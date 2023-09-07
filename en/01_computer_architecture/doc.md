@@ -216,14 +216,10 @@ the second one changes every 3 times we increment (increase by 1) the number, an
 
 So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^(N-1)$ in the number.
 For example, a number 1234 in base ten has:
-
-$ 4 * 10^0 = 4 $ ones,
-
-$ 3 * 10^1 = 3 $ tens,
-
-$ 2 * 10^2 = 2 $ hundreds,
-
-$ 1 * 10^3 = 1 $ thousand.
+- $` 4 * 10^0 = 4 `$ ones,
+- $` 3 * 10^1 = 3 `$ tens,
+- $` 2 * 10^2 = 2 `$ hundreds,
+- $` 1 * 10^3 = 1 `$ thousand.
 
 And to get the final number, you just have to add these quantities together.
 
