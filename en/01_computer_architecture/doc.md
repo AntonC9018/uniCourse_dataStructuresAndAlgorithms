@@ -214,26 +214,26 @@ Let's draw up another table:
 You can see how the last number changes every time, 
 the second one changes every 3 times we increment (increase by 1) the number, and the first one changes every 9 times.
 
-So, in general, for a number system with base N, the Nth position from the right, represents the amount of N^(N-1) in the number.
+So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^(N-1)$ in the number.
 For example, a number 1234 in base ten has:
-- 4 x 10^0 = 4 ones,
-- 3 x 10^1 = 3 tens,
-- 2 x 10^2 = 2 hundreds,
-- 1 x 10^3 = 1 thousand.
+- $ 4 * 10^0 = 4 $ ones,
+- $ 3 * 10^1 = 3 $ tens,
+- $ 2 * 10^2 = 2 $ hundreds,
+- $ 1 * 10^3 = 1 $ thousand.
 And to get the final number, you just have to add these quantities together.
 
 The number 3321 in base 4 would be:
-- 1 x 4^0 = 1 ones,
-- 2 x 4^1 = 2 fours,
-- 3 x 4^2 = 3 sixteens,
-- 3 x 4^3 = 3 sixty-fours.
+- $ 1 * 4^0 = 1 $ ones,
+- $ 2 * 4^1 = 2 $ fours,
+- $ 3 * 4^2 = 3 $ sixteens,
+- $ 3 * 4^3 = 3 $ sixty-fours.
 
 Again, here I wrote the numbers in base 10, but think what would happen if I wrote them in base 4?
 Here it is:
-- 1 x 10^0 = 1 ones,
-- 2 x 10^1 = 2 "one zeros",
-- 3 x 10^2 = 3 "one zero zeros",
-- 3 x 10^3 = 3 "one zero zero zeros",
+- $ 1 * 10^0 = 1 $ ones,
+- $ 2 * 10^1 = 2 $ "one zeros",
+- $ 3 * 10^2 = 3 $ "one zero zeros",
+- $ 3 * 10^3 = 3 $ "one zero zero zeros",
 If you're confused why 4 just became 10, that's because the number of symbols of any base N, 
 written in that number base N, will look like 10.
 In this case we wrote 4 in base 4, which makes it 10 (we read it as "one zero" or "one oh", not as "ten").
@@ -249,8 +249,8 @@ Let's convert from 3321~4~ to base 10: $1 x 4^0 + 2 x 4^1 + 3 x 4^2 + 3 x 4^3 = 
 
 And now another example 3421~5~ from base 5 to base 3
 (you add and multiply the same way as in base 10, just that you have to carry over when you reach the base):
-- $1 * 5_10^0 = 1 * 12_3^0 = 1 * 1 = 1$ 
-- $2 * 5_10^1 = 2 * 12_3^1 = 2 * 12_3 = 2 * 10_3 + 2 * 2_3 = 20_3 + 11_3 = 101_3$
+- $1 * 5_{10}^0 = 1 * 12_3^0 = 1 * 1 = 1$ 
+- $2 * 5_{10}^1 = 2 * 12_3^1 = 2 * 12_3 = 2 * 10_3 + 2 * 2_3 = 20_3 + 11_3 = 101_3$
 TODO
 
 Let's do another one: 1234~10~ from base 10 to base 2: 
