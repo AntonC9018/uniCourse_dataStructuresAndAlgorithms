@@ -242,20 +242,20 @@ In this case we wrote 4 in base 4, which makes it 10 (we read it as "one zero" o
 Reread the examples above if you're confused.
 
 Sometimes you'll see numbers in different bases written with a subscript of the base, written in the usual base 10.
-For example 3321~4~ means 3321 represents a number in base 4.
+For example 3321<sub>4</sub> means 3321 represents a number in base 4.
 
 To convert a number from base N to base M... You just write the powers of each digit in base M, 
 and then just add them up in that base. It should make perfect sense if you think about it.
 
-Let's convert from 3321~4~ to base 10: $1 * 4^0 + 2 * 4^1 + 3 * 4^2 + 3 * 4^3 = 1 + 8 + 48 + 192 = 249$
+Let's convert from 3321<sub>4</sub> to base 10: $1 * 4^0 + 2 * 4^1 + 3 * 4^2 + 3 * 4^3 = 1 + 8 + 48 + 192 = 249$
 
-And now another example 3421~5~ from base 5 to base 3
+And now another example 3421<sub>5</sub> from base 5 to base 3
 (you add and multiply the same way as in base 10, just that you have to carry over when you reach the base):
 - $1 * 5_{10}^0 = 1 * 12_3^0 = 1 * 1 = 1$ 
 - $2 * 5_{10}^1 = 2 * 12_3^1 = 2 * 12_3 = 2 * 10_3 + 2 * 2_3 = 20_3 + 11_3 = 101_3$
 TODO
 
-Let's do another one: 1234~10~ from base 10 to base 2: 
+Let's do another one: 1234<sub>10</sub> from base 10 to base 2: 
 
 ### How does this relate to bytes?
 
@@ -272,7 +272,7 @@ What's the largest number we can store in a byte?
 Well, a byte is 8 bit (binary digit). 
 And what's the largest number you can store in 8 digits?
 Well, the one where all of the digits are equal to the largest symbol in the number system, N - 1, where N is the base.
-In base 2 this means a number with all 1 for each of the 8 digits, which is 11111111~2~.
-If we convert it to base 10, via the idea described above, we get 255~10~.
+In base 2 this means a number with all 1 for each of the 8 digits, which is 11111111<sub>2</sub>.
+If we convert it to base 10, via the idea described above, we get 255<sub>10</sub>.
 
-So each byte can store numbers in range 0-255~10~, inclusive.
+So each byte can store numbers in range 0-255<sub>10</sub>, inclusive.
