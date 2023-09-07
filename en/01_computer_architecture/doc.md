@@ -214,7 +214,7 @@ Let's draw up another table:
 You can see how the last number changes every time, 
 the second one changes every 3 times we increment (increase by 1) the number, and the first one changes every 9 times.
 
-So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^(N-1)$ in the number.
+So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^{N-1}$ in the number.
 For example, a number 1234 in base ten has:
 - $` 4 * 10^0 = 4 `$ ones,
 - $` 3 * 10^1 = 3 `$ tens,
