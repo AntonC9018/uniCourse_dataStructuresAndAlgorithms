@@ -214,7 +214,7 @@ Let's draw up another table:
 You can see how the last number changes every time, 
 the second one changes every 3 times we increment (increase by 1) the number, and the first one changes every 9 times.
 
-So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^{N-1}$ in the number.
+So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^{M-1}$ in the number, where M is the position of the digit from the right.
 For example, a number 1234 in base ten has:
 - $` 4 * 10^0 = 4 `$ ones,
 - $` 3 * 10^1 = 3 `$ tens,
@@ -249,11 +249,20 @@ and then just add them up in that base. It should make perfect sense if you thin
 
 Let's convert from 3321<sub>4</sub> to base 10: $1 * 4^0 + 2 * 4^1 + 3 * 4^2 + 3 * 4^3 = 1 + 8 + 48 + 192 = 249$
 
-And now another example 3421<sub>5</sub> from base 5 to base 3
+And now another example 2101<sub>3</sub> from base 3 to base 5.
 (you add and multiply the same way as in base 10, just that you have to carry over when you reach the base):
-- $1 * 5_{10}^0 = 1 * 12_3^0 = 1 * 1 = 1$ 
-- $2 * 5_{10}^1 = 2 * 12_3^1 = 2 * 12_3 = 2 * 10_3 + 2 * 2_3 = 20_3 + 11_3 = 101_3$
-TODO
+- $1 * 3^0 = 1 * 1_{10}$
+- $0 * 3^1 = 0 * 3_{10}$
+- $1 * 3^2 = 1 * 9_{10}$
+- $2 * 3^3 = 2 * 27_{10}$
+
+Now we can write 1, 3, 9 and 27 in base 5. 
+- $1_{10} = 1_{5}$
+- $3_{10} = 3_{5}$
+- $9_{10} = 1 * 5^1 + 4 * 5^0 = 14_{5}$
+- $27_{10} = 1 * 5^2 + 0 * 5^1 + 2 * 5^0 = 102_{5}$
+
+Now we just add them up to get the result in base 5: $1_5 + 0_5 + 14_5 + 102_5 = 130_5$
 
 Let's do another one: 1234<sub>10</sub> from base 10 to base 2: 
 
