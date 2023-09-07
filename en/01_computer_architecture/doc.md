@@ -262,7 +262,25 @@ Now we can write 1, 3, 9 and 27 in base 5.
 - $9_{10} = 1 * 5^1 + 4 * 5^0 = 14_{5}$
 - $27_{10} = 1 * 5^2 + 0 * 5^1 + 2 * 5^0 = 102_{5}$
 
-Now we just add them up to get the result in base 5: $1_5 + 0_5 + 14_5 + 102_5 = 130_5$
+Now we can replace the coefficients in the base 10 written initially with the coefficients in base 5:
+- $1 * 1_{10} = 1 * 1_{5} = 1_{5}$
+- $0 * 3_{10} = 0 * 3_{5} = 0_{5}$
+- $1 * 9_{10} = 1 * 14_{5} = 14_{5}$
+- $2 * 27_{10} = 2 * 102_{5} = 204_{5}$
+
+Now we just add them up to get the result in base 5: $1_5 + 0_5 + 14_5 + 204_5 = ...$
+Here we can do the addition just like regular, using a table 
+(we just have to carry over when we reach 5, instead of the regular 10):
+```
+204 +
+ 14 +
+  0 +
+  1 =
+----
+224
+```
+
+```
 
 Let's do another one: 1234<sub>10</sub> from base 10 to base 2: 
 
