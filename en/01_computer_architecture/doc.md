@@ -54,7 +54,7 @@ An identifier is just a unique number, which can be used to uniquely identify an
 In other words, if you know this identifier, you know exactly what instruction it refers to, be it read or write.
 
 For sake of simplicity, let's say that the identifier for reading from main memory is 15,
-adding a number in the main memory to a number in the processor memory is 22, and wiriting to main memory is 39.
+adding a number in the main memory to a number in the processor memory is 22, and writing to main memory is 39.
 
 So the three instructions above could be compacted as follows:
 1. Use the instruction with identifier 15, where the first argument (main memory address) is 102 and the second argument (processor memory address) is 0. 
