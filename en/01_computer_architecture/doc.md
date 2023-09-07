@@ -280,8 +280,6 @@ Here we can do the addition just like regular, using a table
 224
 ```
 
-```
-
 Let's do another one: 1234<sub>10</sub> from base 10 to base 2: 
 
 ### How does this relate to bytes?
