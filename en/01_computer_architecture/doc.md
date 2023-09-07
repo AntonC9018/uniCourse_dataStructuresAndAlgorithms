@@ -224,25 +224,17 @@ For example, a number 1234 in base ten has:
 And to get the final number, you just have to add these quantities together.
 
 The number 3321 in base 4 would be:
-
-$ 1 * 4^0 = 1 $ ones,
-
-$ 2 * 4^1 = 2 $ fours,
-
-$ 3 * 4^2 = 3 $ sixteens,
-
-$ 3 * 4^3 = 3 $ sixty-fours.
+- $` 1 * 4^0 = 1 `$ ones,
+- $` 2 * 4^1 = 2 `$ fours,
+- $` 3 * 4^2 = 3 `$ sixteens,
+- $` 3 * 4^3 = 3 `$ sixty-fours.
 
 Again, here I wrote the numbers in base 10, but think what would happen if I wrote them in base 4?
 Here it is:
-
-$ 1 * 10^0 = 1 $ ones,
-
-$ 2 * 10^1 = 2 $ "one zeros",
-
-$ 3 * 10^2 = 3 $ "one zero zeros",
-
-$ 3 * 10^3 = 3 $ "one zero zero zeros".
+- $` 1 * 10^0 = 1 `$ ones,
+- $` 2 * 10^1 = 2 `$ "one zeros",
+- $` 3 * 10^2 = 3 `$ "one zero zeros",
+- $` 3 * 10^3 = 3 `$ "one zero zero zeros".
 
 If you're confused why 4 just became 10, that's because the number of symbols of any base N, 
 written in that number base N, will look like 10.
