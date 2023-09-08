@@ -301,3 +301,8 @@ In base 2 this means a number with all 1 for each of the 8 digits, which is 1111
 If we convert it to base 10, via the idea described above, we get 255<sub>10</sub>.
 
 So each byte can store numbers in range 0-255<sub>10</sub>, inclusive.
+
+
+### Additional resources
+
+Processor architecture, simplified, but way more in depth than I have described here: [A (Very) Simplified CPU Diagram](https://www.youtube.com/watch?v=8VakkEFOiJc)
