@@ -8,7 +8,7 @@ int main()
 	// 0 0 0 69
 	int i = 69;
 	// 0 0 0 5
-	// 0 0 0 6
+	// 0 0 2 1
 	// 0 0 0 0
 	// 0 0 0 0
 	// 0 0 0 0
@@ -26,7 +26,7 @@ int main()
 	std::cout << (*iPointer) << std::endl;
 
 	// 0 0 0 0 0 0 0 44
-	int* arr1Pointer = iPointer + 3; // explain pointer arithmetic, with pictures
+	int* arr1Pointer = iPointer + 2; // explain pointer arithmetic, with pictures
 	std::cout << *arr1Pointer;
 
 	return 0;
