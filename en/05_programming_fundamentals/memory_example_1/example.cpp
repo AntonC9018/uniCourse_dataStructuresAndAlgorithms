@@ -12,22 +12,22 @@ int main()
 	// 0 0 0 0
 	// 0 0 0 0
 	// 0 0 0 0
-	int arr[5] = { 0 };
+	// 0 0 0 0
+	int arr[6] = { 0 };
 	arr[0] = 5;
-	arr[1] = 6;
+	arr[1] = 513;
 
-	// 0 0 0 0 0 0 0 35 
+	// 0 0 0 0 0 0 0 36 
 	int* iPointer = &i; // make sure people understand what & does
-	// 0 0 0 0 0 0 0 35
+	// 0 0 0 0 0 0 0 36
 	size_t iPointerAsNumber = (size_t) iPointer;
 
 	std::cout << iPointerAsNumber << std::endl;
 	std::cout << (*iPointer) << std::endl;
 
-	// 0 0 0 0 0 0 0 43
-	int* arr1Pointer = iPointer + 2; // explain pointer arithmetic, with pictures
+	// 0 0 0 0 0 0 0 44
+	int* arr1Pointer = iPointer + 3; // explain pointer arithmetic, with pictures
 	std::cout << *arr1Pointer;
 
 	return 0;
 }
-
