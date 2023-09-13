@@ -22,7 +22,7 @@ std::byte myByte;
 ```
 
 You also need to initialize the variable, which means write a value into the memory of that variable.
-By default any variable's memory is "unititialized", which means it could contain anything that had been in that memory previously, which in practice be anything
+By default any variable's memory is "unititialized", which means it will contain whatever was in that memory previously, which in practice can be anything
 (this is often called "garbage" or "garbage data").
 Typically what you do is you should immediately "zero out" the value, if you're going to use it later.
 Zeroing the value means writing a zero into each byte of the memory of the variable.
