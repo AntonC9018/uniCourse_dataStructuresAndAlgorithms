@@ -103,7 +103,9 @@ int main()
 
         Position selectedPosition = INVALID_POSITION;
 
-		PlayerKind playerKind = playerIndex == 0 ? PlayerKind::human : PlayerKind::computer;
+		PlayerKind playerKind = playerIndex == 0
+			? PlayerKind::human
+			: PlayerKind::computer;
 
         switch (playerKind)
         {
@@ -113,9 +115,15 @@ int main()
                 while (true)
                 {
                     char playerSymbol = getSymbol(playerValue);
-                    std::cout << "Select position to put ";
-                    std::cout << playerSymbol;
-                    std::cout << ": " << std::endl;
+					// Calling `cout << string` returns back the `cout` object itself.
+					// This is why we can chain multiple `<<` operators.
+                    // The next calls will call `<<` on the `cout` object,
+					// returned from the previous `<<` call.
+                    std::cout
+						<< "Select position to put "
+						<< playerSymbol
+						<< ": "
+						<< std::endl;
 
 					// NOTE:
 					// It's problematic to do these loops in C++ with enums.
@@ -136,8 +144,9 @@ int main()
                     CellValue selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
                     if (selectedValue != CellValue::empty)
                     {
-                        std::cout << "Input position not empty!";
-                        std::cout << std::endl;
+                        std::cout
+							<< "Input position not empty!"
+                        	<< std::endl;
                         continue;
                     }
 
@@ -171,10 +180,11 @@ int main()
 
         if (checkIfPlayerWonByMakingMove(&board, selectedPosition))
         {
-			std::cout << "Player ";
-			std::cout << playerIndex;
-			std::cout << " won.";
-			std::cout << std::endl;
+			std::cout
+				<< "Player "
+			    << playerIndex
+			    << " won."
+			    << std::endl;
 
 			// Stop the game loop.
 			break;
@@ -239,22 +249,21 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
 
     if (!std::cin)
     {
-        std::cout << "Invalid input.";
-        std::cout << std::endl;
+        std::cout << "Invalid input." << std::endl;
         return false;
     }
     else if (*outCoordinate < 0)
     {
-        std::cout << "Position must be positive.";
-        std::cout << std::endl;
+        std::cout << "Position must be positive." << std::endl;
         return false;
     }
     else if (*outCoordinate >= BOARD_DIMENSION)
     {
-        std::cout << "Position must be less than ";
-        std::cout << BOARD_DIMENSION;
-        std::cout << ".";
-        std::cout << std::endl;
+        std::cout
+			<< "Position must be less than "
+            << BOARD_DIMENSION
+            << "."
+            << std::endl;
         return false;
     }
 
@@ -451,8 +460,7 @@ void printGameState(Board* board)
         {
             CellValue valueAtPosition = board->elements[y][x];
             char valueAsCharacter = getSymbol(valueAtPosition);
-            std::cout << valueAsCharacter;
-            std::cout << ' ';
+            std::cout << valueAsCharacter << ' ';
         }
         std::cout << std::endl;
     }
