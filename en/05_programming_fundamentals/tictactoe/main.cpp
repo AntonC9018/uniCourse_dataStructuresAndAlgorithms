@@ -9,7 +9,7 @@ enum class CellValue
 	empty = 0,
 	x = 1,
 	o = 2,
-	// TODO:
+	// NOTE:
 	// This is a non-standard thing that I do sometimes.
     // You can define a standalone constant, or name this something different.
 	_count = 3,
