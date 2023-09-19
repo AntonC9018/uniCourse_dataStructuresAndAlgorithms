@@ -1,30 +1,32 @@
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 
 // constexpr int BOARD_DIMENSION = 3;
-#define BOARD_DIMENSIONS 3
+#define BOARD_DIMENSION 3
 
 // const char[3] symbols = { ' ', 'X', 'O' };
 // if-else is not the best way to do this,
 // the best way would be a lookup.
 char getSymbol(int value)
 {
-    if (value == 1)
+	switch (value)
     {
-        return 'X';
-    }
-    else if (value == 2)
-    {
-        return 'O';
-    }
-    else
-    {
-        assert(false, "Should never happen");
+		case 0:
+			return '_';
+		case 1:
+			return 'X';
+		case 2:
+			return 'O';
+		default:
+        {
+            assert(false);
+			return '\0';
+        }
     }
 }
 
 // Here we use a lookup. It's better than if-else.
-const char[2] axisName = { 'x', 'y' };
+const char axisName[2] = { 'x', 'y' };
 char getAxisName(int axisIndex)
 {
     return axisName[axisIndex];
@@ -51,10 +53,10 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
         std::cout << std::endl;
         return false;
     }
-    else if (*outCoordinate >= BOARD_DIMENSIONS)
+    else if (*outCoordinate >= BOARD_DIMENSION)
     {
         std::cout << "Position must be less than ";
-        std::cout << BOARD_DIMENSIONS;
+        std::cout << BOARD_DIMENSION;
         std::cout << ".";
         std::cout << std::endl;
         return false;
@@ -66,7 +68,7 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
 struct Board
 {
     int elements[BOARD_DIMENSION][BOARD_DIMENSION];
-}
+};
 
 struct Position
 {
@@ -81,12 +83,18 @@ struct Position
         struct {
             int x;
             int y;
-        }
-        int[2] coordinates;
-    }
-}
+        };
+        int coordinates[2];
+    };
+};
 
 const Position INVALID_POSITION = { -1, -1 };
+#define COORDINATE_COUNT 2
+
+bool checkIsInvalidPosition(Position p)
+{
+	return p.x < 0 || p.y < 0;
+}
 
 Position getFirstEmptyPosition(Board* board)
 {
@@ -110,10 +118,9 @@ Position getFirstEmptyPosition(Board* board)
     return INVALID_POSITION;
 }
 
-bool checkRowOrColumnCombination(Board* board, Position position, int coordinateIndexToFix)
+bool checkRowOrColumnCombination(Board* board, Position position, int coordinateIndexToVary)
 {
-	int otherCoordinateIndex = 1 - coordinateIndexToFix;
-	int* changingValue = &position.coordinates[otherCoordinateIndex];
+	int* changingValue = &position.coordinates[coordinateIndexToVary];
 
 	// Here, the dereferencing operator also effectively converts it to a reference.
 	// It doesn't read from that memory, it writes to it.
@@ -134,6 +141,7 @@ bool checkRowOrColumnCombination(Board* board, Position position, int coordinate
 
 bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 {
+#if false
 	// 0 _ _
 	// _ 0 _
 	// _ _ 0
@@ -141,19 +149,19 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 	// _ _ 0
 	// _ 0 _
 	// 0 _ _
-	Position p;
+	Position position;
 	int xDirection;
     if (leftToRightDiagonal)
 	{
-		p.x = 0;
-		p.y = 0;
+		position.x = 0;
+		position.y = 0;
         // x increases each iteration
 		xDirection = 1;
 	}
 	else
     {
-		p.x = 2;
-		p.y = 0;
+		position.x = 2;
+		position.y = 0;
 		// x descreases each iteration
 		xDirection = -1;
     }
@@ -179,7 +187,7 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 	// The version above is just a generalized version of the one below.
 	// In this case the generalization isn't very useful, since it's hard to understand.
     // Another implementation could be like this:
-#if false
+#else
 	if (leftToRightDiagonal)
     {
 		int v = board->elements[0][0];
@@ -203,27 +211,27 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 
 bool checkIfPlayerWonByMakingMove(Board* board, Position move)
 {
-    for (int coordinateIndex = 0; coordinateIndex < BOARD_DIMENSION; coordinateIndex++)
+    for (int coordinateIndex = 0; coordinateIndex < COORDINATE_COUNT; coordinateIndex++)
     {
-        bool hasWon = checkRowOrColumnCombination(&board, selectedPosition, coordinateIndex);
+        bool hasWon = checkRowOrColumnCombination(board, move, coordinateIndex);
         if (hasWon)
             return true;
     }
 
     // left to right diagonal
-    if (selectedPosition.x - selectedPosition.y == 0)
+    if (move.x - move.y == 0)
     {
         bool isLeftToRightDiagonal = true;
-        bool hasWon = checkDiagonalCombination(&board, isLeftToRightDiagonal);
+        bool hasWon = checkDiagonalCombination(board, isLeftToRightDiagonal);
         if (hasWon)
 			return true;
     }
 
     // right to left diagonal
-    if (selectedPosition.x + selectedPosition.y == BOARD_DIMENSION - 1)
+    if (move.x + move.y == BOARD_DIMENSION - 1)
     {
         bool isLeftToRightDiagonal = false;
-        bool hasWon = checkDiagonalCombination(&board, isLeftToRigthDiagonal);
+        bool hasWon = checkDiagonalCombination(board, isLeftToRightDiagonal);
         if (hasWon)
 			return true;
     }
@@ -237,7 +245,7 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
 // loop through the memory and check if each cell is not the empty cell.
 int checkBoardFullyOccupied(Board* board)
 {
-    int* elementsAsLinearBuffer = (int*) board->coordinates;
+    int* elementsAsLinearBuffer = (int*) board->elements;
     size_t numCells = (size_t)(BOARD_DIMENSION * BOARD_DIMENSION);
     for (int cellIndex = 0; cellIndex < numCells; cellIndex++)
     {
@@ -248,6 +256,27 @@ int checkBoardFullyOccupied(Board* board)
             return false;
     }
     return true;
+
+#if false
+	// Another idea is to just use an existing function for this.
+	Position p = getFirstEmptyPosition(board);
+	return checkIsInvalidPosition(p);
+#endif
+}
+
+void printGameState(Board* board)
+{
+    for (int y = 0; y < BOARD_DIMENSION; y++)
+    {
+        for (int x = 0; x < BOARD_DIMENSION; x++)
+        {
+            int valueAtPosition = board->elements[y][x];
+            char valueAsCharacter = getSymbol(valueAtPosition);
+            std::cout << valueAsCharacter;
+            std::cout << ' ';
+        }
+        std::cout << std::endl;
+    }
 }
 
 int main()
@@ -257,6 +286,9 @@ int main()
     // 2 - O
     Board board = {};
     int playerIndex = 0;
+	int playerCount = 2;
+
+	printGameState(&board);
 
     // Game loop
     while (true)
@@ -276,13 +308,13 @@ int main()
                     std::cout << playerSymbol;
                     std::cout << ": " << std::endl;
 
-                    for (int coordIndex = 0; coordIndex < 2; coordIndex++)
+                    for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
                     {
                         int* coord = &selectedPosition.coordinates[coordIndex];
                         char axisName = getAxisName(coordIndex);
                         while (true)
                         {
-                            bool savedValidNumber = getCoordinateFromConsole(coord, axisName)
+                            bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
                             if (savedValidNumber)
                                 break;
                         }
@@ -296,6 +328,9 @@ int main()
                         std::cout << std::endl;
                         continue;
                     }
+
+					// Input selected.
+					break;
                 }
 
                 break;
@@ -303,16 +338,24 @@ int main()
 			// Computer turn.
             case 1:
             {
-                Position p = getFirstEmptyPosition(&board);
-                assert(p == INVALID_POSITION,
-                    "No empty positions, the game must have ended already.");
-
-                // Find first empty position.
+				// Just find the first empty position (for now).
+                selectedPosition = getFirstEmptyPosition(&board);
                 break;
+            }
+			default:
+			{
+				assert(false);
+				break;
             }
         }
 
+        assert(!checkIsInvalidPosition(selectedPosition));
+
+		// Make the move.
         board.elements[selectedPosition.y][selectedPosition.x] = playerValue;
+
+		// Print out the updated game state.
+		printGameState(&board);
 
         if (checkIfPlayerWonByMakingMove(&board, selectedPosition))
         {
@@ -326,11 +369,14 @@ int main()
         }
 
 		// Also need to check if there are no empty spaces on the board.
-		if (isBoardEmpty(&board))
+		if (checkBoardFullyOccupied(&board))
 		{
 			std::cout << "It's a tie...";
 			break;
 		}
+
+		playerIndex += 1;
+		playerIndex %= playerCount;
     }
 
     return 1;

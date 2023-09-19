@@ -3,3 +3,4 @@
 *.lib
 ~$*.xlsx
 .idea
+.vs
