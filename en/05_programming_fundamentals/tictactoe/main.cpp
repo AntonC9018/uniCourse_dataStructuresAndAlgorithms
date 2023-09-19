@@ -4,13 +4,26 @@
 // constexpr int BOARD_DIMENSION = 3;
 #define BOARD_DIMENSION 3
 
+enum class CellValue
+{
+	empty = 0,
+	x = 1,
+	o = 2,
+	// TODO:
+	// This is a non-standard thing that I do sometimes.
+    // You can define a standalone constant, or name this something different.
+	_count = 3,
+};
+
+
 // Struct declarations have to go up top, because they're referenced
 // in the function declarations.
 struct Board
 {
-    int elements[BOARD_DIMENSION][BOARD_DIMENSION];
+    CellValue elements[BOARD_DIMENSION][BOARD_DIMENSION];
 };
 
+#define COORDINATE_COUNT 2
 struct Position
 {
 	// Each coordinate has two names.
@@ -25,12 +38,29 @@ struct Position
             int x;
             int y;
         };
-        int coordinates[2];
+        int coordinates[COORDINATE_COUNT];
     };
 };
 
 const Position INVALID_POSITION = { -1, -1 };
-#define COORDINATE_COUNT 2
+
+enum class Diagonal
+{
+    leftToRight = 0,
+    rightToLeft = 1,
+};
+
+enum class PlayerKind
+{
+    human = 0,
+    computer = 1,
+};
+
+enum CoordinateAxisIndex
+{
+    x = 0,
+    y = 1,
+};
 
 // Putting functions declarations up top is a good practice,
 // because then you can either move the definitions to another file,
@@ -41,17 +71,19 @@ const Position INVALID_POSITION = { -1, -1 };
 // these declarations as well, which adds a maintainability cost (how easily you can change things).
 // Split them off after you've decided on the interface
 // (what they take as parameters, and what they return).
-char getSymbol(int value);
-char getAxisName(int axisIndex);
+char getSymbol(CellValue value);
+char getAxisName(CoordinateAxisIndex axisIndex);
 bool getCoordinateFromConsole(int* outCoordinate, char coordinateName);
 bool checkIsInvalidPosition(Position p);
 Position getFirstEmptyPosition(Board* board);
-bool checkRowOrColumnCombination(Board* board, Position position, int coordinateIndexToVary);
-bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal);
+bool checkRowOrColumnCombination(Board* board, Position position, CoordinateAxisIndex coordinateIndexToVary);
+bool checkDiagonalCombination(Board* board, Diagonal diagonal);
 bool checkIfPlayerWonByMakingMove(Board* board, Position move);
 int checkBoardFullyOccupied(Board* board);
 void printGameState(Board* board);
 
+// Main doesn't need a split declaration, because it's not supposed
+// to be called from anywhere else.
 int main()
 {
     // 0 - empty
@@ -66,13 +98,17 @@ int main()
     // Game loop
     while (true)
     {
-        int playerValue = playerIndex + 1;
+        CellValue playerValue = (CellValue)(playerIndex + 1);
+		assert(playerValue < CellValue::_count);
+
         Position selectedPosition = INVALID_POSITION;
 
-        switch (playerIndex)
+		PlayerKind playerKind = playerIndex == 0 ? PlayerKind::human : PlayerKind::computer;
+
+        switch (playerKind)
         {
 			// Player turn.
-            case 0:
+            case PlayerKind::human:
             {
                 while (true)
                 {
@@ -81,10 +117,14 @@ int main()
                     std::cout << playerSymbol;
                     std::cout << ": " << std::endl;
 
+					// NOTE:
+					// It's problematic to do these loops in C++ with enums.
+					// I actually don't know what the best way would be
+					// (trying to avoid casts as much as possible).
                     for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
                     {
                         int* coord = &selectedPosition.coordinates[coordIndex];
-                        char axisName = getAxisName(coordIndex);
+                        char axisName = getAxisName((CoordinateAxisIndex) coordIndex);
                         while (true)
                         {
                             bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
@@ -93,9 +133,8 @@ int main()
                         }
                     }
 
-                    int selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
-                    // Not empty
-                    if (selectedValue != 0)
+                    CellValue selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
+                    if (selectedValue != CellValue::empty)
                     {
                         std::cout << "Input position not empty!";
                         std::cout << std::endl;
@@ -109,7 +148,7 @@ int main()
                 break;
             }
 			// Computer turn.
-            case 1:
+            case PlayerKind::computer:
             {
 				// Just find the first empty position (for now).
                 selectedPosition = getFirstEmptyPosition(&board);
@@ -158,15 +197,15 @@ int main()
 // const char[3] symbols = { ' ', 'X', 'O' };
 // if-else is not the best way to do this,
 // the best way would be a lookup.
-char getSymbol(int value)
+char getSymbol(CellValue value)
 {
 	switch (value)
     {
-		case 0:
+		case CellValue::empty:
 			return '_';
-		case 1:
+		case CellValue::x:
 			return 'X';
-		case 2:
+		case CellValue::o:
 			return 'O';
 		default:
         {
@@ -177,10 +216,16 @@ char getSymbol(int value)
 }
 
 // Here we use a lookup. It's better than if-else.
-const char axisName[2] = { 'x', 'y' };
-char getAxisName(int axisIndex)
+const char axisName[COORDINATE_COUNT] = {
+    'x',
+	'y',
+	// This better syntax is not available in C++ by default (needs a C99 extension).
+	// [(int) CoordinateAxisIndex::x] = 'x', // element 0 = 'x'
+    // [(int) CoordinateAxisIndex::y] = 'y', // element 1 = 'y'
+};
+char getAxisName(CoordinateAxisIndex axisIndex)
 {
-    return axisName[axisIndex];
+    return axisName[(int) axisIndex];
 }
 
 bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
@@ -227,7 +272,7 @@ Position getFirstEmptyPosition(Board* board)
     {
         for (int x = 0; x < BOARD_DIMENSION; x++)
         {
-            if (board->elements[y][x] == 0)
+            if (board->elements[y][x] == CellValue::empty)
             {
                 Position p = { };
                 p.x = x;
@@ -243,15 +288,18 @@ Position getFirstEmptyPosition(Board* board)
     return INVALID_POSITION;
 }
 
-bool checkRowOrColumnCombination(Board* board, Position position, int coordinateIndexToVary)
+bool checkRowOrColumnCombination(
+	Board* board,
+	Position position,
+	CoordinateAxisIndex coordinateIndexToVary)
 {
-	int* changingValue = &position.coordinates[coordinateIndexToVary];
+	int* changingValue = &position.coordinates[(int) coordinateIndexToVary];
 
 	// Here, the dereferencing operator also effectively converts it to a reference.
 	// It doesn't read from that memory, it writes to it.
 	*changingValue = 0;
 
-    int valueToCheck = board->elements[position.y][position.x];
+    CellValue valueToCheck = board->elements[position.y][position.x];
     for (*changingValue = 1; *changingValue < BOARD_DIMENSION;
 		// NOTE:
 		// We increment the value in the memory, not the pointer.
@@ -264,7 +312,7 @@ bool checkRowOrColumnCombination(Board* board, Position position, int coordinate
     return true;
 }
 
-bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
+bool checkDiagonalCombination(Board* board, Diagonal diagonal)
 {
 #if false
 	// 0 _ _
@@ -276,28 +324,33 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 	// 0 _ _
 	Position position;
 	int xDirection;
-    if (leftToRightDiagonal)
+    if (diagonal == Diagonal::leftToRight)
 	{
 		position.x = 0;
 		position.y = 0;
         // x increases each iteration
 		xDirection = 1;
 	}
-	else
+	else if (diagonal == Diagonal::rightToLeft)
     {
 		position.x = 2;
 		position.y = 0;
 		// x descreases each iteration
 		xDirection = -1;
     }
+    else
+	{
+		assert(false);
+    }
 
-    int valueToCheck = board->elements[position.y][position.x];
+
+    CellValue valueToCheck = board->elements[position.y][position.x];
     position.x += xDirection;
     position.y += 1;
 
     for (int i = 1; i < BOARD_DIMENSION; i++)
     {
-        int value = board->elements[position.y][position.x];
+        CellValue value = board->elements[position.y][position.x];
         if (value != valueToCheck)
             return false;
 
@@ -313,9 +366,9 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
 	// In this case the generalization isn't very useful, since it's hard to understand.
     // Another implementation could be like this:
 #else
-	if (leftToRightDiagonal)
+	if (diagonal == Diagonal::leftToRight)
     {
-		int v = board->elements[0][0];
+		CellValue v = board->elements[0][0];
 		if (v != board->elements[1][1])
 			return false;
 		if (v != board->elements[2][2])
@@ -324,7 +377,7 @@ bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal)
     }
     else
 	{
-		int v = board->elements[0][2];
+		CellValue v = board->elements[0][2];
 		if (v != board->elements[1][1])
 			return false;
 		if (v != board->elements[2][0])
@@ -338,7 +391,10 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
 {
     for (int coordinateIndex = 0; coordinateIndex < COORDINATE_COUNT; coordinateIndex++)
     {
-        bool hasWon = checkRowOrColumnCombination(board, move, coordinateIndex);
+        bool hasWon = checkRowOrColumnCombination(
+			board,
+			move,
+			(CoordinateAxisIndex) coordinateIndex);
         if (hasWon)
             return true;
     }
@@ -346,8 +402,7 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
     // left to right diagonal
     if (move.x - move.y == 0)
     {
-        bool isLeftToRightDiagonal = true;
-        bool hasWon = checkDiagonalCombination(board, isLeftToRightDiagonal);
+        bool hasWon = checkDiagonalCombination(board, Diagonal::leftToRight);
         if (hasWon)
 			return true;
     }
@@ -355,8 +410,7 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
     // right to left diagonal
     if (move.x + move.y == BOARD_DIMENSION - 1)
     {
-        bool isLeftToRightDiagonal = false;
-        bool hasWon = checkDiagonalCombination(board, isLeftToRightDiagonal);
+        bool hasWon = checkDiagonalCombination(board, Diagonal::rightToLeft);
         if (hasWon)
 			return true;
     }
@@ -395,7 +449,7 @@ void printGameState(Board* board)
     {
         for (int x = 0; x < BOARD_DIMENSION; x++)
         {
-            int valueAtPosition = board->elements[y][x];
+            CellValue valueAtPosition = board->elements[y][x];
             char valueAsCharacter = getSymbol(valueAtPosition);
             std::cout << valueAsCharacter;
             std::cout << ' ';
