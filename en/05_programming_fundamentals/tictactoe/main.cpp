@@ -207,8 +207,9 @@ int main()
 }
 
 // const char[3] symbols = { ' ', 'X', 'O' };
-// if-else is not the best way to do this,
-// the best way would be a lookup.
+// a switch is one of the best way to do this thing,
+// the best way would be a lookup
+// (although the compiler will likely do that on its own with a switch).
 char getSymbol(CellValue value)
 {
 	switch (value)
@@ -227,7 +228,8 @@ char getSymbol(CellValue value)
     }
 }
 
-// Here we use a lookup. It's better than if-else.
+// Here we use a lookup.
+// It's better than if-else, and (might be) better than a switch.
 const char axisName[COORDINATE_COUNT] = {
     'x',
 	'y',
@@ -245,7 +247,7 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
     std::cout << coordinateName << ": ";
 
     // NOTE:
-    // Here, the dereference operator converts from int* into a int&.
+    // Here, the dereference operator converts from int* into an int&.
     // It doesn't actually dereference (read from that memory).
     std::cin >> *outCoordinate;
 
@@ -378,13 +380,13 @@ bool checkDiagonalCombination(Board* board, Diagonal diagonal)
     }
     return true;
 
+#elif true
 	// The code above really only makes sense if you have bigger boards.
 	// If you know the size will always be 3x3, you could (and honestly should)
 	// use the version below.
 	// The version above is just a generalized version of the one below.
 	// In this case the generalization isn't very useful, since it's hard to understand.
     // Another implementation could be like this:
-#else
 	if (diagonal == Diagonal::leftToRight)
     {
 		CellValue v = board->elements[0][0];
@@ -403,6 +405,34 @@ bool checkDiagonalCombination(Board* board, Diagonal diagonal)
 			return false;
 		return true;
 	}
+#else
+	// Another idea uses the fact that the array is linear at the end of the day.
+	// The next position in the diagonal is always the current position + the size of row + 1,
+    // since we have to travel to the next row, and then one more cell to the right of that.
+	// In the other diagonal, we have to go one cell to the left instead.
+	size_t index;
+	size_t stride;
+	if (diagonal == Diagonal::leftToRight)
+    {
+        index = 0;
+        stride = BOARD_DIMENSION + 1;
+    }
+    else
+    {
+		index = BOARD_DIMENSION - 1;
+		stride = BOARD_DIMENSION - 1;
+    }
+
+	CellValue* elementsAsLinearBuffer = (CellValue*) board->elements;
+	CellValue valueToCheck = elementsAsLinearBuffer[index];
+	for (int i = 1; i < BOARD_DIMENSION; i++)
+    {
+        index += stride;
+        if (elementsAsLinearBuffer[index] != valueToCheck)
+            return false;
+    }
+    return true;
+
 #endif
 }
 
