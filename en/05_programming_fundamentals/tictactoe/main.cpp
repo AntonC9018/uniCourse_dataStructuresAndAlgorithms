@@ -4,6 +4,157 @@
 // constexpr int BOARD_DIMENSION = 3;
 #define BOARD_DIMENSION 3
 
+// Struct declarations have to go up top, because they're referenced
+// in the function declarations.
+struct Board
+{
+    int elements[BOARD_DIMENSION][BOARD_DIMENSION];
+};
+
+struct Position
+{
+	// Each coordinate has two names.
+	// x is the same as coordinates[0]
+	// y is the same as coordinates[1]
+    // It is important to have both ways for generalizations.
+	// `union` means they refer to the same memory.
+	// In total, the size of this struct is 2 ints = 2 * 4 bytes = 8 bytes.
+    union
+    {
+        struct {
+            int x;
+            int y;
+        };
+        int coordinates[2];
+    };
+};
+
+const Position INVALID_POSITION = { -1, -1 };
+#define COORDINATE_COUNT 2
+
+// Putting functions declarations up top is a good practice,
+// because then you can either move the definitions to another file,
+// linking them from another implementation file, or just define them
+// after the main function.
+// I argue you should do this after you've defined and used the function,
+// because if you change e.g. the function parameters, you'll have to change
+// these declarations as well, which adds a maintainability cost (how easily you can change things).
+// Split them off after you've decided on the interface
+// (what they take as parameters, and what they return).
+char getSymbol(int value);
+char getAxisName(int axisIndex);
+bool getCoordinateFromConsole(int* outCoordinate, char coordinateName);
+bool checkIsInvalidPosition(Position p);
+Position getFirstEmptyPosition(Board* board);
+bool checkRowOrColumnCombination(Board* board, Position position, int coordinateIndexToVary);
+bool checkDiagonalCombination(Board* board, bool leftToRightDiagonal);
+bool checkIfPlayerWonByMakingMove(Board* board, Position move);
+int checkBoardFullyOccupied(Board* board);
+void printGameState(Board* board);
+
+int main()
+{
+    // 0 - empty
+    // 1 - X
+    // 2 - O
+    Board board = {};
+    int playerIndex = 0;
+	int playerCount = 2;
+
+	printGameState(&board);
+
+    // Game loop
+    while (true)
+    {
+        int playerValue = playerIndex + 1;
+        Position selectedPosition = INVALID_POSITION;
+
+        switch (playerIndex)
+        {
+			// Player turn.
+            case 0:
+            {
+                while (true)
+                {
+                    char playerSymbol = getSymbol(playerValue);
+                    std::cout << "Select position to put ";
+                    std::cout << playerSymbol;
+                    std::cout << ": " << std::endl;
+
+                    for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
+                    {
+                        int* coord = &selectedPosition.coordinates[coordIndex];
+                        char axisName = getAxisName(coordIndex);
+                        while (true)
+                        {
+                            bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
+                            if (savedValidNumber)
+                                break;
+                        }
+                    }
+
+                    int selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
+                    // Not empty
+                    if (selectedValue != 0)
+                    {
+                        std::cout << "Input position not empty!";
+                        std::cout << std::endl;
+                        continue;
+                    }
+
+					// Input selected.
+					break;
+                }
+
+                break;
+            }
+			// Computer turn.
+            case 1:
+            {
+				// Just find the first empty position (for now).
+                selectedPosition = getFirstEmptyPosition(&board);
+                break;
+            }
+			default:
+			{
+				assert(false);
+				break;
+            }
+        }
+
+        assert(!checkIsInvalidPosition(selectedPosition));
+
+		// Make the move.
+        board.elements[selectedPosition.y][selectedPosition.x] = playerValue;
+
+		// Print out the updated game state.
+		printGameState(&board);
+
+        if (checkIfPlayerWonByMakingMove(&board, selectedPosition))
+        {
+			std::cout << "Player ";
+			std::cout << playerIndex;
+			std::cout << " won.";
+			std::cout << std::endl;
+
+			// Stop the game loop.
+			break;
+        }
+
+		// Also need to check if there are no empty spaces on the board.
+		if (checkBoardFullyOccupied(&board))
+		{
+			std::cout << "It's a tie...";
+			break;
+		}
+
+		playerIndex += 1;
+		playerIndex %= playerCount;
+    }
+
+    return 1;
+}
+
 // const char[3] symbols = { ' ', 'X', 'O' };
 // if-else is not the best way to do this,
 // the best way would be a lookup.
@@ -64,32 +215,6 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
 
     return true;
 }
-
-struct Board
-{
-    int elements[BOARD_DIMENSION][BOARD_DIMENSION];
-};
-
-struct Position
-{
-	// Each coordinate has two names.
-	// x is the same as coordinates[0]
-	// y is the same as coordinates[1]
-    // It is important to have both ways for generalizations.
-	// `union` means they refer to the same memory.
-	// In total, the size of this struct is 2 ints = 2 * 4 bytes = 8 bytes.
-    union
-    {
-        struct {
-            int x;
-            int y;
-        };
-        int coordinates[2];
-    };
-};
-
-const Position INVALID_POSITION = { -1, -1 };
-#define COORDINATE_COUNT 2
 
 bool checkIsInvalidPosition(Position p)
 {
@@ -277,107 +402,4 @@ void printGameState(Board* board)
         }
         std::cout << std::endl;
     }
-}
-
-int main()
-{
-    // 0 - empty
-    // 1 - X
-    // 2 - O
-    Board board = {};
-    int playerIndex = 0;
-	int playerCount = 2;
-
-	printGameState(&board);
-
-    // Game loop
-    while (true)
-    {
-        int playerValue = playerIndex + 1;
-        Position selectedPosition;
-
-        switch (playerIndex)
-        {
-			// Player turn.
-            case 0:
-            {
-                while (true)
-                {
-                    char playerSymbol = getSymbol(playerValue);
-                    std::cout << "Select position to put ";
-                    std::cout << playerSymbol;
-                    std::cout << ": " << std::endl;
-
-                    for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
-                    {
-                        int* coord = &selectedPosition.coordinates[coordIndex];
-                        char axisName = getAxisName(coordIndex);
-                        while (true)
-                        {
-                            bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
-                            if (savedValidNumber)
-                                break;
-                        }
-                    }
-
-                    int selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
-                    // Not empty
-                    if (selectedValue != 0)
-                    {
-                        std::cout << "Input position not empty!";
-                        std::cout << std::endl;
-                        continue;
-                    }
-
-					// Input selected.
-					break;
-                }
-
-                break;
-            }
-			// Computer turn.
-            case 1:
-            {
-				// Just find the first empty position (for now).
-                selectedPosition = getFirstEmptyPosition(&board);
-                break;
-            }
-			default:
-			{
-				assert(false);
-				break;
-            }
-        }
-
-        assert(!checkIsInvalidPosition(selectedPosition));
-
-		// Make the move.
-        board.elements[selectedPosition.y][selectedPosition.x] = playerValue;
-
-		// Print out the updated game state.
-		printGameState(&board);
-
-        if (checkIfPlayerWonByMakingMove(&board, selectedPosition))
-        {
-			std::cout << "Player ";
-			std::cout << playerIndex;
-			std::cout << " won.";
-			std::cout << std::endl;
-
-			// Stop the game loop.
-			break;
-        }
-
-		// Also need to check if there are no empty spaces on the board.
-		if (checkBoardFullyOccupied(&board))
-		{
-			std::cout << "It's a tie...";
-			break;
-		}
-
-		playerIndex += 1;
-		playerIndex %= playerCount;
-    }
-
-    return 1;
 }
