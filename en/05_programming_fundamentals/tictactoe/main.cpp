@@ -56,7 +56,7 @@ enum class PlayerKind
     computer = 1,
 };
 
-enum CoordinateAxisIndex
+enum class CoordinateAxisIndex
 {
     x = 0,
     y = 1,
