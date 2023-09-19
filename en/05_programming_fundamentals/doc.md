@@ -405,7 +405,7 @@ int main()
 
 ### Prototypes
 
-A prototype, also called a signature in other languages, is a description of the interface of a function.
+A **prototype**, also called a signature in other languages, is a description of the interface of a function.
 It describes what "parameters", or inputs, the function takes, and what it "returns", or outputs.
 
 You can think of a function at a high level as a factory:
@@ -414,21 +414,21 @@ You can think of a function at a high level as a factory:
 - It does some operations with it;
 - Out comes something else (return value), like a car.
 
-You're probably familiar with the math notation $` f(x, y, z) \rightarrow \mathbb{N} `$, which says:
+You're probably familiar with the math notation $` f(x, y, z) \rightarrow \mathbb{Z} `$, which says:
 
 - The function is named `f`;
 - It takes parameters `x`, `y`, and `z`;
-- It returns some value, that is a natural number (`N`).
+- It returns some value, that is a whole number (`Z`).
 
 Note that in this math notation the types (which values they may have)
 of the parameters are often implied by the context,
 but they can also be specified explicitly separately,
-like right here: $` f(x, y) \rightarrow \mathbb{N}, x \in \mathbb{N}, y \in \mathbb{N} `$.
+like right here: $` f(x, y) \rightarrow \mathbb{Z}, x \in \mathbb{Z}, y \in \mathbb{Z} `$.
 
 The same thing happens in C++.
 Any function has a return type, a name and a list of parameter, where each one has a name and a type.
 
-For example, if we approximate $` \mathbb{N} `$ with `int`, we can declare this function in C++ like this:
+For example, if we approximate $` \mathbb{Z} `$ with `int`, we can declare this function in C++ like this:
 
 ```cpp
 int f(int x, int y);
