@@ -468,19 +468,16 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
 }
 
 // We know that `elements` is an inline fixed-size array, that is,
-// it represents a contiguos piece of memory.
+// it represents a contiguous piece of memory.
 // Each cell has a consecutive position in this contiguos memory, so we can just
 // loop through the memory and check if each cell is not the empty cell.
 int checkBoardFullyOccupied(Board* board)
 {
-    int* elementsAsLinearBuffer = (int*) board->elements;
+    CellValue* elementsAsLinearBuffer = (CellValue*) board->elements;
     size_t numCells = (size_t)(BOARD_DIMENSION * BOARD_DIMENSION);
     for (int cellIndex = 0; cellIndex < numCells; cellIndex++)
     {
-        // 0 means empty.
-        // 0 here is a "magical constant".
-        // See the next commit to view how to get rid of them.
-        if (elementsAsLinearBuffer[cellIndex] != 0)
+        if (elementsAsLinearBuffer[cellIndex] != CellValue::empty)
             return false;
     }
     return true;
