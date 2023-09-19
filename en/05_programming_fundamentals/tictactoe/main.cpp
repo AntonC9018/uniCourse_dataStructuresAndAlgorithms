@@ -81,6 +81,7 @@ bool checkDiagonalCombination(Board* board, Diagonal diagonal);
 bool checkIfPlayerWonByMakingMove(Board* board, Position move);
 int checkBoardFullyOccupied(Board* board);
 void printGameState(Board* board);
+CellValue& valueAt(Board* board, Position position);
 
 // Main doesn't need a split declaration, because it's not supposed
 // to be called from anywhere else.
@@ -141,7 +142,7 @@ int main()
                         }
                     }
 
-                    CellValue selectedValue = board.elements[selectedPosition.y][selectedPosition.x];
+                    CellValue selectedValue = valueAt(&board, selectedPosition);
                     if (selectedValue != CellValue::empty)
                     {
                         std::cout
@@ -173,7 +174,8 @@ int main()
         assert(!checkIsInvalidPosition(selectedPosition));
 
 		// Make the move.
-        board.elements[selectedPosition.y][selectedPosition.x] = playerValue;
+        // We've returned a reference, so we can assign without dereferencing the pointer.
+		valueAt(&board, selectedPosition) = playerValue;
 
 		// Print out the updated game state.
 		printGameState(&board);
@@ -281,6 +283,14 @@ Position getFirstEmptyPosition(Board* board)
     {
         for (int x = 0; x < BOARD_DIMENSION; x++)
         {
+			// Can also call it like this:
+			//
+			// if (valueAt(board, { x, y }) == CellValue::empty)
+			//
+			// This creates a position with x and y
+			// (it knows it needs to create a Position and not anything else,
+			// because it has the information on the function parameter types)
+
             if (board->elements[y][x] == CellValue::empty)
             {
                 Position p = { };
@@ -308,14 +318,14 @@ bool checkRowOrColumnCombination(
 	// It doesn't read from that memory, it writes to it.
 	*changingValue = 0;
 
-    CellValue valueToCheck = board->elements[position.y][position.x];
+    CellValue valueToCheck = valueAt(board, position);
     for (*changingValue = 1; *changingValue < BOARD_DIMENSION;
 		// NOTE:
 		// We increment the value in the memory, not the pointer.
 		// So this increments either x or y by 1.
 		(*changingValue)++)
     {
-        if (board->elements[position.y][position.x] != valueToCheck)
+        if (valueAt(board, position) != valueToCheck)
             return false;
     }
     return true;
@@ -353,13 +363,13 @@ bool checkDiagonalCombination(Board* board, Diagonal diagonal)
     }
 
 
-    CellValue valueToCheck = board->elements[position.y][position.x];
+    CellValue valueToCheck = valueAt(board, position);
     position.x += xDirection;
     position.y += 1;
 
     for (int i = 1; i < BOARD_DIMENSION; i++)
     {
-        CellValue value = board->elements[position.y][position.x];
+        CellValue value = valueAt(board, position);
         if (value != valueToCheck)
             return false;
 
@@ -464,4 +474,13 @@ void printGameState(Board* board)
         }
         std::cout << std::endl;
     }
+}
+
+// We return a reference (which is a pointer in disguise),
+// in order to be able to easily set the value.
+CellValue& valueAt(Board* board, Position position)
+{
+	// Note, than even though we return the address of the cell here,
+	// we don't need to use the & (it's done implicitly when converting to a reference).
+    return board->elements[position.y][position.x];
 }
