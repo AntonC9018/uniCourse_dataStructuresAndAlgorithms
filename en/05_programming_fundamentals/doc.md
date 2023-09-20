@@ -605,3 +605,194 @@ The [example 3](./memory_example_3) shows how the different kinds of memory work
 *insert explanation here*, sigh.
 
 The [example 4](./memory_example_4) shows how recursion works.
+
+
+## Structs
+
+Check out [memory_example_2](./memory_example_2) for an example of how structs are laid out in memory.
+
+A struct is a means to group together multiple variables.
+Formally, a struct is a custom datatype that a programmer can define.
+Variables declared in a struct are called fields.
+
+Below, we declare a struct that groups together two int variables, named `a` and `b`.
+
+```cpp
+struct TwoInts
+{
+    int a;
+    int b;
+};
+```
+
+And below we declare a struct "Car" to hold data about a car.
+
+```cpp
+struct Car
+{
+    Color color; // another custom struct, defined elsewhere
+    int numberOfDoors; // an int
+    int wheelLastChangedYear[4]; // an array of 4 ints
+};
+```
+
+### Usage and the field access operator
+
+To use a struct, you need to declare a variable of that type.
+You can then access the fields of the struct by using the `.` operator.
+
+```cpp
+struct Point
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    Point point;
+    point.x = 10;
+    point.y = 20;
+    
+    // 10 + 20 = 30
+    int a = point.x + point.y;
+    
+    return 0;
+}
+```
+
+The struct as a whole has the name `point`, and the variables within 
+have the names `point.x` and `point.y` (their name in the declaration, prefixed with `point.`).
+Think of the operator `.` as reaching into the memory of the whole point,
+and grabbing the variable you want.
+
+
+### Copying structs
+
+The same way that you can have multiple variables of the same type,
+you can have multiple variables of the same type, e.g. `Point`.
+
+```cpp
+struct Point
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    Point point1;
+    point1.x = 10;
+    point1.y = 20;
+    
+    Point point2;
+    point2.x = 30;
+    point2.y = 40;
+    
+    // 10 + 20 = 30
+    int a = point1.x + point1.y;
+    // 30 + 40 = 70
+    int b = point2.x + point2.y;
+    
+    return 0;
+}
+```
+
+You can also copy the points fully, one to the other.
+This means copying all bytes, which will 
+set the variables within one to their values within the other.
+
+```cpp
+struct Point
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    Point point1;
+    point1.x = 10;
+    point1.y = 20;
+    
+    Point point2;
+    point2.x = 30;
+    point2.y = 40;
+    
+    // Copy point1 into point2.
+    // sets point2.x to 10
+    // sets point2.y to 20
+    point2 = point1;
+    
+    // 10 + 20 = 30
+    int a = point1.x + point1.y;
+    // 10 + 20 = 30
+    int b = point2.x + point2.y;
+    
+    return 0;
+}
+```
+
+
+### Pointers to structs, and the `->` operator
+
+You can also have pointers to structs, 
+just like you can have pointers to any other type.
+
+You can use the `->` operator to dereference a pointer to a struct,
+and then access one of the fields.
+You can think of `->x` as "go to the address of the pointer, then grab the local `x` variable".
+
+```cpp
+struct Point
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    Point point;
+    point.x = 10;
+    point.y = 20;
+    
+    Point* pointerToPoint = &point;
+    pointerToPoint->x = 30;
+    
+    // 30 + 20 = 50
+    int a = point.x + point.y;
+    
+    return 0;
+}
+```
+
+### Arrays of structs
+
+You can also have arrays of structs.
+
+```cpp
+struct Point
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    Point points[3] = { };
+    points[0].x = 10;
+    points[1].x = 20;
+    points[2].y = 30;
+    
+    // 10 + 20 + 30 = 60
+    int a = points[0].x + points[1].x + points[2].y;
+    
+    return 0;
+}
+```
+
+
+### `sizeof`
+
+The [`sizeof`](https://en.cppreference.com/w/cpp/language/sizeof) operator returns the size of a type in bytes.
+It's useful for example when allocating memory with malloc.
