@@ -2,3 +2,5 @@
 *.pdb
 *.lib
 ~$*.xlsx
+.idea
+.vs
