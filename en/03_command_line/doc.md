@@ -83,15 +83,23 @@ That's what `PATH` is for.
 
 If you set `PATH` to `C:/Programs` (where `prog.exe` is located),
 then you'll be able to run `prog.exe` from anywhere by typing its file name (`prog.exe`).
-The operating system will try to find `prog.exe` in the current directory, 
-and if it can't, it will try and look into the directory specified in the `PATH` variable,
-aka the path `C:/Programs`, where it will find your program.
+The operating system will try to find `prog.exe` by looking into 
+the directory specified in the `PATH` variable, aka the path `C:/Programs`, where it will find your program.
+But if it didn't find it in `PATH`, it would then look for it in the current directory.
 
 `PATH` can be set to a *";"-delimited list of paths*,
 which means it can include multiple such directory paths in which it should look for programs,
 you just have to separate them with ";".
 For example, `C:/Folder1;C:/Folder2`.
 When you try to run a program, it will try and look into all of these in order, until it finds the program.
+
+It will always try and find the program in the order of paths in `PATH`, 
+and only then look in the current directory.
+However, there's a workaround which allows you to run a program from the current directory only.
+You do this by specifying the program's relative path from the current directory.
+In this case it will skip looking in the `PATH` directories and just look in the current directory.
+You do this by prepending the program name with `./`, for example `./prog.exe`
+(`.` means "the current directory").
 
 ### PATH Examples
 
@@ -107,9 +115,6 @@ running `prog2.exe` will run the program `prog2.exe` from `C:/Folder1` (because 
 running `prog3.exe` will run the program `prog3.exe` from `C:/Folder2`,
 and running `prog4.exe` will fail to find it.
 
-However, if the path was just `C:/Folder2`, and you stayed in `C:/Folder1` and tried to run `prog2.exe`,
-it would run the one in the folder that you're currently in, that is, `C:/Folder1/prog2.exe`,
-because the CWD always takes priority over `PATH`.
 
 ### Exporting environment variables
 
