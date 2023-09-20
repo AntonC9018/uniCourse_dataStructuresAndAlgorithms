@@ -53,4 +53,5 @@ int main()
 
 	StructWithArray memory;
 	memset(&memory, 0, sizeof(StructWithArray));
+	return 0;
 }

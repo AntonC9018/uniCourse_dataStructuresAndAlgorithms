@@ -135,6 +135,8 @@ like from user input, or just another function.
 
 ## Pointers
 
+> [Video](https://www.youtube.com/watch?v=2ybLD6_2gKM)
+
 If you understand memory addresses, you pretty much understand pointers.
 A pointer is a variable that stores a memory address.
 For an example of how a pointer is stored in memory, check out [memory_example_1](./memory_example_1).
@@ -291,6 +293,9 @@ int valueFromPointer = * (int*) pointer;
 
 ### Pointers into arrays and pointer arithmetic
 
+> [Video](https://youtu.be/q24-QTbKQS8). 
+> It's in C, so the syntax is a tiny bit different with structs.
+
 Just like with any other variable, you can point a pointer to an element in an array.
 
 ```cpp
@@ -347,8 +352,15 @@ ptrdiff_t negativeNumberOfItems = pointerToArray0 - pointerToArray2; // -2
 ```
 
 If you want to find out the difference in bytes between two pointers,
-you can cast them to `size_t` or to `ptrdiff_t` first.
+you can cast them to `std::byte*` or `size_t` or `ptrdiff_t` first.
 Also, you cannot subtract two `void*`, or pointers of different types, unless you cast them first.
+
+> The best way is probably `std::byte*`, because it won't cause any weirdness with signedness.
+> When subtracting a `size_t`, you have to be certain the left one is bigger,
+> and casting to `ptrdiff_t` loses one bit of information (the sign bit).
+> Subtracting types other than `std::byte*` for pointers very quickly gets into the territory of
+> "is overflow or underflow defined for this type, or is it undefined behavior?",
+> which it's better to just avoid.
 
 ```cpp
 int array[3] = { 1, 2, 3 };
@@ -358,11 +370,16 @@ int* pointerToArray2 = &array[2];
 size_t numberOfBytes = (size_t) pointerToArray2 - (size_t) pointerToArray0; // 8
 // or
 ptrdiff_t numberOfBytes = (ptrdiff_t) pointerToArray2 - (ptrdiff_t) pointerToArray0; // 8
+// or
+ptrdiff_t numberOfBytes = (std::byte*) pointerToArray2 - (std::byte*) pointerToArray0; // 8
 ```
 
 Adding two pointers is not allowed either 
 (it doesn't really make a whole lot sense why you'd do that, if you think about it).
 
+> Note that subtracting pointers is only allowed by the C++ standard 
+> if they point to elements in the same array / block of memory.
+> Otherwise it's undefined behavior (anything can happen, don't rely on it).
 
 ## Functions
 
@@ -402,6 +419,8 @@ int main()
     return 0;
 }
 ```
+
+> `return 0` indicates success, while returning any other value indicates a failure.
 
 ### Prototypes
 
@@ -463,7 +482,7 @@ void printHello()
 
 // Here's a procedure that takes in a pointer to an int,
 // and writes a value to it.
-// (affects the memory of the caller)
+// (affects memory of the caller)
 void writeValue(int* pointer)
 {
     *pointer = 10;
@@ -477,6 +496,112 @@ Functions are analogous to variables, in that they have a declaration and a defi
 However, unlike variables, functions are not initialized with garbage by default like variables,
 they are simply unusable as just a declaration, unless a definition is also provided somewhere in the program.
 
-```cpp
+For example, the following program will fail to compile with a linker error,
+due to `add` missing its definition.
 
+```cpp
+int add(int a, int b);
+
+int main()
+{
+    int c = add(1, 2);
+    return 0;
+}
 ```
+
+
+### Function definition
+
+A function definition is the actual implementation of the function.
+It is also called the body of the function.
+
+In the above example, if we defined the body of `add` (what instructions it should do),
+the program would compile and run correctly.
+
+```cpp
+// declaration
+int add(int a, int b);
+
+// definition
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int c = add(1, 2);
+    return 0;
+}
+```
+
+We can put the definition anywhere in the program.
+
+> As long as there's only one definition.
+> It may happen that you have multiple definitions of the same function,
+> in cases where you define the same function in multiple source files,
+> and then try to link them together into a single executable.
+> It will fail with a linker error, saying there's more than one definition.
+
+```cpp
+// declaration
+int add(int a, int b);
+
+int main()
+{
+    int c = add(1, 2);
+    return 0;
+}
+
+// definition
+// In this case, it's put after it's called in the file.
+int add(int a, int b)
+{
+    return a + b;
+}
+```
+
+The restriction is that the definition must come before the function is called.
+The following will *fail to compile*:
+
+```cpp
+int main()
+{
+    int c = add(1, 2);
+    return 0;
+}
+
+// declaration
+int add(int a, int b);
+```
+
+You can also combine the declaration with the definition, 
+analogous to the way you do it with variables:
+
+```cpp
+// declaration + definition
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int c = add(1, 2);
+    return 0;
+}
+```
+
+
+### The locals go on the stack
+
+*insert explanation here*, sigh.
+
+The [example 3](./memory_example_3) shows how the different kinds of memory work.
+
+
+### Recursion (function inception)
+
+*insert explanation here*, sigh.
+
+The [example 4](./memory_example_4) shows how recursion works.
