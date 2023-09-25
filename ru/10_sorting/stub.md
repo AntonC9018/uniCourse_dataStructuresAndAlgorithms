@@ -1,0 +1,8 @@
+- Bubble
+- Insertion
+- Selection
+- Merge
+- Quick
+- Heap
+- Radix (for those who are interested)
+- Shell (this was on the exam, so I assume it's needed?)
