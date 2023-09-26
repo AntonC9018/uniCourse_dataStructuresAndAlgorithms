@@ -6,13 +6,13 @@
 
 enum class CellValue
 {
-	empty = 0,
-	x = 1,
-	o = 2,
-	// NOTE:
-	// This is a non-standard thing that I do sometimes.
+    empty = 0,
+    x = 1,
+    o = 2,
+    // NOTE:
+    // This is a non-standard thing that I do sometimes.
     // You can define a standalone constant, or name this something different.
-	_count = 3,
+    _count = 3,
 };
 
 
@@ -26,12 +26,12 @@ struct Board
 #define COORDINATE_COUNT 2
 struct Position
 {
-	// Each coordinate has two names.
-	// x is the same as coordinates[0]
-	// y is the same as coordinates[1]
+    // Each coordinate has two names.
+    // x is the same as coordinates[0]
+    // y is the same as coordinates[1]
     // It is important to have both ways for generalizations.
-	// `union` means they refer to the same memory.
-	// In total, the size of this struct is 2 ints = 2 * 4 bytes = 8 bytes.
+    // `union` means they refer to the same memory.
+    // In total, the size of this struct is 2 ints = 2 * 4 bytes = 8 bytes.
     union
     {
         struct {
@@ -92,44 +92,44 @@ int main()
     // 2 - O
     Board board = {};
     int playerIndex = 0;
-	int playerCount = 2;
+    int playerCount = 2;
 
-	printGameState(&board);
+    printGameState(&board);
 
     // Game loop
     while (true)
     {
         CellValue playerValue = (CellValue)(playerIndex + 1);
-		assert(playerValue < CellValue::_count);
+        assert(playerValue < CellValue::_count);
 
         Position selectedPosition = INVALID_POSITION;
 
-		PlayerKind playerKind = playerIndex == 0
-			? PlayerKind::human
-			: PlayerKind::computer;
+        PlayerKind playerKind = playerIndex == 0
+            ? PlayerKind::human
+            : PlayerKind::computer;
 
         switch (playerKind)
         {
-			// Player turn.
+            // Player turn.
             case PlayerKind::human:
             {
                 while (true)
                 {
                     char playerSymbol = getSymbol(playerValue);
-					// Calling `cout << string` returns back the `cout` object itself.
-					// This is why we can chain multiple `<<` operators.
+                    // Calling `cout << string` returns back the `cout` object itself.
+                    // This is why we can chain multiple `<<` operators.
                     // The next calls will call `<<` on the `cout` object,
-					// returned from the previous `<<` call.
+                    // returned from the previous `<<` call.
                     std::cout
-						<< "Select position to put "
-						<< playerSymbol
-						<< ": "
-						<< std::endl;
+                        << "Select position to put "
+                        << playerSymbol
+                        << ": "
+                        << std::endl;
 
-					// NOTE:
-					// It's problematic to do these loops in C++ with enums.
-					// I actually don't know what the best way would be
-					// (trying to avoid casts as much as possible).
+                    // NOTE:
+                    // It's problematic to do these loops in C++ with enums.
+                    // I actually don't know what the best way would be
+                    // (trying to avoid casts as much as possible).
                     for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
                     {
                         int* coord = &selectedPosition.coordinates[coordIndex];
@@ -146,61 +146,61 @@ int main()
                     if (selectedValue != CellValue::empty)
                     {
                         std::cout
-							<< "Input position not empty!"
-                        	<< std::endl;
+                            << "Input position not empty!"
+                            << std::endl;
                         continue;
                     }
 
-					// Input selected.
-					break;
+                    // Input selected.
+                    break;
                 }
 
                 break;
             }
-			// Computer turn.
+            // Computer turn.
             case PlayerKind::computer:
             {
-				// Just find the first empty position (for now).
+                // Just find the first empty position (for now).
                 selectedPosition = getFirstEmptyPosition(&board);
                 break;
             }
-			default:
-			{
-				assert(false);
-				break;
+            default:
+            {
+                assert(false);
+                break;
             }
         }
 
         assert(!checkIsInvalidPosition(selectedPosition));
 
-		// Make the move.
+        // Make the move.
         // We've returned a reference, so we can assign without dereferencing the pointer.
-		valueAt(&board, selectedPosition) = playerValue;
+        valueAt(&board, selectedPosition) = playerValue;
 
-		// Print out the updated game state.
-		printGameState(&board);
+        // Print out the updated game state.
+        printGameState(&board);
 
         if (checkIfPlayerWonByMakingMove(&board, selectedPosition))
         {
-			std::cout
-				<< "Player "
-			    << playerIndex
-			    << " won."
-			    << std::endl;
+            std::cout
+                << "Player "
+                << playerIndex
+                << " won."
+                << std::endl;
 
-			// Stop the game loop.
-			break;
+            // Stop the game loop.
+            break;
         }
 
-		// Also need to check if there are no empty spaces on the board.
-		if (checkBoardFullyOccupied(&board))
-		{
-			std::cout << "It's a tie...";
-			break;
-		}
+        // Also need to check if there are no empty spaces on the board.
+        if (checkBoardFullyOccupied(&board))
+        {
+            std::cout << "It's a tie...";
+            break;
+        }
 
-		playerIndex += 1;
-		playerIndex %= playerCount;
+        playerIndex += 1;
+        playerIndex %= playerCount;
     }
 
     return 1;
@@ -212,18 +212,18 @@ int main()
 // (although the compiler will likely do that on its own with a switch).
 char getSymbol(CellValue value)
 {
-	switch (value)
+    switch (value)
     {
-		case CellValue::empty:
-			return '_';
-		case CellValue::x:
-			return 'X';
-		case CellValue::o:
-			return 'O';
-		default:
+        case CellValue::empty:
+            return '_';
+        case CellValue::x:
+            return 'X';
+        case CellValue::o:
+            return 'O';
+        default:
         {
             assert(false);
-			return '\0';
+            return '\0';
         }
     }
 }
@@ -232,9 +232,9 @@ char getSymbol(CellValue value)
 // It's better than if-else, and (might be) better than a switch.
 const char axisName[COORDINATE_COUNT] = {
     'x',
-	'y',
-	// This better syntax is not available in C++ by default (needs a C99 extension).
-	// [(int) CoordinateAxisIndex::x] = 'x', // element 0 = 'x'
+    'y',
+    // This better syntax is not available in C++ by default (needs a C99 extension).
+    // [(int) CoordinateAxisIndex::x] = 'x', // element 0 = 'x'
     // [(int) CoordinateAxisIndex::y] = 'y', // element 1 = 'y'
 };
 char getAxisName(CoordinateAxisIndex axisIndex)
@@ -264,7 +264,7 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
     else if (*outCoordinate >= BOARD_DIMENSION)
     {
         std::cout
-			<< "Position must be less than "
+            << "Position must be less than "
             << BOARD_DIMENSION
             << "."
             << std::endl;
@@ -276,7 +276,7 @@ bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
 
 bool checkIsInvalidPosition(Position p)
 {
-	return p.x < 0 || p.y < 0;
+    return p.x < 0 || p.y < 0;
 }
 
 Position getFirstEmptyPosition(Board* board)
@@ -285,13 +285,13 @@ Position getFirstEmptyPosition(Board* board)
     {
         for (int x = 0; x < BOARD_DIMENSION; x++)
         {
-			// Can also call it like this:
-			//
-			// if (valueAt(board, { x, y }) == CellValue::empty)
-			//
-			// This creates a position with x and y
-			// (it knows it needs to create a Position and not anything else,
-			// because it has the information on the function parameter types)
+            // Can also call it like this:
+            //
+            // if (valueAt(board, { x, y }) == CellValue::empty)
+            //
+            // This creates a position with x and y
+            // (it knows it needs to create a Position and not anything else,
+            // because it has the information on the function parameter types)
 
             if (board->elements[y][x] == CellValue::empty)
             {
@@ -310,22 +310,22 @@ Position getFirstEmptyPosition(Board* board)
 }
 
 bool checkRowOrColumnCombination(
-	Board* board,
-	Position position,
-	CoordinateAxisIndex coordinateIndexToVary)
+    Board* board,
+    Position position,
+    CoordinateAxisIndex coordinateIndexToVary)
 {
-	int* changingValue = &position.coordinates[(int) coordinateIndexToVary];
+    int* changingValue = &position.coordinates[(int) coordinateIndexToVary];
 
-	// Here, the dereferencing operator also effectively converts it to a reference.
-	// It doesn't read from that memory, it writes to it.
-	*changingValue = 0;
+    // Here, the dereferencing operator also effectively converts it to a reference.
+    // It doesn't read from that memory, it writes to it.
+    *changingValue = 0;
 
     CellValue valueToCheck = valueAt(board, position);
     for (*changingValue = 1; *changingValue < BOARD_DIMENSION;
-		// NOTE:
-		// We increment the value in the memory, not the pointer.
-		// So this increments either x or y by 1.
-		(*changingValue)++)
+        // NOTE:
+        // We increment the value in the memory, not the pointer.
+        // So this increments either x or y by 1.
+        (*changingValue)++)
     {
         if (valueAt(board, position) != valueToCheck)
             return false;
@@ -336,32 +336,32 @@ bool checkRowOrColumnCombination(
 bool checkDiagonalCombination(Board* board, Diagonal diagonal)
 {
 #if false
-	// 0 _ _
-	// _ 0 _
-	// _ _ 0
+    // 0 _ _
+    // _ 0 _
+    // _ _ 0
     //
-	// _ _ 0
-	// _ 0 _
-	// 0 _ _
-	Position position;
-	int xDirection;
+    // _ _ 0
+    // _ 0 _
+    // 0 _ _
+    Position position;
+    int xDirection;
     if (diagonal == Diagonal::leftToRight)
-	{
-		position.x = 0;
-		position.y = 0;
-        // x increases each iteration
-		xDirection = 1;
-	}
-	else if (diagonal == Diagonal::rightToLeft)
     {
-		position.x = 2;
-		position.y = 0;
-		// x descreases each iteration
-		xDirection = -1;
+        position.x = 0;
+        position.y = 0;
+        // x increases each iteration
+        xDirection = 1;
+    }
+    else if (diagonal == Diagonal::rightToLeft)
+    {
+        position.x = 2;
+        position.y = 0;
+        // x descreases each iteration
+        xDirection = -1;
     }
     else
-	{
-		assert(false);
+    {
+        assert(false);
     }
 
 
@@ -381,51 +381,51 @@ bool checkDiagonalCombination(Board* board, Diagonal diagonal)
     return true;
 
 #elif true
-	// The code above really only makes sense if you have bigger boards.
-	// If you know the size will always be 3x3, you could (and honestly should)
-	// use the version below.
-	// The version above is just a generalized version of the one below.
-	// In this case the generalization isn't very useful, since it's hard to understand.
+    // The code above really only makes sense if you have bigger boards.
+    // If you know the size will always be 3x3, you could (and honestly should)
+    // use the version below.
+    // The version above is just a generalized version of the one below.
+    // In this case the generalization isn't very useful, since it's hard to understand.
     // Another implementation could be like this:
-	if (diagonal == Diagonal::leftToRight)
+    if (diagonal == Diagonal::leftToRight)
     {
-		CellValue v = board->elements[0][0];
-		if (v != board->elements[1][1])
-			return false;
-		if (v != board->elements[2][2])
-			return false;
-		return true;
+        CellValue v = board->elements[0][0];
+        if (v != board->elements[1][1])
+            return false;
+        if (v != board->elements[2][2])
+            return false;
+        return true;
     }
     else
-	{
-		CellValue v = board->elements[0][2];
-		if (v != board->elements[1][1])
-			return false;
-		if (v != board->elements[2][0])
-			return false;
-		return true;
-	}
+    {
+        CellValue v = board->elements[0][2];
+        if (v != board->elements[1][1])
+            return false;
+        if (v != board->elements[2][0])
+            return false;
+        return true;
+    }
 #else
-	// Another idea uses the fact that the array is linear at the end of the day.
-	// The next position in the diagonal is always the current position + the size of row + 1,
+    // Another idea uses the fact that the array is linear at the end of the day.
+    // The next position in the diagonal is always the current position + the size of row + 1,
     // since we have to travel to the next row, and then one more cell to the right of that.
-	// In the other diagonal, we have to go one cell to the left instead.
-	size_t index;
-	size_t stride;
-	if (diagonal == Diagonal::leftToRight)
+    // In the other diagonal, we have to go one cell to the left instead.
+    size_t index;
+    size_t stride;
+    if (diagonal == Diagonal::leftToRight)
     {
         index = 0;
         stride = BOARD_DIMENSION + 1;
     }
     else
     {
-		index = BOARD_DIMENSION - 1;
-		stride = BOARD_DIMENSION - 1;
+        index = BOARD_DIMENSION - 1;
+        stride = BOARD_DIMENSION - 1;
     }
 
-	CellValue* elementsAsLinearBuffer = (CellValue*) board->elements;
-	CellValue valueToCheck = elementsAsLinearBuffer[index];
-	for (int i = 1; i < BOARD_DIMENSION; i++)
+    CellValue* elementsAsLinearBuffer = (CellValue*) board->elements;
+    CellValue valueToCheck = elementsAsLinearBuffer[index];
+    for (int i = 1; i < BOARD_DIMENSION; i++)
     {
         index += stride;
         if (elementsAsLinearBuffer[index] != valueToCheck)
@@ -441,9 +441,9 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
     for (int coordinateIndex = 0; coordinateIndex < COORDINATE_COUNT; coordinateIndex++)
     {
         bool hasWon = checkRowOrColumnCombination(
-			board,
-			move,
-			(CoordinateAxisIndex) coordinateIndex);
+            board,
+            move,
+            (CoordinateAxisIndex) coordinateIndex);
         if (hasWon)
             return true;
     }
@@ -453,7 +453,7 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
     {
         bool hasWon = checkDiagonalCombination(board, Diagonal::leftToRight);
         if (hasWon)
-			return true;
+            return true;
     }
 
     // right to left diagonal
@@ -461,10 +461,10 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
     {
         bool hasWon = checkDiagonalCombination(board, Diagonal::rightToLeft);
         if (hasWon)
-			return true;
+            return true;
     }
 
-	return false;
+    return false;
 }
 
 // We know that `elements` is an inline fixed-size array, that is,
@@ -483,9 +483,9 @@ int checkBoardFullyOccupied(Board* board)
     return true;
 
 #if false
-	// Another idea is to just use an existing function for this.
-	Position p = getFirstEmptyPosition(board);
-	return checkIsInvalidPosition(p);
+    // Another idea is to just use an existing function for this.
+    Position p = getFirstEmptyPosition(board);
+    return checkIsInvalidPosition(p);
 #endif
 }
 
@@ -507,7 +507,7 @@ void printGameState(Board* board)
 // in order to be able to easily set the value.
 CellValue& valueAt(Board* board, Position position)
 {
-	// Note, than even though we return the address of the cell here,
-	// we don't need to use the & (it's done implicitly when converting to a reference).
+    // Note, than even though we return the address of the cell here,
+    // we don't need to use the & (it's done implicitly when converting to a reference).
     return board->elements[position.y][position.x];
 }

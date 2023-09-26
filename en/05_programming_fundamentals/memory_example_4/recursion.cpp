@@ -13,31 +13,31 @@
 
 int recurse(int recursionLevel)
 {
-	int nextRecursionLevel = recursionLevel + 1;
+    int nextRecursionLevel = recursionLevel + 1;
 
-	if (nextRecursionLevel < 3)
-	{
-		int result = recurse(nextRecursionLevel);
-		result += 1;
-		return result;
-	}
-	else
-	{
-		return 5;
-	}
+    if (nextRecursionLevel < 3)
+    {
+        int result = recurse(nextRecursionLevel);
+        result += 1;
+        return result;
+    }
+    else
+    {
+        return 5;
+    }
 }
 
 int main()
 {
-	int recursionLevel = 0;
-	int result = recurse(recursionLevel);
-	std::cout << result;
+    int recursionLevel = 0;
+    int result = recurse(recursionLevel);
+    std::cout << result;
 
-	// Note that at this point, the memory that's been used by recurse
-	// has been reclaimed, that is, if you call recurse again, it will use the same memory slots.
-	// So this does *exactly the same thing, on the exact same memory*.
-	result = recurse(recursionLevel);
-	return 0;
+    // Note that at this point, the memory that's been used by recurse
+    // has been reclaimed, that is, if you call recurse again, it will use the same memory slots.
+    // So this does *exactly the same thing, on the exact same memory*.
+    result = recurse(recursionLevel);
+    return 0;
 }
 
 /* The operations done here, in order (approximately):
