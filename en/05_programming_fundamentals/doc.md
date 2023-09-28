@@ -758,6 +758,7 @@ int main()
     
     Point* pointerToPoint = &point;
     pointerToPoint->x = 30;
+    // Equivalent to (*pointerToPoint).x = 30;
     
     // 30 + 20 = 50
     int a = point.x + point.y;

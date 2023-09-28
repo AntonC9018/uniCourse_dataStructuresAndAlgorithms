@@ -42,7 +42,7 @@ int main()
     std::cout << s.arr[0] << std::endl;
     std::cout << s1.arr[0] << std::endl;
 
-    StructWithArray structArray[2] = { 0 };
+    StructWithArray structArray[2] = { };
     structArray[0].arr[3] = 77;
     structArray[1].someNumber = &structArray[0].arr[3];
 
