@@ -6,20 +6,21 @@ int* heapMemory()
     std::cout << "a: " << *a << std::endl;
     // assign to memory at address stored in a = deference a + 1
     *a = *a + 1;
+    return a;
 }
 
 int main()
 {
-    int* a = stackMemory(); // prints 0
-    int* b = stackMemory(); // prints 0
+    int* a = heapMemory(); // prints 0
+    int* b = heapMemory(); // prints 0
 
     // The addresses won't be equal, every new invocation gets a new `a`.
     bool areAddressesEqual = ((size_t) a == (size_t) b);
-    std::cout << "are addresses equal: " << areValuesEqual ? "yes" : "no" << std::endl;
+    std::cout << "are addresses equal: " << (areAddressesEqual ? "yes" : "no") << std::endl;
 
     // The values will!
     bool areValuesEqual = (*a == *b);
-    std::cout << "are values equal: " << areValuesEqual ? "yes" : "no" << std::endl;
+    std::cout << "are values equal: " << (areValuesEqual ? "yes" : "no") << std::endl;
 
     // And it's legal to use them again, even outside `heapMemory`'s stack frame.
     *a = 5;

@@ -11,8 +11,8 @@ void staticMemory()
 
 int main()
 {
-    stackMemory(); // prints 0
-    stackMemory(); // prints 1
-    stackMemory(); // prints 2
+    staticMemory(); // prints 0
+    staticMemory(); // prints 1
+    staticMemory(); // prints 2
     return 0;
 }
