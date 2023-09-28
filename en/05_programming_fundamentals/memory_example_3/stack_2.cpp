@@ -1,4 +1,4 @@
-#inlcude <stdlib.h>
+#include <stdlib.h>
 #include <iostream>
 
 // This program was designed to show you how the stack works.

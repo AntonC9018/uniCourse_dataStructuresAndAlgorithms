@@ -10,20 +10,21 @@ int* heapMemory()
     int* a = (int*) memory;
     std::cout << "a: " << *a << std::endl;
     *a = *a + 1;
+    return a;
 }
 
 int main()
 {
-    int* a = stackMemory(); // prints 0
-    int* b = stackMemory(); // prints 0
+    int* a = heapMemory(); // prints 0
+    int* b = heapMemory(); // prints 0
 
     // no
     bool areAddressesEqual = ((size_t) a == (size_t) b);
-    std::cout << "are addresses equal: " << areValuesEqual ? "yes" : "no" << std::endl;
+    std::cout << "are addresses equal: " << (areAddressesEqual ? "yes" : "no") << std::endl;
 
     // yes
     bool areValuesEqual = (*a == *b);
-    std::cout << "are values equal: " << areValuesEqual ? "yes" : "no" << std::endl;
+    std::cout << "are values equal: " << (areValuesEqual ? "yes" : "no") << std::endl;
 
     *a = 5;
     *b = 10;
