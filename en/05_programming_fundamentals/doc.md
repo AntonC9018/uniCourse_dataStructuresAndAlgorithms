@@ -561,7 +561,7 @@ int add(int a, int b)
 }
 ```
 
-The restriction is that the definition must come before the function is called.
+The restriction is that the declaration must come before the function is called.
 The following will *fail to compile*:
 
 ```cpp
