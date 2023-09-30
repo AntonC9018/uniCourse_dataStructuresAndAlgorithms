@@ -669,8 +669,8 @@ and grabbing the variable you want.
 
 ### Copying structs
 
-The same way that you can have multiple variables of the same type,
-you can have multiple variables of the same type, e.g. `Point`.
+The same way that you can have multiple variables of the same primitive type,
+you can have multiple variables of the same complex type, e.g. `Point`.
 
 ```cpp
 struct Point
