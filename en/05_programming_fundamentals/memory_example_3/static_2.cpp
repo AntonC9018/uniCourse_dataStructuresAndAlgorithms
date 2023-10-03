@@ -1,6 +1,5 @@
 #include <iostream>
 
-// globals are implicitly static.
 int a = 0;
 
 void staticMemory()

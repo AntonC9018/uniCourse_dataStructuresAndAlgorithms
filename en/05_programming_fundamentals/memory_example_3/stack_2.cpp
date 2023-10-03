@@ -18,17 +18,17 @@ int* stackMemory1()
 
 int* stackMemory2()
 {
-    int a = 2;
-    return &a;
+    int b = 2;
+    return &b;
 }
 
 int main()
 {
     int* b = stackMemory1();
-    int a1 = *b;
+    int a1 = *b; // 1
     int* c = stackMemory2();
-    int a2 = *c;
-    int a3 = *b;
+    int a2 = *c; // 2
+    int a3 = *b; // 2
 
     std::cout << a1 << std::endl; // prints 1
     std::cout << a2 << std::endl; // prints 2
