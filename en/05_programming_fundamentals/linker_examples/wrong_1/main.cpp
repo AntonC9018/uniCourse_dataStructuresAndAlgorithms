@@ -1,9 +1,12 @@
-
-#include "f.h"
+int f(int a);
 
 int main()
 {
     f(1);
-    b(2.0f);
     return 0;
+}
+
+int f(int a)
+{
+
 }

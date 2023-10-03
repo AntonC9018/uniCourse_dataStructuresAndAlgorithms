@@ -15,16 +15,16 @@ int recurse(int recursionLevel)
 {
     int nextRecursionLevel = recursionLevel + 1;
 
-    // if (nextRecursionLevel < 3)
+    if (nextRecursionLevel < 3)
     {
         int result = recurse(nextRecursionLevel);
         result += 1;
         return result;
     }
-    // else
-    // {
-    //     return 5;
-    // }
+    else
+    {
+        return 5;
+    }
 }
 
 int main()

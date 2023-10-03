@@ -1,3 +1,5 @@
+// Definitions of the functions visible to the linker.
+
 int f(int a)
 {
     return a;

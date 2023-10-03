@@ -10,6 +10,8 @@
 
 // Also note, that this produces a warning on Zig C++ (Clang), which is expected.
 
+// See the excel file for a visualization of the stack.
+
 int* stackMemory1()
 {
     int a = 1;

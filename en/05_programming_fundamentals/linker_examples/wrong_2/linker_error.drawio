@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net" modified="2023-10-03T11:54:29.106Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="J2x0pSrP_2rul-TGtlRC" version="21.7.4" type="device">
+  <diagram name="Page-1" id="mz0K3IEcQmQy3VDoT_oy">
+    <mxGraphModel dx="988" dy="593" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-4" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="30" y="10" width="310" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-2" value="" style="whiteSpace=wrap;html=1;aspect=fixed;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="kUE7Anu8ZaF_NScLpF4x-4" vertex="1">
+          <mxGeometry width="310" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-3" value="Compilation unit of main.cpp" style="rounded=0;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="kUE7Anu8ZaF_NScLpF4x-4" vertex="1">
+          <mxGeometry x="55" y="20" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-5" value="Definitions:&lt;br&gt;&lt;b&gt;int main()&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="kUE7Anu8ZaF_NScLpF4x-4" vertex="1">
+          <mxGeometry x="55" y="100" width="205" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-6" value="References to external functions (declared, but not defined):&lt;br&gt;&lt;b&gt;int f(int)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="kUE7Anu8ZaF_NScLpF4x-4" vertex="1">
+          <mxGeometry x="55" y="170" width="205" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-18" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="90" y="343.7" width="263.35" height="176.3" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-12" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="kUE7Anu8ZaF_NScLpF4x-18" vertex="1">
+          <mxGeometry y="6.300000000000011" width="170" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-16" value="&lt;b&gt;f&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="kUE7Anu8ZaF_NScLpF4x-18" vertex="1">
+          <mxGeometry x="37.5" y="36.30000000000001" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-44" value="&lt;b&gt;main&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="kUE7Anu8ZaF_NScLpF4x-18" vertex="1">
+          <mxGeometry x="45" y="96.3" width="80" height="33.7" as="geometry" />
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-45" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="kUE7Anu8ZaF_NScLpF4x-18" target="kUE7Anu8ZaF_NScLpF4x-44" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="116.30000000000001" as="sourcePoint" />
+            <mxPoint x="190" y="156.3" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Eg9tf3B3EHdBYtTlRTTR-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="kUE7Anu8ZaF_NScLpF4x-18" source="kUE7Anu8ZaF_NScLpF4x-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="26.30000000000001" as="sourcePoint" />
+            <mxPoint x="270" y="16.30000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-23" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="kUE7Anu8ZaF_NScLpF4x-2" target="kUE7Anu8ZaF_NScLpF4x-12" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="400" as="sourcePoint" />
+            <mxPoint x="440" y="350" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kUE7Anu8ZaF_NScLpF4x-30" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="kUE7Anu8ZaF_NScLpF4x-12" target="Eg9tf3B3EHdBYtTlRTTR-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="550" as="sourcePoint" />
+            <mxPoint x="296.6116523516814" y="546.6116523516814" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Eg9tf3B3EHdBYtTlRTTR-2" value="Can&#39;t find an &lt;b&gt;f &lt;/b&gt;in any of the compilation units.&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -22,7 +22,7 @@ void b()
 - Allocate space for the next instruction on the stack.
 - Save address of `return;` on the stack.
 - Jump to first instruction of `a`.
-- Return (to address of `return 0;` in main.
+- Return (to address of `return 0;` in main).
 */
 
 int main()
