@@ -2,7 +2,7 @@
 
 int* heapMemory()
 {
-    int* a = new int(0);
+    int* a = new int{};
     std::cout << "a: " << *a << std::endl;
     // assign to memory at address stored in a = deference a + 1
     *a = *a + 1;

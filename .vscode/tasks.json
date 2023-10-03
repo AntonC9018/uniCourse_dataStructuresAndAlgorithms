@@ -10,7 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileBasenameNoExtension}.exe",
-                "-Werror"
+                "-Werror",
             ],
             "options": {
                 "cwd": "${fileDirname}"
