@@ -42,7 +42,7 @@ struct Position
     };
 };
 
-const Position INVALID_POSITION = { -1, -1 };
+inline const Position INVALID_POSITION = { -1, -1 };
 
 enum class Diagonal
 {
