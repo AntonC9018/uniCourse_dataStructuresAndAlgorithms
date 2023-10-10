@@ -1,8 +1,11 @@
+**IMPORTANT!**
+
+**This topic is only required for those who want to use standard containers
+(`std::vector`, `std::unordered_map`) and `std::string`, and those who have been
+explicitly told to study this or just want to learn more.**
+
 This topic is an extension of the previous topic of programming fundamentals, focusing
 on RAII, move semantics, some OOP elements and other C++ features.
-It is only required for those who want to use standard containers
-(`std::vector`, `std::unordered_map`) and `std::string`, and those who have been
-explicitly told to study this or just want to learn more.
 
 Concepts covered:
 - References (`&`)
@@ -10,6 +13,7 @@ Concepts covered:
 - `static` class members
 - Scopes, destructors
 - Ownership of memory -- the idea of RAII
+- `std::unique_ptr` and `std::shared_ptr`
 - Custom `std::vector` implementation with RAII
 - `const` parameters and `const` methods
 - Constructors, copy constructors
