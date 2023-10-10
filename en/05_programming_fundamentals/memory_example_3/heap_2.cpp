@@ -8,6 +8,7 @@ int* heapMemory()
 {
     void* memory = malloc(sizeof(int));
     int* a = (int*) memory;
+    *a = 0;
     std::cout << "a: " << *a << std::endl;
     *a = *a + 1;
     return a;
