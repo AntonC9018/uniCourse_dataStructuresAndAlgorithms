@@ -797,3 +797,431 @@ int main()
 
 The [`sizeof`](https://en.cppreference.com/w/cpp/language/sizeof) operator returns the size of a type in bytes.
 It's useful for example when allocating memory with malloc.
+
+
+## Linker and more on functions
+
+### Compiler phases in short
+
+Compiler is the program that can read the source code and produce an executable file with
+machine instructions, which can be executed directly by the processor.
+
+The process of compilation is split up into a few phases:
+
+- Preprocessing, where the directives are expanded. 
+  For examples, `#include "some_file.h"` is replaced with the contents 
+  of `some_file.h` at this initial phase.
+
+- Reading the source files by the compiler and the output of object files.
+  Object files are the result of compiling a single `.cpp` source file after preprocessing 
+  (also called a compilation unit).
+  Object files contain the instructions for function *defined* in that file, information about
+  which functions and global variables are defined, and which are only declared but not defined.
+  
+- The last phase is the linking phase. 
+  Either a separate program or a subprogram included in the compiler, called the **linker**,
+  takes all the object files and links them together into a single executable file.
+
+### The function of the linker
+
+The function of the linker is to *resolve references to functions and variables in between different compilation units*.
+For example if we have a file `main.cpp` which declares and function and calls it:
+
+```cpp
+// main.cpp
+int f(int a);
+
+int main()
+{
+    int b = f(10);
+    return 0;
+}
+```
+
+And another file which provides the definition (the body) for `f`:
+```cpp
+// f.cpp
+int f(int a)
+{
+    return a + 1;
+}
+```
+
+It is the job of the linker to:
+- Identify that `main.cpp` wants to call a function named `f`, which it doesn't have the definition for;
+- Identify that `f.cpp` provides the definition for a function named `f`;
+- Realize that it needs to *link* the definition from `f.cpp` to the declaration in `main.cpp`;
+- Link the function definition from `f.cpp` to the function call in `main.cpp`;
+- Produce an executable file that contains the instructions for `main.cpp` and `f.cpp` together.
+
+> For a visual diagram of what's happening here, see the first example in [linker_examples](./linker_examples). 
+> Be sure to read the readme in that folder as well.
+
+Consider a broader picture of what happens when you compile a program: suppose you run the command
+`zig c++ main.cpp f.cpp`, which will:
+- Compile `main.cpp` separately getting the object file for it;
+- Compile `f.cpp` separately getting the object file for it;
+- Execute the linker on the two object files, producing an executable output file.
+
+Also, if you want to view the intermediate object files, you can force zig to only compile them,
+and then link them into an executable manually as a separate command:
+```
+# Compile main.cpp into main.o
+zig c++ -c main.cpp -o main.o
+
+# Compile f.cpp into f.o
+zig c++ -c f.cpp -o f.o
+
+# Link main.o and f.o into an executable
+zig c++ main.o f.o -o main.exe
+
+# Run the executable
+.\main.exe
+```
+
+### `extern`
+
+Variable declarations, as opposed to functions, are also definitions.
+`extern` forces a variable declaration to stop being a definition.
+
+In the context of the linker, being a global/non-static definition means 
+that the function or the variable can be linked to from other files.
+So `extern` basically makes the variable be "imported" from somewhere in the other file,
+rather than defined in the current file.
+
+Since function declarations are already not definitions, `extern` for these is redundant,
+which is to say, it does nothing.
+
+> See the 2nd example in [linker_examples](./linker_examples).
+
+### `static` functions
+
+`static` means that the function does not participate in linking.
+This effectively means it can only be used in the compilation unit where it was defined.
+
+> See the 4th example in [linker_examples](./linker_examples).
+
+Two different static functions may be defined in multiple compilation units,
+in which case all of them will end up in the executable, and they will all be treated
+independently.
+
+
+### `inline` functions
+
+`inline` means that the instructions of the functions are going to be *inlined*.
+Inlining means they are going to be expanded in place, instead of being called as a function.
+
+This is similar to a macro, the difference being that macros are resolved by the preprocessor at textual level,
+which inline functions are just regular functions that are expanded at instruction level.
+So in case of macros, the text of a macro will be placed directly where it was used,
+but with inline functions, it will be the instructions of the function instead.
+
+Inline functions don't participate in linking either. 
+Their difference from static functions is that they don't end up in the executable as regular functions.
+
+> `inline` is technically a hint to the compiler, so it may or may not inline the function.
+> This means, technically, it may still end up in the executable.
+
+> See the 3rd example in [linker_examples](./linker_examples).
+
+
+### Functions have addresses
+
+You can think of the executable file as a sequence of instructions,
+where each instruction has an address, so just like regular memory you already understand.
+The only difference being that the memory slots cannot be changed (are read only) and
+serve a different purpose (store the instructions, letting the processor execute them).
+
+Functions, just like variables, are just names for certain addresses in the executable file.
+For example, a function like this:
+```cpp
+void f()
+{
+    int a;
+    a = 5;
+    a = a + 10;
+    return;
+}
+```
+will literally look like each individual line as machine instructions written one after the other
+in the executable file, with the first instructions (allocating some space for the local variable)
+as the first instruction, and `return;` as the last instruction.
+
+There is a couple of special instructions when it comes to functions:
+- *Jumping* to an address to continue execution. This is in essence equivalent to calling a function:
+  the processor sees this jump instruction, and realizes that it should continue executing the
+  instructions starting at the address it's jumping to, which can be the first address of the function.
+- Storing the address of the next instruction on the stack (local memory, explained later).
+- *Returning* from a function, which is in essence equivalent to jumping 
+  to the address stored on the stack to continue executing from there.
+
+An example won't hurt:
+```cpp
+void f()
+{
+    int a;
+    a = 5;
+    a = a + 10;
+    return;
+}
+
+void g()
+{
+    f();
+    return;
+}
+```
+
+Which will compile to something like:
+
+| Address | Instruction                                                                                    |
+|---------|------------------------------------------------------------------------------------------------|
+| 100     | Allocate space for `a` on the stack                                                            |
+| 101     | Store 5 in `a`                                                                                 |
+| 102     | Add 10 to `a`                                                                                  |
+| 103     | Return: read the address stored below `a`, jump to it                                          |
+| 104     | Store the address 106 on the stack                                                             |
+| 105     | Jump to address 100                                                                            |
+| 106     | Return: read the address on the stack (saved by the function that could call this), jump to it |
+
+The addresses 100-103 correspond to `f`, and 104-106 correspond to `g`.
+
+> See the example in [function example](./function_example_1).
+
+
+### The stack
+
+As mentioned, the stack is used by functions to store local variables and the return addresses
+(among other things, like the arguments).
+The stack is a relatively large piece of memory that's available to the program,
+which has a fixed size and is allocated to the program when it starts.
+
+The stack is used to allocate temporary space for things like local variables.
+
+```cpp
+void f()
+{
+    int a = 5;
+    int b = 10;
+    // return;
+}
+
+void g()
+{
+    int a = 15;
+    f();
+    // return;
+}
+```
+
+The stack will look something like this, when we call `g`:
+
+| Address | Variable                | Value |
+|---------|-------------------------|-------|
+| 100     | a (from g)              | 15    |
+| 104     | address of return; of g | 69420 |
+| 112     | a (from f)              | 5     |
+| 114     | b (from f)              | 10    |
+
+Note that when `f` returns, continuing the execution of `g`, the stack will look the same,
+except for the fact that the local variables of `f` will be effectively forgotten,
+even though their values will still remain in memory.
+So to `g` the stack will look like this:
+
+| Address | Variable   | Value |
+|---------|------------|-------|
+| 100     | a (from g) | 15    |
+| 104     | ?????????? | 69420 |
+| 112     | ?????????? | 5     |
+| 114     | ?????????? | 10    |
+
+Meaning that the old values are still there, they just became meaningless without the 
+variable names, so we might as well call them just garbage data.
+
+Now supposed we had a program like this:
+
+```cpp
+void f1()
+{
+    int a = 5;
+    int b = 10;
+    // return;
+}
+
+void f2()
+{
+    int a = 8;
+    int b = 9;
+    // return;
+}
+
+void g()
+{
+    int a = 15;
+    f1();
+    f2();
+    // return;
+}
+```
+
+Let me show you how the stack will look at each point in time:
+
+1. When we call `g`, before calling `f1`:
+
+| Address | Variable   | Value |
+|---------|------------|-------|
+| 100     | a (from g) | 15    |
+| 104     |            | ???   |
+| 108     |            | ???   |
+| ...     | ...        | ...   |
+
+2. When we're at `return;` of `f1`:
+
+| Address | Variable                      | Value |
+|---------|-------------------------------|-------|
+| 100     | a (from g)                    | 15    |
+| 104     | the address of `f2();` in `g` | 69420 |
+| 112     | a (from f1)                   | 5     |
+| 116     | a (from f2)                   | 10    |
+| ...     | ...                           | ...   |
+
+3. Back in `g`, after `f1` returned, before calling `f2`:
+
+| Address | Variable   | Value |
+|---------|------------|-------|
+| 100     | a (from g) | 15    |
+| 104     | ???????    | 69420 |
+| 112     | ???????    | 5     |
+| 116     | ???????    | 10    |
+| ...     | ...        | ...   |
+
+4. When we're at `return;` of `f2`. Note that it got the same memory for the local variables,
+   overwriting the memory that `f1` had used:
+
+| Address | Variable                        | Value |
+|---------|---------------------------------|-------|
+| 100     | a (from g)                      | 15    |
+| 104     | the address of `return;` in `g` | 69420 |
+| 112     | a (from f2)                     | 8     |
+| 116     | a (from f1)                     | 9     |
+| ...     | ...                             | ...   |
+
+5. Back in `g`, after `f2` returned:
+
+| Address | Variable   | Value |
+|---------|------------|-------|
+| 100     | a (from g) | 15    |
+| 104     | ???????    | 69420 |
+| 112     | ???????    | 8     |
+| 116     | ???????    | 9     |
+| ...     | ...        | ...   |
+
+> This demonstration is conceptual and should not be relied on: the compiler has the full freedom
+> to choose how it should lay out your locals and if it needs to do that at all. 
+
+> See the [stack example 2](./memory_example_3/stack_2.cpp) for a more involved example
+
+### Recursion
+
+Recursion is when a function calls itself, either directly or indirectly.
+If you understand the stack and how functions get called, this should be easy to understand.
+
+```cpp
+void f(int depth)
+{
+    if (depth == 2)
+        return;
+
+    f(depth + 1);
+}
+
+int main()
+{
+    f(0);
+    return 0;
+}
+```
+
+The function `f` has no local, but it has the parameter `depth`, which
+may get space on the stack in place of locals (let's assume it works just like a local for the
+sake of this demonstration).
+
+The function `f` will return prematurely when `depth` is 2.
+Each time `f` calls itself, we pass it larger `depth` values.
+
+If we write out the instructions, it would like kind of like this:
+
+| Address      | Operation      | Instruction                                                                     |
+|--------------|----------------|---------------------------------------------------------------------------------|
+| 69420 (f)    | `_(int depth)` | Read the local `depth`                                                          |
+| 69421        | `depth < 2`    | Compare `depth` to 2                                                            |
+| 69422        | `if (_)`       | If `depth` was not equal in the previous comparison, jump to address 104        |
+| 69423        | `return;`      | Return: read the address stored below `depth`, jump to it                       |
+| 69424        |                | Put the address 69427 on the stack                                              |
+| 69425        | `_(depth + 1)` | Put the value of `depth + 1` on the stack (local variable `depth` of next call) |
+| 69426        | `f(_)`         | Jump to address 69420                                                           |
+| 69427        | `return;`      | Return: read the address stored below `depth`, jump to it                       |
+| 69428 (main) |                | Put the address 69431 on the stack                                              |
+| 69429        | `_(0)`         | Put the value 0 on the stack (local variable `depth` of first call)             |
+| 69430        | `f(_)`         | Jump to address 69420                                                           |
+| 69431        | `return 0;`    | Return: read the address, jump to it                                            |
+
+And the stack would look like this (I show the final state rather than the whole progression here):
+
+| Address | Variable            | Value |
+|---------|---------------------|-------|
+| 100     | address (in `main`) | 69431 |
+| 108     | `depth` of `f(0)`   | 0     |
+| 112     | address (in `f(0)`) | 69427 |
+| 120     | `depth` of `f(1)`   | 1     |
+| 124     | address (in `f(1)`) | 69427 |
+| 132     | `depth` of `f(2)`   | 2     |
+
+So each function *gets its own copy of the local variables*.
+This is absolutely crucial to realize.
+
+> See [memory example 4](./memory_example_4) for a similar example (that one ignores the return addresses though).
+
+
+### Function pointers
+
+Just like you can have pointers to variables, you can have pointers to functions.
+This can allow you to call functions indirectly, just like you can write to memory indirectly with pointers.
+
+```cpp
+// Declare a function pointer type called SumFunctionType
+// that takes two ints and returns an int.
+// The syntax is the ugliest thing in the world,
+// which is why we do a typedef and just forget about it.
+typedef int (*SumFunctionType)(int, int);
+
+// Define the function.
+// Doesn't have to be a definition, can just as well be a declaration.
+int sum(int a, int b)
+{
+    return a + b;
+}
+
+int subtract(int a, int b)
+{
+    return a - b;
+}
+
+int main()
+{
+    // Take the address of `sum` and store it in a variable.
+    // The syntax is the same as with variables.
+    SumFunctionType funcPointer = &sum; 
+
+    // Call the function indirectly.
+    int s = funcPointer(5, 10); // 15
+
+    // Change the function pointer to point to a different function.
+    funcPointer = &subtract;
+
+    // Call the function indirectly.
+    int d = funcPointer(5, 10); // -5
+
+    return 0;
+}
+```
