@@ -1143,7 +1143,7 @@ int main()
 ```
 
 The function `f` has no local, but it has the parameter `depth`, which
-may get space on the stack in place of locals (let's assume it works just like a local for the
+may get space on the stack in place of locals (let's assume it works like a local for the
 sake of this demonstration).
 
 The function `f` will return prematurely when `depth` is 2.
