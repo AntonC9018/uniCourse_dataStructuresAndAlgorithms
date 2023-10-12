@@ -1016,12 +1016,12 @@ void g()
 
 The stack will look something like this, when we call `g`:
 
-| Address | Variable                | Value |
-|---------|-------------------------|-------|
-| 100     | a (from g)              | 15    |
-| 104     | address of return; of g | 69420 |
-| 112     | a (from f)              | 5     |
-| 114     | b (from f)              | 10    |
+| Address | Variable                  | Value |
+|---------|---------------------------|-------|
+| 100     | a (from g)                | 15    |
+| 104     | address of `return;` of g | 69420 |
+| 112     | a (from f)                | 5     |
+| 114     | b (from f)                | 10    |
 
 Note that when `f` returns, continuing the execution of `g`, the stack will look the same,
 except for the fact that the local variables of `f` will be effectively forgotten,
@@ -1101,7 +1101,7 @@ Let me show you how the stack will look at each point in time:
 | Address | Variable                        | Value |
 |---------|---------------------------------|-------|
 | 100     | a (from g)                      | 15    |
-| 104     | the address of `return;` in `g` | 69420 |
+| 104     | the address of `return;` in `g` | 69423 |
 | 112     | a (from f2)                     | 8     |
 | 116     | a (from f1)                     | 9     |
 | ...     | ...                             | ...   |
@@ -1111,7 +1111,7 @@ Let me show you how the stack will look at each point in time:
 | Address | Variable   | Value |
 |---------|------------|-------|
 | 100     | a (from g) | 15    |
-| 104     | ???????    | 69420 |
+| 104     | ???????    | 69423 |
 | 112     | ???????    | 8     |
 | 116     | ???????    | 9     |
 | ...     | ...        | ...   |
