@@ -1014,7 +1014,7 @@ void g()
 }
 ```
 
-The stack will look something like this, when we call `g`:
+The stack will look something like this, when we call `f` from `g`:
 
 | Address | Variable                  | Value |
 |---------|---------------------------|-------|
