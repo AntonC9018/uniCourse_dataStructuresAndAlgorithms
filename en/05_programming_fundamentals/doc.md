@@ -901,7 +901,7 @@ This effectively means it can only be used in the compilation unit where it was 
 
 > See the 4th example in [linker_examples](./linker_examples).
 
-Two different static functions may be defined in multiple compilation units,
+Two different static functions with the same name and parameters may be defined in multiple compilation units,
 in which case all of them will end up in the executable, and they will all be treated
 independently.
 
