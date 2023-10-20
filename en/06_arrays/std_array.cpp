@@ -24,6 +24,8 @@ int main()
     sum(arr);
 }
 
+// Don't focus too much on the syntax (the template bit),
+// you don't have to remember this yet.
 template<int N>
 int sum(std::array<int, N> arr)
 {
@@ -35,3 +37,34 @@ int sum(std::array<int, N> arr)
     }
     return result;
 }
+
+#if false
+
+// NOTE: 
+// The above copies all elements of the array passed in into the parameter `arr`.
+// You can use a pointer (or a reference) if you don't want to copy.
+// Example:
+template<int N>
+int sum(std::array<int, N>* arr)
+{
+    int result = 0;
+    for (size_t i = 0; i < (*arr).size(); i++)
+    {
+        result += (*arr)[i];
+    }
+    return result;
+}
+
+// Or with a reference:
+template<int N>
+int sum(std::array<int, N>& arr)
+{
+    int result = 0;
+    for (size_t i = 0; i < arr.size(); i++)
+    {
+        result += arr[i];
+    }
+    return result;
+}
+
+#endif

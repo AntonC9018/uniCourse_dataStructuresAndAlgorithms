@@ -204,9 +204,10 @@ One of these is `std::array`.
 
 int main()
 {
-    // Equivalent to
-    // int arr[4]{};
     std::array<int, 4> arr{};
+
+    // In memory, it would look the same as:
+    // int arr[4]{};
 
     // You can use the indexing operator, just like usual.
     arr[0] = 5;

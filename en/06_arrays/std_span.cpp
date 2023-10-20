@@ -31,6 +31,7 @@ int main()
     std::cout << sum(arr);
 }
 
+// std::span = { pointer to first element, length }
 int sum(std::span<int> arr)
 {
     int result = 0;
