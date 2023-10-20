@@ -976,15 +976,15 @@ Which will compile to something like:
 
 | Address | Instruction                                                                                    |
 |---------|------------------------------------------------------------------------------------------------|
-| 100     | Allocate space for `a` on the stack                                                            |
-| 101     | Store 5 in `a`                                                                                 |
-| 102     | Add 10 to `a`                                                                                  |
-| 103     | Return: read the address stored below `a`, jump to it                                          |
-| 104     | Store the address 106 on the stack                                                             |
-| 105     | Jump to address 100                                                                            |
-| 106     | Return: read the address on the stack (saved by the function that could call this), jump to it |
+| 690     | Allocate space for `a` on the stack                                                            |
+| 691     | Store 5 in `a`                                                                                 |
+| 692     | Add 10 to `a`                                                                                  |
+| 693     | Return: read the address stored below `a`, jump to it                                          |
+| 694     | Store the address 696 on the stack                                                             |
+| 695     | Jump to address 690                                                                            |
+| 696     | Return: read the address on the stack (saved by the function that could call this), jump to it |
 
-The addresses 100-103 correspond to `f`, and 104-106 correspond to `g`.
+The addresses 690-693 correspond to `f`, and 694-696 correspond to `g`.
 
 > See the example in [function example](./function_example_1).
 
@@ -1014,7 +1014,7 @@ void g()
 }
 ```
 
-The stack will look something like this, when we call `f` from `g`:
+The stack will look something like this, when we call `f` from `g` (69420 is an example address):
 
 | Address | Variable                  | Value |
 |---------|---------------------------|-------|
@@ -1177,7 +1177,7 @@ And the stack would look like this (I show the final state rather than the whole
 | 124     | address (in `f(1)`) | 69427 |
 | 132     | `depth` of `f(2)`   | 2     |
 
-So each function *gets its own copy of the local variables*.
+So each function call *gets its own copy of the local variables*.
 This is absolutely crucial to realize.
 
 > See [memory example 4](./memory_example_4) for a similar example (that one ignores the return addresses though).
