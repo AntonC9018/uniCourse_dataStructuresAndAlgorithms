@@ -178,3 +178,72 @@ int main()
 ```
 
 
+## `std::array`
+
+C++ adds a few better ways to deal with linear blocks of memory of a certain type.
+One of these is `std::array`.
+
+`std::array` can be used in place of C arrays, having a bunch of advantages over that:
+- It encodes the number of elements in the type and makes it accessible via `size()`;
+- It is an actual type, and not a special thing like arrays, meaning you can actually pass 
+  these to functions without hacks;
+- It doesn't decay to a pointer;
+- You can have a pointer to a block of memory if its type is `std:array` in a regular way
+  (it works just like a regular pointer), without the need for extra syntax.
+
+> Note: I don't even explain the arcane extra syntax used for C arrays,
+> because I don't believe it's useful.
+
+### Example
+
+> Note: the syntax `Type variableName = { }` is equivalent to `Type variableName{ }`.
+
+```cpp
+// Include this header to use std::array.
+#include <array>
+
+int main()
+{
+    // Equivalent to
+    // int arr[4]{};
+    std::array<int, 4> arr{};
+
+    // You can use the indexing operator, just like usual.
+    arr[0] = 5;
+
+    // You can take pointers to elements, just like usual.
+    int* pointerToElement = &arr[2];
+
+    // Now because it's a regular type, you can make a copy 
+    // of the whole array in a single operation.
+    // This creates another block of memory for 4 ints, 
+    // and copies each int from `arr`.
+    std::array<int, 4> copy = arr;
+
+    // Now some more magic: it can actually understand that 
+    // you mean the `int` type and the length automatically, 
+    // if you use the brace initialization with concrete values.
+    std::array arr2{1, 2, 3, 4};
+    // Which is equivalent to
+    // std::array<int, 4> arr2{1, 2, 3, 4};
+
+    // The same happens if you tried to copy:
+    std::array copy2 = arr2;
+
+    // The cool thing is that 4 doesn't have to be hardcoded anywhere anymore,
+    // and neither do you have to do the `sizeof` hack, because of `.size()`:
+    size_t numElementsOfArray = arr.size(); // 4
+
+    // This is even going to work in const (or even constexpr) context,
+    // because `.size()` is known via the type at compile time.
+    // This is useful when you want to use length of the array 
+    // at compile time for a size of an array for example.
+    constexpr size_t numElementsOfArray2 = arr.size(); // 4
+
+    // You can have a pointer to a fixed size `std::array`, 
+    // which you cannot have with C arrays (without special syntax).
+    std::array<int, 4>* pointerToArray = &arr;
+    (*pointerToArray)[1] = 9;
+    int firstElement = arr[1]; // 9
+}
+```

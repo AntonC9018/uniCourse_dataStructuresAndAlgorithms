@@ -7,4 +7,5 @@
 *.ilk
 *.o
 test.md
+test*.cpp
 Tests
