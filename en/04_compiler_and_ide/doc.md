@@ -112,7 +112,7 @@ to be able to help you with e.g. Visual Studio.
 - Copy-paste the folder `.vscode` from this repository into your project folder.
   It will allow you to compile + run the currently open file by pressing `F5`.
 
-The configuration that you've copied (`.vscode`) contains two files:
+The configuration that you've copied (`.vscode`) contains a few files, among which are:
 - `launch.json` defines a configuration that allows the IDE to run a given compiled file.
 - `tasks.json` which defines a task with the command that compiles the current file.
 
