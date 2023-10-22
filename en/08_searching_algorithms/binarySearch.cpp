@@ -26,9 +26,11 @@ struct SearchResult
 
 SearchResult binarySearch(std::span<int> arr, int elementToFind)
 {
+    const SearchResult elementNotFoundResult = {0, false};
+
     if (arr.empty())
     {
-        return { 0, false };
+        return elementNotFoundResult;
     }
 
     // This is to account for the case where it would *underflow*.
@@ -43,7 +45,7 @@ SearchResult binarySearch(std::span<int> arr, int elementToFind)
     // to see for youself what I mean.
     if (arr[0] < elementToFind)
     {
-        return { 0, false };
+        return elementNotFoundResult;
     }
 
     size_t indexLow = 0;
@@ -68,7 +70,7 @@ SearchResult binarySearch(std::span<int> arr, int elementToFind)
         }
     }
 
-    return { 0, false };
+    return elementNotFoundResult;
 }
 
 
