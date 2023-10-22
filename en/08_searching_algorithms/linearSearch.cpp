@@ -1,4 +1,5 @@
 #include <span>
+#include <array>
 #include <iostream>
 
 struct SearchResult
