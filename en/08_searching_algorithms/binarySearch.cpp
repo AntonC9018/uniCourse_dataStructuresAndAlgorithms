@@ -43,7 +43,7 @@ SearchResult binarySearch(std::span<int> arr, int elementToFind)
     // You can try and debug the application without this check, and try and search for
     // an element that is smaller than the first element in the array, 
     // to see for youself what I mean.
-    if (arr[0] < elementToFind)
+    if (arr[0] > elementToFind)
     {
         return elementNotFoundResult;
     }
