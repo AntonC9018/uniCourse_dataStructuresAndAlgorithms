@@ -70,6 +70,9 @@ pointers when passing arguments to functions.
 
 Consider a function that takes in a struct variable.
 
+> Do not worry about how `std::string` works yet, 
+> just conceptually think of it as a string.
+
 ```cpp
 #include <iostream>
 
@@ -102,6 +105,9 @@ We can convert this function into a member function, also called a method.
 Let's first make it a static member function, to see how the concept of *namespaces* works.
 
 > Note that methods only exist in C++ and not in C.
+
+> *Member* means something that's declared in a `struct` or `class`.
+> It can be either a method or a field.
 
 ```cpp
 #include <iostream>
@@ -220,5 +226,92 @@ struct Person
         // `age` refers to `this->age`.
         std::cout << age;
     }
+};
+```
+
+You can separate definition from declaration the same way you did with static methods.
+
+## Accessibility and `class`
+
+By default, all members of a struct are `public`.
+This means they can be accessed on an instance of the struct.
+You can make them `private` explicitly, to disallow access.
+
+This might seem completely useless at first. 
+I mean, what's the point of disallowing access to some memory?
+One of the ideas is to limit the ways in which the data can be accessed 
+or modified to make it obvious which way is the correct way by using methods.
+
+This isn't something unique to OOP, you can do this on a module level by making some functions `static`
+(only visible internally within the compilation unit they were defined).
+The *accessibility modifiers* specifically is an OOP exclusive thing though.
+
+```cpp
+struct Person
+{
+private:
+    int age;
+    std::string name;
+
+public:
+    void setAge(int age)
+    {
+        this->age = age;
+    }
+
+    void printAge()
+    {
+        std::cout << this->age;
+    }
+
+    void printName()
+    {
+        std::cout << this->name;
+    }
+};
+
+int main()
+{
+    Person person;
+    person.age = 15; // compile-time error: cannot access private field.
+    person.name = "John"; // same error
+
+    person.setAge(15); // compiles
+    person.printAge(); // compiles
+    person.printName(); // compiles
+
+    return 0;
 }
 ```
+
+You can make some fields `private`, and others `public`.
+
+```cpp
+struct Person
+{
+private:
+    int age;
+
+public:
+    std::string name;
+}
+
+int main()
+{
+    Person person;
+    person.age = 10; // compile-time error: cannot access private field.
+    person.name = "John"; // works
+    return 0;
+}
+```
+
+`class` is equivalent to `struct`, the only difference 
+being that it has an implicit `private:` at the top.
+So all of the members are public by default in a `struct`, but private in `class`.
+
+> `class` is the keywords that's usually used in the context of OOP.
+> It is considered good tone to use `class` instead of `struct` if you declare any methods
+> that encapsulate (provide well-defined access patterns to) the data (the fields).
+
+
+## Scopes
