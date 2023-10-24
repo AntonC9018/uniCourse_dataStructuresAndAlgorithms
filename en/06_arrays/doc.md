@@ -246,5 +246,7 @@ int main()
     std::array<int, 4>* pointerToArray = &arr;
     (*pointerToArray)[1] = 9;
     int firstElement = arr[1]; // 9
+
+    return 0;
 }
 ```

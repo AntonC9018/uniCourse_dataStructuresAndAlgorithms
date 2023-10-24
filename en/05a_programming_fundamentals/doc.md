@@ -305,6 +305,9 @@ int main()
 }
 ```
 
+
+### `class`
+
 `class` is equivalent to `struct`, the only difference 
 being that it has an implicit `private:` at the top.
 So all of the members are public by default in a `struct`, but private in `class`.
@@ -313,5 +316,325 @@ So all of the members are public by default in a `struct`, but private in `class
 > It is considered good tone to use `class` instead of `struct` if you declare any methods
 > that encapsulate (provide well-defined access patterns to) the data (the fields).
 
+```cpp
+struct Person
+{
+private:
+    int age;
+    std::string name;
+}
+
+// is the same as
+
+class Person
+{
+    int age;
+    std::string name;
+}
+
+// and vice-versa ...
+
+class Person
+{
+public:
+    int age;
+    std::string name;
+}
+
+// is the same as
+
+struct Person
+{
+    int age;
+    std::string name;
+}
+```
 
 ## Scopes
+
+Scopes have two functions in C++:
+- They serve to make variables not visible outside of them;
+- They are used to clean up memory ("resources") of objects.
+  This can be achieved by using destructors.
+
+You can say that scopes allow you to control the lifetimes of objects.
+
+### Scopes for limiting the visibility
+
+You can create scopes by using `{ ... }`.
+
+```cpp
+int main()
+{
+    int a = 1;
+
+    {
+        int b = 2;
+        a = 5; // allowed, `a` is visible in outer scope
+        b = 10; // allowed, `b` is visible in the current scope
+    }
+
+    b = 10; // not allowed, `b` is not visible, because its scope has ended 
+            // (the brace has been closed).
+
+    a = 15; // still allowed, because it's visible in the current scope
+
+    return 0;
+}
+```
+
+Functions must define a scope for their body.
+
+
+You can redeclare variables with the same name if they are in different scopes.
+They are not guaranteed to end up pointing at the same memory.
+
+```cpp
+int main()
+{
+    int a = 5;
+
+    // Redeclaring the variable in the same scope is not allowed.
+    // int a;
+
+    {
+        // Redeclaring it here is also not allowed.
+        // int a;
+
+        int b = 10;
+    }
+
+    {
+        // This is allowed, because the scopes don't interact.
+        int b = 20;
+
+        {
+            // This would be disallowed.
+            // int b = 30;
+        }
+    }
+
+    return 0;
+}
+```
+
+A scope within another scope is called a *nested scope*.
+You can *nest* scopes indefinately.
+
+> In general, putting things within other things of the same kind is called *nesting*.
+
+There's also the concept of the global scope, 
+which is the scope that's outside of any function.
+
+
+### Scopes for cleaning up resources
+
+Conceptually, a variable defined in a scope is destroyed at the end of the scope.
+For simple types like int, it means literally nothing.
+For a complex type, like `std::string`, this means 
+returning the memory allocated for the character array to the C++ runtime.
+
+
+### Destructor 
+
+You can define your own logic to be called when your object is destroyed by using a *destructor*.
+Destructor is a special `void` function that is called in this context automatically.
+You can call it manually as well.
+
+
+Let's just illustrate how it works.
+
+```cpp
+#include <iostream>
+
+struct Demo
+{
+    int i;
+
+    // This is a destructor
+    ~Demo()
+    {
+        std::cout << "Destroying demo" << this->i << std::endl;
+    }
+};
+
+int main()
+{
+    Demo demo1{1};
+    Demo demo2{2};
+    std::cout << "Demos created" << std::endl;
+
+    return 0;
+
+    // The compiler implicitly adds the following:
+    // `demo2.~Demo();`
+    // `demo1.~Demo();`
+}
+```
+
+Which prints:
+
+```
+Demo created
+Destroying demo
+```
+
+> You can split the destructor declaration and the definition 
+> the same way you do with regular methods.
+
+Note that the destructor will only be called in that context.
+If you reassign the variable, it won't be called for the object already in that memory.
+
+```cpp
+int main()
+{
+    Demo demo1{1};
+    Demo demo2{2};
+    demo2 = demo1; // This copies the object, but doesn't call the destructor of `demo2`.
+
+    return 0;
+
+    // `demo2.~Demo()` runs, printing "Destroying demo 1"
+    // `demo1.~Demo()` runs, printing "Destroying demo 1"
+}
+```
+
+> To make sure the destructor of `demo2` is in fact called, 
+> we'll have to overload the assignment operator.
+
+
+## Constructors
+
+Constructors are special `void` functions used to initialize objects.
+Constructors cannot be called in any other context.
+
+Constructors were created to allow initializing private data members (fields) in OOP.
+Constructors can be more involved than that, but it's generally discouraged to make them complex.
+
+> If they get out of hand, you can switch to using factory functions.
+
+For example, let's define a parameterless constructor (a default constructor),
+which prints to the console.
+
+```cpp
+#include <iostream>
+
+class Demo
+{
+    int memory;
+
+public:
+    Demo()
+    {
+        // memory will be unitialized at this point (contain garbage).
+        std::cout << "Created " << this->memory << std::endl;
+        this->memory = 5;
+    }
+
+    ~Demo()
+    {
+        // memory is 5 here.
+        std::cout << "Destroyed " << this->memory << std::endl;
+    }
+};
+
+int main()
+{
+    {
+        // This actually calls the parameterless constructor.
+        // C++ designers decided that objects must never be unitialized.
+        Demo demo;
+
+        // Compiler implicitly added:
+        // demo.~Demo();
+    }
+
+    {
+        // Explicitly calls the parameterless constructor.
+        Demo demo{};
+
+        // Equivalent syntax:
+        // Demo demo = Demo();
+
+        // Compiler implicitly added:
+        // demo.~Demo();
+    }
+
+    return 0;
+}
+```
+
+A practical use case would be e.g. to allocate memory, and clean it up in the destructor.
+We can do this by using the `new` and `delete` operators.
+
+
+```cpp
+#include <iostream>
+#include <assert.h>
+
+class Buffer
+{
+// private:
+    size_t length;
+    int* firstElement;
+
+public:
+    Buffer(size_t elementCount) 
+        // Writes `elementCount` to length directly, before our code is run.
+        // This is called a member initializer.
+        : length(elementCount)//, anotherField(8)
+    {
+        // NOTE: firstElement contains garbage here.
+
+        // We need to allocate memory, which won't be readable in the initializer.
+        // This is why I decided to write it in the constructor body.
+        this->firstElement = new int[elementCount];
+
+        // The elements are initially uninitialized.
+    }
+
+    ~Buffer()
+    {
+        delete[] firstElement;
+    }
+
+    int& elementAt(size_t index)
+    {
+        assert(index < this->length);
+        return firstElement[index];
+    }
+};
+
+int main()
+{
+    Buffer buffer{5};
+
+    // Prints garbage.
+    std::cout << buffer.elementAt(0) << std::endl;
+
+    // Do some stuff with the buffer.
+    int& secondElement = buffer.elementAt(1);
+    secondElement = 10;
+
+    return 0;
+
+    // The compiler inserted the following automatically.
+    // buffer.~Buffer();
+}
+```
+
+It is still extremely easy to break the code above and end up with a memory leaks or repeated memory deletes:
+
+```cpp
+int main()
+{
+    Buffer buffer1{10};
+    Buffer buffer2{20};
+    // This does a memberwise copy.
+    buffer2 = buffer1;
+    return 0;
+
+    // the buffer with 20 length is never deallocated
+    // the buffer with 10 length is deallocated twice (runtime error)
+}
+```
