@@ -1177,3 +1177,8 @@ based on the fundamental operations provided by `std::ostream`,
 such as string or `int` output.
 
 This idea is closely related to encapsulation and is typically called *separation of concerns*.
+
+To be noted, that `std::ostream` overloads the `<<` operator for some of the fundamental types,
+like `const char[N]`, `int`, `float`, etc, which is how you're able to use `<<` for printing.
+And you're able to use it fluently (chain operators) 
+because it returns a reference to the same stream object.
