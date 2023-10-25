@@ -503,6 +503,40 @@ int main()
 > we'll have to overload the assignment operator.
 
 
+### Implicit destructors
+
+Say you had a struct with a field whose type has a destructor.
+
+```cpp
+#include <iostream>
+
+struct Test
+{
+    ~Test()
+    {
+        std::cout << "Destroying test" << std::endl;
+    }
+};
+
+struct Person
+{
+    Test test;
+};
+
+int main()
+{
+    Person person;
+    person.test = {};
+    return 0;
+
+    // The compiler automatically calls the destructor of each field.
+    // `person.test.~Test();`
+
+    // It will also delete the temporary object used for the assignment,
+    // but that's explained in more detail later.
+}
+```
+
 ## Constructors
 
 Constructors are special `void` functions used to initialize objects.
@@ -510,6 +544,8 @@ Constructors cannot be called in any other context.
 
 Constructors were created to allow initializing private data members (fields) in OOP.
 Constructors can be more involved than that, but it's generally discouraged to make them complex.
+
+### Constructors used to initialize new objects
 
 > If they get out of hand, you can switch to using factory functions.
 
@@ -623,7 +659,7 @@ int main()
 }
 ```
 
-It is still extremely easy to break the code above and end up with a memory leaks or repeated memory deletes:
+It is still extremely easy to break the code above and end up with memory leaks or repeated memory deletes:
 
 ```cpp
 int main()
@@ -634,7 +670,197 @@ int main()
     buffer2 = buffer1;
     return 0;
 
-    // the buffer with 20 length is never deallocated
-    // the buffer with 10 length is deallocated twice (runtime error)
+    // the buffer with length 20 is never deallocated
+    // the buffer with length 10 is deallocated twice (runtime error)
+}
+```
+
+
+### Copy constructors
+
+You can define a constructor that takes in an object reference,
+which is going to be called on copy initialization.
+This includes regular definitions with `{ }`, or definitions with an immediate assignment.
+
+
+```cpp
+#include <iostream>
+
+class Demo
+{
+    int id;
+
+public:
+    // We need a constructor with parameters to be able to create an object in the first place.
+    Demo(int idParameter) : id(idParameter) { }
+
+    // Demo(const Demo& other)
+    Demo(Demo& other) : id(other.id)
+    {
+        std::cout << "Copying " << other.id << std::endl;
+    }
+};
+
+int main()
+{
+    Demo a{1};
+
+    // Calls the copy constructor.
+    Demo b{a};
+
+    // Also calls the copy constructor.
+    Demo c = a;
+
+    // This does NOT call the copy constructor. 
+    // It just does a memberwise copy.
+    b = c; 
+}
+```
+
+
+### Moving an object
+
+Moving an object into another object makes one steal the resources of the other.
+This is often used when constructing objects, 
+or writing values into fields to avoid calling the copy constructor.
+
+Consider the following example, which creates 2 copies of `std::string`:
+
+```cpp
+struct Person
+{
+    std::string name;
+};
+
+int main()
+{
+    // Calls the constructor of `std::string`, 
+    // which copies the characters into a dynamically-allocated buffer.
+    std::string name = "John Brown";
+
+    Person person;
+
+    // Makes a copy of `name` by allocating another buffer and copying the characters.
+    // It then writes this copy into `person.name`.
+    person.name = name;
+
+    return 0;
+
+    // The compiler implicitly adds the following:
+    // `person.name.~string();` (from the implicit destructor of Person which deletes all fields)
+    // `name.~string();`
+}
+```
+
+So what we do is we move `name` into `person.name`, instead of copying it.
+In this case, this means, in essence, copying the string object into `person.name`,
+and then clearing it from the `name` variable, so that it no longer refers to the buffer.
+So it becomes unusable after the call.
+
+```cpp
+#include <iostream>
+
+struct Person
+{
+    std::string name;
+};
+
+int main()
+{
+    std::string name = "John Brown";
+    Person person;
+
+    std::cout << name << std::endl; // // prints "John Brown"
+    std::cout << person.name << std::endl; // prints nothing
+
+    person.name = std::move(name);
+
+    std::cout << name << std::endl; // prints nothing
+    std::cout << person.name << std::endl; // prints "John Brown"
+
+    return 0;
+}
+```
+
+
+### Move constructors
+
+In general, you can define constructors that take in *rvalue references* (\&\&).
+This basically means a reference from which you're supposed to steal resources.
+
+> Don't get hung up on the details here, I will explain what rvalues are later.
+
+> You can use rvalue references as regular parameters as well.
+
+```cpp
+#include <iostream>
+
+class Demo
+{
+    int* memoryPointer;
+
+    int getValue()
+    {
+        if (memoryPointer == nullptr)
+            return 0;
+        return *memoryPointer;
+    }
+
+public:
+    Demo(int value)
+    {
+        // Allocate an int on the heap (just as a demo, I know this is pointless),
+        // and store the pointer to it in `memoryPointer`.
+        this->memoryPointer = new int{value};
+    }
+
+    ~Demo()
+    {
+        std::cout << "Destructor called for " << this->getValue() << std::endl;
+        // Deallocate (deleting a nullptr is allowed).
+        delete this->memoryPointer;
+    }
+
+    // Move constructor
+    Demo(Demo&& other)
+    {
+        std::cout 
+            << "Move constructor called for "
+            << other.getValue()
+            << std::endl;
+
+        // Steal the pointer from the other object.
+        this->memoryPointer = other.memoryPointer;
+
+        // Clear the pointer from the other object.
+        // `nullptr` is the same as `0`, it just zeros it out.
+        other.memoryPointer = nullptr;
+    }
+};
+
+int main()
+{
+    Demo demo1{1};
+    Demo demo2{2};
+
+    // This calls the move constructor.
+    Demo demo3 = std::move(demo1);
+
+    return 0;
+
+    // The compiler implicitly adds the following:
+    // demo3.~Demo(); (clears memory with 1)
+    // demo2.~Demo(); (clears memory with 2)
+    // demo1.~Demo(); (doesn't do anything)
+}
+```
+
+
+The move constructor will also be called if the object is constructed in place:
+```cpp
+int main()
+{
+    Demo demo = Demo{1};
+    return 0;
 }
 ```
