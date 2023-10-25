@@ -1152,7 +1152,7 @@ struct Vector
     friend std::ostream& operator<<(std::ostream& outputStream, Vector vector);
 };
 
-// This is the definition of the function.
+// Definition.
 // You don't need the scope resolution operator `::`.
 // In fact, using it here is invalid.
 std::ostream& operator<<(std::ostream& outputStream, Vector vector)
