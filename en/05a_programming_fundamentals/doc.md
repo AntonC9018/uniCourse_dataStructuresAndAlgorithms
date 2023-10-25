@@ -854,13 +854,3 @@ int main()
     // demo1.~Demo(); (doesn't do anything)
 }
 ```
-
-
-The move constructor will also be called if the object is constructed in place:
-```cpp
-int main()
-{
-    Demo demo = Demo{1};
-    return 0;
-}
-```
