@@ -66,6 +66,19 @@ int main()
     std::cout << "Enter max number of elements" << std::endl;
     size_t maxElementCount;
     std::cin >> maxElementCount;
+
+    //    (stack memory)
+    // | address | value |
+    // |  100    | 500   | <- buffer.arr
+    // |  108    |  4    | <- buffer.maxElementCount
+    // |  116    |  0    | <- buffer.currentIndex
+
+    //    (heap memory)
+    // | address | value |
+    // | 500     | ??    |
+    // | 504     | ??    |
+    // | 508     | ??    |
+    // | 512     | ??    |
     Buffer buffer = createDynamicBuffer(maxElementCount);
 
     for (size_t i = 0; i < getMaxElementCount(&buffer); i++)

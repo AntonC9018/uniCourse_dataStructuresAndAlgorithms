@@ -476,7 +476,8 @@ Which prints:
 
 ```
 Demo created
-Destroying demo
+Destroying demo2
+Destroying demo1
 ```
 
 > You can split the destructor declaration and the definition 
@@ -618,7 +619,7 @@ public:
     Buffer(size_t elementCount) 
         // Writes `elementCount` to length directly, before our code is run.
         // This is called a member initializer.
-        : length(elementCount)//, anotherField(8)
+        : length(elementCount) //, anotherField(8)
     {
         // NOTE: firstElement contains garbage here.
 
