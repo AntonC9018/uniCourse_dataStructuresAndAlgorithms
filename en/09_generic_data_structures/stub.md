@@ -1,3 +1,4 @@
 - Maybe do dynamic arrays here, and use `std::vector` previously?
+- Queue, stack
 - Linked lists
 - Hash table (hash function, consecutive buckets on hash collision, chaining, the concept of rehashing)
