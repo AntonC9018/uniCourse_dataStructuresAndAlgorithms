@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <array>
 
-struct Stack
+struct Buffer
 {
     // | ** | ?? | ?? | ?? |
     // | 60 | ** | ?? | ?? |
@@ -13,7 +13,7 @@ struct Stack
     size_t currentIndex = 0;
 };
 
-void pushElement(Stack* buffer, int value)
+void addElement(Buffer* buffer, int value)
 {
     size_t maxElementCount = buffer->arr.size();
     assert(buffer->currentIndex < maxElementCount);
@@ -22,17 +22,17 @@ void pushElement(Stack* buffer, int value)
     buffer->currentIndex = buffer->currentIndex + 1;
 }
 
-size_t getElementCount(Stack* buffer)
+size_t getElementCount(Buffer* buffer)
 {
     return buffer->currentIndex;
 }
 
-size_t getMaxElementCount(Stack* buffer)
+size_t getMaxElementCount(Buffer* buffer)
 {
     return buffer->arr.size();
 }
 
-int getElementAtIndex(Stack* buffer, size_t index)
+int getElementAtIndex(Buffer* buffer, size_t index)
 {
     // 15 | 22 | 10 | ** | ... 
     // 3
@@ -44,7 +44,7 @@ int getElementAtIndex(Stack* buffer, size_t index)
 
 int main()
 {
-    Stack buffer{};
+    Buffer buffer{};
 
     for (size_t i = 0; i < getMaxElementCount(&buffer); i++)
     {
@@ -56,7 +56,7 @@ int main()
         {
             break;
         }
-        pushElement(&buffer, input);
+        addElement(&buffer, input);
     }
 
     size_t elementCount = getElementCount(&buffer);

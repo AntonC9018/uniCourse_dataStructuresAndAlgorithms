@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <array>
 
-struct Stack
+struct Buffer
 {
     // | ** | ?? | ?? | ?? |
     // | 60 | ** | ?? | ?? |
@@ -14,7 +14,7 @@ struct Stack
     size_t currentIndex = 0;
 };
 
-void pushElement(Stack* buffer, int value)
+void addElement(Buffer* buffer, int value)
 {
     size_t maxElementCount = buffer->maxElementCount;
     assert(buffer->currentIndex < maxElementCount);
@@ -23,17 +23,17 @@ void pushElement(Stack* buffer, int value)
     buffer->currentIndex = buffer->currentIndex + 1;
 }
 
-size_t getElementCount(Stack* buffer)
+size_t getElementCount(Buffer* buffer)
 {
     return buffer->currentIndex;
 }
 
-size_t getMaxElementCount(Stack* buffer)
+size_t getMaxElementCount(Buffer* buffer)
 {
     return buffer->maxElementCount;
 }
 
-int getElementAtIndex(Stack* buffer, size_t index)
+int getElementAtIndex(Buffer* buffer, size_t index)
 {
     // 15 | 22 | 10 | ** | ... 
     // 3
@@ -42,12 +42,12 @@ int getElementAtIndex(Stack* buffer, size_t index)
     return buffer->arr[index];
 }
 
-Stack createDynamicBuffer(size_t maxElementCount)
+Buffer createDynamicBuffer(size_t maxElementCount)
 {
     void* memoryBlock = malloc(maxElementCount * sizeof(int));
     int* arr = (int*) memoryBlock;
 
-    Stack buffer;
+    Buffer buffer;
     buffer.arr = arr;
     buffer.maxElementCount = maxElementCount;
     buffer.currentIndex = 0;
@@ -55,7 +55,7 @@ Stack createDynamicBuffer(size_t maxElementCount)
     return buffer;
 }
 
-void destroyDynamicBuffer(Stack* buffer)
+void destroyDynamicBuffer(Buffer* buffer)
 {
     free(buffer->arr);
 }
@@ -66,7 +66,7 @@ int main()
     std::cout << "Enter max number of elements" << std::endl;
     size_t maxElementCount;
     std::cin >> maxElementCount;
-    Stack buffer = createDynamicBuffer(maxElementCount);
+    Buffer buffer = createDynamicBuffer(maxElementCount);
 
     for (size_t i = 0; i < getMaxElementCount(&buffer); i++)
     {
@@ -78,7 +78,7 @@ int main()
         {
             break;
         }
-        pushElement(&buffer, input);
+        addElement(&buffer, input);
     }
 
     size_t elementCount = getElementCount(&buffer);
