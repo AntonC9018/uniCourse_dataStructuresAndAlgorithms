@@ -1601,3 +1601,76 @@ void DynamicArray::addItem(int item)
 }
 ```
 
+## `template`
+
+### Basic `template` usage
+
+`template` at a basic level allows you to automate copy pasting of function overloads.
+Consider the following example:
+
+```cpp
+int sum(std::span<int> arr)
+{
+    int result = 0;
+    for (size_t i = 0; i << arr.size(); i++)
+        result += arr[i];
+    return result;
+}
+
+// Overload the function, which means define another function with
+// different parameter types (or count).
+float sum(std::span<float> arr)
+{
+    float result = 0;
+    for (size_t i = 0; i << arr.size(); i++)
+        result += arr[i];
+    return result;
+}
+
+int main()
+{
+    std::array<int, 3> arrInt = { 1, 2, 3 };
+    // Calls `sum` with the `std::span<int>` parameter.
+    int resultInt = sum(arrInt);
+
+    std::array<float, 3> arrFloat = { 1.0f, 2.0f, 3.0f };
+    // Calls `sum` with the `std::span<float>` parameter.
+    float resultFloat = sum(arrFloat);
+
+    return 0;
+}
+```
+
+`template` allows you to write out the function only once, for any type.
+The following templated function will work for not only `float` and `int`,
+but also any other type that has a default constructor, and overloads the `+=` operator.
+
+```cpp
+template<typename T>
+T sum(std::span<T> arr)
+{
+    T result{};
+    for (size_t i = 0; i << arr.size(); i++)
+        result += arr[i];
+    return result;
+}
+
+int main()
+{
+    std::array<int, 3> arrInt = { 1, 2, 3 };
+    int resultInt = sum(arrInt);
+    // It understands that `T` should be `int` from the type of the variable
+    // that is passed in. It's equivalent to:
+    // resultInt = sum<int>(arrInt);
+
+    std::array<float, 3> arrFloat = { 1.0f, 2.0f, 3.0f };
+    float resultFloat = sum(arrFloat);
+    // equivalent to
+    // resultFloat = sum<float>(arrFloat);
+
+    return 0;
+}
+```
+
+Templated functions are a bit magical when put in a header file.
+Even if they are used in 
