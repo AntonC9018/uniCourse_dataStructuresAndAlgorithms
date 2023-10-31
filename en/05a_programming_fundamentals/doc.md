@@ -1183,3 +1183,102 @@ To be noted, that `std::ostream` overloads the `<<` operator for some of the fun
 like `const char[N]`, `int`, `float`, etc, which is how you're able to use `<<` for printing.
 And you're able to use it fluently (chain operators) 
 because it returns a reference to the same stream object.
+
+
+## Abstraction and Encapsulation
+
+### Implementation files (cpp)
+
+Let me clarify some points related to implementation files (`cpp` files).
+`cpp` files typically contain *definitions of functions and/or global variables*.
+They may expose said functions to be used in other compilation units (in other cpp files),
+but they may also define `internal` functions and global variables,
+which can be used as helper functions in the exposed functions, that is, 
+help implementing the logic of the exposed functions.
+
+What do you think would happen if a `cpp` file were to be included in the compilation twice?
+Assume we compiled the two files `main.cpp` and `f.cpp` with the command `zig c++ main.cpp f.cpp`,
+where the files have the following contents:
+
+`main.cpp`:
+
+```cpp
+#include "f.cpp"
+
+int main()
+{
+    f(1);
+    return 0;
+}
+```
+
+`f.cpp`:
+
+```cpp
+void f(int a)
+{
+}
+```
+
+The answer is that it will produce a linker error,
+because the function `f` has been defined twice:
+once in `main.cpp` (due to us including the contents of `f.cpp`)
+and a second time in `f.cpp` (because we compile this file too).
+
+This basically implies that *it is only valid to compile each implementation file at most once*.
+
+
+### Sharing declarations
+
+What do we do if we wanted to use the same function `f` in multiple different files?
+Well, we just have to declare it in all of those files, and then link them to the implementation.
+> See [example 1](./headers/example_1)
+
+The problem is that now if we wanted to change e.g. the parameter type of `f`
+from `int` to `float`, we'd have to:
+- Modify the implementation file,
+- Modify the `f` declaration in `main.cpp`,
+- Modify the `f` declaration in `other_file.cpp`.
+
+And if we had more files, we'd have to go through all of them.
+
+What people usually do to only have to modify the declaration in a single file,
+is that they put the declaration in a separate file, and paste the declaration
+in the files that need it using `#include`.
+The files that contain such declarations are called header files.
+Of course, the definition will still have to be modified separately.
+> See [example 2](./headers/example_2)
+
+If the function definition is obvious and small, like returning some constant, it is
+common to put the *definition* directly in the header file.
+Now, if we just went ahead and did that, we'd have
+the same problem as in [the paragraph above](#Implementation-files-(cpp)).
+Recall the `inline` modifier, which makes it so that the function does not participate
+in linking, and won't appear in the final executable.
+This use case is perfect for `inline`.
+In fact, we don't even need an implementation file if all functions can be made inline.
+> See [example 3](./headers/example_3)
+
+The other way to avoid linker errors here is to make all functions `static`.
+This is typically discouraged, because the executable file will include their definitions
+as many times as the header is imported.
+
+### The interface
+
+A *module* can be defined as a header-implementation file pair.
+You can see how the header file, having the declarations, effectively specifies the 
+*public interface* of the *module*, while the implementation file specifies the
+*implementation* of the interface. 
+
+*Abstraction* means that you interact with a module only via its public interface.
+*Encapsulation* means that you can interact with the module as a whole,
+without having to understand how it's implemented and what data exactly it uses under the hood. 
+
+Contrary to common opinion, OOP did not invent either of these.
+You can use these principles without using classes.
+OOP just adds finer-grained encapsulation at *class level*, 
+in the form of the accessibility system (public - private),
+and finer-grained abstraction at class level via virtual methods (maybe described later?).
+
+So OOP allows these two concepts both *at module level and at class level*,
+while regular procedural programming only allows this *at module level*.

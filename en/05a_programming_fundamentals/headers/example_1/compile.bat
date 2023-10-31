@@ -1,0 +1,1 @@
+zig c++ main.cpp f.cpp other_file.cpp
