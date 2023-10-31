@@ -1,0 +1,1 @@
+zig c++ -std=c++20 main.cpp f.cpp
