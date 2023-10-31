@@ -312,7 +312,7 @@ int main()
 being that it has an implicit `private:` at the top.
 So all of the members are public by default in a `struct`, but private in `class`.
 
-> `class` is the keywords that's usually used in the context of OOP.
+> `class` is the keyword that's usually used in the context of OOP.
 > It is considered good tone to use `class` instead of `struct` if you declare any methods
 > that encapsulate (provide well-defined access patterns to) the data (the fields).
 
@@ -491,7 +491,7 @@ int main()
 {
     Demo demo1{1};
     Demo demo2{2};
-    demo2 = demo1; // This copies the object, but doesn't call the destructor of `demo2`.
+    demo2 = demo1; // This copies the object's bytes, but doesn't call the destructor of `demo2`.
 
     return 0;
 
@@ -500,8 +500,8 @@ int main()
 }
 ```
 
-> To make sure the destructor of `demo2` is in fact called, 
-> we'll have to overload the assignment operator.
+> To make sure that the same object isn't deleted more than once
+> in this situation, we'll have to overload the assigment operator.
 
 
 ### Implicit destructors
@@ -973,7 +973,7 @@ int main()
 
 ### Another solution: prohibiting copying
 
-You can make an operator that is allowed to be used implicitly unusable,
+You can make an operator that is allowed to be used implicitly, unusable,
 by *deleting* the method responsible for the operator.
 You do that by assigning the `delete` keyword to the method, instead of providing a body.
 
@@ -1047,7 +1047,7 @@ I have implemented a Vector struct with operations for addition,
 subtraction and scaling.
 
 One implementation is procedural, the other one is with operator overloading.
-See the examples code [here](./vector/procedural.cpp) and [here](./vector/operator.cpp).
+See the example code [here](./vector/procedural.cpp) and [here](./vector/operator.cpp).
 
 
 ### Returning values or references from mutating operators
@@ -1179,7 +1179,7 @@ such as string or `int` output.
 
 This idea is closely related to encapsulation and is typically called *separation of concerns*.
 
-To be noted, that `std::ostream` overloads the `<<` operator for some of the fundamental types,
+To be noted that `std::ostream` overloads the `<<` operator for some of the fundamental types,
 like `const char[N]`, `int`, `float`, etc, which is how you're able to use `<<` for printing.
 And you're able to use it fluently (chain operators) 
 because it returns a reference to the same stream object.
@@ -1192,8 +1192,8 @@ because it returns a reference to the same stream object.
 Let me clarify some points related to implementation files (`cpp` files).
 `cpp` files typically contain *definitions of functions and/or global variables*.
 They may expose said functions to be used in other compilation units (in other cpp files),
-but they may also define `internal` functions and global variables,
-which can be used as helper functions in the exposed functions, that is, 
+but they may also define `static` functions and global variables,
+which can be used as helpers in the exposed functions, that is, 
 help implementing the logic of the exposed functions.
 
 What do you think would happen if a `cpp` file were to be included in the compilation twice?
@@ -1303,7 +1303,7 @@ Now assume a situation where `main.cpp` includes `a.h` and `b.h`,
 and `b.h` includes `a.h` too.
 This would mean `a.h` has been included twice.
 If `a.h` declared any functions, the program would fail to compile due to
-multiple of the same declaration. 
+multiple copies of the same declaration. 
 
 This can be avoided by using `#pragma once`, which instructs the preprocessor
 to only include this file once.
@@ -1325,7 +1325,7 @@ These are not allowed, because files are only ever included sequentially.
 
 Like I have mentioned before, typical procedural programming does not allow
 class-level (struct-level) encapsulation, but only module-level encapsulation.
-This means *the data in the structs that the interfaces expects the users to pass in can be changed by the user*.
+This means *the data in the structs that the interface expects the users to pass in can be changed by the user*.
 
 An example: assume we had a type that represents a dynamically allocated fixed-size buffer.
 The code could be something like this:
@@ -1603,6 +1603,9 @@ void DynamicArray::addItem(int item)
 
 ## `template`
 
+`template` is a C++ language primitive, which, 
+together with the overload mechanism, enables *static polymorphism*.
+
 ### Basic `template` usage
 
 `template` at a basic level allows you to automate copy pasting of function overloads.
@@ -1621,7 +1624,7 @@ int sum(std::span<int> arr)
 }
 
 // Overload the function, which means define another function with
-// different parameter types (or count).
+// different parameter types (or count thereof).
 float sum(std::span<float> arr)
 {
     float result = 0;
@@ -1633,12 +1636,12 @@ float sum(std::span<float> arr)
 int main()
 {
     std::array<int, 3> arrInt = { 1, 2, 3 };
-    // Calls `sum` with the `std::span<int>` parameter.
+    // Calls `sum` with an `std::span<int>` parameter.
     // Implicitly convert to `std::span<int>`
     int resultInt = sum(arrInt);
 
     std::array<float, 3> arrFloat = { 1.0f, 2.0f, 3.0f };
-    // Calls `sum` with the `std::span<float>` parameter.
+    // Calls `sum` with an `std::span<float>` parameter.
     float resultFloat = sum(arrFloat);
 
     return 0;
@@ -1646,8 +1649,8 @@ int main()
 ```
 
 `template` allows you to write out the function only once, for any type.
-The following templated function will work for not only `float` and `int`,
-but also any other type that has a default constructor, and overloads the `+=` operator.
+The following templated function will work not only for `float` and `int`,
+but also for any other type that has a default constructor, and overloads the `+=` operator.
 
 ```cpp
 template<typename T>
@@ -1662,7 +1665,7 @@ T sum(std::span<T> arr)
 int main()
 {
     std::array<int, 3> arrInt = { 1, 2, 3 };
-    // We have to implicitly convert to `std::span<int>` manually.
+    // We have to convert to `std::span<int>` manually.
     std::span<int> spanInt = arrInt;
     int resultInt = sum(spanInt);
     // It understands that `T` should be `int` from the type of the variable
@@ -1679,9 +1682,9 @@ int main()
 }
 ```
 
-Templated functions are a bit magical when put in a header file.
+Templated function definitions are a bit magical when put in a header file.
 Even if they are used from multiple compilation units, the linker is smart enough
-to automatically remove duplicate definitions of these functions.
+to automatically remove duplicate definitions derived from these functions.
 Aka if you called `sum<int>` from two different compilation units,
 there will (typically) only be a single definition of `sum` for the `int` type parameter,
 even though both the compilation units had had their own copy created.
@@ -1695,9 +1698,9 @@ where the duplicates are automatically trimmed (removed).
 > See [an example of this](./template/example_2).
 
 
-### `template` for types
+### `template` for types 
 
-In the same way, you can use `template` for type (structs/classes).
+In the same way, you can use `template` for types (structs/classes).
 There are no additional issues with this approach if you only have fields in the type.
 
 > See [example_3](./template/example_3).
@@ -1707,5 +1710,319 @@ defined in-place in your type.
 
 > See [example_4](./template/example_4).
 
-However, the problems begin when you want to only *declare* the method in the header file,
+
+### Explicit template instantiation
+
+The problems with templates begin when you want to only 
+*declare* the method / function in the header file,
 but define it in a separate implementation file.
+In this case a definition is never created.
+You have to make sure an explicit definition is created.
+You can do this in the file that defines the template by *explicitly instantiating the template*.
+
+You can also import the file with the templated definition (`f.cpp`),
+and instantiate it explicitly in another file.
+
+> See [example_5](./template/example_5).
+
+For types, it works in a similar way.
+Methods that are only declared, but not defined, 
+in a templated class definition will require 
+an explicit instantiation from the templated defintion in order to be defined.
+
+> See [example_6](./template/example_6)
+
+
+### Templated methods within templated classes
+
+In this situation you just have to apply the `template` thing multiple times.
+The rest works just like in the previous examples.
+
+
+### Passing things other than types as template parameters
+
+You can pass e.g. numbers as template parameters.
+You have already used this previously with `std::array<Type, Size>`.
+Here's an example:
+
+```cpp
+template<size_t N> // you write the type instead of `typename`
+std::array<int, N> createArray()
+{
+    return {};
+}
+
+int main()
+{
+    std:array result = createArray<10>();
+    return 0;
+}
+```
+
+These can be implied automatically as well:
+
+```cpp
+template<size_t N>
+void doStuff(std::array<int, N>& arr)
+{
+    // ...
+}
+
+int main()
+{
+    std::array arr = { 1, 2, 3 };
+    doStuff(arr); // calls 1doStuff<3>`
+}
+```
+
+
+## `const`
+
+`const` means that the value of something cannot be changed.
+
+### Basic usage
+
+You can define `const` variables, which will prevent you from modifying their value.
+
+```cpp
+const int a = 5;
+a = 10; // compile time error
+```
+
+This applies to any types, including custom types.
+
+```cpp
+struct T
+{
+    int value;
+};
+
+// ...
+
+const T a{5};
+a.value = 10; // not allowed, because a.value is part of the memory of the `a` variable.
+a = { 50 }; // it is not allowed to change the whole memory either.
+```
+
+You can apply `const` to parameters as well.
+It means the function is not allowed to change the value of the parameter.
+While pretty useless by itself for copies, it's very useful for references and pointers.
+For example, let's say we had a `Demo` type:
+
+```cpp
+struct Demo
+{
+    int value;
+};
+
+void stuff(const Demo& demo)
+{
+    int value = demo.value; // reading is allowed.
+    demo.value = 5; // writing not allowed.
+    demo = { 6 }; // overwriting also not allowed.
+}
+```
+
+### `const` with pointers
+
+Generally, `const` only applies one level deep for pointers.
+For example, a `const int*` or `int const*` means that the *memory pointed at* cannot be changed,
+but the pointer itself can,
+and `int* const` means that *the pointer address itself* cannot be changed,
+but the memory pointed at can.
+Similarly, `const int* const` means that neither can be changed.
+
+For pointers multiple levels deep, you need to specify the `const` for each level.
+
+```cpp
+void func(
+    int* p, // mutable address, mutable object
+    const int* p1, // mutable address, immutable object
+    int* const p2, // immutable address, mutable object
+    const int* const p3 // immutable address, immutable object
+)
+{
+    int local = 8;
+
+    *p = 10;
+    p = &local;
+
+    // *p1 = 10;
+    p1 = &local;
+
+    *p2 = 10;
+    // p2 = &local;
+
+    // *p3 = 10;
+    // p3 = &local;
+}
+```
+
+For pointers to objects with pointers, `const` is only applied at the first level.
+It won't be applied to the nested pointer's memory.
+
+```cpp
+struct Demo
+{
+    int someValue;
+    int* pointer;
+};
+
+void func(const Demo* demo)
+{
+    int local = 8;
+    // demo->someValue = 10;
+    // demo->pointer = &local;
+    *demo->pointer = 10; // this is allowed.
+}
+```
+
+### `const` vs `constexpr`
+
+The value of a `const` variable used 
+with compile-time known constants of a primitive type
+can be used in compile-time context.
+For example, it can be used as the size of
+a static array, or as a template parameter. 
+
+```cpp
+#include <array>
+static inline const size_t arrayLength = 10;
+
+int arr[arrayLength];
+std::array<int, arrayLength> arr2;
+```
+
+It won't work if you were to use a struct for example:
+```cpp
+#include <array>
+struct Test
+{
+    size_t value;
+};
+
+// This will only be available at runtime,
+// because it's not a primitive type.
+static inline const Test arrayLength = { 10 };
+
+int arr[arrayLength.value]; // not allowed
+std::array<int, arrayLength.value>; // not allowed
+```
+
+But you can make it work if you changed `const` to `constexpr` in this example.
+`constexpr` makes it a compile-time constant.
+
+`constexpr` can also be used with functions to tell
+the compiler that they can be evaluated at compile time.
+`constexpr` functions can only call other `constexpr` functions.
+It's yet other rabbit hole, so I'll stop here. 
+
+### `const` methods
+
+`const` can be applied to a method, which just applies to the `this*` pointer.
+The syntax is like this:
+
+```cpp
+class Demo
+{
+    int state;
+
+private:
+    int readState() const
+    {
+        return this->state;
+    }
+};
+
+// Which conceptually means basically:
+int readState(const Demo* const this)
+{
+    return this->state;
+}
+```
+
+### `const_cast`
+
+This can be used when you know an operation will not modify an object,
+even though it is not declared const, and vice-versa.
+A valid use case is for example a function that provides access 
+to the n-th element of an array.
+
+```cpp
+struct Buffer
+{
+    int* elements;
+    size_t length;
+};
+
+int& getRefAtIndex(Buffer& buff, size_t index)
+{
+    return buff.elements[index];
+}
+
+// Have to implement the same method for a const Buffer.
+const int& getRefAtIndex(const Buffer& buff, size_t index)
+{
+    // Note how we have to provide the exact same implementation.
+    return buff.elements[index];
+}
+
+int main()
+{
+    Buffer buff{new int[5], 5};
+    const Buffer buffConst{new int[5], 5};
+
+    // Calls the mutable overload
+    getRefAtIndex(buff, 0);
+
+    // Calls the const overload
+    getRefAtIndex(buffConst, 0);
+
+    return 0;
+}
+```
+
+In order not to have to implement the same function body a second time,
+we can make the first mutable function call the second `const` one.
+This means we have to cast the parameter to `const`,
+and then cast the result back to non-const.
+You can see how it will in fact be a valid implementation, since
+that `const` only affects the return type.
+
+```cpp
+int& getRefAtIndex(Buffer& buff, size_t index)
+{
+    // first cast the buffer type
+    const Buffer& constBuff = buff;
+    // now call the const function
+    const int& element = getRefAtIndex(constBuff, index);
+    // now remove `const`
+    return const_cast<int&>(element);
+}
+```
+
+
+### Good practices
+
+It's considered good practice and leads to more robust code
+to follow const-correctness, meaning that one should
+always apply `const` anywhere appropriate.
+
+
+## `enum` and `enum class`
+
+## Smart pointers
+
+If you understand RAII, it should be easy to grasp smart pointers as well.
+
+### `std::unique_ptr`
+
+`std::unique_ptr` is a templated type that represents dynamically allocated memory
+that follows RAII.
+
+### `std::shared_ptr`
+
+
+## Iterators
+
+## `static_cast`, `reinterpret_cast`, `bit_cast`, `const_cast`
