@@ -1606,6 +1606,9 @@ void DynamicArray::addItem(int item)
 ### Basic `template` usage
 
 `template` at a basic level allows you to automate copy pasting of function overloads.
+
+> See [a basic example](./template/example_1)
+
 Consider the following example:
 
 ```cpp
@@ -1631,6 +1634,7 @@ int main()
 {
     std::array<int, 3> arrInt = { 1, 2, 3 };
     // Calls `sum` with the `std::span<int>` parameter.
+    // Implicitly convert to `std::span<int>`
     int resultInt = sum(arrInt);
 
     std::array<float, 3> arrFloat = { 1.0f, 2.0f, 3.0f };
@@ -1658,19 +1662,50 @@ T sum(std::span<T> arr)
 int main()
 {
     std::array<int, 3> arrInt = { 1, 2, 3 };
-    int resultInt = sum(arrInt);
+    // We have to implicitly convert to `std::span<int>` manually.
+    std::span<int> spanInt = arrInt;
+    int resultInt = sum(spanInt);
     // It understands that `T` should be `int` from the type of the variable
     // that is passed in. It's equivalent to:
-    // resultInt = sum<int>(arrInt);
+    // resultInt = sum<int>(spanInt);
 
     std::array<float, 3> arrFloat = { 1.0f, 2.0f, 3.0f };
-    float resultFloat = sum(arrFloat);
+    std::span<float> spanFloat = arrFloat;
+    float resultFloat = sum(spanFloat);
     // equivalent to
-    // resultFloat = sum<float>(arrFloat);
+    // resultFloat = sum<float>(spanFloat);
 
     return 0;
 }
 ```
 
 Templated functions are a bit magical when put in a header file.
-Even if they are used in 
+Even if they are used from multiple compilation units, the linker is smart enough
+to automatically remove duplicate definitions of these functions.
+Aka if you called `sum<int>` from two different compilation units,
+there will (typically) only be a single definition of `sum` for the `int` type parameter,
+even though both the compilation units had had their own copy created.
+So basically templated functions typically work like `static` functions,
+where the duplicates are automatically trimmed (removed).
+
+> Technically, they aren't guaranteed to be trimmed.
+
+> TODO: source. I vaguely remember reading about this somewhere.
+
+> See [an example of this](./template/example_2).
+
+
+### `template` for types
+
+In the same way, you can use `template` for type (structs/classes).
+There are no additional issues with this approach if you only have fields in the type.
+
+> See [example_3](./template/example_3).
+
+It appears to work, which I honestly did not expect, even if you have methods
+defined in-place in your type.
+
+> See [example_4](./template/example_4).
+
+However, the problems begin when you want to only *declare* the method in the header file,
+but define it in a separate implementation file.
