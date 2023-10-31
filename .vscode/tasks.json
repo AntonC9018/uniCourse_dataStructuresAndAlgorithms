@@ -4,7 +4,7 @@
         {
             "type": "cppbuild",
             "label": "Zig C++ build current file",
-            "command": "D:\\zig\\zig.exe",
+            "command": "zig",
             "args": [
                 "c++",
                 "${file}",

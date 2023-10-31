@@ -1618,7 +1618,7 @@ Consider the following example:
 int sum(std::span<int> arr)
 {
     int result = 0;
-    for (size_t i = 0; i << arr.size(); i++)
+    for (size_t i = 0; i < arr.size(); i++)
         result += arr[i];
     return result;
 }
@@ -1628,7 +1628,7 @@ int sum(std::span<int> arr)
 float sum(std::span<float> arr)
 {
     float result = 0;
-    for (size_t i = 0; i << arr.size(); i++)
+    for (size_t i = 0; i < arr.size(); i++)
         result += arr[i];
     return result;
 }
@@ -1657,7 +1657,7 @@ template<typename T>
 T sum(std::span<T> arr)
 {
     T result{};
-    for (size_t i = 0; i << arr.size(); i++)
+    for (size_t i = 0; i < arr.size(); i++)
         result += arr[i];
     return result;
 }
@@ -1771,7 +1771,7 @@ void doStuff(std::array<int, N>& arr)
 int main()
 {
     std::array arr = { 1, 2, 3 };
-    doStuff(arr); // calls 1doStuff<3>`
+    doStuff(arr); // calls `doStuff<3>`
 }
 ```
 
@@ -1881,7 +1881,7 @@ void func(const Demo* demo)
 
 The value of a `const` variable used 
 with compile-time known constants of a primitive type
-can be used in compile-time context.
+can be used in a compile-time context.
 For example, it can be used as the size of
 a static array, or as a template parameter. 
 
@@ -1915,7 +1915,7 @@ But you can make it work if you changed `const` to `constexpr` in this example.
 `constexpr` can also be used with functions to tell
 the compiler that they can be evaluated at compile time.
 `constexpr` functions can only call other `constexpr` functions.
-It's yet other rabbit hole, so I'll stop here. 
+It's yet another rabbit hole, so I'll stop here. 
 
 ### `const` methods
 
@@ -1943,7 +1943,7 @@ int readState(const Demo* const this)
 
 ### `const_cast`
 
-This can be used when you know an operation will not modify an object,
+This can be useful when you know an operation will not modify an object,
 even though it is not declared const, and vice-versa.
 A valid use case is for example a function that provides access 
 to the n-th element of an array.
@@ -2006,7 +2006,7 @@ int& getRefAtIndex(Buffer& buff, size_t index)
 
 It's considered good practice and leads to more robust code
 to follow const-correctness, meaning that one should
-always apply `const` anywhere appropriate.
+always apply `const` wherever appropriate.
 
 
 ## `enum` and `enum class`
@@ -2022,7 +2022,16 @@ that follows RAII.
 
 ### `std::shared_ptr`
 
-
 ## Iterators
 
-## `static_cast`, `reinterpret_cast`, `bit_cast`, `const_cast`
+## `static_cast`, `reinterpret_cast`, `bit_cast`
+
+## Strings
+
+### C strings
+
+### ASCII and Unicode
+
+### `std::string`
+
+### `std::string_view`
