@@ -1,4 +1,5 @@
 #include <string>
+#include <span>
 #include <iostream>
 #include <assert.h>
 #include <vector>
@@ -29,15 +30,22 @@ bool isWaterCell(Cell* cell)
     return true;
 }
 
+const int WATER_SOURCE_VALUE = 1;
+
+bool isCellWaterSource(Cell* cell)
+{
+    return cell->value == WATER_SOURCE_VALUE;
+}
+
 int getStepsFromWaterSource(Cell* cell)
 {
-    return cell->value - 1;
+    return cell->value - WATER_SOURCE_VALUE;
 }
 
 Cell createWaterSourceCell()
 {
     Cell cell;
-    cell.value = 1;
+    cell.value = WATER_SOURCE_VALUE;
     return cell;
 }
 
@@ -80,6 +88,10 @@ size_t getGridLinearArrayLength(Grid* grid)
 
 Cell* getCellAtIndex(Grid* grid, size_t linearIndex)
 {
+    if (linearIndex >= getGridLinearArrayLength(grid))
+    {
+        std::cout << "hello";
+    }
     assert(linearIndex < getGridLinearArrayLength(grid));
     return grid->firstCell + linearIndex;
 }
@@ -91,7 +103,7 @@ struct EdgeMask
     std::array<bool, MAX_NEIGHBOR_COUNT> values;
 };
 
-EdgeMask getIsEdgeMask(Grid* grid, size_t currentIndex)
+EdgeMask getEdgeMask(Grid* grid, size_t currentIndex)
 {
     std::array<bool, MAX_NEIGHBOR_COUNT> isOnEdge
     {
@@ -124,17 +136,17 @@ std::array<size_t, MAX_NEIGHBOR_COUNT> getNeighborIndices(Grid* grid, size_t cur
 {
     std::array<size_t, MAX_NEIGHBOR_COUNT> neighborIndices
     {
-        // Right neighbor
-        currentIndex + 1,
-
         // Left neighbor
         currentIndex - 1,
 
-        // Bottom neighbor
-        currentIndex + grid->columnCount,
+        // Right neighbor
+        currentIndex + 1,
 
         // Top neighbor
         currentIndex - grid->columnCount,
+
+        // Bottom neighbor
+        currentIndex + grid->columnCount,
     };
     return neighborIndices;
 }
@@ -148,10 +160,10 @@ void computeAndPrintBacktrace(Grid* grid, size_t currentIndex)
     {
         Cell *cell = getCellAtIndex(grid, backtrackIndex);
         trace.push_back(backtrackIndex);
-        if (getStepsFromWaterSource(cell) == 0)
+        if (isCellWaterSource(cell))
             break;
 
-        EdgeMask edgeMask = getIsEdgeMask(grid, backtrackIndex);
+        EdgeMask edgeMask = getEdgeMask(grid, backtrackIndex);
         std::array neighbors = getNeighborIndices(grid, backtrackIndex);
         int minValue = INT_MAX;
         size_t minPosition = 0;
@@ -161,7 +173,7 @@ void computeAndPrintBacktrace(Grid* grid, size_t currentIndex)
                 continue;
 
             size_t neighborPosition = neighbors[neighborIndex];
-            Cell *neighbor = getCellAtIndex(grid, neighbors[neighborIndex]);
+            Cell *neighbor = getCellAtIndex(grid, neighborPosition);
             if (isCellEmpty(neighbor))
                 continue;
 
@@ -186,19 +198,25 @@ void computeAndPrintBacktrace(Grid* grid, size_t currentIndex)
             break;
         traceIndex -= 1;
 
-        std::cout << "--> " << trace[traceIndex];
+        std::cout << " --> " << trace[traceIndex];
     }
 }
 
 int main()
 {
     std::string mapFromFile =
-        "   "
-        "BB "
-        " W ";
+        "BBBBB"
+        "BW BB"
+        "BB BB"
+        "B   B"
+        "BBB B";
+
+        // "BB "
+        // " W "
+        // "   ";
     
     Grid grid;
-    grid.columnCount = 3;
+    grid.columnCount = 5;
     grid.rowCount = mapFromFile.size() / grid.columnCount;
     // size_t elementCount = grid.columnCount * grid.rowCount;
     size_t elementCount = mapFromFile.size();
@@ -233,10 +251,13 @@ int main()
                     << ". Invalid symbol "
                     << symbolAtPosition
                     << std::endl;
+                break;
             }
         }
+        grid.firstCell[elementIndex] = newCell;
     }
 
+    std::span memory = { grid.firstCell, getGridLinearArrayLength(&grid) };
     std::unordered_set<size_t> currentOutermostWaterIndices{};
 
     for (size_t elementIndex = 0; elementIndex < elementCount; elementIndex++)
@@ -254,7 +275,7 @@ int main()
         return 1;
     }
 
-    int currentValue = 1 + 1;
+    int currentValue = WATER_SOURCE_VALUE + 1;
 
     std::unordered_set<size_t> newWaterPositions{};
 
@@ -262,7 +283,7 @@ int main()
     {
         for (size_t currentIndex : currentOutermostWaterIndices)
         {
-            EdgeMask isOnEdge = getIsEdgeMask(&grid, currentIndex);
+            EdgeMask isOnEdge = getEdgeMask(&grid, currentIndex);
 
             if (isAnyEdge(&isOnEdge))
             {
@@ -271,11 +292,11 @@ int main()
             }
 
             std::array neighborIndices = getNeighborIndices(&grid, currentIndex);
-            for (size_t i = 0; i < 4; i++)
+            for (size_t i = 0; i < neighborIndices.size(); i++)
             {
                 size_t neighborIndex = neighborIndices[i];
                 Cell* neighbor = getCellAtIndex(&grid, neighborIndex);
-                if (!isCellEmpty(neighbor))
+                if (!isCellEmpty(neighbor) || isCellWall(neighbor))
                     continue;
 
                 neighbor->value = currentValue;
@@ -291,8 +312,8 @@ int main()
             return 0;
         }
 
-        std::swap(newWaterPositions, currentOutermostWaterIndices);
         currentOutermostWaterIndices.clear();
+        std::swap(newWaterPositions, currentOutermostWaterIndices);
         currentValue++;
     }
 
