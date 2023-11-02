@@ -117,7 +117,7 @@ EdgeMask getEdgeMask(Grid* grid, size_t currentIndex)
         currentIndex < grid->columnCount,
 
         // Bottom row
-        currentIndex > (grid->columnCount * (grid->rowCount - 1)),
+        currentIndex >= (grid->columnCount * (grid->rowCount - 1)),
     };
     return { isOnEdge };
 }
