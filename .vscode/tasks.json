@@ -10,7 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileBasenameNoExtension}.exe",
-                "-Werror",
+                // "-Werror",
                 "-Wall",
                 "-std=c++20",
             ],
