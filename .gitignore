@@ -9,3 +9,6 @@
 test.md
 test*.cpp
 Tests
+
+*.html
+*.pdf
