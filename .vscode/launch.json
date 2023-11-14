@@ -16,7 +16,7 @@
             "cwd": "${fileDirname}",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask": "Zig C++ build current file"
+            "preLaunchTask": "zig_cpp_current_file"
         }
     ]
 }

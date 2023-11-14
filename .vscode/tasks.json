@@ -2,8 +2,8 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "Zig C++ build current file",
+            "type": "shell",
+            "label": "zig_cpp_current_file",
             "command": "zig",
             "args": [
                 "c++",
@@ -12,7 +12,7 @@
                 "${fileBasenameNoExtension}.exe",
                 // "-Werror",
                 "-Wall",
-                "-std=c++20",
+                "-std=c++20"
             ],
             "options": {
                 "cwd": "${fileDirname}"
