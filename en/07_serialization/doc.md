@@ -433,7 +433,7 @@ if (std::cin.eof())
 
 ## Serialization
 
-*Serialization* means converting an object in memory to a format that can be stored
+*Serialization* means converting an object in memory to a representation that can be stored
 in a text file, or in a binary file.
 *Deserialization* means converting from this file back into an object in memory.
 
