@@ -15,7 +15,7 @@ struct Car
 };
 ```
 
-One of the key idea is that you can have multiple variables of this type 
+One of the key ideas is that you can have multiple variables of this type 
 to represent data about different cars.
 
 ```cpp
@@ -318,3 +318,198 @@ If you do, tagged unions are the go-to solution for me.
   watched the video that explained the use cases,
   and I deliberately want to use exceptions because it fits my problem.
 
+
+## Working with streams
+
+Honestly, streams are a very nice abstraction to have around.
+
+
+### What's a stream?
+
+A *input stream* is an object is an object that you can read data from.
+An *output stream* is an object that you can write data to.
+
+For example `std::cout` is an output stream.
+When you write data to it, it gets copies into the standard out (the console).
+
+```cpp
+// Pump data into the output stream
+std::cout << "Hello";
+```
+
+Analogously, `std::cin` is an input stream.
+
+```cpp
+std::string x;
+std::cin >> x;
+```
+
+`std::cout` and `std::cin` are some global variables, available in every program.
+The type of these variables is `std::ostream` and `std::istream` 
+respectively (o for output, i for input).
+
+
+### File streams
+
+You can also create streams that read from and write to files.
+This can be achieved by using `std::fstream` (file stream, both input and output),
+`std::istream` (input stream, read only), or `std::ostream` (output stream, write only).
+They use RAII to close the handle at the end of the scope of the variable.
+
+```cpp
+#include <fstream>
+
+int main()
+{
+    std::ifstream inputFile;
+    std::ofstream outputFile;
+    inputFile.open("input.txt");
+    outputFile.open("output.txt");
+
+    // Copy the contents of the file.
+    // `rdbuf` makes a buffered reader.
+    outputFile << inputFile.rdbuf();
+
+    // And then some more stuff.
+    outputFile << std::endl;
+    outputFile << "Hello";
+
+    return 0;
+}
+```
+
+There are more methods to skip until a certain position (`seekg`),
+read one byte at a time (`get` / `peek`), copy into a local buffer (`read`), etc.
+There are similar methods for the writer as well.
+
+I'm not going to describe these, try to play around and google what you need.
+
+
+### Validation used in streams
+
+Spot the bug in the following code.
+
+```cpp
+int a;
+std::cin >> a;
+```
+
+The bug is that it doesn't check if the conversion failed or not.
+Streams use the bool approach for this, but rather than returning `true` or `false`,
+they set a flag on the object. 
+You can check these flags by calling one of the 
+[appropritate methods](https://cplusplus.com/reference/ios/ios/good/)
+
+```cpp
+int a;
+std::cin >> a;
+
+// It's a set of flags, but you can use the 
+// helper methods to check for specific flags.
+// std::ios_base::iostate state = std::cin.rdstate();
+
+// Checks rdstate() for the goodbit flag.
+if (std::cin.good())
+{
+    // Conversion succeeded.
+}
+else
+{
+    // Conversion failed.
+}
+
+```
+
+The flags also allow contain information on whether the end of file has been reached.
+
+```cpp
+// Checks the eofbit flag (End Of File).
+if (std::cin.eof())
+{
+    // End of file reached.
+}
+```
+
+
+## Serialization
+
+*Serialization* means converting an object in memory to a format that can be stored
+in a text file, or in a binary file.
+*Deserialization* means converting from this file back into an object in memory.
+
+For example, if we had an object like this:
+
+```cpp
+struct Car
+{
+    std::string companyName;
+    std::string modelName;
+    std::string numberplateText;
+    int producedYear;
+    int numberOfDoors;
+};
+
+// ...
+
+Car myCar{
+    "Audi", // companyName
+    "A4", // modelName
+    "MD1515", // numberplateText
+    2000, // producedYear
+    4, // numberOfDoors
+};
+```
+
+We could represent it in a text file like this:
+
+```
+Audi
+A4
+MD1515
+2000
+4
+```
+
+Or like this:
+
+```
+companyName: Audi
+modelName: A4
+numberplateText: MD1515
+producedYear: 2000
+numberOfDoors: 4
+```
+
+Or like this:
+
+```
+Audi|A4|MD1515|2000|4
+```
+
+The idea is that *you* choose how you're going to represent it in the file.
+The rules of how you store that in the text file are called the *serialization format*.
+The most popular ones for flat data are CSV, 
+and for structured data (nested objects) JSON and XML.
+
+In the deserialization phase you'd read this string, and convert it into your object.
+So in goes the string (or the stream), out comes the object.
+
+```cpp
+#include <iostream>
+#include <string>
+
+// std::optional<Car> is basically { Car value; bool isValid; }
+std::optional<Car> deserializeCar(std::istream& stream)
+{
+    Car car;
+
+    // read the first line into car.companyName
+    std::getline(stream, car.companyName);
+    if (!stream.good())
+        return std::nullopt;
+    
+    // ...
+
+    return car;
+}
+```
