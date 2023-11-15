@@ -6,7 +6,6 @@ bool validateCar(const Car& car);
 int main()
 {
     int currentYear = getCurrentYear();
-    std::cout << currentYear;
     Car car{
         "", // empty string not allowed
         "ABC",

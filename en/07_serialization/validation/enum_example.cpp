@@ -1,7 +1,7 @@
 #include <iostream>
 #include "common.h"
 
-enum ValidationResultKind
+enum class ValidationResultKind
 {
     Valid = 0,
     CompanyName_Empty = 1,
@@ -16,7 +16,6 @@ ValidationResultKind validateCar(const Car& car, int currentYear);
 int main()
 {
     int currentYear = getCurrentYear();
-    std::cout << currentYear;
     Car car{
         "", // empty string not allowed
         "ABC",
@@ -31,16 +30,20 @@ int main()
     {
         case ValidationResultKind::Valid:
             std::cout << "All fine";
-            return 0;
+            break;
 
         case ValidationResultKind::NumberOfDoors_Negative:
             std::cout << "Number of doors was negative?? bruh";
-            return 1;
+            break;
         
         default:
             std::cout << "Some other error has occured";
-            return 2;
+            break;
     }
+
+    // You can use the int value of the enum for the error code.
+    // Valid is 0, which checks out with the "no-error" exit code of 0.
+    return static_cast<int>(result);
 }
 
 ValidationResultKind validateCar(const Car& car, int currentYear)
