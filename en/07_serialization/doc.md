@@ -81,7 +81,7 @@ separated by a newline character, for example.
 > [See example](validation/string_multiline_example.cpp)
 
 
-### Enum and flags
+### `enum`
 
 This can be useful when you want to record just the specific kind of error.
 The idea is to give each error a unique number, and return that number.
