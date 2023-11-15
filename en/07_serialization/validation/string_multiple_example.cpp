@@ -37,7 +37,7 @@ bool validateCar(const Car& car, std::ostream& error, int currentYear)
     {
         size_t size = car.numberplateText.size();
         size_t minSymbols = 6;
-        if (size < 6)
+        if (size < minSymbols)
         {
             error << "numberplaceText has less than ";
             error << minSymbols;

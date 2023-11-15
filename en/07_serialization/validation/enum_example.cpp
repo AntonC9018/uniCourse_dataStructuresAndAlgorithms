@@ -59,7 +59,7 @@ ValidationResultKind validateCar(const Car& car, int currentYear)
     {
         size_t size = car.numberplateText.size();
         size_t minSymbols = 6;
-        if (size < 6)
+        if (size < minSymbols)
         {
             return ValidationResultKind::NumberplateText_TooShort;
         }

@@ -183,45 +183,15 @@ So this approach does generalize to multiple errors.
 
 Also note that `union` cannot be used with non-trivial types, like `std::string`.
 
-### Exceptions
-
-This is a very complicated system, initially designed to be able to
-handle errors that occur in constructors, where you can't use the other approaches,
-because constructors are void functions.
-I'm not going to go deep into how they work, I'm only going to mention
-how to use APIs that signal errors through exceptions.
-
-> See a [very long and detailed video](https://www.youtube.com/watch?v=HXJmrMnnDYQ)
-> on exception use cases
-
-You can think of a function that uses exceptions to return errors
-as forcing you to handle the error, or your program will crash.
-For contrast, in the previous approaches the error is treated as a regular return value,
-and may be completely ignored without any repercussions 
-(well, not checking it is likely a logical error anyway),
-but this is for the most part a language limitation.
-
-For example, let's look at a function `std::stoi` that converts a string to an integer.
-It *throws* the exception `std::invalid_argument` if the string is not a valid integer,
-and `std::out_of_range` if the integer is too big to fit the 32 bits of an `int`.
-See the example code [here](validation/exception_example.cpp).
-
-You can try removing one of the `catch` blocks and triggering that exception.
-It will make your program crash.
-
-
-### My recommendation
-
-Generally, never use exceptions in your own code, unless you are on the receiving end
-of it, aka it's fine to catch it, but don't throw it in your code.
-Consider using one of the appropriate other techniques.
-
-Tagged union is the most flexible technique,
-but it is easy to mess up in its raw form.
+Tagged unions are a very flexible, 
+but they are easy to mess up in their raw form.
 You can easily crash your program by accessing a wrong field.
 It is generally advisable to wrap the union in a class,
 access the payload for the correct kind of error through a get method,
 where you'd `assert` the correct kind of error is present.
+This is to detect the read from a wrong field immediately,
+and not later in the program, when it's no longer obvious 
+what the source of the unexpected behavior was.
 
 A simplified example would be like this:
 
@@ -241,10 +211,10 @@ struct PayloadErrorB
 
 class Result
 {
-    ResultKind kind;
+    ResultKind _kind;
     union {
-        int payloadErrorA;
-        PayloadErrorB payloadErrorB;
+        int _payloadErrorA;
+        PayloadErrorB _payloadErrorB;
     };
 
 public:
@@ -256,43 +226,78 @@ public:
     static Result createErrorA(int payload) 
     { 
         Result result;
-        result.kind = ResultKind::ErrorA;
-        result.payloadErrorA = payload;
+        result._kind = ResultKind::ErrorA;
+        result._payloadErrorA = payload;
         return result;
     }
 
     static Result createErrorB(PayloadErrorB payload) 
     { 
         Result result;
-        result.kind = ResultKind::ErrorB;
-        result.payloadErrorB = payload;
+        result._kind = ResultKind::ErrorB;
+        result._payloadErrorB = payload;
         return result;
     }
 
-    ResultKind getKind() const 
+    ResultKind kind() const 
     { 
-        return kind; 
+        return _kind; 
     }
 
-    int& getPayloadErrorA() const 
+    int& payloadErrorA()
     { 
-        assert(kind == ResultKind::ErrorA);
-        return payloadErrorA; 
+        assert(_kind == ResultKind::ErrorA);
+        return _payloadErrorA; 
     }
 
-    PayloadErrorB& getPayloadErrorB() const 
+    PayloadErrorB& payloadErrorB()
     { 
-        assert(kind == ResultKind::ErrorB);
-        return payloadErrorB; 
+        assert(_kind == ResultKind::ErrorB);
+        return _payloadErrorB; 
     }
 };
 ```
 
-Don't bother with tagged unions, unless you actually need the payload.
 There are also libraries that offer more general tagged union implementations,
 that can work for any payload types, see for example 
 [`boost::variant`](https://www.boost.org/doc/libs/1_78_0/doc/html/variant.html), 
 or [`std::variant`](https://en.cppreference.com/w/cpp/utility/variant).
+
+### Exceptions
+
+This is a very complicated system, initially designed to be able to
+handle errors that occur in constructors, where you can't use the other approaches,
+because constructors are void functions.
+I'm not going to go deep into how they work, I'm only going to mention
+how to use APIs that signal errors through exceptions.
+
+> See a [very long and detailed video](https://www.youtube.com/watch?v=HXJmrMnnDYQ)
+> on exception use cases.
+
+You can think of a function that uses exceptions to return errors
+as forcing you to handle the error, or your program will crash.
+For contrast, in the previous approaches the error is treated as a regular return value,
+and may be completely ignored without any repercussions 
+(well, not checking it is likely a logical error anyway),
+but this is for the most part a language limitation.
+
+For example, let's look at a function `std::stoi` that converts a string to an integer.
+It *throws* the exception `std::invalid_argument` if the string is not a valid integer,
+and `std::out_of_range` if the integer is too big to fit into the 32 bits of an `int`.
+See the example code [here](validation/exception_example.cpp).
+
+You can try removing one of the `catch` blocks and triggering that exception.
+It will make your program crash.
+
+
+### My recommendation
+
+Generally, never use exceptions in your own code, unless you are on the receiving end
+of it, aka it's fine to catch it, but don't throw it in your code.
+Consider using one of the appropriate other techniques.
+
+Don't bother with tagged unions, unless you actually need the payload.
+If you do, tagged unions are the go-to solution for me.
 
 
 ### To sum up:
