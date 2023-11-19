@@ -2086,10 +2086,10 @@ but the added flexibility + removing code duplication may be really valuable.
 C++ has a "standard way" of doing iterators, which is required for some
 templated functions in the standard library to work:
 
-- The iterator type overloads the `++` operator, to mean the `advance` method in my example.
+- The iterator type overloads the `++` operator, to mean the `advance` method from my example.
   It also optionally overloads the `--` operators, to go back to the previous element.
 
-- The iterator type overloads the `*` operator, to mean the `value` method in my example. 
+- The iterator type overloads the `*` operator, to mean the `value` method from my example. 
   `*` as in pointer dereference. It should return a reference if possible.
 
 - The iterator has a special state that means the end of iteration.
