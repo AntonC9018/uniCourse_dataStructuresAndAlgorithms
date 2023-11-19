@@ -1816,6 +1816,7 @@ For example, let's say we had a `Demo` type:
 struct Demo
 {
     int value;
+    int expensiveToCopy[1000];
 };
 
 void stuff(const Demo& demo)
@@ -1947,7 +1948,7 @@ int readState(const Demo* const this)
 ### `const_cast`
 
 This can be useful when you know an operation will not modify an object,
-even though it is not declared const, and vice-versa.
+even though it is not declared const.
 A valid use case is for example a function that provides access 
 to the n-th element of an array.
 
@@ -2234,8 +2235,8 @@ is encoded in.
 - The first bit being `1` means that *the current character is contained in multiple bytes*.
 - The second bit after `1` being `0` means that *the current byte is not the first byte
   of the character*; otherwise, it is.
-- The number of `1` before a `0`, following the first `1` indicates *the number of bytes
-  of the character*.
+- The number of `1` before a `0`, following the first `1`, including the first `1`,
+  indicates *the number of bytes of the character*.
 
 The idea is that any byte by itself has the context of whether it's a self-contained
 ASCII byte (the first bit is 0), the first byte of a sequence (pattern 11),
@@ -2270,7 +2271,7 @@ a character increased to 2 and 4 respectively, and use similar ideas for encodin
 
 A *C string* refers to a sequence of characters that ends with a *null terminator*, 
 aka the number 0.
-In C (not C++!), strings are typically stored in an inline array, or as a pointer, 
+In C (not C++!), strings are typically stored in an array, or as a pointer, 
 without storing the length of the string (the number of characters).
 The program is assumed to trust that wherever the string ends, it will have a 0 byte,
 which is how it can find the end of the string.
@@ -2424,7 +2425,7 @@ std::cout << string1; // Hello world
 ```
 
 Also, for short strings, it doesn't actually allocate memory on the heap.
-If the string is short enough, it will store it in a buffer inside the object itself 
+If the string is short enough, it will store it inside the object itself 
 (typically up to 23 bytes doesn't allocate).
 This is called *small string optimization*.
 
