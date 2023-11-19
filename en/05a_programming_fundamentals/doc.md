@@ -2057,7 +2057,7 @@ int sumDFS(const Node* node)
 You can see how this might become problematic if the traversal logic was more involved
 than just recursively looping through the children.
 
-Now, one of the ways to solve this would be to use the strategy pattern / the visitor pattern,
+Now, one of the ways to solve this would be to use the strategy pattern,
 aka passing in a function to be executed when visiting a node.
 How you do that will be described later.
 
@@ -3129,4 +3129,168 @@ int main()
     TrafficLightColor color = static_cast<TrafficLightColor>(5);
     return 0;
 }
+```
+
+
+## Polymorphism
+
+*Polymorphism* means that a single function name can refer to different functions,
+depending on some context.
+
+### Static polymorphism (function overloading)
+
+I've already kind of glossed over this idea in the `template` section.
+It refers to declaring multiple functions with the same name, but different
+number of parameters / parameter types.
+
+```cpp
+void f(int a)
+{
+    std::cout << "int";
+}
+
+void f(float a)
+{
+    std::cout << "float";
+}
+
+int main()
+{
+    f(5); // int
+    f(5.0f); // float
+    return 0;
+}
+```
+
+There really isn't much beyond this.
+The key idea to understand is that the same name `f` refers to multiple functions,
+and which function exactly is called is decided based on the context -- the type of the argument. 
+
+Note that C, in contrast to C++, does not have function overloading.
+In C, in order to implement the same functionality, 
+you would have to give the functions different names.
+Usually, the names are prefixed with the type of the argument (in some way).
+
+```cpp
+void f_int(int a)
+{
+    std::cout << "int";
+}
+
+void f_float(float a)
+{
+    std::cout << "float";
+}
+
+int main()
+{
+    f_int(5); // int
+    f_float(5.0f); // float
+    return 0;
+}
+```
+
+It turns out more explicit on the caller site, 
+which function overloading strives to eliminate.
+If the program already has the type information,
+based on which it can decide which function to call,
+why would you want to repeat it again every time you want to call the function?
+That's basically the idea.
+
+
+### Function pointers
+
+The idea here is to call the function by its address,
+stored in a pointer variable.
+You can use it to implement a rudimentary form of the strategy pattern.
+It's not as powerful as the iterator pattern when it comes to collections,
+but it can still be used in this context.
+
+See [the example](./polymorphism/strategy_func_pointer.cpp).
+
+You can use this idea to assign behavior to things.
+Imagine wiring up a certain function to be called when a button is pressed.  
+See [an example](./polymorphism/button_func_pointer_example.cpp).
+
+Sure, you could achieve that with a `switch`. 
+But what if the main function doesn't or shouldn't know about 
+all of the possible functions?
+Like in the [following example](./polymorphism/button_func_pointer_decentralized.cpp).
+This can easily happen, if you want to keep the actual functions in some other module
+as static, and only expose a function that would add these internal functions to the list.
+You could never achieve something like this with a switch,
+without exposing the internal functions.
+
+```cpp
+// main.cpp
+#include "math_functions.h"
+// ...
+addMathFuncs(functionList);
+```
+
+```cpp
+// math_functions.h
+void addMathFuncs(std::vector<ButtonFunc>& functionList);
+```
+
+```cpp
+// math_functions.c
+static void add()
+{
+    // ...
+}
+
+static void subtract()
+{
+    // ...
+}
+
+void addMathFuncs(std::vector<ButtonFunc>& functionList)
+{
+    functionList.push_back(add);
+    functionList.push_back(subtract);
+}
+```
+
+### Passing private state to the function
+
+When using function pointers,
+the one issue that you'll have is that you can't pass data to it.
+If you want a function that adds 5 to each number of the array, you're fine,
+but if you want one that adds N to each number of the array,
+you simply can't do this by passing a parameter.
+
+```cpp
+void add5(int& a)
+{
+    a += 5;
+}
+
+void addN(int& a, int n)
+{
+    a += n;
+}
+
+// ...
+
+// Totally fine
+forEachItem(list, add5);
+
+// Not possible
+int increment = 5;
+forEachItem(list, addN(???, increment));
+```
+
+Sure, you can kind of solve this by using global variables,
+but don't, because that's a bad idea.
+It makes for an inflexible and messy program.
+Sure, if `forEachItem` only accepted function pointers, you'd have no choice,
+but if you could change `forEachItem`, you could do better.
+
+What we want is to allow the user to pass *custom context* to the function,
+meaning some additional data that the function needs to do its thing. 
+A simple enough solution would be to make add a template parameter for the context type,
+and pass it together with the function pointer.
+
+```cpp
 ```
