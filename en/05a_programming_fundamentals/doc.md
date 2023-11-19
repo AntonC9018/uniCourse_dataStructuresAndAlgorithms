@@ -3285,18 +3285,18 @@ Sure, you can kind of solve this by using global variables,
 but don't, because that's a bad idea.
 It makes for an inflexible and messy program.
 Sure, if `forEachItem` only accepted function pointers, you'd have no choice,
-but if you could change `forEachItem`, you could do better.
+but if you can change `forEachItem`, you can do better.
 
 What we want is to allow the user to pass *custom context* to the function,
 meaning some additional data that the function needs to do its thing. 
-A simple enough solution would be to make add a template parameter for the context type,
+A simple enough solution would be to add a template parameter for the context type,
 and pass it together with the function pointer.
 
 See [the example](./polymorphism/func_with_context.cpp).
 It has a few issues, like not being able to easily make a `const` overload,
 without duplicating all of the code, but don't worry about that too much.
-The other issue that different functions might require different context types,
-so the polymorphism is basically back to static here,
+The other issue is that different functions might require different context types,
+so the polymorphism is basically back to being static here,
 but by the context type, rather than the function. 
 
 
@@ -3310,22 +3310,20 @@ See [the example](./polymorphism/func_with_context_void.cpp).
 
 Also, since some context might be smaller than a pointer, 
 we could store it directly, instead of the pointer.
-We can do this by passing in a `size_t` instead
+We can do this by passing in a `uintptr_t` instead
 and then casting it to the expected type, which will either be a pointer, 
-or the value type.
-
-```cpp
-using Context = size_t;
-
-void add5(Context context)
-{
-    int* value = reinterpret_cast<int*>(context);
-    *value += 5;
-}
-```
+or the value type. 
+See [an example](./polymorphism/pointer_value_union_small_example.cpp).
 
 
-### Unifying the private state and the function
+### Templated state and function in one (functors)
 
-You can use a template parameter to unify the function and the context.
-The idea is to have the parameters that is passed in 
+This is another approach to static polymorphism, with context passing.
+The idea is that you can unify the context and the function into a single type,
+by making the function you want to call into a member function of that type.
+
+
+In order to be able to reliably call the method from the templated
+definition, you have to decide on the name that the function should have.
+C++ selected the invocation operator `operator()` for this,
+because with that you are now able to pass function pointers as functors.

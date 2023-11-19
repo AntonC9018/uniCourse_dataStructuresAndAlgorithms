@@ -10,9 +10,9 @@
                 "${file}",
                 "-o",
                 "${fileBasenameNoExtension}.exe",
-                // "-Werror",
+                "-Werror",
                 "-Wall",
-                "-std=c++20"
+                "-std=c++20",
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -24,6 +24,31 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
+        {
+            "type": "shell",
+            "label": "gcc_cpp_current_file",
+            "command": "g++",
+            "args": [
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}.exe",
+                // "-Werror",
+                "-Wall",
+                "-std=c++20",
+                "-ggdb",
+                // "-O1"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
     ]
 }
