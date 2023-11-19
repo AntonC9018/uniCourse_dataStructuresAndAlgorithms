@@ -3321,9 +3321,21 @@ See [an example](./polymorphism/pointer_value_union_small_example.cpp).
 This is another approach to static polymorphism, with context passing.
 The idea is that you can unify the context and the function into a single type,
 by making the function you want to call into a member function of that type.
-
+See [the example](./polymorphism/functor_custom_name.cpp).
 
 In order to be able to reliably call the method from the templated
 definition, you have to decide on the name that the function should have.
-C++ selected the invocation operator `operator()` for this,
+C++ selected the *invocation operator `operator(parameters)`* for this,
 because with that you are now able to pass function pointers as functors.
+See [the example](./polymorphism/functor.cpp).
+
+Note that for each new type that you pass into `forEachItem`,
+a new copy of the function will be created in the final executable
+(unless trimmed / merged into an existing definition / optimized away).
+This most of the time isn't something you should be concerned about,
+but especially large function could bloat your executable (aka make it way too large),
+because of which using a more dynamic approach could be more reasonable.
+
+Functors is an idea that is very often used by functions in 
+e.g. the `algorithm` module of the standard library,
+which works with iterators as well.
