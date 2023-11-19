@@ -2062,7 +2062,7 @@ How you do that will be described later.
 
 Here, we will discuss the iterator pattern instead, 
 which is another solution to this problem,
-and to that arguably a more flexible one.
+and to that a more flexible one.
 It will allow you to pause the traversal, and resume it later, as well as do 
 any operation with the elements, and accessing any of your variables you want.
 
