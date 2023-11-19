@@ -10,6 +10,7 @@ struct Node
     {
         for (size_t i = 0; i < this->children.size(); i++)
             delete this->children[i];
+        children.~vector();
     }
 };
 
