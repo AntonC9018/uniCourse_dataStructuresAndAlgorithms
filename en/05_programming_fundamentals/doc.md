@@ -160,21 +160,21 @@ or 4 bytes (32 bit) on 32-bit architectures.
 > Now technically it could be anything, but in 99.9% of cases it's one of those to.
 > For the purposes of furthering the discussion, assume it's 8 bytes.
 
-The special type `size_t` indicates the maximum length in bytes of a block of memory,
-which by extension also means the maximum possible address, because each byte of memory has an address,
-and the address of the last byte of that block of memory is the maximum possible address,
-and is equal to the `size - 1`.
-So `size_t` is the type that can store any size (in bytes) of a block of memory, or any address.
+The special type `size_t` indicates the maximum length in bytes of a block of memory.
+It is also the same as the address size, on most architectures.
 It's usually used for indices or lengths of arrays.
 
-We can retrieve the numerical value of an address by converting it to a `size_t`.
+The type that can store any pointer is `uintptr_t` and 
+it will be the same size as `size_t` for all modern processors used in personal computers.
+
+We can retrieve the numerical value of an address by converting it to a `uintptr_t`.
 Converting from one type into another is called "casting".
 
 ```cpp
 int someNumber = 1;
 int* pointerToSomeNumber = &someNumber;
-// Cast the pointer to a size_t, by interpreting the memory address stored in there as a number.
-size_t addressOfSomeNumber = (size_t) pointerToSomeNumber;
+// Cast the pointer to a uintptr_t, by interpreting the memory address stored in there as a number.
+uintptr_t addressOfSomeNumber = (uintptr_t) pointerToSomeNumber;
 ```
 
 ### Dereferencing
@@ -266,7 +266,7 @@ int valueOfOtherValueAgain = **pointerToPointerToValue;
  
 <details> 
 <summary>Response</summary>
-`size_t` (typically 8 bytes), just like any other memory address.
+`uintptr_t` (typically 8 bytes), just like any other memory address.
 </details>
 
 
@@ -352,11 +352,11 @@ ptrdiff_t negativeNumberOfItems = pointerToArray0 - pointerToArray2; // -2
 ```
 
 If you want to find out the difference in bytes between two pointers,
-you can cast them to `std::byte*` or `size_t` or `ptrdiff_t` first.
+you can cast them to `std::byte*` or `uintptr_t` or `ptrdiff_t` first.
 Also, you cannot subtract two `void*`, or pointers of different types, unless you cast them first.
 
 > The best way is probably `std::byte*`, because it won't cause any weirdness with signedness.
-> When subtracting a `size_t`, you have to be certain the left one is bigger,
+> When subtracting a `uintptr_t`, you have to be certain the left one is bigger,
 > and casting to `ptrdiff_t` loses one bit of information (the sign bit).
 > Subtracting types other than `std::byte*` for pointers very quickly gets into the territory of
 > "is overflow or underflow defined for this type, or is it undefined behavior?",
@@ -367,7 +367,7 @@ int array[3] = { 1, 2, 3 };
 int* pointerToArray0 = &array[0];
 int* pointerToArray2 = &array[2];
 
-size_t numberOfBytes = (size_t) pointerToArray2 - (size_t) pointerToArray0; // 8
+uintptr_t numberOfBytes = (uintptr_t) pointerToArray2 - (uintptr_t) pointerToArray0; // 8
 // or
 ptrdiff_t numberOfBytes = (ptrdiff_t) pointerToArray2 - (ptrdiff_t) pointerToArray0; // 8
 // or

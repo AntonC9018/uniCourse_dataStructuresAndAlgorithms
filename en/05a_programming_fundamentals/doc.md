@@ -3295,3 +3295,37 @@ and pass it together with the function pointer.
 See [the example](./polymorphism/func_with_context.cpp).
 It has a few issues, like not being able to easily make a `const` overload,
 without duplicating all of the code, but don't worry about that too much.
+The other issue that different functions might require different context types,
+so the polymorphism is basically back to static here,
+but by the context type, rather than the function. 
+
+
+### `void*` as the context type
+
+The special thing about `void*` is that it can be used to store a pointer to anything,
+which means you can pass any context type with it.
+The only issue is that you'll have to make sure you pass the right thing,
+and cast it back in the function on the receiving end, so it's pretty fragile.
+See [the example](./polymorphism/func_with_context_void.cpp).
+
+Also, since some context might be smaller than a pointer, 
+we could store it directly, instead of the pointer.
+We can do this by passing in a `size_t` instead
+and then casting it to the expected type, which will either be a pointer, 
+or the value type.
+
+```cpp
+using Context = size_t;
+
+void add5(Context context)
+{
+    int* value = reinterpret_cast<int*>(context);
+    *value += 5;
+}
+```
+
+
+### Unifying the private state and the function
+
+You can use a template parameter to unify the function and the context.
+The idea is to have the parameters that is passed in 

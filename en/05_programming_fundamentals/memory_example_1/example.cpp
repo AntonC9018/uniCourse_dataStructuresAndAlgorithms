@@ -20,7 +20,7 @@ int main()
     // 0 0 0 0 0 0 0 36 
     int* iPointer = &i; // make sure people understand what & does
     // 0 0 0 0 0 0 0 36
-    size_t iPointerAsNumber = (size_t) iPointer;
+    uintptr_t iPointerAsNumber = (uintptr_t) iPointer;
 
     std::cout << iPointerAsNumber << std::endl;
     std::cout << (*iPointer) << std::endl;

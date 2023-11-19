@@ -15,7 +15,7 @@ int main()
     int* b = heapMemory(); // prints 0
 
     // The addresses won't be equal, every new invocation gets a new `a`.
-    bool areAddressesEqual = ((size_t) a == (size_t) b);
+    bool areAddressesEqual = ((uintptr_t) a == (uintptr_t) b);
     std::cout << "are addresses equal: " << (areAddressesEqual ? "yes" : "no") << std::endl;
 
     // The values will!

@@ -20,7 +20,7 @@ int main()
     int* b = heapMemory(); // prints 0
 
     // no
-    bool areAddressesEqual = ((size_t) a == (size_t) b);
+    bool areAddressesEqual = ((uintptr_t) a == (uintptr_t) b);
     std::cout << "are addresses equal: " << (areAddressesEqual ? "yes" : "no") << std::endl;
 
     // yes
