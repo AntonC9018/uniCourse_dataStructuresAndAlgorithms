@@ -3292,5 +3292,6 @@ meaning some additional data that the function needs to do its thing.
 A simple enough solution would be to make add a template parameter for the context type,
 and pass it together with the function pointer.
 
-```cpp
-```
+See [the example](./polymorphism/func_with_context.cpp).
+It has a few issues, like not being able to easily make a `const` overload,
+without duplicating all of the code, but don't worry about that too much.
