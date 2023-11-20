@@ -71,7 +71,8 @@
         "string": "cpp",
         "algorithm": "cpp",
         "chrono": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "optional": "cpp"
     },
     "cmake.configureOnOpen": true
 }

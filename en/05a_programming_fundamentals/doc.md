@@ -3399,7 +3399,7 @@ See [the example](./polymorphism/functor_custom_name.cpp).
 
 In order to be able to reliably call the method from the templated
 definition, you have to decide on the name that the function should have.
-C++ selected the *invocation operator `operator(parameters)`* for this,
+C++ selected the *invocation operator `operator()`* for this,
 because with that you are now able to pass function pointers as functors.
 See [the example](./polymorphism/functor.cpp).
 
@@ -3555,6 +3555,34 @@ The variables will only be captured if they are used in the lambda.
 That is illustrated [here](./polymorphism/lambda_4_functor_sizes.cpp).
 
 
+### A little foreword: function types
+
+It's kind of mind-bending, but function declarations have types in this language.
+The syntax is like with the function pointer types, but without the `(*)`:
+
+```cpp
+using FuncType = void(int, int);
+FuncType f; // declaration
+void f(int a, int b); // an equivalent declaration
+void f(int a, int b) { } // definition
+```
+
+Similar to variables, you can have function references:
+
+```cpp
+using FuncRefType = void(&)(int, int);
+void f(int a, int b) { }
+FuncRefType g = f;
+```
+
+Or, with `decltype`:
+
+```cpp
+void f(int a, int b) {}
+decltype(f)& g = f;
+```
+
+
 ### `std::function`
 
 `std::function` is introduced by the documentation 
@@ -3573,4 +3601,11 @@ To be noted that `std::function` is an RAII type and may allocate dynamic memory
 which implies that it won't lead to code bloat, mentioned previously,
 but it will lead to a runtime overhead when calling the function
 (just as it's slower to call a function via a function pointer rather than directly,
-it is slower to call a functor via an `std::function` rather than than directly).
+it is slower to call a functor via an `std::function` rather than directly).
+
+See [an example](./polymorphism/std_function.cpp),
+which illustrates working with `std::function` 
+with up to two levels of indirection, 
+using both lambdas and functors,
+and provides an example of how to move things into lambdas.
+
