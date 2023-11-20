@@ -3131,16 +3131,88 @@ int main()
 }
 ```
 
+## `auto` and `decltype`
+
+The section about polymorphism kind of requires `auto` when discussing lambdas,
+so I figured I'll explain this here.
+
+### `decltype`
+
+`decltype` is an operator that returns you the type of an expression:
+
+```cpp
+struct T { float x; };
+
+int main()
+{
+    int a{1};
+    decltype(a) b{2}; // int b{2};
+    b += a;
+
+    T t{1.0f};
+    decltype(t) t1{2.0f}; // T t1{2.0f};
+    decltype(t.x) x{3.0f}; // float x{3.0f};
+    decltype(T::x) x1{4.0f}; // float x1{4.0f};
+    return 0;
+}
+```
+
+It cannot be used at time of declaration.
+
+```cpp
+decltype(a) a = 5; // doesn't compile
+decltype(5) a = 5; // this is fine
+```
+
+The expression can be more complicated:
+
+```cpp
+#include <math>
+decltype(std::max(5, 6) - static_cast<float>(5)) a = 5.0f; // float a = 5.0f;
+```
+
+### `auto`
+
+`auto` is a keyword that allows the compiler to *deduce* or *imply* the type of a variable
+from the expression type that you assign to it.
+
+`auto x = y;` is equivalent to `decltype(y) x = y;`.
+
+```cpp
+int a1 = 5;
+auto a2 = 5; // int a2{5};
+```
+
+It can also be used as the return type of functions.
+In the following example, the compiler deduces that the return type of `f` is `int`:
+
+```cpp
+auto f()
+{
+    return 5;
+}
+```
+
+To be extra clear, variables declared with `auto` as the type are still statically typed.
+You cannot reassign a different type to them.
+
+```cpp
+auto a = 5;
+a = 6; // fine
+a = "Hello"; // doesn't compile
+```
 
 ## Polymorphism
 
 *Polymorphism* means that a single function name can refer to different functions,
 depending on some context.
+It is one of the most important programming concepts, 
+which enables some really powerful techniques.
 
 ### Static polymorphism (function overloading)
 
 I've already kind of glossed over this idea in the `template` section.
-It refers to declaring multiple functions with the same name, but different
+It refers to declaring multiple functions with the same name, but a different
 number of parameters / parameter types.
 
 ```cpp
@@ -3202,9 +3274,11 @@ That's basically the idea.
 
 The idea here is to call the function by its address,
 stored in a pointer variable.
+
 You can use it to implement a rudimentary form of the strategy pattern.
 It's not as powerful as the iterator pattern when it comes to collections,
 but it can still be used in this context.
+You can also compound the two together to create an abstraction over loops.
 
 See [the example](./polymorphism/strategy_func_pointer.cpp).
 
@@ -3339,3 +3413,164 @@ because of which using a more dynamic approach could be more reasonable.
 Functors is an idea that is very often used by functions in 
 e.g. the `algorithm` module of the standard library,
 which works with iterators as well.
+
+
+### Lambdas
+
+Lambdas allow us to define functions without naming them (anonymous functions),
+potentially inside the scope of another function,
+and creating the functor type automatically, which is done by the compiler.
+
+#### Without context
+
+To define a lambda function without context,
+which would be equivalent to a regular free function 
+(a regular function in the global scope), 
+you use [the following syntax](./polymorphism/lambda_1_void.cpp).
+You can pass it directly as a parameter to other functions 
+that accept a function pointer as well.
+
+#### Private context
+
+To define the private context of the function,
+you put the parameters of the lambda in the square brackets (called the *capture group*).
+*Copies* of whatever variables you put in the square brackets 
+will be accessible in the function.
+Under the hood, the compiler creates a functor type,
+and those variables become private fields in that type.
+See [the example](./polymorphism/lambda_2_context_copy.cpp).
+
+> Note that `mutable` is required if the function wants 
+> to change the value of its context.
+> It adds `const` to the generated `operator()` method,
+> so it follows the regular `const` of references vs values.
+
+The act of copying the variables is called *capturing*.
+
+#### Sharing the context
+
+You can also capture by reference, 
+by prepending `&` to the variable name in the capture group.
+This way you can share context between multiple lambdas.
+See [the example](./polymorphism/lambda_3_shared_context.cpp).
+
+You can mix the capture types.
+```cpp
+int a = 1;
+float b = 8;
+auto func = [&a, b]() mutable {
+    a += 5;
+    b *= 10;
+};
+
+func();
+
+assert(a == 6);
+assert(b == 8); // `b` was copied by value
+```
+
+And have multiple captures of the same type:
+```cpp
+int a;
+float b;
+auto func = [&a, &b]() mutable {
+    a += 5;
+    b *= 10;
+};
+```
+
+#### Passing lambdas to templates
+
+For example, in [this example](./polymorphism/functor.cpp), 
+you can pass lambdas to the function:
+```cpp
+// `a` is a reference here.
+forEachItem(values, [&a = values[0]](float& value){ value *= a; });
+
+// or store the address (`a` is a pointer here)
+forEachItem(values, [a = &values[0]](float& value){ value *= *a; });
+```
+
+#### Dangling references
+
+Be careful with capturing by reference,
+because you can easily end up with dangling references,
+if you try to return the functor having by-reference 
+captures to local variables from a function.
+
+```cpp
+auto createBadFunctor()
+{
+    int localVariable{5};
+    return [&localVariable](){ return localVariable; };
+}
+
+int main()
+{
+    auto func = createBadFunctor();
+    func(); // references deleted memory -- undefined behavior
+    return 0;
+}
+```
+
+#### Capturing everything
+
+You can capture everything visible in the current scope
+by value with `[=]` or by reference with `[&]`.
+
+```cpp
+int a = 1;
+int b = 2;
+{
+    auto func = [=]() mutable {
+        a += 5;
+        b *= 10;
+    };
+    func(); // a = 1, b = 2
+}
+{
+    auto func = [&]() {
+        a += 5;
+        b *= 10;
+    };
+    func(); // a = 6, b = 20
+}
+```
+
+You can also use `&` or `=` to set the default,
+and then overwrite it for specific variables:
+
+```cpp
+int a = 1;
+int b = 2;
+// The default is &, but `a` is to be copied.
+auto func = [&, a]() mutable {
+    a += 5;
+    b *= 10;
+};
+func(); // a = 1, b = 20
+```
+
+The variables will only be captured if they are used in the lambda.
+That is illustrated [here](./polymorphism/lambda_4_functor_sizes.cpp).
+
+
+### `std::function`
+
+`std::function` is introduced by the documentation 
+as a *general-purpose polymorphic function wrapper*.
+The idea of `std::function` is to be able to assign any function, or functor
+to it, potentially capturing its context, and then be able to call it later.
+
+It's a really powerful type, which effectively allows you 
+to implement dynamic polymorphism in a very flexible way,
+which means you can pass it to functions without it having 
+a template parameter for the functor.
+
+To be noted that `std::function` is an RAII type and may allocate dynamic memory.
+
+`std::function` truly implements dynamic polymorphism,
+which implies that it won't lead to code bloat, mentioned previously,
+but it will lead to a runtime overhead when calling the function
+(just as it's slower to call a function via a function pointer rather than directly,
+it is slower to call a functor via an `std::function` rather than than directly).

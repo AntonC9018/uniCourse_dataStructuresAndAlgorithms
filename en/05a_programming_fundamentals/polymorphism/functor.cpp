@@ -43,5 +43,6 @@ int main()
     forEachItem(values, printFloat);
     forEachItem(values, Multiplier{2.0f});
     forEachItem(values, printFloat);
+    forEachItem(values, [&a = values[0]](float& value){ value *= a; });
     return 0;
 }

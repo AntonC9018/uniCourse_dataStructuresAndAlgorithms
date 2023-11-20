@@ -7,6 +7,11 @@ struct BufferListNode
     std::array<float, 8> items;
 };
 
+// Creates 4 blocks of 8 floats
+// | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+// | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+// | 0 | 2 | 4 | 6 | 8 | 10| 12| 14|
+// | 0 | 3 | 6 | 9 | 12| 15| 18| 21|
 BufferListNode* createTestBuffer()
 {
     BufferListNode* head = new BufferListNode;
