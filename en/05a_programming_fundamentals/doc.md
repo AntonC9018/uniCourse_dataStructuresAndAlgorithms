@@ -2129,8 +2129,8 @@ That would make sense for e.g. a `DynamicArray`, but it probably won't for a gra
 
 `static_cast` for basic types is equivalent to a regular C cast.
 It's different only in the context of class inheritance.
-The values of pointers casted with `static_cast` are not modified, 
-it just changes the type, and fails at compile time if it can't do that safely.
+It can cast, with potentially modifying the pointer,
+to a less derived type, but not the other way.
 
 `reinterpret_cast` is a cast that just changes the type of a pointer,
 without changing the address, skipping checks if the conversion is valid.
@@ -3374,7 +3374,7 @@ so the polymorphism is basically back to being static here,
 but by the context type, rather than the function. 
 
 
-### `void*` as the context type
+### `void*` as the context type (type erasure)
 
 The special thing about `void*` is that it can be used to store a pointer to anything,
 which means you can pass any context type with it.
@@ -3605,7 +3605,161 @@ it is slower to call a functor via an `std::function` rather than directly).
 
 See [an example](./polymorphism/std_function.cpp),
 which illustrates working with `std::function` 
-with up to two levels of indirection, 
-using both lambdas and functors,
+with up to two levels of indirection, using both lambdas and functors,
 and provides an example of how to move things into lambdas.
 
+
+### Passing multiple functions (vtable, fat pointers)
+
+If your function has to call more than one function,
+passed as an argument, you can use your existing knowledge to
+figure out how to do that.
+A potential implementation would be:
+
+```cpp
+using IntroductionFunc = void(*)();
+using SumFunc = int(*)(int a, int b);
+
+struct Behavior
+{
+    PrintFunc introduceOneself;
+    SumFunc answer;
+};
+
+void test(Behavior& behavior)
+{
+    behavior.introduceOneself();
+    int answer = behavior.answer(5, 6);
+    std::cout << answer << std::endl;
+}
+
+int main()
+{
+    Behavior dumbCat{
+        [](){ std::cout << "Meow" << std::endl; },
+        [](int a, int b){ return 0; },
+    };
+    Behavior smartDog{
+        [](){ std::cout << "Woof" << std::endl; },
+        [](int a, int b){ return a + b; },
+    };
+    test(dumbCat); // Meow, 0
+    test(smartDog); // Woof, 11
+
+    return 0;
+}
+```
+
+You can imagine a similar implementation with `std::function`, 
+which will allow you to capture some context in each function as well.
+
+Now, what do would we do if we wanted both the functions to share the same context,
+and we also wanted dynamic polymorphism (we need functions to be either function pointers
+or `std::function`)?
+Sure, you could share the context in the `std::function`s, but that's kind of wasteful.
+We would end up storing the context's memory somewhere, and then we'd have to store 
+a reference to it in each of the functions.
+We could avoid storing the pointers by just passing the context manually.
+
+A solution which does what we want is to use `void*` for the context.
+Sure, it is clunky, and dangerous, but it does what we want.
+What we do, is we would pass the context pointer together with 
+a pointer to the struct with the functions, 
+which is also called a *virtual table* or a *vtable*.
+The reason why we use a pointer to the vtable, rather than the vtable itself,
+is simply because we want to use the same vtable for multiple contexts.
+See [the example](./polymorphism/fat_pointer.cpp).
+
+> This is basically how Rust does dynamic polymorphism.
+
+
+### Multiple virtual tables
+
+Assume we wanted to have multiple vtables.
+Let's say we want to use a vtable for greetings
+(methods like `introduceSelf` when greeting and `excuseSelf` when leaving),
+and another vtable for computing answers to questions
+(like `computeSum` and `writeCppProgram`).
+
+Sure, we could do this by using fat pointers, 
+but *virtual inheritance* in C++ takes a different approach.
+Instead, they *modify the pointer*, 
+adjusting it to be looking at the method table, 
+rather than the start of the object,
+and *store the offset to the start of the object data in the vtable*,
+to be able to get at the context.
+
+See [the example](./polymorphism/multiple_vtables_cpp_approach.cpp).
+
+I'm not going to force you to understand the code thoroughly,
+but if you do want to understand the topic, be sure to learn it.
+Here's [a video](https://youtu.be/QzJL-8WbpuU) I've been suggested too.
+
+
+### Pure abstract base classes and virtual functions
+
+The method table idea that I have described and implemented previously
+is available as a primitive in C++.
+
+> It may not be exactly the same my implementation, but it uses some very similar ideas.
+
+To define the layout of a vtable, you can define a *pure abstract base class*
+with *virtual* methods, set to `0`, meaning "unimplemented".
+Another name for this is an *interface*.
+
+```cpp
+class GreetingAbstractBase
+{
+public:
+    virtual void introduceSelf() = 0;
+    virtual void excuseSelf() = 0;
+};
+```
+
+You can then *inherit* these in a class with your context,
+and *override* the methods.
+This will initialize the vtables, and add an implicit pointer field
+to each of them in your *derived* class (the one that inherits).
+
+```cpp
+class Person : 
+    public GreetingAbstractBase,
+    public QuestionAbstractBase
+{
+    // ...
+
+    void introduceSelf() override
+    {
+        // ...
+    }
+
+    // ...
+}
+```
+
+The conversion syntax and the call syntax are then way simpler,
+it is a language primitive after all.
+
+```cpp
+Person person;
+
+Person* personPtr = &person;
+GreetingAbstractBase* greetingPtr = personPtr;
+QuestionAbstractBase* questionPtr = personPtr;
+
+// The pointers look at different memory.
+assert(static_cast<uint8_t*>(greetingsPtr) - static_cast<uint8_t*>(questionPtr) != 0);
+
+// The context is adjusted and passed implicitly.
+greetingPtr->introduceSelf();
+```
+
+It is less flexible than fat pointers,
+because it marries the data (the context) to the methods, 
+but it is convenient due to the simpler syntax,
+so you might find yourself using it anyway.
+
+In general, prefer using `std::function` 
+instead of interfaces when you only need a single method.
+Otherwise, interfaces are a good choice.
+But, of course, before you do, consider if you really want dynamic polymorphism at all.
