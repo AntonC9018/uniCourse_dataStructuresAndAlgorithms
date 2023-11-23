@@ -72,7 +72,8 @@
         "algorithm": "cpp",
         "chrono": "cpp",
         "iomanip": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "bitset": "cpp"
     },
     "cmake.configureOnOpen": true
 }
