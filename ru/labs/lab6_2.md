@@ -6,7 +6,7 @@
 ## Система ивентов (событий)
 
 1. Реализуйте простую систему ивентов (событий).
-   Интерфейс пользователя должен быть следующий:
+   Интерфейс должен быть следующий:
 
 * Структура `EventSystem`, которая будет хранить список обработчиков (event handler)
   для каждого типа события.
@@ -105,7 +105,7 @@
         size_t eventId,
         EventInfo<Payload>* event)
     {
-        std::span<EventHandler<Payload>> handlers = getEventHandlersById<Payload>(eventSystem);
+        std::span<EventHandler<Payload>> handlers = getEventHandlersById<Payload>(eventSystem, eventId);
         for (const auto& handler : handlers)
         {
             handler.func(event);
