@@ -5,7 +5,7 @@
 // N^2/2  + ..N + C
 // O(N^2) -- execution
 // O(1) -- memory
-void insertionSort(std::span<int> arr)
+void selectionSort(std::span<int> arr)
 {
     // N - 1
     while (arr.size() > 1)
@@ -40,7 +40,7 @@ void insertionSort(std::span<int> arr)
 int main()
 {
     std::array<int, 5> arr = { 5, 4, 3, 9, 1 };
-    insertionSort(arr);
+    selectionSort(arr);
     assertSorted(arr);
     return 0;
 }

@@ -16,8 +16,12 @@ void deleteMergeResultBuffer(MergeResult buffer)
     delete[] buffer.data();
 }
 
-// O(log_2(N) * N) = O(N log(N))
-// O(2N) = O(N)
+// "log_2(N)" means "how many times N can be divided by 2?"
+
+// log_2(N) layers, N items processed in each layer.
+
+// O(log_2(N) * N) = O(N log(N)) -- execution
+// O(2N) = O(N) -- memory
 MergeResult mergeSort(std::span<int> arr)
 {
     if (arr.size() == 0)
@@ -45,7 +49,7 @@ MergeResult mergeSort(std::span<int> arr)
     size_t leftIndex = 0;
     size_t rightIndex = 0;
     size_t resultIndex = 0;
-    // N
+    // ~N
     while (leftIndex < left.size() && rightIndex < right.size())
     {
         int leftValue = left[leftIndex];
