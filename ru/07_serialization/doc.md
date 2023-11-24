@@ -57,7 +57,7 @@ int main()
 
 > [`time_t`](https://en.cppreference.com/w/cpp/chrono/c/time_t)
 
-> [Пример](../../en/07_serialization/validation/bool_example.cpp)
+> [Пример](../../en/07_serialization/validation/01_bool_example.cpp)
 
 ### Сообщение ошибки
 
@@ -70,12 +70,12 @@ int main()
 с легкостью определить, что пошло не так,
 потому что им придется анализировать сообщение ошибки.
 
-> [Пример](../../en/07_serialization/validation/string_example.cpp)
+> [Пример](../../en/07_serialization/validation/02_string_example.cpp)
 
 Этот подход также позволяет записывать несколько ошибок, выводя каждую,
 разделенную символом, например, новой строки.
 
-> [Пример](../../en/07_serialization/validation/string_multiline_example.cpp)
+> [Пример](../../en/07_serialization/validation/03_string_multiline_example.cpp)
 
 
 ### `enum`
@@ -83,7 +83,7 @@ int main()
 Это может быть полезно, когда вы хотите сохранить только тип одной ошибки.
 Идея заключается в том, чтобы дать каждой ошибке уникальный номер и возвращать этот номер.
 
-> [Пример](../../en/07_serialization/validation/enum_example.cpp)
+> [Пример](../../en/07_serialization/validation/04_enum_example.cpp)
 
 ### Флаги
 
@@ -152,7 +152,7 @@ int main()
 результат не будет полностью состоять из нулей.
 Это означает, что *для проверки наличия некоторых флагов можно использовать `&` и сравнение с нулем*.
 
-Все это объединено в [примере](../../en/07_serialization/validation/enum_flags_example.cpp).
+Все это объединено в [примере](../../en/07_serialization/validation/05_enum_flags_example.cpp).
 
 
 ### Tagged union
@@ -170,7 +170,7 @@ int main()
 При использовании `union`, однако, нужно быть очень осторожным, чтобы не читать из неверного поля.
 Чтение из поля неверного типа считается неопределенным поведением!
 
-> [Пример](../../en/07_serialization/validation/tagged_union_example.cpp)
+> [Пример](../../en/07_serialization/validation/06_tagged_union_example.cpp)
 
 Вы можете изменить функцию валидации так, чтобы она принимала `std::vector` ошибок,
 добавляла все записанные ошибки туда, а затем проходила по ним
@@ -280,7 +280,7 @@ public:
 Например, рассмотрим функцию `std::stoi`, которая преобразует строку в целое число.
 Она *генерирует* исключение `std::invalid_argument`, если строка не является числом,
 и `std::out_of_range`, если число не влезает в 32 битах `int`.
-Смотрите пример кода [здесь](../../en/07_serialization/validation/exception_example.cpp).
+Смотрите пример кода [здесь](../../en/07_serialization/validation/07_exception_usage_example.cpp).
 
 Вы можете попробовать удалить один из блоков `catch` и вызвать это исключение.
 

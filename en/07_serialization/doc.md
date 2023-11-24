@@ -60,7 +60,7 @@ to diagnose the problem when it occurs.
 
 > [`time_t`](https://en.cppreference.com/w/cpp/chrono/c/time_t)
 
-> [See example](validation/bool_example.cpp)
+> [See example](validation/01_bool_example.cpp)
 
 ### String error
 
@@ -73,12 +73,12 @@ by looking at the logs, but your other functions won't be able to
 easily determine what went wrong, because they'd have to be able to
 analyze the string. 
 
-> [See example](validation/string_example.cpp)
+> [See example](validation/02_string_example.cpp)
 
 This approach also allows you to record multiple errors, outputting each,
 separated by a newline character, for example.
 
-> [See example](validation/string_multiline_example.cpp)
+> [See example](validation/03_string_multiline_example.cpp)
 
 
 ### `enum`
@@ -86,7 +86,7 @@ separated by a newline character, for example.
 This can be useful when you want to record just the specific kind of error.
 The idea is to give each error a unique number, and return that number.
 
-> [See example](validation/enum_example.cpp)
+> [See example](validation/04_enum_example.cpp)
 
 ### Flags
 
@@ -156,7 +156,7 @@ Consequently, if at least one of the bits from `b` is also set in `a`,
 the result will not be all zeros.
 This means that *to check for presence of some flags, you can use `&` and compare to zero*.
 
-I put it all together in the [example](./validation/enum_flags_example.cpp).
+I put it all together in the [example](./validation/05_enum_flags_example.cpp).
 
 
 ### Tagged union
@@ -174,7 +174,7 @@ We can do that by using `union`.
 When using unions, however, you have to be super careful to not read from the wrong field.
 Reading from a field of the wrong type is considered undefined behavior!
 
-> [See example](validation/tagged_union_example.cpp)
+> [See example](validation/06_tagged_union_example.cpp)
 
 You can modify the validation function to accept an `std::vector` of errors,
 add all of the errors recorded in there, and then loop through it on the
@@ -284,7 +284,7 @@ but this is for the most part a language limitation.
 For example, let's look at a function `std::stoi` that converts a string to an integer.
 It *throws* the exception `std::invalid_argument` if the string is not a valid integer,
 and `std::out_of_range` if the integer is too big to fit into the 32 bits of an `int`.
-See the example code [here](validation/exception_example.cpp).
+See the example code [here](validation/07_exception_usage_example.cpp).
 
 You can try removing one of the `catch` blocks and triggering that exception.
 It will make your program crash.
