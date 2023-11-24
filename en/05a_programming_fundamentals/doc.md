@@ -3443,7 +3443,7 @@ See [the example](./polymorphism/lambda_2_context_copy.cpp).
 > Note that `mutable` is required if the function wants 
 > to change the value of its context.
 > It adds `const` to the generated `operator()` method,
-> so it follows the regular `const` of references vs values.
+> so it follows the regular `const` rules of references vs values.
 
 The act of copying the variables is called *capturing*.
 
@@ -3763,3 +3763,5 @@ In general, prefer using `std::function`
 instead of interfaces when you only need a single method.
 Otherwise, interfaces are a good choice.
 But, of course, before you do, consider if you really want dynamic polymorphism at all.
+
+See [an example](./polymorphism/abstract_base_class.cpp)
