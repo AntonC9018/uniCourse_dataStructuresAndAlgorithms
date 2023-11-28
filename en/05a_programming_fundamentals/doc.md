@@ -3380,7 +3380,7 @@ The special thing about `void*` is that it can be used to store a pointer to any
 which means you can pass any context type with it.
 The only issue is that you'll have to make sure you pass the right thing,
 and cast it back in the function on the receiving end, so it's pretty fragile.
-See [the example](./polymorphism/func_with_context_void.cpp).
+See [the example](./polymorphism/func_void_pointer_context.cpp).
 
 Also, since some context might be smaller than a pointer, 
 we could store it directly, instead of the pointer.
