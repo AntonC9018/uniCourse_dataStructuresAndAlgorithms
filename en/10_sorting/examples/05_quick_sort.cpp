@@ -1,5 +1,7 @@
 #include "common.h"
 
+// O(N log(N)) -- execution
+// O(log N) -- memory
 void quickSort(std::span<int> arr)
 {
     if (arr.size() <= 1)
@@ -12,20 +14,20 @@ void quickSort(std::span<int> arr)
         if (arr[i] >= pivotValue)
             continue;
 
-        lessThanCounter++;
-
         int lesserValue = arr[i];
         int otherValue = arr[lessThanCounter];
 
         arr[i] = otherValue;
         arr[lessThanCounter] = lesserValue;
+
+        lessThanCounter++;
     }
 
     arr[0] = arr[lessThanCounter];
     arr[lessThanCounter] = pivotValue;
 
     {
-        int* leftStart = arr.data();
+        int* leftStart = arr.data(); // &arr[0]
         size_t leftLength = lessThanCounter;
         quickSort({ leftStart, leftLength });
     }

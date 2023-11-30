@@ -31,7 +31,7 @@ MergeResult mergeSort(std::span<int> arr)
 
     if (arr.size() == 1)
     {
-        MergeResult result = createMergeResultBuffer(arr.size());
+        MergeResult result = createMergeResultBuffer(1);
         result[0] = arr[0];
         return result;
     }

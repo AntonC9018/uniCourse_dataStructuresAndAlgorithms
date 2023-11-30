@@ -23,9 +23,9 @@ void bubbleSort(std::span<int> arr)
         }
     }
 
-    arr = { arr.begin(), arr.size() - 1 };
+    std::span arr1 = { arr.begin(), arr.size() - 1 };
 
-    bubbleSort(arr);
+    bubbleSort(arr1);
 }
 
 int main()
