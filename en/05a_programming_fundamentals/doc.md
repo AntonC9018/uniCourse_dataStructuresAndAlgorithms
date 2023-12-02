@@ -2272,7 +2272,7 @@ a character increased to 2 and 4 respectively, and use similar ideas for encodin
 A *C string* refers to a sequence of characters that ends with a *null terminator*, 
 aka the number 0.
 In C (not C++!), strings are typically stored in an array, or as a pointer, 
-without storing the length of the string (the number of characters).
+without storing the length of the string (the number of bytes).
 The program is assumed to trust that wherever the string ends, it will have a 0 byte,
 which is how it can find the end of the string.
 
