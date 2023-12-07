@@ -156,7 +156,7 @@ struct Person
 };
 
 // Можете считать `Person::printAge` именем этой функции.
-static void Person::printAge(Person* person)
+void Person::printAge(Person* person)
 {
     std::cout << person->age;
 }
