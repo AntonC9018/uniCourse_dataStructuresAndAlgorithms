@@ -43,10 +43,8 @@ void quickSort(std::span<int> arr)
 
 int main()
 {
-    std::array arr = { 5, 4, 3, 9, 1, 10 };
+    std::array arr = { 5, 4, 3, 9, 1, 10, 1, 8, 12 };
     quickSort(arr);
-    for (auto i : arr)
-        std::cout << i << ",";
     assertSorted(arr);
     return 0;
 }
