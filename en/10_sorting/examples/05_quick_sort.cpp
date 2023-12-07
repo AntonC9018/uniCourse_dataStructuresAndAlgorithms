@@ -1,4 +1,5 @@
 #include "common.h"
+#include <iostream>
 
 // O(N log(N)) -- execution
 // O(log N) -- memory
@@ -7,23 +8,24 @@ void quickSort(std::span<int> arr)
     if (arr.size() <= 1)
         return;
 
-    int pivotValue = arr[0];
+    size_t pivotIndex = 0;
+    int pivotValue = arr[pivotIndex];
     size_t lessThanCounter = 0;
     for (size_t i = 1; i < arr.size(); i++)
     {
         if (arr[i] >= pivotValue)
             continue;
 
+        lessThanCounter++;
+
         int lesserValue = arr[i];
         int otherValue = arr[lessThanCounter];
 
         arr[i] = otherValue;
         arr[lessThanCounter] = lesserValue;
-
-        lessThanCounter++;
     }
 
-    arr[0] = arr[lessThanCounter];
+    arr[pivotIndex] = arr[lessThanCounter];
     arr[lessThanCounter] = pivotValue;
 
     {
@@ -41,8 +43,10 @@ void quickSort(std::span<int> arr)
 
 int main()
 {
-    std::array arr = { 5, 4, 3, 9, 1 };
+    std::array arr = { 5, 4, 3, 9, 1, 10 };
     quickSort(arr);
+    for (auto i : arr)
+        std::cout << i << ",";
     assertSorted(arr);
     return 0;
 }
