@@ -157,7 +157,7 @@ struct Person
 };
 
 // Think of `Person::printAge` as the name of this function.
-static void Person::printAge(Person* person)
+void Person::printAge(Person* person)
 {
     std::cout << person->age;
 }
