@@ -42,7 +42,15 @@ struct Position
     };
 };
 
-inline const Position INVALID_POSITION = { -1, -1 };
+inline Position createPosition(int x, int y)
+{
+    Position p = { };
+    p.x = x;
+    p.y = y;
+    return p;
+}
+
+inline const Position INVALID_POSITION = createPosition(-1, -1);
 
 enum class Diagonal
 {
@@ -97,7 +105,7 @@ int main()
     // Game loop
     while (true)
     {
-        CellValue playerValue = (CellValue)(playerIndex + 1);
+        CellValue playerValue = static_cast<CellValue>(playerIndex + 1);
         assert(playerValue < CellValue::_count);
 
         Position selectedPosition = INVALID_POSITION;
@@ -194,7 +202,7 @@ const char axisName[COORDINATE_COUNT] = {
 };
 char getAxisName(CoordinateAxisIndex axisIndex)
 {
-    return axisName[(int) axisIndex];
+    return axisName[static_cast<size_t>(axisIndex)];
 }
 
 
@@ -222,7 +230,7 @@ Position selectPositionFromConsole(Board* board, CellValue playerValue)
         for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
         {
             int *coord = &selectedPosition.coordinates[coordIndex];
-            char axisName = getAxisName((CoordinateAxisIndex)coordIndex);
+            char axisName = getAxisName(static_cast<CoordinateAxisIndex>(coordIndex));
             while (true)
             {
                 bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
@@ -289,8 +297,6 @@ Position getFirstEmptyPosition(Board* board)
         {
             // Can also call it like this:
             //
-            // if (valueAt(board, { x, y }) == CellValue::empty)
-            //
             // This creates a position with x and y
             // (it knows it needs to create a Position and not anything else,
             // because it has the information on the function parameter types)
@@ -302,9 +308,7 @@ Position getFirstEmptyPosition(Board* board)
                 p.y = y;
                 return p;
 
-                // return Position { x, y };
-
-                // return { x, y };
+                // return createPosition(x, y);
             }
         }
     }
@@ -316,7 +320,7 @@ bool checkRowOrColumnCombination(
     Position position,
     CoordinateAxisIndex coordinateIndexToVary)
 {
-    int* changingValue = &position.coordinates[(int) coordinateIndexToVary];
+    int* changingValue = &position.coordinates[static_cast<size_t>(coordinateIndexToVary)];
 
     // Here, the dereferencing operator also effectively converts it to a reference.
     // It doesn't read from that memory, it writes to it.
@@ -445,7 +449,7 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
         bool hasWon = checkRowOrColumnCombination(
             board,
             move,
-            (CoordinateAxisIndex) coordinateIndex);
+            static_cast<CoordinateAxisIndex>(coordinateIndex));
         if (hasWon)
             return true;
     }
@@ -475,8 +479,8 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move)
 // loop through the memory and check if each cell is not the empty cell.
 int checkBoardFullyOccupied(Board* board)
 {
-    CellValue* elementsAsLinearBuffer = (CellValue*) board->elements;
-    size_t numCells = (size_t)(BOARD_DIMENSION * BOARD_DIMENSION);
+    CellValue* elementsAsLinearBuffer = static_cast<CellValue*>(*board->elements);
+    size_t numCells = static_cast<size_t>(BOARD_DIMENSION * BOARD_DIMENSION);
     for (int cellIndex = 0; cellIndex < numCells; cellIndex++)
     {
         if (elementsAsLinearBuffer[cellIndex] != CellValue::empty)
