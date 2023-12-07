@@ -82,14 +82,12 @@ bool checkIfPlayerWonByMakingMove(Board* board, Position move);
 int checkBoardFullyOccupied(Board* board);
 void printGameState(Board* board);
 CellValue& valueAt(Board* board, Position position);
+Position selectPositionFromConsole(Board* board, CellValue playerValue);
 
 // Main doesn't need a split declaration, because it's not supposed
 // to be called from anywhere else.
 int main()
 {
-    // 0 - empty
-    // 1 - X
-    // 2 - O
     Board board = {};
     int playerIndex = 0;
     int playerCount = 2;
@@ -110,54 +108,11 @@ int main()
 
         switch (playerKind)
         {
-            // Player turn.
             case PlayerKind::human:
             {
-                while (true)
-                {
-                    char playerSymbol = getSymbol(playerValue);
-                    // Calling `cout << string` returns back the `cout` object itself.
-                    // This is why we can chain multiple `<<` operators.
-                    // The next calls will call `<<` on the `cout` object,
-                    // returned from the previous `<<` call.
-                    std::cout
-                        << "Select position to put "
-                        << playerSymbol
-                        << ": "
-                        << std::endl;
-
-                    // NOTE:
-                    // It's problematic to do these loops in C++ with enums.
-                    // I actually don't know what the best way would be
-                    // (trying to avoid casts as much as possible).
-                    for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
-                    {
-                        int* coord = &selectedPosition.coordinates[coordIndex];
-                        char axisName = getAxisName((CoordinateAxisIndex) coordIndex);
-                        while (true)
-                        {
-                            bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
-                            if (savedValidNumber)
-                                break;
-                        }
-                    }
-
-                    CellValue selectedValue = valueAt(&board, selectedPosition);
-                    if (selectedValue != CellValue::empty)
-                    {
-                        std::cout
-                            << "Input position not empty!"
-                            << std::endl;
-                        continue;
-                    }
-
-                    // Input selected.
-                    break;
-                }
-
+                selectedPosition = selectPositionFromConsole(&board, playerValue);
                 break;
             }
-            // Computer turn.
             case PlayerKind::computer:
             {
                 // Just find the first empty position (for now).
@@ -203,7 +158,7 @@ int main()
         playerIndex %= playerCount;
     }
 
-    return 1;
+    return 0;
 }
 
 // const char[3] symbols = { ' ', 'X', 'O' };
@@ -240,6 +195,53 @@ const char axisName[COORDINATE_COUNT] = {
 char getAxisName(CoordinateAxisIndex axisIndex)
 {
     return axisName[(int) axisIndex];
+}
+
+
+Position selectPositionFromConsole(Board* board, CellValue playerValue)
+{
+    while (true)
+    {
+        char playerSymbol = getSymbol(playerValue);
+        // Calling `cout << string` returns back the `cout` object itself.
+        // This is why we can chain multiple `<<` operators.
+        // The next calls will call `<<` on the `cout` object,
+        // returned from the previous `<<` call.
+        std::cout
+            << "Select position to put "
+            << playerSymbol
+            << ": "
+            << std::endl;
+
+        Position selectedPosition;
+
+        // NOTE:
+        // It's problematic to do these loops in C++ with enums.
+        // I actually don't know what the best way would be
+        // (trying to avoid casts as much as possible).
+        for (int coordIndex = 0; coordIndex < COORDINATE_COUNT; coordIndex++)
+        {
+            int *coord = &selectedPosition.coordinates[coordIndex];
+            char axisName = getAxisName((CoordinateAxisIndex)coordIndex);
+            while (true)
+            {
+                bool savedValidNumber = getCoordinateFromConsole(coord, axisName);
+                if (savedValidNumber)
+                    break;
+            }
+        }
+
+        CellValue selectedValue = valueAt(board, selectedPosition);
+        if (selectedValue != CellValue::empty)
+        {
+            std::cout
+                << "Input position not empty!"
+                << std::endl;
+            continue;
+        }
+
+        return selectedPosition;
+    }
 }
 
 bool getCoordinateFromConsole(int* outCoordinate, char coordinateName)
