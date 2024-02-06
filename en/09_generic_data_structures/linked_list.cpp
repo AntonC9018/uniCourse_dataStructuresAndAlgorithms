@@ -41,7 +41,10 @@ int removeFromStart(LinkedList* list) // dequeue
     Node* secondNode = firstNode->nextNode;
 
     if (firstNode == list->lastNode)
+    {
         list->lastNode = nullptr;
+    }
+
     list->firstNode = secondNode;
 
     int value = firstNode->value;

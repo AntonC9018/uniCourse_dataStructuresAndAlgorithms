@@ -75,10 +75,10 @@ int main()
 
     //    (heap memory)
     // | address | value |
-    // | 500     | ??    |
-    // | 504     | ??    |
-    // | 508     | ??    |
-    // | 512     | ??    |
+    // | 500     | ??    | <- buffer.arr[0]
+    // | 504     | ??    | <- buffer.arr[1]
+    // | 508     | ??    | <- buffer.arr[2]
+    // | 512     | ??    | <- buffer.arr[3]
     Buffer buffer = createDynamicBuffer(maxElementCount);
 
     for (size_t i = 0; i < getMaxElementCount(&buffer); i++)

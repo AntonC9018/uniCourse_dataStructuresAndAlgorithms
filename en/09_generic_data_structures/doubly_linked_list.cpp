@@ -44,10 +44,14 @@ void removeFromStart(LinkedList* list)
     Node* secondNode = firstNode->nextNode;
 
     if (secondNode != nullptr)
+    {
         secondNode->previousNode = nullptr;
+    }
 
     if (firstNode == list->lastNode)
+    {
         list->lastNode = nullptr;
+    }
 
     list->firstNode = secondNode;
 
@@ -59,20 +63,21 @@ void removeFromEnd(LinkedList* list)
     assert(list->lastNode != nullptr);
 
     Node* lastNode = list->lastNode;
-    Node* nextToLastNode = lastNode->previousNode;
+    Node* secondToLastNode = lastNode->previousNode;
 
     if (list->firstNode == lastNode)
     {
         list->firstNode = nullptr;
     }
 
-    if (nextToLastNode != nullptr)
+    if (secondToLastNode != nullptr)
     {
-        nextToLastNode->nextNode = nullptr;
+        secondToLastNode->nextNode = nullptr;
     }
 
+    list->lastNode = secondToLastNode;
 
-    list->lastNode = nextToLastNode;
+    delete lastNode;
 }
 
 

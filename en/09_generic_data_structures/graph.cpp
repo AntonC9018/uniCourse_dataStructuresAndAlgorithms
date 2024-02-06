@@ -13,14 +13,18 @@ void printValuesOfNeighborsOfNeighbors(GraphNode* node)
     {
         GraphNode* neighbor = node->neighbors[i];
         if (neighbor == nullptr)
+        {
             break;
+        }
         
         for (size_t j = 0; j < neighbor->neighbors.size(); j++)
         {
             GraphNode* neigborsNeighbor = neighbor->neighbors[j];
 
             if (neigborsNeighbor == nullptr)
+            {
                 break;
+            }
 
             std::cout << neigborsNeighbor->value;
         }
