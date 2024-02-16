@@ -1,7 +1,6 @@
-#include <iostream>
 #include "common.h"
 
-bool validateCar(const Car& car);
+bool validateCar(const Car& car, int currentYear);
 
 int main()
 {

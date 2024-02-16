@@ -78,7 +78,7 @@ analyze the string.
 This approach also allows you to record multiple errors, outputting each,
 separated by a newline character, for example.
 
-> [See example](validation/03_string_multiline_example.cpp)
+> [See example](validation/03_string_multiple_example.cpp)
 
 
 ### `enum`
