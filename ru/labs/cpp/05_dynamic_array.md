@@ -1,9 +1,9 @@
-# Лаборатоная работа 4
+# 5. Пример: динамический массив
 
 ## 1. Процедуральный динамический массив
 
-> Основано на темах [с array-ами](../../en/06_arrays) (`std::span`, `std::array`),
-> и примерах с буферами в теме [generic data structures](../../en/09_generic_data_structures).
+> Основано на темах [с array-ами](../../../en/06_arrays) (`std::span`, `std::array`),
+> и примерах с буферами в теме [generic data structures](../../../en/09_generic_data_structures).
 
 Распишите код для структуры данных динамического массива:
 
