@@ -6,7 +6,7 @@
 
 `template` на базовом уровне позволяет автоматизировать создание перегрузок функций.
 
-> См. [простой пример](../../en/05a_programming_fundamentals/headers/template/example_1).
+> См. [простой пример](../../en/05a_programming_fundamentals/template/example_1).
 
 Рассмотрим следующий пример:
 
@@ -87,7 +87,7 @@ int main()
 
 > Технически гарантии об этом отсутствуют.
 
-> См. [пример этого](../../en/05a_programming_fundamentals/headers/template/example_2).
+> См. [пример этого](../../en/05a_programming_fundamentals/template/example_2).
 
 
 
@@ -97,11 +97,11 @@ int main()
 Точно так же вы можете использовать `template` для типов (структур/классов).
 Если у вас есть только поля в типе, это не вызывает дополнительных проблем.
 
-> См. [пример 3](../../en/05a_programming_fundamentals/headers/template/example_3).
+> См. [пример 3](../../en/05a_programming_fundamentals/template/example_3).
 
 Это работает, даже если методы определены на месте в вашем типе.
 
-> См. [пример 4](../../en/05a_programming_fundamentals/headers/template/example_4).
+> См. [пример 4](../../en/05a_programming_fundamentals/template/example_4).
 
 
 ## Явное инстанцирование шаблона
@@ -115,13 +115,13 @@ int main()
 Вы также можете импортировать файл с определением шаблона (`f.cpp`),
 и явно инстанциировать его в другом файле.
 
-> См. [пример 5](../../en/05a_programming_fundamentals/headers/template/example_5).
+> См. [пример 5](../../en/05a_programming_fundamentals/template/example_5).
 
 Для типов это работает аналогичным образом.
 Методы, только объявленные, но не определенные, в определении шаблона требуют
 явного инстанцирования шаблона для определения.
 
-> См. [пример 6](../../en/05a_programming_fundamentals/headers/template/example_6)
+> См. [пример 6](../../en/05a_programming_fundamentals/template/example_6)
 
 
 ## Шаблонные методы в шаблонных классах
