@@ -3,15 +3,16 @@
 #include <cassert>
 #include <fstream>
 #include <sstream>
+#include <array>
 
 struct Cell
 {
     int value;
 };
 
-const static inline Cell WALL = { INT_MAX };
-const static inline Cell EMPTY = { 0 };
-const static inline Cell WATER_SOURCE = { 1 };
+constexpr static inline Cell WALL = { INT_MAX };
+constexpr static inline Cell EMPTY = { 0 };
+constexpr static inline Cell WATER_SOURCE = { 1 };
 
 struct Position
 {
@@ -24,6 +25,11 @@ struct Grid
     size_t width;
     size_t height;
 };
+
+size_t getCellCount(const Grid& grid)
+{
+    return grid.width * grid.height;
+}
 
 Grid createGridFromString(std::string_view str)
 {
@@ -78,7 +84,6 @@ Grid createGridFromString(std::string_view str)
             // # -- wall
             // w -- water
             // ' ' -- undiscovered cell
-            else
             {
                 char c = str[stringIndex];
                 switch (c)
@@ -131,19 +136,69 @@ std::string readAllFile(const char* fileName)
     return buffer.str();
 }
 
+const size_t MAX_NEIGHBOR_COUNT = 4;
 
-int main()
+struct EdgeMask
 {
-    std::string fileContent = readAllFile("maze.maze");
-    Grid grid = createGridFromString(fileContent);
+    std::array<bool, MAX_NEIGHBOR_COUNT> values;
+};
 
+EdgeMask getEdgeMask(const Grid& grid, size_t currentIndex)
+{
+    std::array<bool, MAX_NEIGHBOR_COUNT> isOnEdge
+    {
+        // Left column
+        (currentIndex % grid.width) == 0,
+
+        // Right column
+        ((currentIndex + 1) % grid.width) == 0,
+
+        // Top row
+        currentIndex < grid.width,
+
+        // Bottom row
+        currentIndex >= (grid.width * (grid.height - 1)),
+    };
+    return { isOnEdge };
+}
+
+bool isAnyEdge(const EdgeMask& edgeMask)
+{
+    for (size_t i = 0; i < MAX_NEIGHBOR_COUNT; i++)
+    {
+        if (edgeMask.values[i])
+            return true;
+    }
+    return false;
+}
+
+std::array<size_t, MAX_NEIGHBOR_COUNT> getNeighborIndices(const Grid& grid, size_t currentIndex)
+{
+    std::array<size_t, MAX_NEIGHBOR_COUNT> neighborIndices
+    {
+        // Left neighbor
+        currentIndex - 1,
+
+        // Right neighbor
+        currentIndex + 1,
+
+        // Top neighbor
+        currentIndex - grid.width,
+
+        // Bottom neighbor
+        currentIndex + grid.width,
+    };
+    return neighborIndices;
+}
+
+void printGrid(const Grid& grid)
+{
     for (size_t y = 0; y < grid.height; y++)
     {
         for (size_t x = 0; x < grid.width; x++)
         {
             size_t linearIndex = y * grid.width + x;
             Cell cell = grid.firstCell[linearIndex];
-            std::cout << cell.value;
             if (cell.value == WALL.value)
             {
                 std::cout << "#";
@@ -154,28 +209,108 @@ int main()
             }
             else
             {
-                std::cout << "w";
+                std::cout << cell.value;
             }
-        std::cout << std::endl;
         }
         std::cout << std::endl;
     }
+}
+
+void computeAndPrintBacktrace(const Grid& grid, size_t currentIndex)
+{
+    std::vector<size_t> trace{};
+
+    size_t backtrackIndex = currentIndex;
+    while (true)
+    {
+        const Cell& cell = grid.firstCell[backtrackIndex];
+        trace.push_back(backtrackIndex);
+        if (cell.value == WATER_SOURCE.value)
+            break;
+
+        EdgeMask edgeMask = getEdgeMask(grid, backtrackIndex);
+        std::array neighbors = getNeighborIndices(grid, backtrackIndex);
+        int minValue = INT_MAX;
+        size_t minPosition = 0;
+        for (size_t neighborIndex = 0; neighborIndex < neighbors.size(); neighborIndex++)
+        {
+            if (edgeMask.values[neighborIndex])
+                continue;
+
+            size_t neighborPosition = neighbors[neighborIndex];
+            const Cell& neighbor = grid.firstCell[neighborPosition];
+            if (neighbor.value == EMPTY.value)
+                continue;
+
+            if (neighbor.value < minValue)
+            {
+                minValue = neighbor.value;
+                minPosition = neighborPosition;
+            }
+        }
+
+        backtrackIndex = minPosition;
+    }
+
+    std::cout << "The path to exit is: " << std::endl;
+    size_t traceIndex = trace.size() - 1;
+
+    std::cout << trace[traceIndex];
+    // Here we have to work around the fact that size_t is unsigned.
+    while (true)
+    {
+        if (traceIndex == 0)
+            break;
+        traceIndex -= 1;
+
+        std::cout << " --> " << trace[traceIndex];
+    }
+}
+
+int main()
+{
+    std::string fileContent = readAllFile("maze.maze");
+    Grid grid = createGridFromString(fileContent);
+    printGrid(grid);
 
     std::queue<Position> waterPositionsToProcess;
 
-    for (size_t i = 
+    for (size_t i = 0; i < getCellCount(grid); i++)
+    {
+        Cell cell = grid.firstCell[i];
+        if (cell.value != WALL.value
+            && cell.value != WATER_SOURCE.value)
+        {
+            waterPositionsToProcess.push({ i });
+        }
+    }
 
     while (!waterPositionsToProcess.empty())
     {
-        Position p = waterPositionsToProcess.front();
+        Position p = waterPositionsToProcess.back();
         waterPositionsToProcess.pop();
-        std::cout << p.linearIndex << std::endl;
 
-        if (p.linearIndex == 7)
+        Cell& cell = grid.firstCell[p.linearIndex];
+        EdgeMask edgeMask = getEdgeMask(grid, p.linearIndex);
+        bool isOnEdge = isAnyEdge(edgeMask);
+
+        if (isOnEdge)
         {
-            waterPositionsToProcess.push({ 8 });
+            // backtrack
+            computeAndPrintBacktrace(grid, p.linearIndex);
+            return 0;
+        }
+
+        std::array neighborIndices = getNeighborIndices(grid, p.linearIndex);
+        for (size_t i = 0; i < MAX_NEIGHBOR_COUNT; i++)
+        {
+            size_t neighborIndex = neighborIndices[i];
+            Cell& neighbor = grid.firstCell[p.linearIndex];
+            neighbor.value = cell.value + 1;
+            waterPositionsToProcess.push({ neighborIndex });
         }
     }
-    
+
+    std::cout << "The maze has no exit." << std::endl;
     return 0;
 }
