@@ -151,13 +151,13 @@ EdgeMask getEdgeMask(const Grid& grid, size_t currentIndex)
         (currentIndex % grid.width) == 0,
 
         // Right column
-        ((currentIndex + 1) % grid.width) == 0,
+        (currentIndex % grid.width) == grid.width - 1,
 
         // Top row
         currentIndex < grid.width,
 
         // Bottom row
-        currentIndex >= (grid.width * (grid.height - 1)),
+        currentIndex >= getCellCount(grid) - grid.width,
     };
     return { isOnEdge };
 }
@@ -267,19 +267,16 @@ void computeAndPrintBacktrace(const Grid& grid, size_t currentIndex)
     }
 }
 
-int main()
+void doWaterAlgorithm(Grid& grid)
 {
-    std::string fileContent = readAllFile("maze.maze");
-    Grid grid = createGridFromString(fileContent);
-    printGrid(grid);
-
     std::queue<Position> waterPositionsToProcess;
 
-    for (size_t i = 0; i < getCellCount(grid); i++)
+    size_t cellCount = getCellCount(grid);
+    for (size_t i = 0; i < cellCount; i++)
     {
         Cell cell = grid.firstCell[i];
         if (cell.value != WALL.value
-            && cell.value != WATER_SOURCE.value)
+            && cell.value != EMPTY.value)
         {
             waterPositionsToProcess.push({ i });
         }
@@ -298,19 +295,30 @@ int main()
         {
             // backtrack
             computeAndPrintBacktrace(grid, p.linearIndex);
-            return 0;
+            return;
         }
 
         std::array neighborIndices = getNeighborIndices(grid, p.linearIndex);
         for (size_t i = 0; i < MAX_NEIGHBOR_COUNT; i++)
         {
             size_t neighborIndex = neighborIndices[i];
-            Cell& neighbor = grid.firstCell[p.linearIndex];
+            Cell& neighbor = grid.firstCell[neighborIndex];
+            if (neighbor.value != EMPTY.value)
+                continue;
+
             neighbor.value = cell.value + 1;
             waterPositionsToProcess.push({ neighborIndex });
         }
     }
+}
 
-    std::cout << "The maze has no exit." << std::endl;
+int main()
+{
+    std::string fileContent = readAllFile("maze.maze");
+    Grid grid = createGridFromString(fileContent);
+    printGrid(grid);
+    doWaterAlgorithm(grid);
+    destroyGrid(grid);
+
     return 0;
 }
