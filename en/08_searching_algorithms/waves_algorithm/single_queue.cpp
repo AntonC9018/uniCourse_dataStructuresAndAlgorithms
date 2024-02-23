@@ -34,7 +34,7 @@ size_t getCellCount(const Grid& grid)
 Grid createGridFromString(std::string_view str)
 {
     size_t width;
-    {
+   {
         size_t index = 0;
         while (index < str.size())
         {
@@ -284,7 +284,7 @@ void doWaterAlgorithm(Grid& grid)
 
     while (!waterPositionsToProcess.empty())
     {
-        Position p = waterPositionsToProcess.back();
+        Position p = waterPositionsToProcess.front();
         waterPositionsToProcess.pop();
 
         Cell& cell = grid.firstCell[p.linearIndex];
