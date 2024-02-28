@@ -41,7 +41,7 @@ int getElementAtIndex(Buffer* buffer, size_t index)
     return buffer->arr[index];
 }
 
-Buffer createDynamicBuffer(size_t maxElementCount)
+Buffer createDynamicArray(size_t maxElementCount)
 {
     void* memoryBlock = malloc(maxElementCount * sizeof(int));
     int* arr = (int*) memoryBlock;
@@ -78,7 +78,7 @@ int main()
     // | 504     | ??    | <- buffer.arr[1]
     // | 508     | ??    | <- buffer.arr[2]
     // | 512     | ??    | <- buffer.arr[3]
-    Buffer buffer = createDynamicBuffer(maxElementCount);
+    Buffer buffer = createDynamicArray(maxElementCount);
 
     for (size_t i = 0; i < getMaxElementCount(&buffer); i++)
     {
