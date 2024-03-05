@@ -9,6 +9,8 @@
 test.md
 test*.cpp
 Tests
+*.out
 
 *.html
 *.pdf
+
