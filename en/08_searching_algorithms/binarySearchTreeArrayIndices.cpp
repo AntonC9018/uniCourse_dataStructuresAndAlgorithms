@@ -1,26 +1,62 @@
 #include <array>
+#include <span>
 #include <iostream>
 #include <vector>
 
 struct Node
 {
     int value;
-    size_t left;
-    size_t right;
+    size_t leftIndex;
+    size_t rightIndex;
 };
-
-static const inline size_t INVALID_INDEX = 0;
 
 struct BinarySearchTree
 {
     std::vector<Node> nodes;
 };
 
-BinarySearchTree createBinarySearchTree(size_t capacity)
+Node* addNode(BinarySearchTree* tree, int value)
 {
-    BinarySearchTree result {};
-    result.nodes.reserve(capacity);
-    return result;
+    size_t count = tree->nodes.size();
+    tree->nodes.push_back({ value, 0, 0 });
+
+    // nodes.push_back({});
+    // Node* node = &nodes.back();
+    // node->value = value;
+    // node->leftIndex = 0;
+    // node->rightIndex = 0;
+
+    if (count == 0)
+    {
+        return &tree->nodes[count];
+    }
+
+    size_t currentIndex = 0;
+    while (true)
+    {
+        Node* currentNode = &tree->nodes[currentIndex];
+        size_t* indexSlot;
+        if (value > currentNode->value)
+        {
+            indexSlot = &currentNode->rightIndex;
+        }
+        else
+        {
+            indexSlot = &currentNode->leftIndex;
+        }
+
+        if (*indexSlot == 0)
+        {
+            *indexSlot = count;
+            break;
+        }
+        else
+        {
+            currentIndex = *indexSlot;
+        }
+    }
+
+    return &tree->nodes[count];
 }
 
 Node* find(BinarySearchTree* tree, int value)
@@ -30,101 +66,65 @@ Node* find(BinarySearchTree* tree, int value)
         return nullptr;
     }
 
-    size_t currentNodeIndex = 0;
+    size_t currentIndex = 0;
     while (true)
     {
-        Node* currentNode = &tree->nodes[currentNodeIndex];
-        if (currentNode->value == value)
+        Node* currentNode = &tree->nodes[currentIndex];
+        if (value == currentNode->value)
         {
-            // currentNode is the target node;
-            break;
+            return currentNode;
         }
-        else if (value < currentNode->value)
+
+        if (value > currentNode->value)
         {
-            currentNodeIndex = currentNode->left;
+            currentIndex = currentNode->rightIndex;
         }
         else
         {
-            currentNodeIndex = currentNode->right;
+            currentIndex = currentNode->leftIndex;
         }
 
-        if (currentNodeIndex == INVALID_INDEX)
+        if (currentIndex == 0)
         {
             return nullptr;
         }
     }
-
-    return &tree->nodes.at(currentNodeIndex);
 }
 
-Node* addNode(BinarySearchTree* tree, int value)
+void find9AndPrint(BinarySearchTree* tree)
 {
-    size_t newNodeIndex = tree->nodes.size();
-    tree->nodes.push_back({});
-    Node* node = &tree->nodes.at(newNodeIndex);
-    node->value = value;
-    node->left = INVALID_INDEX;
-    node->right = INVALID_INDEX;
-
-    if (newNodeIndex == 0)
+    Node* node = find(tree, 9);
+    if (node == nullptr)
     {
-        return node;
+        std::cout << "Node not found";
     }
-
-    Node* currentNode = &tree->nodes[0];
-    while (true)
+    if (node->leftIndex != 0)
     {
-        if (value > currentNode->value)
-        {
-            if (currentNode->right != INVALID_INDEX)
-            {
-                currentNode = &tree->nodes[currentNode->right];
-            }
-            else
-            {
-                currentNode->right = newNodeIndex;
-                break;
-            }
-        }
-        else
-        {
-            if (currentNode->left != INVALID_INDEX)
-            {
-                currentNode = &tree->nodes[currentNode->left];
-            }
-            else
-            {
-                currentNode->left = newNodeIndex;
-                break;
-            }
-        }
+        std::cout << tree->nodes[node->leftIndex].value << std::endl;
     }
-    return node;
+    if (node->rightIndex != 0)
+    {
+        std::cout << tree->nodes[node->rightIndex].value << std::endl;
+    }
 }
 
 int main()
 {
-    std::array<int, 6> values{1, 5, 3, 4, 9, 7};
-    BinarySearchTree tree = createBinarySearchTree(values.size());
+    std::array values{5, 7, 2, 6, 9};
 
-    for (size_t i = 0; i < values.size(); i++)
+    BinarySearchTree tree{{}};
+
+    // nodes.reserve(values.size() * 2);
+
+    for (size_t count = 0; count < values.size(); count++)
     {
-        int currentValue = values[i];
-        addNode(&tree, currentValue);
+        int value = values[count];
+        addNode(&tree, value);
     }
 
-    Node* node = find(&tree, 5);
-    if (node == nullptr)
-    {
-        std::cout << "Node not found" << std::endl;
-    }
-    if (node->left != INVALID_INDEX)
-    {
-        std::cout << tree.nodes[node->left].value << std::endl;
-    }
-    if (node->right != INVALID_INDEX)
-    {
-        std::cout << tree.nodes[node->right].value << std::endl;
-    }
-    return 0;
+    addNode(&tree, 10);
+    find9AndPrint(&tree);
+
+    addNode(&tree, 8);
+    find9AndPrint(&tree);
 }

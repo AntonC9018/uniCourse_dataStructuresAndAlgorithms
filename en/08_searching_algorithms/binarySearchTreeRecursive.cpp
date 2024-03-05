@@ -34,36 +34,19 @@ Node* findInSubtree(Node* subtreeRoot, int value)
     {
         nextSubtreeRoot = subtreeRoot->left;
     }
-    return findInSubtree(nextSubtreeRoot, value);
+    Node* r = findInSubtree(nextSubtreeRoot, value);
+    return r;
 }
 
 Node* find(BinarySearchTree tree, int value)
 {
-    Node* currentNode = tree.root;
-    while (currentNode != nullptr)
-    {
-        if (currentNode->value == value)
-        {
-            // currentNode is the target node;
-            break;
-        }
-        else if (value < currentNode->value)
-        {
-            currentNode = currentNode->left;
-        }
-        else
-        {
-            currentNode = currentNode->right;
-        }
-    }
-
-    return currentNode;
+    return findInSubtree(tree.root, value);
 }
 
-void internalAddNode(Node* subtreeRoot, Node* node)
+void addNodeIntoSubtree(Node* subtreeRoot, Node* newNode)
 {
     Node** nextSubtreeRoot;
-    if (node->value > subtreeRoot->value)
+    if (newNode->value > subtreeRoot->value)
     {
         nextSubtreeRoot = &subtreeRoot->right;
     }
@@ -74,10 +57,12 @@ void internalAddNode(Node* subtreeRoot, Node* node)
 
     if (*nextSubtreeRoot == nullptr)
     {
-        *nextSubtreeRoot = node;
-        return;
+        *nextSubtreeRoot = newNode;
     }
-    internalAddNode(*nextSubtreeRoot, node);
+    else
+    {
+        addNodeIntoSubtree(*nextSubtreeRoot, newNode);
+    }
 }
 
 Node* addNode(BinarySearchTree* tree, int value)
@@ -93,13 +78,14 @@ Node* addNode(BinarySearchTree* tree, int value)
         return node;
     }
 
-    internalAddNode(tree->root, node);
+    addNodeIntoSubtree(tree->root, node);
+
     return node;
 }
 
 int main()
 {
-    std::array<int, 6> values{1, 5, 3, 4, 9, 7};
+    std::array values{5, 7, 2, 6, 9, 10, 8};
     BinarySearchTree tree;
     tree.root = nullptr;
 
@@ -109,18 +95,18 @@ int main()
         addNode(&tree, currentValue);
     }
 
-    Node* node = find(tree, 5);
+    Node* node = find(tree, 9);
     if (node == nullptr)
     {
-        std::cout << "Node not found" << std::endl;
+        std::cout << "Node not found";
     }
     if (node->left != nullptr)
     {
-        std::cout << node->left->value << std::endl;
+        std::cout << node->left->value;
     }
     if (node->right != nullptr)
     {
-        std::cout << node->right->value << std::endl;
+        std::cout << node->right->value;
     }
     return 0;
 }

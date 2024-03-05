@@ -1,6 +1,6 @@
 #include <array>
 #include <iostream>
-#include <cassert>
+#include <span>
 
 struct Node
 {
@@ -9,26 +9,9 @@ struct Node
     Node* right;
 };
 
-struct BinarySearchTree
+Node* find(Node* treeRoot, int value)
 {
-    Node* arr;
-    size_t capacity;
-    size_t count;
-};
-
-BinarySearchTree createBinarySearchTree(size_t capacity)
-{
-    Node* arr = new Node[capacity];
-    return { arr, capacity, 0 };
-}
-
-Node* find(BinarySearchTree* tree, int value)
-{
-    if (tree->count == 0)
-    {
-        return nullptr;
-    }
-    Node* currentNode = &tree->arr[0];
+    Node* currentNode = treeRoot;
     while (currentNode != nullptr)
     {
         if (currentNode->value == value)
@@ -49,82 +32,69 @@ Node* find(BinarySearchTree* tree, int value)
     return currentNode;
 }
 
-Node* addNode(BinarySearchTree* tree, int value)
+int main()
 {
-    if (tree->capacity == tree->count)
-    {
-        assert(false);
-    }
+    std::array numbers{ 5, 7, 2, 6, 9 };
 
-    Node* node = &tree->arr[tree->count];
-    node->value = value;
-    node->left = nullptr;
-    node->right = nullptr;
+    Node* firstNodeAddress = new Node[numbers.size()];
+    std::span<Node> nodes {firstNodeAddress, numbers.size()};
 
+    for (size_t count = 0; count < numbers.size(); count++)
     {
-        size_t count = tree->count;
-        tree->count += 1;
+        int value = numbers[count];
+
+        Node* newNode = &nodes[count];
+        newNode->value = value;
+        newNode->left = nullptr;
+        newNode->right = nullptr;
 
         if (count == 0)
         {
-            return node;
+            continue;
         }
-    }
 
-    Node* currentNode = &tree->arr[0];
-    while (true)
-    {
-        if (value > currentNode->value)
+        Node* currentNode = &nodes[0];
+        while (true)
         {
-            if (currentNode->right != nullptr)
+            if (value > currentNode->value)
             {
-                currentNode = currentNode->right;
+                if (currentNode->right == nullptr)
+                {
+                    currentNode->right = newNode;
+                    break;
+                }
+                else
+                {
+                    currentNode = currentNode->right;
+                }
             }
             else
             {
-                currentNode->right = node;
-                break;
-            }
-        }
-        else
-        {
-            if (currentNode->left != nullptr)
-            {
-                currentNode = currentNode->left;
-            }
-            else
-            {
-                currentNode->left = node;
-                break;
+                if (currentNode->left == nullptr)
+                {
+                    currentNode->left = newNode;
+                    break;
+                }
+                else
+                {
+                    currentNode = currentNode->left;
+                }
             }
         }
     }
-    return node;
-}
 
-int main()
-{
-    std::array<int, 6> values{1, 5, 3, 4, 9, 7};
-    BinarySearchTree tree = createBinarySearchTree(values.size());
-
-    for (size_t i = 0; i < values.size(); i++)
-    {
-        int currentValue = values[i];
-        addNode(&tree, currentValue);
-    }
-
-    Node* node = find(&tree, 5);
+    Node* node = find(&nodes[0], 7);
     if (node == nullptr)
     {
-        std::cout << "Node not found" << std::endl;
+        std::cout << "Node not found";
     }
     if (node->left != nullptr)
     {
-        std::cout << node->left->value << std::endl;
+        std::cout << node->left->value;
     }
     if (node->right != nullptr)
     {
-        std::cout << node->right->value << std::endl;
+        std::cout << node->right->value;
     }
     return 0;
 }
