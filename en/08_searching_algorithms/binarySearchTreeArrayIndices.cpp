@@ -1,5 +1,4 @@
 #include <array>
-#include <span>
 #include <iostream>
 #include <vector>
 
