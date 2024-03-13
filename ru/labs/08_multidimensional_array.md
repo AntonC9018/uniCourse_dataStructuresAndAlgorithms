@@ -203,8 +203,8 @@ $$
 n_j = h_j - l_j + 1 \\\\
 D_0 = 1 \\\\
 D_j = n_{j - 1} * D_{j - 1} \\\\
-i = \sum{{j = 0}}^{N - 1} (k_j - l_j) D_j = \sum{j = 0}^{N - 1} k_j D_j - с \\\\
-c = \sum{{j = 0}}^{N - 1} l_j D_j
+i = \sum\{j = 0\}^{N - 1} (k_j - l_j) D_j = \sum\{j = 0\}^{N - 1} k_j D_j - с \\\\
+c = \sum\{j = 0\}^{N - 1} l_j D_j
 }
 $$
 
