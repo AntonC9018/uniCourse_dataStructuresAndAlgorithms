@@ -20,7 +20,7 @@
 На картинке ниже например, индекс элемента 71 будет 3 (array), 1 (row), 2 (column).
 Заметьте, что на картинке индексирование идет с 1.
 
-![](https://images.app.goo.gl/JvNsRzH5iwjmpAjx8)
+![](https://scaler.com/topics/images/javascript-multidimensional-array.webp)
 
 
 ## Iliffe
