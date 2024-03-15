@@ -6,12 +6,7 @@ struct Node
     int value; 
     std::vector<Node*> children;
 
-    inline ~Node()
-    {
-        for (size_t i = 0; i < this->children.size(); i++)
-            delete this->children[i];
-        this->children.~vector();
-    }
+    // NOTE: This leaks the nodes
 };
 
 static std::unique_ptr<Node> createGraph()
