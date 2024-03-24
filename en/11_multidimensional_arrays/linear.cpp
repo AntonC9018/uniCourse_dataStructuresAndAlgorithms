@@ -119,10 +119,6 @@ int main()
     std::array<size_t, 3> dimensions{ 3, 4, 5 };
     LinearArray arr = createLinearArray(dimensions);
 
-    std::cout << arr.dimensions.size() << std::endl;
-    for (size_t d : arr.dimensions)
-        std::cout << d << std::endl;
-
     std::span linearMemory = getLinearMemory(&arr);
     for (size_t i = 0; i < linearMemory.size(); i++)
     {
@@ -130,11 +126,6 @@ int main()
     }
 
     iterate(dimensions, [&](std::span<size_t> indices){
-        std::cout << std::endl;
-        for (size_t i = 0; i < indices.size(); i++)
-        {
-            std::cout << indices[i] << ", ";
-        }
         int x = *getElementAtIndex(&arr, indices);
         std::cout << x << ", ";
     });
