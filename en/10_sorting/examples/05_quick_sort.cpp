@@ -1,5 +1,4 @@
 #include "common.h"
-#include <iostream>
 
 // O(N log(N)) -- execution
 // O(log N) -- memory

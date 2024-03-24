@@ -2,7 +2,7 @@
 #include <array>
 #include <cassert>
 
-void assertSorted(std::span<int> arr)
+static void assertSorted(std::span<int> arr)
 {
     for (size_t i = 1; i < arr.size(); i++)
     {
