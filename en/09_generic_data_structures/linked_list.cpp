@@ -1,4 +1,3 @@
-#include <assert.h>
 #include "linked_list_impl.cpp"
 
 int main()
