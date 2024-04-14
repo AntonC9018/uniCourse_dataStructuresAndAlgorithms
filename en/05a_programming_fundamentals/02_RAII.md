@@ -564,11 +564,12 @@ Demo test()
 
 ## lvalue and rvalue
 
-*lvalue* means a value that appears on the left hand side of an assignment.
+*lvalue* means a value that may appear on the left hand side of an assignment.
 This is equivalent to saying that *an lvalue is a value that has storage*, meaning it is stored in some memory.
+In other words, *lvalues have a memory address*.
 
-An *rvalue* may not have any storage, but be a temporary value.
-rvalues appear on the right hand side of an assigment.
+An *rvalue* does not have any storage, it could be either a temporary value or a constant.
+rvalues may appear on the right hand side of an assigment.
 
 
 ```cpp
@@ -579,12 +580,17 @@ a = 5;
 
 int b;
 
-// b is lvalue, a is rvalue
+// b and a are both lvalues
+// lvalues may appear on the right hand side
 b = a;
 
 std::vector<int> vec;
-// vec is lvalue, {} is rvalue
+// vec is an lvalue, {} is an rvalue
 vec = {};
+
+int& t = a;
+// t is an lvalue
+t = 5;
 ```
 
 *rvalue references* are denoted as `T&&`, which means that it's a temporary object, whose value won't be used later.
