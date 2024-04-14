@@ -562,3 +562,70 @@ Demo test()
 }
 ```
 
+## lvalue and rvalue
+
+*lvalue* means a value that appears on the left hand side of an assignment.
+This is equivalent to saying that *an lvalue is a value that has storage*, meaning it is stored in some memory.
+
+An *rvalue* may not have any storage, but be a temporary value.
+rvalues appear on the right hand side of an assigment.
+
+
+```cpp
+int a;
+
+// a is an lvalue, 5 is an rvalue
+a = 5;
+
+int b;
+
+// b is lvalue, a is rvalue
+b = a;
+
+std::vector<int> vec;
+// vec is lvalue, {} is rvalue
+vec = {};
+```
+
+*rvalue references* are denoted as `T&&`, which means that it's a temporary object, whose value won't be used later.
+You can force an object to be treated like an rvalue reference by using `std::move`.
+
+```cpp
+std::vector<int> a{};
+a.push_back(5);
+
+{
+    // This makes a copy of a in t
+    std::vector<int> t{ a };
+    a[0] = 6;
+    assert(t[0] == 5);
+    assert(a[0] == 6);
+}
+{
+    // a becomes empty, now t posesses the memory that was previously pointed at by a
+    std::vector<int> t{ std::move(a) };
+    assert(a.size() == 0);
+    assert(t[0] == 5);
+}
+```
+
+It can be used to avoid making copies.
+In the example below, only one copy of the strings *Test* and *Magic* will be created.
+
+> Note that you shouldn't see a difference in the memory usage due to small string optimization,
+> but if the strings are large enough, it will be copied into dynamically allocated memory more times than required.
+
+```cpp
+void addBook(Book&& book)
+{
+    *someMemory = std::move(book);
+}
+
+// ...
+
+Book temp;
+temp.author = "Test";
+temp.title = "Magic";
+addBook(std::move(book));
+assert(temp.author == "");
+```
