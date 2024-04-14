@@ -16,7 +16,7 @@
 Однако, мы можем с легкостью можем создать свое, новое пространство имен.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 // Определяем пространство имен с именем Demo.
 namespace Demo
@@ -41,7 +41,7 @@ int main()
 Это потому, что объявления типов функционируют как пространства имен.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Demo
 {
@@ -304,7 +304,7 @@ namespace Demo
 будь то скоупы функций, вложенные обычне скоупы, пространства имен или скоупы типов.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 int main()
 {
@@ -330,7 +330,7 @@ int main()
 Я покажу вам это на более мирном примере, чтобы вы поняли идею.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 namespace Demo
 {
@@ -367,7 +367,7 @@ int main()
 `using namespace` *нельзя* применять к типам.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct T
 {

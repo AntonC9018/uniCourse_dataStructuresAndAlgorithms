@@ -174,7 +174,7 @@ which allows it to access the private fields of `Vector`.
 > `friend` functions are implicitly static, aka they don't have a hidden `this` parameter.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Vector
 {

@@ -75,7 +75,7 @@ int main()
 > просто концептуально думайте о ней как о строке.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Person
 {
@@ -111,7 +111,7 @@ int main()
 > Это может быть как метод, так и поле.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Person
 {

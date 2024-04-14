@@ -77,7 +77,7 @@ Consider a function that takes in a struct variable.
 > just conceptually think of it as a string.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Person
 {
@@ -113,7 +113,7 @@ Let's first make it a static member function, to see how the concept of *namespa
 > It can be either a method or a field.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Person
 {

@@ -93,7 +93,7 @@ int main()
 Давайте просто покажем, как это работает.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Demo
 {
@@ -157,7 +157,7 @@ int main()
 Предположим, у вас есть структура с полем, тип которого имеет деструктор.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Test
 {
@@ -203,7 +203,7 @@ int main()
 который выводит информацию на консоль.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 class Demo
 {
@@ -254,8 +254,8 @@ int main()
 Мы можем сделать это, используя операторы `new` и `delete`.
 
 ```cpp
-include <iostream>
-include <assert.h>
+#include <iostream>
+#include <assert.h>
 
 class Buffer
 {
@@ -334,7 +334,7 @@ int main()
 Это включает в себя обычные определения с использованием `{ }` или определения с немедленным присваиванием.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 class Demo
 {
@@ -407,7 +407,7 @@ int main()
 Таким образом, она становится непригодной к использованию после этого вызова.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Person
 {
@@ -441,7 +441,7 @@ int main()
 > Вы можете использовать rvalue-ссылки как обычные параметры тоже.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 class Demo
 {

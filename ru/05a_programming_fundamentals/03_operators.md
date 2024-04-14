@@ -157,7 +157,7 @@ int main()
 > `friend` функции являются неявно статическими, то есть у них нет скрытого параметра `this`.
 
 ```cpp
-include <iostream>
+#include <iostream>
 
 struct Vector
 {
