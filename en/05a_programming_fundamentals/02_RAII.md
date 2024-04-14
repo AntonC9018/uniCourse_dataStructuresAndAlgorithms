@@ -578,19 +578,31 @@ int a;
 // a is an lvalue, 5 is an rvalue
 a = 5;
 
-int b;
+{
+    int b;
 
-// b and a are both lvalues
-// lvalues may appear on the right hand side
-b = a;
+    // b and a are both lvalues
+    // lvalues may appear on the right hand side
+    b = a;
+}
 
-std::vector<int> vec;
-// vec is an lvalue, {} is an rvalue
-vec = {};
+{
+    std::vector<int> vec;
+    // vec is an lvalue, {} is an rvalue
+    vec = {};
+}
 
-int& t = a;
-// t is an lvalue
-t = 5;
+{
+    int& t = a;
+    // t is an lvalue
+    t = 6;
+}
+
+{
+    int* t = &a;
+    // *t is an lvalue
+    *t = 7;
+}
 ```
 
 *rvalue references* are denoted as `T&&`, which means that it's a temporary object, whose value won't be used later.
