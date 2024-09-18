@@ -2,7 +2,7 @@
 
 Тема: **Установка компилятор**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=yLDtNDtAvUE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
+[Сопровождающее видео](https://www.youtube.com/watch?v=OgsTtVSwJUk&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=7)
 
 ## Концепты
 

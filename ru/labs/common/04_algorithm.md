@@ -2,7 +2,7 @@
 
 Тема: **Алгоритм (на высоком уровне)**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=yLDtNDtAvUE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=4)
+[Сопровождающее видео](https://www.youtube.com/watch?v=vUtxmspD82k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=4)
 
 ## Концепты
 

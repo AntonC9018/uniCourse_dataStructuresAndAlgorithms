@@ -2,7 +2,7 @@
 
 Тема: **Что такое функции, вызов функций, stack**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=yLDtNDtAvUE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
+[Сопровождающее видео](https://www.youtube.com/watch?v=jTRJM_gmhU4&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
 
 ## Концепты
 

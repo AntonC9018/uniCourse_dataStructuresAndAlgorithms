@@ -2,7 +2,7 @@
 
 Тема: **Системы счисления**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=yLDtNDtAvUE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=2)
+[Сопровождающее видео](https://www.youtube.com/watch?v=h4jq2BBiLSI&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=2)
 
 ## Примеры
 
