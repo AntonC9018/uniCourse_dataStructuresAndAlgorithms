@@ -160,7 +160,7 @@ or 4 bytes (32 bit) on 32-bit architectures.
 > Now technically it could be anything, but in 99.9% of cases it's one of those to.
 > For the purposes of furthering the discussion, assume it's 8 bytes.
 
-The special type `size_t` indicates the maximum length in bytes of a block of memory.
+The special type `size_t` can contain any number up until the maximum length in bytes of a block of memory.
 It is also the same as the address size, on most architectures.
 It's usually used for indices or lengths of arrays.
 
