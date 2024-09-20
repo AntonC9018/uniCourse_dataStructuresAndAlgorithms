@@ -16,7 +16,7 @@ where the files have the following contents:
 `main.cpp`:
 
 ```cpp
-include "f.cpp"
+#include "f.cpp"
 
 int main()
 {
@@ -66,8 +66,7 @@ If the function definition is obvious and small, like returning some constant, i
 common to put the *definition* directly in the header file.
 Now, if we just went ahead and did that, we'd have
 the same problem as in [the paragraph above](#Implementation-files-(cpp)).
-Recall the `inline` modifier, which makes it so that the function does not participate
-in linking, and won't appear in the final executable.
+Recall the `inline` modifier, which makes it so that the function won't appear in the final executable.
 This use case is perfect for `inline`.
 In fact, we don't even need an implementation file if all functions can be made inline.
 > See [example 3](./headers/example_3)
