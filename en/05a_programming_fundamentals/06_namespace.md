@@ -7,7 +7,7 @@ you can use `namespace`.
 ## Basic usage
 
 A namespace basically means a scope that can house functions, variables, types and other namespaces,
-and can be used to avoid name collisions within these.
+and can be used to avoid name collisions among these.
 
 I've been using the `std` namespace in my examples extensively.
 `std` is a namespace that comes from the standard library, but we can easily create our own.
