@@ -166,19 +166,15 @@ void Person::printAge(Person* person)
 
 ## Instances and Objects
 
-*Instance* stands for the memory of a variable of some type.
-So in the following code:
+An *object* means some memory, either of some variable, of an item in an array, or any other storage, which contains data of some type. So if you had a `Person` struct, and code like this:
 
 ```cpp
 Person person;
 ```
 
-we can say that `person` is an instance of the `Person` type.
+We can say that the variable `person` refers to an object of type `Person`. In other words, an object is whatever value lives in some memory, and the memory it lives in.
 
-
-*Object* means the value of an instance of some type.
-So we can say that `person` contains a `Person` object.
-
+An *instance* means basically the same thing as an object, but it shifts the focus from the memory to the type of the data stored in that memory. So you can say that `person` is an instance of `Person`.
 
 ## Non-static (instance) methods
 
