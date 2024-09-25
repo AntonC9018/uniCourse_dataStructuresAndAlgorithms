@@ -1082,7 +1082,7 @@ Let me show you how the stack will look at each point in time:
 | 100     | a (from g)                    | 15    |
 | 104     | the address of `f2();` in `g` | 69420 |
 | 112     | a (from f1)                   | 5     |
-| 116     | a (from f2)                   | 10    |
+| 116     | b (from f1)                   | 10    |
 | ...     | ...                           | ...   |
 
 3. Back in `g`, after `f1` returned, before calling `f2`:
@@ -1103,7 +1103,7 @@ Let me show you how the stack will look at each point in time:
 | 100     | a (from g)                      | 15    |
 | 104     | the address of `return;` in `g` | 69423 |
 | 112     | a (from f2)                     | 8     |
-| 116     | a (from f1)                     | 9     |
+| 116     | b (from f2)                     | 9     |
 | ...     | ...                             | ...   |
 
 5. Back in `g`, after `f2` returned:
