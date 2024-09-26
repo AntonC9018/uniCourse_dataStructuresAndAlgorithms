@@ -2,6 +2,7 @@
 
 Тема: *Объекты*.
 
+Сопровождающее [видео](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
 
 ## Задания
 

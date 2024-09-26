@@ -2,6 +2,9 @@
 
 Тема: `bool`, flow control.
 
+Сопровождающие видео:
+- [`bool`, flow control](https://www.youtube.com/watch?v=21m4VfonFnA&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=10)
+- [span](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11) (до строк)
 
 ## Рефакторинг
 
@@ -77,6 +80,10 @@ void main()
 
 4. Объявите временные переменные подусловий в блоке,
    чтобы эти переменные не были видны за пределами блока.
+
+5. Зарефакторьте 3 переменные с количеством фруктов в одну структуру (`FruitCounts`)
+   с 3 полями, по одному для каждого типа фруктов.
+   Переделайте код, чтобы везде использовалась эта структура.
 
 
 ## Цикл
