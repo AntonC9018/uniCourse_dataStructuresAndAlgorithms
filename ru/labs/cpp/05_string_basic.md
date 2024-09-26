@@ -12,6 +12,7 @@
 
 <details>
 <summary>Пример</summary>
+
 ```
 void runTests()
 {
