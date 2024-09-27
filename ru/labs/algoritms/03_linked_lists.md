@@ -9,14 +9,12 @@
 > Можете выделять память динамически в heap используя `new` или `malloc`, отдельно для каждого нода.
 > Можете пользоваться [примерами](../../en/09_generic_data_structures).
 
-Вместо `T` вставьте свою структуру из 1 лабы (или `T&&` если используете `std::string`, там где имеет смысл).
 Можете использовать `template<typename T>`.
-Если не уверены в своих силах, используйте просто `int` вместо `T`.
 
 1. Singly linked list (односвязный список):
     - Структура должна иметь поля под указатели на первый и последний нод списка;
 
-    - `Node* insertAfter(LinkedList* list, Node* node, T value)` создает новый нод
+    - `Node* insertAfter(LinkedList* list, Node* node, int value)` создает новый нод
       и добавляет его после данного нода.
       В случае если `node == nullptr`, нод добавляется в начало списка.
       Возвращает указатель на созданный нод;
@@ -24,10 +22,6 @@
     - `FindNodeResult find(LinkedList* list, int value)` ищет нод до нода с заданным значением в списке;
       Возвращает нод с этим значением, а также нод до него.
       `FindNodeResult` определите сами.
-
-      Если не используете `int` как `T`, сделайте функцию по типу
-      `FindNodeResult findByAge(LinkedList* list, int age)`,
-      которая должна найти первый нод с заданным возрастом, например.
 
       Если используете `template`, можете добавить еще один параметр и передавать функтор поиска;
 
@@ -45,9 +39,9 @@
 2. Doubly linked list (двусвязный список):
     - Структура должна иметь поля под указатели на первый и последний нод списка;
 
-    - `Node* insertAfter(LinkedList* list, Node* node, T value)`;
+    - `Node* insertAfter(LinkedList* list, Node* node, int value)`;
 
-    - `Node* insertBefore(LinkedList* list, Node* node, T value)`;
+    - `Node* insertBefore(LinkedList* list, Node* node, int value)`;
 
     - `Node* find(LinkedList* list, int value)` ищет нод с данным значением в списке 
       (применяются заметки для `find` выше);

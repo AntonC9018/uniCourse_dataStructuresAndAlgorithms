@@ -14,8 +14,8 @@
 
 Стек отличается следующими операциями:
 - `bool isEmpty(const Stack* stack)` проверяет если стек пустой;
-- `void push(Stack* stack, T value)` добавляет поверх элементов стека;
-- `T* getLastElement(Stack* stack)` (можете назвать как вам логичнее) дает адрес (или ссылку) элемента сверху, не удаляя его;
+- `void push(Stack* stack, int value)` добавляет поверх элементов стека;
+- `int* getLastElement(Stack* stack)` (можете назвать как вам логичнее) дает адрес (или ссылку) элемента сверху, не удаляя его;
 - `void pop(Stack* stack)` удаяет элемент сверху (последний добавленный).
 
 Пример есть [здесь](../../en/09_generic_data_structures/stack.cpp).
@@ -35,8 +35,8 @@
 
 Очередь отличается следующими операциями:
 - `bool isEmpty(const Queue* queue)` проверяет если очередь пустая;
-- `void enqueue(Queue* queue, T value)` добавляет элемент **в конец** очереди;
-- `T* front(Queue* queue)` дает адрес (или ссылку) **первого** элемента из очереди;
+- `void enqueue(Queue* queue, int value)` добавляет элемент **в конец** очереди;
+- `int* front(Queue* queue)` дает адрес (или ссылку) **первого** элемента из очереди;
 - `void dequeue(Queue* queue)` удаляет элемент **с начала** очереди.
 
 Пример есть [здесь](../../en/09_generic_data_structures/queue.cpp).
