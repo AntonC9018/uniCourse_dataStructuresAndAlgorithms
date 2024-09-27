@@ -20,22 +20,22 @@
 Примерный outline:
 
 ```cpp
-std::array<std::vector<Record>> allData;
+std::array<std::vector<int>> allData;
 allData.resize(DATA_COUNT);
 
 std::array<std::string_view, DATA_COUNT> fileNames =
 {
-    { "small.csv" },
-    { "medium.csv" },
-    { "large.csv" },
+    { "small.data" },
+    { "medium.data" },
+    { "large.data" },
 };
 
 bool hasErrors = false;
 for (int di; di < DATA_COUNT; di++)
 {
     std::string_view fileName = fileNames[di];
-    ifstream file{fileName};
-    bool success = parseRecordsFromCsv(file, allData[di]);
+    std::ifstream file{fileName};
+    bool success = readDataFromFile(file, allData[di]);
     if (!success)
     {
         // You might return more context here,
