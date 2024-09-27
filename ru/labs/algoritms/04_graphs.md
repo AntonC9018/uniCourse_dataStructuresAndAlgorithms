@@ -5,12 +5,12 @@
 Используйте идею связных списков, чтобы реализовать графы.
 Графы -- это списки, где каждый нод может иметь несколько соседних нодов.
 
-Пример графа есть [здесь](../../en/09_generic_data_structures/graph.cpp).
+Пример графа есть [здесь](../../../en/09_generic_data_structures/graph.cpp).
 
 1. Определите структуру нода из графа. 
    Она должны иметь поле `int` для значения нода, а также динамический буфер для соседних нодов.
-   Можете использовать код из [static_buffer](../../en/09_generic_data_structures/static_buffer.cpp)
-   или [dynamic_array](../../en/09_generic_data_structures/dynamic_array.cpp).
+   Можете использовать код из [static_buffer](../../../en/09_generic_data_structures/static_buffer.cpp)
+   или [dynamic_array](../../../en/09_generic_data_structures/dynamic_array.cpp).
    > Можете использовать `std::vector`, но тогда убедитесь, что понимаете RAII. 
 
 
