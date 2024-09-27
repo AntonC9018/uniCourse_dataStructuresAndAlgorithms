@@ -1,4 +1,5 @@
 // Definitions of the functions visible to the linker.
+#include "f.h"
 
 int f(int a)
 {
