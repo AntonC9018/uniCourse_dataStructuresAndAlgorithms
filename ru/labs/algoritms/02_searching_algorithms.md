@@ -18,9 +18,7 @@
 Примерный outline:
 
 ```cpp
-std::array<std::vector<int>> allData;
-allData.resize(DATA_COUNT);
-
+std::array<std::vector<int>, DATA_COUNT> allData;
 std::array<std::string_view, DATA_COUNT> fileNames =
 {
     { "small.data" },
@@ -48,12 +46,12 @@ if (hasErrors)
     return 1;
 }
 
-std::vector<Record> items;
+std::vector<int> items;
 for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
 {
     for (int di; di < DATA_COUNT; di++)
     {
-        const std::vector<Record>& sortedData = allData[di];
+        std::span<int> sortedData = allData[di];
         items.resize(sortedData.size());
 
         for (int si = 0; si < SHUFFLE_COUNT; si++)
