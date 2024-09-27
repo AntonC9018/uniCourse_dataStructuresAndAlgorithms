@@ -1,6 +1,6 @@
 # Лабораторная работа №1
 
-> См. [видео](https://www.youtube.com/playlist?list=PL4sUOB8DjVlXtWZJKdJdTeT9i4q3mNEsm) 
+> См. [видео](https://youtu.be/OgsTtVSwJUk) 
 
 1. Создайте аккаунт гитхаб (если еще нет)
 2. Создайте репозиторий для лабораторных работ
