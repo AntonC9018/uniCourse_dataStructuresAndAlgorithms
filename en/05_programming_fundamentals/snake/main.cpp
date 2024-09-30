@@ -12,7 +12,6 @@ int main()
 
     while (true)
     {
-        std::cout << "Hello" << std::endl;
         {
             char key = getPressedSymbol();
             if (key == 10)
