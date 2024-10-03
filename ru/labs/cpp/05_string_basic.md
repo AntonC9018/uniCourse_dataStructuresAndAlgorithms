@@ -38,4 +38,5 @@ secondWord("") == ""
 secondWord(" ") == ""
 secondWord(" a ") == "a"
 secondWord("a  ") == ""
+secondWord("a  b") == ""
 ```
