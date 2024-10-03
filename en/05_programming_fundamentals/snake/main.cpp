@@ -1,6 +1,6 @@
 #include "graphic.h"
 #include "logic.h"
-#include <iostream>
+#include "controller.h"
 
 int main()
 {

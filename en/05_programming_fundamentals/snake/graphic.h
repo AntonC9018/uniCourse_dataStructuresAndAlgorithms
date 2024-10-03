@@ -4,9 +4,6 @@
 #include "logic.h"
 #include <span>
 
-char getPressedSymbol();
-Direction getDirectionFromKey(char ch);
-
 struct BoardText
 {
     std::span<char> span;
