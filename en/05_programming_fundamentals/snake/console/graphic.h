@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common.h"
-#include "logic.h"
+#include "../common/common.h"
+#include "../common/logic.h"
 #include <span>
 
 struct BoardText
