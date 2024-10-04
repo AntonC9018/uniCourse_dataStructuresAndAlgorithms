@@ -43,7 +43,7 @@ void forEachItem(BufferListNode* head, ItemFunc func)
     {
         for (size_t i = 0; i < node->items.size(); i++)
         {
-            node->items[i] *= 2.0f;
+            func(node->items[i]);
         }
         node = node->next;
     }
