@@ -18,7 +18,7 @@ SnakePositionsStorage createSnakePositionStorage(const BoardDimensions& dimensio
 
 void freeSnakePositionStorage(SnakePositionsStorage& snake)
 {
-    delete snake.bodyPositions.data();
+    delete[] snake.bodyPositions.data();
 }
 
 bool existsSnakeBodyAt(
