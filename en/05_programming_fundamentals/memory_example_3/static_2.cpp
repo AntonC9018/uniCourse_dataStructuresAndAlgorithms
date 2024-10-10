@@ -10,8 +10,10 @@ void staticMemory()
 
 int main()
 {
+    std::cout << a;
     staticMemory(); // prints 0
     staticMemory(); // prints 1
     staticMemory(); // prints 2
     return 0;
 }
+
