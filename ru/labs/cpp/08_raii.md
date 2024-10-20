@@ -40,8 +40,8 @@ public:
 
     HeapInt(const HeapInt& hello); // 7
     HeapInt(HeapInt&& hello);
-    operator=(const HeapInt& hello);
-    operator=(HeapInt&& hello);
+    void operator=(const HeapInt& hello);
+    void operator=(HeapInt&& hello);
 };
 
 // Файл main.cpp
