@@ -11,6 +11,7 @@
 ```cpp
 // Файл HeapInt.h
 #pragma once // 1
+#include <cassert>
 
 class HeapInt
 {
