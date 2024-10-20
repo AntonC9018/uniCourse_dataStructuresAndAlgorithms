@@ -67,7 +67,7 @@ int main()
 ```
 
 A scope within another scope is called a *nested scope*.
-You can *nest* scopes indefinately.
+You can *nest* scopes indefinitely.
 
 > In general, putting things within other things of the same kind is called *nesting*.
 
