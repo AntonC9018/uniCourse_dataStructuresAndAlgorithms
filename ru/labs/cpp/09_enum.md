@@ -222,6 +222,8 @@ i = (((i + offset) % 3) + 3) % 3; // 2
 // __0   offset = 0, i = 2
 ```
 
+Тут есть и другие подходы, смотри [инфу](https://stackoverflow.com/questions/14997165/fastest-way-to-get-a-positive-modulo-in-c-c).
+
 </details>
 
 
