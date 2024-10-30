@@ -246,7 +246,7 @@ std::ostream& operator<<(std::ostream& outputStream, Vector vector)
 ```
 
 `friend` functions allow you to put the logic that comes to printing your object
-in the your class, rather than in the `std::ostream` class.
+in *your* class, rather than in the `std::ostream` class.
 This is useful when you can't or have a reason not to 
 modify the type that is used as the first parameter,
 meaning you can't or don't want to add that operator 
