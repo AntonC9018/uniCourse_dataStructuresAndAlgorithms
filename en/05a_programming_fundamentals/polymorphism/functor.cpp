@@ -32,7 +32,7 @@ void forEachItem(std::span<float> values, F functor)
 {
     for (float& value : values)
     {
-        functor.execute(value);
+        functor(value);
     }
 }
 
