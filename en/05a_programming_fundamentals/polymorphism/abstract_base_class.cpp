@@ -105,7 +105,7 @@ void quiz(QuestionAbstractBase* object)
     std::cout << "Answer: " << object->computeSum(5, 6) << std::endl;
 
     std::cout << "Question 2: What is 10 + 20?" << std::endl;
-    std::cout << "Answer: " << object->computeSum(5, 6) << std::endl;
+    std::cout << "Answer: " << object->computeSum(10, 20) << std::endl;
 
     std::cout << "Question 3: Write a C++ program" << std::endl;
     object->writeCppProgram(std::cout);
