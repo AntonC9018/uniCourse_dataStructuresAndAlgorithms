@@ -69,7 +69,7 @@ int main()
         ItemFunc func = &printFunc;
 
         // prints each element
-        forEachItem(head, printFunc); 
+        forEachItem(head, func); 
 
         std::cout << std::endl;
     }
