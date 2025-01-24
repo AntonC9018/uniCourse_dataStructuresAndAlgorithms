@@ -87,7 +87,7 @@ int main()
         F errorsToFindMask = F::CompanyName_Empty | F::ProducedYear_BeyondCurrentYear;
         if (containsAnyOf(result, errorsToFindMask))
         {
-            std::cout << "The two selected errors are present, and maybe more." << std::endl;
+            std::cout << "One or both of the two selected errors are present, and maybe more." << std::endl;
         }
     }
 
