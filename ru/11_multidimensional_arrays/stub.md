@@ -1,3 +1,0 @@
-- Illife
-- Dope vector
-- The problem of multilevel iteration without nesting for loops (I have come across this problem like 3 times in my career)

@@ -1,5 +1,0 @@
-- Reading and writing files
-- Defining domain data models
-- Serialization and deserialization
-- CSV files (JSON files introduced but not used)
-- Using `std::vector&`, `std::string_view` and `std::span` to avoid copying
