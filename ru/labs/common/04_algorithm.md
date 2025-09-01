@@ -2,7 +2,7 @@
 
 Тема: **Алгоритм (на высоком уровне)**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=4)
+[Сопровождающее видео](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
 
 ## Концепты
 
@@ -11,7 +11,7 @@
 - Интерфейс
 - Input / Output
 - Индекс
-- Sentinel
+- Sentinel-значение
 - Переменная, значение переменной
 
 ## Практические навыки
