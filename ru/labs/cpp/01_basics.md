@@ -1,6 +1,10 @@
-# 1. Базовый синтаксис переменных и поинтеров
+# 1. Базовый синтаксис: инструкции, переменные, указатели
 
-Сопровождающее [видео](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8).
+- [Видео про инструкции](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
+- [Видео про переменные и типы](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
+- [Видео про указатели](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
+- [Видео по основам, более углубленная информация](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+
 
 Используя инфу из папки `05_programming_fundamentals`, файл `doc.md`, 
 и ориентируясь по примеру `memory_example_1` из той же папки, реализуйте следующие задания:

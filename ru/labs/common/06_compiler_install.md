@@ -2,7 +2,9 @@
 
 Тема: **Установка компилятор**.
 
-[Сопровождающее видео](https://www.youtube.com/watch?v=80rlPY4qFxM&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
+- [Установка GCC](https://www.youtube.com/watch?v=bQnbkV6xgY4&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=12)
+- [Настройка VSCode](https://www.youtube.com/watch?v=lBVXv8Qaj9Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=13)
+
 
 ## Задания
 
