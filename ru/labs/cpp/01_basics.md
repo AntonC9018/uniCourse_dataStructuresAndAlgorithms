@@ -690,7 +690,7 @@
 4. ```cpp
    int a[2]{};
    int b = 6;
-   int* p = &a[3];
+   int* p = &a[2];
    *p = 7;
 
    std::cout << b;
