@@ -649,8 +649,8 @@
        int arr[2]{};
        int* a = &arr[0];
        int* b = &arr[1];
-       uintptr_t a1 = reinterpret_cast<uintptr_t>(a);
-       uintptr_t b1 = reinterpret_cast<uintptr_t>(b);
+       intptr_t a1 = reinterpret_cast<intptr_t>(a);
+       intptr_t b1 = reinterpret_cast<intptr_t>(b);
        ptrdiff_t x = static_cast<ptrdiff_t>(b1 - a1);
 
        std::cout << x;
