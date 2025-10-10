@@ -649,8 +649,8 @@
        int arr[2]{};
        int* a = &arr[0];
        int* b = &arr[1];
-       intptr_t a1 = reinterpret_cast<intptr_t>(a);
-       intptr_t b1 = reinterpret_cast<intptr_t>(b);
+       uintptr_t a1 = reinterpret_cast<uintptr_t>(a);
+       uintptr_t b1 = reinterpret_cast<uintptr_t>(b);
        ptrdiff_t x = static_cast<ptrdiff_t>(b1 - a1);
 
        std::cout << x;
@@ -661,7 +661,7 @@
    <details>
    <summary>Ответ</summary>
 
-   `intptr_t` это число, занимающее столько же байтов, сколько и `int*` (вероятно, 8 байтов).
+   `uintptr_t` это число, занимающее столько же байтов, сколько и `int*` (вероятно, 8 байтов).
 
    `b1 - a1` применяется между адресами как числами. 
    Это выражение уже не имеет информацию о том, какого типа указатели были вначале.
