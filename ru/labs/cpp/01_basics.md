@@ -371,8 +371,34 @@
    ```
 
    <details>
-   <summary>Ответ</summary>
+   <summary>Ответ:</summary>
 
+   На строчке `p = &b` перезаписывается сам *адрес* из `p` на адрес другой переменной (`b`).
+
+   `*p = 8` впишет 8 уже в `b`.
+
+   </details>
+
+
+1. ```cpp
+   int a = 5;
+   int b = 6;
+   int* p = &a;
+   int** pp = &p;
+   **pp = 7;
+            
+   *pp = &b;
+   **pp = 8;
+
+   std::cout << a;
+   std::cout << std::endl;
+
+   std::cout << b;
+   std::cout << std::endl;
+   ```
+
+   <details>
+   <summary>Ответ</summary>
    ```cpp
    int a = 5; // скажем, адрес = 32
    int b = 6; // скажем, адрес = 36
@@ -382,7 +408,7 @@
              // то есть a = 7
    *pp = &b; // адрес в p = 36
    **pp = 8; // *(*pp) --> *(40) --> *(p) --> *36 --> b
-             // то есть b = 7
+             // то есть b = 8
 
    std::cout << a;
    std::cout << std::endl;
