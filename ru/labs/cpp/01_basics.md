@@ -399,6 +399,7 @@
 
    <details>
    <summary>Ответ</summary>
+     
    ```cpp
    int a = 5; // скажем, адрес = 32
    int b = 6; // скажем, адрес = 36
