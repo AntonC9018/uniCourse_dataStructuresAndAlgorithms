@@ -93,3 +93,151 @@ C массивы не являются объектами в обыкновен�
 У них есть странности.
 </details>
 
+## Вопросы на понимание
+
+1. ```cpp
+   int& b = 5;
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   
+   </details>
+
+1. ```cpp
+   int a = 5;
+   int& b = a;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   
+   </details>
+
+
+1. ```cpp
+   int a = 5;
+   int& b = a;
+   b = 6;
+   std::cout << a << std::endl;
+   ```
+
+2. ```cpp
+   int a = 5;
+   int& b = a;
+   a = 6;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   int a = 5;
+   int& b = 6;
+   a = 7;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   int a = 5;
+   int& b = a + 7;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   int a = 5;
+   int& b = a + 7;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   int a = 5;
+   int& b = a;
+   b += 7;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   int a = 1;
+   int b = 2;
+   int& c = a;
+   c = b;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   std::cout << c << std::endl;
+   ```
+
+2. ```cpp
+   int a = 1;
+   int* pa = &a;
+   int& b = *pa;
+   *pa = 2;
+   b = 3;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   std::cout << *pa << std::endl;
+   ```
+
+2. ```cpp
+   std::array<int, 2> arr{ 1, 2 };
+   int* pa = a.data();
+   int& b = *pa;
+   pa += 1;
+   std::cout << b << std::endl;
+   ```
+
+2. ```cpp
+   std::array<int, 2> arr{ 1, 2 };
+   std::array<int, 2> other{ 3, 4 };
+   arr = other;
+   ```
+
+2. ```cpp
+   std::array<int, 2> arr{ 1, 2 };
+   std::array<int, 2> other{ arr };
+   ```
+
+2. ```cpp
+   std::array<int, 2> arr{ 1, 2 };
+   std::array<int, 2>& other{ arr };
+   other[0] = 3;
+   std::cout << arr[0] << std::endl;
+   ```
+
+2. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int x;
+       int y;
+   };
+
+   int main()
+   {
+       A a{ 1, 2 };
+
+       A& ra = a;
+
+       int& rx = ra.x;
+       ra.x = 3;
+
+       ra.y = 4;
+       int& ry = ra.y;
+
+       std::cout << rx << std::endl;
+       std::cout << ry << std::endl;
+
+       std::cout << ra.x << std::endl;
+       std::cout << ra.y << std::endl;
+
+       std::cout << a.x << std::endl;
+       std::cout << a.y << std::endl;
+   }
+   ```
