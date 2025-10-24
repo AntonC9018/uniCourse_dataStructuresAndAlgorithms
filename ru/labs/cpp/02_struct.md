@@ -180,6 +180,7 @@
 
    Код выведет 2, 1, а затем крашнется на последней строчке при попытке сяитать по нулевому адресу с отступом (segmentation fault).
    </details>
+
 4. ```cpp
    #include <iostream>
 
@@ -579,7 +580,7 @@
    int main()
    {
        int b = 6;
-       int s = func(func(1, func(2, b));
+       int s = func(func(1, func(2, b)));
    }
    ```
 
