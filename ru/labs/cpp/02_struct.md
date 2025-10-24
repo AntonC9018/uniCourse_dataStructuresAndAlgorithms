@@ -580,7 +580,7 @@
    int main()
    {
        int b = 6;
-       int s = func(func(1, func(2, b)));
+       int s = func(func(1, func(2, b)), b);
    }
    ```
 
