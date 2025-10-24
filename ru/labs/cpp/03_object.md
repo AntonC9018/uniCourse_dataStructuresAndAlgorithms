@@ -93,6 +93,33 @@ C массивы не являются объектами в обыкновен�
 У них есть странности.
 </details>
 
+<details>
+<summary>Ответ</summary>
+
+Объекты:
+```
+person
+person.legs
+person.legs[0]
+person.legs[1]
+person.legs[0].length
+person.legs[1].length
+person.arms[0]
+person.arms[1]
+person.arms[0].power
+person.arms[1].power
+```
+
+Типы:
+```
+Person
+Leg
+Arm
+int
+std::array<Leg, 2>
+```
+</details>
+
 ## Вопросы на понимание
 
 1. ```cpp
