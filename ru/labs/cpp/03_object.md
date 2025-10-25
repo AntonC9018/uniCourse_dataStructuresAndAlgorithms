@@ -4,6 +4,13 @@
 
 Сопровождающее [видео](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
 
+## Концепты
+
+- Объект
+- rvalue, lvalue
+- Ссылка
+- `std::array`
+
 ## Задания
 
 Какие тут типы, и какие тут объекты? перечислите все.
