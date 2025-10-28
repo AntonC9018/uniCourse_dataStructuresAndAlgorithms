@@ -113,6 +113,37 @@
    На строчке `b = *pa`, `*pa` по сути эквивалентно прямому обращению к переменной `a`. Ситуация та же, что выше.
    </details>
 
+2. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f1;
+       int f2;
+   };
+
+   int main()
+   {
+       A a;
+       a.f1 = 5;
+       a.f2 = 6;
+       A* pa = &a;
+       a.f1 = 7;
+       A b = *pa;
+
+       std::cout << b.f1 << std::endl;
+       std::cout << b.f2 << std::endl;
+   }
+   ```
+   <details>
+   <summary>Ответ:</summary>
+
+   В `b.f1` попадет `7`. 
+   Оператор `&` берет не адрес значения `f1 = 5, f2 = 6`,
+   а адрес *переменной* `a`.
+   Считывая по адресу, всегда получите текущее значение `a`.
+   </details>
+
 3. ```cpp
    #include <iostream>
 
