@@ -50,6 +50,42 @@
    `b = a` копирует значения *всех полей* `a` в `b`.
    </details>
 
+1. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f1;
+       int f2;
+   };
+
+   int main()
+   {
+       A a;
+       a.f1 = 5;
+       a.f2 = 6;
+
+       A b;
+       b.f1 = 7;
+       b = a;
+
+       std::cout << a.f1 << std::endl;
+       std::cout << a.f2 << std::endl;
+
+       std::cout << b.f1 << std::endl;
+       std::cout << b.f2 << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   `b = a` не знает от том, какие поля уже инициализированы.
+   Он копирует *все* поля, без разбору.
+
+   По итогу, в `b` будет `f1 = 5`, `f2 = 6`.
+   </details>
+
 2. ```cpp
    #include <iostream>
 
