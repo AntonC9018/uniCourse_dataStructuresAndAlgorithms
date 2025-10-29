@@ -58,7 +58,7 @@
   void A()
   {
       std::cout << "A";
-      std::endl << std::endl;
+      std::cout << std::endl;
   }
   int main()
   {
