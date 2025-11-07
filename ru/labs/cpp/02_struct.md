@@ -56,6 +56,65 @@
    {
        A a;
        a.f1 = 5;
+       int b = a.f1;
+       a.f2 = b;
+
+       std::cout << a.f1 << std::endl;
+       std::cout << a.f2 << std::endl;
+       std::cout << b << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Можно считывать их и вписывать в каждое из полей по отдельности.
+
+   Выведется `5` трижды.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f;
+   };
+
+   int main()
+   {
+       A a;
+       int* b = &a.f;
+       *b = 5;
+       std::cout << a.f << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Можно получать адрес на поле изнутри переменных, типа структуры.
+
+   На строчке `int* b = &a.f`, в `&a.f`, точка выполняется первой,
+   давай доступ к полю `f` внутри `a`,
+   затем получаете ее адрес, используя `&`.
+
+   В `a.f` будет сохранено значение `5`.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f1;
+       int f2;
+   };
+
+   int main()
+   {
+       A a;
+       a.f1 = 5;
        a.f2 = 6;
 
        A b;
