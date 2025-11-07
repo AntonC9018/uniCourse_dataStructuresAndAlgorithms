@@ -415,9 +415,9 @@
 1. Будет ли в `b` и в `c` тот же адрес?
    ```cpp
    int a = 5;
-   int b = &a;
+   int* b = &a;
    a = 6;
-   int c = &a;
+   int* c = &a;
    ```
 
    <details>
