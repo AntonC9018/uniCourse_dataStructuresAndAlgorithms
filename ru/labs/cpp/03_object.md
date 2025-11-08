@@ -383,7 +383,7 @@ std::array<Leg, 2>
 2. ```cpp
    #include <iostream>
 
-   struct A
+   struct Position
    {
        int x;
        int y;
@@ -391,9 +391,9 @@ std::array<Leg, 2>
 
    int main()
    {
-       A a{ .x = 1, .y = 2 };
+       Position a{ .x = 1, .y = 2 };
 
-       A& ra = a;
+       Position& ra = a;
 
        int& rx = ra.x;
        ra.x = 3;
@@ -479,7 +479,6 @@ std::array<Leg, 2>
    `rb = 3` впишет `3` в `b`.
    </details>
 
-
 2. ```cpp
    std::array<int, 2> arr { 1, 2 };
    int& arr1 = *(p.data() + 1)
@@ -495,24 +494,52 @@ std::array<Leg, 2>
 2. ```cpp
    #include <iostream>
 
-   void f(int& a)
+   void resetAmount(int& amount)
    {
-       a = 5;
+       amount = 0;
    }
    int main()
    {
-       int b = 6;
-       f(b);
-       std::cout << b << std::endl;
+       int appleAmount = 6;
+       resetAmount(appleAmount);
+       std::cout << appleAmount << std::endl;
    }
    ```
 
    <details>
    <summary>Ответ</summary>
 
-   `b` перезапишется на 5, так как функции передастся ссылка на нее.
+   `appleAmount` перезапишется на `0`, так как функции передастся ссылка на нее.
 
-   Под капотом, передается *адрес* переменной `b`, но это скрывается компилятором.
+   Под капотом, передается *адрес* переменной `appleAmount`, но это скрывается компилятором.
+   </details>
+
+2. ```cpp
+   #include <iostream>
+
+   struct Arm
+   {
+       int power;
+   };
+
+   void increasePower(Arm& arm)
+   {
+       arm.power += 1;
+   }
+
+   int main()
+   {
+       Arm arm { 1 };
+       increasePower(arm);
+       std::cout << arm.power << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   В функции можно передавать ссылки на объекты типа структуры.
+   Здесь, задача функции — увеличить силу.
    </details>
 
 2. Возможно ли у ссылки взять размер? Какой размер у ссылки?
