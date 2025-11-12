@@ -768,7 +768,7 @@
    </details>
 
 3. ```cpp
-   int arr[3]{};
+   int arr[2]{};
    int* p = arr;
    *arr = 1;
 
@@ -776,6 +776,9 @@
    std::cout << std::endl;
 
    std::cout << arr[0];
+   std::cout << std::endl;
+
+   std::cout << arr[1];
    std::cout << std::endl;
    ```
 
