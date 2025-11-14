@@ -4,7 +4,6 @@
 
 Видео:
 - [`bool`, flow control](https://www.youtube.com/watch?v=21m4VfonFnA&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=10)
-- [span](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11) (до строк)
 
 ## 4.1 bool
 
@@ -652,7 +651,6 @@
    {
        std::cout << "C" << std::endl;
    }
-   ```
    </details>
 
 1. Попытайтесь представить данный код как цепочку `if`-`else`, ему идентичную.
@@ -755,6 +753,7 @@
 
    int main()
    {
+       // предполагается, что a, b, c были созданы ранее ...
        f(a, b, c);
    }
    ```
@@ -771,17 +770,17 @@
 
    Пример кода без применения guard clause / early return:
    ```cpp
-   void sendWelcomeEmail(User user)
+   void sendWelcomeEmail(User* user)
    {
        // Условия перечислены с увеличением вложенности.
-       if (user != null)
+       if (user != nullptr)
        {
-           if (user.IsActive)
+           if (user->IsActive)
            {
-               if (user.EmailConfirmed)
+               if (user->EmailConfirmed)
                {
                    // Код с самим действием спрятан в середине функции.
-                   Console.WriteLine($"Sending email to {user.Email}");
+                   std::cout << "Sending email to " << user->email << std::endl;
                }
                else
                {
@@ -804,26 +803,26 @@
 
    Тот же код, с его применением:
    ```cpp
-   void sendWelcomeEmail(User user)
+   void sendWelcomeEmail(User* user)
    {
        // Можно блоком разграничить контракт 
        // (необходимые условия для выполнения основного действия), 
        // или вынести его в свою функцию.
        {
            // Соблюдена локальность: условия рядом с их обработкой.
-           if (user == null)
+           if (user == nullptr)
            {
                std::cout << "User not found." << std::endl;
                return;
            }
        
-           if (!user.isActive)
+           if (!user->isActive)
            {
                std::cout << "User is not active." << std::endl;
                return;
            }
        
-           if (!user.emailConfirmed)
+           if (!user->emailConfirmed)
            {
                std::cout << "Email not confirmed." << std::endl;
                return;
@@ -831,7 +830,7 @@
        }
    
        // Основной код находится после всех проверок, а не в середине.
-       std::cout << "Sending email to " << user.email << std::endl;
+       std::cout << "Sending email to " << user->email << std::endl;
    }
    ```
    </details>
@@ -976,11 +975,15 @@ void main()
    Переделайте код, чтобы везде использовалась эта структура.
 
 
-### Циклы
+## 4.3
+
+- Видео по [span](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11) (до строк)
+
+### Алгоритм
 
 - Сделайте функцию которая попарно перемножает числа из 2 массивов, записывая результат в 1-ый массив.
 
-```
+```cpp
 void product(std::span<int> inputOutput, std::span<int> coefficients)
 {
     // ...
@@ -1007,7 +1010,47 @@ assert(inputOutput.size() == coefficients.size());
 ### Примеры на понимание `span` 
 
 1. ```cpp
+   std::array<int, 3> arr{ 0, 1, 2 };
+   int* arrStart{ arr.data() };
+   *arrStart = 3;
+   *(arrStart + 0) = 4;
+   arrStart[0] = 5;
+   *(arrStart + 1) = 6;
+   arrStart[1] = 7;
+   *(arrStart + 2) = 8;
+   arrStart[2] = 9;
+
+   int item0{ *arrStart };
+   item0 = arrStart[0];
+   int item1{ *(arrStart + 1) };
+   item1 = arrStart[1];
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+   
+   `arrStart` получает адрес первого элемента в массива, благодаря `.data()`.
+
+   Далее `*arrStart` ссылается на первый элемент в массиве по адресу.
+   `*arrStart` эквивалентно `*(arrStart + 0)`.
+
+   Синтаксис `*(x + 1)` эквивалентен синтаксису `x[1]`.
+   Соответственно, `*(arrStart + 0)` можно индексированием записать как `arrStart[0]`.
+
+   > `x[1]` так же эквивалентен `1[x]`
+
+   `*(arrStart + 1)` эквивалентно `arrStart[1]`, что эквивалентно `arr[1]`.
+   Здесь, мы перепрыгиваем через первый элемент (`+ 1`), 
+   начиная с начала первого элемента (`arrStart`)?
+   попадая на следующую ячейку в памяти.
+
+   Эти выражения можно использовать как для вписывания значений,
+   так и для их считывания.
+   </details>
+
+1. ```cpp
    #include <iostream>
+   #include <array>
 
    void func(int* arr)
    {
@@ -1022,8 +1065,22 @@ assert(inputOutput.size() == coefficients.size());
    }
    ```
 
+   <details>
+   <summary>Ответ:</summary>
+   
+   Здесь функции передается адрес первого элемента из массива.
+
+   `arr[0]` эквивалентен `*(arr + 0)` 
+   и считает первый элемент из массива `arr` из функции `main`.
+
+   Соответственно `arr[1]` эквивалентен `*(arr + 1)` и напечатает второй элемент.
+
+   Выведется `1` и `2`.
+   </details>
+
 1. ```cpp
    #include <iostream>
+   #include <array>
 
    void func(int arr[])
    {
@@ -1038,8 +1095,16 @@ assert(inputOutput.size() == coefficients.size());
    }
    ```
 
+   <details>
+   <summary>Ответ:</summary>
+   
+   `int* arr` эквивалентно `int[] arr` когда используется в качестве параметра.
+   Этот пример эквивалентен предыдущему.
+   </details>
+
 1. ```cpp
    #include <iostream>
+   #include <array>
 
    void func(int arr[])
    {
@@ -1051,6 +1116,79 @@ assert(inputOutput.size() == coefficients.size());
    int main()
    {
        std::array<int, 2> arr{ 1, 2 };
+       func(arr.data());
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+   
+   `arr[2]` в инструкции `std::cout << arr[2] << std::endl` пытается считать по индексу `2` из массива.
+   В C, попытка считывания по несуществующему индексу считается UB (undefined behavior).
+   Этот код скомпилируется и запустится без проблем,
+   но считывание `arr[2]` технически способно привести к любому результату при выполнении.
+
+   Подобное считается логической ошибкой в коде.
+   </details>
+
+   <details>
+   <summary>Как предотвратить данную ошибку?</summary>
+
+   Нужно выполнять проверку того, находится ли индекс за пределами массива перед тем,
+   как считываете по тому или иному индексу.
+   Для того чтобы выполнить данную проверку, помимо указателя на начало массива
+   нужно иметь также и длину массива. 
+   В данном примере, длина массива известна (2), но в общем случае ее тоже нужно будет передать.
+   Об этом есть в дальнейших примерах.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+
+   void func(int arr[])
+   {
+       std::cout << arr[0] << std::endl;
+       std::cout << arr[1] << std::endl;
+       std::cout << arr[2] << std::endl;
+   }
+
+   int main()
+   {
+       std::array<int, 3> arr1{ 0, 1, 2 };
+       std::array<int, 2> arr2{ 0, 1 };
+       func(arr1.data());
+       func(arr2.data());
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+   
+   Для первого массива не возникает UB, 
+   поскольку он позволяет просматривать все индексы от 0 до 2.
+
+   Однако для второго массива, повторяется ситуация в примере выше.
+
+   Здесь иллюстрируется тот факт, что одна и та же функция может использоваться
+   для массивов разной длины, и не может предположить ее заранее.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+
+   void func(int arr[])
+   {
+       for (size_t i = 0; i < 2; i++)
+       {
+           std::cout << arr[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 2> arr{ 0, 1 };
        func(arr.data());
    }
    ```

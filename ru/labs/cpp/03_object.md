@@ -16,6 +16,8 @@
 Какие тут типы, и какие тут объекты? перечислите все.
 
 ```cpp
+#include <array>
+
 struct Leg
 {
     int length;
@@ -128,6 +130,17 @@ std::array<Leg, 2>
 </details>
 
 ## Вопросы на понимание
+
+> Там, где `main` не был расписан, код помещается в типичный основной файл:
+> ```cpp
+> #include <iostream>
+> #include <array> // надо для std::array
+>
+> int main()
+> {
+>     // сюда
+> }
+> ```
 
 1. ```cpp
    5 = 6;
