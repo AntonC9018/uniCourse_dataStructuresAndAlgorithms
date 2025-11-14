@@ -463,36 +463,6 @@
    Код выведет 2, 1, а затем крашнется на последней строчке при попытке считать по нулевому адресу с отступом (segmentation fault).
    </details>
 
-1. ```cpp
-   #include <iostream>
-
-   struct A
-   {
-       int f1;
-       int f2;
-   };
-
-   int main()
-   {
-       A a;
-       a.f1 = 5;
-       int b = a.f1;
-       a.f2 = b;
-
-       std::cout << a.f1 << std::endl;
-       std::cout << a.f2 << std::endl;
-       std::cout << b << std::endl;
-   }
-   ```
-
-   <details>
-   <summary>Ответ:</summary>
-
-   Можно считывать из и вписывать в каждое из полей по отдельности.
-
-   Выведется `5` трижды.
-   </details>
-
 4. ```cpp
    #include <iostream>
 

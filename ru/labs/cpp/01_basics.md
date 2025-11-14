@@ -111,7 +111,7 @@
    int b = 6;
    a = b;
    b = 7;
-   std::cout << a;
+   std::cout << a << std::endl;
    ```
 
    <details>
@@ -132,7 +132,7 @@
    int a = 5;
    int b = a + 6;
    a = 7;
-   std::cout << b;
+   std::cout << b << std::endl;
    ```
    <details>
    <summary>Правильный ответ:</summary>

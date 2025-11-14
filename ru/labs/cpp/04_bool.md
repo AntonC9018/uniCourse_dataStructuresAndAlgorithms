@@ -186,7 +186,7 @@
 
    int main()
    {
-       bool result = f();
+       bool result = IsGreater(5, 6);
        std::cout << result << std::endl;
    }
    ```
