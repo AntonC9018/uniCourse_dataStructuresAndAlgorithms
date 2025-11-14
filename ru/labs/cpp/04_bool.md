@@ -1001,3 +1001,55 @@ assert(inputOutput.size() == coefficients.size());
 - Реализуйте версию с циклом `while` с условием.
 
 - Реализуйте версию с циклом `for`.
+
+
+### Примеры на понимание `span` 
+
+1. ```cpp
+   #include <iostream>
+
+   void func(int* arr)
+   {
+       std::cout << arr[0] << std::endl;
+       std::cout << arr[1] << std::endl;
+   }
+
+   int main()
+   {
+       std::array<int, 2> arr{ 1, 2 };
+       func(arr.data());
+   }
+   ```
+
+1. ```cpp
+   #include <iostream>
+
+   void func(int arr[])
+   {
+       std::cout << arr[0] << std::endl;
+       std::cout << arr[1] << std::endl;
+   }
+
+   int main()
+   {
+       std::array<int, 2> arr{ 1, 2 };
+       func(arr.data());
+   }
+   ```
+
+1. ```cpp
+   #include <iostream>
+
+   void func(int arr[])
+   {
+       std::cout << arr[0] << std::endl;
+       std::cout << arr[1] << std::endl;
+       std::cout << arr[2] << std::endl;
+   }
+
+   int main()
+   {
+       std::array<int, 2> arr{ 1, 2 };
+       func(arr.data());
+   }
+   ```
