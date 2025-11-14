@@ -126,7 +126,7 @@
 6. ```cpp
    #include <iostream>
 
-   void f(bool x)
+   void f(bool a)
    {
        std::cout << a << std::endl;
    }
@@ -652,6 +652,7 @@
    {
        std::cout << "C" << std::endl;
    }
+   ```
    </details>
 
 1. Попытайтесь представить данный код как цепочку `if`-`else`, ему идентичную.
