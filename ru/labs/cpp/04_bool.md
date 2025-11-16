@@ -1260,7 +1260,8 @@ assert(inputOutput.size() == coefficients.size());
    <details>
    <summary>Что такое <code>constexpr</code></summary>
 
-   `constexpr` это константа, известная во время компиляции.
+   `constexpr` (от constant expression) это константа (неизменяемое значение с именем),
+   известная во время компиляции.
    Она как бы заменится компилятором на ее значение везде где она упоминается.
 
    Нам необходима константа на время компиляции, 
@@ -1273,7 +1274,7 @@ assert(inputOutput.size() == coefficients.size());
 
    int main()
    {
-       int len = 2;
+       size_t len = 2;
        std::array<int, len> arr{ 1, 2 };
    }
    ```
@@ -1284,14 +1285,14 @@ assert(inputOutput.size() == coefficients.size());
 
    int main()
    {
-       constexpr int len = 2;
+       constexpr size_t len = 2;
        std::array<int, len> arr{ 1, 2 };
    }
    ```
 
    `constexpr` в данном примере можно заменить на `static inline const` 
    (в теме с линкером будет больше об этом), чтобы получить то же поведение
-   (`const` `int`-ы в C++ являются так же константами при компиляции.
+   (`const` `int`-ы в C++ являются так же константами при компиляции).
    </details>
 
    <details>
@@ -1306,4 +1307,614 @@ assert(inputOutput.size() == coefficients.size());
    ```
 
    Это происходит, поскольку нет проверки на то *откуда появился указатель* при вызове функции.
+   </details>
+
+1. Как получить длину C-массива? А `std::array`?
+
+   <details>
+   <summary>C-массив? Ты о чем?</summary>
+
+   Вот это определение C-массива:
+   ```cpp
+   int arr[2]{};
+   ```
+
+   А вот тут определяется C++ массив (`std::array`):
+   ```cpp
+   std::array<int, 2> arr{};
+   ```
+
+   Если инициализируете элементы, `int` и `2` можно не писать, их компилятор сам поймет:
+   ```cpp
+   std::array arr{1, 2};
+   ```
+   </details>
+
+   <details>
+   <summary>Подсказка 1</summary>
+
+   У C-массива нет метода `.size()` как у `std::array`.
+   </details>
+
+   <details>
+   <summary>Подсказка 2</summary>
+   Приходится обходить систему через `sizeof`.
+
+   </details>
+
+   <details>
+   <summary>Подсказка 3</summary>
+
+   `sizeof` для всего массива дает его величину в байтах.
+   </details>
+
+   <details>
+   <summary>Подсказка 4</summary>
+
+   `sizeof` выражения одного из элементов или базового типа дает его величину.
+   Это можно совместить с предыдущей подсказкой.
+   </details>
+
+   <details>
+   <summary>Ответ</summary>
+
+   Количество байтов, выделенное под массив, делите на размер одного из элементов,
+   получаете количество элементов. 
+
+   Если ранее был определен `arr`:
+   ```cpp
+   int arr[3]{};
+   ```
+
+   Этого можно достичь вот так:
+   ```cpp
+   constexpr size_t len{ sizeof(arr) / sizeof(int) };
+   ```
+
+   Или вот так, что более гибко:
+   ```cpp
+   constexpr size_t len{ sizeof(arr) / sizeof(arr[0]) };
+   ```
+
+   `sizeof(arr[0])` дает константу, потому что `sizeof` смотрит лишь на *тип выражения* —
+   операция `arr[0]` и не вычислится априори — компилятор смотрит на то, какой тип *бы* вернулся.
+   </details>
+
+1. Баг с андерфлоу
+
+1. В чем преимущества и недостатки этого подхода?
+   ```cpp
+   #include <array>
+   #include <iostream>
+
+   void print(int* arr, size_t length)
+   {
+        for (size_t i = 0; i < length; i++)
+        {
+             std::cout << arr[i] << std::endl;
+        }
+   }
+
+   int main()
+   {
+        std::array<int, 2> arr{ 0, 1 };
+        print(arr.data(), arr.size());
+
+        int arr1[3]{};
+        print(arr1, sizeof(arr1) / sizeof(arr1[0]));
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Преимущество в том, что теперь функция будет работать для массивов разных длин.
+
+   Еще один плюс в том, что еще сложнее ошибится при передачи длины —
+   просто нужно передать длину массива которую передаете.
+
+   Главный недостаток в том, что длину таки надо передать правильно,
+   и в этом моменте можно допустить ошибку.
+   Например:
+   ```cpp
+   std::array<int, 2> arr{};
+   print(arr.data(), 3);
+   ```
+   </details>
+
+
+1. (продвинутый уровень)
+   ```cpp
+   #include <iostream>
+
+   int main()
+   {
+       int arr[3]{};
+       int (&arrRef)[3]{ arr };
+       arrRef[0] = 1;
+       std::cout << arr[0] << std::endl;
+   }
+   ```
+
+1. (продвинутый уровень)
+   ```cpp
+   #include <iostream>
+
+   void print(int (&arr)[3])
+   {
+        for (size_t i = 0; i < len; i++)
+        {
+             std::cout << arr[i] << std::endl;
+        }
+   }
+
+   int main()
+   {
+        int arr1[3]{};
+        print(arr1);
+   }
+   ```
+
+1. (продвинутый уровень)
+   ```cpp
+   #include <iostream>
+
+   template<size_t len>
+   void print(int (&arr)[len])
+   {
+        for (size_t i = 0; i < len; i++)
+        {
+             std::cout << arr[i] << std::endl;
+        }
+   }
+
+   int main()
+   {
+        int arr1[3]{};
+        print(arr1);
+   }
+   ```
+
+   <details>
+   <summary><code>template</code>?</summary>
+
+   Идея в том, что компиятор определит каждое использование данной функции для разных длин массивов,
+   и создаст разные функции `print`, подставляя соответствующий `len`, исходя из этой длины.
+
+   Например, здесь, `print` заменится на `print` с подстановкой `2` как `len`, что иначе можно записать
+   вот так:
+   ```cpp
+   print<3>(arr1);
+   ```
+   
+   </details>
+
+   <details>
+   <summary>Ответ</summary>
+
+   В шаблоны можно таким образом передавать ссылки на массивы.
+   </details>
+
+1. ```cpp
+   #include <array>
+   #include <iostream>
+
+   void change(std::array<int, 3> arr)
+   {
+        arr[0] = 1;
+   }
+
+   int main()
+   {
+        std::array<int, 3> arr{};
+        change(arr);
+        std::cout << arr[0] << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   `arr` не изменится, поскольку функции была передана копия его значения.
+   </details>
+
+1. ```cpp
+   #include <array>
+   #include <iostream>
+
+   void change(std::array<int, 3>& arr)
+   {
+        arr[0] = 1;
+   }
+
+   int main()
+   {
+        std::array<int, 3> arr{};
+        change(arr);
+        std::cout << arr[0] << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   В `arr[0]` запишется `1`, поскольку функции была передана *ссылка* на объект масссива в `main`.
+   </details>
+
+1. ```cpp
+   #include <array>
+   #include <iostream>
+
+   void print(std::array<int, 3>& arr)
+   {
+       for (size_t i = 0; i < arr.size(); i++)
+       {
+           std::cout << arr[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+        std::array<int, 3> arr{};
+        print(arr);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Здесь, в функцию был передан массив ссылкой.
+   Теперь невозможно передать массив неправильной длины!
+   Например, следующее не скомпилируется:
+   ```cpp
+   std::array<int, 2> arr{};
+   print(arr);
+   ```
+
+   Недостаток этого подхода в том, что функция поддерживает только массивы длиной 3.
+   </details>
+
+1. (продвинутый уровень)
+   ```cpp
+   #include <array>
+   #include <iostream>
+
+   template<size_t len>
+   void print(std::array<int, len>& arr)
+   {
+       for (size_t i = 0; i < arr.size(); i++)
+       {
+           std::cout << arr[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+        std::array<int, 3> arr{};
+        print(arr);
+
+        std::array<int, 2> arr1{};
+        print(arr1);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Данный подход позволяет создавать по функции для каждой длины массива.
+   Теперь функция поддерживает любую длину массива!
+
+   Недостатка сейчас 2:
+   - Функция поддерживает только C++ массивы со *статически* известной длиной
+     (длина часть типа и известна при компиляции);
+   - Будет создано по одной новой функции для каждой длины, что
+     будет тратить лишнюю память в виде инструкций в скомпилированной программе
+     (об этом больше в своей теме).
+
+   Эти недостатки можно решить, передавая длину параметром как значение,
+   а не как часть типа.
+   </details>
+
+1. ```cpp
+   #include <span>
+   #include <iostream>
+   #include <array>
+
+   int main()
+   {
+       std::array<int, 8> arr{0, 1, 2, 3, 4, 5, 6, 7};
+       std::span<int> span{ arr };
+
+       std::cout << "Item 1: " << span[1] << std::endl;
+       std::cout << "Item 7: " << span[7] << std::endl;
+       std::cout << "arr size in bytes: " << sizeof(arr) << std::endl;
+       std::cout << "span size in bytes: " << sizeof(span) << std::endl;
+       std::cout << "span length: " << span.size() << std::endl;
+   }
+   ```
+
+   <details>
+   <summary><code>span</code></summary>
+
+   `span` — это указатель на первый элемент и длина в одном объекте.
+   </details>
+
+   <details>
+   <summary>Ответ (индексирование):</summary>
+
+   Индексирование `span`-а применяется к основной памяти массива.
+
+   Напечатается `1` и `7` из `arr`.
+   </details>
+
+   <details>
+   <summary>Ответ (<code>sizeof</code>):</summary>
+
+   `arr` состоит из 8 `int`, каждый из которых занимает по 4 байта.
+   Итого, 8 × 4 = 32 байта.
+
+   `span` хоть и ссылается на `arr`, делает он это благодаря указателю.
+   `span` это один указатель `int*` на начало массива и один `size_t` с длиной массива.
+
+   Итого, `sizeof(int*)` + `sizeof(size_t)` = 8 + 8 = 16.
+   </details>
+
+   <details>
+   <summary>Ответ (<code>span.size()</code>):</summary>
+
+   `span.size()` получает доступ к сохраненной в `span` длине и возвращает `8`.
+   </details>
+
+1. ```cpp
+   #include <span>
+   #include <iostream>
+   #include <array>
+
+   int main()
+   {
+       std::array<int, 2> arr{1, 2};
+       std::span<int> span{ arr };
+       arr[0] = 3;
+       arr[1] = 4;
+
+       std::cout << span[0] << std::endl;
+       std::cout << span[1] << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Поскольку `span` хранить *адрес начала массива*, а не его копию, 
+   всегда будут выводится текущие значения из массива.
+
+   Выведется `3`, `4`.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+
+   int main()
+   {
+       std::array<int, 2> arr{1, 2};
+       std::cout << arr[0] << std::endl;
+       std::cout << arr.at(0) << std::endl;
+       std::cout << arr[2] << std::endl;
+       std::cout << arr.at(2) << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Что делает <code>arr.at</code></summary>
+
+   `at` дает доступ к элементу, точно так же как индексирование (`arr[...]`),
+   но помимо этого делает проверку длины.
+   Если заданный индекс за пределами массива, программа крашнется.
+
+   > На самом деле выбросится исключение, которое можно поймать, но это мы не проходим.
+   </details>
+
+   <details>
+   <summary>Ответ</summary>
+
+   `arr[0]` как обычно считает значение первого элемента из массива.
+
+   `arr.at(0)` сделает то же самое, после удачной проверки на длину.
+   Проверка на длину успешна, потому что в массиве есть индекс `0`,
+   так как длина больше `0`.
+
+   `arr[2]` это UB (обсуждалось ранее).
+
+   `arr.at(2)` крашнет программу при проверке длины.
+   Проверка на длину не успешна, поскольку в массиве нет индекса `2`,
+   так как длина не есть больше `2`.
+
+   > Эта проверка на длину грамотно называется "bounds-check".
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+
+   int main()
+   {
+       std::array<int, 2> arr{1, 2};
+       std::span<int> span{ arr };
+       std::cout << span.at(2) << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   `std::span` тоже поддерживает `at`.
+   Поведение аналогичное — программа крашится.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+
+   void print(std::span<int> s)
+   {
+       for (size_t i = 0; i < s.size(); i++)
+       {
+           std::cout << s[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 3> arr{ 1, 2, 3 };
+       std::span<int> span{ arr };
+       print(span);
+
+       print({ arr });
+       print(arr);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Все 3 синтаксиса `print(span)`, `print({ arr })` и `print(arr)` сработают и сделают то же самое.
+
+   `print(span)` передаст копию уже созданного `span`.
+
+   `print({ arr })` и `print(arr)` инициализируют временный 
+   `std::span<int>` и передадут его функции `print`.
+
+   В каждом случае, `print` пройдется циклом по элементам `arr` из `main` и напечатает их.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+
+   void print(std::span<int> s)
+   {
+       for (size_t i = 0; i < s.size(); i++)
+       {
+           std::cout << s[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       std::span<int> wholeSpan{ arr };
+       std::span<int> span123{ arr.data(), 3 };
+       std::span<int> span234{ arr.data() + 1, 3 };
+
+       print(wholeSpan);
+
+       std::cout << std::endl;
+       print(span123);
+
+       std::cout << std::endl;
+       print(span234);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   `std::span` можно создать как из всего массива, так и из отдельно *указателя* и *длины*.
+
+   Например, `std::span<int> span123{ arr.data(), 3 };` передает:
+   - Адрес начала массива (`arr.data()`) как указатель,
+   - `3` как длину.
+
+   `std::span<int> span234{ arr.data() + 1, 3 };` передает:
+   - Адрес второго элемента массива (`arr.data() + 1` = `&arr[1]`) как указатель,
+   - `3` как длину.
+
+   При печати `span123` напечатаются первые 3 элемента.
+
+   При печати `span234` напечатаются 3 элемента, начиная со второго (2, 3 и 4).
+   </details>
+
+   Что
+
+1. Что будет, если сменить 
+   ```cpp
+   std::span<int> span123{ arr.data(), 3 };
+   std::span<int> span234{ arr.data() + 1, 3 };
+   ```
+   на 
+   ```cpp
+   std::span<int> span123{ wholeSpan.data(), 3 };
+   std::span<int> span234{ span123.data() + 1, 3 };
+   ```
+   в предыдущем примере?
+
+   <details>
+   <summary>Ответ:</summary>
+
+   `data` для `std::span` возвращает сохраненный в нем указатель.
+
+   Результат будет тот же, поскольку и в `wholeSpan` и в `span123` были
+   сохранены указатели на первый элемент из `arr`.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+
+   void print(std::span<int> s)
+   {
+       for (size_t i = 0; i < s.size(); i++)
+       {
+           std::cout << s[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       std::span<int> wholeSpan{ arr };
+       std::span<int> span123{ wholeSpan.subspan(0, 3) };
+       std::span<int> span234{ wholeSpan.subspan(1, 3) };
+
+       print(wholeSpan);
+
+       std::cout << std::endl;
+       print(span123);
+
+       std::cout << std::endl;
+       print(span234);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   `subspan` принимает 2 аргумента:
+   - *С какого индекса* начать;
+   - Какая будет длина.
+
+   `wholeSpan.subspan(0, 3)` говорит начать с индекса `0`, с длиной `3`.
+   Это эквивалентно `wholeSpan.data() + 0, 3`.
+
+   `wholeSpan.subspan(1, 3)` говорит начать с индекса `1`, с длиной `3`.
+   Это эквивалентно `wholeSpan.data() + 1, 3`.
+   </details>
+
+1. Что если в предыдущем примере выйти за рамки массива, например вот так:
+   ```cpp
+   std::span<int> s{ wholeSpan.subspan(2, 3) };
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Тут не делается bounds-checking, это просто UB при считывании из позиции `2` в `s`
+
+   > создания некорректного `std::span` не считается UB, 
+   > по аналогии с указателями, а вот считывание за пределами массива считается.
    </details>
