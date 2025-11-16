@@ -1380,8 +1380,6 @@ assert(inputOutput.size() == coefficients.size());
    операция `arr[0]` и не вычислится априори — компилятор смотрит на то, какой тип *бы* вернулся.
    </details>
 
-1. Баг с андерфлоу
-
 1. В чем преимущества и недостатки этого подхода?
    ```cpp
    #include <array>
@@ -1685,7 +1683,7 @@ assert(inputOutput.size() == coefficients.size());
    <details>
    <summary>Ответ:</summary>
 
-   Поскольку `span` хранить *адрес начала массива*, а не его копию, 
+   Поскольку `span` хранит *адрес начала массива*, а не его копию, 
    всегда будут выводится текущие значения из массива.
 
    Выведется `3`, `4`.
@@ -1733,25 +1731,25 @@ assert(inputOutput.size() == coefficients.size());
    > Эта проверка на длину грамотно называется "bounds-check".
    </details>
 
-1. ```cpp
-   #include <iostream>
-   #include <array>
-   #include <span>
+<!-- 1. ```cpp -->
+<!--    #include <iostream> -->
+<!--    #include <array> -->
+<!--    #include <span> -->
 
-   int main()
-   {
-       std::array<int, 2> arr{1, 2};
-       std::span<int> span{ arr };
-       std::cout << span.at(2) << std::endl;
-   }
-   ```
+<!--    int main() -->
+<!--    { -->
+<!--        std::array<int, 2> arr{1, 2}; -->
+<!--        std::span<int> span{ arr }; -->
+<!--        std::cout << span.at(2) << std::endl; -->
+<!--    } -->
+<!--    ``` -->
 
-   <details>
-   <summary>Ответ</summary>
+<!--    <details> -->
+<!--    <summary>Ответ</summary> -->
 
-   `std::span` тоже поддерживает `at`.
-   Поведение аналогичное — программа крашится.
-   </details>
+<!--    `std::span` тоже поддерживает `at`. -->
+<!--    Поведение аналогичное — программа крашится. -->
+<!--    </details> -->
 
 1. ```cpp
    #include <iostream>
@@ -1838,8 +1836,6 @@ assert(inputOutput.size() == coefficients.size());
    При печати `span234` напечатаются 3 элемента, начиная со второго (2, 3 и 4).
    </details>
 
-   Что
-
 1. Что будет, если сменить 
    ```cpp
    std::span<int> span123{ arr.data(), 3 };
@@ -1915,6 +1911,111 @@ assert(inputOutput.size() == coefficients.size());
 
    Тут не делается bounds-checking, это просто UB при считывании из позиции `2` в `s`
 
-   > создания некорректного `std::span` не считается UB, 
+   > Создание некорректного `std::span` не считается UB, 
    > по аналогии с указателями, а вот считывание за пределами массива считается.
+   </details>
+
+1. Что выведется здесь?
+   ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+   #include <cassert>
+
+   void print(std::span<int> s)
+   {
+       int lastIndex = static_cast<int>(s.size()) - 1;
+       for (int i { lastIndex }; i >= 0; i--)
+       {
+           size_t si = static_cast<size_t>(i);
+           assert(si < s.size());
+
+           std::cout << s[si] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       print({ arr });
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   В примере элементы массива печатаются в обратном порядке.
+
+   `static_cast` используются, чтобы обойти предупреждения 
+   о возможной потере информации (narrowing conversion из `size_t` в `int`)
+   и неявной смене знака (из `int` в `size_t`).
+   </details>
+
+1. Что выведется здесь?
+   ```cpp
+   #include <iostream>
+   #include <array>
+   #include <span>
+   #include <cassert>
+
+   void print(std::span<int> s)
+   {
+       for (size_t i { s.size() - 1 }; i >= 0; i--)
+       {
+           assert(i < s.size());
+
+           std::cout << s[i] << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       print({ arr });
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Напечатаются все элементы, затем программа крашнется.
+
+   Так как `i` — это тип без знака, 
+   `0 - 1` как `size_t` будет не `-1`, а случится underflow и число станет максимальным.
+
+   Это можно обойти, если делать проверку вручную:
+
+   ```cpp
+   void print(std::span<int> s)
+   {
+       if (s.size() == 0)
+       {
+           return;
+       }
+       size_t i { s.size() - 1 };
+       while (true)
+       {
+           assert(i < s.size());
+           std::cout << s[i] << std::endl;
+           if (i == 0)
+           {
+               return;
+           }
+           i--;
+       }
+   }
+   ```
+   
+   Или считать максимальное значение недопустимым индексом и делать проверку на `-1` как `size_t`:
+
+   ```cpp
+   void print(std::span<int> s)
+   {
+       for (size_t i { s.size() - 1 }; i != static_cast<size_t>(-1); i--)
+       {
+           assert(i < s.size());
+           std::cout << s[i] << std::endl;
+       }
+   }
+   ```
    </details>
