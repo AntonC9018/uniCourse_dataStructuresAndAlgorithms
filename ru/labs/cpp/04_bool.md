@@ -1731,26 +1731,6 @@ assert(inputOutput.size() == coefficients.size());
    > Эта проверка на длину грамотно называется "bounds-check".
    </details>
 
-<!-- 1. ```cpp -->
-<!--    #include <iostream> -->
-<!--    #include <array> -->
-<!--    #include <span> -->
-
-<!--    int main() -->
-<!--    { -->
-<!--        std::array<int, 2> arr{1, 2}; -->
-<!--        std::span<int> span{ arr }; -->
-<!--        std::cout << span.at(2) << std::endl; -->
-<!--    } -->
-<!--    ``` -->
-
-<!--    <details> -->
-<!--    <summary>Ответ</summary> -->
-
-<!--    `std::span` тоже поддерживает `at`. -->
-<!--    Поведение аналогичное — программа крашится. -->
-<!--    </details> -->
-
 1. ```cpp
    #include <iostream>
    #include <array>
