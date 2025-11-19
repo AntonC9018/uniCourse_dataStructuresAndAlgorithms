@@ -275,8 +275,8 @@
    int main()
    {
        A* fp { &A };
-       *fp = 5;
-       std::cout << *fp << std::endl;
+       *fp = { 5, 6 };
+       std::cout << fp->f1 << std::endl;
    }
    ```
 
