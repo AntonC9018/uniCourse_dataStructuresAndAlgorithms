@@ -924,12 +924,12 @@
        {
            int totalStudents { 25 };
            int studentsPerTable { 2 };
-           Result result { ceilDivide(totalStudents, studentsPerTable) };
+           Result result { ceilingDivide(totalStudents, studentsPerTable) };
            std::cout << result.isDenominatorZero << std::endl;
            std::cout << result.result << std::endl;
        }
        {
-           Result result { ceilDivide(30, 0) };
+           Result result { ceilingDivide(30, 0) };
            std::cout << result.isDenominatorZero << std::endl;
            std::cout << result.result << std::endl;
        }
