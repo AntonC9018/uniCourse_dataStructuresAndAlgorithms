@@ -115,30 +115,6 @@
 
    int main()
    {
-       int* fp { &A.f1 };
-       *fp = 5;
-       std::cout << *fp << std::endl;
-   }
-   ```
-
-   <details>
-   <summary>Ответ:</summary>
-
-   Подобное недопустимо, поскольку сама структура `A` не хранит никаких данных.
-   Данные можно хранить в *переменной типа `A`*, которую необходимо заранее создать.
-   </details>
-
-1. ```cpp
-   #include <iostream>
-
-   struct A
-   {
-       int f1;
-       int f2;
-   };
-
-   int main()
-   {
        A a;
        a.f1 = 5;
        a.f2 = 6;
@@ -286,6 +262,54 @@
    Это по-другому можно выразить как `(*pa).f1`.
    И это будет по факту эквивалентно `a.f1`.
    </details>
+
+1. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f1;
+       int f2;
+   };
+
+   int main()
+   {
+       A* fp { &A };
+       *fp = 5;
+       std::cout << *fp << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Подобное недопустимо, поскольку сама структура `A` не хранит никаких данных.
+   Данные можно хранить в *переменной типа `A`*, которую необходимо заранее создать.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int f1;
+       int f2;
+   };
+
+   int main()
+   {
+       int* fp { &A.f1 };
+       *fp = 5;
+       std::cout << *fp << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Подобное недопустимо. Объяснение то же, что и в прошлом примере.
+   </details>
+
 
 3. ```cpp
    #include <iostream>
