@@ -664,6 +664,32 @@
    Выведется `0` для `a` и `4` для `b`.
    </details>
 
+6. ```cpp
+   #include <iostream>
+
+   struct A
+   {
+       int arr[2];
+   };
+
+   int main()
+   {
+       A a { { 1, 2 } };
+       A b { { 3, 4 } };
+       b = a;
+
+       std::cout << b.arr[0] << std::endl;
+       std::cout << b.arr[1] << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ:</summary>
+
+   Выведется `1`, `2`.
+   </details>
+
+
 ## 2.2 Функции
 
 - [Видео (сырое)](https://www.youtube.com/watch?v=LnxQKSif69s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=10)
