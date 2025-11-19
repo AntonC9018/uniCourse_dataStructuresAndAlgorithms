@@ -891,6 +891,50 @@
 
    Функция вернет `0`. `break` и `return 1` не выполнятся.
    </details>
+
+1. ```cpp
+   #include <iostream>
+
+   struct Result
+   {
+       bool isDenominatorZero;
+       // Should only be read if there is no error.
+       int result;
+   };
+
+   Result ceilingDivide(int numerator, int denominator)
+   {
+       if (denominator == 0)
+       {
+           return {
+               .isDenominatorZero = true,
+               .result = 0,
+           };
+       }
+
+       int value = (numerator + denominator - 1) / denominator;
+       return {
+           .isDenominatorZero = false,
+           .result = value,
+       };
+   }
+
+   int main()
+   {
+       {
+           int totalStudents { 25 };
+           int studentsPerTable { 2 };
+           Result result { ceilDivide(totalStudents, studentsPerTable) };
+           std::cout << result.isDenominatorZero << std::endl;
+           std::cout << result.result << std::endl;
+       }
+       {
+           Result result { ceilDivide(30, 0) };
+           std::cout << result.isDenominatorZero << std::endl;
+           std::cout << result.result << std::endl;
+       }
+   }
+   ```
    
 ### Рефакторинг
 
