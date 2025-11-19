@@ -274,10 +274,11 @@
 
    int main()
    {
-       A a;
-       A* fp { &a };
-       *fp = { 5, 6 };
-       std::cout << fp->f1 << std::endl;
+       A a{};
+       A* pa { &a };
+       *pa = { 5, 6 };
+       std::cout << pa->f1 << std::endl;
+       std::cout << pa->f2 << std::endl;
    }
    ```
 
