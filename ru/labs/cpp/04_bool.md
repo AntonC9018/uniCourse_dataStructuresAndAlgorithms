@@ -176,6 +176,31 @@
 8. ```cpp
    #include <iostream>
 
+   void f(bool b)
+   {
+       b = true;
+   }
+
+   int main()
+   {
+       int x { 1 };
+       f(x == 2);
+       std::cout << x << std::endl;
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+ 
+   При вызове `f` ей передается результат вычисления выражения `x == 2`.
+   Изменение переменной параметра `b` никак не повлияет на `x`.
+
+   Выведется `1`.
+   </details>
+
+8. ```cpp
+   #include <iostream>
+
    void f()
    {
        return true;
