@@ -162,7 +162,6 @@
 
    int main()
    {
-       bool a = true;
        f(5 > 3);
    }
    ```
