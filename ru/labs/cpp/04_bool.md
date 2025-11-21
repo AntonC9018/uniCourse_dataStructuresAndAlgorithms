@@ -520,6 +520,10 @@
    {
        std::cout << "World" << std::endl;
    }
+   if (b)
+   {
+       std::cout << "b is true!" << std::endl;
+   }
    ```
 
    <details>
@@ -527,6 +531,9 @@
 
    `if`, когда ему передают указатель, проверяет, если указатель не является нулевым (`nullptr`).
    `Hello` тут не выведется, а `World` выведется.
+
+   `if (b)` -> `if (0)` -> `if (false)`.
+   `b is true!` не выведется.
    </details>
 
 1. ```cpp
@@ -964,8 +971,11 @@
            int totalStudents { 25 };
            int studentsPerTable { 2 };
            Result result { ceilingDivide(totalStudents, studentsPerTable) };
-           std::cout << result.isDenominatorZero << std::endl;
-           std::cout << result.result << std::endl;
+           if (!result.isDenominatorZero)
+           {
+               int numTablesNeeded = result.result;
+               std::cout << "Number of tables needed is " << numTablesNeeded << std::endl;
+           }
        }
        {
            Result result { ceilingDivide(30, 0) };
@@ -1181,7 +1191,7 @@ assert(inputOutput.size() == coefficients.size());
    <details>
    <summary>Ответ:</summary>
    
-   `int* arr` эквивалентно `int[] arr` когда используется в качестве параметра.
+   `int* arr` эквивалентно `int arr[]` когда используется в качестве параметра.
    Этот пример эквивалентен предыдущему.
    </details>
 
@@ -1531,7 +1541,7 @@ assert(inputOutput.size() == coefficients.size());
 
    void print(int (&arr)[3])
    {
-        for (size_t i = 0; i < len; i++)
+        for (size_t i = 0; i < 3; i++)
         {
              std::cout << arr[i] << std::endl;
         }
