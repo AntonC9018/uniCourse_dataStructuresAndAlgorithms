@@ -2049,3 +2049,64 @@ assert(inputOutput.size() == coefficients.size());
    }
    ```
    </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <cassert>
+
+   void print(int* start, int* end)
+   {
+       for (int* current{start}; current <= end; current++)
+       {
+           std::cout << *current << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       print(arr.data(), &arr[arr.size() - 1]);
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Здесь иллюстрируется другой подход к пределам итерации.
+   Цикл работает не исходя из количества элементов в массиве, 
+   а исходя из первого и последнего адреса.
+   </details>
+
+1. ```cpp
+   #include <iostream>
+   #include <array>
+   #include <cassert>
+
+   void print(int* start, int* pastEnd)
+   {
+       for (int* current{start}; current != pastEnd; current++)
+       {
+           std::cout << *current << std::endl;
+       }
+   }
+
+   int main()
+   {
+       std::array<int, 4> arr{1, 2, 3, 4};
+       print(arr.data(), &arr[arr.size()]);
+       print(arr.begin(), arr.end());
+   }
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Здесь применяется подход итераторов: вместо адреса последнего элемента
+   передается *первый адрес после последнего*.
+
+   `arr.begin()` возвращает *итератор* (есть в другой теме) первого элемента,
+   а `arr.end()` возвращает итератор последнего.
+   Итераторы можно автоматически конвертировать в адреса, 
+   что и происходит при их передачи как параметр.
+   </details>
