@@ -201,7 +201,7 @@
 8. ```cpp
    #include <iostream>
 
-   void f()
+   bool f()
    {
        return true;
    }
