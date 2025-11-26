@@ -209,7 +209,6 @@ std::array<Leg, 2>
    Напечатается `5` 2 раза.
    </details>
 
-
 1. ```cpp
    int a = 5;
    int& b = a;
