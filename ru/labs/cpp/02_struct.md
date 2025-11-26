@@ -1380,14 +1380,14 @@
 
 1. (продвинутый уровень)
    ```cpp
-   uintptr_t f()
+   void f()
    {
        int a;
        std::cout << a << std::endl;
        a = 2;
    }
 
-   uintptr_t g()
+   void g()
    {
        int b{ 1 };
        std::cout << b << std::endl;
