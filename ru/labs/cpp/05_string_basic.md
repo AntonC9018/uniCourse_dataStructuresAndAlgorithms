@@ -34,6 +34,7 @@ void runTests()
 ```
 secondWord("Hello world") == "world"
 secondWord("Hello my dear") == "my"
+secondWord("Hello") == ""
 secondWord("") == ""
 secondWord(" ") == ""
 secondWord(" a ") == "a"

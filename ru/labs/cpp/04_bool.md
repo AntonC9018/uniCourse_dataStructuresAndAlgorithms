@@ -1721,11 +1721,11 @@ assert(inputOutput.size() == coefficients.size());
 
    int main()
    {
-       std::array<int, 8> arr{0, 1, 2, 3, 4, 5, 6, 7};
+       std::array<int, 6> arr{0, 1, 2, 3, 4, 5};
        std::span<int> span{ arr };
 
        std::cout << "Item 1: " << span[1] << std::endl;
-       std::cout << "Item 7: " << span[7] << std::endl;
+       std::cout << "Item 4: " << span[4] << std::endl;
        std::cout << "arr size in bytes: " << sizeof(arr) << std::endl;
        std::cout << "span size in bytes: " << sizeof(span) << std::endl;
        std::cout << "span length: " << span.size() << std::endl;
@@ -1743,14 +1743,14 @@ assert(inputOutput.size() == coefficients.size());
 
    Индексирование `span`-а применяется к основной памяти массива.
 
-   Напечатается `1` и `7` из `arr`.
+   Напечатается `1` и `4` из `arr`.
    </details>
 
    <details>
    <summary>Ответ (<code>sizeof</code>):</summary>
 
-   `arr` состоит из 8 `int`, каждый из которых занимает по 4 байта.
-   Итого, 8 × 4 = 32 байта.
+   `arr` состоит из 6 `int`, каждый из которых занимает по 4 байта.
+   Итого, 6 × 4 = 24 байта.
 
    `span` хоть и ссылается на `arr`, делает он это благодаря указателю.
    `span` это один указатель `int*` на начало массива и один `size_t` с длиной массива.
@@ -1761,7 +1761,7 @@ assert(inputOutput.size() == coefficients.size());
    <details>
    <summary>Ответ (<code>span.size()</code>):</summary>
 
-   `span.size()` получает доступ к сохраненной в `span` длине и возвращает `8`.
+   `span.size()` получает доступ к сохраненной в `span` длине и возвращает `6`.
    </details>
 
 1. ```cpp
