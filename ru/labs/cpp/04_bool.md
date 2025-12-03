@@ -616,16 +616,20 @@
        }
        else
        {
-           std::cout << "B" << std::endl;
+           std::cout << "Else" << std::endl;
        }
+       std::cout << "After Else" << std::endl;
    }
    ```
 
    <details>
    <summary>Ответ</summary>
 
-   Здесь `B` не напечатается.
+   Здесь `Else` не напечатается.
    То, выполнится ли блок `else`, зависит лишь от условия в `if`.
+
+   `return` полностью пропускает все последующие интсрукции. 
+   `After Else` тоже не напечатается.
    </details>
 
 1. ```cpp
