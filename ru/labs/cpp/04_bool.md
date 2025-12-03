@@ -410,7 +410,7 @@
    int main()
    {
        int a { 1 };
-       f(a == 1, &a);
+       func(a == 1, &a);
    }
    ```
 
