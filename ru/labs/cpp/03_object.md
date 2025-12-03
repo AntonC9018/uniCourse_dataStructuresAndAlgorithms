@@ -346,6 +346,27 @@ std::array<Leg, 2>
    </details>
 
 2. ```cpp
+   int a = 1;
+   int b = 2;
+   int* p = &a;
+   int& r = *p;
+   p = &b;
+   r = 3;
+   std::cout << a << std::endl;
+   std::cout << b << std::endl;
+   ```
+
+   <details>
+   <summary>Ответ</summary>
+
+   Изменится `a`, а не `b`. Выведется:
+   ```
+   3
+   2
+   ```
+   </details>
+
+2. ```cpp
    std::array<int, 2> arr{ 1, 2 };
    int* pa = a.data();
    int& b = *pa;
