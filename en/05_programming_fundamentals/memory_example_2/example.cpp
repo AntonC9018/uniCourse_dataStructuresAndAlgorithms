@@ -15,20 +15,20 @@ struct StructWithArray
 
 int main()
 {
-    TwoInts i2 = { };
+    TwoInts i2{};
     i2.a = 5;
     i2.b = 7;
 
     std::cout << i2.a << std::endl;
     std::cout << i2.b << std::endl;
     
-    StructWithArray s = { };
+    StructWithArray s{};
     s.arr[0] = 10;
 
-    StructWithArray s1 = { };
+    StructWithArray s1{};
     s1.arr[0] = 15;
 
-    StructWithArray* sPointer = &s;
+    StructWithArray* sPointer{ &s };
     sPointer->arr[0] = 20;
 
     std::cout << s.arr[0] << std::endl;
@@ -42,7 +42,7 @@ int main()
     std::cout << s.arr[0] << std::endl;
     std::cout << s1.arr[0] << std::endl;
 
-    StructWithArray structArray[2] = { };
+    StructWithArray structArray[2]{};
     structArray[0].arr[3] = 77;
     structArray[1].someNumber = &structArray[0].arr[3];
 
