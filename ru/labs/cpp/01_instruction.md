@@ -1,4 +1,4 @@
-# 1. Базовый синтаксис: инструкции
+# Базовый синтаксис: инструкции
 
 - [Видео про инструкции](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
 

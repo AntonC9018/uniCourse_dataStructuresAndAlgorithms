@@ -1,4 +1,4 @@
-# 1. Pointer arithmetic
+# Pointer arithmetic
 
 - [Видео по основам, более углубленная информация](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
 

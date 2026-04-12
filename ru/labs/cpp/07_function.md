@@ -1,4 +1,4 @@
-# 2.2 Функции
+# Функции
 
 - [Видео (сырое)](https://www.youtube.com/watch?v=LnxQKSif69s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=10)
 
