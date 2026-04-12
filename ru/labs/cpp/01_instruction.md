@@ -94,6 +94,80 @@ int main()
 По этой причине, при выполнении `main` ничего не будет напечатано.
 </details>
 
+### 1. Печать строки
+
+```cpp
+int main()
+{
+    std::cout << "Hello world";
+    std::cout << std::endl;
+}
+```
+
+<details>
+<summary>Интуиция для <code>std::cout &lt;&lt;</code></summary>
+
+`std` — это сокращение для *standard*. 
+Можете запомнить, что `std::` указывает, что функция из стандартной библиотеки.
+
+Слово `cout` состоит из 
+- `c` обозначает слово "console", консоль;
+- `out` это сокращение для "output", как вывод в консоль.
+
+`<<` как бы **запихивает** следующую за собой строку в `std::cout`.
+</details>
+
+<details>
+<summary>Ответ</summary>
+
+Эта программа не скомпилируется.
+Произойдет ошибка компиляции по той причине, 
+что нет строки `#include <iostream>` перед `int main()` 
+(не включен хедер `<iostream>`).
+Без этой строки, компилятор не знает о существовании инструкции печати.
+</details>
+
+### 1. Исправленный код печати строки
+
+```cpp
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello world";
+    std::cout << std::endl;
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Эта программа скомпилируется.
+При запуске выполнятся инструкции из функции `main`,
+печатая "Hello world".
+</details>
+
+### 1. Печать на той же строке
+
+```cpp
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello world" << std::endl;
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Этот код эквивалентен следующему:
+```cpp
+std::cout << "Hello world";
+std::cout << std::endl;
+```
+</details>
+
 ### 2. Пустая функция `A`
 
 ```cpp
