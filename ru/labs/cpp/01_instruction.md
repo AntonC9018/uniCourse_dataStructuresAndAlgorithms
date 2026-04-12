@@ -86,6 +86,8 @@ int main()
 <details>
 <summary>Ответ</summary>
 
+Эта программа успешно скомпилируется.
+
 Функция `main` автоматически запустится при запуске этой программы.
 
 Сама функция не содержит инструкций в теле (пустые фигурные скобки).
@@ -131,7 +133,8 @@ void A()
 <details>
 <summary>Ответ</summary>
 
-Произойдет ошибка компиляции по той причине, что не включен хедер `<iostream>`.
+Произойдет ошибка компиляции по той причине, что не включен хедер `<iostream>`
+(нет строки `#include <iostream>`).
 Компилятор не знает о существовании инструкции печати.
 
 ```
@@ -171,7 +174,7 @@ void A()
 ```cpp
 #include <iostream>
 
-void main()
+int main()
 {
     std::cout << "Hello World." << std::endl;
 }
@@ -194,7 +197,7 @@ void main()
 ```cpp
 #include <iostream>
 
-void Main()
+int Main()
 {
     std::cout << "Hello World." << std::endl;
 }
@@ -214,7 +217,7 @@ C++ чувствителен к заглавности букв в именах 
 ```cpp
 #include <iostream>
 
-void main()
+int main()
 {
     // std::cout << "Hello" << std::endl;
     std::cout << "World" << std::endl;
@@ -231,7 +234,7 @@ void main()
 ### 8. Коммент всего
 
 ```cpp
-void main()
+int main()
 {
     // std::cout << "Hello" << std::endl;
     // std::cout << "World" << std::endl;
@@ -284,7 +287,7 @@ void B()
     A();
     std::cout << "B-after" << std::endl;
 }
-void main()
+int main()
 {
     B();
 }
@@ -325,7 +328,7 @@ void A()
 {
     std::cout << "A" << std::endl;
 }
-void main()
+int main()
 {
     B();
 }
@@ -335,5 +338,10 @@ void main()
 <summary>Ответ</summary>
 
 Теперь программа не скомпилируется.
-`A` должны быть объявлена до того в исходном файле, как ее вызывает `B`.
+`A();` в функции `B` находится **в файле с кодом до определения функции `A`**.
+
+Вызов `B();` в функции `main` не вызовет таких проблем, потому что 
+**определение функции `B` находится в файле до ее вызова**.
+
+`A` должна быть определена в исходном файле до того, как ее вызывает `B`.
 </details>
