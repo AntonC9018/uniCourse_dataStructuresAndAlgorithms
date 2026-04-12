@@ -206,7 +206,7 @@ void Main()
 <summary>Ответ</summary>
 
 C++ чувствителен к заглавности букв в именах функций и в именах других сущностей.
-Функции `main` нет, как и в [во втором вопросе](#2-пустая-функция-A).
+Функции `main` нет, как и [во втором вопросе](#2-пустая-функция-A).
 </details>
 
 ### 7. Коммент
@@ -216,16 +216,16 @@ C++ чувствителен к заглавности букв в именах 
 
 void main()
 {
-    // std::cout << "Hello World." << std::endl;
-    std::cout << "main" << std::endl;
+    // std::cout << "Hello" << std::endl;
+    std::cout << "World" << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Напечатается лишь `main`.
-Строка с печатью Hello World "откомменчена" (`//` в начале) и не выполнится.
+Напечатается лишь World.
+Строка с печатью Hello "откомменчена" (`//` в начале) и не выполнится.
 </details>
 
 ### 8. Коммент всего
@@ -233,8 +233,8 @@ void main()
 ```cpp
 void main()
 {
-    // std::cout << "Hello World." << std::endl;
-    // std::cout << "main" << std::endl;
+    // std::cout << "Hello" << std::endl;
+    // std::cout << "World" << std::endl;
 }
 ```
 
@@ -255,7 +255,7 @@ void main()
 
 void A()
 {
-    std::cout << "Hello World." << std::endl;
+    std::cout << "Hello World" << std::endl;
 }
 void B()
 {
