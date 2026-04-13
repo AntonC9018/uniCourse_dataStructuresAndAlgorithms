@@ -12,7 +12,7 @@ They support the indexing operator and represent a linear block of memory.
 
 ### Functions that take arrays as arguments
 
-You cannot pass C arrays to functions.
+You cannot really pass C arrays to functions.
 You can only pass the address to the memory of an array.
 
 
@@ -190,6 +190,10 @@ One of these is `std::array`.
 - It doesn't decay to a pointer;
 - You can have a pointer to a block of memory if its type is `std:array` in a regular way
   (it works just like a regular pointer), without the need for extra syntax.
+  ```
+  // Pointer to array with 4 elements
+  std::array<int, 4>* p{ &arr };
+  ```
 
 > Note: I don't even explain the arcane extra syntax used for C arrays,
 > because I don't believe it's useful.
