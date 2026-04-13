@@ -1,8 +1,7 @@
-# Лабораторная работа 7.
+# Базовый ООП
 
-**Тема: Базовый ООП**
-
-[Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.
+- [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.
+- [Информация](../../../en/05_programming_fundamentals/linker_examples)
 
 ## Базовые концепты
 

@@ -85,12 +85,9 @@ to automatically remove duplicate definitions derived from these functions.
 Aka if you called `sum<int>` from two different compilation units,
 there will (typically) only be a single definition of `sum` for the `int` type parameter,
 even though both the compilation units had had their own copy created.
-So basically templated functions typically work like `static` functions,
-where the duplicates are automatically trimmed (removed).
 
-> Technically, they aren't guaranteed to be trimmed.
-
-> TODO: source. I vaguely remember reading about this somewhere.
+If you want to learn more, 
+look up the [One Definition Rule](https://en.cppreference.com/w/cpp/language/definition.html).
 
 > See [an example of this](./template/example_2).
 

@@ -1,8 +1,7 @@
-# Лабораторная работа 9.
+# `enum`
 
-Тема: `enum`.
-
-[Видео](https://www.youtube.com/watch?v=Kbc6iaN3M6A&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=17).
+- [Видео](https://www.youtube.com/watch?v=Kbc6iaN3M6A&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=17).
+- [Информация](../../../en/05a_programming_fundamentals/04_enum.md)
 
 ## Чему равно значение `Test::b` и почему?
 
