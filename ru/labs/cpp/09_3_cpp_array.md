@@ -96,11 +96,11 @@ std::cout << arr[1] << std::endl;
 Здесь, изначальные элементы перезаписываются на `3, 4`.
 </details>
 
-### 18. Индексирование адреса массива
+### 18. Dereference адреса массива
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
-std::array<int, 2> arr1{ p[0] };
+std::array<int, 2> arr1{ *p };
 arr1[0] = 3;
 arr1[1] = 4;
 std::cout << arr[0] << std::endl;
@@ -110,8 +110,7 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Ответ</summary>
 
-`p[0]` это то же самое, что `*p`.
-Тип у `p` это `std::array<int, 2>`, выражение `p[0]` даст значение
+Тип у `p` это `std::array<int, 2>`, выражение `*p` даст значение
 типа `std::array<int, 2>`, то есть в `arr1` попадет копия всего массива
 
 Поскольку `arr1` это копия, ее изменения не повлияют на `arr`.
