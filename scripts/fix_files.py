@@ -40,7 +40,7 @@ def fix_file(filepath: Path) -> None:
         if h1_match and not h1_fixed:
             old_num = int(h1_match.group(2))
             if old_num != h1_number:
-                line = f"{h1_match.group(1)}{h1_number}{h1_match.group(3)}"
+                line = f"{h1_match.group(1)}{h1_number}{h1_match.group(3)}\n"
                 print(f"  H1 : {old_num} -> {h1_number}")
                 changed = True
             h1_fixed = True
@@ -53,7 +53,7 @@ def fix_file(filepath: Path) -> None:
             h3_counter += 1
             old_num = int(h3_match.group(2))
             if old_num != h3_counter:
-                line = f"{h3_match.group(1)}{h3_counter}{h3_match.group(3)}"
+                line = f"{h3_match.group(1)}{h3_counter}{h3_match.group(3)}\n"
                 print(f"  H3 : {old_num} -> {h3_counter}")
                 changed = True
             result.append(line)
