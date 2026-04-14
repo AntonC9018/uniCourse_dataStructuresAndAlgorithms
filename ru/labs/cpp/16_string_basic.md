@@ -17,38 +17,38 @@
 std::cout << sizeof(char) << std::endl;
 ```
 
-### 1. Печать символа
+### 2. Печать символа
 ```cpp
-char a { 'a' };
+char a { '1' };
 std::cout << a << std::endl;
 ```
 
-### 1. Символ как число
+### 3. Символ как число
 ```cpp
-char a { 'a' };
+char a { '1' };
 std::cout << static_cast<int>(a) << std::endl;
 ```
 
-### 1. Число как символ
+### 4. Число как символ
 ```cpp
 char a { 98 };
 std::cout << a << std::endl;
 ```
 
-### 1. Печать адреса массива символов с 0 на конце
+### 5. Печать адреса массива символов с 0 на конце
 ```cpp
 std::array<char, 2> s{ 'a', 0 };
 char* p{ s.data() };
 std::cout << p << std::endl;
 ```
 
-### 1. Печать адреса массива символов с 0 в середине
+### 6. Печать адреса массива символов с 0 в середине
 ```cpp
 std::array<char, 5> s{ 'a', 'b', 0, 'c', 'd' };
 std::cout << s.data() << std::endl;
 ```
 
-### 1. Печать массива после модификации
+### 7. Печать массива после модификации
 ```cpp
 std::array<char, 5> s{ 'a', 'b', 'c', 'd', 0 };
 std::cout << s.data() << std::endl;
@@ -59,19 +59,19 @@ std::cout << s.data() << std::endl;
 ```
 
 <!-- ab, a, ab0cd, cd, адрес s, UB -->
-### 1. Код символа `\0`
+### 8. Код символа `\0`
 ```cpp
 char z{ '\0' };
 std::cout << static_cast<int>(z) << std::endl;
 ```
 
-### 1. `\0` в массиве
+### 9. `\0` в массиве
 ```cpp
 std::array<char, 5> s{ 'a', 'b', '\0', 'c', 'd' };
 std::cout << s.data() << std::endl;
 ```
 
-### 1. Silencing warnings about unused variables
+### 10. Silencing warnings about unused variables
 
 Скомпилируйте эту программу с флагом `-Wunused` и интерпретируйте результат.
 
@@ -101,7 +101,7 @@ test.cpp:7:5: warning: unused variable ‘c’ [-Wunused-variable]
 ```
 </details>
 
-### 1. Печать адреса массива символов без 0 на конце
+### 11. Печать адреса массива символов без 0 на конце
 ```cpp
 std::array<char, 2> s{ 'a', 'b' };
 std::array<char, 2> s1{ '1', '\0' };
@@ -146,7 +146,7 @@ std::cout << s.data() << std::endl;
 что печатало бы данные оставшиеся там от предыдущего использования этой памяти.
 </details>
 
-### 1. Строка как массив
+### 12. Строка как массив
 ```cpp
 char s[]{ "12" };
 size_t count{ sizeof(s) }; // sizeof(char) == 1
@@ -163,7 +163,7 @@ std::cout << static_cast<int>(s[count - 1]) << std::endl;
 он автоматически включает `\0` на конце.
 </details>
 
-### 1. Строка с `\0` как массив
+### 13. Строка с `\0` как массив
 ```cpp
 char s[]{ "12\0" };
 std::cout << sizeof(s) << std::endl;
@@ -184,7 +184,7 @@ std::cout << sizeof(s) << std::endl;
 он автоматически включает `\0` на конце.
 </details>
 
-### 1. `\0` pitfalls
+### 14. `\0` pitfalls
 ```cpp
 char arr[]{ "1\023" };
 std::cout << sizeof(arr) << std::endl;
@@ -203,19 +203,19 @@ char arr[]{ "1\0" "23" };
 ```
 </details>
 
-### 1. `std::to_array` (1)
+### 15. `std::to_array` (1)
 ```cpp
 auto s{ std::to_array("abc") };
 std::cout << s.size() << std::endl;
 ```
 
-### 1. `std::to_array` (2)
+### 16. `std::to_array` (2)
 ```cpp
 auto s{ std::to_array("a\0bc") };
 std::cout << s.size() << std::endl;
 ```
 
-### 1. `const char*`
+### 17. `const char*`
 
 - Где хранятся символы строки?
 - Почему необходим `const`?
@@ -278,7 +278,7 @@ auto& s{"123"};
 ```
 <details>
 
-### 1. `std::string_view` после модификации источника
+### 18. `std::string_view` после модификации источника
 ```cpp
 std::array<char, 4> arr{ "123" };
 std::string_view v{ arr.data(), 3 };
@@ -286,7 +286,7 @@ arr[0] = 'a';
 std::cout << v << std::endl;
 ```
 
-### 1. `std::string_view` применим для любой памяти
+### 19. `std::string_view` применим для любой памяти
 
 ```cpp
 #include <iostream>
@@ -324,7 +324,7 @@ int main()
 }
 ```
 
-### 1. `std::string_view` определяет длину при создании
+### 20. `std::string_view` определяет длину при создании
 
 Если длина строки не задана вручную,
 `std::string_view` при создании попытается ее определить,
