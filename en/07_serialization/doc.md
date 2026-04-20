@@ -289,6 +289,70 @@ See the example code [here](validation/07_exception_usage_example.cpp).
 You can try removing one of the `catch` blocks and triggering that exception.
 It will make your program crash.
 
+### Error code + pointer return
+
+Very common pattern in C and libraries.
+
+```cpp
+// library.h
+enum class ResultType
+{
+    Ok,
+    ErrorA,
+    OutOfMemory,
+};
+
+ResultType getLibraryContext(Context* result)
+{
+    // ...
+}
+
+ResultType getSomeData(Context* libraryContext, SomeData* result)
+{
+    // ...
+}
+
+// main.cpp
+#include <library.h>
+
+void handleError(ResultType err)
+{
+    if (err == ResultType::OutOfMemory)
+    {
+        // ...
+    }
+    else if (err == ResultType::Error1)
+    {
+        // ...
+    }
+}
+
+int main()
+{
+    Context context;
+    {
+        ResultType err{ getLibraryContext(&context) };
+        if (err != ResultType::Ok)
+        {
+            handleError(err);
+            return -1;
+        }
+    }
+    SomeData data;
+    {
+        ResultType err{ getSomeData(&context, &data) };
+        if (err != ResultType::Ok)
+        {
+            handleError(err);
+            return -1;
+        }
+    }
+
+    // data is valid, can do stuff with it.
+    // ...
+}
+```
+
 
 ### My recommendation
 
