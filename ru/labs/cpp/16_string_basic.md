@@ -235,7 +235,7 @@ std::cout << s << std::endl;
 </details>
 
 <details>
-<summary>Почему `const`?</summary>
+<summary>Почему <code>const</code>?</summary>
 
 Зачастую, строки попадают в readonly память, 
 которую программе не позволительно изменять.
@@ -247,7 +247,8 @@ std::cout << s << std::endl;
 ```cpp
 const char* a{ "123" };
 const char* b{ "123" };
-std::cout << (a == b) << std::endl;
+std::cout << static_cast<void*>(a) << std::endl;
+std::cout << static_cast<void*>(b) << std::endl;
 ```
 </details>
 
@@ -276,7 +277,45 @@ const char(&s)[4]{"123"};
 // Сам определяет тип const char(&)[4] из строки.
 auto& s{"123"};
 ```
-<details>
+</details>
+
+### 18. Сравнение строк (1)
+
+```cpp
+const char* a{ "123" };
+auto b{ std::to_array("123") };
+const char* bp{ b.data() };
+if (a == bp)
+{
+    std::cout << "Equal" << std::endl;
+}
+else
+{
+    std::cout << "Not Equal" << std::endl;
+}
+```
+
+### 18. Сравнение строк (2)
+```cpp
+#include <iostream>
+#include <array>
+#include <cstring>
+
+int main()
+{
+    const char* a{ "123" };
+    auto b{ std::to_array("123") };
+    const char* bp{ b.data() };
+    if (std::strcmp(a, b) == 0)
+    {
+        std::cout << "Equal" << std::endl;
+    }
+    else
+    {
+        std::cout << "Not Equal" << std::endl;
+    }
+}
+```
 
 ### 18. `std::string_view` после модификации источника
 ```cpp
@@ -370,6 +409,25 @@ int main()
         std::string_view s{ "a\0c", 3 };
         usage({ s }); // 3
     }
+}
+```
+
+### 20. Сравнение строк через `std::string_view`
+
+```cpp
+auto s1{ std::to_array("abc") };
+auto& s2{ "abc" };
+
+std::string_view v1{ s1.data(), s1.size() - 1 };
+std::string_view v2{ s2, sizeof(s2) - 1 };
+
+if (v1 == v2)
+{
+    std::cout << "Equal" << std::endl;
+}
+else
+{
+    std::cout << "Not Equal" << std::endl;
 }
 ```
 
