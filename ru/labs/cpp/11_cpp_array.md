@@ -14,7 +14,7 @@
 
 ## Примеры
 
-### 14. С++ массивы
+### 1. С++ массивы
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 int* pa = a.data();
@@ -38,7 +38,7 @@ std::cout << b << std::endl;
 </details>
 
 
-### 16. Инициализация C++ массивов (1)
+### 2. Инициализация C++ массивов (1)
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2> other{ 3, 4 };
@@ -51,7 +51,7 @@ arr = other;
 Тут каждый элемент копириуется из `other` в `arr`.
 </details>
 
-### 17. Инициализация C++ массивов (2)
+### 3. Инициализация C++ массивов (2)
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2> other{ arr };
@@ -63,7 +63,7 @@ std::array<int, 2> other{ arr };
 Тут тоже, но при создании `other`.
 </details>
 
-### 18. Ссылка на массив
+### 4. Ссылка на массив
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>& other{ arr };
@@ -78,7 +78,7 @@ std::cout << arr[0] << std::endl;
 `other` как бы заменяете на `arr`.
 </details>
 
-### 18. Адрес массива
+### 5. Адрес массива
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -96,7 +96,7 @@ std::cout << arr[1] << std::endl;
 Здесь, изначальные элементы перезаписываются на `3, 4`.
 </details>
 
-### 18. Dereference адреса массива
+### 6. Dereference адреса массива
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -117,7 +117,7 @@ std::cout << arr[1] << std::endl;
 </details>
 
 
-### 20. Ссылка на элемент массива
+### 7. Ссылка на элемент массива
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 int& a = arr[0];
@@ -131,7 +131,7 @@ a = 3;
 поскольку в `a` была сохранена ссылка на 1 элемент (на объект внутри массива).
 </details>
 
-### 18. Индексирование элементов из адреса
+### 8. Индексирование элементов из адреса
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -154,7 +154,7 @@ std::cout << arr[1] << std::endl;
 Перезапись также будет применяться к элементам `arr`.
 </details>
 
-### 23. Адрес элемента через `data`
+### 9. Адрес элемента через `data`
 ```cpp
 std::array<int, 2> arr { 1, 2 };
 int& arr1 = *(p.data() + 1)
@@ -168,7 +168,7 @@ int& arr1 = *(p.data() + 1)
 </details>
 
 
-### 27. Взаиморасположение базового адреса и самого объекта массива
+### 10. Взаиморасположение базового адреса и самого объекта массива
 ```cpp
 std::array<int, 2> arr { 1, 2 };
 ptrdiff_t diff { reinterpret_cast<uint8_t*>(arr.data()) - reinterpret_cast<uint8_t*>(&arr) };
@@ -184,7 +184,7 @@ std::cout << diff << std::endl;
 Выведется 0.
 </details>
 
-### 28. Матрицы (двумерные массивы)
+### 11. Матрицы (двумерные массивы)
 ```cpp
 std::array<std::array<int, 2>, 3> arr{ 
     std::array{ 1, 2 },

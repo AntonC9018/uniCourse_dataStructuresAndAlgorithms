@@ -295,7 +295,7 @@ else
 }
 ```
 
-### 18. Сравнение строк (2)
+### 19. Сравнение строк (2)
 ```cpp
 #include <iostream>
 #include <array>
@@ -317,7 +317,7 @@ int main()
 }
 ```
 
-### 18. `std::string_view` после модификации источника
+### 20. `std::string_view` после модификации источника
 ```cpp
 std::array<char, 4> arr{ "123" };
 std::string_view v{ arr.data(), 3 };
@@ -325,7 +325,7 @@ arr[0] = 'a';
 std::cout << v << std::endl;
 ```
 
-### 19. `std::string_view` применим для любой памяти
+### 21. `std::string_view` применим для любой памяти
 
 ```cpp
 #include <iostream>
@@ -363,7 +363,7 @@ int main()
 }
 ```
 
-### 20. `std::string_view` определяет длину при создании
+### 22. `std::string_view` определяет длину при создании
 
 Если длина строки не задана вручную,
 `std::string_view` при создании попытается ее определить,
@@ -412,7 +412,7 @@ int main()
 }
 ```
 
-### 20. Сравнение строк через `std::string_view`
+### 23. Сравнение строк через `std::string_view`
 
 ```cpp
 auto s1{ std::to_array("abc") };
