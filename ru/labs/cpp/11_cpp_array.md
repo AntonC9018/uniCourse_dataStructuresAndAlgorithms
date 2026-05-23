@@ -187,9 +187,9 @@ std::cout << diff << std::endl;
 ### 28. Матрицы (двумерные массивы)
 ```cpp
 std::array<std::array<int, 2>, 3> arr{ 
-   std::array{ 1, 2 },
-   { 3, 4 },
-   { 5, 6 },
+    std::array{ 1, 2 },
+    { 3, 4 },
+    { 5, 6 },
 };
 std::array<int, 2> firstRow { arr[0] };
 std::array<int, 2> lastRow { arr[2] };
@@ -218,17 +218,17 @@ arr[1] = { 9, 10 };
 ```cpp
 struct Item
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 ```
 
 И использовать его в качестве типа элемента, вот так:
 ```cpp
 std::array<Item, 3> arr{
-   Item{ 1, 2 },
-   { 3, 4 },
-   { 5, 6 },
+    Item{ 1, 2 },
+    { 3, 4 },
+    { 5, 6 },
 };
 ```
 </details>

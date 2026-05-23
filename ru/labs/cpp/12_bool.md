@@ -150,13 +150,13 @@ std::cout << a << std::endl;
 
 void f(bool a)
 {
-   std::cout << a << std::endl;
+    std::cout << a << std::endl;
 }
 
 int main()
 {
-   bool a = true;
-   f(a);
+    bool a = true;
+    f(a);
 }
 ```
 
@@ -166,12 +166,12 @@ int main()
 
 void f(bool flag)
 {
-   std::cout << flag << std::endl;
+    std::cout << flag << std::endl;
 }
 
 int main()
 {
-   f(5 > 3);
+    f(5 > 3);
 }
 ```
 
@@ -188,14 +188,14 @@ int main()
 
 void f(bool b)
 {
-   b = true;
+    b = true;
 }
 
 int main()
 {
-   int x { 1 };
-   f(x == 2);
-   std::cout << x << std::endl;
+    int x { 1 };
+    f(x == 2);
+    std::cout << x << std::endl;
 }
 ```
 
@@ -214,13 +214,13 @@ int main()
 
 bool f()
 {
-   return true;
+    return true;
 }
 
 int main()
 {
-   bool result = f();
-   std::cout << result << std::endl;
+    bool result = f();
+    std::cout << result << std::endl;
 }
 ```
 
@@ -231,13 +231,13 @@ int main()
 
 bool IsGreater(int a, int b)
 {
-   return a > b;
+    return a > b;
 }
 
 int main()
 {
-   bool result = IsGreater(5, 6);
-   std::cout << result << std::endl;
+    bool result = IsGreater(5, 6);
+    std::cout << result << std::endl;
 }
 ```
 
@@ -289,19 +289,19 @@ std::cout << c << std::endl;
 
 bool A()
 {
-   std::cout << "A" << std::endl;
-   return true;
+    std::cout << "A" << std::endl;
+    return true;
 }
 
 bool B()
 {
-   std::cout << "B" << std::endl;
-   return true;
+    std::cout << "B" << std::endl;
+    return true;
 }
 
 int main()
 {
-   bool result = A() && B();
+    bool result = A() && B();
 }
 ```
 
@@ -322,19 +322,19 @@ B
 
 bool A()
 {
-   std::cout << "A" << std::endl;
-   return true;
+    std::cout << "A" << std::endl;
+    return true;
 }
 
 bool B()
 {
-   std::cout << "B" << std::endl;
-   return false;
+    std::cout << "B" << std::endl;
+    return false;
 }
 
 int main()
 {
-   bool result = A() && B();
+    bool result = A() && B();
 }
 ```
 
@@ -356,19 +356,19 @@ B
 
 bool A()
 {
-   std::cout << "A" << std::endl;
-   return false;
+    std::cout << "A" << std::endl;
+    return false;
 }
 
 bool B()
 {
-   std::cout << "B" << std::endl;
-   return true;
+    std::cout << "B" << std::endl;
+    return true;
 }
 
 int main()
 {
-   bool result = A() && B();
+    bool result = A() && B();
 }
 ```
 
@@ -389,19 +389,19 @@ A
 
 bool A()
 {
-   std::cout << "A" << std::endl;
-   return true;
+    std::cout << "A" << std::endl;
+    return true;
 }
 
 bool B()
 {
-   std::cout << "B" << std::endl;
-   return true;
+    std::cout << "B" << std::endl;
+    return true;
 }
 
 int main()
 {
-   bool result = A() || B();
+    bool result = A() || B();
 }
 ```
 
@@ -422,15 +422,15 @@ A
 
 void func(bool b, int* a)
 {
-   std::cout << b << std::endl;
-   *a = 2;
-   std::cout << b << std::endl;
+    std::cout << b << std::endl;
+    *a = 2;
+    std::cout << b << std::endl;
 }
 
 int main()
 {
-   int a { 1 };
-   func(a == 1, &a);
+    int a { 1 };
+    func(a == 1, &a);
 }
 ```
 

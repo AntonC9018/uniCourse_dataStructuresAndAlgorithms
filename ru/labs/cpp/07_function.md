@@ -22,12 +22,12 @@
 ```cpp
 void func()
 {
-   int b = 6;
+    int b = 6;
 }
 int main()
 {
-   int a = 5;
-   func();
+    int a = 5;
+    func();
 }
 ```
 
@@ -49,12 +49,12 @@ int main()
 ```cpp
 void func()
 {
-   int a = 6;
+    int a = 6;
 }
 int main()
 {
-   int a = 5;
-   func();
+    int a = 5;
+    func();
 }
 ```
 
@@ -70,13 +70,13 @@ int main()
 ```cpp
 void func()
 {
-   int b = 6;
+    int b = 6;
 }
 int main()
 {
-   int a = 5;
-   func();
-   b = 7;
+    int a = 5;
+    func();
+    b = 7;
 }
 ```
 
@@ -91,12 +91,12 @@ int main()
 ```cpp
 void func(int b)
 {
-   b = 6;
+    b = 6;
 }
 int main()
 {
-   int a = 5;
-   func(a);
+    int a = 5;
+    func(a);
 }
 ```
 
@@ -117,12 +117,12 @@ int main()
 ```cpp
 void func(int a)
 {
-   a = 6;
+    a = 6;
 }
 int main()
 {
-   int a = 5;
-   func(a);
+    int a = 5;
+    func(a);
 }
 ```
 
@@ -140,20 +140,20 @@ int main()
 ```cpp
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 void func(A a)
 {
-   a.f1 = 1;
-   a.f2 = 2;
+    a.f1 = 1;
+    a.f2 = 2;
 }
 int main()
 {
-   A a;
-   a.f1 = 3;
-   a.f2 = 4;
-   func(a);
+    A a;
+    a.f1 = 3;
+    a.f2 = 4;
+    func(a);
 }
 ```
 
@@ -172,12 +172,12 @@ int main()
 ```cpp
 void func(int* a)
 {
-   *a = 1;
+    *a = 1;
 }
 int main()
 {
-   int a{2};
-   func(&a);
+    int a{2};
+    func(&a);
 }
 ```
 
@@ -198,23 +198,23 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 void func(A* a)
 {
-   a->f1 = 1;
-   a->f2 = 2;
+    a->f1 = 1;
+    a->f2 = 2;
 }
 int main()
 {
-   A a;
-   a.f1 = 3;
-   a.f2 = 4;
-   func(&a);
+    A a;
+    a.f1 = 3;
+    a.f2 = 4;
+    func(&a);
 
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 }
 ```
 
@@ -232,12 +232,12 @@ int main()
 ```cpp
 int func(int a, int b)
 {
-   return a + b;
+    return a + b;
 }
 int main()
 {
-   int b = 6;
-   func(1, b);
+    int b = 6;
+    func(1, b);
 }
 ```
 
@@ -252,13 +252,13 @@ int main()
 ```cpp
 int func(int a, int b)
 {
-   return a + b;
+    return a + b;
 }
 int main()
 {
-   int b = 6;
-   int s = func(1, b);
-   b = s;
+    int b = 6;
+    int s = func(1, b);
+    b = s;
 }
 ```
 
@@ -272,12 +272,12 @@ int main()
 ```cpp
 int func(int a, int b)
 {
-   return a + b;
+    return a + b;
 }
 int main()
 {
-   int b = 6;
-   int s = func(func(1, func(2, b)), b);
+    int b = 6;
+    int s = func(func(1, func(2, b)), b);
 }
 ```
 
@@ -294,11 +294,11 @@ int main()
 ```cpp
 void func(int a)
 {
-   func(a);
+    func(a);
 }
 int main()
 {
-   func(1);
+    func(1);
 }
 ```
 <details>
@@ -318,14 +318,14 @@ int main()
 
 void func(int sum, int* a)
 {
-   std::cout << sum << std::endl;
-   *a = 3;
-   std::cout << sum << std::endl;
+    std::cout << sum << std::endl;
+    *a = 3;
+    std::cout << sum << std::endl;
 }
 int main()
 {
-   int a { 1 };
-   func(a + 2, &a);
+    int a { 1 };
+    func(a + 2, &a);
 }
 ```
 
@@ -345,17 +345,17 @@ int main()
 
 int func(int x)
 {
-   return x;
+    return x;
 }
 
 int main()
 {
-   int a { 1 };
-   int b { func(a) };
-   a = 2;
+    int a { 1 };
+    int b { func(a) };
+    a = 2;
 
-   std::cout << a << std::endl;
-   std::cout << b << std::endl;
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
 }
 ```
 
@@ -408,25 +408,25 @@ int main()
 
 struct Vector
 {
-   int x;
-   int y;
+    int x;
+    int y;
 };
 
 Vector multiply(Vector pos, int scalar)
 {
-   Vector result;
-   result.x = pos.x * scalar;
-   result.y = pos.y * scalar;
-   return result;
+    Vector result;
+    result.x = pos.x * scalar;
+    result.y = pos.y * scalar;
+    return result;
 }
 
 int main()
 {
-   Vector v { 2, 3 };
-   Vector v2 { multiply(v, 2) };
+    Vector v { 2, 3 };
+    Vector v2 { multiply(v, 2) };
 
-   std::cout << v2.x << std::endl;
-   std::cout << v2.y << std::endl;
+    std::cout << v2.x << std::endl;
+    std::cout << v2.y << std::endl;
 }
 ```
 
@@ -438,10 +438,10 @@ int main()
 ```cpp
 int main()
 {
-   Vector v { 2, 3 };
-   int v2 { multiply(v, 2) };
+    Vector v { 2, 3 };
+    int v2 { multiply(v, 2) };
 
-   std::cout << v2 << std::endl;
+    std::cout << v2 << std::endl;
 }
 ```
 
@@ -459,25 +459,25 @@ int main()
 ```cpp
 uintptr_t f()
 {
-   int a;
-   return reinterpret_cast<uintptr_t>(&a);
+    int a;
+    return reinterpret_cast<uintptr_t>(&a);
 }
 
 uintptr_t g()
 {
-   int b;
-   return reinterpret_cast<uintptr_t>(&b);
+    int b;
+    return reinterpret_cast<uintptr_t>(&b);
 }
 
 int main()
 {
-   uintptr_t f1 { f() };
-   uintptr_t f2 { f() };
-   uintptr_t g1 { g() };
+    uintptr_t f1 { f() };
+    uintptr_t f2 { f() };
+    uintptr_t g1 { g() };
 
-   std::cout << f1 << std::endl;
-   std::cout << f2 << std::endl;
-   std::cout << g1 << std::endl;
+    std::cout << f1 << std::endl;
+    std::cout << f2 << std::endl;
+    std::cout << g1 << std::endl;
 }
 ```
 
@@ -498,22 +498,22 @@ C++ компилятор не гарантирует этого, и на это 
 ```cpp
 void f()
 {
-   int a;
-   std::cout << a << std::endl;
-   a = 2;
+    int a;
+    std::cout << a << std::endl;
+    a = 2;
 }
 
 void g()
 {
-   int b{ 1 };
-   std::cout << b << std::endl;
+    int b{ 1 };
+    std::cout << b << std::endl;
 }
 
 int main()
 {
-   g();
-   f();
-   f();
+    g();
+    f();
+    f();
 }
 ```
 

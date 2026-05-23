@@ -279,30 +279,30 @@ std::cout << a << std::endl;
 
 struct Position
 {
-   int x;
-   int y;
+    int x;
+    int y;
 };
 
 int main()
 {
-   Position a{ .x = 1, .y = 2 };
+    Position a{ .x = 1, .y = 2 };
 
-   Position& ra = a;
+    Position& ra = a;
 
-   int& rx = ra.x;
-   ra.x = 3;
+    int& rx = ra.x;
+    ra.x = 3;
 
-   ra.y = 4;
-   int& ry = ra.y;
+    ra.y = 4;
+    int& ry = ra.y;
 
-   std::cout << rx << std::endl;
-   std::cout << ry << std::endl;
+    std::cout << rx << std::endl;
+    std::cout << ry << std::endl;
 
-   std::cout << ra.x << std::endl;
-   std::cout << ra.y << std::endl;
+    std::cout << ra.x << std::endl;
+    std::cout << ra.y << std::endl;
 
-   std::cout << a.x << std::endl;
-   std::cout << a.y << std::endl;
+    std::cout << a.x << std::endl;
+    std::cout << a.y << std::endl;
 }
 ```
 
@@ -371,9 +371,9 @@ std::cout << b << std::endl;
 
 int main()
 {
-   int a = 6;
-   int& b = a;
-   std::cout << sizeof(b) << std::endl;
+    int a = 6;
+    int& b = a;
+    std::cout << sizeof(b) << std::endl;
 }
 ```
 
@@ -398,13 +398,13 @@ int main()
 
 void resetAmount(int& amount)
 {
-   amount = 0;
+    amount = 0;
 }
 int main()
 {
-   int appleAmount = 6;
-   resetAmount(appleAmount);
-   std::cout << appleAmount << std::endl;
+    int appleAmount = 6;
+    resetAmount(appleAmount);
+    std::cout << appleAmount << std::endl;
 }
 ```
 
@@ -422,19 +422,19 @@ int main()
 
 struct Arm
 {
-   int power;
+    int power;
 };
 
 void increasePower(Arm& arm)
 {
-   arm.power += 1;
+    arm.power += 1;
 }
 
 int main()
 {
-   Arm arm { 1 };
-   increasePower(arm);
-   std::cout << arm.power << std::endl;
+    Arm arm { 1 };
+    increasePower(arm);
+    std::cout << arm.power << std::endl;
 }
 ```
 

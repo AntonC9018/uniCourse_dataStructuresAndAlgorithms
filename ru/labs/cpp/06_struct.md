@@ -24,15 +24,15 @@
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a { 1, 2 };
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    A a { 1, 2 };
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 }
 ```
 
@@ -52,15 +52,15 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a = A{ 1, 2 };
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    A a = A{ 1, 2 };
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 }
 ```
 
@@ -107,14 +107,14 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   int a = A{ 1, 2 };
-   std::cout << a << std::endl;
+    int a = A{ 1, 2 };
+    std::cout << a << std::endl;
 }
 ```
 
@@ -131,20 +131,20 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   int b = a.f1;
-   a.f2 = b;
-
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
-   std::cout << b << std::endl;
+    A a;
+    a.f1 = 5;
+    int b = a.f1;
+    a.f2 = b;
+ 
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
+    std::cout << b << std::endl;
 }
 ```
 
@@ -162,15 +162,15 @@ int main()
 
 struct A
 {
-   int f;
+    int f;
 };
 
 int main()
 {
-   A a;
-   int* b = &a.f;
-   *b = 5;
-   std::cout << a.f << std::endl;
+    A a;
+    int* b = &a.f;
+    *b = 5;
+    std::cout << a.f << std::endl;
 }
 ```
 
@@ -192,24 +192,24 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   a.f2 = 6;
+    A a;
+    a.f1 = 5;
+    a.f2 = 6;
 
-   A b;
-   b = a;
+    A b;
+    b = a;
 
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 
-   std::cout << b.f1 << std::endl;
-   std::cout << b.f2 << std::endl;
+    std::cout << b.f1 << std::endl;
+    std::cout << b.f2 << std::endl;
 }
 ```
 
@@ -225,25 +225,25 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   a.f2 = 6;
+    A a;
+    a.f1 = 5;
+    a.f2 = 6;
 
-   A b;
-   b.f1 = 7;
-   b = a;
+    A b;
+    b.f1 = 7;
+    b = a;
 
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 
-   std::cout << b.f1 << std::endl;
-   std::cout << b.f2 << std::endl;
+    std::cout << b.f1 << std::endl;
+    std::cout << b.f2 << std::endl;
 }
 ```
 
@@ -262,20 +262,20 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   a.f2 = 6;
-   A* pa = &a;
-   A b = *pa;
+    A a;
+    a.f1 = 5;
+    a.f2 = 6;
+    A* pa = &a;
+    A b = *pa;
 
-   std::cout << b.f1 << std::endl;
-   std::cout << b.f2 << std::endl;
+    std::cout << b.f1 << std::endl;
+    std::cout << b.f2 << std::endl;
 }
 ```
 <details>
@@ -290,21 +290,21 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   a.f2 = 6;
-   A* pa = &a;
-   a.f1 = 7;
-   A b = *pa;
+    A a;
+    a.f1 = 5;
+    a.f2 = 6;
+    A* pa = &a;
+    a.f1 = 7;
+    A b = *pa;
 
-   std::cout << b.f1 << std::endl;
-   std::cout << b.f2 << std::endl;
+    std::cout << b.f1 << std::endl;
+    std::cout << b.f2 << std::endl;
 }
 ```
 <details>
@@ -322,20 +322,20 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   a.f1 = 5;
-   A* pa = &a;
-   (*pa).f2 = 6;
-   pa->f1 = 7;
+    A a;
+    a.f1 = 5;
+    A* pa = &a;
+    (*pa).f2 = 6;
+    pa->f1 = 7;
 
-   std::cout << a.f1 << std::endl;
-   std::cout << a.f2 << std::endl;
+    std::cout << a.f1 << std::endl;
+    std::cout << a.f2 << std::endl;
 }
 ```
 <details>
@@ -356,17 +356,17 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a{};
-   A* pa { &a };
-   *pa = { 5, 6 };
-   std::cout << pa->f1 << std::endl;
-   std::cout << pa->f2 << std::endl;
+    A a{};
+    A* pa { &a };
+    *pa = { 5, 6 };
+    std::cout << pa->f1 << std::endl;
+    std::cout << pa->f2 << std::endl;
 }
 ```
 
@@ -388,15 +388,15 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A* fp { &A };
-   *fp = { 5, 6 };
-   std::cout << fp->f1 << std::endl;
+    A* fp { &A };
+    *fp = { 5, 6 };
+    std::cout << fp->f1 << std::endl;
 }
 ```
 
@@ -413,15 +413,15 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   int* fp { &A.f1 };
-   *fp = 5;
-   std::cout << *fp << std::endl;
+    int* fp { &A.f1 };
+    *fp = 5;
+    std::cout << *fp << std::endl;
 }
 ```
 
@@ -437,18 +437,18 @@ int main()
 
 struct A
 {
-   int* f1;
+    int* f1;
 };
 
 int main()
 {
-   int num = 1;
-   A a;
-   a.f1 = &num;
-   *a.f1 = 2;
+    int num = 1;
+    A a;
+    a.f1 = &num;
+    *a.f1 = 2;
 
-   std::cout << a.f1 << std::endl;
-   std::cout << num << std::endl;
+    std::cout << a.f1 << std::endl;
+    std::cout << num << std::endl;
 }
 ```
 <details>
@@ -467,27 +467,27 @@ int main()
 
 struct A
 {
-   int* f[2];
+    int* f[2];
 };
 
 int main()
 {
-   int var1;
-   int var2;
-   A a { .f = { &var1, &var2 } };
-   *a.f[0] = 1;
-   *a.f[1] = 2;
-   int** b = a.f;
-   int c = **b;
+    int var1;
+    int var2;
+    A a { .f = { &var1, &var2 } };
+    *a.f[0] = 1;
+    *a.f[1] = 2;
+    int** b = a.f;
+    int c = **b;
 
-   std::cout << var1 << std::endl;
-   std::cout << var2 << std::endl;
+    std::cout << var1 << std::endl;
+    std::cout << var2 << std::endl;
 
-   std::cout << a.f[0] << std::endl;
-   std::cout << a.f[1] << std::endl;
+    std::cout << a.f[0] << std::endl;
+    std::cout << a.f[1] << std::endl;
 
-   std::cout << b << std::endl;
-   std::cout << c << std::endl;
+    std::cout << b << std::endl;
+    std::cout << c << std::endl;
 }
 ```
 
@@ -516,28 +516,28 @@ int main()
 
 struct Nested
 {
-   int f;
+    int f;
 };
 
 struct A
 {
-   Nested nested;
-   int f;
+    Nested nested;
+    int f;
 };
 
 int main()
 {
-   A a {
+    A a {
        .nested = { .f = 1 },
        .f = 2,
-   };
+    };
 
-   a.f = 3;
-   a.nested = { 5 };
-   a.nested.f = 6;
+    a.f = 3;
+    a.nested = { 5 };
+    a.nested.f = 6;
 
-   std::cout << a.f << std::endl;
-   std::cout << a.nested.f << std::endl;
+    std::cout << a.f << std::endl;
+    std::cout << a.nested.f << std::endl;
 }
 ```
 
@@ -556,8 +556,8 @@ int main()
 ```cpp
 struct A
 {
-   int value;
-   A other;
+    int value;
+    A other;
 };
 ```
 
@@ -575,28 +575,28 @@ struct A
 
 struct Node
 {
-   int value;
-   Node* next;
+    int value;
+    Node* next;
 };
 
 int main()
 {
-   Node end{};
-   end.value = 1;
-   end.next = nullptr;
+    Node end{};
+    end.value = 1;
+    end.next = nullptr;
 
-   Node start{};
-   start.value = 2;
-   start.next = &end;
+    Node start{};
+    start.value = 2;
+    start.next = &end;
 
-   Node* current = &start;
-   std::cout << current->value << std::endl;
+    Node* current = &start;
+    std::cout << current->value << std::endl;
 
-   current = current->next;
-   std::cout << current->value << std::endl;
+    current = current->next;
+    std::cout << current->value << std::endl;
 
-   current = current->next;
-   std::cout << current->value << std::endl;
+    current = current->next;
+    std::cout << current->value << std::endl;
 }
 ```
 <details>
@@ -618,15 +618,15 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A a;
-   std::cout << sizeof(a) << std::endl;
-   std::cout << sizeof(A) << std::endl;
+    A a;
+    std::cout << sizeof(a) << std::endl;
+    std::cout << sizeof(A) << std::endl;
 }
 ```
 <details>
@@ -645,13 +645,13 @@ int main()
 
 struct A
 {
-   int f1[4];
-   int* f2;
+    int f1[4];
+    int* f2;
 };
 
 int main()
 {
-   std::cout << sizeof(A) << std::endl;
+    std::cout << sizeof(A) << std::endl;
 }
 ```
 
@@ -670,16 +670,16 @@ int main()
 
 struct A
 {
-   int f;
+    int f;
 };
 
 int main()
 {
-   A a { 1 };
-   A* pa { &a };
-   int* pf { &pa->f };
-   *pf = 2;
-   std::cout << a.f << std::endl;
+    A a { 1 };
+    A* pa { &a };
+    int* pf { &pa->f };
+    *pf = 2;
+    std::cout << a.f << std::endl;
 }
 ```
 
@@ -700,16 +700,16 @@ int main()
 
 struct A
 {
-   int f;
+    int f;
 };
 
 int main()
 {
-   A a { };
-   A* pa { &a };
-   int* pf { &pa->f };
-   ptrdiff_t diff { reinterpret_cast<uint8_t*>(pf) - reinterpret_cast<uint8_t*>(pa) };
-   std::cout << diff << std::endl;
+    A a { };
+    A* pa { &a };
+    int* pf { &pa->f };
+    ptrdiff_t diff { reinterpret_cast<uint8_t*>(pf) - reinterpret_cast<uint8_t*>(pa) };
+    std::cout << diff << std::endl;
 }
 ```
 
@@ -727,14 +727,14 @@ int main()
 
 struct A
 {
-   uint8_t f1;
-   int f2;
-   uint8_t f3;
+    uint8_t f1;
+    int f2;
+    uint8_t f3;
 };
 
 int main()
 {
-   std::cout << sizeof(A) << std::endl;
+    std::cout << sizeof(A) << std::endl;
 }
 ```
 
@@ -775,7 +775,7 @@ struct A
 
 int main()
 {
-   std::cout << sizeof(A) << std::endl;
+    std::cout << sizeof(A) << std::endl;
 }
 ```
 
@@ -797,14 +797,14 @@ int main()
 
 struct A
 {
-   int a;
-   int b;
+    int a;
+    int b;
 };
 
 int main()
 {
-   std::cout << offsetof(A, a) << std::endl;
-   std::cout << offsetof(A, b) << std::endl;
+    std::cout << offsetof(A, a) << std::endl;
+    std::cout << offsetof(A, b) << std::endl;
 }
 ```
 
@@ -822,17 +822,17 @@ int main()
 
 struct A
 {
-   int arr[2];
+    int arr[2];
 };
 
 int main()
 {
-   A a { { 1, 2 } };
-   A b { { 3, 4 } };
-   b = a;
+    A a { { 1, 2 } };
+    A b { { 3, 4 } };
+    b = a;
 
-   std::cout << b.arr[0] << std::endl;
-   std::cout << b.arr[1] << std::endl;
+    std::cout << b.arr[0] << std::endl;
+    std::cout << b.arr[1] << std::endl;
 }
 ```
 
@@ -848,28 +848,28 @@ int main()
 
 struct A
 {
-   int f1;
-   int f2;
+    int f1;
+    int f2;
 };
 
 int main()
 {
-   A arr[3]{};
+    A arr[3]{};
 
-   arr[0].f2 = 1;
+    arr[0].f2 = 1;
 
-   arr[1] = A{ 2, 3 };
+    arr[1] = A{ 2, 3 };
 
-   A copy { arr[2] };
-   copy.f1 = 4;
-   copy.f2 = 5;
+    A copy { arr[2] };
+    copy.f1 = 4;
+    copy.f2 = 5;
 
-   std::cout << arr[0].f1 << std::endl;
-   std::cout << arr[0].f2 << std::endl;
-   std::cout << arr[1].f1 << std::endl;
-   std::cout << arr[1].f2 << std::endl;
-   std::cout << arr[2].f1 << std::endl;
-   std::cout << arr[2].f2 << std::endl;
+    std::cout << arr[0].f1 << std::endl;
+    std::cout << arr[0].f2 << std::endl;
+    std::cout << arr[1].f1 << std::endl;
+    std::cout << arr[1].f2 << std::endl;
+    std::cout << arr[2].f1 << std::endl;
+    std::cout << arr[2].f2 << std::endl;
 }
 ```
 

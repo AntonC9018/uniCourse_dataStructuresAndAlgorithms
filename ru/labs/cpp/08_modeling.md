@@ -71,7 +71,7 @@
    Поиск стоимости.
    Поэтому, возвращаемый тип будет `int`.
    
-   ```csharp
+   ```cpp
    int customerTotal(Prices prices, Choices choices)
    {
        // ...
