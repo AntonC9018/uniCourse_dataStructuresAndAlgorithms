@@ -1,6 +1,6 @@
 # Практика по моделированию простой задачи
 
-- [Видео (сырое)](https://www.youtube.com/watch?v=LnxQKSif69s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=10)
+- [Видео](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)
 
 ## Задание
 
