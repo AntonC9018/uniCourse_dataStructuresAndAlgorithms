@@ -1,1 +1,1 @@
-[doc](../../../05_programming_fundamentals/doc.md)
+[doc](../../../en/05_programming_fundamentals/doc.md)
