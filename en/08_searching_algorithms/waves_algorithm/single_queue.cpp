@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <array>
+#include <climits>
 
 struct Cell
 {

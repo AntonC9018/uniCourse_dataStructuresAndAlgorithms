@@ -1,6 +1,7 @@
 #include <iostream>
 #include <array>
 #include <vector>
+#include <limits>
 
 using ButtonFunc = void(*)();
 struct FuncOption
@@ -43,10 +44,12 @@ int main()
         }
         std::cout << "): ";
 
-        std::cin >> functionChoice;
-
-        if (!std::cin.good())
+        if (!(std::cin >> functionChoice))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
+        }
         if (functionChoice >= allFunctions.size())
             continue;
         break;

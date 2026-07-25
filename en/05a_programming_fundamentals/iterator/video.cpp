@@ -36,7 +36,7 @@ Array4Iterator createEnd(Array4& arr);
 
 bool Array4Iterator::operator==(Array4Iterator other)
 {
-    assert(other.arr != this->arr);
+    assert(other.arr == this->arr);
     return this->state.bufferIndex == other.state.bufferIndex
         && this->state.itemIndex == other.state.itemIndex;
 }
@@ -48,30 +48,19 @@ std::span<int> Array4Iterator::currentBuffer()
 
 void Array4Iterator::operator++()
 {
+    ++this->state.itemIndex;
     while (true)
     {
-        ++this->state.itemIndex;
-
-        if (this->state.itemIndex == currentBuffer().size())
+        if (this->state.itemIndex < currentBuffer().size())
         {
-            while (true)
-            {
-                ++this->state.bufferIndex;
-
-                if (*this != createEnd(*this->arr))
-                {
-                    return;
-                }
-
-                if (currentBuffer().size() != 0)
-                {
-                    break;
-                }
-            }
-            this->state.itemIndex = 0;
+            return;
         }
-
-        break;
+        ++this->state.bufferIndex;
+        this->state.itemIndex = 0;
+        if (this->state.bufferIndex == this->arr->arrays.size())
+        {
+            return;
+        }
     }
 }
 
@@ -111,24 +100,14 @@ Array4Iterator createArray4Iterator(Array4& arr)
         .state = {},
         .arr = &arr,
     };
-    Array4Iterator end = createEnd(arr);
-
-    while (true)
+    while (ret.state.bufferIndex < arr.arrays.size())
     {
         std::span<int> currentBuffer = arr.arrays[ret.state.bufferIndex];
-        if (currentBuffer.size() == 0)
-        {
-            ++ret.state.bufferIndex;
-        }
-        else
+        if (!currentBuffer.empty())
         {
             break;
         }
-
-        if (ret != end)
-        {
-            break;
-        }
+        ++ret.state.bufferIndex;
     }
 
     return ret;

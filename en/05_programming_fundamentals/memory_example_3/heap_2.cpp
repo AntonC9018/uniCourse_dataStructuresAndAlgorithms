@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <cstdint>
 
 // This is the same example, but with the malloc() function,
 // it uses the C heap instead of the C++ heap.

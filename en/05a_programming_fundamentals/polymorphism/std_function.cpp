@@ -2,6 +2,7 @@
 #include <iostream>
 #include <span>
 #include <functional>
+#include <limits>
 
 // Note the missing (*), because it's not a function pointer.
 using ItemFunc = void(float&);
@@ -113,9 +114,12 @@ int main()
         }
 
         size_t input;
-        std::cin >> input;
-        if (!std::cin.good())
+        if (!(std::cin >> input))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
+        }
         if (input >= funcs.size())
             break;
         

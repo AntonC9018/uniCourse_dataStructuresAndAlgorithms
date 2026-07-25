@@ -31,6 +31,7 @@ void addElement(DynamicArray* arr, int value)
         }
         delete[] arr->buffer;
         arr->buffer = newArr;
+        arr->capacity = newCapacity;
     }
 
     arr->buffer[arr->count] = value;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <limits>
 
 struct ComputedState
 {
@@ -43,12 +44,13 @@ void printStateAdapter(void* context)
 void addToFloat(float& value)
 {
     float n;
-    do
+    std::cout << "Enter a number to add to the value:";
+    while (!(std::cin >> n))
     {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Enter a number to add to the value:";
-        std::cin >> n;
-    } 
-    while (!std::cin.good());
+    }
 
     value += n;
 }
@@ -100,9 +102,12 @@ int main()
         {
             std::cout << i << " - " << buttons[i].name << std::endl;
         }
-        std::cin >> buttonChoice;
-        if (!std::cin.good())
+        if (!(std::cin >> buttonChoice))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
+        }
         if (buttonChoice >= buttons.size())
             break;
         

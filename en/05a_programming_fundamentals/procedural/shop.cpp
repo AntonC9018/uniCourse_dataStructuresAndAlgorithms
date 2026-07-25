@@ -47,6 +47,7 @@ bool tryBuyItem(ShopCycleContext context, size_t itemIndex)
     }
 
     context.customer->boughtItems[itemIndex] += 1;
+    context.customer->moneyLeft -= item.price;
     return true;
 }
 

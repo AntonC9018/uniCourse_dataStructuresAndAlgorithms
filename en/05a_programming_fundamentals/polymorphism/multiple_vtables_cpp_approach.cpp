@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 using VoidFunc = void(*)(void* context);
 
