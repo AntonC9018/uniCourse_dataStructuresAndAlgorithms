@@ -1,4 +1,9 @@
 #include <array>
+#include <stddef.h>
+
+template<size_t N>
+int sum(const std::array<int, N>& arr);
+
 int main()
 {
     // int arr[5]{};
@@ -26,8 +31,8 @@ int main()
 
 // Don't focus too much on the syntax (the template bit),
 // you don't have to remember this yet.
-template<int N>
-int sum(std::array<int, N> arr)
+template<size_t N>
+int sum(const std::array<int, N>& arr)
 {
     int result = 0;
     for (size_t i = 0; i < arr.size(); i++)

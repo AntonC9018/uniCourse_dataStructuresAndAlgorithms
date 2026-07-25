@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <limits>
 
 static inline const int RED = 0;
 static inline const int YELLOW = 1;
@@ -46,11 +47,18 @@ int main()
     }
 
     int color;
-    do
+    while (true)
     {
-        std::cin >> color;
+        if (std::cin >> color)
+        {
+            break;
+        }
+        std::cin.clear();
+
+        // Skip everything until the next line.
+        const auto maxChars{ std::numeric_limits<std::streamsize>::max() };
+        std::cin.ignore(maxChars, '\n');
     }
-    while (!std::cin.good()); // while not parsed
 
     switch (color)
     {

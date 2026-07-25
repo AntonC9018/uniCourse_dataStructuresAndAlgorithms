@@ -2,6 +2,7 @@
 #include <cassert>
 #include <queue>
 #include <array>
+#include <climits>
 
 struct Cell
 {

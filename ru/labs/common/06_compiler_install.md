@@ -1,6 +1,6 @@
-# Лаборатоная работа 6
+# Лабораторная работа 6
 
-Тема: **Установка компилятор**.
+Тема: **Установка компилятора**.
 
 - [Установка GCC](https://www.youtube.com/watch?v=bQnbkV6xgY4&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=12)
 - [Настройка VSCode](https://www.youtube.com/watch?v=lBVXv8Qaj9Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=13)

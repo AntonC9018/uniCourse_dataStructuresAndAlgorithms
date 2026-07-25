@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <limits>
 
 using ButtonFunc = void(*)();
 
@@ -27,9 +28,12 @@ int main()
     while (true)
     {
         std::cout << "Select a function to be executed:";
-        std::cin >> functionChoice;
-        if (!std::cin.good())
+        if (!(std::cin >> functionChoice))
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
+        }
         if (functionChoice >= allFunctions.size())
             continue;
         break;
@@ -39,4 +43,3 @@ int main()
     selectedFunc();
     return 0;
 }
-

@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <unordered_set>
+#include <climits>
 
 struct Cell
 {

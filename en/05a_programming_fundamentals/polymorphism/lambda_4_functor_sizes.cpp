@@ -1,4 +1,5 @@
 #include <cassert>
+#include <stddef.h>
 
 int main()
 {

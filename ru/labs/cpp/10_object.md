@@ -1,0 +1,130 @@
+# Объекты
+
+- [Видео (теория)](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
+- [Видео (разбор примера)](https://www.youtube.com/watch?v=OvH8meqCnik&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18).
+
+## Концепты
+
+- Объект
+- rvalue, lvalue
+- Ссылка
+- `std::array`
+
+## Задания
+
+Какие тут типы, и какие тут объекты? перечислите все.
+
+```cpp
+#include <array>
+
+struct Leg
+{
+    int length;
+};
+
+struct Arm
+{
+    int power;
+};
+
+struct Person
+{
+    std::array<Leg, 2> legs;
+    Arm arms[2];
+};
+
+int main()
+{
+    Person person;
+}
+```
+
+<details>
+<summary>Подсказка (объект) 1</summary>
+Объект - это кусок памяти конкретного типа.
+</details>
+
+<details>
+<summary>Подсказка (объект) 2</summary>
+Объект может быть любого типа.
+</details>
+
+<details>
+<summary>Подсказка (поля) 1</summary>
+
+Вспомните синтаксис объявления полей в структурах.
+</details>
+
+<details>
+<summary>Подсказка (поля) 2</summary>
+
+Синтаксис объявления полей похож на синтаксис объявления переменных.
+```
+тип имя;
+```
+</details>
+
+<details>
+<summary>Подсказка (тип) 1</summary>
+Структура - это пользовательский тип.
+</details>
+
+<details>
+<summary>Подсказка (тип) 2</summary>
+
+Типы имеют имя.
+Имя типа - это не обязательно один идентификатор (слово), тип может иметь и более сложное имя.
+
+Например, `std::vector<int>` - это все тоже имя типа.
+</details>
+
+<details>
+<summary>Подсказка (поля) 3</summary>
+
+Определения полей это не объекты.
+
+Поля могут быть объектами только внутри уже имеющегося другого объекта.
+Тип этого другого объекта должен быть тем, внутри которого объявлено поле (пользовательский тип).
+
+Стандартные типы (такие как `int`) не содержат полей.
+Только пользовательские типы (структуры) могут объявлять поля.
+</details>
+
+<details>
+<summary>Подсказка (массив) 1</summary>
+Массивы хранят в себе несколько объектов.
+</details>
+
+<details>
+<summary>Подсказка (массив) 2</summary>
+C массивы не являются объектами в обыкновенном смысле слова. 
+У них есть странности.
+</details>
+
+<details>
+<summary>Ответ</summary>
+
+Объекты:
+```
+person
+person.legs
+person.legs[0]
+person.legs[1]
+person.legs[0].length
+person.legs[1].length
+person.arms[0]
+person.arms[1]
+person.arms[0].power
+person.arms[1].power
+```
+
+Типы:
+```
+Person
+Leg
+Arm
+int
+std::array<Leg, 2>
+```
+</details>
+

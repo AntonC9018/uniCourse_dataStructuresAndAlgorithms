@@ -1,10 +1,11 @@
 #include <iostream>
+#include <cstdint>
 
 int* heapMemory()
 {
     int* a = new int{};
     std::cout << "a: " << *a << std::endl;
-    // assign to memory at address stored in a = deference a + 1
+    // assign to memory at address stored in a = dereference a + 1
     *a = *a + 1;
     return a;
 }

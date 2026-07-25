@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <iostream>
+#include <cstdint>
 
 int main()
 {
