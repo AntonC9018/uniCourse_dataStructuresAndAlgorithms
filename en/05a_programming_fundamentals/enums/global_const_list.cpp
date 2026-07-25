@@ -47,10 +47,17 @@ int main()
     }
 
     int color;
-    while (!(std::cin >> color))
+    while (true)
     {
+        if (std::cin >> color)
+        {
+            break;
+        }
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        // Skip everything until the next line.
+        const auto maxChars{ std::numeric_limits<std::streamsize>::max() };
+        std::cin.ignore(maxChars, '\n');
     }
 
     switch (color)
