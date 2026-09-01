@@ -497,7 +497,7 @@ The correct code would be:
 ```cpp
 int a { 1 };
 int b { 2 };
-// temporary variable
+// временная переменная
 int temp { a };
 a = b;
 b = temp;

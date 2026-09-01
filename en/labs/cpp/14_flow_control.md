@@ -399,7 +399,7 @@ void f(bool a, bool b, bool c)
 
 int main()
 {
-   // Assumes that a, b, and c were declared earlier ...
+   // предполагается, что a, b, c были созданы ранее ...
    f(a, b, c);
 }
 ```
@@ -418,14 +418,14 @@ Example code without using a guard clause / early return:
 ```cpp
 void sendWelcomeEmail(User* user)
 {
-   // The conditions are nested one inside another.
+   // Условия перечислены с увеличением вложенности.
    if (user != nullptr)
    {
        if (user->IsActive)
        {
            if (user->EmailConfirmed)
            {
-               // The code that performs the action is hidden in the middle of the function.
+               // Код с самим действием спрятан в середине функции.
                std::cout << "Sending email to " << user->email << std::endl;
            }
            else
@@ -438,8 +438,8 @@ void sendWelcomeEmail(User* user)
            std::cout << "User is not active." << std::endl;
        }
    }
-   // Locality is not preserved:
-   // the handling is separated in the source code from the associated check.
+   // Не соблюдается локальность:
+   // обработка удалена в исходном коде от связанной проверки.
    else
    {
        std::cout << "User not found." << std::endl;
@@ -451,11 +451,11 @@ The same code using a guard clause / early return:
 ```cpp
 void sendWelcomeEmail(User* user)
 {
-   // A block can be used to delimit the contract
-   // (the conditions required to perform the main action),
-   // or it can be moved to its own function.
+   // Можно блоком разграничить контракт 
+   // (необходимые условия для выполнения основного действия), 
+   // или вынести его в свою функцию.
    {
-       // Locality is preserved: conditions are next to their handling.
+       // Соблюдена локальность: условия рядом с их обработкой.
        if (user == nullptr)
        {
            std::cout << "User not found." << std::endl;
@@ -475,7 +475,7 @@ void sendWelcomeEmail(User* user)
        }
    }
 
-   // The main code comes after all checks rather than in the middle.
+   // Основной код находится после всех проверок, а не в середине.
    std::cout << "Sending email to " << user->email << std::endl;
 }
 ```

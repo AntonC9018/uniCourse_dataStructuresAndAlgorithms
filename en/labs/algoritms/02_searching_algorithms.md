@@ -49,7 +49,7 @@ if (hasErrors)
 std::vector<int> items;
 for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
 {
-    for (int di = 0; di < DATA_COUNT; di++)
+    for (int di; di < DATA_COUNT; di++)
     {
         std::span<int> sortedData = allData[di];
         items.resize(sortedData.size());
