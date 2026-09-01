@@ -180,7 +180,7 @@ void A()
 <details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-пустой-main)
+The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-empty-main)
 </details>
 
 ### 8. Function `main`
@@ -221,7 +221,7 @@ int Main()
 <summary>Answer</summary>
 
 C++ is case-sensitive for function names and the names of other entities.
-There is no `main` function, so the program will not link, just as in [the earlier example](#5-пустая-функция-A).
+There is no `main` function, so the program will not link, just as in [the earlier example](#5-empty-function-a).
 </details>
 
 ### 10. Comment

@@ -89,7 +89,7 @@ whose values are `1` and `2`, as in the image below.
 Think of it as temporary data simply suspended in the air; it is not stored
 anywhere in RAM.
 
-![01_example_value_of_type_of_struct](images/01_example_value_of_type_of_struct.png)
+![01_example_value_of_type_of_struct](../../../ru/labs/cpp/images/01_example_value_of_type_of_struct.png)
 </details>
 
 The fact that the expression has type `A` means that
