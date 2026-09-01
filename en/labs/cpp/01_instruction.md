@@ -180,7 +180,7 @@ void A()
 <details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-empty-main)
+The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-пустой-main)
 </details>
 
 ### 8. Function `main`

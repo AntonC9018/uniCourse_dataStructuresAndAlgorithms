@@ -60,7 +60,7 @@ Recall the syntax for declaring fields in structures.
 
 The syntax for declaring fields is similar to the syntax for declaring variables.
 ```
-type name;
+тип имя;
 ```
 </details>
 

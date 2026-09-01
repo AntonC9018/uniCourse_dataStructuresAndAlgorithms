@@ -41,7 +41,6 @@ Starting at the first element (`arrStart`), `+ 1` moves to the next memory locat
 These expressions can be used both to write values
 and to read them.
 </details>
-
 ### 2. Passing an array as a pointer
 ```cpp
 #include <iostream>
@@ -1035,3 +1034,42 @@ void print(std::span<int> s)
 }
 ```
 </details>
+```cpp
+#include <iostream>
+#include <array>
+#include <cassert>
+
+void print(int* start, int* end)
+{
+   for (int* current{start}; current <= end; current++)
+   {
+       std::cout << *current << std::endl;
+   }
+}
+
+int main()
+{
+   std::array<int, 4> arr{1, 2, 3, 4};
+   print(arr.data(), &arr[arr.size() - 1]);
+}
+```
+```cpp
+#include <iostream>
+#include <array>
+#include <cassert>
+
+void print(int* start, int* pastEnd)
+{
+   for (int* current{start}; current != pastEnd; current++)
+   {
+       std::cout << *current << std::endl;
+   }
+}
+
+int main()
+{
+   std::array<int, 4> arr{1, 2, 3, 4};
+   print(arr.data(), &arr[arr.size()]);
+   print(arr.begin(), arr.end());
+}
+```

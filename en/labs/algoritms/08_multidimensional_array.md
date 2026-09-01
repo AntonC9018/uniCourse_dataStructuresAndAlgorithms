@@ -38,7 +38,7 @@ There will be 9 of them in total.
 
 20 | 21 | 22
 
-... more rows here
+... больше рядов здесь
 
 70 | 71 | 72
 
@@ -52,11 +52,11 @@ These addresses are stored in an array at the next level -- an array of row addr
 There will be only 3 such arrays.
 
 ```
-Address of row (10|11|12) | Address of row (20|21|22) | Address of row (30|31|32) --> x
+Адрес ряда (10|11|12) | Адрес ряда (20|21|22) | Адрес ряда (30|31|32) --> x
 
-Address of row (40|41|42) | Address of row (50|51|52) | Address of row (60|61|62) --> y
+Адрес ряда (40|41|42) | Адрес ряда (50|51|52) | Адрес ряда (60|61|62) --> y
 
-Address of row (70|71|72) | Address of row (80|81|82) | Address of row (90|91|92) --> z
+Адрес ряда (70|71|72) | Адрес ряда (80|81|82) | Адрес ряда (90|91|92) --> z
 ```
 
 The final array will store the addresses of these arrays of row addresses: `x|y|z`.

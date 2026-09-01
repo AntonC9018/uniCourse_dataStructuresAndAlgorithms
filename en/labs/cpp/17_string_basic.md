@@ -264,10 +264,10 @@ Therefore, in C++ **it is impossible to determine the actual buffer length from 
 You can get the literal's length by creating a reference to it
 before decay to `const char*` occurs:
 ```cpp
-// The size is in the type; it can be used as a pointer.
+// Размер есть в типе, можно использовать как указатель.
 const char(&s)[4]{"123"};
 
-// Deduces the const char(&)[4] type from the string itself.
+// Сам определяет тип const char(&)[4] из строки.
 auto& s{"123"};
 ```
 </details>
