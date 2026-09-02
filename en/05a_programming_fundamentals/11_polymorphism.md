@@ -485,7 +485,7 @@ rather than the start of the object,
 and *store the offset to the start of the object data in the vtable*,
 to be able to get at the context.
 
-> **Well, actually**: the vtable layout and pointer adjustment are an implementation
+> 🤓 The vtable layout and pointer adjustment are an implementation
 > detail — the standard technically doesn't mandate any of it.
 > But that's kind of what C++ inheritance does: in practice, every modern compiler
 > adjusts pointers and stores offsets like this.

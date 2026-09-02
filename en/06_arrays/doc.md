@@ -90,7 +90,7 @@ which will in fact read the memory that comes after it on the stack.
 The next thing after the local array variable `arr` on the stack 
 will most likely be the return address for the `sum` function.
 
-> **Well, actually**: what exactly sits next to the array (and whether there is a return
+> 🤓 What exactly sits next to the array (and whether there is a return
 > address there at all) is an implementation detail of the stack layout. The standard
 > technically promises nothing about reading or writing memory beyond the array bounds:
 > that's undefined behavior. In practice, on any modern hardware with a conventional

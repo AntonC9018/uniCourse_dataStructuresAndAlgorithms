@@ -292,11 +292,12 @@ decltype(std::max(5, 6) - static_cast<float>(5)) a = 5.0f; // float a = 5.0f;
 `auto` is a keyword that allows the compiler to *deduce* or *imply* the type of a variable
 from the expression type that you assign to it.
 
-`auto` deduces the type using the template parameter deduction rules:
-top-level `const` and references are dropped, and arrays and functions decay to pointers.
-`decltype(y)` instead preserves the declared type of `y`.
-So `auto x = y;` is not always equivalent to `decltype(y) x = y;` —
-on simple types like int there is no difference.
+`auto x = y;` is equivalent to `decltype(y) x = y;`.
+
+> 🤓 Not exactly: `auto` deduces the type using the template parameter deduction rules —
+> top-level `const` and references are dropped, and arrays and functions decay to pointers —
+> while `decltype(y)` preserves the declared type of `y`.
+> On simple types like int there is no difference.
 
 ```cpp
 int a1 = 5;

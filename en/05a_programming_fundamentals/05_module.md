@@ -206,12 +206,12 @@ public:
     // Properties are methods that return or set the values of fields.
     // Note that I've named the fields with an underscore so that we don't
     // have name collisions with the properties.
-    const int* firstElementPointer() const
+    const int* firstElementPointer()
     {
         return this->_firstElementPointer;
     }
 
-    size_t length() const
+    size_t length()
     {
         return this->_length;
     }
@@ -239,7 +239,7 @@ int main()
 {
     DynamicBuffer buffer{10};
     buffer._firstElementPointer = 0; // does not compile
-    const int* firstElement = buffer.firstElementPointer(); // can still *read* the value
+    const int* firstElement = buffer.firstElementPointer(); // can still *read* the internal pointer
     return 0;
 }
 ```
@@ -392,8 +392,9 @@ private:
 ```
 
 ```cpp
-// The type definition itself can't be `static` — the nested type's
-// definition simply goes into the implementation file.
+// You can't mark the type definition itself `static`: `static` is only valid
+// for functions and variables, not for type definitions.
+// So the nested type's definition simply lives in the implementation file.
 struct DynamicArray::Impl
 {
     // We don't require an instance.

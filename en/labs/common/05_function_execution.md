@@ -92,6 +92,13 @@ When attempting to return to this address, the program will crash.
 > The compiler sometimes adds stack protection in debugging mode, 
 > which helps find such errors (Google it if you are interested).
 
+> 🤓 The stack layout in the tables above is a conceptual simplification: what exactly goes
+> into a stack frame (local variables, the return address, saved registers), and in what order,
+> is decided by the implementation — the standard doesn't mandate it.
+> In practice, on any modern hardware with a conventional stack layout, the frame's bookkeeping
+> data — including the return address — really does sit next to the local variables,
+> which is why the idea behind the exercise above works.
+
 
 ## Analysis 2
 

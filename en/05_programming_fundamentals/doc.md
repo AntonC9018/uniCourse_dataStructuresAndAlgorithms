@@ -66,7 +66,7 @@ int g;
 g = 10;
 ```
 
-> **Well, actually**: the size of `int` (4 bytes), the size of a byte, and the byte order
+> 🤓 The size of `int` (4 bytes), the size of a byte, and the byte order
 > in memory are implementation details. The standard technically guarantees less: it only
 > fixes the range of values an `int` can hold — the concrete bit pattern and byte layout
 > aren't specified at all.
@@ -190,7 +190,7 @@ int* pointerToSomeNumber = &someNumber;
 uintptr_t addressOfSomeNumber = (uintptr_t) pointerToSomeNumber;
 ```
 
-> **Well, actually**: the existence of `uintptr_t` and the result of such a conversion are
+> 🤓 The existence of `uintptr_t` and the result of such a conversion are
 > implementation details. The standard technically doesn't require this type to exist at all
 > (it's optional), and the pointer-to-integer conversion is implementation-defined — the
 > resulting number isn't guaranteed to be a meaningful address.
@@ -358,7 +358,7 @@ int value4 = *pointerToArray; // 3
 A `void*` acts as an `std::byte*` when doing pointer arithmetic, that is to say,
 it navigates memory in increments of 1 byte.
 
-> **Well, actually**: arithmetic on `void*` is an implementation detail (a compiler
+> 🤓 Arithmetic on `void*` is an implementation detail (a compiler
 > extension). The standard technically doesn't define it; the portable way to navigate
 > memory byte-by-byte is to cast to `std::byte*` or `char*`.
 > In practice, GCC and Clang on any modern hardware behave exactly as described above.

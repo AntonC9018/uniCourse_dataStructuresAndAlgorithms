@@ -6,7 +6,7 @@ it points to cannot be changed, and with simplified syntax.
 
 You can also think of it as an alias for a variable (a memory location).
 
-> **Well, actually**: describing a reference as "a pointer that can't be reseated" is an
+> 🤓 Describing a reference as "a pointer that can't be reseated" is an
 > implementation detail. The standard technically doesn't require any particular
 > representation for references: formally, a reference is just an alias for an existing
 > object — one that can't be reseated and can't be null.
@@ -127,8 +127,8 @@ struct Person
     int age;
     std::string name;
     
-    // The `static` keyword makes this a *static member function*:
-    // it has no implicit `this` parameter, meaning it's not bound to any instance.
+    // The `static` keyword makes this a *static member function*,
+    // which would typically be called using the scope resolution operator (::).
     static void printAge(Person* person)
     {
         std::cout << person->age;
@@ -143,9 +143,7 @@ int main()
     
     // This is how you call a static member function.
     // `Person::printAge` is a qualified name: `printAge` is looked up
-    // in the scope of the `Person` class (that's a class scope, not a namespace).
-    // Note that `::` is not a requirement but a way to qualify the name;
-    // a static member function can also be called through an object: `person.printAge(&person)`.
+    // in the scope of the `Person` class.
     // The idea is that we're able to associate the operations that operate on a `Person` with the type itself.
     Person::printAge(&person);
     

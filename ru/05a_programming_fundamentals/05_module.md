@@ -206,12 +206,12 @@ public:
     // Свойства — это методы, которые возвращают или устанавливают значения полей.
     // Заметьте, я назвал поля с подчеркиванием в начале, чтобы избежать
     // конфликта имен со свойствами.
-    const int* firstElementPointer() const
+    const int* firstElementPointer()
     {
         return this->_firstElementPointer;
     }
 
-    size_t length() const
+    size_t length()
     {
         return this->_length;
     }
@@ -239,7 +239,7 @@ int main()
 {
     DynamicBuffer buffer{10};
     buffer._firstElementPointer = 0; // не компилируется
-    const int* firstElement = buffer.firstElementPointer(); // значение по-прежнему можно *читать*
+    const int* firstElement = buffer.firstElementPointer(); // внутренний указатель по-прежнему можно *читать*
     return 0;
 }
 ```
@@ -392,8 +392,8 @@ private:
 ```
 
 ```cpp
-// Само определение типа не может быть `static` — определение вложенного
-// типа просто помещается в файл реализации.
+// `static` допустим только для функций и переменных, но не для определений типов.
+// Поэтому определение вложенного типа просто находится в файле реализации.
 struct DynamicArray::Impl
 {
     // Экземпляр нам не нужен.

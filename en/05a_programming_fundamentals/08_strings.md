@@ -17,7 +17,7 @@ to that from the ASCII table.
 The type that represents an ASCII character is `char`.
 `char` is an 8-bit type, which can be either signed or unsigned depending on the compiler.
 
-> **Well, actually**: "8-bit" here is an implementation detail. The standard technically only
+> 🤓 "8-bit" here is an implementation detail. The standard technically only
 > guarantees that a byte has at least 8 bits (the exact number is `CHAR_BIT`), and the
 > signedness of `char` is implementation-defined.
 > In practice, on any modern hardware a byte is 8 bits.
@@ -95,7 +95,7 @@ is encoded in.
 - The highest bit being `0` means that this is a *self-contained single-byte ASCII character*.
 - If the highest bit is `1`, the byte belongs to a multi-byte sequence:
   *leading* (first) bytes have the pattern `11xxxxxx`, while *continuation bytes* have `10xxxxxx`.
-- The number of leading `1`s in the first byte (up to the first `0`, including them)
+- The number of leading `1`s in the first byte, up to the first `0`,
   indicates *the number of bytes of the character*: `110xxxxx` is two bytes, `1110xxxx` is three, `11110xxx` is four.
 
 The idea is that any byte by itself has the context of whether it's a self-contained
@@ -134,8 +134,8 @@ A *C string* refers to a sequence of characters that ends with a *null terminato
 aka the number 0.
 Strings are typically stored in an array, or as a pointer, 
 without storing the length of the string (the number of bytes).
-This representation comes from C, but it's widely used in C++ as well —
-which is why such strings are called C strings.
+This representation comes from C, but it's widely used in C++ as well.
+This is why such strings are called C strings.
 The program is assumed to trust that wherever the string ends, it will have a 0 byte,
 which is how it can find the end of the string.
 

@@ -5,9 +5,24 @@ Scopes have two roles in C++:
 - They control the lifetimes of local objects with *automatic storage duration*:
   when the scope ends, such objects are destroyed and their destructors free up resources.
 
-> Note that this doesn't apply to all objects: dynamic (created with `new`),
-> static, thread-local, and placement-new objects follow different rules —
-> leaving a scope does not destroy them on its own.
+> Note that this doesn't apply to dynamically allocated memory: `new` returns a pointer,
+> and that pointer is itself a local object of the scope. When the scope ends,
+> the pointer is destroyed, but the object in heap memory is not affected in any way.
+
+```cpp
+int main()
+{
+    {
+        // `pointer` is a regular local variable: it lives in this scope.
+        int* pointer = new int{5};
+    }
+
+    // The scope has ended: the pointer is gone, but the int it pointed to
+    // is still sitting in heap memory, untouched (and now unreachable — a memory leak).
+
+    return 0;
+}
+```
 
 You can say that scopes allow you to control the lifetimes of automatic objects.
 
@@ -315,7 +330,7 @@ int main()
 ```
 
 > Yes, reading uninitialized memory above is formally undefined behavior:
-> we're doing it on purpose to see the garbage value.
+> we're doing it on purpose to observe the garbage value.
 
 ## Breaking the code above
 
@@ -421,7 +436,7 @@ In this case, this means, in essence, copying the string object into `person.nam
 and then clearing it from the `name` variable, so that it no longer refers to the buffer.
 So it becomes unusable after the call.
 
-> **Well, actually**: the moved-from string being "cleared" here is an implementation detail.
+> 🤓 The moved-from string being "cleared" here is an implementation detail.
 > The standard technically guarantees less: a moved-from object is left in a
 > *valid but unspecified* state (it may not even be empty) — there are simply no more
 > requirements on its contents.
@@ -532,7 +547,7 @@ If you return an object from a function, its destructor will not be called.
 In fact, the move constructor won't be called either.
 It will just write the result directly into the memory of the variable declared for the result.
 
-> **Well, actually**: for a named variable like `demo1` below, this is an implementation
+> 🤓 For a named variable like `demo1` below, this is an implementation
 > detail (NRVO). The standard technically guarantees copy elision only for temporaries —
 > e.g. `return Demo{1};` (guaranteed since C++17). For a named object, if NRVO doesn't
 > kick in, the move or copy constructor is called and `demo1` is destroyed as usual.
@@ -590,6 +605,16 @@ Demo test()
 
 ## lvalue and rvalue
 
+*lvalue* means a value that may appear on the left hand side of an assignment.
+This is equivalent to saying that *an lvalue is a value that has storage*, meaning it is stored in some memory.
+In other words, *lvalues have a memory address*.
+
+An *rvalue* does not have any storage, it could be either a temporary value or a constant.
+rvalues may appear on the right hand side of an assignment.
+
+<details>
+<summary>A more precise definition (expression categories)</summary>
+
 *lvalue* and *rvalue* are categories of *expressions*, not positions in an assignment.
 
 An *lvalue* is an expression that has identity: a named variable,
@@ -601,9 +626,10 @@ the literal `5`) that lives until the end of the current expression.
 
 > The subtlety: an rvalue doesn't necessarily lack an address or storage. For example,
 > `std::move(x)` is an rvalue (more precisely, an *xvalue*), even though it refers to a very
-> real object with an address. That's why defining the categories through "left/right hand
-> side of an assignment" and "does it have storage" are simplifications that break on
-> references and `std::move`.
+> real object with an address. That's why the definitions above are simplifications
+> that break on references and `std::move`.
+
+</details>
 
 
 ```cpp

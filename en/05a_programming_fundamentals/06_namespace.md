@@ -162,14 +162,14 @@ int main()
 }
 ```
 
-> **Well, actually**: technically, adding arbitrary entities to `std` is undefined
+> 🤓 Technically, adding arbitrary entities to `std` is undefined
 > behavior — don't do that. The rule protects the standard library: the implementation
 > is allowed to assume it controls everything inside `std` and to declare its own things
 > there. If your `std::f` ever collides with some internal `f` from the library's headers,
 > the compiler isn't even required to warn you. (Defining something that already exists
 > is an obvious mistake anyway.) Treat the example above as a simplification.
 
-Note that `main` must not be in any namespace to play the special role of the entry point.
+Note that `main` must be outside of any namespace to play the special role of the entry point.
 
 One of the extensions the standard explicitly allows is specializing `std::hash`
 for your own type: without it, your type can't be put into a `std::unordered_set`
@@ -210,7 +210,7 @@ int main()
 }
 ```
 
-Note that `main` must not be in any namespace to play the special role of the entry point.
+Note that `main` must be outside of any namespace to play the special role of the entry point.
 
 
 ## Namespaces allow you to use things from the namespace without qualification
