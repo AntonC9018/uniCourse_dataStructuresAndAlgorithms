@@ -122,7 +122,7 @@ int b = std::bit_cast<int>(a); // 40 a0 00 00 = 1084227584
 int c = static_cast<int>(a); // 5
 ```
 
-> 🤓 The specific number `1084227584` is an implementation detail.
-> It assumes `float` is IEEE 754, `int` is 32 bits, and the byte order is little-endian;
-> the standard technically guarantees none of that.
+> Note that the number is just an example output that I got running this code on my machine,
+> you could see another value. It depends on `float` being IEEE 754, `int` being 32 bits,
+> and the byte order being little-endian.
 
