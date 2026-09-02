@@ -146,12 +146,34 @@ namespace Demo
 }
 ```
 
-Which means that opening existing namespaces and adding to them is allowed.
-The `std` namespace, however, may only be extended in the ways the standard explicitly allows,
-for example by specializing `std::hash` for your own type.
-Adding arbitrary entities to `std` (like your own `std::f`) is not allowed:
-it's undefined behavior — the standard library is allowed to assume
-it controls everything inside `std`.
+Which means that defining the `std` namespace in your code is totally allowed.
+It's even required for some things, like defining a hash function for a type.
+
+```cpp
+namespace std
+{
+    void f(){}
+}
+
+int main()
+{
+    std::f();
+    return 0;
+}
+```
+
+> **Well, actually**: technically, adding arbitrary entities to `std` is undefined
+> behavior — don't do that. The rule protects the standard library: the implementation
+> is allowed to assume it controls everything inside `std` and to declare its own things
+> there. If your `std::f` ever collides with some internal `f` from the library's headers,
+> the compiler isn't even required to warn you. (Defining something that already exists
+> is an obvious mistake anyway.) Treat the example above as a simplification.
+
+Note that `main` must not be in any namespace to play the special role of the entry point.
+
+One of the extensions the standard explicitly allows is specializing `std::hash`
+for your own type: without it, your type can't be put into a `std::unordered_set`
+or used as a key in a `std::unordered_map`.
 
 ```cpp
 #include <cstddef>
