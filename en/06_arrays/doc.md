@@ -3,7 +3,7 @@
 C arrays is the arrays that we have learned in the previous chapter.
 As a reminder, here is an example of a C array:
 
-```c
+```cpp
 int a[4];
 ```
 
@@ -23,7 +23,7 @@ of the first element of some array and sums up all elements one by one,
 returning the sum as the result.
 Note that the function has to know how many elements that block is in size.
 
-```c
+```cpp
 int sum(int* a)
 {
     int result = 0;
@@ -38,7 +38,7 @@ int sum(int* a)
 
 The prototype of the function can be instead:
 
-```c
+```cpp
 int sum(int a[]);
 ```
 
@@ -47,7 +47,7 @@ I'm going to stick to the pointer notation, because the latter makes no sense in
 
 
 Now let's try to call this function:
-```c
+```cpp
 int main()
 {
     // Note that the length has to be the exact same as used in the function.
@@ -76,7 +76,7 @@ but product garbage results.
 
 Imagine if `main` went like this:
 
-```c
+```cpp
 int main()
 {
     int arr[2]{};
@@ -91,7 +91,7 @@ will most likely be the return address for the `sum` function.
 
 Now imagine if the `sum` function wrote to that memory, instead of just reading from it.
 
-```c
+```cpp
 void setZeros(int* a)
 {
     for (size_t i = 0; i < 4; i++)
