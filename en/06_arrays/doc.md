@@ -29,10 +29,11 @@ int sum(int* a)
     int result = 0;
     for (size_t i = 0; i < 4; i++)
     {
-        int* pointerToElmement = a + i;
+        int* pointerToElement = a + i;
         int elementAtIndex = *pointerToElement;
         result = result + elementAtIndex;
     }
+    return result;
 }
 ```
 
@@ -56,11 +57,11 @@ int main()
     arr[1] = 10;
 
     // Pass it the pointer to the start of the memory of the array.
-    int sum = f(&arr[0]); // 15
+    int result = sum(&arr[0]); // 15
 
     // Passing the array variable implicitly passes the address of the first element.
     // This is also referred to as the array "decaying" to a pointer.
-    int sum1 = f(arr); // 15
+    int result1 = sum(arr); // 15
 
     return 0;
 }
@@ -88,6 +89,13 @@ The `sum` function would try to sum memory after the memory assigned to the arra
 which will in fact read the memory that comes after it on the stack.
 The next thing after the local array variable `arr` on the stack 
 will most likely be the return address for the `sum` function.
+
+> **Well, actually**: what exactly sits next to the array (and whether there is a return
+> address there at all) is an implementation detail of the stack layout. The standard
+> technically promises nothing about reading or writing memory beyond the array bounds:
+> that's undefined behavior. In practice, on any modern hardware with a conventional
+> stack layout, bookkeeping data of the frame — including the return address —
+> really does sit above the local variables.
 
 Now imagine if the `sum` function wrote to that memory, instead of just reading from it.
 
@@ -188,9 +196,9 @@ One of these is `std::array`.
 - It is an actual type, and not a special thing like arrays, meaning you can actually pass 
   these to functions without hacks;
 - It doesn't decay to a pointer;
-- You can have a pointer to a block of memory if its type is `std:array` in a regular way
+- You can have a pointer to a block of memory if its type is `std::array` in a regular way
   (it works just like a regular pointer), without the need for extra syntax.
-  ```
+  ```cpp
   // Pointer to array with 4 elements
   std::array<int, 4>* p{ &arr };
   ```

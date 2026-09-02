@@ -149,7 +149,7 @@ std::array<int, N> createArray()
 
 int main()
 {
-    std:array result = createArray<10>();
+    std::array<int, 10> result = createArray<10>();
     return 0;
 }
 ```

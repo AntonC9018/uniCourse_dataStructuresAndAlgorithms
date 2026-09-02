@@ -4,10 +4,10 @@
 
 We still have a major elephant in the room, 
 who makes itself known in a dangerous way when we copy into an existing variable.
-See the example [here](#Breaking-the-code-above).
+See the example [here](./02_RAII.md#destructor).
 
 We can fix that issue by redefining what assignment does for our type.
-This is called *assigment operator overloading*, "assignment operator" meaning the `=` in the assignment operation, 
+This is called *assignment operator overloading*, "assignment operator" meaning the `=` in the assignment operation, 
 and "overloading" meaning defining a function which will substitute the default behavior for our type.
 
 ```cpp
@@ -67,7 +67,7 @@ class Example
 
     // This makes the operator = unusable.
     void operator=(const Example& other) = delete;
-}
+};
 
 int main()
 {
@@ -103,7 +103,7 @@ class Example
     // the assignment to do the default thing as well.
     // The return type has to be `Example&` for this to work (I explain why a bit later).
     Example& operator=(const Example& other) = default;
-}
+};
 
 int main()
 {

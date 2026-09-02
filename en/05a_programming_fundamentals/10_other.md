@@ -137,8 +137,9 @@ But you can make it work if you changed `const` to `constexpr` in this example.
 
 `constexpr` can also be used with functions to tell
 the compiler that they can be evaluated at compile time.
-`constexpr` functions can only call other `constexpr` functions.
-It's yet another rabbit hole, so I'll stop here. 
+Since C++11, a `constexpr` function is also allowed to call regular functions —
+as long as those calls don't happen during constant evaluation.
+It's yet another rabbit hole, so I'll stop here.
 
 ### `const` methods
 
@@ -282,7 +283,7 @@ decltype(5) a = 5; // this is fine
 The expression can be more complicated:
 
 ```cpp
-#include <math>
+#include <algorithm>
 decltype(std::max(5, 6) - static_cast<float>(5)) a = 5.0f; // float a = 5.0f;
 ```
 
@@ -291,7 +292,11 @@ decltype(std::max(5, 6) - static_cast<float>(5)) a = 5.0f; // float a = 5.0f;
 `auto` is a keyword that allows the compiler to *deduce* or *imply* the type of a variable
 from the expression type that you assign to it.
 
-`auto x = y;` is equivalent to `decltype(y) x = y;`.
+`auto` deduces the type using the template parameter deduction rules:
+top-level `const` and references are dropped, and arrays and functions decay to pointers.
+`decltype(y)` instead preserves the declared type of `y`.
+So `auto x = y;` is not always equivalent to `decltype(y) x = y;` —
+on simple types like int there is no difference.
 
 ```cpp
 int a1 = 5;

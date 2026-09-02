@@ -1,11 +1,15 @@
 # Scopes
 
-Scopes have two functions in C++:
+Scopes have two roles in C++:
 - They serve to make variables not visible outside of them;
-- They are used to clean up memory ("resources") of objects.
-  This can be achieved by using destructors.
+- They control the lifetimes of local objects with *automatic storage duration*:
+  when the scope ends, such objects are destroyed and their destructors free up resources.
 
-You can say that scopes allow you to control the lifetimes of objects.
+> Note that this doesn't apply to all objects: dynamic (created with `new`),
+> static, thread-local, and placement-new objects follow different rules —
+> leaving a scope does not destroy them on its own.
+
+You can say that scopes allow you to control the lifetimes of automatic objects.
 
 ## Scopes for limiting the visibility
 
@@ -77,7 +81,7 @@ which is the scope that's outside of any function.
 
 ## Scopes for cleaning up resources
 
-Conceptually, a variable defined in a scope is destroyed at the end of the scope.
+Conceptually, a local variable with automatic storage duration is destroyed at the end of the scope.
 For simple types like int, it means literally nothing.
 For a complex type, like `std::string`, this means 
 returning the memory allocated for the character array to the C++ runtime.
@@ -86,8 +90,10 @@ returning the memory allocated for the character array to the C++ runtime.
 ## Destructor 
 
 You can define your own logic to be called when your object is destroyed by using a *destructor*.
-Destructor is a special `void` function that is called in this context automatically.
-You can call it manually as well.
+A destructor is a special function without a return type that is called in this context automatically.
+You can call it manually as well,
+but carefully: for a regular automatic object, the destructor will run again
+when the scope ends, and an object must not be destroyed twice.
 
 
 Let's just illustrate how it works.
@@ -122,8 +128,8 @@ int main()
 
 Which prints:
 
-```
-Demo created
+```text
+Demos created
 Destroying demo2
 Destroying demo1
 ```
@@ -188,7 +194,7 @@ int main()
 
 # Constructors
 
-Constructors are special `void` functions used to initialize objects.
+Constructors are special functions without a return type used to initialize objects.
 Constructors cannot be called in any other context.
 
 Constructors were created to allow initializing private data members (fields) in OOP.
@@ -308,6 +314,9 @@ int main()
 }
 ```
 
+> Yes, reading uninitialized memory above is formally undefined behavior:
+> we're doing it on purpose to see the garbage value.
+
 ## Breaking the code above
 
 It is still extremely easy to break the code above and end up with memory leaks or repeated memory deletes:
@@ -345,8 +354,7 @@ public:
     // We need a constructor with parameters to be able to create an object in the first place.
     Demo(int idParameter) : id(idParameter) { }
 
-    // Demo(const Demo& other)
-    Demo(Demo& other) : id(other.id)
+    Demo(const Demo& other) : id(other.id)
     {
         std::cout << "Copying " << other.id << std::endl;
     }
@@ -367,6 +375,11 @@ int main()
     b = c; 
 }
 ```
+
+> The `const` in the copy constructor parameter is not there by accident: without it,
+> you can't copy a const object or a temporary. If a type has a reason to forbid that,
+> taking a non-const reference makes it possible — but for a regular copyable type,
+> `const Demo&` is what you write.
 
 
 ## Moving an object
@@ -408,6 +421,13 @@ In this case, this means, in essence, copying the string object into `person.nam
 and then clearing it from the `name` variable, so that it no longer refers to the buffer.
 So it becomes unusable after the call.
 
+> **Well, actually**: the moved-from string being "cleared" here is an implementation detail.
+> The standard technically guarantees less: a moved-from object is left in a
+> *valid but unspecified* state (it may not even be empty) — there are simply no more
+> requirements on its contents.
+> In practice, though, every modern compiler on any modern hardware leaves
+> `std::string` and `std::vector` empty after a move, just as described above.
+
 ```cpp
 #include <iostream>
 
@@ -421,7 +441,7 @@ int main()
     std::string name = "John Brown";
     Person person;
 
-    std::cout << name << std::endl; // // prints "John Brown"
+    std::cout << name << std::endl; // prints "John Brown"
     std::cout << person.name << std::endl; // prints nothing
 
     person.name = std::move(name);
@@ -512,6 +532,12 @@ If you return an object from a function, its destructor will not be called.
 In fact, the move constructor won't be called either.
 It will just write the result directly into the memory of the variable declared for the result.
 
+> **Well, actually**: for a named variable like `demo1` below, this is an implementation
+> detail (NRVO). The standard technically guarantees copy elision only for temporaries —
+> e.g. `return Demo{1};` (guaranteed since C++17). For a named object, if NRVO doesn't
+> kick in, the move or copy constructor is called and `demo1` is destroyed as usual.
+> In practice, though, every modern compiler on any modern hardware elides the copy here too.
+
 > I have not described how returning objects from functions actually works,
 > but that's because I don't know the actual mechanics myself.
 >
@@ -564,12 +590,20 @@ Demo test()
 
 ## lvalue and rvalue
 
-*lvalue* means a value that may appear on the left hand side of an assignment.
-This is equivalent to saying that *an lvalue is a value that has storage*, meaning it is stored in some memory.
-In other words, *lvalues have a memory address*.
+*lvalue* and *rvalue* are categories of *expressions*, not positions in an assignment.
 
-An *rvalue* does not have any storage, it could be either a temporary value or a constant.
-rvalues may appear on the right hand side of an assigment.
+An *lvalue* is an expression that has identity: a named variable,
+an array element, a dereferenced pointer. It has an address,
+and it can usually stand on the left hand side of `=`.
+
+An *rvalue* is an expression without identity: a temporary value (the result of arithmetic,
+the literal `5`) that lives until the end of the current expression.
+
+> The subtlety: an rvalue doesn't necessarily lack an address or storage. For example,
+> `std::move(x)` is an rvalue (more precisely, an *xvalue*), even though it refers to a very
+> real object with an address. That's why defining the categories through "left/right hand
+> side of an assignment" and "does it have storage" are simplifications that break on
+> references and `std::move`.
 
 
 ```cpp
@@ -605,8 +639,9 @@ a = 5;
 }
 ```
 
-*rvalue references* are denoted as `T&&`, which means that it's a temporary object, whose value won't be used later.
-You can force an object to be treated like an rvalue reference by using `std::move`.
+*rvalue references* are denoted as `T&&` — a reference to an object whose resources are meant to be "stolen".
+You can force an expression to be treated as an rvalue by using `std::move`:
+on its own it doesn't move anything, it just casts the expression to an rvalue reference.
 
 ```cpp
 std::vector<int> a{};
@@ -644,6 +679,6 @@ void addBook(Book&& book)
 Book temp;
 temp.author = "Test";
 temp.title = "Magic";
-addBook(std::move(book));
+addBook(std::move(temp));
 assert(temp.author == "");
 ```

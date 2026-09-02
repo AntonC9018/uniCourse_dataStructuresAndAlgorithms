@@ -93,7 +93,7 @@ int main()
 
 ```cpp
 // main.cpp
-include "math_functions.h"
+#include "math_functions.h"
 // ...
 addMathFuncs(functionList);
 ```
@@ -104,7 +104,7 @@ void addMathFuncs(std::vector<ButtonFunc>& functionList);
 ```
 
 ```cpp
-// math_functions.c
+// math_functions.cpp
 static void add()
 {
     // ...
@@ -417,7 +417,7 @@ using SumFunc = int(*)(int a, int b);
 
 struct Behavior
 {
-    PrintFunc introduceOneself;
+    IntroductionFunc introduceOneself;
     SumFunc answer;
 };
 
@@ -484,6 +484,12 @@ int main()
 и *хранят в vtable смещение до начала данных объекта*,
 чтобы можно было добраться до контекста.
 
+> **Ну вообще-то**: раскладка vtable и подстройка указателя — деталь реализации,
+> стандарт технически не предписывает ничего из этого.
+> Но по сути это примерно то, что наследование в C++ и делает:
+> на практике каждый современный компилятор подстраивает указатели
+> и хранит смещения подобным образом.
+
 См. [пример](./polymorphism/multiple_vtables_cpp_approach.cpp).
 
 Я не буду заставлять вас досконально разбираться в этом коде,
@@ -529,7 +535,7 @@ class Person :
     }
 
     // ...
-}
+};
 ```
 
 Синтаксис приведения и вызова становится куда проще —
@@ -543,7 +549,7 @@ GreetingAbstractBase* greetingPtr = personPtr;
 QuestionAbstractBase* questionPtr = personPtr;
 
 // Указатели смотрят на разные участки памяти.
-assert(static_cast<uint8_t*>(greetingsPtr) - static_cast<uint8_t*>(questionPtr) != 0);
+assert(static_cast<void*>(greetingPtr) != static_cast<void*>(questionPtr));
 
 // Контекст подстраивается и передается неявно.
 greetingPtr->introduceSelf();

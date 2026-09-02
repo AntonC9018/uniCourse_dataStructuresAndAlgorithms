@@ -6,4 +6,4 @@ For the C++ OOP part (I think I need to teach this to the 2nd year students):
 - Single inheritance of fields (no pointer adjustment)
 - Virtual inheritance (pointer adjustment)
 - Useless diamond inheritance, how solved at a low level (see link in resources), syntax
-- `std::static_cast`, `std::dynamic_cast`, `std::reinterpret_cast`
+- `static_cast`, `dynamic_cast`, `reinterpret_cast`

@@ -146,18 +146,44 @@ namespace Demo
 }
 ```
 
-Which means that defining the `std` namespace in your code is totally allowed.
-It's even required for some things, like defining a hash function for a type.
+Which means that opening existing namespaces and adding to them is allowed.
+The `std` namespace, however, may only be extended in the ways the standard explicitly allows,
+for example by specializing `std::hash` for your own type.
+Adding arbitrary entities to `std` (like your own `std::f`) is not allowed:
+it's undefined behavior — the standard library is allowed to assume
+it controls everything inside `std`.
 
 ```cpp
+#include <cstddef>
+#include <functional>
+#include <iostream>
+#include <string>
+
+struct Person
+{
+    std::string name;
+    int age;
+};
+
 namespace std
 {
-    void f(){}
+    // A standard-allowed extension:
+    // a specialization of `std::hash` for your own type.
+    template <>
+    struct hash<Person>
+    {
+        size_t operator()(const Person& person) const
+        {
+            return std::hash<std::string>{}(person.name)
+                 ^ (std::hash<int>{}(person.age) << 1);
+        }
+    };
 }
 
 int main()
 {
-    std::f();
+    Person person{"John", 20};
+    std::cout << std::hash<Person>{}(person) << std::endl;
     return 0;
 }
 ```
@@ -292,8 +318,10 @@ namespace Demo
 It can be used to bring everything from a namespace into the current scope.
 By bring, I mean make all members of the namespace visible, aka
 available without qualification.
-The coolest thing is that it can be used in *any* scope, be it separate function scopes,
-nested regular scopes, namespaces or type scopes.
+The coolest thing is that it can be used in almost *any* scope, be it separate function scopes,
+nested regular scopes, or namespaces.
+The exception is class scopes: a using-directive is not allowed inside a class,
+use qualified names or using-declarations there instead.
 
 ```cpp
 #include <iostream>

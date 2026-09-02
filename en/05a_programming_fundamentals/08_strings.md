@@ -17,6 +17,11 @@ to that from the ASCII table.
 The type that represents an ASCII character is `char`.
 `char` is an 8-bit type, which can be either signed or unsigned depending on the compiler.
 
+> **Well, actually**: "8-bit" here is an implementation detail. The standard technically only
+> guarantees that a byte has at least 8 bits (the exact number is `CHAR_BIT`), and the
+> signedness of `char` is implementation-defined.
+> In practice, on any modern hardware a byte is 8 bits.
+
 ```cpp
 #include <iostream>
 
@@ -87,11 +92,11 @@ For example, the character `ș` can be written in two bytes like `C8 99` in hex.
 What UTF-8 does, is it uses the higher bits to indicate the number of bytes that the character 
 is encoded in.
 
-- The first bit being `1` means that *the current character is contained in multiple bytes*.
-- The second bit after `1` being `0` means that *the current byte is not the first byte
-  of the character*; otherwise, it is.
-- The number of `1` before a `0`, following the first `1`, including the first `1`,
-  indicates *the number of bytes of the character*.
+- The highest bit being `0` means that this is a *self-contained single-byte ASCII character*.
+- If the highest bit is `1`, the byte belongs to a multi-byte sequence:
+  *leading* (first) bytes have the pattern `11xxxxxx`, while *continuation bytes* have `10xxxxxx`.
+- The number of leading `1`s in the first byte (up to the first `0`, including them)
+  indicates *the number of bytes of the character*: `110xxxxx` is two bytes, `1110xxxx` is three, `11110xxx` is four.
 
 The idea is that any byte by itself has the context of whether it's a self-contained
 ASCII byte (the first bit is 0), the first byte of a sequence (pattern 11),
@@ -106,10 +111,11 @@ The table below illustrates the pattern:
 | 3               | 1110.... | 10...... | 10...... | N/A      |
 | 4               | 11110... | 10...... | 10...... | 10...... |
 
-4 bytes is the max.
-If the character is more than 4 bytes (this is the case for most emojis),
-it's called a grapheme cluster.
-It is then represented with multiple UTF-8 characters.
+4 bytes is the max for a single Unicode code point.
+But one *visible character* can consist of several code points:
+such composite entities (like most emojis, assembled from several code points
+joined by a ZWJ separator) are called *grapheme clusters*.
+In UTF-8, such a cluster is represented by several 1–4 byte sequences.
 
 > The different terminology can cause confusion, so the term "character" is
 > basically meaningless when talking about UTF-8.
@@ -126,8 +132,10 @@ a character increased to 2 and 4 respectively, and use similar ideas for encodin
 
 A *C string* refers to a sequence of characters that ends with a *null terminator*, 
 aka the number 0.
-In C (not C++!), strings are typically stored in an array, or as a pointer, 
+Strings are typically stored in an array, or as a pointer, 
 without storing the length of the string (the number of bytes).
+This representation comes from C, but it's widely used in C++ as well —
+which is why such strings are called C strings.
 The program is assumed to trust that wherever the string ends, it will have a 0 byte,
 which is how it can find the end of the string.
 
@@ -190,7 +198,7 @@ We very often need to know the length of the string,
 or want to refer to only a part of the whole string,
 which is why storing the length along with the pointer is useful.
 
-In this regard, `std::string_view` works just like a `const std::span<char>`.
+In this regard, `std::string_view` works just like a `std::span<const char>`.
 It stores the pointer to the string, along with the length.
 The only difference is that it has some methods that are useful for strings,
 and output streams (e.g. `std::cout`) print it as a string.
@@ -208,6 +216,7 @@ to determine the length.
 #include <iostream>
 #include <array>
 #include <string>
+#include <string_view>
 
 int main()
 {

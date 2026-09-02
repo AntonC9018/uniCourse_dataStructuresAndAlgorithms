@@ -6,6 +6,13 @@ it points to cannot be changed, and with simplified syntax.
 
 You can also think of it as an alias for a variable (a memory location).
 
+> **Well, actually**: describing a reference as "a pointer that can't be reseated" is an
+> implementation detail. The standard technically doesn't require any particular
+> representation for references: formally, a reference is just an alias for an existing
+> object — one that can't be reseated and can't be null.
+> In practice, though, every modern compiler on any modern hardware
+> implements references exactly as pointers.
+
 ```cpp
 int main()
 {
@@ -105,7 +112,7 @@ int main()
 ## `static` method
 
 We can convert this function into a member function, also called a method.
-Let's first make it a static member function, to see how the concept of *namespaces* works.
+Let's first make it a static member function, to see how name qualification through the class scope works.
 
 > Note that methods only exist in C++ and not in C.
 
@@ -120,8 +127,8 @@ struct Person
     int age;
     std::string name;
     
-    // The `static` keyword doesn't actually make it static,
-    // it just requires you to call this function using the scope resolution operator (::).
+    // The `static` keyword makes this a *static member function*:
+    // it has no implicit `this` parameter, meaning it's not bound to any instance.
     static void printAge(Person* person)
     {
         std::cout << person->age;
@@ -135,9 +142,11 @@ int main()
     person.name = "John";
     
     // This is how you call a static member function.
-    // `Person` is the namespace here, and `printAge` is the method.
-    // The idea is that we're able to associate the operations 
-    // that operate on a `Person` in the `Person` namespace of this struct.
+    // `Person::printAge` is a qualified name: `printAge` is looked up
+    // in the scope of the `Person` class (that's a class scope, not a namespace).
+    // Note that `::` is not a requirement but a way to qualify the name;
+    // a static member function can also be called through an object: `person.printAge(&person)`.
+    // The idea is that we're able to associate the operations that operate on a `Person` with the type itself.
     Person::printAge(&person);
     
     return 0;
@@ -293,7 +302,7 @@ private:
 
 public:
     std::string name;
-}
+};
 
 int main()
 {
@@ -321,7 +330,7 @@ struct Person
 private:
     int age;
     std::string name;
-}
+};
 
 // is the same as
 
@@ -329,7 +338,7 @@ class Person
 {
     int age;
     std::string name;
-}
+};
 
 // and vice-versa ...
 
@@ -338,7 +347,7 @@ class Person
 public:
     int age;
     std::string name;
-}
+};
 
 // is the same as
 
@@ -346,5 +355,5 @@ struct Person
 {
     int age;
     std::string name;
-}
+};
 ```
