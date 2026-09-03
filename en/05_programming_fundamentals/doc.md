@@ -37,8 +37,14 @@ The way you do this in C++ is you assign `{ }` (you can use 0 as well if it's a 
 ### Definition
 
 Declaring and initializing a variable together is also named defining a variable.
-But since variables are initialized by default (with garbage, but still in effect initialized), 
-any variable declaration is also its definition.
+
+> The subtlety: declaration and definition are different things. A definition allocates
+> memory for the variable, while a declaration merely announces its existence
+> (e.g. `extern int value;` is a declaration without a definition). A local variable without
+> an initializer, like `int value;`, is left with an indeterminate (garbage) value:
+> reading it is not allowed, that's undefined behavior. Variables with static storage duration
+> (global and static ones) are zero-initialized instead of containing garbage.
+> In simple cases a declaration is also a definition, so I won't distinguish them further.
 
 ```cpp
 // Define an int, and fill all 4 bytes with zeros.
@@ -59,6 +65,13 @@ int g;
 // ... Initialization
 g = 10;
 ```
+
+> 🤓 The size of `int` (4 bytes), the size of a byte, and the byte order
+> in memory are implementation details. The standard technically guarantees less: it only
+> fixes the range of values an `int` can hold — the concrete bit pattern and byte layout
+> aren't specified at all.
+> In practice, virtually any modern compiler on any modern hardware behaves exactly
+> as described above.
 
 ### Assignment
 
@@ -105,7 +118,7 @@ from the start of the memory of the array.
 
 In the ascii table below is represented the first 12 bytes of the memory of an `int` array.
 
-```
+```text
 address:          0 1 2 3   4 5 6 7   8 9 10 11 ... 
 bytes graphic:  | _ _ _ _ | _ _ _ _ | _ _ _ _ | ...
 offset (index): 0         1         2         3 ...
@@ -176,6 +189,13 @@ int* pointerToSomeNumber = &someNumber;
 // Cast the pointer to a uintptr_t, by interpreting the memory address stored in there as a number.
 uintptr_t addressOfSomeNumber = (uintptr_t) pointerToSomeNumber;
 ```
+
+> 🤓 The existence of `uintptr_t` and the result of such a conversion are
+> implementation details. The standard technically doesn't require this type to exist at all
+> (it's optional), and the pointer-to-integer conversion is implementation-defined — the
+> resulting number isn't guaranteed to be a meaningful address.
+> In practice, every modern compiler on any modern hardware has this type,
+> and it's just a flat memory address.
 
 ### Dereferencing
 
@@ -337,6 +357,11 @@ int value4 = *pointerToArray; // 3
 
 A `void*` acts as an `std::byte*` when doing pointer arithmetic, that is to say,
 it navigates memory in increments of 1 byte.
+
+> 🤓 Arithmetic on `void*` is an implementation detail (a compiler
+> extension). The standard technically doesn't define it; the portable way to navigate
+> memory byte-by-byte is to cast to `std::byte*` or `char*`.
+> In practice, GCC and Clang on any modern hardware behave exactly as described above.
 
 Another thing that needs to be mentioned is that you can subtract 
 two pointers to get the number of items in between them.
@@ -865,7 +890,7 @@ Consider a broader picture of what happens when you compile a program: suppose y
 
 Also, if you want to view the intermediate object files, you can force zig to only compile them,
 and then link them into an executable manually as a separate command:
-```
+```sh
 # Compile main.cpp into main.o
 zig c++ -c main.cpp -o main.o
 
@@ -908,19 +933,21 @@ independently.
 
 ### `inline` functions
 
-`inline` means that the instructions of the functions are going to be *inlined*.
-Inlining means they are going to be expanded in place, instead of being called as a function.
+`inline` is primarily a linking modifier, not an order to inline instructions.
+It allows the same function to be defined in multiple translation units:
+all definitions must be identical, and the linker keeps one of them.
+That's an exception to the One Definition Rule, which is why a function can be defined
+right in a header file that gets included into many `.cpp` files.
 
-This is similar to a macro, the difference being that macros are resolved by the preprocessor at textual level,
-which inline functions are just regular functions that are expanded at instruction level.
-So in case of macros, the text of a macro will be placed directly where it was used,
-but with inline functions, it will be the instructions of the function instead.
+Unlike static functions, an inline function has external linkage:
+it can be referenced and called from other translation units,
+and it may well end up in the executable as a regular function.
 
-Inline functions don't participate in linking either. 
-Their difference from static functions is that they don't end up in the executable as regular functions.
-
-> `inline` is technically a hint to the compiler, so it may or may not inline the function.
-> This means, technically, it may still end up in the executable.
+> Inlining itself — expanding the body at the call site instead of a real call —
+> doesn't depend on the keyword: `inline` is just a hint that the compiler applies
+> when it wants to. Macros work similarly, except the substitution there is textual,
+> at the preprocessor level. Modern compilers inline small functions when they want to,
+> with or without `inline`.
 
 > See the 3rd example in [linker_examples](./linker_examples).
 
@@ -1154,8 +1181,8 @@ If we write out the instructions, it would like kind of like this:
 | Address      | Operation      | Instruction                                                                     |
 |--------------|----------------|---------------------------------------------------------------------------------|
 | 69420 (f)    | `_(int depth)` | Read the local `depth`                                                          |
-| 69421        | `depth < 2`    | Compare `depth` to 2                                                            |
-| 69422        | `if (_)`       | If `depth` was not equal in the previous comparison, jump to address 104        |
+| 69421        | `depth == 2`   | Compare `depth` to 2                                                            |
+| 69422        | `if (_)`       | If `depth` was equal in the previous comparison, jump to address 69423        |
 | 69423        | `return;`      | Return: read the address stored below `depth`, jump to it                       |
 | 69424        |                | Put the address 69427 on the stack                                              |
 | 69425        | `_(depth + 1)` | Put the value of `depth + 1` on the stack (local variable `depth` of next call) |

@@ -65,8 +65,8 @@ Of course, the definition will still have to be modified separately.
 If the function definition is obvious and small, like returning some constant, it is
 common to put the *definition* directly in the header file.
 Now, if we just went ahead and did that, we'd have
-the same problem as in [the paragraph above](#Implementation-files-(cpp)).
-Recall the `inline` modifier, which makes it so that the function won't appear in the final executable.
+the same problem as in [the paragraph above](#implementation-files-cpp).
+Recall the `inline` modifier, which allows the same function to be defined in every translation unit that includes the header — the linker then merges those definitions into one.
 This use case is perfect for `inline`.
 In fact, we don't even need an implementation file if all functions can be made inline.
 > See [example 3](./headers/example_3)
@@ -99,8 +99,6 @@ while regular procedural programming only allows this *at module level*.
 
 ## Avoiding duplicate declarations
 
-> TODO: this example is kinda jack, because I assume multiple declarations aren't allowed.
-
 Assume we had code like this:
 
 ```cpp
@@ -112,11 +110,15 @@ void f(int a)
 }
 ```
 
-It might be undesirable to have multiple declarations of the same function.
+Multiple *identical* declarations of the same function are fine, no error there.
+An error would be incompatible declarations (say, with different parameter types)
+or multiple definitions of the same function.
 Now assume a situation where `main.cpp` includes `a.h` and `b.h`,
 and `b.h` includes `a.h` too.
 This would mean `a.h` has been included twice.
 If `a.h` declared any functions, our program will include the declarations multiple times.
+As long as they're identical that's not a problem, but `a.h` may also contain definitions,
+for which being included twice is fatal.
 
 This can be avoided by using `#pragma once`, which instructs the preprocessor
 to only include this file once.
@@ -131,7 +133,11 @@ If you removed `#pragma once` from `f.h`, it will fail to compile.
 
 ## Circular includes
 
-These are not allowed, because files are only ever included sequentially.
+Circular inclusion itself is not forbidden: the preprocessor simply expands files sequentially.
+The problem is the order: if `a.h` includes `b.h` and `b.h` includes `a.h`,
+one of them will see the other incomplete on the first pass, leading to compile errors.
+Include guards and `#pragma once` prevent a file from being processed twice in one translation unit,
+but the order of inclusions still matters.
 
 
 ## `private` fields
@@ -148,7 +154,7 @@ struct DynamicBuffer
 {
     int* firstItemPointer;
     size_t length;
-}
+};
 
 DynamicBuffer createBuffer(size_t length)
 {
@@ -200,7 +206,7 @@ public:
     // Properties are methods that return or set the values of fields.
     // Note that I've named the fields with an underscore so that we don't
     // have name collisions with the properties.
-    int* firstElementPointer()
+    const int* firstElementPointer()
     {
         return this->_firstElementPointer;
     }
@@ -233,7 +239,7 @@ int main()
 {
     DynamicBuffer buffer{10};
     buffer._firstElementPointer = 0; // does not compile
-    int* firstElement = buffer.firstElementPointer(); // can still *read* the value
+    const int* firstElement = buffer.firstElementPointer(); // can still *read* the internal pointer
     return 0;
 }
 ```
@@ -386,8 +392,10 @@ private:
 ```
 
 ```cpp
-// Making the struct static makes all of the methods static (internal linkage).
-static struct DynamicArray::Impl
+// You can't mark the type definition itself `static`: `static` is only valid
+// for functions and variables, not for type definitions.
+// So the nested type's definition simply lives in the implementation file.
+struct DynamicArray::Impl
 {
     // We don't require an instance.
     // `static` here doesn't mean internal linkage,
@@ -400,7 +408,7 @@ static struct DynamicArray::Impl
         
         // ...
     }
-}
+};
 
 void DynamicArray::addItem(int item)
 {

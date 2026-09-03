@@ -162,7 +162,55 @@ int main()
 }
 ```
 
-Note that `main` must not be in any namespace to play the special role of the entry point.
+> 🤓 Technically, adding arbitrary entities to `std` is undefined
+> behavior — don't do that. The rule protects the standard library: the implementation
+> is allowed to assume it controls everything inside `std` and to declare its own things
+> there. If your `std::f` ever collides with some internal `f` from the library's headers,
+> the compiler isn't even required to warn you. (Defining something that already exists
+> is an obvious mistake anyway.) Treat the example above as a simplification.
+
+Note that `main` must be outside of any namespace to play the special role of the entry point.
+
+One of the extensions the standard explicitly allows is specializing `std::hash`
+for your own type: without it, your type can't be put into a `std::unordered_set`
+or used as a key in a `std::unordered_map`.
+
+```cpp
+#include <cstddef>
+#include <functional>
+#include <iostream>
+#include <string>
+
+struct Person
+{
+    std::string name;
+    int age;
+};
+
+namespace std
+{
+    // A standard-allowed extension:
+    // a specialization of `std::hash` for your own type.
+    template <>
+    struct hash<Person>
+    {
+        size_t operator()(const Person& person) const
+        {
+            return std::hash<std::string>{}(person.name)
+                 ^ (std::hash<int>{}(person.age) << 1);
+        }
+    };
+}
+
+int main()
+{
+    Person person{"John", 20};
+    std::cout << std::hash<Person>{}(person) << std::endl;
+    return 0;
+}
+```
+
+Note that `main` must be outside of any namespace to play the special role of the entry point.
 
 
 ## Namespaces allow you to use things from the namespace without qualification
@@ -292,8 +340,10 @@ namespace Demo
 It can be used to bring everything from a namespace into the current scope.
 By bring, I mean make all members of the namespace visible, aka
 available without qualification.
-The coolest thing is that it can be used in *any* scope, be it separate function scopes,
-nested regular scopes, namespaces or type scopes.
+The coolest thing is that it can be used in almost *any* scope, be it separate function scopes,
+nested regular scopes, or namespaces.
+The exception is class scopes: a using-directive is not allowed inside a class,
+use qualified names or using-declarations there instead.
 
 ```cpp
 #include <iostream>

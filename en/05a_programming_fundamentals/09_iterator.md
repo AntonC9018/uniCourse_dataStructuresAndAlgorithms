@@ -97,13 +97,22 @@ That would make sense for e.g. a `DynamicArray`, but it probably won't for a gra
 
 # `static_cast`, `reinterpret_cast`, `bit_cast`
 
-`static_cast` for basic types is equivalent to a regular C cast.
-It's different only in the context of class inheritance.
-It can cast, with potentially modifying the pointer,
-to a less derived type, but not the other way.
+`static_cast` performs checks at compile time and, for basic types,
+does the expected value conversion. A C-style cast, like `(int)x`, is broader:
+it can do what `static_cast` does, and when needed also what
+`const_cast` (removing constness) and `reinterpret_cast` (reinterpreting bits) can do.
+
+> In the context of class inheritance, `static_cast` can cast — potentially modifying
+> the pointer — to a less derived type, but not the other way;
+> it does not check the actual type of the object at runtime (that's what `dynamic_cast` is for).
 
 `reinterpret_cast` is a cast that just changes the type of a pointer,
 without changing the address, skipping checks if the conversion is valid.
+
+> The subtlety: the pointer value is only guaranteed to be preserved if the target type
+> has suitable alignment requirements; otherwise, using the result may be undefined.
+> Dereferencing such a pointer is only allowed when an object of the target type
+> may actually be read at that address.
 
 `bit_cast` can be used to reinterpret the bits of a type as another type.
 For example:
@@ -112,4 +121,8 @@ float a = 5.0f; // 40 a0 00 00 = 5.0
 int b = std::bit_cast<int>(a); // 40 a0 00 00 = 1084227584
 int c = static_cast<int>(a); // 5
 ```
+
+> Note that the number is just an example output that I got running this code on my machine,
+> you could see another value. It depends on `float` being IEEE 754, `int` being 32 bits,
+> and the byte order being little-endian.
 

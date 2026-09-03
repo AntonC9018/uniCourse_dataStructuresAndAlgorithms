@@ -93,7 +93,7 @@ without exposing the internal functions.
 
 ```cpp
 // main.cpp
-include "math_functions.h"
+#include "math_functions.h"
 // ...
 addMathFuncs(functionList);
 ```
@@ -104,7 +104,7 @@ void addMathFuncs(std::vector<ButtonFunc>& functionList);
 ```
 
 ```cpp
-// math_functions.c
+// math_functions.cpp
 static void add()
 {
     // ...
@@ -418,7 +418,7 @@ using SumFunc = int(*)(int a, int b);
 
 struct Behavior
 {
-    PrintFunc introduceOneself;
+    IntroductionFunc introduceOneself;
     SumFunc answer;
 };
 
@@ -485,6 +485,11 @@ rather than the start of the object,
 and *store the offset to the start of the object data in the vtable*,
 to be able to get at the context.
 
+> 🤓 The vtable layout and pointer adjustment are an implementation
+> detail — the standard technically doesn't mandate any of it.
+> But that's kind of what C++ inheritance does: in practice, every modern compiler
+> adjusts pointers and stores offsets like this.
+
 See [the example](./polymorphism/multiple_vtables_cpp_approach.cpp).
 
 I'm not going to force you to understand the code thoroughly,
@@ -530,7 +535,7 @@ class Person :
     }
 
     // ...
-}
+};
 ```
 
 The conversion syntax and the call syntax are then way simpler,
@@ -544,7 +549,7 @@ GreetingAbstractBase* greetingPtr = personPtr;
 QuestionAbstractBase* questionPtr = personPtr;
 
 // The pointers look at different memory.
-assert(static_cast<uint8_t*>(greetingsPtr) - static_cast<uint8_t*>(questionPtr) != 0);
+assert(static_cast<void*>(greetingPtr) != static_cast<void*>(questionPtr));
 
 // The context is adjusted and passed implicitly.
 greetingPtr->introduceSelf();

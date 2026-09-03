@@ -15,9 +15,11 @@ static inline const int YELLOW = 1;
 static inline const int GREEN = 2;
 ```
 
-The `static inline` are there in order to make the linker not consider them when linking files,
-and so that they don't end up in the final executable.
-Each file that wants to use these constants, can just import the file that defines them,
+`static` here gives the constants internal linkage: each translation unit
+gets its own copy, and the linker has nothing to match across files.
+`inline` (for variables, since C++17) allows identical definitions
+in multiple translation units. Each file that wants to use these constants,
+can just import the file that defines them,
 without caring about duplicate definitions.
 
 And you could use it [like this](./enums/global_const_list.cpp).
@@ -92,8 +94,10 @@ way simpler syntax. See the [example](./enums/enum_class.cpp).
 > The only important difference is that in our `struct` implementation, 
 > you don't necessarily have to define the constants within the namespace,
 > but with `enum class` they are always defined in the namespace.
-> Which means that you can pull all of the constants into the current scope with `using`,
-> but you can't do the same with `enum class`.
+> Which means that you can pull all of the constants into the current scope with `using`.
+> With `enum class` that wasn't possible until C++20,
+> but starting with C++20 there is `using enum TrafficLightColors;`,
+> which imports the enumerators into the current scope.
 
 
 ## The base type

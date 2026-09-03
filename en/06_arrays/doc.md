@@ -3,7 +3,7 @@
 C arrays is the arrays that we have learned in the previous chapter.
 As a reminder, here is an example of a C array:
 
-```c
+```cpp
 int a[4];
 ```
 
@@ -23,22 +23,23 @@ of the first element of some array and sums up all elements one by one,
 returning the sum as the result.
 Note that the function has to know how many elements that block is in size.
 
-```c
+```cpp
 int sum(int* a)
 {
     int result = 0;
     for (size_t i = 0; i < 4; i++)
     {
-        int* pointerToElmement = a + i;
+        int* pointerToElement = a + i;
         int elementAtIndex = *pointerToElement;
         result = result + elementAtIndex;
     }
+    return result;
 }
 ```
 
 The prototype of the function can be instead:
 
-```c
+```cpp
 int sum(int a[]);
 ```
 
@@ -47,7 +48,7 @@ I'm going to stick to the pointer notation, because the latter makes no sense in
 
 
 Now let's try to call this function:
-```c
+```cpp
 int main()
 {
     // Note that the length has to be the exact same as used in the function.
@@ -56,11 +57,11 @@ int main()
     arr[1] = 10;
 
     // Pass it the pointer to the start of the memory of the array.
-    int sum = f(&arr[0]); // 15
+    int result = sum(&arr[0]); // 15
 
     // Passing the array variable implicitly passes the address of the first element.
     // This is also referred to as the array "decaying" to a pointer.
-    int sum1 = f(arr); // 15
+    int result1 = sum(arr); // 15
 
     return 0;
 }
@@ -76,7 +77,7 @@ but product garbage results.
 
 Imagine if `main` went like this:
 
-```c
+```cpp
 int main()
 {
     int arr[2]{};
@@ -89,9 +90,16 @@ which will in fact read the memory that comes after it on the stack.
 The next thing after the local array variable `arr` on the stack 
 will most likely be the return address for the `sum` function.
 
+> 🤓 What exactly sits next to the array (and whether there is a return
+> address there at all) is an implementation detail of the stack layout. The standard
+> technically promises nothing about reading or writing memory beyond the array bounds:
+> that's undefined behavior. In practice, on any modern hardware with a conventional
+> stack layout, bookkeeping data of the frame — including the return address —
+> really does sit above the local variables.
+
 Now imagine if the `sum` function wrote to that memory, instead of just reading from it.
 
-```c
+```cpp
 void setZeros(int* a)
 {
     for (size_t i = 0; i < 4; i++)
@@ -188,9 +196,9 @@ One of these is `std::array`.
 - It is an actual type, and not a special thing like arrays, meaning you can actually pass 
   these to functions without hacks;
 - It doesn't decay to a pointer;
-- You can have a pointer to a block of memory if its type is `std:array` in a regular way
+- You can have a pointer to a block of memory if its type is `std::array` in a regular way
   (it works just like a regular pointer), without the need for extra syntax.
-  ```
+  ```cpp
   // Pointer to array with 4 elements
   std::array<int, 4>* p{ &arr };
   ```
