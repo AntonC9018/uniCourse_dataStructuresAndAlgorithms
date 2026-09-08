@@ -64,4 +64,9 @@
 
 ## Practice 
 
-- Write an algorithm to solve the following problem: “Given 2 lists containing the same number of values, calculate the sum of each corresponding pair of elements (the first element of the first list and the first element of the second list; the second element of the first list and the second element of the second list; ...)”
+- Write an algorithm (on paper, with words) to solve the following problem:
+  "Given 2 lists containing the same number of values, 
+  calculate the sum of each corresponding pair of elements 
+  (the first element of the first list and the first element of the second list;
+  the second element of the first list and the second element of the second list;
+  ...)"

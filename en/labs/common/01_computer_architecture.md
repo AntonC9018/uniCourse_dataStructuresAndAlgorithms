@@ -2,7 +2,7 @@
 
 Topic: **Computer Architecture**.
 
-[Video about memory](https://www.youtube.com/watch?v=Bmae710korE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=3)
+[Video about memory](https://www.youtube.com/watch?v=8VsiYWW9r48&list=PLf7hB0mZ3VKE&index=1)
 
 ## Topics to study
 
