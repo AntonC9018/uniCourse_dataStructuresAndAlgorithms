@@ -2,7 +2,7 @@
 
 Тема: **Архитектура компьютера**.
 
-[Видео по памяти](https://www.youtube.com/watch?v=Bmae710korE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=3)
+[Видео](https://www.youtube.com/watch?v=Bmae710korE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=3)
 
 ## Вопросы, которые необходимо изучить
 

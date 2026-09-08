@@ -2,7 +2,10 @@
 
 Topic: **Number Systems**.
 
-[Accompanying video](https://www.youtube.com/watch?v=npB8lF-V4mc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=2)
+- [Video on number systems](https://www.youtube.com/watch?v=5sS7w-CMHkU&list=PLf7hB0mZ3VKE&index=2)
+- [Video on addition in binary](https://www.youtube.com/watch?v=RgklPQ8rbkg&list=PLf7hB0mZ3VKE&index=3)
+- [Video on multiplication in binary](https://www.youtube.com/watch?v=xHWKYFhhtJQ&list=PLf7hB0mZ3VKE&index=4)
+- [Video on addition and overflow](https://www.youtube.com/watch?v=WN8i5cwjkSE&list=PLf7hB0mZ3VKE&index=5)
 
 ## Examples
 

@@ -2,7 +2,10 @@
 
 Topic: **How numbers are stored in bytes**.
 
-[Companion video](https://www.youtube.com/watch?v=3HnvK8WrK4M&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=4)
+- [Video on overflow](https://www.youtube.com/watch?v=idIGKWLtPws&list=PLf7hB0mZ3VKE&index=6)
+- [Video on negative numbers](https://www.youtube.com/watch?v=lKTsv6iVxV4&list=PLf7hB0mZ3VKE&index=7)
+- [Video on endianess](https://www.youtube.com/watch?v=NcaiHcBvDR4&list=PLf7hB0mZ3VKE&index=8)
+- [Negative numbers another perspective](https://www.youtube.com/watch?v=87f_WQr1QzQ&list=PLf7hB0mZ3VKE&index=9)
 
 ## Questions
 
