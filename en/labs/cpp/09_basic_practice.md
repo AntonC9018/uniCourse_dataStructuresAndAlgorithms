@@ -326,3 +326,219 @@ int main()
         << std::endl;
 }
 ```
+
+## Practice tasks
+
+- **Battery charge.** A phone has a charge level expressed as a percentage.
+  Each minute on the charger adds 1%, but the charge cannot go above 100%.
+  Write a function that charges the battery and returns nothing —
+  its only result is changing the state of the battery.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  ```cpp
+  struct Battery
+  {
+      int chargePercent;
+  };
+
+  void charge(Battery* battery, int minutes)
+  {
+      battery->chargePercent = std::min(100, battery->chargePercent + minutes);
+  }
+  ```
+
+  The return type is `void` because the algorithm has nothing to return as a result:
+  the result of the function is the side effect, updating the battery through the pointer.
+  `std::min` caps the charge at 100, even if `chargePercent + minutes` is greater than 100.
+
+  Usage from `main`:
+  ```cpp
+  Battery battery{ .chargePercent = 40 };
+  charge(&battery, 90);
+  std::cout << battery.chargePercent << std::endl; // 100
+  ```
+  </details>
+
+- **Time normalization.**
+  A time value was stored as 4 hours, 138 minutes, 250 seconds —
+  this is an inconvenient way to store time: a minute cannot contain more than 60 seconds,
+  and an hour cannot contain more than 60 minutes.
+  Write a function that returns the same time in normalized form.
+  The original time must not change.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  ```cpp
+  struct Time
+  {
+      int hours;
+      int minutes;
+      int seconds;
+  };
+
+  Time normalized(Time time)
+  {
+      int totalSeconds{ time.hours * 3600 + time.minutes * 60 + time.seconds };
+      return Time{
+          .hours = totalSeconds / 3600,
+          .minutes = totalSeconds / 60 % 60,
+          .seconds = totalSeconds % 60,
+      };
+  }
+  ```
+
+  The return type is a struct because the answer consists of three numbers.
+  The parameter is passed by value, so the function does not modify the original in `main` —
+  it does not overwrite anything; it computes and returns a new value.
+  Division and remainder separate complete units from the remainder that does not fit into them:
+  For 4 hours, 138 minutes, 250 seconds, the function gives 6 hours, 22 minutes, 10 seconds.
+  </details>
+
+- **Pouring water.**
+  There are two bottles, each with its own capacity and current amount of water.
+  Write a function that pours water from the first bottle into the second:
+  you cannot pour more into the second bottle than its free space allows,
+  and you cannot pour more out of the first bottle than it contains.
+  The function should return how many milliliters were poured,
+  and the amount of water in both bottles should be updated.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  ```cpp
+  struct Bottle
+  {
+      int capacityMl;
+      int ml;
+  };
+
+  int free_space(Bottle bottle)
+  {
+      return bottle.capacityMl - bottle.ml;
+  }
+
+  int pour(Bottle* from, Bottle* to)
+  {
+      int transferredMl{ std::min(from->ml, free_space(*to)) };
+      from->ml -= transferredMl;
+      to->ml += transferredMl;
+      return transferredMl;
+  }
+  ```
+
+  The algorithm is implemented with two functions: the helper `free_space` computes the free space,
+  and the main `pour` calls it internally.
+  `pour` takes **two pointers** because it modifies **two different objects**,
+  and returns the transferred amount in addition to that side effect.
+  `free_space` does not change anything, so passing the bottle by value is sufficient.
+  </details>
+
+- **Lever.** A lever has two positions: `0` and `1`.
+  Write functions that set the lever to `0` and `1`.
+  If it is already at the requested value, nothing changes.
+  Also write a function that toggles it to the opposite value.
+
+- **Maximum of three numbers.** The built-in `std::max` takes only two numbers.
+  Write a function that returns the largest of three numbers.
+
+- **Calorie content of a dish.**
+  A dish contains specified amounts of protein, fat, and carbohydrates in grams.
+  Its calorie content is 4 kcal per gram of protein, 9 kcal per gram of fat, 4 kcal per gram of carbohydrates.
+  Compute the calorie content of the dish.
+
+- **Average temperature.**
+  A sensor took two readings over the course of a day.
+  Compute the average temperature — the result may be fractional.
+  Be careful: if you divide one `int` by another,
+  the fractional part will be lost before the result is stored.
+
+- **Packing boxes.**
+  A warehouse holds `X` identical items, and one box fits `Y` items.
+  Compute the number of full boxes and the number of leftover items.
+
+- **Hero damage.**
+  A game hero has current and maximum health.
+  Taking damage reduces current health, but current health cannot drop below zero.
+  Write a function that applies damage to the hero.
+
+- **Hero level-up.**
+  For the same hero, when the hero levels up, the maximum health increases by 10,
+  and the current health is restored to the new maximum.
+  Write a level-up function.
+
+- **Piggy bank.**
+  A piggy bank holds `X` dollars and `Y` cents (1 dollar = 100 cents),
+  and `A` additional dollars and `B` cents are added to it.
+  The piggy bank must never contain more than 99 cents — any excess is carried over to dollars.
+  Write a function that tops up the piggy bank.
+
+- **Car tuning.**
+  A car has a price and an engine with a given power output (horsepower).
+  After tuning, the engine power increases by a given number of horsepower,
+  and the price of the car increases by 1000 dollars for each additional horsepower.
+  Write a function that tunes the car.
+
+- **Swapping values.**
+  Write a function that swaps the values of two variables defined in `main`.
+  Recall the value-swapping example from the variables lab:
+  you cannot do it without a temporary variable.
+
+- **Sharing candies.**
+  `N` candies are shared equally among `M` children, and the remainder goes to the youngest child.
+  Compute how many candies each child gets, and how many the youngest gets in total (equal share plus remainder).
+
+- **Clamping to a range.**
+  A parameter has an allowed range of values — from `low` to `high`.
+  Write a function that clamps any value to the allowed range.
+  The range itself must not change.
+
+- **Printing a student record.**
+  A student has a student ID, a year of study, and a GPA (average grade).
+  Write a function that prints all student data to the screen.
+  The function does not modify the student data.
+
+- **Three numbers in ascending order.**
+  Three numbers are given. Write a function that returns them in ascending order.
+  Hint: the smallest and the largest are found using nested `std::min` and `std::max`,
+  and the middle one is computed as the sum of all three minus the smallest and the largest.
+
+- **Board squares.**
+  The squares of an 8×8 board are numbered from 0 to 63, left to right, top to bottom.
+  Write functions that convert a square number into its row and column
+  and vice versa — convert a row and column back into the square number.
+
+- **Duration in seconds.**
+  Write a function that converts a duration given in hours, minutes, and seconds
+  into the total number of seconds.
+
+- **Painting a room.**
+  A room has length, width, and height.
+  Compute the area of all four walls of the room (the floor and the ceiling do not need painting)
+  and the cost of painting at a given price per square meter.
+
+- **Discounted subscription.**
+  A subscription plan is defined by a price per month and a discount percentage.
+  Compute the cost of a subscription for a given number of months with this plan.
+
+- **Trip cost.**
+  The trip distance, the fuel consumption of a car per 100 km, the price of a liter of fuel,
+  the number of nights in a hotel, and the price per night are given. The car makes a round trip — it drives there and back.
+  Compute the total cost of the trip.
+
+- **Elevator trips.**
+  An elevator fits `K` people, and `N` people are waiting on a building floor to board the elevator.
+  Compute how many trips the elevator will make
+  if the last trip may be partially full.
+
+- **Distance between points.**
+  Two points in the plane with integer coordinates are given.
+  Compute the distance between them: the square root of the sum of the squares of the differences in their coordinates.
