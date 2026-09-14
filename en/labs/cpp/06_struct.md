@@ -837,6 +837,46 @@ int main()
 It prints `1`, `2`.
 </details>
 
+### 27. Copying a structure with a pointer field
+```cpp
+#include <iostream>
+
+struct A
+{
+    int* pa;
+    int a;
+};
+
+int main()
+{
+    A s1 { .pa = nullptr, .a = 1 };
+    s1.pa = &s1.a;
+
+    A s2 { s1 };
+    *s2.pa = 2;
+
+    std::cout << s1.a << std::endl;
+    std::cout << s2.a << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+`A s2{ s1 }` copies the values of *all fields*, but for the pointer
+it copies the address itself, not the data at that address.
+This is called a shallow copy.
+
+At the moment of copying, `s1` holds `a = 1`, `pa = &s1.a`,
+so `s2` receives the same values: `s2.a = 1`, `s2.pa = &s1.a`.
+Note: `s2.pa` points to `s1.a`, not to `s2.a`.
+
+Therefore `*s2.pa = 2` follows the address `&s1.a` and overwrites `s1.a`,
+while `s2.a` stays untouched.
+
+It prints `2`, `1`.
+</details>
+
 ### 27. An array of structures
 ```cpp
 #include <iostream>

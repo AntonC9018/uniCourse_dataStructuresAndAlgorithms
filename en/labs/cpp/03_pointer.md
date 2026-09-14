@@ -380,3 +380,34 @@ std::cout << std::endl;
 `sizeof(*ap)` does not evaluate the expression `*ap`; it only determines the type of its result.
 The expression `*ap` has type `int`, so `sizeof(int)`, which is 4, is calculated.
 </details>
+
+### 16. Copying a variable and a pointer with similar names
+
+```cpp
+int x{ 0 };
+int* px{ &x };
+int y{ x };
+int* py{ px };
+
+*px = 1;
+
+std::cout << x << std::endl;
+std::cout << y << std::endl;
+std::cout << *px << std::endl;
+std::cout << *py << std::endl;
+```
+
+<details>
+<summary>Answer:</summary>
+
+`int y{ x }` copies the *value* from `x` — `y` is independent of `x` afterwards,
+so writing through the pointer does not affect it.
+
+`int* py{ px }` copies the *address* from `px` — both pointers point to the same variable `x`.
+
+`*px = 1` writes `1` into `x`, so the output is:
+- `x` — `1`,
+- `y` — `0` (copied before the assignment),
+- `*px` — `1`,
+- `*py` — `1` (same address as `px`).
+</details>
