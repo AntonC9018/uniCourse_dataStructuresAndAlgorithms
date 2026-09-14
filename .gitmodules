@@ -1,0 +1,3 @@
+[submodule "course_maintenance"]
+	path = course_maintenance
+	url = git@github.com:AntonC9018/course_maintenance.git

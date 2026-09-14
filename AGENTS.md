@@ -15,13 +15,12 @@ Only work on the diffs, reading the context around the diffs if needed.
 If the revision json didn't exist, run maintenance on all labs.
 If it did, see which files have changed, and run maintenance on those files.
 
-Maintenance is a single script at `../course_maintenance/maintain.py`
-(sibling folder of the repo, not to be confused with `course_management`).
-It runs, in order: rename (close `NN_` gaps per directory),
-headings (`H1` from filename, resequence `###`), links (repair
-moved-file/anchor links). List-to-header conversion is opt-in only.
-- `python3 ../course_maintenance/maintain.py --check <paths>` — preview
-- `python3 ../course_maintenance/maintain.py <paths>` — apply
+Maintenance is handled by the `course_maintenance` submodule
+(upstream: https://github.com/AntonC9018/course_maintenance —
+not to be confused with `course_management`).
+Follow `course_maintenance/AGENTS.md` for the full workflow. Quick version:
+- `python3 course_maintenance/maintain.py --check <paths>` — preview
+- `python3 course_maintenance/maintain.py <paths>` — apply
 - file args never trigger renames; dir args (default `.`) do.
 
 Commit once you're done.
