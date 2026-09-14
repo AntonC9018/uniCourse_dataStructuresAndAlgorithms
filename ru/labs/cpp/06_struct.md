@@ -156,6 +156,29 @@ int main()
 Выведется `5` трижды.
 </details>
 
+### 4. Присваивание структуры
+
+```cpp
+struct A 
+{ 
+    int f;
+};
+int main()
+{
+    A a{ 1 };
+    A b{ a };
+    a.f = 2;
+    std::cout << a.f << std::endl;
+    std::cout << b.f << std::endl;
+}
+```
+<details>
+<summary>Ответ:</summary>
+
+Синтаксис создает независимые копии полей.
+TODO: fill in
+</details>
+
 ### 5. Адреса полей
 ```cpp
 #include <iostream>
