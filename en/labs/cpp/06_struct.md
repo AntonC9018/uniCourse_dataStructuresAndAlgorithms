@@ -877,7 +877,7 @@ while `s2.a` stays untouched.
 It prints `2`, `1`.
 </details>
 
-### 27. An array of structures
+### 28. An array of structures
 ```cpp
 #include <iostream>
 

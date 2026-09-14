@@ -7,7 +7,7 @@
 
 На базовом уровне `template` позволяет автоматизировать копипастинг перегрузок функций.
 
-> См. [базовый пример](./template/example_1)
+> См. [базовый пример](../../en/05a_programming_fundamentals/template/example_1)
 
 Рассмотрим пример:
 
@@ -90,7 +90,7 @@ int main()
 Если хотите узнать больше,
 почитайте про [One Definition Rule](https://en.cppreference.com/w/cpp/language/definition.html).
 
-> См. [пример этого](./template/example_2).
+> См. [пример этого](../../en/05a_programming_fundamentals/template/example_2).
 
 
 ## `template` для типов
@@ -98,12 +98,12 @@ int main()
 Точно так же `template` можно использовать для типов (struct/class).
 Если в типе только поля, у этого подхода нет никаких дополнительных сложностей.
 
-> См. [example_3](./template/example_3).
+> См. [example_3](../../en/05a_programming_fundamentals/template/example_3).
 
 И это работает, что я, честно говоря, не ожидал, — даже если методы
 определены прямо внутри вашего типа.
 
-> См. [example_4](./template/example_4).
+> См. [example_4](../../en/05a_programming_fundamentals/template/example_4).
 
 
 ## Явная инстанциация шаблонов
@@ -118,14 +118,14 @@ int main()
 Также можно импортировать файл с шаблонным определением (`f.cpp`)
 и явно инстанцировать его в другом файле.
 
-> См. [example_5](./template/example_5).
+> См. [example_5](../../en/05a_programming_fundamentals/template/example_5).
 
 Для типов все работает похожим образом.
 Методы, которые в определении шаблонного класса
 только объявлены, но не определены,
 потребуют явной инстанциации шаблонного определения, чтобы обрести тело.
 
-> См. [example_6](./template/example_6)
+> См. [example_6](../../en/05a_programming_fundamentals/template/example_6)
 
 
 ## Шаблонные методы внутри шаблонных классов
