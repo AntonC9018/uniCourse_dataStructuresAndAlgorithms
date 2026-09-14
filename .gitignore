@@ -13,4 +13,5 @@ Tests
 
 *.html
 *.pdf
+__pycache__
 
