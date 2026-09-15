@@ -1,3 +1,6 @@
+---
+title: Arrays
+---
 ## On C arrays
 
 C arrays is the arrays that we have learned in the previous chapter.

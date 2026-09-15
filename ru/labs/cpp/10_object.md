@@ -1,3 +1,6 @@
+---
+title: "Объекты"
+---
 # Объекты
 
 - [Видео (теория)](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).

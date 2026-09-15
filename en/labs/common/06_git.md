@@ -1,3 +1,6 @@
+---
+title: Git and Version Control
+---
 # Lab 7
 
 Topic: **Git and version control**.

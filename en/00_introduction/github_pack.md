@@ -1,3 +1,6 @@
+---
+title: GitHub Student Developer Pack
+---
 # How to get free stuff from GitHub
 
 If you've got a university email, you can get free stuff by applying for

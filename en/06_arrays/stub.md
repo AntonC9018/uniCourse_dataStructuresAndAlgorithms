@@ -1,3 +1,6 @@
+---
+title: Arrays
+---
 - More on C arrays, why they suck
 - Static array and `std::array`
 - `std::span`

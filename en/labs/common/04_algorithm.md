@@ -1,3 +1,6 @@
+---
+title: Algorithms
+---
 # Lab 4
 
 - Topic: **Algorithms**.

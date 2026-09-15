@@ -1,3 +1,6 @@
+---
+title: Abstraction and Encapsulation
+---
 # Abstraction and Encapsulation
 
 ## Implementation files (cpp)

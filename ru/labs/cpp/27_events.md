@@ -1,3 +1,6 @@
+---
+title: "Полиморфизм"
+---
 # Полиморфизм
 
 - [Моя информация с примерами](../../../en/05a_programming_fundamentals/11_polymorphism.md)

@@ -1,3 +1,6 @@
+---
+title: Resources
+---
 # Resources
 
 I have a lot of example university projects on my github which can be used as reference when doing them youself. 

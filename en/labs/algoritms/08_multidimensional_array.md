@@ -1,3 +1,6 @@
+---
+title: "Multidimensional Arrays"
+---
 # Lab Work 8
 
 This assignment is **not required**.

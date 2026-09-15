@@ -1,3 +1,6 @@
+---
+title: Iterators
+---
 # Iterators
 
 An *iterator* is a powerful programming pattern that allows you to abstract the logic

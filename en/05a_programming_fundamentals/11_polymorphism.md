@@ -1,3 +1,6 @@
+---
+title: Polymorphism
+---
 # Polymorphism
 
 *Polymorphism* means that a single function name can refer to different functions,

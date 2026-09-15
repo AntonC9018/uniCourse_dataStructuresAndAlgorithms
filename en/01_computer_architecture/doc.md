@@ -1,3 +1,6 @@
+---
+title: Introduction to Computer Architecture
+---
 # General understanding of computer architecture
 
 ## Overview

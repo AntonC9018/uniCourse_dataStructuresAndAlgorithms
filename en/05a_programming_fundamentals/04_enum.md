@@ -1,3 +1,6 @@
+---
+title: '`enum` and `enum class`'
+---
 # `enum` and `enum class`
 
 `enum` allows you do define named compile-time constants in a straightforward way.

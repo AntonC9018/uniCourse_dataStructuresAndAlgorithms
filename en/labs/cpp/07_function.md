@@ -1,3 +1,6 @@
+---
+title: "Functions"
+---
 # Functions
 
 - [Video](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)

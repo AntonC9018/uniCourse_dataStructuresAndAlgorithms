@@ -1,3 +1,6 @@
+---
+title: "enum"
+---
 # `enum`
 
 - [Видео](https://www.youtube.com/watch?v=Kbc6iaN3M6A&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=17).

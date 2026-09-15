@@ -1,1 +1,4 @@
+---
+title: "Sorting Demo"
+---
 Game with the cards used to demo sorting is called **Balatro**.

@@ -1,3 +1,6 @@
+---
+title: "Sorting Algorithms"
+---
 # Laboratory Work 7
 
 Topic: **Sorting algorithms.**

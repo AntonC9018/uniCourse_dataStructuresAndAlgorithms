@@ -1,3 +1,6 @@
+---
+title: Namespaces
+---
 # Namespaces
 
 We have already met with type scopes, which have the namespace concept built into them.

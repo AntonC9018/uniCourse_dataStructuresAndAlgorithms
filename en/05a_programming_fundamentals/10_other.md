@@ -1,3 +1,6 @@
+---
+title: '`const`, Smart Pointers and `auto`'
+---
 ## `const`
 
 `const` means that the value of something cannot be changed.

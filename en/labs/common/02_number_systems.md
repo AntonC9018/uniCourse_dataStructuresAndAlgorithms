@@ -1,3 +1,6 @@
+---
+title: Number Systems
+---
 # Laboratory Work 2
 
 Topic: **Number Systems**.

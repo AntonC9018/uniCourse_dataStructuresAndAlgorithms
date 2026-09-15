@@ -1,3 +1,6 @@
+---
+title: "Git and GitHub"
+---
 # Lab Work No. 1
 
 > See the [video](https://youtu.be/OgsTtVSwJUk) 

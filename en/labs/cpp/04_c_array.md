@@ -1,3 +1,6 @@
+---
+title: "C arrays (groups of variables)"
+---
 # C arrays (groups of variables)
 
 - [Arrays and indexes](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

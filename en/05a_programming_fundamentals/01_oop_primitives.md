@@ -1,3 +1,6 @@
+---
+title: References, Methods and Classes
+---
 
 # References (\&)
 

@@ -1,3 +1,6 @@
+---
+title: "Search Algorithms"
+---
 # Lab Assignment 2
 
 Topic: **Search Algorithms**.

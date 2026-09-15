@@ -1,3 +1,6 @@
+---
+title: "Pointer arithmetic"
+---
 # Pointer arithmetic
 
 - [Video covering the basics and providing more in-depth information](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)

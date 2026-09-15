@@ -1,3 +1,6 @@
+---
+title: Installing a Compiler
+---
 # Lab 6
 
 Topic: **Installing a compiler**.

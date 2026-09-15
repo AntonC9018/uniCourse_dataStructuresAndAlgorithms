@@ -1,3 +1,6 @@
+---
+title: "Linked Lists"
+---
 # Laboratory Work 3
 
 Topic: **Linked Lists**

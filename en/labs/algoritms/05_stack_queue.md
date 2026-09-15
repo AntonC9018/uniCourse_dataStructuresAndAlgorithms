@@ -1,3 +1,6 @@
+---
+title: "Stack and Queue"
+---
 # Lab 5
 
 Topic: **Stack & Queue**

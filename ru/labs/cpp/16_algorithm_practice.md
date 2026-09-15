@@ -1,3 +1,6 @@
+---
+title: "Практика по алгоритмам"
+---
 # Практика по алгоритмам
 
 - [Видео по алгоритмам](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

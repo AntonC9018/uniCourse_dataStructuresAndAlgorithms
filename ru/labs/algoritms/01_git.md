@@ -1,3 +1,6 @@
+---
+title: "Git и GitHub"
+---
 # Лабораторная работа №1
 
 > См. [видео](https://youtu.be/OgsTtVSwJUk) 

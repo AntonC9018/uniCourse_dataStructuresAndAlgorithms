@@ -1,3 +1,6 @@
+---
+title: Scopes and RAII
+---
 # Scopes
 
 Scopes have two roles in C++:

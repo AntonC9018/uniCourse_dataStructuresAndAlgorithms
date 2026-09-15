@@ -1,3 +1,6 @@
+---
+title: "Variables and Types"
+---
 # Variables and Types
 
 - [Video about variables and types](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)

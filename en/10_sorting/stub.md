@@ -1,3 +1,6 @@
+---
+title: "Sorting Algorithms"
+---
 - Bubble
 - Insertion
 - Selection

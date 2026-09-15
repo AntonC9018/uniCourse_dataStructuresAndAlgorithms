@@ -1,3 +1,6 @@
+---
+title: "Basic syntax: statements"
+---
 # Basic syntax: statements
 
 - [Video about statements](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)

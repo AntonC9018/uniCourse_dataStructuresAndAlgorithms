@@ -1,3 +1,6 @@
+---
+title: "std::span"
+---
 # `std::span`
 
 - [Video](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=19)

@@ -1,3 +1,6 @@
+---
+title: "Graphs"
+---
 # Lab Assignment 4
 
 ## Graphs as a Data Structure

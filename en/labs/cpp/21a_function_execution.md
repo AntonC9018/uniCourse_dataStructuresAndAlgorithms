@@ -1,3 +1,6 @@
+---
+title: "Function Execution and the Stack"
+---
 # Lab 5
 
 Topic: **Functions, function calls, and the stack**.

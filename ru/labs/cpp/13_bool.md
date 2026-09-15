@@ -1,3 +1,6 @@
+---
+title: "bool"
+---
 # `bool`
 
 Тема: `bool`, flow control.

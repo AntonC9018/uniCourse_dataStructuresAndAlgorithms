@@ -1,3 +1,6 @@
+---
+title: "Searching Algorithms"
+---
 - Linear search
 - Binary search (possible variations like exponential or fibonacci search)
 - Binary search tree (note on allocators, aka if you construct it, use it a bunch, then you don't need it, use an arena, or just allocate nodes and use indices instead of pointers)

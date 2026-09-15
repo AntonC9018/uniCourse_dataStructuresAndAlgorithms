@@ -1,3 +1,6 @@
+---
+title: Strings
+---
 # Strings
 
 *Strings* are arrays of characters.

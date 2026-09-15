@@ -1,3 +1,6 @@
+---
+title: "bool"
+---
 # `bool`
 
 Topic: `bool`, flow control.

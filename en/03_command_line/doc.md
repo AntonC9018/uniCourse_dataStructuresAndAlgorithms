@@ -1,3 +1,6 @@
+---
+title: Command Line
+---
 # Command Line
 
 A command line interface is an interface that allows launching or executing commands (or programs)

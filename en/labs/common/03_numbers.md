@@ -1,3 +1,6 @@
+---
+title: How Numbers Are Stored in Bytes
+---
 # Lab 3
 
 Topic: **How numbers are stored in bytes**.

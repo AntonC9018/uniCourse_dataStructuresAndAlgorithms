@@ -1,3 +1,6 @@
+---
+title: "C++ arrays (std::array)"
+---
 # C++ arrays (`std::array`)
 
 - [Information](../../../en/06_arrays/doc.md)

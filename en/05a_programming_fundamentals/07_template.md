@@ -1,3 +1,6 @@
+---
+title: '`template`'
+---
 # `template`
 
 `template` is a C++ language primitive, which, 

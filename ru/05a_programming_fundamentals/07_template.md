@@ -1,3 +1,6 @@
+---
+title: `template`
+---
 # `template`
 
 `template` — это примитив языка C++, который

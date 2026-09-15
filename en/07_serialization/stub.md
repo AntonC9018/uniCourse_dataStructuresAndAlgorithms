@@ -1,3 +1,6 @@
+---
+title: Serialization
+---
 - Reading and writing files
 - Defining domain data models
 - Serialization and deserialization

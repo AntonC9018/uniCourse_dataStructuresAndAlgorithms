@@ -1,3 +1,6 @@
+---
+title: "Structures"
+---
 # Structures
 
 - [In-depth video on basic syntax, section on structures](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8&t=2457)

@@ -1,3 +1,6 @@
+---
+title: "Переменные и типы"
+---
 # Переменные и типы
 
 - [Видео про переменные и типы](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)

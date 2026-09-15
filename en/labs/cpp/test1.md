@@ -1,3 +1,6 @@
+---
+title: "Assessment 1 Template"
+---
 # Assessment 1 Template
 
 ## 1. Algorithms (48 points)

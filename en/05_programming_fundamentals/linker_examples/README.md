@@ -1,3 +1,6 @@
+---
+title: Linker Examples
+---
 Compile the examples by using e.g.:
 
 ```sh

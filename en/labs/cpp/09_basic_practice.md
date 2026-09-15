@@ -1,3 +1,6 @@
+---
+title: "Practice with Simple Problems"
+---
 # Practice with Simple Problems
 
 ## What you will develop in this assignment

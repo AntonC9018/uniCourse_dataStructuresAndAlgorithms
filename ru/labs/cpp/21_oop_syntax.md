@@ -1,3 +1,6 @@
+---
+title: "Основы ООП"
+---
 # Базовый ООП
 
 - [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.

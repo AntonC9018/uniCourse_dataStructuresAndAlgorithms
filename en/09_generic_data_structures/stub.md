@@ -1,3 +1,6 @@
+---
+title: "Generic Data Structures"
+---
 - Maybe do dynamic arrays here, and use `std::vector` previously?
 - Queue, stack
 - Linked lists

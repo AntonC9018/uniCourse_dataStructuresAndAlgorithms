@@ -1,3 +1,6 @@
+---
+title: "Dynamic Array — Practice"
+---
 # Dynamic Array — Practice
 
 ## 1. Procedural Dynamic Array

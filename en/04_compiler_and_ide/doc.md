@@ -1,3 +1,6 @@
+---
+title: Compiler and IDE
+---
 > Be sure to have read [the command line lesson](../03_command_line).
 
 ## C++ compiler at a high level

@@ -1,3 +1,6 @@
+---
+title: Compiler and IDE
+---
 **What's a compiler?**
 
 Read [this blogpost](https://www.scaler.com/topics/c/compilation-process-in-c/), it has pretty good wording in my opinion.

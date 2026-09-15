@@ -1,3 +1,6 @@
+---
+title: Programming Fundamentals
+---
 ## Variables
 
 A *variable* represents a memory location with a name.

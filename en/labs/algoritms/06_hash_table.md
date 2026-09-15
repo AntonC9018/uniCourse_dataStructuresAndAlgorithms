@@ -1,3 +1,6 @@
+---
+title: "Hash Tables"
+---
 # Lab 6
 
 Topic: **Hash Tables (Associative Arrays)**

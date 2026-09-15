@@ -1,3 +1,6 @@
+---
+title: Computer Architecture
+---
 # Laboratory Work 1
 
 Topic: **Computer Architecture**.
