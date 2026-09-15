@@ -445,3 +445,41 @@ int main()
 You can pass references to struct objects to a function.
 Here, the function increases the power.
 </details>
+
+### 21. `auto` makes a copy
+```cpp
+int a = 5;
+auto b = a;
+b = 6;
+std::cout << a << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`auto` figures out the type (`int`) but not the reference:
+`b` is a separate object holding a copy of `a`.
+
+`b = 6` overwrites only the copy, so `5` will be printed.
+</details>
+
+### 22. `auto&` makes a reference
+```cpp
+int a = 5;
+auto& b = a;
+b = 6;
+std::cout << a << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`auto&` figures out `int` and keeps the reference:
+`b` is another name for `a`.
+
+`b = 6` overwrites `a` through that name, so `6` will be printed.
+
+Use `auto&` when you want to change the original —
+for example, the elements of an array in a loop —
+and `const auto&` when you only want to read it.
+</details>

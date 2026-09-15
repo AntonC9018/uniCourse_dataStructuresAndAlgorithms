@@ -790,7 +790,62 @@ All 3 forms, `print(span)`, `print({ arr })`, and `print(arr)`, will work and do
 In each case, `print` will loop over the elements of `arr` from `main` and print them.
 </details>
 
-### 21. Creating a subspan manually
+### 21. Printing with a range-based `for` loop
+```cpp
+#include <iostream>
+#include <array>
+
+int main()
+{
+   std::array<int, 3> arr{ 1, 2, 3 };
+   for (int value : arr)
+   {
+       std::cout << value << std::endl;
+   }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This prints `1`, `2`, and `3`.
+
+`for (int value : arr)` visits each element in turn without an index:
+on each pass, `value` is a copy of the next element.
+It works the same on a `std::span`, since a span also has a beginning and an end.
+</details>
+
+### 22. Changing elements with a range-based `for` loop
+```cpp
+#include <iostream>
+#include <array>
+
+int main()
+{
+   std::array<int, 3> arr{ 1, 2, 3 };
+   for (int& value : arr)
+   {
+       value *= 2;
+   }
+   for (int value : arr)
+   {
+       std::cout << value << std::endl;
+   }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This prints `2`, `4`, and `6`.
+
+`for (int& value : arr)` borrows each element instead of copying it,
+so `value *= 2` overwrites the element inside the array.
+With a plain `int value`, the loop would only double its own copy
+and the array would stay `1, 2, 3`.
+</details>
+
+### 23. Creating a subspan manually
 ```cpp
 #include <iostream>
 #include <array>
@@ -839,7 +894,7 @@ When `span123` is printed, the first 3 elements will be printed.
 When `span234` is printed, 3 elements starting from the second one will be printed (2, 3, and 4).
 </details>
 
-### 22. Understanding the `data` method
+### 24. Understanding the `data` method
 
 What happens if you change
 ```cpp
@@ -862,7 +917,7 @@ The result will be the same, because both `wholeSpan` and `span123`
 store pointers to the first element of `arr`.
 </details>
 
-### 23. A subspan with the `subspan` method
+### 25. A subspan with the `subspan` method
 ```cpp
 #include <iostream>
 #include <array>
@@ -912,7 +967,7 @@ so that the `span` extends to the end of the array.
 For example, instead of `wholeSpan.subspan(1, 3)`, you can use `wholeSpan.subspan(1)`.
 </details>
 
-### 24. Details of `subspan`
+### 26. Details of `subspan`
 
 What happens if, in the previous example, you go beyond the array bounds, for example:
 ```cpp
@@ -928,7 +983,7 @@ There is no bounds check here; accessing index `2` of `s` is simply UB.
 > by analogy with pointers, but reading beyond the array bounds is.
 </details>
 
-### 25. Looping in reverse (1)
+### 27. Looping in reverse (1)
 
 What will this print?
 ```cpp
@@ -966,7 +1021,7 @@ about possible information loss (a narrowing conversion from `size_t` to `int`)
 and implicit sign conversion (from `int` to `size_t`).
 </details>
 
-### 26. Looping in reverse (2)
+### 28. Looping in reverse (2)
 
 What will this print?
 ```cpp
