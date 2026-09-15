@@ -206,7 +206,7 @@ $$
 & n_j = h_j - l_j + 1 \\\\
 & D_0 = 1 \\\\
 & D_j = n_{j - 1} * D_{j - 1} \\\\
-& i = \\sum_{j=0}^{N - 1} (k_j - l_j) D_j = \\sum_{j=0}^{N - 1} k_j D_j - с \\\\
+& i = \\sum_{j=0}^{N - 1} (k_j - l_j) D_j = \\sum_{j=0}^{N - 1} k_j D_j - c \\\\
 & c = \\sum_{j=0}^{N - 1} l_j D_j
 \end{align}
 $$

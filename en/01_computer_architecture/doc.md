@@ -217,7 +217,7 @@ Let's draw up another table:
 You can see how the last number changes every time, 
 the second one changes every 3 times we increment (increase by 1) the number, and the first one changes every 9 times.
 
-So, in general, for a number system with base N, the Nth position from the right, represents the amount of $N^{M-1}$ in the number, where M is the position of the digit from the right.
+So, in general, for a number system with base N, the Nth position from the right, represents the amount of $`N^{M-1}`$ in the number, where M is the position of the digit from the right.
 For example, a number 1234 in base ten has:
 - $` 4 * 10^0 = 4 `$ ones,
 - $` 3 * 10^1 = 3 `$ tens,
@@ -250,28 +250,28 @@ For example 3321<sub>4</sub> means 3321 represents a number in base 4.
 To convert a number from base N to base M... You just write the powers of each digit in base M, 
 and then just add them up in that base. It should make perfect sense if you think about it.
 
-Let's convert from 3321<sub>4</sub> to base 10: $1 * 4^0 + 2 * 4^1 + 3 * 4^2 + 3 * 4^3 = 1 + 8 + 48 + 192 = 249$
+Let's convert from 3321<sub>4</sub> to base 10: $`1 * 4^0 + 2 * 4^1 + 3 * 4^2 + 3 * 4^3 = 1 + 8 + 48 + 192 = 249`$
 
 And now another example 2101<sub>3</sub> from base 3 to base 5.
 (you add and multiply the same way as in base 10, just that you have to carry over when you reach the base):
-- $1 * 3^0 = 1 * 1_{10}$
-- $0 * 3^1 = 0 * 3_{10}$
-- $1 * 3^2 = 1 * 9_{10}$
-- $2 * 3^3 = 2 * 27_{10}$
+- $`1 * 3^0 = 1 * 1_{10}`$
+- $`0 * 3^1 = 0 * 3_{10}`$
+- $`1 * 3^2 = 1 * 9_{10}`$
+- $`2 * 3^3 = 2 * 27_{10}`$
 
 Now we can write 1, 3, 9 and 27 in base 5. 
-- $1_{10} = 1_{5}$
-- $3_{10} = 3_{5}$
-- $9_{10} = 1 * 5^1 + 4 * 5^0 = 14_{5}$
-- $27_{10} = 1 * 5^2 + 0 * 5^1 + 2 * 5^0 = 102_{5}$
+- $`1_{10} = 1_{5}`$
+- $`3_{10} = 3_{5}`$
+- $`9_{10} = 1 * 5^1 + 4 * 5^0 = 14_{5}`$
+- $`27_{10} = 1 * 5^2 + 0 * 5^1 + 2 * 5^0 = 102_{5}`$
 
 Now we can replace the coefficients in the base 10 written initially with the coefficients in base 5:
-- $1 * 1_{10} = 1 * 1_{5} = 1_{5}$
-- $0 * 3_{10} = 0 * 3_{5} = 0_{5}$
-- $1 * 9_{10} = 1 * 14_{5} = 14_{5}$
-- $2 * 27_{10} = 2 * 102_{5} = 204_{5}$
+- $`1 * 1_{10} = 1 * 1_{5} = 1_{5}`$
+- $`0 * 3_{10} = 0 * 3_{5} = 0_{5}`$
+- $`1 * 9_{10} = 1 * 14_{5} = 14_{5}`$
+- $`2 * 27_{10} = 2 * 102_{5} = 204_{5}`$
 
-Now we just add them up to get the result in base 5: $1_5 + 0_5 + 14_5 + 204_5 = ...$
+Now we just add them up to get the result in base 5: $`1_5 + 0_5 + 14_5 + 204_5 = ...`$
 Here we can do the addition just like regular, using a table 
 (we just have to carry over when we reach 5, instead of the regular 10):
 ```
