@@ -1,3 +1,5 @@
+# Agent Instructions
+
 ## When asked to maintain after edits
 
 Maintenance is handled by the `./course_maintenance`, read its `AGENTS.md`.
