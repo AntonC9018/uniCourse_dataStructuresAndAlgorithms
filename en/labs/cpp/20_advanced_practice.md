@@ -72,18 +72,18 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Say slots 0 and 3 hold books and the rest are empty.
-  Putting the Atlas at slot 2 has to pass three checks:
-  the pointer is set, 2 is inside the array, slot 2 has no value —
+  Putting the Atlas at slot 2 has to pass two checks:
+  2 is inside the array, slot 2 has no value —
   only then store the book and report success.
+  The shelf itself is not checked: the function expects it to never be null.
   At slot 0 the last check fails, so refuse with `false` and touch nothing:
 
   ```cpp
+  #include <cassert>
+
   bool shelve_book(Bookshelf* shelf, std::size_t index, Book book)
   {
-      if (shelf == nullptr)
-      {
-          return false;
-      }
+      assert(shelf != nullptr); // shelve_book expects shelf to never be null
       if (index >= shelf->slots.size())
       {
           return false;
@@ -97,25 +97,24 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
 
+  A reference cannot be null, so taking the shelf by `&` instead of by `*`
+  enforces that it is never null. The rest of the examples use references for this reason.
+
   Taking a book is mirrored: slot 0 has a book, so clear it with `reset()`
   and return `true`; an empty slot refuses:
 
   ```cpp
-  bool take_book(Bookshelf* shelf, std::size_t index)
+  bool take_book(Bookshelf& shelf, std::size_t index)
   {
-      if (shelf == nullptr)
+      if (index >= shelf.slots.size())
       {
           return false;
       }
-      if (index >= shelf->slots.size())
+      if (!shelf.slots[index].has_value())
       {
           return false;
       }
-      if (!shelf->slots[index].has_value())
-      {
-          return false;
-      }
-      shelf->slots[index].reset();
+      shelf.slots[index].reset();
       return true;
   }
   ```
@@ -142,7 +141,7 @@ slug: en/cpp/labs/advanced-practice
   ```cpp
   Bookshelf shelf{};
   shelve_book(&shelf, 2, Book{ .title = "Atlas" });
-  take_book(&shelf, 0);
+  take_book(shelf, 0);
   int free{ empty_count(shelf) };
   ```
   </details>
@@ -183,7 +182,7 @@ slug: en/cpp/labs/advanced-practice
 
   Say fridge shelf 1 holds the pizza and freezer shelf 0 is empty.
   Moving it goes down the checks:
-  both pointers are set, both indices are inside,
+  both indices are inside,
   the source has food, the target is free.
   Then two steps: copy the food into freezer shelf 0,
   clear fridge shelf 1 with `reset()`.
@@ -192,30 +191,26 @@ slug: en/cpp/labs/advanced-practice
   Any failed check returns `false` and nothing is touched:
 
   ```cpp
-  bool move_food(Fridge* from, std::size_t fromIndex, Freezer* to, std::size_t toIndex)
+  bool move_food(Fridge& from, std::size_t fromIndex, Freezer& to, std::size_t toIndex)
   {
-      if (from == nullptr || to == nullptr)
+      if (fromIndex >= from.shelves.size())
       {
           return false;
       }
-      if (fromIndex >= from->shelves.size())
+      if (toIndex >= to.shelves.size())
       {
           return false;
       }
-      if (toIndex >= to->shelves.size())
+      if (!from.shelves[fromIndex].has_value())
       {
           return false;
       }
-      if (!from->shelves[fromIndex].has_value())
+      if (to.shelves[toIndex].has_value())
       {
           return false;
       }
-      if (to->shelves[toIndex].has_value())
-      {
-          return false;
-      }
-      to->shelves[toIndex] = from->shelves[fromIndex];
-      from->shelves[fromIndex].reset();
+      to.shelves[toIndex] = from.shelves[fromIndex];
+      from.shelves[fromIndex].reset();
       return true;
   }
   ```
@@ -225,7 +220,7 @@ slug: en/cpp/labs/advanced-practice
   Fridge fridge{};
   fridge.shelves[1] = Food{ .name = "pizza" };
   Freezer freezer{};
-  bool moved{ move_food(&fridge, 1, &freezer, 0) };
+  bool moved{ move_food(fridge, 1, freezer, 0) };
   ```
   </details>
 
@@ -268,17 +263,13 @@ slug: en/cpp/labs/advanced-practice
   a second put would find a busy tray and refuse:
 
   ```cpp
-  bool put_meal(Microwave* m, Meal meal)
+  bool put_meal(Microwave& m, Meal meal)
   {
-      if (m == nullptr)
+      if (m.tray.has_value())
       {
           return false;
       }
-      if (m->tray.has_value())
-      {
-          return false;
-      }
-      m->tray = meal;
+      m.tray = meal;
       return true;
   }
   ```
@@ -287,17 +278,13 @@ slug: en/cpp/labs/advanced-practice
   Heating an empty microwave finds nothing and returns `false`:
 
   ```cpp
-  bool heat_meal(Microwave* m)
+  bool heat_meal(Microwave& m)
   {
-      if (m == nullptr)
+      if (!m.tray.has_value())
       {
           return false;
       }
-      if (!m->tray.has_value())
-      {
-          return false;
-      }
-      m->tray->warmth = Warmth::Hot;
+      m.tray->warmth = Warmth::Hot;
       return true;
   }
   ```
@@ -306,18 +293,14 @@ slug: en/cpp/labs/advanced-practice
   clears the tray, and returns the copy:
 
   ```cpp
-  std::optional<Meal> take_meal(Microwave* m)
+  std::optional<Meal> take_meal(Microwave& m)
   {
-      if (m == nullptr)
+      if (!m.tray.has_value())
       {
           return std::nullopt;
       }
-      if (!m->tray.has_value())
-      {
-          return std::nullopt;
-      }
-      std::optional<Meal> result{ m->tray };
-      m->tray.reset();
+      std::optional<Meal> result{ m.tray };
+      m.tray.reset();
       return result;
   }
   ```
@@ -325,9 +308,9 @@ slug: en/cpp/labs/advanced-practice
   Usage from `main`:
   ```cpp
   Microwave mw{};
-  put_meal(&mw, Meal{ .name = "soup", .warmth = Warmth::Cold });
-  heat_meal(&mw);
-  std::optional<Meal> lunch{ take_meal(&mw) };
+  put_meal(mw, Meal{ .name = "soup", .warmth = Warmth::Cold });
+  heat_meal(mw);
+  std::optional<Meal> lunch{ take_meal(mw) };
   ```
   </details>
 
@@ -365,26 +348,22 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Walk through a red potion on a hero with 50 health and 0 shield:
-  the pointer is set, the `switch` sees `Red`, adds 20 health,
+  the `switch` sees `Red`, adds 20 health,
   and returns `true` — the hero is now at 70.
   A blue potion would take the next branch and add 10 shield instead.
   A spoiled potion takes the last branch and returns `false`
   without touching the hero:
 
   ```cpp
-  bool drink_potion(Hero* hero, Potion potion)
+  bool drink_potion(Hero& hero, Potion potion)
   {
-      if (hero == nullptr)
-      {
-          return false;
-      }
       switch (potion.kind)
       {
           case PotionKind::Red:
-              hero->health += 20;
+              hero.health += 20;
               return true;
           case PotionKind::Blue:
-              hero->shield += 10;
+              hero.shield += 10;
               return true;
           case PotionKind::Spoiled:
               return false;
@@ -396,7 +375,7 @@ slug: en/cpp/labs/advanced-practice
   Usage from `main`:
   ```cpp
   Hero hero{ .health = 50, .shield = 0 };
-  drink_potion(&hero, Potion{ .kind = PotionKind::Red });
+  drink_potion(hero, Potion{ .kind = PotionKind::Red });
   ```
   </details>
 
@@ -450,14 +429,10 @@ slug: en/cpp/labs/advanced-practice
   The function returns 2:
 
   ```cpp
-  int soak_basket(Basket* basket)
+  int soak_basket(Basket& basket)
   {
-      if (basket == nullptr)
-      {
-          return 0;
-      }
       int soaked{ 0 };
-      for (auto& slot : basket->slots)
+      for (auto& slot : basket.slots)
       {
           if (!slot.has_value())
           {
@@ -478,7 +453,7 @@ slug: en/cpp/labs/advanced-practice
   ```cpp
   Laundry laundry{};
   laundry.tubs[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
-  int n{ soak_basket(&laundry.tubs[0]) };
+  int n{ soak_basket(laundry.tubs[0]) };
   ```
   </details>
 

@@ -21,6 +21,9 @@ Commit once you're done.
 
 ## When asked to add an example to a lab or edit one
 
+Always edit both `en/` and `ru/` versions of the lab identically.
+If only one language is meant, the request will say so explicitly.
+
 Insert the examples at their logical position in the document.
 Disregard the fact that they'd have a duplicate number, 
 that's going to be handled by the maintenance scripts.

@@ -72,18 +72,18 @@ slug: ru/cpp/labs/advanced-practice
   ```
 
   Допустим, слоты 0 и 3 хранят книги, а остальные пусты.
-  Чтобы положить «Атлас» в слот 2, нужны три успешные проверки:
-  указатель не `nullptr`, индекс 2 в пределах массива, в слоте 2 нет значения —
+  Чтобы положить «Атлас» в слот 2, нужны две проверки:
+  индекс 2 в пределах массива, в слоте 2 нет значения —
   только тогда сохраняем книгу и возвращаем успех (`true`).
+  Сам указатель не проверяется: функция ожидает, что он никогда не `nullptr`.
   В слоте 0 последняя проверка не проходит, поэтому возвращаем `false`, ничего не меняя:
 
   ```cpp
+  #include <cassert>
+
   bool shelve_book(Bookshelf* shelf, std::size_t index, Book book)
   {
-      if (shelf == nullptr)
-      {
-          return false;
-      }
+      assert(shelf != nullptr); // shelve_book ожидает, что shelf никогда не nullptr
       if (index >= shelf->slots.size())
       {
           return false;
@@ -97,25 +97,24 @@ slug: ru/cpp/labs/advanced-practice
   }
   ```
 
+  Ссылка не может быть `nullptr`, поэтому передача полки по `&` вместо `*`
+  гарантирует, что она никогда не `nullptr`. Остальные примеры используют ссылки по этой причине.
+
   Взятие книги — зеркальный случай: в слоте 0 есть книга, поэтому очищаем его через `reset()`
   и возвращаем `true`; для пустого слота возвращаем `false`:
 
   ```cpp
-  bool take_book(Bookshelf* shelf, std::size_t index)
+  bool take_book(Bookshelf& shelf, std::size_t index)
   {
-      if (shelf == nullptr)
+      if (index >= shelf.slots.size())
       {
           return false;
       }
-      if (index >= shelf->slots.size())
+      if (!shelf.slots[index].has_value())
       {
           return false;
       }
-      if (!shelf->slots[index].has_value())
-      {
-          return false;
-      }
-      shelf->slots[index].reset();
+      shelf.slots[index].reset();
       return true;
   }
   ```
@@ -141,7 +140,7 @@ slug: ru/cpp/labs/advanced-practice
   ```cpp
   Bookshelf shelf{};
   shelve_book(&shelf, 2, Book{ .title = "Atlas" });
-  take_book(&shelf, 0);
+  take_book(shelf, 0);
   int free{ empty_count(shelf) };
   ```
   </details>
@@ -182,7 +181,7 @@ slug: ru/cpp/labs/advanced-practice
 
   Допустим, на полке 1 холодильника лежит пицца, а полка 0 морозилки пуста.
   При перемещении проходим проверки по порядку:
-  оба указателя не `nullptr`, оба индекса в допустимых пределах,
+  оба индекса в допустимых пределах,
   в источнике есть продукт, цель свободна.
   Затем два шага: копируем продукт на полку 0 морозилки,
   очищаем полку 1 холодильника через `reset()`.
@@ -190,30 +189,26 @@ slug: ru/cpp/labs/advanced-practice
   Если хоть одна проверка не прошла, возвращаем `false` и ничего не трогаем:
 
   ```cpp
-  bool move_food(Fridge* from, std::size_t fromIndex, Freezer* to, std::size_t toIndex)
+  bool move_food(Fridge& from, std::size_t fromIndex, Freezer& to, std::size_t toIndex)
   {
-      if (from == nullptr || to == nullptr)
+      if (fromIndex >= from.shelves.size())
       {
           return false;
       }
-      if (fromIndex >= from->shelves.size())
+      if (toIndex >= to.shelves.size())
       {
           return false;
       }
-      if (toIndex >= to->shelves.size())
+      if (!from.shelves[fromIndex].has_value())
       {
           return false;
       }
-      if (!from->shelves[fromIndex].has_value())
+      if (to.shelves[toIndex].has_value())
       {
           return false;
       }
-      if (to->shelves[toIndex].has_value())
-      {
-          return false;
-      }
-      to->shelves[toIndex] = from->shelves[fromIndex];
-      from->shelves[fromIndex].reset();
+      to.shelves[toIndex] = from.shelves[fromIndex];
+      from.shelves[fromIndex].reset();
       return true;
   }
   ```
@@ -223,7 +218,7 @@ slug: ru/cpp/labs/advanced-practice
   Fridge fridge{};
   fridge.shelves[1] = Food{ .name = "pizza" };
   Freezer freezer{};
-  bool moved{ move_food(&fridge, 1, &freezer, 0) };
+  bool moved{ move_food(fridge, 1, freezer, 0) };
   ```
   </details>
 
@@ -266,17 +261,13 @@ slug: ru/cpp/labs/advanced-practice
   при второй попытке поддон уже занят, поэтому возвращаем `false`:
 
   ```cpp
-  bool put_meal(Microwave* m, Meal meal)
+  bool put_meal(Microwave& m, Meal meal)
   {
-      if (m == nullptr)
+      if (m.tray.has_value())
       {
           return false;
       }
-      if (m->tray.has_value())
-      {
-          return false;
-      }
-      m->tray = meal;
+      m.tray = meal;
       return true;
   }
   ```
@@ -285,17 +276,13 @@ slug: ru/cpp/labs/advanced-practice
   При разогреве пустой микроволновки внутри ничего нет, поэтому возвращаем `false`:
 
   ```cpp
-  bool heat_meal(Microwave* m)
+  bool heat_meal(Microwave& m)
   {
-      if (m == nullptr)
+      if (!m.tray.has_value())
       {
           return false;
       }
-      if (!m->tray.has_value())
-      {
-          return false;
-      }
-      m->tray->warmth = Warmth::Hot;
+      m.tray->warmth = Warmth::Hot;
       return true;
   }
   ```
@@ -304,18 +291,14 @@ slug: ru/cpp/labs/advanced-practice
   очищаем поддон и возвращаем копию:
 
   ```cpp
-  std::optional<Meal> take_meal(Microwave* m)
+  std::optional<Meal> take_meal(Microwave& m)
   {
-      if (m == nullptr)
+      if (!m.tray.has_value())
       {
           return std::nullopt;
       }
-      if (!m->tray.has_value())
-      {
-          return std::nullopt;
-      }
-      std::optional<Meal> result{ m->tray };
-      m->tray.reset();
+      std::optional<Meal> result{ m.tray };
+      m.tray.reset();
       return result;
   }
   ```
@@ -323,9 +306,9 @@ slug: ru/cpp/labs/advanced-practice
   Использование из `main`:
   ```cpp
   Microwave mw{};
-  put_meal(&mw, Meal{ .name = "soup", .warmth = Warmth::Cold });
-  heat_meal(&mw);
-  std::optional<Meal> lunch{ take_meal(&mw) };
+  put_meal(mw, Meal{ .name = "soup", .warmth = Warmth::Cold });
+  heat_meal(mw);
+  std::optional<Meal> lunch{ take_meal(mw) };
   ```
   </details>
 
@@ -363,26 +346,22 @@ slug: ru/cpp/labs/advanced-practice
   ```
 
   Разберем случай красного зелья для героя с 50 единицами здоровья и 0 щита:
-  указатель не `nullptr`, ветка `switch` для `Red` добавляет 20 здоровья
+  ветка `switch` для `Red` добавляет 20 здоровья
   и возвращает `true` — теперь у героя 70 здоровья.
   Синее зелье идет в следующую ветку и добавляет 10 щита.
   Испорченное зелье идет в последнюю ветку и возвращает `false`,
   не меняя героя:
 
   ```cpp
-  bool drink_potion(Hero* hero, Potion potion)
+  bool drink_potion(Hero& hero, Potion potion)
   {
-      if (hero == nullptr)
-      {
-          return false;
-      }
       switch (potion.kind)
       {
           case PotionKind::Red:
-              hero->health += 20;
+              hero.health += 20;
               return true;
           case PotionKind::Blue:
-              hero->shield += 10;
+              hero.shield += 10;
               return true;
           case PotionKind::Spoiled:
               return false;
@@ -394,7 +373,7 @@ slug: ru/cpp/labs/advanced-practice
   Использование из `main`:
   ```cpp
   Hero hero{ .health = 50, .shield = 0 };
-  drink_potion(&hero, Potion{ .kind = PotionKind::Red });
+  drink_potion(hero, Potion{ .kind = PotionKind::Red });
   ```
   </details>
 
@@ -448,14 +427,10 @@ slug: ru/cpp/labs/advanced-practice
   Функция возвращает 2:
 
   ```cpp
-  int soak_basket(Basket* basket)
+  int soak_basket(Basket& basket)
   {
-      if (basket == nullptr)
-      {
-          return 0;
-      }
       int soaked{ 0 };
-      for (auto& slot : basket->slots)
+      for (auto& slot : basket.slots)
       {
           if (!slot.has_value())
           {
@@ -476,7 +451,7 @@ slug: ru/cpp/labs/advanced-practice
   ```cpp
   Laundry laundry{};
   laundry.tubs[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
-  int n{ soak_basket(&laundry.tubs[0]) };
+  int n{ soak_basket(laundry.tubs[0]) };
   ```
   </details>
 
