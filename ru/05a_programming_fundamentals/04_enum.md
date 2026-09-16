@@ -1,5 +1,4 @@
 ---
-title: '`enum` и `enum class`'
 slug: ru/cpp/advanced-programming-fundamentals/enum
 ---
 <!-- course-site-backlink:start -->

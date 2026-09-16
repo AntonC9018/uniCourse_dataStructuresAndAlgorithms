@@ -1,5 +1,4 @@
 ---
-title: "C++ arrays (std::array)"
 slug: en/cpp/labs/cpp-array
 ---
 <!-- course-site-backlink:start -->

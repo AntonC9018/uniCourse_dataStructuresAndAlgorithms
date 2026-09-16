@@ -1,5 +1,4 @@
 ---
-title: Resources
 slug: en/common/introduction/resources
 ---
 <!-- course-site-backlink:start -->

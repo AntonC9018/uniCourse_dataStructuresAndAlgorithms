@@ -1,5 +1,4 @@
 ---
-title: "const"
 slug: en/cpp/labs/const
 ---
 <!-- course-site-backlink:start -->

@@ -1,4 +1,5 @@
 ---
-title: "Minecraft Setup for the Wave Algorithm Demo"
 ---
+# Minecraft Setup for the Wave Algorithm Demo
+
 You need the version 1.20.1 of Minecraft with Fabric.

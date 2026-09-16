@@ -1,5 +1,4 @@
 ---
-title: "C-массивы (группы переменных)"
 slug: ru/cpp/labs/c-array
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: "Линковщик"
 slug: ru/cpp/labs/linker
 ---
 <!-- course-site-backlink:start -->

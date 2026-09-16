@@ -1,5 +1,4 @@
 ---
-title: "Operator Overloading"
 slug: en/cpp/labs/operators
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: "Polymorphism"
 slug: en/cpp/labs/events
 ---
 <!-- course-site-backlink:start -->

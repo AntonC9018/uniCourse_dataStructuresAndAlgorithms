@@ -1,5 +1,4 @@
 ---
-title: "Переменные и типы"
 slug: ru/cpp/labs/variables
 ---
 <!-- course-site-backlink:start -->

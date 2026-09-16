@@ -1,5 +1,4 @@
 ---
-title: "Linker"
 slug: en/cpp/labs/linker
 ---
 <!-- course-site-backlink:start -->

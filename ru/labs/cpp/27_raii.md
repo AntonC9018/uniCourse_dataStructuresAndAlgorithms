@@ -1,5 +1,4 @@
 ---
-title: "Конструкторы, деструкторы, RAII"
 slug: ru/cpp/labs/raii
 ---
 <!-- course-site-backlink:start -->

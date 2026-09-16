@@ -1,5 +1,4 @@
 ---
-title: Introduction to Computer Architecture
 slug: en/common/computer-architecture
 ---
 <!-- course-site-backlink:start -->

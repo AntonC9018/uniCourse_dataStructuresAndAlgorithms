@@ -1,10 +1,11 @@
 ---
-title: '`const`, умные указатели и `auto`'
 slug: ru/cpp/advanced-programming-fundamentals/other
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/other/)
 <!-- course-site-backlink:end -->
+# `const`, умные указатели и `auto`
+
 ## `const`
 
 `const` означает, что значение чего-либо нельзя изменить.

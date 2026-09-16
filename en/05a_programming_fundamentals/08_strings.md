@@ -1,5 +1,4 @@
 ---
-title: Strings
 slug: en/cpp/advanced-programming-fundamentals/strings
 ---
 <!-- course-site-backlink:start -->

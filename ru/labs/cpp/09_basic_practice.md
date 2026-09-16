@@ -1,5 +1,4 @@
 ---
-title: "Практика по простым задачам"
 slug: ru/cpp/labs/basic-practice
 ---
 <!-- course-site-backlink:start -->

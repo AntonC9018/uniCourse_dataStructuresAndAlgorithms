@@ -1,5 +1,4 @@
 ---
-title: "Макет аттестации 1"
 slug: ru/cpp/labs/assessment-1
 ---
 <!-- course-site-backlink:start -->

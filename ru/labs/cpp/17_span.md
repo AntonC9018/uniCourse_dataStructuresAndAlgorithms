@@ -1,5 +1,4 @@
 ---
-title: "std::span"
 slug: ru/cpp/labs/span
 ---
 <!-- course-site-backlink:start -->

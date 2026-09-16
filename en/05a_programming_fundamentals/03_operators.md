@@ -1,5 +1,4 @@
 ---
-title: Operator Overloading
 slug: en/cpp/advanced-programming-fundamentals/operators
 ---
 <!-- course-site-backlink:start -->

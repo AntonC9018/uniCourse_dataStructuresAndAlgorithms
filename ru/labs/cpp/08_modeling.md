@@ -1,5 +1,4 @@
 ---
-title: "Практика по моделированию простой задачи"
 slug: ru/cpp/labs/modeling
 ---
 <!-- course-site-backlink:start -->

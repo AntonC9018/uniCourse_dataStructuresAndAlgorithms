@@ -1,5 +1,4 @@
 ---
-title: "C arrays (groups of variables)"
 slug: en/cpp/labs/c-array
 ---
 <!-- course-site-backlink:start -->

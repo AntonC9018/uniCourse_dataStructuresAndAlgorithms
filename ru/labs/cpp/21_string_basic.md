@@ -1,5 +1,4 @@
 ---
-title: "Строки"
 slug: ru/cpp/labs/string-basic
 ---
 <!-- course-site-backlink:start -->

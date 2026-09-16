@@ -1,5 +1,4 @@
 ---
-title: "Ссылки"
 slug: ru/cpp/labs/reference
 ---
 <!-- course-site-backlink:start -->

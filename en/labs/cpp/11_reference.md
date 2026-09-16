@@ -1,5 +1,4 @@
 ---
-title: "References"
 slug: en/cpp/labs/reference
 ---
 <!-- course-site-backlink:start -->

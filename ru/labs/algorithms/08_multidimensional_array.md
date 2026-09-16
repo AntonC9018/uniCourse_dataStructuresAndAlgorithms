@@ -1,11 +1,10 @@
 ---
-title: "Многомерные массивы"
 slug: ru/dsa/labs/multidimensional-array
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/multidimensional-array/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 8
+# Многомерные массивы
 
 Эта работа **не обязательна** для выполнения.
 

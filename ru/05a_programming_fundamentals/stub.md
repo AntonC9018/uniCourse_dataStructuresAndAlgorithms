@@ -1,10 +1,11 @@
 ---
-title: ООП в C++
 slug: ru/cpp/advanced-programming-fundamentals/stub
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/stub/)
 <!-- course-site-backlink:end -->
+# ООП в C++
+
 Часть про ООП в C++ (кажется, это нужно преподавать второкурсникам):
 - Модификаторы доступа
 - Понятие vtable и зачем она нужна (полиморфизм, виртуальные методы)

@@ -1,5 +1,4 @@
 ---
-title: "Strings"
 slug: en/cpp/labs/string-basic
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: "Продвинутая практика"
 slug: ru/cpp/labs/advanced-practice
 ---
 <!-- course-site-backlink:start -->

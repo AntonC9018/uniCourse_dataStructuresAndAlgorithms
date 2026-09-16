@@ -1,6 +1,7 @@
 ---
-title: 'Math Vectors and `std::valarray`'
 ---
+# Math Vectors and `std::valarray`
+
 This is the math kind of vector, not the dynamic array kind of vector.
 The STL actually provides a template class for element-wise operations on numeric arrays,
 it's called [`std::valarray`](https://en.cppreference.com/w/cpp/numeric/valarray).

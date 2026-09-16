@@ -1,5 +1,4 @@
 ---
-title: '`template`'
 slug: ru/cpp/advanced-programming-fundamentals/template
 ---
 <!-- course-site-backlink:start -->

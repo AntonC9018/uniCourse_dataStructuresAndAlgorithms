@@ -1,5 +1,4 @@
 ---
-title: "Практика по алгоритмам"
 slug: ru/cpp/labs/algorithm-practice
 ---
 <!-- course-site-backlink:start -->

@@ -1,11 +1,10 @@
 ---
-title: Number Systems
 slug: en/common/labs/number-systems
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/number-systems/)
 <!-- course-site-backlink:end -->
-# Laboratory Work 2
+# Number Systems
 
 Topic: **Number Systems**.
 

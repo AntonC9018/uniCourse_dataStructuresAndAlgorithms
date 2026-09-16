@@ -1,5 +1,4 @@
 ---
-title: Polymorphism
 slug: en/cpp/advanced-programming-fundamentals/polymorphism
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: "Structures"
 slug: en/cpp/labs/struct
 ---
 <!-- course-site-backlink:start -->

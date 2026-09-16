@@ -1,10 +1,11 @@
 ---
-title: Arrays
 slug: en/cpp/arrays
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/arrays/)
 <!-- course-site-backlink:end -->
+# Arrays
+
 ## On C arrays
 
 C arrays is the arrays that we have learned in the previous chapter.

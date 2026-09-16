@@ -1,5 +1,4 @@
 ---
-title: Abstraction and Encapsulation
 slug: en/cpp/advanced-programming-fundamentals/module
 ---
 <!-- course-site-backlink:start -->

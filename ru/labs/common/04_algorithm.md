@@ -1,11 +1,10 @@
 ---
-title: Алгоритмы
 slug: ru/common/labs/algorithm
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/algorithm/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 4
+# Алгоритмы
 
 - Тема: **Алгоритмы**.
 - [Видео](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

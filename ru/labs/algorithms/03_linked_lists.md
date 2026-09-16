@@ -1,11 +1,10 @@
 ---
-title: "Связные списки"
 slug: ru/dsa/labs/linked-lists
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/linked-lists/)
 <!-- course-site-backlink:end -->
-# Лаборатоная работа 3
+# Связные списки
 
 Тема: **Связные списки**
 

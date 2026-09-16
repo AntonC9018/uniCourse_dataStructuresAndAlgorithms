@@ -1,5 +1,4 @@
 ---
-title: "std::optional"
 slug: en/cpp/labs/optional
 ---
 <!-- course-site-backlink:start -->

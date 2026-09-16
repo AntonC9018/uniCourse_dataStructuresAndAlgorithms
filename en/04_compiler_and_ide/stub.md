@@ -1,10 +1,11 @@
 ---
-title: Compiler and IDE
 slug: en/cpp/compiler-and-ide/stub
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/compiler-and-ide/stub/)
 <!-- course-site-backlink:end -->
+# Compiler and IDE
+
 **What's a compiler?**
 
 Read [this blogpost](https://www.scaler.com/topics/c/compilation-process-in-c/), it has pretty good wording in my opinion.

@@ -1,11 +1,10 @@
 ---
-title: "Управление потоком выполнения"
 slug: ru/cpp/labs/flow-control
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/flow-control/)
 <!-- course-site-backlink:end -->
-# Flow control
+# Управление потоком выполнения
 
 ## Концепты
 

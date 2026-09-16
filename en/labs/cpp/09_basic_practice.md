@@ -1,5 +1,4 @@
 ---
-title: "Practice with Simple Problems"
 slug: en/cpp/labs/basic-practice
 ---
 <!-- course-site-backlink:start -->

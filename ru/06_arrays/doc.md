@@ -1,10 +1,11 @@
 ---
-title: Массивы
 slug: ru/cpp/arrays
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/arrays/)
 <!-- course-site-backlink:end -->
+# Массивы
+
 ## О C-массивах
 
 C-массивы — это те массивы, с которыми мы познакомились в предыдущей главе.

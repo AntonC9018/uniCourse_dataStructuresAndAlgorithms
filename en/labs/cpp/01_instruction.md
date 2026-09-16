@@ -1,5 +1,4 @@
 ---
-title: "Basic syntax: statements"
 slug: en/cpp/labs/instruction
 ---
 <!-- course-site-backlink:start -->

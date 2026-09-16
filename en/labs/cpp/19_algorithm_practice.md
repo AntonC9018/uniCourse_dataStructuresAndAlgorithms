@@ -1,5 +1,4 @@
 ---
-title: "Algorithm Practice"
 slug: en/cpp/labs/algorithm-practice
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: "Перегрузка операторов"
 slug: ru/cpp/labs/operators
 ---
 <!-- course-site-backlink:start -->

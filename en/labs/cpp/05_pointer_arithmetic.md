@@ -1,5 +1,4 @@
 ---
-title: "Pointer arithmetic"
 slug: en/cpp/labs/pointer-arithmetic
 ---
 <!-- course-site-backlink:start -->

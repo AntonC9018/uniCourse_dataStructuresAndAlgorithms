@@ -1,11 +1,10 @@
 ---
-title: Архитектура компьютера
 slug: ru/common/labs/computer-architecture
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/computer-architecture/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 1
+# Архитектура компьютера
 
 Тема: **Архитектура компьютера**.
 

@@ -1,5 +1,4 @@
 ---
-title: "Advanced Practice"
 slug: en/cpp/labs/advanced-practice
 ---
 <!-- course-site-backlink:start -->

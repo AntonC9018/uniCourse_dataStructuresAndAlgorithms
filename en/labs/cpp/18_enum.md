@@ -1,5 +1,4 @@
 ---
-title: "enum"
 slug: en/cpp/labs/enum
 ---
 <!-- course-site-backlink:start -->

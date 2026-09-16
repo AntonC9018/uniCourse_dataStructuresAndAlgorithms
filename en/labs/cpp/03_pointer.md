@@ -1,5 +1,4 @@
 ---
-title: "Pointers"
 slug: en/cpp/labs/pointer
 ---
 <!-- course-site-backlink:start -->

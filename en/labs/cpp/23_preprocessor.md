@@ -1,5 +1,4 @@
 ---
-title: "Preprocessor"
 slug: en/cpp/labs/preprocessor
 ---
 <!-- course-site-backlink:start -->

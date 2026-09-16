@@ -1,5 +1,4 @@
 ---
-title: Строки
 slug: ru/cpp/advanced-programming-fundamentals/strings
 ---
 <!-- course-site-backlink:start -->

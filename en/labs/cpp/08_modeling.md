@@ -1,5 +1,4 @@
 ---
-title: "Practice Modeling a Simple Problem"
 slug: en/cpp/labs/modeling
 ---
 <!-- course-site-backlink:start -->

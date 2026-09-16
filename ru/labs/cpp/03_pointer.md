@@ -1,5 +1,4 @@
 ---
-title: "Указатели"
 slug: ru/cpp/labs/pointer
 ---
 <!-- course-site-backlink:start -->

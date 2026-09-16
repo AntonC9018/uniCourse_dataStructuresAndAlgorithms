@@ -1,10 +1,11 @@
 ---
-title: "Sorting Algorithms"
 slug: en/dsa/sorting/stub
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/sorting/stub/)
 <!-- course-site-backlink:end -->
+# Sorting Algorithms
+
 - Bubble
 - Insertion
 - Selection

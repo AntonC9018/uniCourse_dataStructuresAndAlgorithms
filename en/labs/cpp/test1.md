@@ -1,5 +1,4 @@
 ---
-title: "Assessment 1 Template"
 slug: en/cpp/labs/assessment-1
 ---
 <!-- course-site-backlink:start -->

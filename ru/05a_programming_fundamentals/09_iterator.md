@@ -1,5 +1,4 @@
 ---
-title: Итераторы
 slug: ru/cpp/advanced-programming-fundamentals/iterator
 ---
 <!-- course-site-backlink:start -->
@@ -102,7 +101,7 @@ int sumDFS(const Node* node)
 Для `DynamicArray`, скажем, это имеет смысл, а для графа — скорее всего нет.
 
 
-# `static_cast`, `reinterpret_cast`, `bit_cast`
+## `static_cast`, `reinterpret_cast`, `bit_cast`
 
 `static_cast` выполняет проверки во время компиляции и для примитивных типов
 делает ожидаемое преобразование значения. Приведение в стиле C, например `(int)x`, шире:

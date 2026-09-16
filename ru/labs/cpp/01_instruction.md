@@ -1,5 +1,4 @@
 ---
-title: "Базовый синтаксис: инструкции"
 slug: ru/cpp/labs/instruction
 ---
 <!-- course-site-backlink:start -->

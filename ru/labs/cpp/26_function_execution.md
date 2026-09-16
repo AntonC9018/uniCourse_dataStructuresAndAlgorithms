@@ -1,11 +1,10 @@
 ---
-title: "Выполнение функций и стек"
 slug: ru/cpp/labs/function-execution
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/function-execution/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 5
+# Выполнение функций и стек
 
 Тема: **Что такое функции, вызов функций, stack**.
 

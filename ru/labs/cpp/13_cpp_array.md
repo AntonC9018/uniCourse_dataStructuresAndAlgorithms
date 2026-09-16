@@ -1,5 +1,4 @@
 ---
-title: "C++ массивы (std::array)"
 slug: ru/cpp/labs/cpp-array
 ---
 <!-- course-site-backlink:start -->

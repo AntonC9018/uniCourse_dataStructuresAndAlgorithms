@@ -1,11 +1,10 @@
 ---
-title: "Алгоритмы сортировки"
 slug: ru/dsa/labs/sorting-algorithms
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/sorting-algorithms/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 7
+# Алгоритмы сортировки
 
 Тема: **Алгоритмы сортировки.**
 

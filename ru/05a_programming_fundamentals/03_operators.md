@@ -1,5 +1,4 @@
 ---
-title: Перегрузка операторов
 slug: ru/cpp/advanced-programming-fundamentals/operators
 ---
 <!-- course-site-backlink:start -->

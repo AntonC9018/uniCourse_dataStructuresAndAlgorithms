@@ -1,5 +1,4 @@
 ---
-title: "Полиморфизм"
 slug: ru/cpp/labs/events
 ---
 <!-- course-site-backlink:start -->

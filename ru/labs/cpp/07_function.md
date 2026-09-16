@@ -1,5 +1,4 @@
 ---
-title: "Функции"
 slug: ru/cpp/labs/function
 ---
 <!-- course-site-backlink:start -->

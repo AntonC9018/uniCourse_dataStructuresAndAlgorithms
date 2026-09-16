@@ -1,5 +1,4 @@
 ---
-title: Iterators
 slug: en/cpp/advanced-programming-fundamentals/iterator
 ---
 <!-- course-site-backlink:start -->
@@ -102,7 +101,7 @@ you can define a `begin` and an `end` method for your container type directly.
 That would make sense for e.g. a `DynamicArray`, but it probably won't for a graph.
 
 
-# `static_cast`, `reinterpret_cast`, `bit_cast`
+## `static_cast`, `reinterpret_cast`, `bit_cast`
 
 `static_cast` performs checks at compile time and, for basic types,
 does the expected value conversion. A C-style cast, like `(int)x`, is broader:

@@ -1,11 +1,10 @@
 ---
-title: "Стек и очередь"
 slug: ru/dsa/labs/stack-queue
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/stack-queue/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 5
+# Стек и очередь
 
 Тема: **Stack & Queue**
 

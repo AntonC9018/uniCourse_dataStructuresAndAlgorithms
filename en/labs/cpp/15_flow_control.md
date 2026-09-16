@@ -1,5 +1,4 @@
 ---
-title: "Flow control"
 slug: en/cpp/labs/flow-control
 ---
 <!-- course-site-backlink:start -->

@@ -1,11 +1,10 @@
 ---
-title: "Function Execution and the Stack"
 slug: en/cpp/labs/function-execution
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/function-execution/)
 <!-- course-site-backlink:end -->
-# Lab 5
+# Function Execution and the Stack
 
 Topic: **Functions, function calls, and the stack**.
 

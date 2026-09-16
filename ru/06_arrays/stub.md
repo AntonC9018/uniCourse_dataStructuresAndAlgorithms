@@ -1,10 +1,11 @@
 ---
-title: Массивы
 slug: ru/cpp/arrays/stub
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/arrays/stub/)
 <!-- course-site-backlink:end -->
+# Массивы
+
 - Подробнее о C-массивах и почему они плохи
 - Статический массив и `std::array`
 - `std::span`

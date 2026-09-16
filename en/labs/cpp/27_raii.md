@@ -1,5 +1,4 @@
 ---
-title: "Constructors, Destructors, RAII"
 slug: en/cpp/labs/raii
 ---
 <!-- course-site-backlink:start -->

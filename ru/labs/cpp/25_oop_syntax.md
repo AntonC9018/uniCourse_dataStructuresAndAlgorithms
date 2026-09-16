@@ -1,5 +1,4 @@
 ---
-title: "Основы ООП"
 slug: ru/cpp/labs/oop-syntax
 ---
 <!-- course-site-backlink:start -->

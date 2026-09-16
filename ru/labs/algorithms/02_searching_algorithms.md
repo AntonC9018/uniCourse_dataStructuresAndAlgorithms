@@ -1,11 +1,10 @@
 ---
-title: "Алгоритмы поиска"
 slug: ru/dsa/labs/searching-algorithms
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/searching-algorithms/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 2
+# Алгоритмы поиска
 
 Тема: **Алгоритмы поиска**.
 

@@ -1,11 +1,10 @@
 ---
-title: Git и контроль версий
 slug: ru/common/labs/git
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/git/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 7
+# Git и контроль версий
 
 Тема: **Git и контроль версий**.
 

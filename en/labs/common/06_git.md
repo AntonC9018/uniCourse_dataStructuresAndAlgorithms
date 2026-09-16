@@ -1,11 +1,10 @@
 ---
-title: Git and Version Control
 slug: en/common/labs/git
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/git/)
 <!-- course-site-backlink:end -->
-# Lab 7
+# Git and Version Control
 
 Topic: **Git and version control**.
 

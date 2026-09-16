@@ -1,5 +1,4 @@
 ---
-title: "Динамический массив — практика"
 slug: ru/cpp/labs/dynamic-array
 ---
 <!-- course-site-backlink:start -->

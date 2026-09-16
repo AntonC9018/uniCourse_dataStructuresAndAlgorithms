@@ -1,5 +1,4 @@
 ---
-title: "Dynamic Array — Practice"
 slug: en/cpp/labs/dynamic-array
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: GitHub Student Developer Pack
 slug: en/common/introduction/github-pack
 ---
 <!-- course-site-backlink:start -->

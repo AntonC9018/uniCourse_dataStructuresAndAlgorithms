@@ -1,5 +1,4 @@
 ---
-title: "Interfaces and Abstraction"
 slug: en/common/fundamental-concepts/interfaces-abstraction
 ---
 <!-- course-site-backlink:start -->

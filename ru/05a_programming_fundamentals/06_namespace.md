@@ -1,5 +1,4 @@
 ---
-title: Пространства имен
 slug: ru/cpp/advanced-programming-fundamentals/namespace
 ---
 <!-- course-site-backlink:start -->

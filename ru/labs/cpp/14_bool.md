@@ -1,5 +1,4 @@
 ---
-title: "bool"
 slug: ru/cpp/labs/bool
 ---
 <!-- course-site-backlink:start -->

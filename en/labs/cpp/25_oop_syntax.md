@@ -1,5 +1,4 @@
 ---
-title: "Basic OOP"
 slug: en/cpp/labs/oop-syntax
 ---
 <!-- course-site-backlink:start -->

@@ -1,5 +1,4 @@
 ---
-title: Namespaces
 slug: en/cpp/advanced-programming-fundamentals/namespace
 ---
 <!-- course-site-backlink:start -->

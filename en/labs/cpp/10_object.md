@@ -1,5 +1,4 @@
 ---
-title: "Objects"
 slug: en/cpp/labs/object
 ---
 <!-- course-site-backlink:start -->

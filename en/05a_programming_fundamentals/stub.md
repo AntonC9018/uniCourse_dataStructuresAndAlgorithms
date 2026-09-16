@@ -1,10 +1,11 @@
 ---
-title: OOP in C++
 slug: en/cpp/advanced-programming-fundamentals/stub
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/stub/)
 <!-- course-site-backlink:end -->
+# OOP in C++
+
 For the C++ OOP part (I think I need to teach this to the 2nd year students):
 - Accessibility modifiers
 - The concept and motivation of a vtable (polymorphism, virtual methods)

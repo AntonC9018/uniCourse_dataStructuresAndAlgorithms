@@ -1,5 +1,4 @@
 ---
-title: "Variables and Types"
 slug: en/cpp/labs/variables
 ---
 <!-- course-site-backlink:start -->

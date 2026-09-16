@@ -1,11 +1,10 @@
 ---
-title: Установка компилятора
 slug: ru/common/labs/compiler-install
 ---
 <!-- course-site-backlink:start -->
 [Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/compiler-install/)
 <!-- course-site-backlink:end -->
-# Лабораторная работа 6
+# Установка компилятора
 
 Тема: **Установка компилятора**.
 

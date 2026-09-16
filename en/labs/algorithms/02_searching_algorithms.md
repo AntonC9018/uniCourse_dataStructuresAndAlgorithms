@@ -1,11 +1,10 @@
 ---
-title: "Search Algorithms"
 slug: en/dsa/labs/searching-algorithms
 ---
 <!-- course-site-backlink:start -->
 [This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/searching-algorithms/)
 <!-- course-site-backlink:end -->
-# Lab Assignment 2
+# Search Algorithms
 
 Topic: **Search Algorithms**.
 

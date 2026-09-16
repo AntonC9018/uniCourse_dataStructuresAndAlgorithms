@@ -1,5 +1,4 @@
 ---
-title: Абстракция и инкапсуляция
 slug: ru/cpp/advanced-programming-fundamentals/module
 ---
 <!-- course-site-backlink:start -->

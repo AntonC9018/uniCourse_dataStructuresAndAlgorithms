@@ -1,5 +1,4 @@
 ---
-title: Command Line
 slug: en/common/command-line
 ---
 <!-- course-site-backlink:start -->
