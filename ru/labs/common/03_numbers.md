@@ -1,6 +1,10 @@
 ---
 title: Как числа хранятся в байтах
+slug: ru/common/labs/numbers
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/numbers/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 3
 
 Тема: **Как числа хранятся в байтах**.

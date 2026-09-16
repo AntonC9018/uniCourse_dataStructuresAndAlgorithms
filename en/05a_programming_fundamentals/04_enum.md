@@ -1,6 +1,10 @@
 ---
 title: '`enum` and `enum class`'
+slug: en/cpp/advanced-programming-fundamentals/enum
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/enum/)
+<!-- course-site-backlink:end -->
 # `enum` and `enum class`
 
 `enum` allows you do define named compile-time constants in a straightforward way.

@@ -1,6 +1,10 @@
 ---
 title: Namespaces
+slug: en/cpp/advanced-programming-fundamentals/namespace
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/namespace/)
+<!-- course-site-backlink:end -->
 # Namespaces
 
 We have already met with type scopes, which have the namespace concept built into them.
@@ -578,4 +582,3 @@ int main()
     NS::func();
 }
 ```
-

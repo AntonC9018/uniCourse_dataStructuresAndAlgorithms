@@ -1,6 +1,10 @@
 ---
 title: "Строки"
+slug: ru/cpp/labs/string-basic
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/string-basic/)
+<!-- course-site-backlink:end -->
 # Строки
 
 - Сопровождающие [видео](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639):

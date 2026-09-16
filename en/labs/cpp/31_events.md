@@ -1,6 +1,10 @@
 ---
 title: "Polymorphism"
+slug: en/cpp/labs/events
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/events/)
+<!-- course-site-backlink:end -->
 # Polymorphism
 
 - [My notes with examples](../../../en/05a_programming_fundamentals/11_polymorphism.md)

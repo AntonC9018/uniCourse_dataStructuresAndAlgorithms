@@ -1,6 +1,10 @@
 ---
 title: "Стек и очередь"
+slug: ru/dsa/labs/stack-queue
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/stack-queue/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 5
 
 Тема: **Stack & Queue**
@@ -45,4 +49,3 @@ title: "Стек и очередь"
 Пример есть [здесь](../../../en/09_generic_data_structures/queue.cpp).
 Но это по факту связный список с дополнительными функциями / другими именами функций,
 в своей базовой имплементации.
-

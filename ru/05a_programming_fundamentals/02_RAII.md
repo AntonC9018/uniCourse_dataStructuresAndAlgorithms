@@ -1,6 +1,10 @@
 ---
 title: Области видимости и RAII
+slug: ru/cpp/advanced-programming-fundamentals/raii
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/raii/)
+<!-- course-site-backlink:end -->
 # Области видимости
 
 В C++ у областей видимости две роли:

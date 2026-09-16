@@ -1,6 +1,10 @@
 ---
 title: Строки
+slug: ru/cpp/advanced-programming-fundamentals/strings
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/strings/)
+<!-- course-site-backlink:end -->
 # Строки
 
 *Строки* — это массивы символов.

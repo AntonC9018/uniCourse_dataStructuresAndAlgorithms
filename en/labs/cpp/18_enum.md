@@ -1,6 +1,10 @@
 ---
 title: "enum"
+slug: en/cpp/labs/enum
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/enum/)
+<!-- course-site-backlink:end -->
 # `enum`
 
 - [Video](https://www.youtube.com/watch?v=Kbc6iaN3M6A&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=17).

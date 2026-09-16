@@ -1,6 +1,10 @@
 ---
 title: "Графы"
+slug: ru/dsa/labs/graphs
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/graphs/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 4
 
 ## Графы (Graphs) как структура данных

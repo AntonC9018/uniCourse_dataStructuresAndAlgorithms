@@ -15,3 +15,17 @@ Tests
 *.pdf
 __pycache__
 
+# Disposable course publishing outputs (projection/site builds, never commit)
+projection/
+site/
+projection-*/
+site-*/
+dist/
+node_modules/
+.astro/
+mermaid/
+browser/
+public/mermaid/
+public/assets/
+assets/
+

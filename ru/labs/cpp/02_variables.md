@@ -1,6 +1,10 @@
 ---
 title: "Переменные и типы"
+slug: ru/cpp/labs/variables
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/)
+<!-- course-site-backlink:end -->
 # Переменные и типы
 
 - [Видео про переменные и типы](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)

@@ -1,6 +1,10 @@
 ---
 title: '`template`'
+slug: en/cpp/advanced-programming-fundamentals/template
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/template/)
+<!-- course-site-backlink:end -->
 # `template`
 
 `template` is a C++ language primitive, which, 
@@ -171,4 +175,3 @@ int main()
     doStuff(arr); // calls `doStuff<3>`
 }
 ```
-

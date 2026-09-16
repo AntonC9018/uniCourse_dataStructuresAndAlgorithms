@@ -1,6 +1,10 @@
 ---
 title: "Продвинутая практика"
+slug: ru/cpp/labs/advanced-practice
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/advanced-practice/)
+<!-- course-site-backlink:end -->
 # Продвинутая практика
 
 > Это продолжение [Практики по простым задачам](09_basic_practice.md).

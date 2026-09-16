@@ -1,6 +1,10 @@
 ---
 title: "Хеш-таблицы"
+slug: ru/dsa/labs/hash-table
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/hash-table/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 6
 
 Тема: **Hash Tables (Ассоциативные массивы)**

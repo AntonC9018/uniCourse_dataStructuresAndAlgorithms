@@ -1,6 +1,10 @@
 ---
 title: "Hash Tables"
+slug: en/dsa/labs/hash-table
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/hash-table/)
+<!-- course-site-backlink:end -->
 # Lab 6
 
 Topic: **Hash Tables (Associative Arrays)**

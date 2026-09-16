@@ -1,6 +1,10 @@
 ---
 title: "Базовый синтаксис: инструкции"
+slug: ru/cpp/labs/instruction
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/instruction/)
+<!-- course-site-backlink:end -->
 # Базовый синтаксис: инструкции
 
 - [Видео про инструкции](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)
@@ -410,4 +414,3 @@ int main()
   `A` должна вызывать функции `B` и `C`.
   `A`, `B`, `C` все должны печатать сообщение,
   что они вызываются (то есть, для `A`, будет `"called A"`)
-

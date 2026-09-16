@@ -1,6 +1,10 @@
 ---
 title: "Algorithm Practice"
+slug: en/cpp/labs/algorithm-practice
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/algorithm-practice/)
+<!-- course-site-backlink:end -->
 # Algorithm Practice
 
 - [Video on algorithms](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

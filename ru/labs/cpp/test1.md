@@ -1,6 +1,10 @@
 ---
 title: "Макет аттестации 1"
+slug: ru/cpp/labs/assessment-1
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/assessment-1/)
+<!-- course-site-backlink:end -->
 # Макет аттестации 1
 
 ## 1. Алгоритмы (48 баллов)

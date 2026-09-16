@@ -1,6 +1,10 @@
 ---
 title: "Ссылки"
+slug: ru/cpp/labs/reference
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/)
+<!-- course-site-backlink:end -->
 # Ссылки
 
 ## Концепты
@@ -485,4 +489,3 @@ std::cout << a << std::endl;
 например, элементы массива в цикле, —
 а `const auto&`, когда хотите лишь считать его.
 </details>
-

@@ -1,6 +1,10 @@
 ---
 title: Strings
+slug: en/cpp/advanced-programming-fundamentals/strings
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/strings/)
+<!-- course-site-backlink:end -->
 # Strings
 
 *Strings* are arrays of characters.
@@ -330,4 +334,3 @@ from any pointer + length pair.
 The character buffer of any `std::string` 
 is guaranteed to be null terminated by the C++ standard.
 To get a pointer to the buffer, you can use the `c_str()` method.
-

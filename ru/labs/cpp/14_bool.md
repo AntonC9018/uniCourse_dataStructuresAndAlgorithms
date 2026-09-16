@@ -1,6 +1,10 @@
 ---
 title: "bool"
+slug: ru/cpp/labs/bool
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/bool/)
+<!-- course-site-backlink:end -->
 # `bool`
 
 Тема: `bool`, flow control.
@@ -447,4 +451,3 @@ int main()
 из какого выражения произошло значение для `b` теперь была потеряна.
 В `b` сохраняется только результат!
 </details>
-

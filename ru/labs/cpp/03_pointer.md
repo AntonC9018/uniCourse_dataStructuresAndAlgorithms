@@ -1,6 +1,10 @@
 ---
 title: "Указатели"
+slug: ru/cpp/labs/pointer
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/)
+<!-- course-site-backlink:end -->
 # Указатели
 
 - [Видео про указатели](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

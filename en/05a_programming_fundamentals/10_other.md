@@ -1,6 +1,10 @@
 ---
 title: '`const`, Smart Pointers and `auto`'
+slug: en/cpp/advanced-programming-fundamentals/other
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/other/)
+<!-- course-site-backlink:end -->
 ## `const`
 
 `const` means that the value of something cannot be changed.
@@ -325,4 +329,3 @@ auto a = 5;
 a = 6; // fine
 a = "Hello"; // doesn't compile
 ```
-

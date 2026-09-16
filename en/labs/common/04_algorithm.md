@@ -1,6 +1,10 @@
 ---
 title: Algorithms
+slug: en/common/labs/algorithm
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/algorithm/)
+<!-- course-site-backlink:end -->
 # Lab 4
 
 - Topic: **Algorithms**.

@@ -1,6 +1,10 @@
 ---
 title: "Конструкторы, деструкторы, RAII"
+slug: ru/cpp/labs/raii
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/raii/)
+<!-- course-site-backlink:end -->
 # Конструкторы, деструкторы, RAII
 
 - [Видео по ООП, RAII](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16).

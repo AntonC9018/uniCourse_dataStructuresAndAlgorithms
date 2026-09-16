@@ -1,6 +1,10 @@
 ---
 title: Installing a Compiler
+slug: en/common/labs/compiler-install
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/compiler-install/)
+<!-- course-site-backlink:end -->
 # Lab 6
 
 Topic: **Installing a compiler**.

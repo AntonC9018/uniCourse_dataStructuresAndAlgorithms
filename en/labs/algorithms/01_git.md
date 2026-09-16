@@ -1,6 +1,10 @@
 ---
 title: "Git and GitHub"
+slug: en/dsa/labs/git
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/git/)
+<!-- course-site-backlink:end -->
 # Lab Work No. 1
 
 > See the [video](https://youtu.be/OgsTtVSwJUk) 

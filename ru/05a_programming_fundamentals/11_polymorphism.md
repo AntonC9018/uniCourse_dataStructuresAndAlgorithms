@@ -1,6 +1,10 @@
 ---
 title: Полиморфизм
+slug: ru/cpp/advanced-programming-fundamentals/polymorphism
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/polymorphism/)
+<!-- course-site-backlink:end -->
 # Полиморфизм
 
 *Полиморфизм* означает, что одно имя функции может ссылаться на разные функции

@@ -1,6 +1,10 @@
 ---
 title: "Pointers"
+slug: en/cpp/labs/pointer
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/)
+<!-- course-site-backlink:end -->
 # Pointers
 
 - [Video about pointers](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

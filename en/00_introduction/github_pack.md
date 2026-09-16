@@ -1,6 +1,10 @@
 ---
 title: GitHub Student Developer Pack
+slug: en/common/introduction/github-pack
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/introduction/github-pack/)
+<!-- course-site-backlink:end -->
 # How to get free stuff from GitHub
 
 If you've got a university email, you can get free stuff by applying for

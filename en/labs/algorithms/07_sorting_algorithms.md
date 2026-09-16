@@ -1,6 +1,10 @@
 ---
 title: "Sorting Algorithms"
+slug: en/dsa/labs/sorting-algorithms
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/sorting-algorithms/)
+<!-- course-site-backlink:end -->
 # Laboratory Work 7
 
 Topic: **Sorting algorithms.**

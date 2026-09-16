@@ -1,6 +1,10 @@
 ---
 title: "Basic OOP"
+slug: en/cpp/labs/oop-syntax
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/oop-syntax/)
+<!-- course-site-backlink:end -->
 # Basic OOP
 
 - [Video](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) up to `NumberWrapper`.

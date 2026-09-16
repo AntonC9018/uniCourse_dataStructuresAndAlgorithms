@@ -1,6 +1,10 @@
 ---
 title: "C++ массивы (std::array)"
+slug: ru/cpp/labs/cpp-array
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/)
+<!-- course-site-backlink:end -->
 # C++ массивы (`std::array`)
 
 - [Информация](../../../en/06_arrays/doc.md)

@@ -1,6 +1,10 @@
 ---
 title: "Interfaces and Abstraction"
+slug: en/common/fundamental-concepts/interfaces-abstraction
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/fundamental-concepts/interfaces-abstraction/)
+<!-- course-site-backlink:end -->
 # Fundamental concepts in programming: interfaces and abstraction
 
 ## Interface

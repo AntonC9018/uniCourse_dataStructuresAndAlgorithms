@@ -1,6 +1,10 @@
 ---
 title: Advanced Programming Fundamentals
+slug: en/cpp/advanced-programming-fundamentals
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/)
+<!-- course-site-backlink:end -->
 **IMPORTANT!**
 
 **This topic is only required for those who want to use standard containers

@@ -1,6 +1,10 @@
 ---
 title: "Advanced Practice"
+slug: en/cpp/labs/advanced-practice
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/advanced-practice/)
+<!-- course-site-backlink:end -->
 # Advanced Practice
 
 > This is a continuation of [Practice with Simple Problems](09_basic_practice.md).

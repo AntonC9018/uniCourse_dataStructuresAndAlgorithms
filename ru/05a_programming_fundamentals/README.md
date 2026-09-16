@@ -1,6 +1,10 @@
 ---
 title: Расширенные основы программирования
+slug: ru/cpp/advanced-programming-fundamentals
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/)
+<!-- course-site-backlink:end -->
 **ВАЖНО!**
 
 **Эта тема нужна только тем, кто хочет пользоваться стандартными контейнерами

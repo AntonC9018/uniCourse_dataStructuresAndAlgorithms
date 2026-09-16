@@ -1,6 +1,10 @@
 ---
 title: "Практика по моделированию простой задачи"
+slug: ru/cpp/labs/modeling
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/modeling/)
+<!-- course-site-backlink:end -->
 # Практика по моделированию простой задачи
 
 - [Видео](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)
@@ -81,4 +85,3 @@ title: "Практика по моделированию простой зада
    }
    ```
    </details>
-

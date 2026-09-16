@@ -1,6 +1,10 @@
 ---
 title: "Practice Modeling a Simple Problem"
+slug: en/cpp/labs/modeling
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/modeling/)
+<!-- course-site-backlink:end -->
 # Practice Modeling a Simple Problem
 
 - [Video](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)

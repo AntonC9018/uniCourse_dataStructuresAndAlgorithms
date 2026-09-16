@@ -1,6 +1,10 @@
 ---
 title: "Арифметика указателей"
+slug: ru/cpp/labs/pointer-arithmetic
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/)
+<!-- course-site-backlink:end -->
 # Pointer arithmetic
 
 - [Видео по основам, более углубленная информация](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)

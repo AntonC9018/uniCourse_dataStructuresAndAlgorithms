@@ -1,6 +1,10 @@
 ---
 title: "Динамический массив — практика"
+slug: ru/cpp/labs/dynamic-array
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/dynamic-array/)
+<!-- course-site-backlink:end -->
 # Динамический массив - практика
 
 ## 1. Процедуральный динамический массив
