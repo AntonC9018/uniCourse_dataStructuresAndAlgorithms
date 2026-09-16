@@ -1,6 +1,10 @@
 ---
 title: Scopes and RAII
+slug: en/cpp/advanced-programming-fundamentals/raii
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/raii/)
+<!-- course-site-backlink:end -->
 # Scopes
 
 Scopes have two roles in C++:

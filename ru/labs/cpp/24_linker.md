@@ -1,6 +1,10 @@
 ---
 title: "Линковщик"
+slug: ru/cpp/labs/linker
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/linker/)
+<!-- course-site-backlink:end -->
 # Линкер
 
 - [Видео про фазы компиляции](https://www.youtube.com/watch?v=CEl6YS4XhQQ&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=12).
@@ -15,4 +19,3 @@ title: "Линковщик"
 - object файлы, флаг `-c`
 - статические библиотеки, флаги `-l` и `-L`
 - динамические библиотеки (?)
-

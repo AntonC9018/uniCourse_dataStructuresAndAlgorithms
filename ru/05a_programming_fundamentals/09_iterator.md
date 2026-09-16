@@ -1,6 +1,10 @@
 ---
 title: Итераторы
+slug: ru/cpp/advanced-programming-fundamentals/iterator
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/iterator/)
+<!-- course-site-backlink:end -->
 # Итераторы
 
 *Итератор* — это мощный программный паттерн, который позволяет абстрагировать логику

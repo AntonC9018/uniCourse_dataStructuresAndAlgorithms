@@ -1,6 +1,10 @@
 ---
 title: Перегрузка операторов
+slug: ru/cpp/advanced-programming-fundamentals/operators
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/operators/)
+<!-- course-site-backlink:end -->
 # Перегрузка операторов
 
 ## Перегрузка оператора присваивания

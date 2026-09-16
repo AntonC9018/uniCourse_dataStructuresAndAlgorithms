@@ -1,6 +1,10 @@
 ---
 title: "Практика по простым задачам"
+slug: ru/cpp/labs/basic-practice
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/basic-practice/)
+<!-- course-site-backlink:end -->
 # Практика по простым задачам
 
 ## Что нужно развить в данной работе

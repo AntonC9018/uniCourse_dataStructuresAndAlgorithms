@@ -1,6 +1,10 @@
 ---
 title: "Объекты"
+slug: ru/cpp/labs/object
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/object/)
+<!-- course-site-backlink:end -->
 # Объекты
 
 - [Видео (теория)](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
@@ -130,4 +134,3 @@ int
 std::array<Leg, 2>
 ```
 </details>
-

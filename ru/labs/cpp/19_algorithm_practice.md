@@ -1,6 +1,10 @@
 ---
 title: "Практика по алгоритмам"
+slug: ru/cpp/labs/algorithm-practice
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/algorithm-practice/)
+<!-- course-site-backlink:end -->
 # Практика по алгоритмам
 
 - [Видео по алгоритмам](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

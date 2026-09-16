@@ -1,0 +1,156 @@
+# Course site CI + GitHub Pages deploy (issue #15, CI-1..CI-12 course-owned side).
+#
+# Thin caller: checks out the course with its pinned course_maintenance
+# submodule at the committed revision, then invokes the shared command
+# from that submodule. Never fetches a floating maintenance revision or a
+# reusable workflow independent of the submodule pointer (CI-2/CI-6): a
+# shared-tooling change affects this course only after an explicit
+# submodule-pointer commit, which this workflow then validates (CI-6).
+#
+# Triggers (CI-4/CI-5): pull_request targeting master + push to master,
+# no path filters. Feature-branch pushes without a PR do not run.
+# CI never writes or commits source metadata (CI-5).
+#
+# Permissions (CI-9): pull-request validation is read-only
+# (contents: read). Pages write + id-token are confined to the deploy job
+# for a successful master build only. PRs never deploy (CI-3).
+#
+# Concurrency (CI-10): discard superseded runs on the same ref so an older
+# run cannot become the final deployment after a newer master revision.
+# Failed validation does not deploy; the previously published site stays
+# live (no auto-rollback in the initial release).
+#
+# Caches (CI-8): npm + Playwright/Chromium keys reuse the #14 pins
+# (renderer/package-lock.json hash + pinned browser versions). Caches hold
+# runtimes/dependencies only, never source metadata, projections, or
+# deployable output.
+#
+# Pinned actions (CI-8, immutable SHAs; versions in trailing comments):
+#   actions/checkout v6, actions/setup-python v6, actions/setup-node v6,
+#   actions/cache v4, actions/configure-pages v5,
+#   actions/upload-pages-artifact v3, actions/deploy-pages v4.
+# Runtimes: Python 3.12 + Node 22 (see course_maintenance/publishing/ci.py
+# PINNED_PYTHON/PINNED_NODE for the submodule revision checked out here).
+# Browsers: Playwright 1.48.2 + Chromium 130.0.6723.19 (see
+# course_maintenance/publishing/site.py PINNED_VERSIONS/PINNED_BROWSERS).
+#
+# Pages source must be "GitHub Actions" (Settings > Pages); branch
+# protection must require the `validate` status without mandating PRs and
+# with admin bypass retained. Neither setting is automatable via repo
+# files -- see docs/pages-deploy.md + scripts/verify-pages-settings.sh.
+#
+# peer_repositories stays empty (CI-7); no peer checkout steps below.
+
+name: course-site
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+# CI-9: read-only by default. Deploy job escalates to pages:write +
+# id-token:write for a successful master build only.
+permissions:
+  contents: read
+
+# CI-10: same-ref group, cancel superseded. A newer master push cancels a
+# still-running older run, so the older build can never upload/deploy after
+# the newer revision. PR pushes cancel prior runs on the same PR branch.
+concurrency:
+  group: course-site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # CI-2/CI-6: pinned submodule at the committed revision.
+      - name: Checkout course with pinned maintenance submodule
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node 22 with npm cache
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          # CI-8: keyed by the pinned lockfile revision.
+          cache: npm
+          cache-dependency-path: course_maintenance/renderer/package-lock.json
+
+      # CI-8: Playwright/Chromium runtime cache (runtimes only).
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-1.48.2-chromium-130.0.6723.19-${{ hashFiles('course_maintenance/renderer/package-lock.json') }}
+          restore-keys: |
+            playwright-1.48.2-chromium-130.0.6723.19-
+
+      - name: Install renderer dependencies
+        run: npm ci --prefix course_maintenance/renderer --no-audit --no-fund
+
+      - name: Install Playwright Chromium
+        run: npx --prefix course_maintenance/renderer playwright install chromium
+
+      # CI-1: maintain check + publishing check + compat suite + site build,
+      # in that order, read-only wrt sources. --out lives under runner.temp
+      # (outside the course repo); dist/ below holds the exact build that
+      # the upload step publishes on master pushes.
+      - name: Shared CI validation (maintain + publishing + compat + site)
+        run: python3 course_maintenance/publish.py ci --course-repo . --out ${{ runner.temp }}/site-out
+
+      - name: Configure Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      # Upload the exact validated build (CI-4). PR runs skip this step
+      # (CI-3: PRs never deploy); a failed validation stops the job here
+      # so nothing uploads and deploy never runs.
+      - name: Upload Pages artifact (exact validated build)
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: ${{ runner.temp }}/site-out/dist
+
+  deploy:
+    # CI-4: pushes to master only (direct commits + PR merges). PRs never
+    # reach this job; failed validation never reaches it via needs:.
+    if: github.event_name == 'push'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+  smoke:
+    # CI-11: bounded-retry post-deploy checks against the public Pages URL.
+    if: github.event_name == 'push'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout smoke script
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # Smoke needs only scripts/; no submodule checkout required.
+          submodules: false
+          fetch-depth: 1
+
+      - name: Post-deploy smoke tests (bounded retry)
+        env:
+          BASE_URL: https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms
+        run: bash scripts/smoke-test.sh

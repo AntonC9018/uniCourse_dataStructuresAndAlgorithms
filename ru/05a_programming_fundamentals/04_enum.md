@@ -1,6 +1,10 @@
 ---
-title: `enum` и `enum class`
+title: '`enum` и `enum class`'
+slug: ru/cpp/advanced-programming-fundamentals/enum
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/enum/)
+<!-- course-site-backlink:end -->
 # `enum` и `enum class`
 
 `enum` — это простой способ объявить именованные константы времени компиляции.

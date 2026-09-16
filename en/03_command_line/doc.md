@@ -1,6 +1,10 @@
 ---
 title: Command Line
+slug: en/common/command-line
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/command-line/)
+<!-- course-site-backlink:end -->
 # Command Line
 
 A command line interface is an interface that allows launching or executing commands (or programs)

@@ -1,6 +1,10 @@
 ---
 title: "Strings"
+slug: en/cpp/labs/string-basic
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/string-basic/)
+<!-- course-site-backlink:end -->
 # Strings
 
 - Accompanying [video](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639)

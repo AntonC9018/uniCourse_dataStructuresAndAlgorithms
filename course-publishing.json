@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "default_language": "en",
+  "languages": [
+    {
+      "code": "en",
+      "root": "en",
+      "label": "English"
+    },
+    {
+      "code": "ru",
+      "root": "ru",
+      "label": "Русский"
+    }
+  ],
+  "exclude": [
+    "en/05_programming_fundamentals/linker_examples/README.md",
+    "ru/05_programming_fundamentals/linker_examples/README.md",
+    "en/05_programming_fundamentals/snake/raylib-example/README.md",
+    "en/05a_programming_fundamentals/vector/README.md",
+    "ru/05a_programming_fundamentals/vector/README.md",
+    "en/08_searching_algorithms/waves_algorithm/README.md",
+    "en/08_searching_algorithms/waves_algorithm/minecraft/README.md",
+    "en/10_sorting/examples/readme.md",
+    "ru/labs/cpp/README.md"
+  ],
+  "route_sections": [
+    {
+      "source": "00_introduction",
+      "destination": "common/introduction"
+    },
+    {
+      "source": "01_computer_architecture",
+      "destination": "common/computer-architecture"
+    },
+    {
+      "source": "02_fundamental_concepts",
+      "destination": "common/fundamental-concepts"
+    },
+    {
+      "source": "03_command_line",
+      "destination": "common/command-line"
+    },
+    {
+      "source": "04_compiler_and_ide",
+      "destination": "cpp/compiler-and-ide"
+    },
+    {
+      "source": "05_programming_fundamentals",
+      "destination": "cpp/programming-fundamentals"
+    },
+    {
+      "source": "05a_programming_fundamentals",
+      "destination": "cpp/advanced-programming-fundamentals"
+    },
+    {
+      "source": "06_arrays",
+      "destination": "cpp/arrays"
+    },
+    {
+      "source": "07_serialization",
+      "destination": "cpp/serialization"
+    },
+    {
+      "source": "08_searching_algorithms",
+      "destination": "dsa/searching-algorithms"
+    },
+    {
+      "source": "09_generic_data_structures",
+      "destination": "dsa/generic-data-structures"
+    },
+    {
+      "source": "10_sorting",
+      "destination": "dsa/sorting"
+    },
+    {
+      "source": "11_multidimensional_arrays",
+      "destination": "dsa/multidimensional-arrays"
+    },
+    {
+      "source": "labs/common",
+      "destination": "common/labs"
+    },
+    {
+      "source": "labs/cpp",
+      "destination": "cpp/labs"
+    },
+    {
+      "source": "labs/algorithms",
+      "destination": "dsa/labs"
+    }
+  ],
+  "site_title": {
+    "en": "Programming Fundamentals and Data Structures",
+    "ru": "Основы программирования и структуры данных"
+  },
+  "root_lesson": "en/labs/common/01_computer_architecture.md",
+  "peer_repositories": []
+}

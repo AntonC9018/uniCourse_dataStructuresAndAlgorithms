@@ -1,6 +1,10 @@
 ---
-title: `template`
+title: '`template`'
+slug: ru/cpp/advanced-programming-fundamentals/template
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/template/)
+<!-- course-site-backlink:end -->
 # `template`
 
 `template` — это примитив языка C++, который

@@ -1,6 +1,10 @@
 ---
 title: "Linked Lists"
+slug: en/dsa/labs/linked-lists
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/linked-lists/)
+<!-- course-site-backlink:end -->
 # Laboratory Work 3
 
 Topic: **Linked Lists**

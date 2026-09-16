@@ -1,6 +1,10 @@
 ---
 title: "Перегрузка операторов"
+slug: ru/cpp/labs/operators
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/operators/)
+<!-- course-site-backlink:end -->
 # Перегрузка операторов
 
 - [Видео](https://www.youtube.com/watch?v=UoMKfmyYEiw&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18)

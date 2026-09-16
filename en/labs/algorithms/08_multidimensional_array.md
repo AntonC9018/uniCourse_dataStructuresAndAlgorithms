@@ -1,6 +1,10 @@
 ---
 title: "Multidimensional Arrays"
+slug: en/dsa/labs/multidimensional-array
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/multidimensional-array/)
+<!-- course-site-backlink:end -->
 # Lab Work 8
 
 This assignment is **not required**.

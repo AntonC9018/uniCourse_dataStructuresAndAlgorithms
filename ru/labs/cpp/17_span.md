@@ -1,6 +1,10 @@
 ---
 title: "std::span"
+slug: ru/cpp/labs/span
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/span/)
+<!-- course-site-backlink:end -->
 # `std::span`
 
 - [Видео](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=19)

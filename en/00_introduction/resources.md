@@ -1,6 +1,10 @@
 ---
 title: Resources
+slug: en/common/introduction/resources
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/introduction/resources/)
+<!-- course-site-backlink:end -->
 # Resources
 
 I have a lot of example university projects on my github which can be used as reference when doing them youself. 

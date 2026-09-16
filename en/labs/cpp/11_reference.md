@@ -1,6 +1,10 @@
 ---
 title: "References"
+slug: en/cpp/labs/reference
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/)
+<!-- course-site-backlink:end -->
 # References
 
 ## Concepts

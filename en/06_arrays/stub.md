@@ -1,6 +1,10 @@
 ---
 title: Arrays
+slug: en/cpp/arrays/stub
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/arrays/stub/)
+<!-- course-site-backlink:end -->
 - More on C arrays, why they suck
 - Static array and `std::array`
 - `std::span`

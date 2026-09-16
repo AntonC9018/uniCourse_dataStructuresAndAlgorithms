@@ -1,6 +1,10 @@
 ---
 title: "C arrays (groups of variables)"
+slug: en/cpp/labs/c-array
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/c-array/)
+<!-- course-site-backlink:end -->
 # C arrays (groups of variables)
 
 - [Arrays and indexes](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

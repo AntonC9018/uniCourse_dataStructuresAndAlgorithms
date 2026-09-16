@@ -1,6 +1,10 @@
 ---
 title: "Operator Overloading"
+slug: en/cpp/labs/operators
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/operators/)
+<!-- course-site-backlink:end -->
 # Operator Overloading
 
 - [Video](https://www.youtube.com/watch?v=UoMKfmyYEiw&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18)

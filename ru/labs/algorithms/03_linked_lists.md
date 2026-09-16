@@ -1,6 +1,10 @@
 ---
 title: "Связные списки"
+slug: ru/dsa/labs/linked-lists
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/linked-lists/)
+<!-- course-site-backlink:end -->
 # Лаборатоная работа 3
 
 Тема: **Связные списки**
@@ -57,4 +61,3 @@ title: "Связные списки"
       одного нода может отходить максимум 2 связи.
 
 Распишите функции теста для каждой из функций, вызывайте их в `main`.
-

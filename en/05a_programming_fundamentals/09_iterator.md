@@ -1,6 +1,10 @@
 ---
 title: Iterators
+slug: en/cpp/advanced-programming-fundamentals/iterator
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/iterator/)
+<!-- course-site-backlink:end -->
 # Iterators
 
 An *iterator* is a powerful programming pattern that allows you to abstract the logic
@@ -128,4 +132,3 @@ int c = static_cast<int>(a); // 5
 > Note that the number is just an example output that I got running this code on my machine,
 > you could see another value. It depends on `float` being IEEE 754, `int` being 32 bits,
 > and the byte order being little-endian.
-

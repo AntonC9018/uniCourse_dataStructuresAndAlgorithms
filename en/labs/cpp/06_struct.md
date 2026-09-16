@@ -1,6 +1,10 @@
 ---
 title: "Structures"
+slug: en/cpp/labs/struct
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/)
+<!-- course-site-backlink:end -->
 # Structures
 
 - [In-depth video on basic syntax, section on structures](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8&t=2457)

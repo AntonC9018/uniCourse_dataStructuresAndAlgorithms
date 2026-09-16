@@ -1,6 +1,10 @@
 ---
 title: "Flow control"
+slug: en/cpp/labs/flow-control
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/flow-control/)
+<!-- course-site-backlink:end -->
 # Flow control
 
 ## Concepts

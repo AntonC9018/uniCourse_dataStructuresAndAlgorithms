@@ -1,6 +1,10 @@
 ---
 title: "Структуры"
+slug: ru/cpp/labs/struct
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/)
+<!-- course-site-backlink:end -->
 # Структуры
 
 - [Углубленное видео по базовому синтаксису, часть со структурами](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8&t=2457)

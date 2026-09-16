@@ -1,6 +1,10 @@
 ---
 title: How Numbers Are Stored in Bytes
+slug: en/common/labs/numbers
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/numbers/)
+<!-- course-site-backlink:end -->
 # Lab 3
 
 Topic: **How numbers are stored in bytes**.

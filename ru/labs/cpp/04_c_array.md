@@ -1,6 +1,10 @@
 ---
 title: "C-массивы (группы переменных)"
+slug: ru/cpp/labs/c-array
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/c-array/)
+<!-- course-site-backlink:end -->
 # C-массивы (группы переменных)
 
 - [Массивы и индекс](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)

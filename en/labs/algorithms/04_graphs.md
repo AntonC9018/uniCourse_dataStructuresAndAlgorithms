@@ -1,6 +1,10 @@
 ---
 title: "Graphs"
+slug: en/dsa/labs/graphs
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/graphs/)
+<!-- course-site-backlink:end -->
 # Lab Assignment 4
 
 ## Graphs as a Data Structure

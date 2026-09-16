@@ -1,6 +1,10 @@
 ---
 title: Пространства имен
+slug: ru/cpp/advanced-programming-fundamentals/namespace
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/namespace/)
+<!-- course-site-backlink:end -->
 # Пространства имен
 
 Мы уже встречались с областями видимости типов, в которые встроена концепция пространств имен.

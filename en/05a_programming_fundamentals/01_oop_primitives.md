@@ -1,6 +1,10 @@
 ---
 title: References, Methods and Classes
+slug: en/cpp/advanced-programming-fundamentals/oop-primitives
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/oop-primitives/)
+<!-- course-site-backlink:end -->
 
 # References (\&)
 

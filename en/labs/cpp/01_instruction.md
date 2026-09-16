@@ -1,6 +1,10 @@
 ---
 title: "Basic syntax: statements"
+slug: en/cpp/labs/instruction
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/instruction/)
+<!-- course-site-backlink:end -->
 # Basic syntax: statements
 
 - [Video about statements](https://www.youtube.com/watch?v=Z8AFpeE7hOo&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=5)

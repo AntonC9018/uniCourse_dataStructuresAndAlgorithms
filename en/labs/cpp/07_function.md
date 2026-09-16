@@ -1,6 +1,10 @@
 ---
 title: "Functions"
+slug: en/cpp/labs/function
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/function/)
+<!-- course-site-backlink:end -->
 # Functions
 
 - [Video](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)

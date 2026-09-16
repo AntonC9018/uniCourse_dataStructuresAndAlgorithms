@@ -1,6 +1,10 @@
 ---
 title: "C++ arrays (std::array)"
+slug: en/cpp/labs/cpp-array
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/)
+<!-- course-site-backlink:end -->
 # C++ arrays (`std::array`)
 
 - [Information](../../../en/06_arrays/doc.md)

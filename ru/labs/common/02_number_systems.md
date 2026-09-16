@@ -1,6 +1,10 @@
 ---
 title: Системы счисления
+slug: ru/common/labs/number-systems
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/number-systems/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 2
 
 Тема: **Системы счисления**.

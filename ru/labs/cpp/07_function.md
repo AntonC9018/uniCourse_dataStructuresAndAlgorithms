@@ -1,6 +1,10 @@
 ---
 title: "Функции"
+slug: ru/cpp/labs/function
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/function/)
+<!-- course-site-backlink:end -->
 # Функции
 
 - [Видео](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)

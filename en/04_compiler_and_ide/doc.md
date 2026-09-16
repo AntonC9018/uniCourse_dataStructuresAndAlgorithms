@@ -1,6 +1,10 @@
 ---
 title: Compiler and IDE
+slug: en/cpp/compiler-and-ide
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/compiler-and-ide/)
+<!-- course-site-backlink:end -->
 > Be sure to have read [the command line lesson](../03_command_line).
 
 ## C++ compiler at a high level

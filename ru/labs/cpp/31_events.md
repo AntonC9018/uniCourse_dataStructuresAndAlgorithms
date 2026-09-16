@@ -1,6 +1,10 @@
 ---
 title: "Полиморфизм"
+slug: ru/cpp/labs/events
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/events/)
+<!-- course-site-backlink:end -->
 # Полиморфизм
 
 - [Моя информация с примерами](../../../en/05a_programming_fundamentals/11_polymorphism.md)

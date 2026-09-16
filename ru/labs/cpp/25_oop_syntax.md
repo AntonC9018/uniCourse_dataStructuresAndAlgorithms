@@ -1,6 +1,10 @@
 ---
 title: "Основы ООП"
+slug: ru/cpp/labs/oop-syntax
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/oop-syntax/)
+<!-- course-site-backlink:end -->
 # Базовый ООП
 
 - [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.
@@ -142,4 +146,3 @@ title: "Основы ООП"
     Также, ООП дает возможность осуществлять инкапсулирование данных,
     что труднее осуществить в типичном процедуральном программировании.
     </details>
-

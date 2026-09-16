@@ -1,6 +1,10 @@
 ---
 title: "Pointer arithmetic"
+slug: en/cpp/labs/pointer-arithmetic
 ---
+<!-- course-site-backlink:start -->
+[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer-arithmetic/)
+<!-- course-site-backlink:end -->
 # Pointer arithmetic
 
 - [Video covering the basics and providing more in-depth information](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)

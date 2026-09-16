@@ -1,6 +1,10 @@
 ---
 title: "Алгоритмы поиска"
+slug: ru/dsa/labs/searching-algorithms
 ---
+<!-- course-site-backlink:start -->
+[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/searching-algorithms/)
+<!-- course-site-backlink:end -->
 # Лабораторная работа 2
 
 Тема: **Алгоритмы поиска**.
@@ -169,4 +173,3 @@ for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
   (затраченное время в зависимости от количества элементов) с теоретической.
 - Объясните в каких ситуациях стоит применить тот или иной алгоритм,
   и объясните почему он оптимальней других для этих задач.
-
