@@ -387,7 +387,35 @@ std::cout << std::endl;
 The expression `*ap` has type `int`, so `sizeof(int)`, which is 4, is calculated.
 </details>
 
-### 16. Copying a variable and a pointer with similar names
+### 16. Pointer to itself
+```cpp
+void* p = nullptr;
+p = static_cast<void*>(&p);
+
+std::cout << p;
+std::cout << std::endl;
+
+std::cout << &p;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`&p` takes the address of the variable `p` itself.
+The type of the expression `&p` is `void**` (the address of a variable of type `void*`).
+
+The `static_cast<void*>(...)` explicitly converts this `void**` to `void*`,
+that is, to the type of the variable `p` itself.
+So the assignment `p = static_cast<void*>(&p)` stores
+the address of `p` itself in `p` — now `p` points to itself.
+
+Two identical addresses are printed: the value stored in `p` matches the address `&p`.
+
+If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` still happens implicitly.
+</details>
+
+### 17. Copying a variable and a pointer with similar names
 
 ```cpp
 int x{ 0 };

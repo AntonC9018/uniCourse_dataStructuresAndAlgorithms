@@ -47,6 +47,7 @@ Starting at the first element (`arrStart`), `+ 1` moves to the next memory locat
 These expressions can be used both to write values
 and to read them.
 </details>
+
 ### 2. Passing an array as a pointer
 ```cpp
 #include <iostream>
@@ -1095,6 +1096,8 @@ void print(std::span<int> s)
 }
 ```
 </details>
+
+### 29. Pointer iteration (1)
 ```cpp
 #include <iostream>
 #include <array>
@@ -1114,6 +1117,16 @@ int main()
    print(arr.data(), &arr[arr.size() - 1]);
 }
 ```
+
+<details>
+<summary>Answer</summary>
+
+This illustrates another way to specify the iteration bounds.
+The loop does not use the number of elements in the array,
+but instead uses the addresses of the first and last elements (inclusive bounds).
+</details>
+
+### 30. Pointer iteration (2)
 ```cpp
 #include <iostream>
 #include <array>
@@ -1130,7 +1143,18 @@ void print(int* start, int* pastEnd)
 int main()
 {
    std::array<int, 4> arr{1, 2, 3, 4};
-   print(arr.data(), &arr[arr.size()]);
+   print(arr.data(), arr.data() + arr.size());
    print(arr.begin(), arr.end());
 }
 ```
+
+<details>
+<summary>Answer</summary>
+
+This uses the iterator approach: instead of the address of the last element,
+the *first address past the last one* is passed.
+
+`arr.begin()` returns an *iterator* to the first element (covered in another topic),
+and `arr.end()` returns the past-the-end iterator.
+Here both calls compile because iterators for `std::array` are implemented as just `int*` under the hood.
+</details>

@@ -160,7 +160,38 @@ You can read from and write to each field individually.
 It prints `5` three times.
 </details>
 
-### 5. Field addresses
+### 5. Assigning a structure
+
+```cpp
+#include <iostream>
+
+struct A
+{
+    int f;
+};
+int main()
+{
+    A a{ 1 };
+    A b{ a };
+    a.f = 2;
+    std::cout << a.f << std::endl;
+    std::cout << b.f << std::endl;
+}
+```
+<details>
+<summary>Answer:</summary>
+
+`A a{ 1 }` creates a variable `a` with field `f = 1`.
+
+`A b{ a }` creates a new variable `b` and copies the values of *all fields* from `a` into it.
+At this point `b.f` becomes `1`, but as a separate copy in `b`'s own memory.
+
+So `a.f = 2` changes only `a`, while `b` stays untouched.
+
+It prints `2` and `1`.
+</details>
+
+### 6. Field addresses
 ```cpp
 #include <iostream>
 
@@ -189,7 +220,7 @@ giving access to field `f` inside `a`; its address is then obtained using `&`.
 Value `5` is stored in `a.f`.
 </details>
 
-### 6. Assigning a structure variable (1)
+### 7. Assigning a structure variable (1)
 ```cpp
 #include <iostream>
 
@@ -222,7 +253,7 @@ int main()
 `b = a` copies the values of *all fields* of `a` into `b`.
 </details>
 
-### 7. Assigning a structure variable (2)
+### 8. Assigning a structure variable (2)
 ```cpp
 #include <iostream>
 
@@ -259,7 +290,7 @@ It copies *all* fields indiscriminately.
 In the end, `b` has `f1 = 5`, `f2 = 6`.
 </details>
 
-### 8. Structure address (1)
+### 9. Structure address (1)
 ```cpp
 #include <iostream>
 
@@ -287,7 +318,7 @@ int main()
 In the initialization of `b`, `*pa` is essentially equivalent to directly accessing `a`. This is the same situation as above.
 </details>
 
-### 9. Structure address (1)
+### 10. Structure address (1)
 ```cpp
 #include <iostream>
 
@@ -319,7 +350,7 @@ it takes the address of variable `a`.
 When dereferencing that address, you always get the current value of `a`.
 </details>
 
-### 10. The `->` operator
+### 11. The `->` operator
 ```cpp
 #include <iostream>
 
@@ -353,7 +384,7 @@ This can also be written as `(*pa).f1`.
 In practice, it is equivalent to `a.f1`.
 </details>
 
-### 11. Overwriting through an address
+### 12. Overwriting through an address
 ```cpp
 #include <iostream>
 
@@ -385,7 +416,7 @@ This means `a.f1 = 5`, `a.f2 = 6`.
 Similarly, `fp->f2` prints `6`.
 </details>
 
-### 12. Address of a structure type
+### 13. Address of a structure type
 ```cpp
 #include <iostream>
 
@@ -410,7 +441,7 @@ This is not allowed because structure `A` itself stores no data.
 Data can be stored in a *variable of type `A`*, which must be created first.
 </details>
 
-### 13. Address of a type field
+### 14. Address of a type field
 ```cpp
 #include <iostream>
 
@@ -434,7 +465,7 @@ int main()
 This is not allowed. The explanation is the same as in the previous example.
 </details>
 
-### 14. An address field
+### 15. An address field
 ```cpp
 #include <iostream>
 
@@ -464,7 +495,7 @@ After that, `num` is overwritten with `2`.
 It prints the address of `num`, then `2`.
 </details>
 
-### 15. An array field of addresses
+### 16. An array field of addresses
 ```cpp
 #include <iostream>
 
@@ -513,7 +544,7 @@ It prints:
 
 </details>
 
-### 16. A nested structure
+### 17. A nested structure
 ```cpp
 #include <iostream>
 
@@ -553,7 +584,53 @@ This is called nesting, and it is used constantly in programming.
 Here, in the end, `a.f` equals `3`, and `a.nested.f` equals `6`.
 </details>
 
-### 17. Why will this code not compile?
+### 18. Copying a nested structure
+```cpp
+#include <iostream>
+
+struct Nested
+{
+    int f;
+};
+
+struct A
+{
+    Nested nested;
+    int f;
+};
+
+int main()
+{
+    A a { .nested = { 1 }, .f = 2 };
+    A b { a };
+
+    a.nested.f = 3;
+    a.f = 4;
+
+    std::cout << b.nested.f << std::endl;
+    std::cout << b.f << std::endl;
+    std::cout << a.nested.f << std::endl;
+    std::cout << a.f << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+`A b{ a }` copies the values of *all fields*, including the whole nested structure.
+
+At the moment of copying, `a` holds `nested.f = 1`, `f = 2`,
+so `b` receives the same values: `b.nested.f = 1`, `b.f = 2`.
+But it is a separate copy in `b`'s own memory: the `Nested` structure itself
+is stored inside `A` by value, not by address.
+
+So `a.nested.f = 3` and `a.f = 4`
+affect only `a`, while `b` stays untouched.
+
+It prints `1`, `2`, `3`, `4`.
+</details>
+
+### 19. Why will this code not compile?
 
 ```cpp
 struct A
@@ -571,7 +648,7 @@ an infinite amount of memory. It is possible to include a pointer to another suc
 because its size does not depend on the size of the structure.
 </details>
 
-### 18. Linked list
+### 20. Linked list
 ```cpp
 #include <iostream>
 
@@ -613,7 +690,7 @@ The null pointer in the last node of the list (`nullptr`) marks the end of the l
 The code prints `2`, then `1`, and then crashes on the last line when it dereferences a null pointer (segmentation fault).
 </details>
 
-### 19. Structure size (1)
+### 21. Structure size (1)
 ```cpp
 #include <iostream>
 
@@ -640,7 +717,7 @@ Both forms are equivalent.
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
 </details>
 
-### 20. Structure size (2)
+### 22. Structure size (2)
 ```cpp
 #include <iostream>
 
@@ -665,7 +742,7 @@ int main()
 The total is 24 bytes.
 </details>
 
-### 21. Field address from a structure address
+### 23. Field address from a structure address
 ```cpp
 #include <iostream>
 
@@ -695,7 +772,7 @@ This demonstrates that you can take the address of a field after applying `->`.
 It prints `2`.
 </details>
 
-### 22. Field address relative to a structure address
+### 24. Field address relative to a structure address
 ```cpp
 #include <iostream>
 
@@ -722,7 +799,7 @@ It prints `0`.
 The first field of a structure and the structure itself are always located at the same memory address.
 </details>
 
-### 23. (advanced level): Structure size (3)
+### 25. (advanced level): Structure size (3)
 ```cpp
 #include <iostream>
 
@@ -766,7 +843,7 @@ If a structure contains a field of another structure type, its slot is no smalle
 Alignment can be disabled using `#pragma pack`.
 </details>
 
-### 24. (advanced level): Structure size (4)
+### 26. (advanced level): Structure size (4)
 ```cpp
 #include <iostream>
 
@@ -792,7 +869,7 @@ The reason is that 2 objects cannot have the same memory address.
 Objects are covered in the next lab.
 </details>
 
-### 25. (advanced level): Field offsets
+### 27. (advanced level): Field offsets
 ```cpp
 #include <iostream>
 
@@ -817,7 +894,7 @@ int main()
 It prints `0` for `a` and `4` for `b`.
 </details>
 
-### 26. Initializing an array field
+### 28. Initializing an array field
 ```cpp
 #include <iostream>
 
@@ -843,7 +920,45 @@ int main()
 It prints `1`, `2`.
 </details>
 
-### 27. Copying a structure with a pointer field
+### 29. Copying a structure with an array field
+```cpp
+#include <iostream>
+
+struct A
+{
+    int arr[2];
+};
+
+int main()
+{
+    A a { { 1, 2 } };
+    A b { a };
+
+    a.arr[0] = 3;
+
+    std::cout << b.arr[0] << std::endl;
+    std::cout << b.arr[1] << std::endl;
+    std::cout << a.arr[0] << std::endl;
+    std::cout << a.arr[1] << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+`A b{ a }` copies the values of *all fields*, including the whole array, element by element.
+
+At the moment of copying, `a` holds `arr[0] = 1`, `arr[1] = 2`,
+so `b` receives the same values: `b.arr[0] = 1`, `b.arr[1] = 2`.
+But it is a separate copy in `b`'s own memory: the array `arr` itself
+is stored inside `A` by value, not by address.
+
+So `a.arr[0] = 3` affects only `a`, while `b` stays untouched.
+
+It prints `1`, `2`, `3`, `2`.
+</details>
+
+### 30. Copying a structure with a pointer field
 ```cpp
 #include <iostream>
 
@@ -883,7 +998,7 @@ while `s2.a` stays untouched.
 It prints `2`, `1`.
 </details>
 
-### 28. An array of structures
+### 31. An array of structures
 ```cpp
 #include <iostream>
 
