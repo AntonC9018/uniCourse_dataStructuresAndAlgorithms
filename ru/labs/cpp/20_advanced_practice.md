@@ -515,7 +515,9 @@ slug: ru/cpp/labs/advanced-practice
   </summary>
 
   Тот же холодильник и морозилка, что и раньше, но поиск идет через `span` —
-  вид на массив полок вместо самого массива:
+  вид на массив полок вместо самого массива.
+  Имя то же, что у прошлого `move_food`, но параметры другие (перегрузка):
+  что найти и куда положить сгруппированы в отдельную структуру запроса:
 
   ```cpp
   #include <array>
@@ -537,23 +539,29 @@ slug: ru/cpp/labs/advanced-practice
   {
       std::array<std::optional<Food>, 2> shelves;
   };
+
+  struct FoodMove
+  {
+      std::string_view name;
+      std::size_t toIndex;
+  };
   ```
 
   Допустим, на полке 1 холодильника лежит пицца, а полка 1 морозилки пуста.
-  Вызывающая сторона передает `"pizza"` как имя для поиска.
+  Вызывающая сторона упаковывает `"pizza"` и `1` в `FoodMove`.
   `span` перебирает слоты полки по очереди: в слоте 0 пиццы нет, поэтому пропускаем его;
   в слоте 1 есть пицца, поэтому копируем ее в морозилку и очищаем старый слот,
   затем сообщаем об успехе через `true`.
   Если ни в одном слоте нет продукта с таким именем, возвращаем `false` и ничего не трогаем:
 
   ```cpp
-  bool move_pizza(Fridge& fridge, Freezer& to, std::size_t toIndex, std::string_view name)
+  bool move_food(Fridge& fridge, Freezer& to, FoodMove move)
   {
-      if (toIndex >= to.shelves.size())
+      if (move.toIndex >= to.shelves.size())
       {
           return false;
       }
-      if (to.shelves[toIndex].has_value())
+      if (to.shelves[move.toIndex].has_value())
       {
           return false;
       }
@@ -564,11 +572,11 @@ slug: ru/cpp/labs/advanced-practice
           {
               continue;
           }
-          if (slot->name != name)
+          if (slot->name != move.name)
           {
               continue;
           }
-          to.shelves[toIndex] = slot;
+          to.shelves[move.toIndex] = slot;
           slot.reset();
           return true;
       }
@@ -586,7 +594,10 @@ slug: ru/cpp/labs/advanced-practice
       .name = "pizza",
   };
   Freezer freezer{};
-  bool moved{ move_pizza(fridge, freezer, 1, "pizza") };
+  bool moved{ move_food(fridge, freezer, FoodMove{
+      .name = "pizza",
+      .toIndex = 1,
+  }) };
   ```
   </details>
 

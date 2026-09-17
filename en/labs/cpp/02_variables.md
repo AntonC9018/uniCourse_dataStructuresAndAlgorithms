@@ -302,6 +302,7 @@ a = "abc"; // error: `a` is `int`, it cannot become a string later
 ### 10. `auto` without initialization
 ```cpp
 auto a;
+a = 5;
 ```
 
 <details>
@@ -309,6 +310,8 @@ auto a;
 
 This will not compile: `auto` needs an initializer expression to infer the type from.
 With no expression, the compiler has nothing to replace `auto` with.
+Assigning `5` on the next line does not fix it —
+the type must be fixed at the definition and cannot be inferred retroactively from a later assignment.
 </details>
 
 ### 11. `auto` from another variable
