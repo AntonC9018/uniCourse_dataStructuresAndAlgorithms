@@ -833,7 +833,7 @@ slug: en/cpp/labs/advanced-practice
 - **Amusement park.** A park has 3 attractions.
   Each visitor ranks all 3 attractions by preference,
   doesn't visit the same one back-to-back,
-  and may visit at most 3 attractions in total.
+  and may visit attractions 4 times in total.
   Every tick finished visitors get off —
   or leave the park when their quota is used up —
   and visitors without a ride take the first free attraction from their preferences.
@@ -870,20 +870,18 @@ slug: en/cpp/labs/advanced-practice
   #include <cassert>
   #include <string_view>
 
+  constexpr int familySize{ 5 };
+
   struct Person
   {
       std::string_view name;
-      std::bitset<5> hugged{};
+      std::bitset<familySize> hugged{};
   };
 
-  `std::bitset` fixes its size at compile time (`5` is part of the type).
-  The dynamically resizable equivalent is `std::vector<bool>`
-  (bit-packed; needs `<vector>`), or `boost::dynamic_bitset` outside the standard library.
-
-  bool hug(std::array<Person, 5>& family, int i, int j)
+  bool hug(std::array<Person, familySize>& family, int i, int j)
   {
       assert(i != j);
-      assert(i >= 0 && i < 5 && j >= 0 && j < 5);
+      assert(i >= 0 && i < familySize && j >= 0 && j < familySize);
       if (family[i].hugged.test(j))
       {
           return false; // already hugged: nothing new
@@ -893,11 +891,11 @@ slug: en/cpp/labs/advanced-practice
       return true;
   }
 
-  bool all_hugged(const std::array<Person, 5>& family)
+  bool all_hugged(const std::array<Person, familySize>& family)
   {
       for (const Person& person : family)
       {
-          if (person.hugged.count() < 4) // everyone but yourself
+          if (person.hugged.count() < familySize - 1) // everyone but yourself
           {
               return false;
           }
@@ -910,7 +908,7 @@ slug: en/cpp/labs/advanced-practice
   ```cpp
   int main()
   {
-      std::array<Person, 5> family{
+      std::array<Person, familySize> family{
           Person{ .name = "ann" },
           Person{ .name = "bob" },
           Person{ .name = "cid" },
@@ -918,9 +916,9 @@ slug: en/cpp/labs/advanced-practice
           Person{ .name = "eva" },
       };
       int hugs{ 0 };
-      for (int i = 0; i < 5; i++)
+      for (int i = 0; i < familySize; i++)
       {
-          for (int j = i + 1; j < 5; j++)
+          for (int j = i + 1; j < familySize; j++)
           {
               if (hug(family, i, j))
               {
