@@ -382,7 +382,8 @@ slug: en/cpp/labs/advanced-practice
 - **Soak laundry.** A basket holds 3 pieces of clothing.
   A laundry has 2 baskets.
   Each piece has a label and is dirty, soaked, or clean.
-  Soak every dirty shirt in basket 0. Count how many were soaked.
+  Take out every clean shirt from basket 0, then soak every dirty shirt in basket 0.
+  Count how many were taken and how many were soaked.
 
   <details>
   <summary>
@@ -417,18 +418,37 @@ slug: en/cpp/labs/advanced-practice
 
   struct Laundry
   {
-      std::array<Basket, 2> tubs;
+      std::array<Basket, 2> baskets;
   };
   ```
 
-  Say slots 0 and 1 of basket 0 hold dirty shirts and slot 2 is empty.
-  The loop borrows each slot in turn (`auto&`, see the references lab):
-  slot 0 is dirty, so mark it soaked and count 1;
-  slot 1 is dirty, so mark it soaked and count 2;
-  slot 2 is empty, so skip it.
-  The function returns 2:
+  Say slots 0 and 1 of basket 0 hold dirty shirts and slot 2 holds a clean shirt.
+  First take out the clean ones: the loop borrows each slot in turn
+  and clears every slot that holds a clean piece, counting 1.
+  Then soak the dirty ones: a second loop over the same slots
+  marks every dirty piece soaked, counting 2.
+  An empty slot is skipped in both loops.
 
   ```cpp
+  int take_clean_shirts(Basket& basket)
+  {
+      int taken{ 0 };
+      for (auto& slot : basket.slots)
+      {
+          if (!slot.has_value())
+          {
+              continue;
+          }
+          if (slot->state != ClothState::Clean)
+          {
+              continue;
+          }
+          slot.reset();
+          taken++;
+      }
+      return taken;
+  }
+
   int soak_basket(Basket& basket)
   {
       int soaked{ 0 };
@@ -452,8 +472,9 @@ slug: en/cpp/labs/advanced-practice
   Usage from `main`:
   ```cpp
   Laundry laundry{};
-  laundry.tubs[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
-  int n{ soak_basket(laundry.tubs[0]) };
+  laundry.baskets[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
+  int taken{ take_clean_shirts(laundry.baskets[0]) };
+  int n{ soak_basket(laundry.baskets[0]) };
   ```
   </details>
 
@@ -467,13 +488,12 @@ slug: en/cpp/labs/advanced-practice
   Each spot holds a car or is empty.
   Put the new car on the first empty spot. Walk the spots with pointer arithmetic.
 
-- **Car engine.** A car holds a pointer to its engine. The engine has wear 0 to 100.
-  No engine means an empty pointer.
-  Check the engine through the car and repair the engine of car 1 to 0.
+- **Car engine.** A garage holds 4 cars. Each car has its own engine. The engine has wear from 0 to 100.
+  Check the engine through car 1 and repair the engine of car 1 to wear 0.
 
-- **Cup rail.** A rail holds pointers to 4 cups. Some hooks are empty.
+- **Cup rail.** A rail holds 4 cups. Some hooks are empty.
   Put a new cup on the first empty hook and take the cup from hook 1.
-  The pointer moves with the cup.
+  The cup moves with ownership: copy it over, then clear the old spot.
 
 - **Hero party.** A squad holds 3 heroes. Each hero has health and shield.
   Heal hero 1 by 20. Count how many heroes still need healing.
@@ -487,6 +507,84 @@ slug: en/cpp/labs/advanced-practice
 - **Find pizza.** A fridge holds 3 foods with names.
   Find the pizza and move it to freezer shelf 1. Return if it was found.
   Look at the shelves through a span.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  Same fridge and freezer as before, but the search goes through a `span` —
+  a view over the shelves array instead of the array itself:
+
+  ```cpp
+  #include <array>
+  #include <optional>
+  #include <span>
+  #include <string_view>
+
+  struct Food
+  {
+      std::string_view name;
+  };
+
+  struct Fridge
+  {
+      std::array<std::optional<Food>, 3> shelves;
+  };
+
+  struct Freezer
+  {
+      std::array<std::optional<Food>, 2> shelves;
+  };
+  ```
+
+  Say fridge shelf 1 holds the pizza and freezer shelf 1 is free.
+  The `span` borrows each shelf slot in turn: slot 0 has no pizza, so skip it;
+  slot 1 has the pizza, so copy it into the freezer and clear the old slot,
+  then report success with `true`.
+  If no slot holds the pizza, report `false` and touch nothing:
+
+  ```cpp
+  bool move_pizza(Fridge& fridge, Freezer& to, std::size_t toIndex)
+  {
+      if (toIndex >= to.shelves.size())
+      {
+          return false;
+      }
+      if (to.shelves[toIndex].has_value())
+      {
+          return false;
+      }
+      std::span<std::optional<Food>> shelf{ fridge.shelves };
+      for (auto& slot : shelf)
+      {
+          if (!slot.has_value())
+          {
+              continue;
+          }
+          if (slot->name != "pizza")
+          {
+              continue;
+          }
+          to.shelves[toIndex] = slot;
+          slot.reset();
+          return true;
+      }
+      return false;
+  }
+  ```
+
+  Writes through the span reach the fridge itself, because the span
+  stores the address of the shelves, not a copy of them.
+
+  Usage from `main`:
+  ```cpp
+  Fridge fridge{};
+  fridge.shelves[1] = Food{ .name = "pizza" };
+  Freezer freezer{};
+  bool moved{ move_pizza(fridge, freezer, 1) };
+  ```
+  </details>
 
 - **Soak dishes.** A kitchen has 2 racks with 3 plates each. Each plate is dirty or soaked.
   Soak every dirty plate in rack 0.
@@ -506,3 +604,185 @@ slug: en/cpp/labs/advanced-practice
 - **Hot chain.** A kitchen has a fridge, a freezer, and a microwave.
   Put the pizza from fridge shelf 0 into the microwave, heat it,
   then move it to freezer shelf 1. Each step returns if it worked.
+
+- **Barbershop.** A shop has room for 4 waiting clients and 2 workers.
+  Each client has a label and hair left to cut on the head, beard, and armpits, in minutes.
+  Clients are created separately in `main` and only referenced by the shop.
+  Add each client to the first free spot in the queue.
+  Assign idle workers to waiting clients.
+  Each tick every busy worker cuts 1 minute off one unfinished part.
+  When a client is fully cut, the worker becomes free.
+  Simulate with a `while` loop until all clients are done.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  Clients live in `main`, the shop only borrows them —
+  that is why both the queue and the workers store pointers, not copies.
+  A cut through a pointer is visible in the client itself,
+  and the same client is first referenced from the queue, then from a worker.
+
+  ```cpp
+  #include <array>
+  #include <string_view>
+
+  struct MinutesLeft
+  {
+      int value;
+  };
+
+  struct HairCompletion
+  {
+      MinutesLeft head;
+      MinutesLeft beard;
+      MinutesLeft armpits;
+  };
+
+  struct Client
+  {
+      std::string_view label;
+      HairCompletion completion;
+  };
+
+  struct Worker
+  {
+      Client* assignedClient{ nullptr };
+  };
+
+  struct Shop
+  {
+      std::array<Client*, 4> queue{};
+      std::array<Worker, 2> workers{};
+  };
+  ```
+
+  Adding puts the pointer into the first free queue spot.
+  A `nullptr` client is refused:
+
+  ```cpp
+  bool add_client(Shop& shop, Client* client)
+  {
+      if (client == nullptr)
+      {
+          return false;
+      }
+      for (auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              continue;
+          }
+          slot = client;
+          return true;
+      }
+      return false;
+  }
+  ```
+
+  Assigning moves waiting pointers from the queue to idle workers in two separate loops:
+  the outer loop visits each worker, the inner loop finds the first waiting client.
+  The queue spot is cleared, so each client is referenced from exactly one place:
+
+  ```cpp
+  void assign_workers(Shop& shop)
+  {
+      for (auto& worker : shop.workers)
+      {
+          if (worker.assignedClient != nullptr)
+          {
+              continue;
+          }
+          for (auto& slot : shop.queue)
+          {
+              if (slot == nullptr)
+              {
+                  continue;
+              }
+              worker.assignedClient = slot;
+              slot = nullptr;
+              break;
+          }
+      }
+  }
+  ```
+
+  One tick cuts 1 minute off the first unfinished part: head, then beard, then armpits.
+  When the last part reaches 0, the worker lets the pointer go and reports `true`:
+
+  ```cpp
+  bool tick_worker(Worker& worker)
+  {
+      Client* client{ worker.assignedClient };
+      if (client == nullptr)
+      {
+          return false;
+      }
+      if (client->completion.head.value > 0)
+      {
+          client->completion.head.value--;
+      }
+      else if (client->completion.beard.value > 0)
+      {
+          client->completion.beard.value--;
+      }
+      else if (client->completion.armpits.value > 0)
+      {
+          client->completion.armpits.value--;
+      }
+      bool done{ client->completion.head.value == 0
+          && client->completion.beard.value == 0
+          && client->completion.armpits.value == 0 };
+      if (done)
+      {
+          worker.assignedClient = nullptr;
+          return true;
+      }
+      return false;
+  }
+
+  bool shop_done(const Shop& shop)
+  {
+      for (const auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              return false;
+          }
+      }
+      for (const auto& worker : shop.workers)
+      {
+          if (worker.assignedClient != nullptr)
+          {
+              return false;
+          }
+      }
+      return true;
+  }
+  ```
+
+  The simulation is a plain `while` loop: assign, then tick every worker, until done.
+  Clients must outlive the shop, because the shop never copies them:
+
+  ```cpp
+  int main()
+  {
+      Client alice{ .label = "alice", .completion = { .head = { 1 }, .beard = { 0 }, .armpits = { 1 } } };
+      Client bob{ .label = "bob", .completion = { .head = { 2 }, .beard = { 1 }, .armpits = { 0 } } };
+
+      Shop shop{};
+      add_client(shop, &alice);
+      add_client(shop, &bob);
+
+      while (!shop_done(shop))
+      {
+          assign_workers(shop);
+          for (auto& worker : shop.workers)
+          {
+              tick_worker(worker);
+          }
+      }
+  }
+  ```
+  </details>

@@ -130,7 +130,16 @@ std::cout << a << std::endl;
 <summary>Correct answer:</summary>
 
 You cannot define two variables with the same name.
-You can overwrite the values of existing variables.
+This is forbidden even if the second definition has a different type:
+```cpp
+int a = 5;
+double a = 6; // error too: redefinition of `a`
+```
+You can only overwrite the value of the existing variable:
+```cpp
+int a = 5;
+a = 6;
+```
 </details>
 
 ### 4. Assigning one variable to another
@@ -154,6 +163,13 @@ It is also important to remember that assigning one variable to another does not
 `a = b` copies the value in cell `b` into cell `a`.
 This is a one-time action; the cells will not be linked after this line executes.
 No matter how you change `b` afterwards, it will not affect `a`.
+</details>
+
+<details>
+<summary>What counts as an expression here?</summary>
+
+A literal (`5`, `6`, `7`), a variable read (`b`), and even the whole assignment (`a = b`) are all expressions.
+Each of them evaluates to a single value with its own type.
 </details>
 
 <details>
@@ -242,11 +258,17 @@ std::cout << sizeof(a) << std::endl;
 <summary>Answer:</summary>
 
 `sizeof` is evaluated at compile time and yields the size, in bytes, of a variable or type.
+It does not execute at run time: the compiler replaces `sizeof(...)` with a plain number.
 
 For example:
 - `sizeof(int)` produces `4`;
-- `sizeof(a)` is equivalent to `sizeof(тип_а)`, that is, `sizeof(int)`, that is, `4`;
+- `sizeof(a)` is equivalent to `sizeof(type of a)`, that is, `sizeof(int)`, that is, `4`;
 - `sizeof(uint8_t)` produces `1` (8 bits — 1 byte).
+
+The operand is never actually computed.
+In `sizeof(a + 1)`, the expression `a + 1` is not evaluated;
+the compiler only looks at the type its result *would* have (here, `int`),
+because types are known only at compile time and do not survive to run time.
 
 </details>
 
@@ -260,10 +282,20 @@ auto a = 5;
 <details>
 <summary>What does <code>auto</code> mean?</summary>
 
-`auto` means that the type is automatically inferred from the right-hand side of the definition.
-Since the right-hand side is an integer literal, `a` will have type `int`.
+`auto` means that the type is automatically inferred from the type of the initializer expression,
+not just from the text on the right-hand side.
+Since the expression `5` has type `int`, `a` will have type `int`.
 
 You can think of `auto` as being replaced with `int` during compilation.
+
+`auto` does not work without initialization: `auto a;` will not compile,
+because there is no expression to infer the type from.
+
+The inferred type is static (fixed at compile time) and cannot change later:
+```cpp
+auto a = 5;
+a = "abc"; // error: `a` is `int`, it cannot become a string later
+```
 </details>
 
 ### 10. `auto` with uniform initialization

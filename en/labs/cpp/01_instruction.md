@@ -98,6 +98,14 @@ When it runs, the statements in the `main` function will execute,
 printing "Hello world".
 </details>
 
+<details>
+<summary>What does <code>std::endl</code> do?</summary>
+
+`endl` stands for "end line" (`end` + `line`).
+It ends the current line of output (like pressing Enter)
+and flushes the output so it appears on the screen right away.
+</details>
+
 ### 4. Printing on the same line
 ```cpp
 #include <iostream>
@@ -230,7 +238,34 @@ C++ is case-sensitive for function names and the names of other entities.
 There is no `main` function, so the program will not link, just as in [the earlier example](#5-empty-function-a).
 </details>
 
-### 10. Comment
+### 10. `COUT` instead of `cout`
+```cpp
+#include <iostream>
+
+int main()
+{
+    std::COUT << "Hello World." << std::endl;
+}
+```
+
+<!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
+
+<details>
+<summary>Answer</summary>
+
+A compilation error will occur because C++ is case-sensitive:
+`cout` must be written in lowercase.
+`COUT` in all caps is a different name, and there is no such name in `std`.
+
+```
+test.cpp: In function ‘int main()’:
+test.cpp:5:10: error: ‘COUT’ is not a member of ‘std’
+    5 |     std::COUT << "Hello World." << std::endl;
+      |          ^~~~
+```
+</details>
+
+### 11. Comment
 ```cpp
 #include <iostream>
 
@@ -248,7 +283,7 @@ Only World will be printed.
 The line that prints Hello is commented out (`//` at the beginning), so it will not execute.
 </details>
 
-### 11. Everything commented out
+### 12. Everything commented out
 ```cpp
 int main()
 {
@@ -267,7 +302,7 @@ the compiler does not need to know about `std::cout`.
 When run, it will print nothing.
 </details>
 
-### 12. A function calls a function
+### 13. A function calls a function
 ```cpp
 #include <iostream>
 
@@ -287,7 +322,7 @@ void B()
 The source code will compile, but the program will not link because there is no `main` function.
 </details>
 
-### 13. `main` calls a function that calls a function
+### 14. `main` calls a function that calls a function
 ```cpp
 #include <iostream>
 
@@ -324,7 +359,7 @@ std::cout << "B-after" << std::endl;
 ```
 </details>
 
-### 14. Almost the same situation
+### 15. Almost the same situation
 Identify the difference between this example and the previous one.
 What changed, and will it change the outcome?
 

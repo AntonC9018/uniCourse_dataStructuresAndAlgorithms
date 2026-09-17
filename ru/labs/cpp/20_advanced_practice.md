@@ -380,7 +380,8 @@ slug: ru/cpp/labs/advanced-practice
 - **Замачивание белья.** Корзина вмещает 3 вещи.
   В прачечной 2 корзины.
   У каждой вещи есть метка и состояние: грязная, замоченная или чистая.
-  Замочите каждую грязную рубашку в корзине 0. Посчитайте, сколько было замочено.
+  Достаньте каждую чистую рубашку из корзины 0, затем замочите каждую грязную рубашку в корзине 0.
+  Посчитайте, сколько достали и сколько замочили.
 
   <details>
   <summary>
@@ -415,18 +416,37 @@ slug: ru/cpp/labs/advanced-practice
 
   struct Laundry
   {
-      std::array<Basket, 2> tubs;
+      std::array<Basket, 2> baskets;
   };
   ```
 
-  Допустим, слоты 0 и 1 корзины 0 хранят грязные рубашки, а слот 2 пуст.
-  Цикл перебирает слоты по очереди по ссылке (`auto&`, см. лабу про ссылки):
-  слот 0 грязный, поэтому помечаем его замоченным и засчитываем 1;
-  слот 1 грязный, поэтому помечаем его замоченным и засчитываем 2;
-  слот 2 пуст, поэтому пропускаем его.
-  Функция возвращает 2:
+  Допустим, слоты 0 и 1 корзины 0 хранят грязные рубашки, а слот 2 хранит чистую рубашку.
+  Сначала достаем чистые: цикл перебирает слоты по очереди по ссылке
+  и очищает каждый слот с чистой вещью, засчитывая 1.
+  Затем замачиваем грязные: второй цикл по тем же слотам
+  помечает каждую грязную вещь замоченной, засчитывая 2.
+  Пустой слот пропускается в обоих циклах.
 
   ```cpp
+  int take_clean_shirts(Basket& basket)
+  {
+      int taken{ 0 };
+      for (auto& slot : basket.slots)
+      {
+          if (!slot.has_value())
+          {
+              continue;
+          }
+          if (slot->state != ClothState::Clean)
+          {
+              continue;
+          }
+          slot.reset();
+          taken++;
+      }
+      return taken;
+  }
+
   int soak_basket(Basket& basket)
   {
       int soaked{ 0 };
@@ -450,8 +470,9 @@ slug: ru/cpp/labs/advanced-practice
   Использование из `main`:
   ```cpp
   Laundry laundry{};
-  laundry.tubs[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
-  int n{ soak_basket(laundry.tubs[0]) };
+  laundry.baskets[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
+  int taken{ take_clean_shirts(laundry.baskets[0]) };
+  int n{ soak_basket(laundry.baskets[0]) };
   ```
   </details>
 
@@ -465,13 +486,12 @@ slug: ru/cpp/labs/advanced-practice
   Каждое место либо хранит машину, либо пусто.
   Поставьте новую машину на первое пустое место. Пройдите по местам с помощью арифметики указателей.
 
-- **Двигатель машины.** Машина хранит указатель на свой двигатель. У двигателя есть износ от 0 до 100.
-  Отсутствие двигателя означает пустой указатель.
-  Проверьте двигатель через машину и отремонтируйте двигатель машины 1 до износа 0.
+- **Двигатель машины.** В гараже 4 машины. У каждой машины свой двигатель. У двигателя есть износ от 0 до 100.
+  Проверьте двигатель через машину 1 и отремонтируйте двигатель машины 1 до износа 0.
 
-- **Рейлинг для чашек.** Рейлинг хранит указатели на 4 чашки. Некоторые крючки пусты.
+- **Рейлинг для чашек.** Рейлинг хранит 4 чашки. Некоторые крючки пусты.
   Повесьте новую чашку на первый пустой крючок и снимите чашку с крючка 1.
-  Указатель движется вместе с чашкой.
+  Чашка перемещается с владением: скопируйте ее, затем очистите старое место.
 
 - **Отряд героев.** Отряд вмещает 3 героев. У каждого героя есть здоровье и щит.
   Полечите героя 1 на 20 единиц здоровья. Посчитайте, скольким героям все еще нужно лечение.
@@ -485,6 +505,84 @@ slug: ru/cpp/labs/advanced-practice
 - **Найти пиццу.** Холодильник вмещает 3 продукта с названиями.
   Найдите пиццу и переместите ее на полку 1 морозилки. Верните признак, была ли она найдена.
   Обращайтесь к полкам через `std::span`.
+
+  <details>
+  <summary>
+  Возможное решение
+  </summary>
+
+  Тот же холодильник и морозилка, что и раньше, но поиск идет через `span` —
+  вид на массив полок вместо самого массива:
+
+  ```cpp
+  #include <array>
+  #include <optional>
+  #include <span>
+  #include <string_view>
+
+  struct Food
+  {
+      std::string_view name;
+  };
+
+  struct Fridge
+  {
+      std::array<std::optional<Food>, 3> shelves;
+  };
+
+  struct Freezer
+  {
+      std::array<std::optional<Food>, 2> shelves;
+  };
+  ```
+
+  Допустим, на полке 1 холодильника лежит пицца, а полка 1 морозилки пуста.
+  `span` перебирает слоты полки по очереди: в слоте 0 пиццы нет, поэтому пропускаем его;
+  в слоте 1 есть пицца, поэтому копируем ее в морозилку и очищаем старый слот,
+  затем сообщаем об успехе через `true`.
+  Если пиццы ни в одном слоте нет, возвращаем `false` и ничего не трогаем:
+
+  ```cpp
+  bool move_pizza(Fridge& fridge, Freezer& to, std::size_t toIndex)
+  {
+      if (toIndex >= to.shelves.size())
+      {
+          return false;
+      }
+      if (to.shelves[toIndex].has_value())
+      {
+          return false;
+      }
+      std::span<std::optional<Food>> shelf{ fridge.shelves };
+      for (auto& slot : shelf)
+      {
+          if (!slot.has_value())
+          {
+              continue;
+          }
+          if (slot->name != "pizza")
+          {
+              continue;
+          }
+          to.shelves[toIndex] = slot;
+          slot.reset();
+          return true;
+      }
+      return false;
+  }
+  ```
+
+  Записи через `span` доходят до самого холодильника, потому что `span`
+  хранит адрес полок, а не их копию.
+
+  Использование из `main`:
+  ```cpp
+  Fridge fridge{};
+  fridge.shelves[1] = Food{ .name = "pizza" };
+  Freezer freezer{};
+  bool moved{ move_pizza(fridge, freezer, 1) };
+  ```
+  </details>
 
 - **Замочить посуду.** На кухне 2 сушилки по 3 тарелки. Каждая тарелка бывает грязной или замоченной.
   Замочите каждую грязную тарелку в сушилке 0.
@@ -504,3 +602,185 @@ slug: ru/cpp/labs/advanced-practice
 - **Горячая цепочка.** На кухне есть холодильник, морозилка и микроволновка.
   Положите пиццу с полки 0 холодильника в микроволновку, разогрейте ее,
   затем переместите на полку 1 морозилки. Каждый шаг возвращает признак, получилось ли его выполнить.
+
+- **Барбершоп.** В салоне есть место для 4 ожидающих клиентов и 2 мастеров.
+  У каждого клиента есть метка и волосы, которые осталось состричь на голове, бороде и подмышках, в минутах.
+  Клиенты создаются отдельно в `main`, а салон их только заимствует.
+  Добавьте каждого клиента на первое свободное место в очереди.
+  Назначьте свободных мастеров ожидающим клиентам.
+  Каждый тик каждый занятый мастер состригает 1 минуту с одной незавершенной части.
+  Когда клиент полностью пострижен, мастер освобождается.
+  Симулируйте через цикл `while`, пока все клиенты не будут обслужены.
+
+  <details>
+  <summary>
+  Возможное решение
+  </summary>
+
+  Клиенты живут в `main`, а салон их только заимствует —
+  поэтому и очередь, и мастера хранят указатели, а не копии.
+  Стрижка через указатель видна в самом клиенте,
+  а один и тот же клиент сначала наблюдается из очереди, затем из мастера.
+
+  ```cpp
+  #include <array>
+  #include <string_view>
+
+  struct MinutesLeft
+  {
+      int value;
+  };
+
+  struct HairCompletion
+  {
+      MinutesLeft head;
+      MinutesLeft beard;
+      MinutesLeft armpits;
+  };
+
+  struct Client
+  {
+      std::string_view label;
+      HairCompletion completion;
+  };
+
+  struct Worker
+  {
+      Client* assignedClient{ nullptr };
+  };
+
+  struct Shop
+  {
+      std::array<Client*, 4> queue{};
+      std::array<Worker, 2> workers{};
+  };
+  ```
+
+  Добавление кладет указатель на первое свободное место в очереди.
+  Пустой указатель отклоняется:
+
+  ```cpp
+  bool add_client(Shop& shop, Client* client)
+  {
+      if (client == nullptr)
+      {
+          return false;
+      }
+      for (auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              continue;
+          }
+          slot = client;
+          return true;
+      }
+      return false;
+  }
+  ```
+
+  Назначение переносит ожидающие указатели из очереди к свободным мастерам двумя отдельными циклами:
+  внешний цикл обходит каждого мастера, внутренний ищет первого ожидающего клиента.
+  Место в очереди очищается, поэтому каждый клиент наблюдается ровно из одного места:
+
+  ```cpp
+  void assign_workers(Shop& shop)
+  {
+      for (auto& worker : shop.workers)
+      {
+          if (worker.assignedClient != nullptr)
+          {
+              continue;
+          }
+          for (auto& slot : shop.queue)
+          {
+              if (slot == nullptr)
+              {
+                  continue;
+              }
+              worker.assignedClient = slot;
+              slot = nullptr;
+              break;
+          }
+      }
+  }
+  ```
+
+  Один тик состригает 1 минуту с первой незавершенной части: сначала голова, затем борода, затем подмышки.
+  Когда последняя часть доходит до 0, мастер отпускает указатель и сообщает `true`:
+
+  ```cpp
+  bool tick_worker(Worker& worker)
+  {
+      Client* client{ worker.assignedClient };
+      if (client == nullptr)
+      {
+          return false;
+      }
+      if (client->completion.head.value > 0)
+      {
+          client->completion.head.value--;
+      }
+      else if (client->completion.beard.value > 0)
+      {
+          client->completion.beard.value--;
+      }
+      else if (client->completion.armpits.value > 0)
+      {
+          client->completion.armpits.value--;
+      }
+      bool done{ client->completion.head.value == 0
+          && client->completion.beard.value == 0
+          && client->completion.armpits.value == 0 };
+      if (done)
+      {
+          worker.assignedClient = nullptr;
+          return true;
+      }
+      return false;
+  }
+
+  bool shop_done(const Shop& shop)
+  {
+      for (const auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              return false;
+          }
+      }
+      for (const auto& worker : shop.workers)
+      {
+          if (worker.assignedClient != nullptr)
+          {
+              return false;
+          }
+      }
+      return true;
+  }
+  ```
+
+  Симуляция это обычный цикл `while`: назначить, затем тикнуть каждого мастера, пока все не готово.
+  Клиенты должны пережить салон, потому что салон их никогда не копирует:
+
+  ```cpp
+  int main()
+  {
+      Client alice{ .label = "alice", .completion = { .head = { 1 }, .beard = { 0 }, .armpits = { 1 } } };
+      Client bob{ .label = "bob", .completion = { .head = { 2 }, .beard = { 1 }, .armpits = { 0 } } };
+
+      Shop shop{};
+      add_client(shop, &alice);
+      add_client(shop, &bob);
+
+      while (!shop_done(shop))
+      {
+          assign_workers(shop);
+          for (auto& worker : shop.workers)
+          {
+              tick_worker(worker);
+          }
+      }
+  }
+  ```
+  </details>
