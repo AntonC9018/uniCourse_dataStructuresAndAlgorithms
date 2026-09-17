@@ -470,7 +470,10 @@ slug: ru/cpp/labs/advanced-practice
   Использование из `main`:
   ```cpp
   Laundry laundry{};
-  laundry.baskets[0].slots[0] = Cloth{ .label = "shirt", .state = ClothState::Dirty };
+  laundry.baskets[0].slots[0] = Cloth{
+      .label = "shirt",
+      .state = ClothState::Dirty,
+  };
   int taken{ take_clean_shirts(laundry.baskets[0]) };
   int n{ soak_basket(laundry.baskets[0]) };
   ```
@@ -537,13 +540,14 @@ slug: ru/cpp/labs/advanced-practice
   ```
 
   Допустим, на полке 1 холодильника лежит пицца, а полка 1 морозилки пуста.
+  Вызывающая сторона передает `"pizza"` как имя для поиска.
   `span` перебирает слоты полки по очереди: в слоте 0 пиццы нет, поэтому пропускаем его;
   в слоте 1 есть пицца, поэтому копируем ее в морозилку и очищаем старый слот,
   затем сообщаем об успехе через `true`.
-  Если пиццы ни в одном слоте нет, возвращаем `false` и ничего не трогаем:
+  Если ни в одном слоте нет продукта с таким именем, возвращаем `false` и ничего не трогаем:
 
   ```cpp
-  bool move_pizza(Fridge& fridge, Freezer& to, std::size_t toIndex)
+  bool move_pizza(Fridge& fridge, Freezer& to, std::size_t toIndex, std::string_view name)
   {
       if (toIndex >= to.shelves.size())
       {
@@ -560,7 +564,7 @@ slug: ru/cpp/labs/advanced-practice
           {
               continue;
           }
-          if (slot->name != "pizza")
+          if (slot->name != name)
           {
               continue;
           }
@@ -578,9 +582,11 @@ slug: ru/cpp/labs/advanced-practice
   Использование из `main`:
   ```cpp
   Fridge fridge{};
-  fridge.shelves[1] = Food{ .name = "pizza" };
+  fridge.shelves[1] = Food{
+      .name = "pizza",
+  };
   Freezer freezer{};
-  bool moved{ move_pizza(fridge, freezer, 1) };
+  bool moved{ move_pizza(fridge, freezer, 1, "pizza") };
   ```
   </details>
 
@@ -604,11 +610,11 @@ slug: ru/cpp/labs/advanced-practice
   затем переместите на полку 1 морозилки. Каждый шаг возвращает признак, получилось ли его выполнить.
 
 - **Барбершоп.** В салоне есть место для 4 ожидающих клиентов и 2 мастеров.
-  У каждого клиента есть метка и волосы, которые осталось состричь на голове, бороде и подмышках, в минутах.
+  У каждого клиента есть метка и волосы, которые осталось состричь, в минутах.
   Клиенты создаются отдельно в `main`, а салон их только заимствует.
   Добавьте каждого клиента на первое свободное место в очереди.
   Назначьте свободных мастеров ожидающим клиентам.
-  Каждый тик каждый занятый мастер состригает 1 минуту с одной незавершенной части.
+  Каждый тик каждый занятый мастер состригает 1 минуту.
   Когда клиент полностью пострижен, мастер освобождается.
   Симулируйте через цикл `while`, пока все клиенты не будут обслужены.
 
@@ -624,6 +630,7 @@ slug: ru/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <string_view>
 
   struct MinutesLeft
@@ -631,17 +638,10 @@ slug: ru/cpp/labs/advanced-practice
       int value;
   };
 
-  struct HairCompletion
-  {
-      MinutesLeft head;
-      MinutesLeft beard;
-      MinutesLeft armpits;
-  };
-
   struct Client
   {
       std::string_view label;
-      HairCompletion completion;
+      MinutesLeft hairCompletion;
   };
 
   struct Worker
@@ -654,18 +654,29 @@ slug: ru/cpp/labs/advanced-practice
       std::array<Client*, 4> queue{};
       std::array<Worker, 2> workers{};
   };
+
+  enum class AddClientResult
+  {
+      Added,
+      FailedQueueFull,
+  };
+
+  enum class TickResult
+  {
+      Unassigned,
+      StillWorking,
+      Done,
+  };
   ```
 
   Добавление кладет указатель на первое свободное место в очереди.
-  Пустой указатель отклоняется:
+  Клиент никогда не должен быть `nullptr`, поэтому это проверяется через assert;
+  полная очередь это обычная неудача, о ней сообщается через результат:
 
   ```cpp
-  bool add_client(Shop& shop, Client* client)
+  AddClientResult add_client(Shop& shop, Client* client)
   {
-      if (client == nullptr)
-      {
-          return false;
-      }
+      assert(client != nullptr); // add_client ожидает, что client никогда не nullptr
       for (auto& slot : shop.queue)
       {
           if (slot != nullptr)
@@ -673,17 +684,34 @@ slug: ru/cpp/labs/advanced-practice
               continue;
           }
           slot = client;
-          return true;
+          return AddClientResult::Added;
       }
-      return false;
+      return AddClientResult::FailedQueueFull;
   }
   ```
 
-  Назначение переносит ожидающие указатели из очереди к свободным мастерам двумя отдельными циклами:
-  внешний цикл обходит каждого мастера, внутренний ищет первого ожидающего клиента.
-  Место в очереди очищается, поэтому каждый клиент наблюдается ровно из одного места:
+  Взятие первого ожидающего клиента это отдельная функция:
+  она находит первое занятое место в очереди, очищает его и отдает указатель.
+  Назначение просто раздает каждому свободному мастеру то, что вернет эта функция —
+  два отдельных цикла, один по мастерам, а внутри второй по очереди.
+  Результат `nullptr` просто оставляет мастера свободным:
 
   ```cpp
+  Client* take_first_waiting(Shop& shop)
+  {
+      for (auto& slot : shop.queue)
+      {
+          if (slot == nullptr)
+          {
+              continue;
+          }
+          Client* found{ slot };
+          slot = nullptr;
+          return found;
+      }
+      return nullptr;
+  }
+
   void assign_workers(Shop& shop)
   {
       for (auto& worker : shop.workers)
@@ -692,52 +720,44 @@ slug: ru/cpp/labs/advanced-practice
           {
               continue;
           }
-          for (auto& slot : shop.queue)
-          {
-              if (slot == nullptr)
-              {
-                  continue;
-              }
-              worker.assignedClient = slot;
-              slot = nullptr;
-              break;
-          }
+          worker.assignedClient = take_first_waiting(shop);
       }
   }
   ```
 
-  Один тик состригает 1 минуту с первой незавершенной части: сначала голова, затем борода, затем подмышки.
-  Когда последняя часть доходит до 0, мастер отпускает указатель и сообщает `true`:
+  Стрижка пересоздает значение `MinutesLeft` вместо изменения на месте.
+  Проверка готовности клиента это тоже отдельная функция:
 
   ```cpp
-  bool tick_worker(Worker& worker)
+  void cut_one_minute(MinutesLeft* minutes)
+  {
+      assert(minutes != nullptr);
+      assert(minutes->value > 0);
+      *minutes = MinutesLeft{ minutes->value - 1 };
+  }
+
+  bool client_done(const Client& client)
+  {
+      return client.hairCompletion.value == 0;
+  }
+
+  TickResult tick_worker(Worker& worker)
   {
       Client* client{ worker.assignedClient };
       if (client == nullptr)
       {
-          return false;
+          return TickResult::Unassigned;
       }
-      if (client->completion.head.value > 0)
+      if (client->hairCompletion.value > 0)
       {
-          client->completion.head.value--;
+          cut_one_minute(&client->hairCompletion);
       }
-      else if (client->completion.beard.value > 0)
-      {
-          client->completion.beard.value--;
-      }
-      else if (client->completion.armpits.value > 0)
-      {
-          client->completion.armpits.value--;
-      }
-      bool done{ client->completion.head.value == 0
-          && client->completion.beard.value == 0
-          && client->completion.armpits.value == 0 };
-      if (done)
+      if (client_done(*client))
       {
           worker.assignedClient = nullptr;
-          return true;
+          return TickResult::Done;
       }
-      return false;
+      return TickResult::StillWorking;
   }
 
   bool shop_done(const Shop& shop)
@@ -766,8 +786,14 @@ slug: ru/cpp/labs/advanced-practice
   ```cpp
   int main()
   {
-      Client alice{ .label = "alice", .completion = { .head = { 1 }, .beard = { 0 }, .armpits = { 1 } } };
-      Client bob{ .label = "bob", .completion = { .head = { 2 }, .beard = { 1 }, .armpits = { 0 } } };
+      Client alice{
+          .label = "alice",
+          .hairCompletion = { 2 },
+      };
+      Client bob{
+          .label = "bob",
+          .hairCompletion = { 3 },
+      };
 
       Shop shop{};
       add_client(shop, &alice);

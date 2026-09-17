@@ -170,6 +170,9 @@ No matter how you change `b` afterwards, it will not affect `a`.
 
 A literal (`5`, `6`, `7`), a variable read (`b`), and even the whole assignment (`a = b`) are all expressions.
 Each of them evaluates to a single value with its own type.
+Being an expression means the assignment itself produces the assigned value,
+so it can be used where a value is expected — for example, `int c = (a = b);`
+first writes `b` into `a`, then writes that same value into `c`.
 </details>
 
 <details>
@@ -258,7 +261,8 @@ std::cout << sizeof(a) << std::endl;
 <summary>Answer:</summary>
 
 `sizeof` is evaluated at compile time and yields the size, in bytes, of a variable or type.
-It does not execute at run time: the compiler replaces `sizeof(...)` with a plain number.
+It does not execute at run time: the compiler replaces `sizeof(...)` with a plain number,
+so `sizeof` itself does not even exist as a function at run time.
 
 For example:
 - `sizeof(int)` produces `4`;
@@ -288,9 +292,6 @@ Since the expression `5` has type `int`, `a` will have type `int`.
 
 You can think of `auto` as being replaced with `int` during compilation.
 
-`auto` does not work without initialization: `auto a;` will not compile,
-because there is no expression to infer the type from.
-
 The inferred type is static (fixed at compile time) and cannot change later:
 ```cpp
 auto a = 5;
@@ -298,7 +299,33 @@ a = "abc"; // error: `a` is `int`, it cannot become a string later
 ```
 </details>
 
-### 10. `auto` with uniform initialization
+### 10. `auto` without initialization
+```cpp
+auto a;
+```
+
+<details>
+<summary>Answer</summary>
+
+This will not compile: `auto` needs an initializer expression to infer the type from.
+With no expression, the compiler has nothing to replace `auto` with.
+</details>
+
+### 11. `auto` from another variable
+```cpp
+int a{ 5 };
+auto b{ a + 5 };
+```
+
+<details>
+<summary>Answer</summary>
+
+`auto` looks at the type of the whole initializer expression, not just at whether it is a literal.
+`a + 5` has type `int`, so `b` becomes `int` with value `10`.
+The same holds for any expression: `auto c{ a };` would also give `c` the type `int`.
+</details>
+
+### 12. `auto` with uniform initialization
 
 ```cpp
 auto a{ 5 };
@@ -310,7 +337,7 @@ auto a{ 5 };
 This is the same as in the previous example.
 </details>
 
-### 11. `auto` and `static_cast`
+### 13. `auto` and `static_cast`
 
 ```cpp
 auto a{ static_cast<uint8_t>(5) };
@@ -334,7 +361,7 @@ So the following happens:
 - `auto` infers the type of the initializer expression and is replaced with `uint8_t`.
 </details>
 
-### 12. `static_cast` to a larger type
+### 14. `static_cast` to a larger type
 
 ```cpp
 uint8_t a{ 5 };
@@ -351,7 +378,7 @@ which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
 
-### 13. `static_cast` 
+### 15. `static_cast` 
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -417,7 +444,7 @@ discarding the leading 1.
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 14. Bitwise operation (advanced level)
+### 16. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -453,7 +480,7 @@ For example, `1010 0011` -> `0101 1100`.
 
 </details>
 
-### 15. Changing the sign (advanced level)
+### 17. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -513,7 +540,7 @@ In short, `int32_t` will always store *the same numeric value*.
 - The value -1 is stored in `c` as -1 (see the explanation above for how).
 </details>
 
-### 16. Swapping variables
+### 18. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };
