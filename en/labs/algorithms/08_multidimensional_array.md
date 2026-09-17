@@ -176,7 +176,7 @@ the expression for $` D_j `$ can be generalized recursively:
 
 $$
 \begin{align}
-& D_j = D_{j - 1} * n_{j - 1} \\\\
+& D_j = D_{j - 1} * n_{j - 1} \\
 & D_0 = 1
 \end{align}
 $$
@@ -207,11 +207,11 @@ The lookup can be expressed by the following formula ($` l_j `$ is the lower bou
 
 $$
 \begin{align}
-& n_j = h_j - l_j + 1 \\\\
-& D_0 = 1 \\\\
-& D_j = n_{j - 1} * D_{j - 1} \\\\
-& i = \\sum_{j=0}^{N - 1} (k_j - l_j) D_j = \\sum_{j=0}^{N - 1} k_j D_j - c \\\\
-& c = \\sum_{j=0}^{N - 1} l_j D_j
+& n_j = h_j - l_j + 1 \\
+& D_0 = 1 \\
+& D_j = n_{j - 1} * D_{j - 1} \\
+& i = \sum_{j=0}^{N - 1} (k_j - l_j) D_j = \sum_{j=0}^{N - 1} k_j D_j - c \\
+& c = \sum_{j=0}^{N - 1} l_j D_j
 \end{align}
 $$
 
