@@ -667,62 +667,76 @@ slug: en/cpp/labs/advanced-practice
       std::array<Client*, 4> queue{};
       std::array<Worker, 2> workers{};
   };
+  ```
 
+  Adding puts the pointer into the first free queue spot.
+  Finding that spot is its own function:
+  it hands over a pointer to the slot, or `nullptr` when the queue is full.
+  Adding then just fills that slot.
+  The client must never be `nullptr`, so it is enforced with an assert;
+  a full queue is a normal failure reported through the result:
+
+  ```cpp
   enum class AddClientResult
   {
       Added,
       FailedQueueFull,
   };
 
-  enum class TickResult
-  {
-      Unassigned,
-      StillWorking,
-      Done,
-  };
-  ```
-
-  Adding puts the pointer into the first free queue spot.
-  The client must never be `nullptr`, so it is enforced with an assert;
-  a full queue is a normal failure reported through the result:
-
-  ```cpp
-  AddClientResult add_client(Shop& shop, Client* client)
-  {
-      assert(client != nullptr); // add_client expects client to never be null
-      for (auto& slot : shop.queue)
-      {
-          if (slot != nullptr)
-          {
-              continue;
-          }
-          slot = client;
-          return AddClientResult::Added;
-      }
-      return AddClientResult::FailedQueueFull;
-  }
-  ```
-
-  Taking the first waiting client is its own function:
-  it finds the first taken queue spot, clears it, and hands the pointer over.
-  Assigning then just gives every idle worker whatever that function returns —
-  two separate loops, one over the workers and one over the queue inside.
-  A `nullptr` result simply leaves the worker idle:
-
-  ```cpp
-  Client* take_first_waiting(Shop& shop)
+  Client** find_free_slot(Shop& shop)
   {
       for (auto& slot : shop.queue)
       {
           if (slot == nullptr)
           {
-              continue;
+              return &slot;
           }
-          Client* found{ slot };
-          slot = nullptr;
-          return found;
       }
       return nullptr;
+  }
+
+  AddClientResult add_client(Shop& shop, Client* client)
+  {
+      assert(client != nullptr); // add_client expects client to never be null
+      Client** slot{ find_free_slot(shop) };
+      if (slot == nullptr)
+      {
+          return AddClientResult::FailedQueueFull;
+      }
+      *slot = client;
+      return AddClientResult::Added;
+  }
+  ```
+
+  Taking the first waiting client is its own function:
+  finding the first taken queue spot hands over a pointer to the slot,
+  taking clears that slot and hands the client pointer over.
+  Assigning then just gives every idle worker whatever that function returns —
+  a `nullptr` result simply leaves the worker idle:
+
+  ```cpp
+  Client** find_taken_slot(Shop& shop)
+  {
+      for (auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              return &slot;
+          }
+      }
+      return nullptr;
+  }
+
+  Client* take_first_waiting(Shop& shop)
+  {
+      Client** slot{ find_taken_slot(shop) };
+      if (slot == nullptr)
+      {
+          return nullptr;
+      }
+      Client* found{ *slot };
+      *slot = nullptr;
+      return found;
   }
 
   void assign_workers(Shop& shop)
@@ -738,7 +752,6 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
 
-  Cutting recreates the `MinutesLeft` value instead of mutating it in place.
   Whether the client is done is its own function too:
 
   ```cpp
@@ -753,6 +766,13 @@ slug: en/cpp/labs/advanced-practice
   {
       return client.hairCompletion.value == 0;
   }
+
+  enum class TickResult
+  {
+      Unassigned,
+      StillWorking,
+      Done,
+  };
 
   TickResult tick_worker(Worker& worker)
   {
@@ -773,23 +793,41 @@ slug: en/cpp/labs/advanced-practice
       return TickResult::StillWorking;
   }
 
-  bool shop_done(const Shop& shop)
+  void tick_all_workers(Shop& shop)
+  {
+      for (auto& worker : shop.workers)
+      {
+          tick_worker(worker);
+      }
+  }
+
+  bool has_waiting_clients(const Shop& shop)
   {
       for (const auto& slot : shop.queue)
       {
           if (slot != nullptr)
           {
-              return false;
+              return true;
           }
       }
+      return false;
+  }
+
+  bool has_busy_workers(const Shop& shop)
+  {
       for (const auto& worker : shop.workers)
       {
           if (worker.assignedClient != nullptr)
           {
-              return false;
+              return true;
           }
       }
-      return true;
+      return false;
+  }
+
+  bool shop_done(const Shop& shop)
+  {
+      return !has_waiting_clients(shop) && !has_busy_workers(shop);
   }
   ```
 
@@ -815,10 +853,7 @@ slug: en/cpp/labs/advanced-practice
       while (!shop_done(shop))
       {
           assign_workers(shop);
-          for (auto& worker : shop.workers)
-          {
-              tick_worker(worker);
-          }
+          tick_all_workers(shop);
       }
   }
   ```
@@ -843,17 +878,17 @@ slug: en/cpp/labs/advanced-practice
 - **Family hugs.** A family has 5 people.
   Everybody wants to hug every other member exactly once.
   Each person stores pointers to the people they already hugged.
-  Hug everyone and count the hugs.
+  Hug everyone.
 
 - **Family hugs with indices.** Same 5 people,
   but each person stores indices of the hugged members (`std::array<int, 4>`)
   instead of pointers —
   now the hugs only make sense together with the family array they index into.
-  Hug everyone once and count the hugs.
+  Hug everyone once.
 
 - **Family hugs with a bit set.** Same 5 people,
   but using a bit set of members they've hugged.
-  Hug everyone once and count the hugs.
+  Hug everyone once.
 
   <details>
   <summary>
@@ -915,19 +950,14 @@ slug: en/cpp/labs/advanced-practice
           Person{ .name = "dan" },
           Person{ .name = "eva" },
       };
-      int hugs{ 0 };
       for (int i = 0; i < familySize; i++)
       {
           for (int j = i + 1; j < familySize; j++)
           {
-              if (hug(family, i, j))
-              {
-                  hugs++;
-              }
+              hug(family, i, j);
           }
       }
       assert(all_hugged(family));
-      assert(hugs == 10);
   }
   ```
   </details>

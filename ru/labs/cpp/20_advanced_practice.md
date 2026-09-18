@@ -662,62 +662,76 @@ slug: ru/cpp/labs/advanced-practice
       std::array<Client*, 4> queue{};
       std::array<Worker, 2> workers{};
   };
+  ```
 
+  Добавление кладет указатель на первое свободное место в очереди.
+  Поиск этого места это отдельная функция:
+  она отдает указатель на слот или `nullptr`, когда очередь полна.
+  Добавление просто заполняет этот слот.
+  Клиент никогда не должен быть `nullptr`, поэтому это проверяется через assert;
+  переполненная очередь — это штатная ситуация, о ней сообщается возвращаемым значением:
+
+  ```cpp
   enum class AddClientResult
   {
       Added,
       FailedQueueFull,
   };
 
-  enum class TickResult
-  {
-      Unassigned,
-      StillWorking,
-      Done,
-  };
-  ```
-
-  Добавление кладет указатель на первое свободное место в очереди.
-  Клиент никогда не должен быть `nullptr`, поэтому это проверяется через assert;
-  переполненная очередь — это штатная ситуация, о ней сообщается возвращаемым значением:
-
-  ```cpp
-  AddClientResult add_client(Shop& shop, Client* client)
-  {
-      assert(client != nullptr); // add_client ожидает, что client никогда не nullptr
-      for (auto& slot : shop.queue)
-      {
-          if (slot != nullptr)
-          {
-              continue;
-          }
-          slot = client;
-          return AddClientResult::Added;
-      }
-      return AddClientResult::FailedQueueFull;
-  }
-  ```
-
-  Взятие первого ожидающего клиента это отдельная функция:
-  она находит первое занятое место в очереди, очищает его и отдает указатель.
-  Назначение просто раздает каждому свободному мастеру то, что вернет эта функция —
-  два отдельных цикла, один по мастерам, а внутри второй по очереди.
-  Результат `nullptr` просто оставляет мастера свободным:
-
-  ```cpp
-  Client* take_first_waiting(Shop& shop)
+  Client** find_free_slot(Shop& shop)
   {
       for (auto& slot : shop.queue)
       {
           if (slot == nullptr)
           {
-              continue;
+              return &slot;
           }
-          Client* found{ slot };
-          slot = nullptr;
-          return found;
       }
       return nullptr;
+  }
+
+  AddClientResult add_client(Shop& shop, Client* client)
+  {
+      assert(client != nullptr); // add_client ожидает, что client никогда не nullptr
+      Client** slot{ find_free_slot(shop) };
+      if (slot == nullptr)
+      {
+          return AddClientResult::FailedQueueFull;
+      }
+      *slot = client;
+      return AddClientResult::Added;
+  }
+  ```
+
+  Взятие первого ожидающего клиента это отдельная функция:
+  поиск первого занятого места отдает указатель на слот,
+  взятие очищает этот слот и отдает указатель на клиента.
+  Назначение просто раздает каждому свободному мастеру то, что вернет эта функция —
+  результат `nullptr` просто оставляет мастера свободным:
+
+  ```cpp
+  Client** find_taken_slot(Shop& shop)
+  {
+      for (auto& slot : shop.queue)
+      {
+          if (slot != nullptr)
+          {
+              return &slot;
+          }
+      }
+      return nullptr;
+  }
+
+  Client* take_first_waiting(Shop& shop)
+  {
+      Client** slot{ find_taken_slot(shop) };
+      if (slot == nullptr)
+      {
+          return nullptr;
+      }
+      Client* found{ *slot };
+      *slot = nullptr;
+      return found;
   }
 
   void assign_workers(Shop& shop)
@@ -733,7 +747,6 @@ slug: ru/cpp/labs/advanced-practice
   }
   ```
 
-  Стрижка пересоздает значение `MinutesLeft` вместо изменения на месте.
   Проверка готовности клиента это тоже отдельная функция:
 
   ```cpp
@@ -748,6 +761,13 @@ slug: ru/cpp/labs/advanced-practice
   {
       return client.hairCompletion.value == 0;
   }
+
+  enum class TickResult
+  {
+      Unassigned,
+      StillWorking,
+      Done,
+  };
 
   TickResult tick_worker(Worker& worker)
   {
@@ -768,27 +788,45 @@ slug: ru/cpp/labs/advanced-practice
       return TickResult::StillWorking;
   }
 
-  bool shop_done(const Shop& shop)
+  void tick_all_workers(Shop& shop)
+  {
+      for (auto& worker : shop.workers)
+      {
+          tick_worker(worker);
+      }
+  }
+
+  bool has_waiting_clients(const Shop& shop)
   {
       for (const auto& slot : shop.queue)
       {
           if (slot != nullptr)
           {
-              return false;
+              return true;
           }
       }
+      return false;
+  }
+
+  bool has_busy_workers(const Shop& shop)
+  {
       for (const auto& worker : shop.workers)
       {
           if (worker.assignedClient != nullptr)
           {
-              return false;
+              return true;
           }
       }
-      return true;
+      return false;
+  }
+
+  bool shop_done(const Shop& shop)
+  {
+      return !has_waiting_clients(shop) && !has_busy_workers(shop);
   }
   ```
 
-  Симуляция — это обычный цикл `while`: сначала назначаем мастеров, затем вызываем тик каждого занятого мастера, пока все клиенты не будут обслужены.
+  Симуляция — это обычный цикл `while`: сначала назначаем мастеров, затем вызываем тик всех мастеров, пока все клиенты не будут обслужены.
   Клиенты должны существовать дольше салона, потому что салон их никогда не копирует:
 
   ```cpp
@@ -810,10 +848,7 @@ slug: ru/cpp/labs/advanced-practice
       while (!shop_done(shop))
       {
           assign_workers(shop);
-          for (auto& worker : shop.workers)
-          {
-              tick_worker(worker);
-          }
+          tick_all_workers(shop);
       }
   }
   ```
@@ -838,16 +873,16 @@ slug: ru/cpp/labs/advanced-practice
 - **Объятия в семье.** В семье 5 человек.
   Каждый хочет обнять каждого другого ровно один раз.
   Каждый человек хранит указатели на тех, кого уже обнял.
-  Обнимите всех и посчитайте объятия.
+  Обнимите всех.
 
 - **Объятия в семье по индексам.** Те же 5 человек,
   но каждый хранит индексы обнятых (`std::array<int, 4>`) вместо указателей —
   теперь объятия имеют смысл только вместе с массивом семьи, на который указывают индексы.
-  Обнимите всех по разу и посчитайте объятия.
+  Обнимите всех по разу.
 
 - **Объятия в семье с битовым множеством.** Те же 5 человек,
   но с битовым множеством обнятых.
-  Обнимите всех по разу и посчитайте объятия.
+  Обнимите всех по разу.
 
   <details>
   <summary>
@@ -909,19 +944,14 @@ slug: ru/cpp/labs/advanced-practice
           Person{ .name = "dan" },
           Person{ .name = "eva" },
       };
-      int hugs{ 0 };
       for (int i = 0; i < familySize; i++)
       {
           for (int j = i + 1; j < familySize; j++)
           {
-              if (hug(family, i, j))
-              {
-                  hugs++;
-              }
+              hug(family, i, j);
           }
       }
       assert(all_hugged(family));
-      assert(hugs == 10);
   }
   ```
   </details>
