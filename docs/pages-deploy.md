@@ -62,10 +62,10 @@ Third-party actions are pinned to immutable SHAs (CI-8):
 | actions/checkout | v6 | `d23441a48e516b6c34aea4fa41551a30e30af803` |
 | actions/setup-python | v6 | `ece7cb06caefa5fff74198d8649806c4678c61a1` |
 | actions/setup-node | v6 | `249970729cb0ef3589644e2896645e5dc5ba9c38` |
-| actions/cache | v4 | `0057852bfaa89a56745cba8c7296529d2fc39830` |
-| actions/configure-pages | v5 | `983d7736d9b0ae728b81ab479565c72886d7745b` |
-| actions/upload-pages-artifact | v3 | `56afc609e74202658d3ffba0e8f6dda462b719fa` |
-| actions/deploy-pages | v4 | `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e` |
+| actions/cache | v5.1.0 | `caa296126883cff596d87d8935842f9db880ef25` |
+| actions/configure-pages | v6.0.0 | `45bfe0192ca1faeb007ade9deae92b16b8254a0d` |
+| actions/upload-pages-artifact | v5.0.0 | `fc324d3547104276b827a68afc52ff2a11cc49c9` |
+| actions/deploy-pages | v5.0.1 | `368f82528645a54fb793d4d04e342629a3f51346` |
 
 Runtimes: Python 3.12, Node 22 (match `publishing/ci.py`
 `PINNED_PYTHON`/`PINNED_NODE` of the checked-out submodule revision).
