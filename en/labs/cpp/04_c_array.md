@@ -161,9 +161,14 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>How to compute the number of items using sizeof?</summary>
+
+Divide the size of the whole array by the size of one element.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-Divide the size of the whole array by the size of one element to get the number of elements.
 Here, `sizeof(arr)` is 16 (4 ints of 4 bytes each),
 `sizeof(arr[0])` is 4 (one `int`),
 so `16 / 4` gives 4 elements.
@@ -306,11 +311,11 @@ std::cout << std::endl;
 <details>
 <summary>Answer</summary>
 
-Passing `arr` to `std::cout` uses it as an expression,
-so it decays into a pointer to the first element,
-equivalent to `&arr[0]`.
+When `arr` is used as an expression in this context (as an argument to `<<`),
+it decays into a pointer to the first element, equivalent to `&arr[0]`.
 
-What gets printed is that address, not the elements `1`, `2`, `3`.
+`std::cout` doesn't know how to print C arrays of a certain size —
+it only sees a pointer, so what gets printed is that address, not the elements `1`, `2`, `3`.
 To print the elements, print each one by index, as in the first examples.
 </details>
 
