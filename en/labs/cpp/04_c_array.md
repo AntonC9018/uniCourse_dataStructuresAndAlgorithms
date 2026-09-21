@@ -130,7 +130,49 @@ In this context, the array length is determined at compile time by the number of
 4 ints of 4 bytes each make 16.
 </details>
 
-### 4. Reading by index
+### 4. Size of an array of `size_t`
+```cpp
+size_t arr[3]{ 1, 2, 3 };
+
+std::cout << sizeof(arr);
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`sizeof` gives the size of the entire array in bytes, not the number of elements.
+Here, each element has type `size_t`, which is 8 bytes on a 64-bit system,
+so 3 elements of 8 bytes each make 24.
+</details>
+
+### 5. Computing the number of elements from `sizeof`
+```cpp
+int arr[]{ 1, 2, 3, 4 };
+
+std::cout << sizeof(arr);
+std::cout << std::endl;
+
+std::cout << sizeof(arr[0]);
+std::cout << std::endl;
+
+std::cout << sizeof(arr) / sizeof(arr[0]);
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+Divide the size of the whole array by the size of one element to get the number of elements.
+Here, `sizeof(arr)` is 16 (4 ints of 4 bytes each),
+`sizeof(arr[0])` is 4 (one `int`),
+so `16 / 4` gives 4 elements.
+
+This only works while `arr` is still an array.
+Once it decays to a pointer (see below), `sizeof` gives the pointer size instead.
+</details>
+
+### 6. Reading by index
 ```cpp
 int arr[3]{ 1, 2, 3 };
 size_t index { 2 };
@@ -147,7 +189,7 @@ You can use a variable or expression to specify an index.
 The answer is 3.
 </details>
 
-### 5. Writing by index
+### 7. Writing by index
 ```cpp
 int arr[3]{};
 size_t index { 2 };
@@ -162,7 +204,7 @@ std::cout << std::endl;
 You can also write by index using an index produced by an expression.
 </details>
 
-### 6. An expression as an index
+### 8. An expression as an index
 ```cpp
 int arr[3]{};
 size_t index { 1 };
@@ -178,7 +220,7 @@ This demonstrates using a more complex expression
 to obtain an index.
 </details>
 
-### 7. Copying an array element into a variable
+### 9. Copying an array element into a variable
 ```cpp
 int arr[3]{ 0, 2, 1 };
 size_t index { 2 };
@@ -199,7 +241,7 @@ after assignment does not affect `it`.
 `1` will be printed.
 </details>
 
-### 8. A pointer as the element type
+### 10. A pointer as the element type
 ```cpp
 int a = 1;
 int b = 2;
@@ -226,7 +268,7 @@ In this example, the array stores pointers to `int` values (`int*`).
 - `b`, equivalent to `*arr[1]`, equals `3`.
 </details>
 
-### 9. Using an array as a pointer
+### 11. Using an array as a pointer
 ```cpp
 int arr[2]{};
 int* p = arr;
@@ -252,6 +294,24 @@ Here, `arr` is equivalent to `&arr[0]` or `&(arr[0])`.
 `*p`, `*arr`, and `arr[0]` all access the same array element.
 
 1 will be printed twice.
+</details>
+
+### 12. Printing an array
+```cpp
+int arr[3]{ 1, 2, 3 };
+std::cout << arr;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+Passing `arr` to `std::cout` uses it as an expression,
+so it decays into a pointer to the first element,
+equivalent to `&arr[0]`.
+
+What gets printed is that address, not the elements `1`, `2`, `3`.
+To print the elements, print each one by index, as in the first examples.
 </details>
 
 <!-- Missing: get address of item at index, different type than int -->

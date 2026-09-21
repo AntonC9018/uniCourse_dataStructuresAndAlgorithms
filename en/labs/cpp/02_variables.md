@@ -188,7 +188,34 @@ The code compiles because the type of variable `a` (`int`), into which
 the result of the expression `b` is written, **is compatible with the type of expression `b`** (also `int`).
 </details>
 
-### 5. Assigning an expression to a variable
+### 5. Literals, variables and operators are expressions
+```cpp
+int a = 5;
+int b = a;
+int c = a + 6;
+std::cout << b << std::endl;
+std::cout << c << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+Literals, variables (when read) and operators applied to expressions are all expressions.
+Each of them evaluates to a single value with its own type:
+
+- `5` is a literal expression: it evaluates to itself, with type `int`;
+- `a` on the lines `int b = a;` and `int c = a + 6;` is a variable expression:
+  it evaluates to the value currently stored in `a` (here, `5`);
+- `a + 6` is an operator expression:
+  the operator `+` takes two expressions (`a` and `6`) and evaluates to a single value (`11`).
+
+So `int b = a;` copies the result of the variable expression `a` into `b`,
+and `int c = a + 6;` copies the result of the operator expression `a + 6` into `c`.
+
+It prints `5` and `11`.
+</details>
+
+### 6. Assigning an expression to a variable
 ```cpp
 int a = 5;
 int b = a + 6;
@@ -208,7 +235,7 @@ The result of evaluating the expression is the value 11, which is written to cel
 Further changes to `a` do not affect the previous operation, since its *result* has already been stored in `b`.
 </details>
 
-### 6. String value
+### 7. String value
 ```cpp
 int a = "abc";
 ```
@@ -221,7 +248,7 @@ The compiler reports a type incompatibility error.
 You cannot write the string literal `"abc"` to a cell that stores an `int`.
 </details>
 
-### 7. Uniform initialization
+### 8. Uniform initialization
 ```cpp
 int a{5};
 ```
@@ -250,7 +277,7 @@ int a{ 5.6 };
 ```
 </details>
 
-### 8. The `sizeof` operator
+### 9. The `sizeof` operator
 ```cpp
 std::cout << sizeof(int) << std::endl;
 std::cout << sizeof(uint8_t) << std::endl;
@@ -276,7 +303,7 @@ because types are known only at compile time and do not survive to run time.
 
 </details>
 
-### 9. `auto`
+### 10. `auto`
 
 What type will `a` have in this example?
 ```cpp
@@ -299,7 +326,7 @@ a = "abc"; // error: `a` is `int`, it cannot become a string later
 ```
 </details>
 
-### 10. `auto` without initialization
+### 11. `auto` without initialization
 ```cpp
 auto a;
 a = 5;
@@ -314,7 +341,7 @@ Assigning `5` on the next line does not fix it —
 the type must be fixed at the definition and cannot be inferred retroactively from a later assignment.
 </details>
 
-### 11. `auto` from another variable
+### 12. `auto` from another variable
 ```cpp
 int a{ 5 };
 auto b{ a + 5 };
@@ -328,7 +355,7 @@ auto b{ a + 5 };
 The same holds for any expression: `auto c{ a };` would also give `c` the type `int`.
 </details>
 
-### 12. `auto` with uniform initialization
+### 13. `auto` with uniform initialization
 
 ```cpp
 auto a{ 5 };
@@ -340,7 +367,7 @@ auto a{ 5 };
 This is the same as in the previous example.
 </details>
 
-### 13. `auto` and `static_cast`
+### 14. `auto` and `static_cast`
 
 ```cpp
 auto a{ static_cast<uint8_t>(5) };
@@ -364,7 +391,7 @@ So the following happens:
 - `auto` infers the type of the initializer expression and is replaced with `uint8_t`.
 </details>
 
-### 14. `static_cast` to a larger type
+### 15. `static_cast` to a larger type
 
 ```cpp
 uint8_t a{ 5 };
@@ -381,7 +408,7 @@ which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
 
-### 15. `static_cast` 
+### 16. `static_cast` 
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -447,7 +474,7 @@ discarding the leading 1.
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 16. Bitwise operation (advanced level)
+### 17. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -483,7 +510,7 @@ For example, `1010 0011` -> `0101 1100`.
 
 </details>
 
-### 17. Changing the sign (advanced level)
+### 18. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -543,7 +570,7 @@ In short, `int32_t` will always store *the same numeric value*.
 - The value -1 is stored in `c` as -1 (see the explanation above for how).
 </details>
 
-### 18. Swapping variables
+### 19. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };
