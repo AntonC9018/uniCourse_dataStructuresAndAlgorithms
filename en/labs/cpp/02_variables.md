@@ -151,43 +151,6 @@ b = 7;
 std::cout << a << std::endl;
 ```
 
-<details>
-<summary>Correct answer:</summary>
-
-`6` is written to `a` on line 3.
-Writing `7` to `b` on line 4 does not affect `a`'s memory cell.
-
-It is important to remember that instructions execute one after another, from top to bottom.
-
-It is also important to remember that assigning one variable to another does not link their cells.
-`a = b` copies the value in cell `b` into cell `a`.
-This is a one-time action; the cells will not be linked after this line executes.
-No matter how you change `b` afterwards, it will not affect `a`.
-</details>
-
-<details>
-<summary>What counts as an expression here?</summary>
-
-A literal (`5`, `6`, `7`), a variable read (`b`), and even the whole assignment (`a = b`) are all expressions.
-Each of them evaluates to a single value with its own type.
-Being an expression means the assignment itself produces the assigned value,
-so it can be used where a value is expected — for example, `int c = (a = b);`
-first writes `b` into `a`, then writes that same value into `c`.
-</details>
-
-<details>
-<summary>What is the type of expression <code>b</code>?</summary>
-
-The expression `b` in `a = b` means “read the value of the variable `b`”.
-The phrase “the type of an expression” is shorthand for
-“the static (known at compile time) type of the value
-obtained when evaluating the expression”.
-Here, it is the same as the type of variable `b`.
-
-The code compiles because the type of variable `a` (`int`), into which
-the result of the expression `b` is written, **is compatible with the type of expression `b`** (also `int`).
-</details>
-
 ### 5. Literals, variables and operators are expressions
 ```cpp
 int a = 5;
@@ -216,14 +179,18 @@ It prints `5` and `11`.
 </details>
 
 ### 6. Assigning an expression to a variable
+
+What are the expressions in this code fragment?
+
 ```cpp
 int a = 5;
 int b = a + 6;
 a = 7;
 std::cout << b << std::endl;
 ```
+
 <details>
-<summary>Correct answer:</summary>
+<summary>What is going to happen?</summary>
 
 On line 2, the *result of the expression* on the right-hand side of the assignment (`a + 6`) is written to `b`.
 Evaluating this expression means turning it into a single *value*.
@@ -233,6 +200,28 @@ Evaluating this expression means turning it into a single *value*.
 The result of evaluating the expression is the value 11, which is written to cell `b`.
 
 Further changes to `a` do not affect the previous operation, since its *result* has already been stored in `b`.
+</details>
+
+<details>
+<summary>What counts as an expression here?</summary>
+
+A literal (`5`, `6`, `7`), a variable read (`a`).
+Each of them evaluates to a single value with its own type (all `int` here).
+
+Even the whole assignment (`a = 7`) is an expression.
+Why? Because its result can be assigned to e.g. another variable.
+
+For example the following code assigns `7` to `a` while evaluating `a = 7`,
+which itself evaluates to `7` (whatever both of them became after the assignment),
+which is then assigned to `c`.
+```cpp
+int c = (a = 7);
+```
+
+Even `b` on `std::cout << b << std::endl;` is an expression,
+because *its value is going to be passed to the printing function*,
+and it has to be *evaluated* to e.g. a number before getting sent to the print function.
+
 </details>
 
 ### 7. String value
