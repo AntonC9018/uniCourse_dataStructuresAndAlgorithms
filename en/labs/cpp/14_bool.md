@@ -289,7 +289,36 @@ std::cout << c << std::endl;
 `a && b` -> `true && false` -> `false`, because both operands must be `true`.
 </details>
 
-### 18. Nuances of the `&&` operator (1)
+### 18. Functions that are never called
+```cpp
+#include <iostream>
+
+bool A()
+{
+    std::cout << "A" << std::endl;
+    return true;
+}
+
+bool B()
+{
+    std::cout << "B" << std::endl;
+    return true;
+}
+
+int main()
+{
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Defining the functions `A` and `B` only describes what *would* happen if they were called.
+Since `main` does not call either function, their bodies never execute,
+so nothing gets printed.
+</details>
+
+### 19. Nuances of the `&&` operator (1)
 ```cpp
 #include <iostream>
 
@@ -322,7 +351,7 @@ B
 ```
 </details>
 
-### 19. Nuances of the `&&` operator (2)
+### 20. Nuances of the `&&` operator (2)
 ```cpp
 #include <iostream>
 
@@ -356,7 +385,7 @@ B
 ```
 </details>
 
-### 20. Nuances of the `&&` operator (3)
+### 21. Nuances of the `&&` operator (3)
 ```cpp
 #include <iostream>
 
@@ -389,7 +418,7 @@ A
 ```
 </details>
 
-### 21. Nuances of the `||` operator (4)
+### 22. Nuances of the `||` operator (4)
 ```cpp
 #include <iostream>
 
@@ -422,7 +451,7 @@ A
 ```
 </details>
 
-### 22. A function changes a variable used in a parameter expression
+### 23. A function changes a variable used in a parameter expression
 ```cpp
 #include <iostream>
 
