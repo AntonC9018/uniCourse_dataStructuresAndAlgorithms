@@ -176,20 +176,22 @@ const OptionalInt NO_VALUE{ false, 0 };
 
 int main()
 {
-    OptionalInt arr[3]{ { true, 1 }, NO_VALUE, { true, 3 } };
+    std::array<OptionalInt, 3> arr{ 
+        { true, 1 },
+        NO_VALUE,
+        { true, 3 },
+    };
 
-    int i{ 0 };
-    while (i < 3)
+    for (OptionalInt el : arr) 
     {
-        if (arr[i].has_value)
+        if (el.has_value)
         {
-            std::cout << arr[i].value << std::endl;
+            std::cout << el.value << std::endl;
         }
         else
         {
             std::cout << "empty" << std::endl;
         }
-        i = i + 1;
     }
 }
 ```
@@ -244,42 +246,6 @@ It either holds an `int` or holds nothing.
 It prints `5` and `"empty"`.
 </details>
 
-### 6. A constant for the empty value (`std::optional`)
-```cpp
-#include <iostream>
-#include <optional>
-
-const std::optional<int> NO_VALUE{ std::nullopt };
-
-int main()
-{
-    std::optional<int> a{ 5 };
-    std::optional<int> b{ NO_VALUE };
-
-    if (a.has_value())
-    {
-        std::cout << a.value() << std::endl;
-    }
-
-    if (b.has_value())
-    {
-        std::cout << b.value() << std::endl;
-    }
-    else
-    {
-        std::cout << "empty" << std::endl;
-    }
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This is the standard-type version of the custom constant from the earlier example:
-`NO_VALUE` is an empty `std::optional<int>`.
-
-It prints `5` and `"empty"`.
-</details>
 
 ### 7. A function returning an optional (`std::optional`)
 ```cpp
@@ -333,24 +299,24 @@ It prints `3` and `"empty"`.
 #include <iostream>
 #include <optional>
 
-const std::optional<int> NO_VALUE{ std::nullopt };
-
 int main()
 {
-    std::optional<int> arr[3]{ 1, NO_VALUE, 3 };
+    std::array<std::optional<int>, 3> arr{ 
+        1,
+        std::nullopt,
+        3,
+    };
 
-    int i{ 0 };
-    while (i < 3)
+    for (std::optional<int> x : arr)
     {
-        if (arr[i].has_value())
+        if (x.has_value())
         {
-            std::cout << arr[i].value() << std::endl;
+            std::cout << x.value() << std::endl;
         }
         else
         {
             std::cout << "empty" << std::endl;
         }
-        i = i + 1;
     }
 }
 ```
@@ -363,3 +329,7 @@ A plain `1` becomes an `std::optional<int>` holding `1` automatically.
 
 It prints `1`, `"empty"`, `3`.
 </details>
+
+### 9. Pointer can already hold null
+### 10. Reference cannot hold null
+
