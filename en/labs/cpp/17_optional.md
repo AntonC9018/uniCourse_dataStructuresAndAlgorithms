@@ -16,6 +16,8 @@ slug: en/cpp/labs/optional
 - A constant for the empty value
 - Returning an optional from a function
 - Arrays of optionals
+- Pointers already hold null (`nullptr`)
+- References cannot be null
 
 ## Examples to aid understanding
 
@@ -164,6 +166,7 @@ It prints `3` and `"empty"`.
 
 ### 4. An array of optionals
 ```cpp
+#include <array>
 #include <iostream>
 
 struct OptionalInt
@@ -176,13 +179,13 @@ const OptionalInt NO_VALUE{ false, 0 };
 
 int main()
 {
-    std::array<OptionalInt, 3> arr{ 
+    std::array<OptionalInt, 3> arr{
         { true, 1 },
         NO_VALUE,
         { true, 3 },
     };
 
-    for (OptionalInt el : arr) 
+    for (OptionalInt el : arr)
     {
         if (el.has_value)
         {
@@ -234,7 +237,7 @@ int main()
 <details>
 <summary>Answer</summary>
 
-`std::optional<int>` is the standard version of the custom struct from the previous example.
+`std::optional<int>` is the standard version of the custom struct from the earlier examples.
 It either holds an `int` or holds nothing.
 
 - `a` holds a value: `std::optional<int>{ 5 }` stores `5`,
@@ -247,7 +250,7 @@ It prints `5` and `"empty"`.
 </details>
 
 
-### 7. A function returning an optional (`std::optional`)
+### 6. A function returning an optional (`std::optional`)
 ```cpp
 #include <iostream>
 #include <optional>
@@ -294,14 +297,15 @@ an `std::optional<int>` holding that value automatically.
 It prints `3` and `"empty"`.
 </details>
 
-### 8. An array of optionals (`std::optional`)
+### 7. An array of optionals (`std::optional`)
 ```cpp
+#include <array>
 #include <iostream>
 #include <optional>
 
 int main()
 {
-    std::array<std::optional<int>, 3> arr{ 
+    std::array<std::optional<int>, 3> arr{
         1,
         std::nullopt,
         3,
@@ -330,6 +334,139 @@ A plain `1` becomes an `std::optional<int>` holding `1` automatically.
 It prints `1`, `"empty"`, `3`.
 </details>
 
-### 9. Pointer can already hold null
-### 10. Reference cannot hold null
+### 8. A pointer can already hold null
+```cpp
+#include <iostream>
 
+int main()
+{
+    int a{ 5 };
+    int* p{ &a };
+    int* q{ nullptr };
+
+    if (p != nullptr)
+    {
+        std::cout << *p << std::endl;
+    }
+
+    if (q != nullptr)
+    {
+        std::cout << *q << std::endl;
+    }
+    else
+    {
+        std::cout << "empty" << std::endl;
+    }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Pointers already have a built-in empty state — `nullptr`.
+They need no extra flag like `has_value`.
+
+- `p` points at `a`, so the check passes and `5` is printed;
+- `q` holds `nullptr`, so the check fails and `"empty"` is printed instead.
+
+It prints `5` and `"empty"`.
+</details>
+
+### 9. A reference cannot hold null
+```cpp
+int main()
+{
+    int& x{ nullptr };
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This will not compile: a reference must be bound to a real variable of type `int`,
+and `nullptr` is not one. References have no empty state.
+</details>
+
+### 10. Taking the address of `nullptr`
+```cpp
+int main()
+{
+    int& x{ &nullptr };
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This will not compile either: `&` can only be applied to a variable,
+and `nullptr` is not a variable, so its address cannot be taken.
+</details>
+
+### 11. A reference bound to null is UB
+```cpp
+#include <iostream>
+
+int main()
+{
+    int* a = nullptr;
+    int& x{ *a };
+    std::cout << x << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This compiles, but it is UB: `*a` follows a null address.
+Creating the reference already dereferences null,
+so anything can happen (usually a crash).
+Unlike an optional, there is nothing to check — the error is not represented in any way.
+
+Note that writing `&a` here would not compile at all:
+`&a` is an `int**`, not an `int`.
+</details>
+
+### 12. `std::optional` for pointers is pointless
+
+`std::optional` for pointers is pointless: pointers are allowed to hold null already,
+and there is no way to express the opposite — a pointer guaranteed not to be null.
+A reference should be used when wanting to pass a pointer guaranteed not to be null.
+
+```cpp
+#include <iostream>
+
+void print(int* p)
+{
+    if (p != nullptr)
+    {
+        std::cout << *p << std::endl;
+    }
+}
+
+void printRef(int& r)
+{
+    std::cout << r << std::endl;
+}
+
+int main()
+{
+    int a{ 5 };
+    print(&a);
+    print(nullptr);
+    printRef(a);
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Wrapping a pointer as `std::optional<int*>` adds nothing:
+the pointer already expresses “maybe null” through `nullptr`.
+
+And an optional cannot express “guaranteed not null” either.
+That guarantee is what a reference gives: `printRef` needs no check,
+because the caller is forced to pass a real variable.
+
+It prints `5` twice: once from `print(&a)`, once from `printRef(a)`.
+`print(nullptr)` prints nothing.
+</details>

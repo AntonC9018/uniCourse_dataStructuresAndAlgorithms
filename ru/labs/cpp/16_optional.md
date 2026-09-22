@@ -16,6 +16,8 @@ slug: ru/cpp/labs/optional
 - Константа для пустого значения
 - Возвращение optional из функции
 - Массив из optional
+- Указатели уже хранят null (`nullptr`)
+- Ссылки не могут быть null
 
 ## Примеры на понимание
 
@@ -164,6 +166,7 @@ int main()
 
 ### 4. Массив из optional
 ```cpp
+#include <array>
 #include <iostream>
 
 struct OptionalInt
@@ -176,20 +179,22 @@ const OptionalInt NO_VALUE{ false, 0 };
 
 int main()
 {
-    OptionalInt arr[3]{ { true, 1 }, NO_VALUE, { true, 3 } };
+    std::array<OptionalInt, 3> arr{
+        { true, 1 },
+        NO_VALUE,
+        { true, 3 },
+    };
 
-    int i{ 0 };
-    while (i < 3)
+    for (OptionalInt el : arr)
     {
-        if (arr[i].has_value)
+        if (el.has_value)
         {
-            std::cout << arr[i].value << std::endl;
+            std::cout << el.value << std::endl;
         }
         else
         {
             std::cout << "empty" << std::endl;
         }
-        i = i + 1;
     }
 }
 ```
@@ -232,7 +237,7 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-`std::optional<int>` — это стандартная версия самодельной структуры из прошлого примера.
+`std::optional<int>` — это стандартная версия самодельной структуры из прошлых примеров.
 В нём либо хранится `int`, либо ничего нет.
 
 - `a` хранит значение: `std::optional<int>{ 5 }` создаёт optional со значением `5`,
@@ -244,44 +249,7 @@ int main()
 Напечатается `5` и `"empty"`.
 </details>
 
-### 6. Константа для пустого значения (`std::optional`)
-```cpp
-#include <iostream>
-#include <optional>
-
-const std::optional<int> NO_VALUE{ std::nullopt };
-
-int main()
-{
-    std::optional<int> a{ 5 };
-    std::optional<int> b{ NO_VALUE };
-
-    if (a.has_value())
-    {
-        std::cout << a.value() << std::endl;
-    }
-
-    if (b.has_value())
-    {
-        std::cout << b.value() << std::endl;
-    }
-    else
-    {
-        std::cout << "empty" << std::endl;
-    }
-}
-```
-
-<details>
-<summary>Ответ</summary>
-
-Это аналог самодельной константы из прошлого примера,
-но со стандартным типом: `NO_VALUE` — это пустой `std::optional<int>`.
-
-Напечатается `5` и `"empty"`.
-</details>
-
-### 7. Функция, возвращающая optional (`std::optional`)
+### 6. Функция, возвращающая optional (`std::optional`)
 ```cpp
 #include <iostream>
 #include <optional>
@@ -328,29 +296,30 @@ int main()
 Напечатается `3` и `"empty"`.
 </details>
 
-### 8. Массив из optional (`std::optional`)
+### 7. Массив из optional (`std::optional`)
 ```cpp
+#include <array>
 #include <iostream>
 #include <optional>
 
-const std::optional<int> NO_VALUE{ std::nullopt };
-
 int main()
 {
-    std::optional<int> arr[3]{ 1, NO_VALUE, 3 };
+    std::array<std::optional<int>, 3> arr{
+        1,
+        std::nullopt,
+        3,
+    };
 
-    int i{ 0 };
-    while (i < 3)
+    for (std::optional<int> x : arr)
     {
-        if (arr[i].has_value())
+        if (x.has_value())
         {
-            std::cout << arr[i].value() << std::endl;
+            std::cout << x.value() << std::endl;
         }
         else
         {
             std::cout << "empty" << std::endl;
         }
-        i = i + 1;
     }
 }
 ```
@@ -362,4 +331,141 @@ int main()
 Обычный литерал `1` неявно преобразуется в `std::optional<int>` со значением `1`.
 
 Напечатается `1`, `"empty"`, `3`.
+</details>
+
+### 8. Указатель уже может хранить null
+```cpp
+#include <iostream>
+
+int main()
+{
+    int a{ 5 };
+    int* p{ &a };
+    int* q{ nullptr };
+
+    if (p != nullptr)
+    {
+        std::cout << *p << std::endl;
+    }
+
+    if (q != nullptr)
+    {
+        std::cout << *q << std::endl;
+    }
+    else
+    {
+        std::cout << "empty" << std::endl;
+    }
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+У указателей уже есть встроенное пустое состояние — `nullptr`.
+Им не нужен отдельный флаг вроде `has_value`.
+
+- `p` указывает на `a`, поэтому проверка проходит и печатается `5`;
+- `q` хранит `nullptr`, поэтому проверка не проходит и вместо значения печатается `"empty"`.
+
+Напечатается `5` и `"empty"`.
+</details>
+
+### 9. Ссылка не может хранить null
+```cpp
+int main()
+{
+    int& x{ nullptr };
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Это не скомпилируется: ссылка обязана быть привязана к настоящей переменной типа `int`,
+а `nullptr` ею не является. У ссылок нет пустого состояния.
+</details>
+
+### 10. Взятие адреса у `nullptr`
+```cpp
+int main()
+{
+    int& x{ &nullptr };
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Это тоже не скомпилируется: `&` можно применять только к переменной,
+а `nullptr` — не переменная, поэтому взять его адрес нельзя.
+</details>
+
+### 11. Ссылка на null — это UB
+```cpp
+#include <iostream>
+
+int main()
+{
+    int* a = nullptr;
+    int& x{ *a };
+    std::cout << x << std::endl;
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Такой код скомпилируется, но это UB: `*a` идёт по нулевому адресу.
+Создание ссылки уже разыменовывает null,
+поэтому может произойти что угодно (обычно падение).
+В отличие от optional, здесь нечего проверять — ошибка никак не обозначена.
+
+Заметьте: `&a` здесь написать вообще не получилось бы:
+`&a` — это `int**`, а не `int`.
+</details>
+
+### 12. `std::optional` для указателей бессмысленен
+
+`std::optional` для указателей бессмысленен: указатели и так могут хранить null,
+а обратное — указатель, который гарантированно не null, — через optional выразить нельзя.
+Если нужен такой указатель, следует передавать ссылку.
+
+```cpp
+#include <iostream>
+
+void print(int* p)
+{
+    if (p != nullptr)
+    {
+        std::cout << *p << std::endl;
+    }
+}
+
+void printRef(int& r)
+{
+    std::cout << r << std::endl;
+}
+
+int main()
+{
+    int a{ 5 };
+    print(&a);
+    print(nullptr);
+    printRef(a);
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Оборачивание указателя в `std::optional<int*>` ничего не даёт:
+у указателя уже есть `nullptr` для пустого состояния.
+
+А гарантию «точно не null» optional дать не может.
+Эту гарантию даёт ссылка: в `printRef` проверка не нужна,
+потому что вызывающий обязан передать настоящую переменную.
+
+Напечатается `5` дважды — из `print(&a)` и из `printRef(a)`.
+`print(nullptr)` не печатает ничего.
 </details>
