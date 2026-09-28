@@ -396,8 +396,27 @@ you can assign `a` directly to `b`,
 which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
+### 16. `static_cast` of a negative number to a larger type
 
-### 16. `static_cast` 
+```cpp
+int8_t a{ -3 };
+int b{ static_cast<int>(a) };
+```
+
+<details>
+<summary>Answer</summary>
+
+Just like in the previous example, the conversion happens implicitly even without `static_cast`,
+because every value stored in `a` fits in `b`.
+
+The conversion preserves the value and therefore the sign:
+since `a` is negative, the upper bits of `b` are filled with 1.
+`-3` is `1111 1101` in 8 bits
+and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
+</details>
+
+
+### 17. `static_cast` 
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -452,6 +471,19 @@ leaving only the last byte (the least significant byte).
 The result is 0, because 256 is represented as `1 0000 0000` in binary,
 and truncating this number to 8 bits leaves only `0000 0000`,
 discarding the leading 1.
+
+The same value with all 32 bits written out,
+and each hexadecimal digit placed under its 4 bits:
+```
+0000 0000  0000 0000  0000 0001  0000 0000
+0    0     0    0     0    1     0    0
+```
+
+How to read this notation: the top row holds the bits, split into groups of 4
+(one group per hexadecimal digit, with a wider gap between whole bytes);
+the bottom row holds the hexadecimal digit for the 4 bits directly above it.
+Reading the bottom row gives `0x00000100`, which is 256.
+Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is 0.
 </details>
 
 <details>
@@ -463,7 +495,7 @@ discarding the leading 1.
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 17. Bitwise operation (advanced level)
+### 18. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -497,16 +529,38 @@ For example, `1010 0011` -> `0101 1100`.
 - The result is stored in the 8-bit variable `b`.
 - The result is stored unchanged in the 32-bit variable `c` (for printing).
 
+Written out with each hexadecimal digit under its 4 bits:
+```
+a:
+0000 0000
+0    0
+
+b:
+1111 1111
+F    F
+
+c:
+0000 0000  0000 0000  0000 0000  1111 1111
+0    0     0    0     0    0     F    F
+```
+
+Since `b` is unsigned, the most significant bit counts as just another positive bit,
+so the upper 3 bytes of `c` are filled with 0 (zero extension):
+`c` holds `0x000000FF`, and the program prints 255.
+A signed type, by contrast, is going to interpret the most significant bit
+as having a negative coefficient,
+which is why extending a negative value fills the upper bits with 1s instead.
+
 </details>
 
-### 18. Changing the sign (advanced level)
+### 19. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
 
 int main()
 {
-    uint8_t a{ 255 };
+    uint8_t a{ 127 };
     int8_t b{ static_cast<int8_t>(a) };
     int32_t c{ b };
     std::cout << c;
@@ -554,12 +608,26 @@ In short, `int32_t` will always store *the same numeric value*.
 <details>
 <summary>Correct answer:</summary>
 
-- 255 is written to `a` as `1111 1111`.
-- `1111 1111` is converted unchanged to `b`, and as a signed number it is -1.
-- The value -1 is stored in `c` as -1 (see the explanation above for how).
+- 127 is written to `a` as `0111 1111`.
+- `0111 1111` is converted unchanged to `b`, and as a signed number it is 127.
+- The value 127 is stored in `c` as 127 (see the explanation above for how).
+
+Written out with each hexadecimal digit under its 4 bits:
+```
+a, b:
+0111 1111
+7    F
+
+c:
+0000 0000  0000 0000  0000 0000  0111 1111
+0    0     0    0     0    0     7    F
+```
+
+Since `b` is positive, the upper 3 bytes of `c` are filled with 0:
+`c` holds `0x0000007F`, so the program prints 127.
 </details>
 
-### 19. Swapping variables
+### 20. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };
