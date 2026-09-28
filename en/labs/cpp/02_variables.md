@@ -544,12 +544,12 @@ Since `b` is unsigned, the upper 3 bytes of `c` are filled with 0 (zero extensio
 
 int main()
 {
-    uint8_t a{ 255 };                    // 1111 1111
-                                         // F    F
-    int8_t b{ static_cast<int8_t>(a) };  // 1111 1111
-                                         // F    F
-    int32_t c{ b };                      // 1111 1111  1111 1111  1111 1111  1111 1111
-                                         // F    F     F    F     F    F     F    F
+    uint8_t a{ 127 };                    // 0111 1111
+                                         // 7    F
+    int8_t b{ static_cast<int8_t>(a) };  // 0111 1111
+                                         // 7    F
+    int32_t c{ b };                      // 0000 0000  0000 0000  0000 0000  0111 1111
+                                         // 0    0     0    0     0    0     7    F
     std::cout << c;
 }
 ```
@@ -595,12 +595,12 @@ In short, `int32_t` will always store *the same numeric value*.
 <details>
 <summary>Correct answer:</summary>
 
-- 255 is written to `a` as `1111 1111`.
-- `1111 1111` is converted unchanged to `b`, and as a signed number it is -1.
-- The value -1 is stored in `c` as -1 (see the explanation above for how).
+- 127 is written to `a` as `0111 1111`.
+- `0111 1111` is converted unchanged to `b`, and as a signed number it is 127.
+- The value 127 is stored in `c` as 127 (see the explanation above for how).
 
-Since `b` is negative, the upper 3 bytes of `c` are filled with 1 (sign extension):
-`c` holds `0xFFFFFFFF`, so the program prints -1.
+Since `b` is positive, the upper 3 bytes of `c` are filled with 0:
+`c` holds `0x0000007F`, so the program prints 127.
 </details>
 
 ### 20. Swapping variables
