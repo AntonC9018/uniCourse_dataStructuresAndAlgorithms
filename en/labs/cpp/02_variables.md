@@ -502,9 +502,12 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 
 int main()
 {
-    uint8_t a{ 0 };
-    uint8_t b{ ~a };
-    int32_t c{ b };
+    uint8_t a{ 0 };   // 0000 0000
+                      // 0    0
+    uint8_t b{ ~a };  // 1111 1111
+                      // F    F
+    int32_t c{ b };   // 0000 0000  0000 0000  0000 0000  1111 1111
+                      // 0    0     0    0     0    0     F    F
     std::cout << c;
 }
 ```
@@ -529,6 +532,9 @@ For example, `1010 0011` -> `0101 1100`.
 - The result is stored in the 8-bit variable `b`.
 - The result is stored unchanged in the 32-bit variable `c` (for printing).
 
+Since `b` is unsigned, the upper 3 bytes of `c` are filled with 0 (zero extension):
+`c` holds `0x000000FF`, so the program prints 255.
+
 </details>
 
 ### 19. Changing the sign (advanced level)
@@ -538,9 +544,12 @@ For example, `1010 0011` -> `0101 1100`.
 
 int main()
 {
-    uint8_t a{ 255 };
-    int8_t b{ static_cast<int8_t>(a) };
-    int32_t c{ b };
+    uint8_t a{ 255 };                    // 1111 1111
+                                         // F    F
+    int8_t b{ static_cast<int8_t>(a) };  // 1111 1111
+                                         // F    F
+    int32_t c{ b };                      // 1111 1111  1111 1111  1111 1111  1111 1111
+                                         // F    F     F    F     F    F     F    F
     std::cout << c;
 }
 ```
@@ -589,6 +598,9 @@ In short, `int32_t` will always store *the same numeric value*.
 - 255 is written to `a` as `1111 1111`.
 - `1111 1111` is converted unchanged to `b`, and as a signed number it is -1.
 - The value -1 is stored in `c` as -1 (see the explanation above for how).
+
+Since `b` is negative, the upper 3 bytes of `c` are filled with 1 (sign extension):
+`c` holds `0xFFFFFFFF`, so the program prints -1.
 </details>
 
 ### 20. Swapping variables
