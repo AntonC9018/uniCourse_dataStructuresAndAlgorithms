@@ -471,6 +471,19 @@ leaving only the last byte (the least significant byte).
 The result is 0, because 256 is represented as `1 0000 0000` in binary,
 and truncating this number to 8 bits leaves only `0000 0000`,
 discarding the leading 1.
+
+The same value with all 32 bits written out,
+and each hexadecimal digit placed under its 4 bits:
+```
+0000 0000  0000 0000  0000 0001  0000 0000
+0    0     0    0     0    1     0    0
+```
+
+How to read this notation: the top row holds the bits, split into groups of 4
+(one group per hexadecimal digit, with a wider gap between whole bytes);
+the bottom row holds the hexadecimal digit for the 4 bits directly above it.
+Reading the bottom row gives `0x00000100`, which is 256.
+Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is 0.
 </details>
 
 <details>
