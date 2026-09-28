@@ -160,6 +160,33 @@ You can read from and write to each field individually.
 It prints `5` three times.
 </details>
 
+### 5. Assigning a field from a temporary structure
+```cpp
+#include <iostream>
+
+struct A
+{
+    int f1;
+    int f2;
+};
+
+int main()
+{
+    int a = A{ 1, 2 }.f1;
+    std::cout << a << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+It compiles and prints `1`.
+
+The expression `A{ 1, 2 }` has type `A`, so it cannot be stored in an `int` variable, as in the example with assigning a structure to an `int`.
+But `A{ 1, 2 }.f1` has type `int`, because field `f1` has type `int`.
+A value of type `int` can be stored in a variable of type `int`.
+</details>
+
 ### 5. Assigning a structure
 
 ```cpp
