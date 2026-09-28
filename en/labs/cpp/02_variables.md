@@ -396,8 +396,27 @@ you can assign `a` directly to `b`,
 which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
+### 16. `static_cast` of a negative number to a larger type
 
-### 16. `static_cast` 
+```cpp
+int8_t a{ -3 };
+int b{ static_cast<int>(a) };
+```
+
+<details>
+<summary>Answer</summary>
+
+Just like in the previous example, the conversion happens implicitly even without `static_cast`,
+because every value stored in `a` fits in `b`.
+
+The conversion preserves the value and therefore the sign:
+since `a` is negative, the upper bits of `b` are filled with 1.
+`-3` is `1111 1101` in 8 bits
+and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
+</details>
+
+
+### 17. `static_cast` 
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -463,7 +482,7 @@ discarding the leading 1.
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 17. Bitwise operation (advanced level)
+### 18. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -499,7 +518,7 @@ For example, `1010 0011` -> `0101 1100`.
 
 </details>
 
-### 18. Changing the sign (advanced level)
+### 19. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -559,7 +578,7 @@ In short, `int32_t` will always store *the same numeric value*.
 - The value -1 is stored in `c` as -1 (see the explanation above for how).
 </details>
 
-### 19. Swapping variables
+### 20. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };
