@@ -502,12 +502,9 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 
 int main()
 {
-    uint8_t a{ 0 };   // 0000 0000
-                      // 0    0
-    uint8_t b{ ~a };  // 1111 1111
-                      // F    F
-    int32_t c{ b };   // 0000 0000  0000 0000  0000 0000  1111 1111
-                      // 0    0     0    0     0    0     F    F
+    uint8_t a{ 0 };
+    uint8_t b{ ~a };
+    int32_t c{ b };
     std::cout << c;
 }
 ```
@@ -532,8 +529,27 @@ For example, `1010 0011` -> `0101 1100`.
 - The result is stored in the 8-bit variable `b`.
 - The result is stored unchanged in the 32-bit variable `c` (for printing).
 
-Since `b` is unsigned, the upper 3 bytes of `c` are filled with 0 (zero extension):
-`c` holds `0x000000FF`, so the program prints 255.
+Written out with each hexadecimal digit under its 4 bits:
+```
+a:
+0000 0000
+0    0
+
+b:
+1111 1111
+F    F
+
+c:
+0000 0000  0000 0000  0000 0000  1111 1111
+0    0     0    0     0    0     F    F
+```
+
+Since `b` is unsigned, the most significant bit counts as just another positive bit,
+so the upper 3 bytes of `c` are filled with 0 (zero extension):
+`c` holds `0x000000FF`, and the program prints 255.
+A signed type, by contrast, is going to interpret the most significant bit
+as having a negative coefficient,
+which is why extending a negative value fills the upper bits with 1s instead.
 
 </details>
 
@@ -544,12 +560,9 @@ Since `b` is unsigned, the upper 3 bytes of `c` are filled with 0 (zero extensio
 
 int main()
 {
-    uint8_t a{ 127 };                    // 0111 1111
-                                         // 7    F
-    int8_t b{ static_cast<int8_t>(a) };  // 0111 1111
-                                         // 7    F
-    int32_t c{ b };                      // 0000 0000  0000 0000  0000 0000  0111 1111
-                                         // 0    0     0    0     0    0     7    F
+    uint8_t a{ 127 };
+    int8_t b{ static_cast<int8_t>(a) };
+    int32_t c{ b };
     std::cout << c;
 }
 ```
@@ -598,6 +611,17 @@ In short, `int32_t` will always store *the same numeric value*.
 - 127 is written to `a` as `0111 1111`.
 - `0111 1111` is converted unchanged to `b`, and as a signed number it is 127.
 - The value 127 is stored in `c` as 127 (see the explanation above for how).
+
+Written out with each hexadecimal digit under its 4 bits:
+```
+a, b:
+0111 1111
+7    F
+
+c:
+0000 0000  0000 0000  0000 0000  0111 1111
+0    0     0    0     0    0     7    F
+```
 
 Since `b` is positive, the upper 3 bytes of `c` are filled with 0:
 `c` holds `0x0000007F`, so the program prints 127.
