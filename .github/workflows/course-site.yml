@@ -7,7 +7,7 @@
 # shared-tooling change affects this course only after an explicit
 # submodule-pointer commit, which this workflow then validates (CI-6).
 #
-# Triggers (CI-4/CI-5): pull_request targeting master + push to master,
+# Triggers (CI-4/CI-5): pull_request targeting master (including label changes) + push to master,
 # no path filters. Feature-branch pushes without a PR do not run.
 # CI never writes or commits source metadata (CI-5).
 #
@@ -46,6 +46,7 @@ name: course-site
 on:
   pull_request:
     branches: [master]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   push:
     branches: [master]
 
@@ -65,6 +66,14 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      # Keep the required check blocked until the app publishes validated content.
+      # A conditionally skipped job would satisfy branch protection.
+      - name: Require ci-ready for pull request validation
+        if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'ci-ready')
+        run: |
+          echo '::error::Add ci-ready when this pull request is ready for validation.'
+          exit 1
+
       # CI-2/CI-6: pinned submodule at the committed revision.
       - name: Checkout course with pinned maintenance submodule
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
