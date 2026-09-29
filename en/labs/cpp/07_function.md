@@ -92,7 +92,27 @@ This code illustrates that the variable `b` ceases to exist after `func` returns
 The code will not compile.
 </details>
 
-### 4. Assigning to a passed variable
+### 4. Assigning to `main`'s variable inside another function
+```cpp
+void func()
+{
+    a = 6;
+}
+int main()
+{
+    int a = 5;
+    func();
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+This code illustrates that the variable `a` in `main` is not visible inside `func`.
+The code will not compile.
+</details>
+
+### 5. Assigning to a passed variable
 ```cpp
 void func(int b)
 {
@@ -118,7 +138,7 @@ specifically, the values of the expressions in the corresponding call positions 
 `a` will be 5.
 </details>
 
-### 5. Assigning to a passed variable with the same name
+### 6. Assigning to a passed variable with the same name
 ```cpp
 void func(int a)
 {
@@ -141,7 +161,7 @@ This `a` is not connected to the `a` in `main`.
 `a` will be `5`.
 </details>
 
-### 6. Passing a structure
+### 7. Passing a structure
 ```cpp
 struct A
 {
@@ -173,7 +193,7 @@ Again, the variable and parameter names do not matter; they are not connected to
 The code in `func` will not affect the `a` in `main`.
 </details>
 
-### 7. Passing an address
+### 8. Passing an address
 ```cpp
 void func(int* a)
 {
@@ -197,7 +217,7 @@ Using it, you can reference and modify the memory of the local variable in `main
 `a` will be overwritten with `1` by the function.
 </details>
 
-### 8. Passing the address of a structure
+### 9. Passing the address of a structure
 ```cpp
 #include <iostream>
 
@@ -233,7 +253,7 @@ The situation is similar to the one above.
 Here, the values of both fields of the variable `a` in `main` will be overwritten.
 </details>
 
-### 9. Two parameters (1)
+### 10. Two parameters (1)
 ```cpp
 int func(int a, int b)
 {
@@ -253,7 +273,7 @@ Although `func` returns a result, it is not saved anywhere.
 `b` will retain its old value.
 </details>
 
-### 10. Two parameters (2)
+### 11. Two parameters (2)
 ```cpp
 int func(int a, int b)
 {
@@ -273,7 +293,7 @@ int main()
 Both `b` and `s` will be 7.
 </details>
 
-### 11. Passing a function call as a parameter
+### 12. Passing a function call as a parameter
 ```cpp
 int func(int a, int b)
 {
@@ -295,7 +315,7 @@ int main()
 - `func(9, b)` -> `func(9, 6)` -> `15`.
 </details>
 
-### 12. A function that calls itself
+### 13. A function that calls itself
 ```cpp
 void func(int a)
 {
@@ -317,7 +337,7 @@ preceding call (that is, 1).
 At some point, the stack will run out of memory and the program will crash (stack overflow).
 </details>
 
-### 13. Copying arguments
+### 14. Copying arguments
 ```cpp
 #include <iostream>
 
@@ -344,7 +364,7 @@ A function **receives the result of evaluating an expression, not the expression
 Changing `a` does not affect the sum in any way, because they are stored in two unrelated memory locations.
 </details>
 
-### 14. Passing a parameter, then changing it after the call
+### 15. Passing a parameter, then changing it after the call
 ```cpp
 #include <iostream>
 
@@ -407,7 +427,7 @@ Since the result of the function call is used to initialize `b` on the line `int
 `b` receives the value that `a` had when `func(a)` was evaluated.
 </details>
 
-### 15. A real example: vector
+### 16. A real example: vector
 ```cpp
 #include <iostream>
 
@@ -459,7 +479,7 @@ and an `int` cannot be created from a `Vector`.
 
 </details>
 
-### 16. Advanced level: addresses of local variables
+### 17. Advanced level: addresses of local variables
 ```cpp
 uintptr_t f()
 {
@@ -498,7 +518,7 @@ When subsequent functions are called, their local variables
 That is why the local variables in these calls will likely have the same address.
 </details>
 
-### 17. Advanced level: data in uninitialized variables
+### 18. Advanced level: data in uninitialized variables
 ```cpp
 void f()
 {
