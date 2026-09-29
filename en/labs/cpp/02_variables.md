@@ -266,7 +266,24 @@ int a{ 5.6 };
 ```
 </details>
 
-### 9. The `sizeof` operator
+### 9. Empty initialization
+```cpp
+int a{};
+std::cout << a << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+Empty braces mean the variable is value-initialized with a default value.
+
+For `int`, the default value is `0`, so `0` is written into `a` and `0` is printed.
+
+This is different from `int a;`, which leaves `a` uninitialized with garbage data (see example 2).
+Unlike an uninitialized variable, reading from `a` here is allowed.
+</details>
+
+### 10. The `sizeof` operator
 ```cpp
 std::cout << sizeof(int) << std::endl;
 std::cout << sizeof(uint8_t) << std::endl;
@@ -292,7 +309,7 @@ because types are known only at compile time and do not survive to run time.
 
 </details>
 
-### 10. `auto`
+### 11. `auto`
 
 What type will `a` have in this example?
 ```cpp
@@ -315,7 +332,7 @@ a = "abc"; // error: `a` is `int`, it cannot become a string later
 ```
 </details>
 
-### 11. `auto` without initialization
+### 12. `auto` without initialization
 ```cpp
 auto a;
 a = 5;
@@ -330,7 +347,7 @@ Assigning `5` on the next line does not fix it —
 the type must be fixed at the definition and cannot be inferred retroactively from a later assignment.
 </details>
 
-### 12. `auto` from another variable
+### 13. `auto` from another variable
 ```cpp
 int a{ 5 };
 auto b{ a + 5 };
@@ -344,7 +361,7 @@ auto b{ a + 5 };
 The same holds for any expression: `auto c{ a };` would also give `c` the type `int`.
 </details>
 
-### 13. `auto` with uniform initialization
+### 14. `auto` with uniform initialization
 
 ```cpp
 auto a{ 5 };
@@ -356,7 +373,7 @@ auto a{ 5 };
 This is the same as in the previous example.
 </details>
 
-### 14. `auto` and `static_cast`
+### 15. `auto` and `static_cast`
 
 ```cpp
 auto a{ static_cast<uint8_t>(5) };
@@ -380,7 +397,7 @@ So the following happens:
 - `auto` infers the type of the initializer expression and is replaced with `uint8_t`.
 </details>
 
-### 15. `static_cast` to a larger type
+### 16. `static_cast` to a larger type
 
 ```cpp
 uint8_t a{ 5 };
@@ -396,7 +413,7 @@ you can assign `a` directly to `b`,
 which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
-### 16. `static_cast` of a negative number to a larger type
+### 17. `static_cast` of a negative number to a larger type
 
 ```cpp
 int8_t a{ -3 };
@@ -416,7 +433,7 @@ and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
 </details>
 
 
-### 17. `static_cast` 
+### 18. `static_cast` 
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -495,7 +512,7 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 18. Bitwise operation (advanced level)
+### 19. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -553,7 +570,7 @@ which is why extending a negative value fills the upper bits with 1s instead.
 
 </details>
 
-### 19. Changing the sign (advanced level)
+### 20. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -627,7 +644,7 @@ Since `b` is positive, the upper 3 bytes of `c` are filled with 0:
 `c` holds `0x0000007F`, so the program prints 127.
 </details>
 
-### 20. Swapping variables
+### 21. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };

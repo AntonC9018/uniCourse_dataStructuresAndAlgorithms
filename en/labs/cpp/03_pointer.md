@@ -415,7 +415,26 @@ Two identical addresses are printed: the value stored in `p` matches the address
 If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` still happens implicitly.
 </details>
 
-### 17. Copying a variable and a pointer with similar names
+### 17. Empty pointer initialization
+```cpp
+int* p{};
+std::cout << (p == nullptr) << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+Empty braces value-initialize the pointer, which for pointers means it becomes `nullptr`.
+This is equivalent to writing `int* p{ nullptr };`.
+
+So `p == nullptr` is `true`, and `1` is printed.
+
+This is different from `int* p;`, which leaves `p` uninitialized with garbage data.
+Unlike an uninitialized pointer, reading from `p` here (for example, comparing it with `nullptr`) is allowed.
+Dereferencing `p` itself would still not be allowed, since it does not point to any variable.
+</details>
+
+### 18. Copying a variable and a pointer with similar names
 
 ```cpp
 int x{ 0 };

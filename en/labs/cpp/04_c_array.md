@@ -148,7 +148,7 @@ so 3 elements of 8 bytes each make 24.
 
 ### 5. Computing the number of elements from `sizeof`
 ```cpp
-int arr[]{ 1, 2, 3, 4 };
+int arr[]{ 1, 2, 3, 4, 5 };
 
 std::cout << sizeof(arr);
 std::cout << std::endl;
@@ -169,9 +169,9 @@ Divide the size of the whole array by the size of one element.
 <details>
 <summary>Answer</summary>
 
-Here, `sizeof(arr)` is 16 (4 ints of 4 bytes each),
+Here, `sizeof(arr)` is 20 (5 ints of 4 bytes each),
 `sizeof(arr[0])` is 4 (one `int`),
-so `16 / 4` gives 4 elements.
+so `20 / 4` gives 5 elements.
 
 This only works while `arr` is still an array.
 Once it decays to a pointer (see below), `sizeof` gives the pointer size instead.
@@ -216,6 +216,8 @@ size_t index { 1 };
 arr[index + 1] = 5;
 std::cout << arr[2];
 std::cout << std::endl;
+std::cout << index;
+std::cout << std::endl;
 ```
 
 <details>
@@ -223,6 +225,10 @@ std::cout << std::endl;
 
 This demonstrates using a more complex expression
 to obtain an index.
+
+`index + 1` evaluates to `2`, so `5` is written into `arr[2]`.
+Using `index` in the expression does not change `index` itself,
+so `1` is printed afterwards.
 </details>
 
 ### 9. Copying an array element into a variable
