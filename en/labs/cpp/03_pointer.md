@@ -363,7 +363,7 @@ On 64-bit systems, any pointer is 64 bits in size (you are most likely on a 64-b
 
 ```cpp
 int a = 7;
-int ap = &a;
+int* ap = &a;
 
 std::cout << sizeof(a);
 std::cout << std::endl;
