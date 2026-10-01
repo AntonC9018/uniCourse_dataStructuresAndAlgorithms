@@ -325,4 +325,49 @@ it only sees a pointer, so what gets printed is that address, not the elements `
 To print the elements, print each one by index, as in the first examples.
 </details>
 
+### 13. Array assignment (1)
+```cpp
+int arr1[2]{ 1, 2 };
+int arr2[2]{ 3, 4 };
+arr1 = arr2;
+```
+<details>
+<summary>Answer</summary>
+
+Although it might seem that this should copy every element
+from `arr2` to `arr1`, the program will not compile.
+This syntax simply does not work in C++.
+</details>
+
+### 14. Array assignment (2)
+```cpp
+int arr1[2]{ 1, 2 };
+int arr2[2]{ 3, 4 };
+*arr1 = *arr2;
+```
+<details>
+<summary>Answer</summary>
+
+In `*arr1 = *arr2`, the array names are used as expressions.
+In this case, they are treated as pointers to their first elements.
+Accordingly, this overwrites `arr1[0]` with `arr2[0]`, that is, with `3`.
+</details>
+
+### 15. Assigning an array to an `int` variable
+```cpp
+int arr[2]{ 1, 2 };
+int x = arr;
+```
+<details>
+<summary>Answer</summary>
+
+When `arr` is used as an expression, it decays into a pointer
+to its first element, that is, into an `int*`.
+An `int*` cannot be implicitly converted to an `int`,
+so the program will not compile.
+
+To copy one element, use an index: `int x = arr[0];`.
+To store the address of the first element, use a pointer: `int* p = arr;`.
+</details>
+
 <!-- Missing: get address of item at index, different type than int -->

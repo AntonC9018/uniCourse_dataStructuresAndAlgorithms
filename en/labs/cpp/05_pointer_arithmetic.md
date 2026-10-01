@@ -151,32 +151,4 @@ and is not automatically prevented at runtime.
 In this example, it might print 7.
 </details>
 
-### 7. Array assignment (1)
-```cpp
-int arr1[2]{ 1, 2 };
-int arr2[2]{ 3, 4 };
-arr1 = arr2;
-```
-<details>
-<summary>Answer</summary>
-
-Although it might seem that this should copy every element
-from `arr2` to `arr1`, the program will not compile.
-This syntax simply does not work in C++.
-</details>
-
-### 8. Array assignment (2)
-```cpp
-int arr1[2]{ 1, 2 };
-int arr2[2]{ 3, 4 };
-*arr1 = *arr2;
-```
-<details>
-<summary>Answer</summary>
-
-In `*arr1 = *arr2`, the array names are used as expressions.
-In this case, they are treated as pointers to their first elements.
-Accordingly, this overwrites `arr1[0]` with `arr2[0]`, that is, with `3`.
-</details>
-
 <!-- Missing: different pointer type -->
