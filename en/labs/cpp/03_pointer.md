@@ -418,7 +418,7 @@ If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` 
 ### 17. Empty pointer initialization
 ```cpp
 int* p{};
-std::cout << (p == nullptr) << std::endl;
+std::cout << p << std::endl;
 ```
 
 <details>
@@ -427,10 +427,10 @@ std::cout << (p == nullptr) << std::endl;
 Empty braces value-initialize the pointer, which for pointers means it becomes `nullptr`.
 This is equivalent to writing `int* p{ nullptr };`.
 
-So `p == nullptr` is `true`, and `1` is printed.
+So `0` is printed (the null address).
 
 This is different from `int* p;`, which leaves `p` uninitialized with garbage data.
-Unlike an uninitialized pointer, reading from `p` here (for example, comparing it with `nullptr`) is allowed.
+Unlike an uninitialized pointer, reading `p` itself here (for example, printing it) is allowed.
 Dereferencing `p` itself would still not be allowed, since it does not point to any variable.
 </details>
 
