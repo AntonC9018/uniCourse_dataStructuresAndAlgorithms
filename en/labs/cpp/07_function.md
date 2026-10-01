@@ -427,7 +427,72 @@ Since the result of the function call is used to initialize `b` on the line `int
 `b` receives the value that `a` had when `func(a)` was evaluated.
 </details>
 
-### 16. A real example: vector
+### 16. `auto` takes the return type, not the parameter type
+```cpp
+#include <cstdint>
+#include <iostream>
+
+int func(uint8_t x)
+{
+    return x;
+}
+
+int main()
+{
+    uint8_t a { 200 };
+    auto b { func(a) };
+
+    std::cout << sizeof(a) << std::endl;
+    std::cout << sizeof(b) << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+The program will compile.
+
+`a` will be `200`, and `b` will be `200`.
+
+But they have different types: `a` is `uint8_t`, while `b` is `int`.
+So `1` is printed first, then `4` (the second size is `sizeof(int)`, usually `4`).
+
+`auto` deduces the type from the **result of the expression**, and the result of `func(a)`
+has the function's return type — `int`.
+The parameter type (`uint8_t`) and the argument type (`uint8_t`) do not affect it.
+</details>
+
+<details>
+<summary>What is the type of the result of the expression <code>func(a)</code>?</summary>
+
+The result of the expression comes from executing the function,
+so the expression has the function's return type.
+The function's return type is specified in the function definition — `int`.
+
+Therefore `b`, declared with `auto`, also has type `int`.
+</details>
+
+<details>
+<summary>What happens when <code>func(a)</code> is evaluated?</summary>
+
+- Local variables are created for the parameters.
+ In this case, one variable is created for parameter `x` of type `uint8_t`.
+- The argument value is stored in `x` —
+ the result of evaluating the expression `a` — `200`.
+- Execution moves to the first statement of the function `func`.
+- `return x` is executed, which **makes the result of the expression
+ following `return` the result of the `func` call**.
+ The value `200` from the `uint8_t` variable `x` is **implicitly converted to `int`**,
+ because the function's return type is `int`.
+ That `int` value becomes the **result of the function call**.
+- All local variables created during the call to `func` disappear.
+ In this case, variable `x` disappears.
+
+Since the result of the function call is used to initialize `b` on the line `auto b { func(a) }`,
+`b` receives `200` of type `int`.
+</details>
+
+### 17. A real example: vector
 ```cpp
 #include <iostream>
 
@@ -479,7 +544,7 @@ and an `int` cannot be created from a `Vector`.
 
 </details>
 
-### 17. Advanced level: addresses of local variables
+### 18. Advanced level: addresses of local variables
 ```cpp
 uintptr_t f()
 {
@@ -518,7 +583,7 @@ When subsequent functions are called, their local variables
 That is why the local variables in these calls will likely have the same address.
 </details>
 
-### 18. Advanced level: data in uninitialized variables
+### 19. Advanced level: data in uninitialized variables
 ```cpp
 void f()
 {
