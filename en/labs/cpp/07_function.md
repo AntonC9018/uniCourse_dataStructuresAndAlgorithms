@@ -195,6 +195,8 @@ The code in `func` will not affect the `a` in `main`.
 
 ### 8. Passing an address
 ```cpp
+#include <iostream>
+
 void func(int* a)
 {
     *a = 1;
@@ -203,6 +205,8 @@ int main()
 {
     int a{2};
     func(&a);
+
+    std::cout << a << std::endl;
 }
 ```
 

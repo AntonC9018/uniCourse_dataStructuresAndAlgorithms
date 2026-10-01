@@ -196,6 +196,8 @@ int main()
 
 ### 8. Передача адреса
 ```cpp
+#include <iostream>
+
 void func(int* a)
 {
     *a = 1;
@@ -204,6 +206,8 @@ int main()
 {
     int a{2};
     func(&a);
+
+    std::cout << a << std::endl;
 }
 ```
 
