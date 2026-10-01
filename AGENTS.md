@@ -19,6 +19,12 @@ If it did, see which files have changed, and run maintenance on those files.
 
 Commit once you're done.
 
+## When opening a pull request
+
+Always add the `ci-ready` label when the PR is ready for validation.
+Without it, the `validate` job in `course-site.yml` fails on purpose and branch protection stays red.
+Create the label if it doesn't exist yet (`gh label create ci-ready ...`), then `gh pr create --label ci-ready` or add it via `gh pr edit --add-label ci-ready`.
+
 ## When asked to add an example to a lab or edit one
 
 Always edit both `en/` and `ru/` versions of the lab identically.
