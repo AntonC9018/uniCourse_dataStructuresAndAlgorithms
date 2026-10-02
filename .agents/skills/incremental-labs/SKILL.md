@@ -1,6 +1,6 @@
 ---
 name: incremental-labs
-description: Write or extend this course's labs as a sequence of small prediction puzzles that introduce one concept at a time and build on earlier lessons.
+description: Maintain labs and add new examples to labs.
 ---
 
 # Incremental labs
