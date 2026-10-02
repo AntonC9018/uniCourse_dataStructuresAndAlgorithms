@@ -9,9 +9,11 @@ Use this skill when writing, completing, or extending course labs.
 
 ## Establish the starting point
 
-Read the repository's `AGENTS.md`, the target lab in both languages, and the
-preceding labs. Identify what students already know and which syntax has only
-been mentioned without explanation. Use the first few labs as style references.
+Read the repository's `AGENTS.md`, the target lab, and the preceding labs in
+one language. Assume the English and Russian versions have identical content;
+there is no need to read both to understand the lessons. Identify what students
+already know and which syntax has only been mentioned without explanation.
+Use the first few labs as style references.
 
 List the requested concepts and explicit exclusions before drafting. Keep new
 topics outside that scope as suggestions to the user; add them only after the
@@ -54,7 +56,3 @@ Verify runnable examples with a standard C++ compiler and compare their output
 with the answers. Use strict standard conformance when teaching compile-time
 array sizes: compiler extensions must not make invalid examples appear valid.
 Check that intentionally invalid examples fail for the stated reason.
-
-Run the repository's relevant maintenance checks after editing. Preview any
-maintenance changes before applying them and keep unrelated cleanup out of the
-lab change. Report any existing failures separately from this work.
