@@ -18,6 +18,9 @@ slug: en/cpp/labs/cpp-array
 - Obtaining addresses of array elements
 - Data types other than `int` for array elements
 
+- Const arrays, copying them, and read-only access through `data`
+- Compile-time sizes as template arguments
+
 ## Examples
 
 ### 1. C++ arrays
@@ -42,7 +45,6 @@ What is `data`?</summary>
 
 `b` will continue to refer to the first element, even though the pointer has been updated.
 </details>
-
 
 ### 2. Initializing C++ arrays (1)
 ```cpp
@@ -69,7 +71,40 @@ std::array<int, 2> other{ arr };
 The same copying occurs here, when `other` is created.
 </details>
 
-### 4. Reference to an array
+### 4. A const C++ array
+
+```cpp
+const std::array<int, 2> arr{ 1, 2 };
+arr[0] = 3;
+```
+
+<details>
+<summary>Answer</summary>
+
+The program will not compile: indexing a const `std::array` provides read-only access to its elements.
+`arr[0]` can be read, but cannot be assigned to.
+This applies the [const-object rule](12_const.md) to a C++ array.
+</details>
+
+### 5. Copying a const C++ array
+
+```cpp
+const std::array<int, 2> arr{ 1, 2 };
+std::array<int, 2> other = arr;
+other[0] = 3;
+std::cout << arr[0] << std::endl;
+std::cout << other[0] << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `1` and `3`.
+The whole array is copied into the non-const object `other`.
+Just as when copying a const structure, the copy can be changed independently of the original.
+</details>
+
+### 6. Reference to an array
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>& other{ arr };
@@ -84,7 +119,7 @@ This illustrates creating a reference to an object of C++ array type.
 You can think of `other` as another name for `arr`.
 </details>
 
-### 5. Address of an array
+### 7. Address of an array
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -102,7 +137,7 @@ The array object covers all of its elements.
 Here, the original elements are overwritten with `3, 4`.
 </details>
 
-### 6. Dereferencing an array address
+### 8. Dereferencing an array address
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -122,8 +157,7 @@ of type `std::array<int, 2>`, so `arr1` receives a copy of the entire array.
 Since `arr1` is a copy, its changes will not affect `arr`.
 </details>
 
-
-### 7. Reference to an array element
+### 9. Reference to an array element
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 int& a = arr[0];
@@ -137,7 +171,7 @@ a = 3;
 because `a` refers to element 1 (an object inside the array).
 </details>
 
-### 8. Indexing elements through an address
+### 10. Indexing elements through an address
 ```cpp
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2>* p{ &arr };
@@ -160,7 +194,7 @@ to the first element of the `arr` array.
 Assignments through these references update the elements of `arr`.
 </details>
 
-### 9. Address of an element through `data`
+### 11. Address of an element through `data`
 ```cpp
 std::array<int, 2> arr { 1, 2 };
 int& arr1 = *(p.data() + 1)
@@ -173,8 +207,22 @@ This is similar to the code above, but the expression is more complex.
 Here, `arr1` becomes a reference to `arr[1]`.
 </details>
 
+### 12. data from a const C++ array
 
-### 10. Relative locations of the base address and the array object itself
+```cpp
+const std::array<int, 2> arr{ 1, 2 };
+int* p = arr.data();
+```
+
+<details>
+<summary>Answer</summary>
+
+The program will not compile: for this const array, `arr.data()` returns `const int*`.
+Initializing `int*` from it would discard the pointed-to `const`.
+Use `const int* p = arr.data()` to read the elements; writing through that pointer remains forbidden.
+</details>
+
+### 13. Relative locations of the base address and the array object itself
 ```cpp
 std::array<int, 2> arr { 1, 2 };
 ptrdiff_t diff { reinterpret_cast<uint8_t*>(arr.data()) - reinterpret_cast<uint8_t*>(&arr) };
@@ -190,7 +238,7 @@ The beginning of the entire array object is at the same address as its first ele
 It prints 0.
 </details>
 
-### 11. Matrices (two-dimensional arrays)
+### 14. Matrices (two-dimensional arrays)
 ```cpp
 std::array<std::array<int, 2>, 3> arr{ 
     std::array{ 1, 2 },
@@ -237,4 +285,40 @@ std::array<Item, 3> arr{
     { 5, 6 },
 };
 ```
+</details>
+
+### 15. A compile-time size as a template argument
+
+```cpp
+#include <array>
+#include <iostream>
+
+struct Sizes
+{
+    int count;
+};
+
+int main()
+{
+    const int count = 2;
+    std::array<int, count> a{ 1, 2 };
+
+    constexpr Sizes sizes{ 3 };
+    std::array<int, sizes.count> b{ 3, 4, 5 };
+
+    std::cout << a[1] << std::endl;
+    std::cout << b[2] << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `2` and `5`.
+In `std::array<T, N>`, `T` is the element type and `N` is the number of elements.
+These are template arguments: here, the size argument must be a compile-time constant expression.
+Both the local `const int` initialized with `2` and the field of the `constexpr` structure meet that requirement.
+
+This uses the sizes introduced in the [const lab](12_const.md) in place of literal numbers.
+A size obtained from user input would not work, even if its variable were declared `const`.
 </details>
