@@ -29,6 +29,11 @@ Keep the code small and use familiar names, types, and syntax. Change as little
 as possible between related examples so the cause of the different behavior is
 visible. Avoid introducing unrelated syntax to demonstrate the target concept.
 
+Use fresh variables in separate blocks for separate cases instead of reassigning
+result variables. Keep an object across cases only when its continuing state is
+part of the puzzle. Save intentionally ignored return values in local variables
+marked `[[maybe_unused]]` so the decision to leave them unused is explicit.
+
 Ask students to predict whether the program compiles, what it prints, or which
 objects change. Hide the answer in an HTML `<details>` block with a localized
 `<summary>Answer</summary>`. Explain the rule and trace the concrete values or
