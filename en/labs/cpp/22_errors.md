@@ -955,4 +955,151 @@ Do not place required work only inside `assert`, because its expression may not 
 With checks disabled, the printed message alone does not establish that the results were verified.
 </details>
 
+## Practice tasks
+
+Model each domain with structs and write procedural functions. Decide what each function receives, what it changes, and how the caller learns whether it succeeded. Use the error-reporting techniques from this lab. The first task has a full solution; the remaining tasks have no supplied solutions.
+
+### 19. Vending machine
+
+A vending machine sells water for 3 coins and juice for 5 coins. It starts with two bottles of water and one bottle of juice. A customer selects a product by its index and pays a whole number of coins. Report an invalid selection, a negative payment, an empty product slot, or insufficient payment. A successful purchase removes one bottle and returns the change through a reference parameter. A failed purchase changes neither the stock nor the output variable.
+
+<details>
+<summary>Possible solution</summary>
+
+Each product needs a name, a price, and a stock count. The machine holds a fixed array of products. The error enum describes the outcome; the change is a separate output, meaningful only on success.
+
+Check the selection before accessing the array. Then check the payment and availability. Only after every check passes, decrease the stock and write the change. Prices must be positive and stock counts nonnegative: those are assumptions about the machine's state, checked with assertions.
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <string_view>
+
+struct Product
+{
+    std::string_view name;
+    int price;
+    int stock;
+};
+
+struct VendingMachine
+{
+    std::array<Product, 2> products;
+};
+
+enum class PurchaseError
+{
+    None,
+    InvalidSelection,
+    InvalidPayment,
+    SoldOut,
+    NotEnoughMoney,
+};
+
+PurchaseError buyProduct(
+    VendingMachine& machine,
+    int productIndex,
+    int payment,
+    int& change)
+{
+    if (productIndex < 0 || productIndex >= int(machine.products.size()))
+    {
+        return PurchaseError::InvalidSelection;
+    }
+    if (payment < 0)
+    {
+        return PurchaseError::InvalidPayment;
+    }
+
+    Product& product = machine.products[productIndex];
+    assert(product.price > 0);
+    assert(product.stock >= 0);
+    if (product.stock == 0)
+    {
+        return PurchaseError::SoldOut;
+    }
+    if (payment < product.price)
+    {
+        return PurchaseError::NotEnoughMoney;
+    }
+
+    product.stock -= 1;
+    change = payment - product.price;
+    return PurchaseError::None;
+}
+
+int main()
+{
+    VendingMachine machine{
+        std::array<Product, 2>{ Product{ "water", 3, 2 }, Product{ "juice", 5, 1 } }
+    };
+    {
+        int change = 99;
+        PurchaseError error = buyProduct(machine, 1, 4, change);
+        assert(error == PurchaseError::NotEnoughMoney);
+        assert(machine.products[1].stock == 1);
+        assert(change == 99);
+        std::cout << "not enough money" << std::endl;
+    }
+    {
+        int change;
+        PurchaseError error = buyProduct(machine, 1, 7, change);
+        assert(error == PurchaseError::None);
+        if (error == PurchaseError::None)
+        {
+            std::cout << machine.products[1].name << ": change " << change << std::endl;
+        }
+        assert(machine.products[1].stock == 0);
+    }
+    {
+        int change = 99;
+        PurchaseError error = buyProduct(machine, 1, 7, change);
+        assert(error == PurchaseError::SoldOut);
+        assert(machine.products[1].stock == 0);
+        assert(change == 99);
+        std::cout << "sold out" << std::endl;
+    }
+}
+```
+
+The program prints:
+
+```text
+not enough money
+juice: change 2
+sold out
+```
+
+The same machine is used across the three blocks so the second purchase consumes the juice. Each attempt has its own status and output variables. The failed attempts keep the output's initial value, but that value is not change from a purchase. The successful attempt assigns its output before the caller reads it.
+
+The assertions test the outcomes and state changes. Calls to `buyProduct` occur outside the assertions, so disabling assertions does not remove the purchases.
+
+</details>
+
+### 20. Library checkout
+
+A small library has a fixed-size buffer of books, with one copy of each book. Each borrower has a fixed-size buffer of borrowed book IDs and a count of occupied entries. Find a book by ID, returning a null pointer if it is absent. Check out a book to a borrower passed by pointer. Report a missing book, an already borrowed book, or a full borrower buffer. A successful checkout updates both the book's availability and the borrower's buffer; a failed checkout changes neither. Choose capacities small enough to try every case by hand.
+
+### 21. Configurable parcel shipping
+
+A shipping service receives a parcel and a configuration containing dimension and weight limits, supported destinations, prices, and delivery times. Validate the parcel against the supplied configuration and calculate a shipping quote. Return a custom result struct with a status, price, and estimated delivery time; the quote fields are meaningful only on success. Try the same parcel with two different configurations.
+
+### 22. Ticket booking
+
+A vehicle has a fixed-size array of seats with prices and information about which seats are by a window. Support three requests: a specific seat, the first available window seat, or any available seat. For the last option, take the first available seat; no random-number generation is needed. Receive the customer's money by reference, return an error enum, and fill a ticket struct through a pointer parameter. The ticket records the assigned seat, price, and money remaining. On success, reserve the seat and deduct its price. Report an invalid seat, an occupied seat, no matching seat, or insufficient funds. On failure, leave the seats, money, and ticket output unchanged.
+
+### 23. Exam registration
+
+A student wants to register for an exam. Each exam has prerequisites and a limited number of places. A student may lack several prerequisites, the exam may be full, or the student may already be registered. Collect all applicable problems in an error vector passed by reference, identifying each missing prerequisite. Register the student only if there are no problems. Decide whether the function clears the supplied vector or appends to it, and make that contract clear to the caller.
+
+### 24. Sensor readings
+
+A sensor supplies a buffer of temperature readings and an allowed range. Reject readings outside that range and calculate the average of the valid readings. Return an empty `std::optional` if no valid readings remain, and let the caller report the rejected readings. Distinguish expected invalid readings from assumptions about the function's inputs that should be checked with assertions.
+
+### 25. Currency exchange
+
+An exchange service has a fixed table of supported currency pairs, exchange rates, and fees. A customer requests an exchange and supplies a source-currency balance by reference. Return an error enum and fill a receipt struct through a pointer parameter. The receipt records the amount received, rate used, and fee charged. Report an unsupported pair, an invalid amount, or insufficient funds including the fee. On success, deduct the exchanged amount and fee from the balance; on failure, leave the balance and receipt unchanged. Choose and document units and a rounding rule for monetary amounts.
+
+
 [Tagged unions and flags](34_tagged_unions_and_flags.md) and [exceptions](35_exceptions.md) have separate later labs.
