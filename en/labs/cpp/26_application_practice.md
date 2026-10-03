@@ -8,7 +8,7 @@ slug: en/cpp/labs/application-practice
 
 ## Worked example: Snake
 
-<!-- TODO: Add the full Snake game tutorial video link. -->
+[Full Snake game tutorial (in Russian)](https://youtu.be/2tp1cWS77lM).
 
 ## Practice
 
