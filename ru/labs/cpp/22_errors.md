@@ -47,13 +47,16 @@ bool printPage(Printer& printer)
 
 int main()
 {
-    Printer printer{ true };
-    bool printed = printPage(printer);
-    std::cout << printed << std::endl;
-
-    printer.jammed = false;
-    printed = printPage(printer);
-    std::cout << printed << std::endl;
+    {
+        Printer printer{ true };
+        bool printed = printPage(printer);
+        std::cout << printed << std::endl;
+    }
+    {
+        Printer printer{ false };
+        bool printed = printPage(printer);
+        std::cout << printed << std::endl;
+    }
 }
 ```
 
@@ -62,7 +65,7 @@ int main()
 
 Выведутся `0`, `page printed` и `1`.
 `Printer` моделирует принтер, а `jammed` показывает, застряла ли в нём бумага.
-Первый запрос не выполняется из-за застрявшей бумаги. После устранения этой проблемы второй запрос печатает страницу и завершается успешно.
+В первом блоке запрос не выполняется из-за застрявшей бумаги. Во втором блоке создаётся принтер без этой проблемы, поэтому страница печатается успешно.
 
 Bool сообщает вызывающей функции, выполнена ли операция, но не передаёт причину ошибки.
 Этот интерфейс использует `true` для успеха и `false` для ошибки.
@@ -126,7 +129,7 @@ GradeError validateGrade(int grade)
     {
         return GradeError::TooLow;
     }
-    if (grade >= 10)
+    if (grade > 10)
     {
         return GradeError::TooHigh;
     }
@@ -135,19 +138,20 @@ GradeError validateGrade(int grade)
 
 int main()
 {
-    std::cout << (validateGrade(0) == GradeError::TooLow) << std::endl;
-    std::cout << (validateGrade(10) == GradeError::TooHigh) << std::endl;
-    std::cout << (validateGrade(5) == GradeError::None) << std::endl;
+    std::cout << static_cast<int>(validateGrade(0)) << std::endl;
+    std::cout << static_cast<int>(validateGrade(11)) << std::endl;
+    std::cout << static_cast<int>(validateGrade(10)) << std::endl;
+    std::cout << static_cast<int>(validateGrade(5)) << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1`, `1` и `1`.
-Этот интерфейс принимает оценку строго больше `0` и строго меньше `10`.
-Один параметр проверяется по двум условиям: `0` слишком мало, `10` слишком много, а `5` допустимо.
-Enum передаёт конкретную причину ошибки, поэтому вызывающая функция может различить две неудачные проверки, не разбирая текст сообщения.
+Выведутся `1`, `2`, `0` и `0`: числовые значения `TooLow`, `TooHigh`, `None` и `None`.
+Этот интерфейс принимает целочисленные оценки от `1` до `10` включительно.
+Один параметр проверяется по двум условиям: `0` слишком мало, `11` слишком много, а `10` и `5` допустимы.
+Enum передаёт конкретную причину ошибки; `static_cast<int>` позволяет вывести его значение.
 </details>
 
 ### 4. Принтер с двумя причинами ошибки
@@ -184,18 +188,22 @@ PrintError printPage(Printer& printer)
 
 int main()
 {
-    Printer printer{ true, 0 };
-    PrintError error = printPage(printer);
-    std::cout << (error == PrintError::Jammed) << std::endl;
-
-    printer.jammed = false;
-    error = printPage(printer);
-    std::cout << (error == PrintError::NoPaper) << std::endl;
-
-    printer.pagesLoaded = 1;
-    error = printPage(printer);
-    std::cout << (error == PrintError::None) << std::endl;
-    std::cout << printer.pagesLoaded << std::endl;
+    {
+        Printer printer{ true, 0 };
+        PrintError error = printPage(printer);
+        std::cout << (error == PrintError::Jammed) << std::endl;
+    }
+    {
+        Printer printer{ false, 0 };
+        PrintError error = printPage(printer);
+        std::cout << (error == PrintError::NoPaper) << std::endl;
+    }
+    {
+        Printer printer{ false, 1 };
+        PrintError error = printPage(printer);
+        std::cout << (error == PrintError::None) << std::endl;
+        std::cout << printer.pagesLoaded << std::endl;
+    }
 }
 ```
 
@@ -203,10 +211,11 @@ int main()
 <summary>Ответ</summary>
 
 Выведутся `1`, `1`, `1` и `0`.
-Принтер теперь хранит и количество загруженных листов. Успешная печать расходует один лист; неудачный запрос не меняет состояние принтера.
+В каждом блоке создаётся принтер для отдельного случая. Успешная печать расходует один лист; неудачный запрос не меняет состояние этого принтера.
 
-Сначала есть обе проблемы, но проверка застрявшей бумаги сразу завершает функцию, поэтому возвращается `Jammed`.
-После устранения этой проблемы обнаруживается `NoPaper`. Если загрузить лист, последний запрос выполнится успешно, а `pagesLoaded` уменьшится с `1` до `0`.
+В первом случае есть обе проблемы, но проверка застрявшей бумаги сразу завершает функцию, поэтому возвращается `Jammed`.
+Во втором принтере бумага не застряла, но листов нет, поэтому возвращается `NoPaper`.
+В третьем принтере есть один лист: печать выполняется успешно, и `pagesLoaded` уменьшается с `1` до `0`.
 Передача принтера по ссылке позволяет функции менять тот же объект принтера.
 </details>
 
@@ -231,26 +240,31 @@ bool divideExactly(int dividend, int divisor, int* quotient)
 
 int main()
 {
-    int quotient = 99;
-    bool success = divideExactly(8, 2, &quotient);
-    std::cout << success << std::endl;
-    std::cout << quotient << std::endl;
-
-    success = divideExactly(9, 2, &quotient);
-    std::cout << success << std::endl;
-    std::cout << quotient << std::endl;
+    {
+        int quotient = 99;
+        bool success = divideExactly(8, 2, &quotient);
+        std::cout << success << std::endl;
+        std::cout << quotient << std::endl;
+    }
+    {
+        int quotient = 99;
+        bool success = divideExactly(9, 2, &quotient);
+        std::cout << success << std::endl;
+        std::cout << quotient << std::endl;
+    }
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1`, `4`, `0` и `4`.
+Выведутся `1`, `4`, `0` и `99`.
 Функция принимает неотрицательное делимое и положительный делитель и завершается успешно только при делении без остатка.
 `8 / 2` — ровно `4`. При `9 / 2` целочисленное деление отбросило бы дробную часть, поэтому проверка остатка отклоняет такой случай.
 
+У каждого блока свои переменные для частного и признака успеха.
 Bool сообщает об успехе, а частное записывается через параметр-указатель.
-При ошибке присваивания нет: последнее `4` — предыдущий результат, а не результат для `9 / 2`.
+При ошибке присваивания нет: частное во втором блоке остаётся равным `99`, а не становится результатом для `9 / 2`.
 `quotient` должен указывать на существующий объект типа `int`.
 </details>
 
@@ -275,24 +289,29 @@ bool divideExactly(int dividend, int divisor, int& quotient)
 
 int main()
 {
-    int quotient = 99;
-    bool success = divideExactly(8, 2, quotient);
-    std::cout << success << std::endl;
-    std::cout << quotient << std::endl;
-
-    success = divideExactly(9, 2, quotient);
-    std::cout << success << std::endl;
-    std::cout << quotient << std::endl;
+    {
+        int quotient = 99;
+        bool success = divideExactly(8, 2, quotient);
+        std::cout << success << std::endl;
+        std::cout << quotient << std::endl;
+    }
+    {
+        int quotient = 99;
+        bool success = divideExactly(9, 2, quotient);
+        std::cout << success << std::endl;
+        std::cout << quotient << std::endl;
+    }
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся те же `1`, `4`, `0` и `4`.
+Выведутся те же `1`, `4`, `0` и `99`.
 Параметр-ссылка ссылается на переменную в вызывающей функции, поэтому присваивание в `quotient` меняет эту переменную.
 Передаётся сама переменная, а не её адрес.
 Правило деления без остатка и обещание не менять выходное значение при ошибке остаются прежними.
+В каждом блоке создаётся новое частное, инициализированное значением `99`.
 </details>
 
 ### 7. Игнорирование признака успеха
@@ -320,7 +339,7 @@ int main()
 {
     TemperatureSensor sensor{ false, 17 };
     int temperature = 21;
-    readTemperature(sensor, temperature);
+    [[maybe_unused]] bool success = readTemperature(sensor, temperature);
     std::cout << temperature << std::endl;
 }
 ```
@@ -330,7 +349,9 @@ int main()
 
 Выведется `21`.
 Отключённый датчик не может передать новое измерение, поэтому функция возвращает `false`, не меняя выходное значение.
-Вызывающая функция игнорирует этот признак ошибки и выводит старую температуру.
+Вызывающая функция сохраняет признак успеха в переменной с `[[maybe_unused]]` и намеренно не проверяет его.
+Атрибут явно обозначает неиспользуемый результат, но не обрабатывает ошибку.
+
 `21` — инициализированное значение, но считать его новым измерением было бы логической ошибкой.
 Используйте выходное значение как новое измерение только после проверки успеха вызова.
 </details>
@@ -340,49 +361,60 @@ int main()
 ```cpp
 #include <iostream>
 
-struct Printer
+struct VendingMachine
 {
-    bool jammed;
-    int pagesLoaded;
+    int bottles;
+    int price;
 };
 
-enum class PrintError
+enum class PurchaseError
 {
     None,
-    Jammed,
-    NoPaper,
+    SoldOut,
+    NotEnoughMoney,
 };
 
-PrintError printPage(Printer& printer, int& pagesRemaining)
+PurchaseError buyWater(VendingMachine& machine, int money, int& change)
 {
-    if (printer.jammed)
+    if (machine.bottles == 0)
     {
-        return PrintError::Jammed;
+        return PurchaseError::SoldOut;
     }
-    if (printer.pagesLoaded == 0)
+    if (money < machine.price)
     {
-        return PrintError::NoPaper;
+        return PurchaseError::NotEnoughMoney;
     }
-    printer.pagesLoaded -= 1;
-    pagesRemaining = printer.pagesLoaded;
-    return PrintError::None;
+    machine.bottles -= 1;
+    change = money - machine.price;
+    return PurchaseError::None;
 }
 
 int main()
 {
-    Printer printer{ false, 2 };
-    int pagesRemaining = 99;
-    PrintError error = printPage(printer, pagesRemaining);
-    if (error == PrintError::None)
+    VendingMachine machine{ 1, 3 };
     {
-        std::cout << pagesRemaining << std::endl;
+        int change = 99;
+        PurchaseError error = buyWater(machine, 2, change);
+        if (error == PurchaseError::NotEnoughMoney)
+        {
+            std::cout << "not enough money" << std::endl;
+        }
     }
-
-    printer.jammed = true;
-    error = printPage(printer, pagesRemaining);
-    if (error == PrintError::Jammed)
     {
-        std::cout << "printer is jammed" << std::endl;
+        int change = 99;
+        PurchaseError error = buyWater(machine, 5, change);
+        if (error == PurchaseError::None)
+        {
+            std::cout << change << std::endl;
+        }
+    }
+    {
+        int change = 99;
+        PurchaseError error = buyWater(machine, 5, change);
+        if (error == PurchaseError::SoldOut)
+        {
+            std::cout << "sold out" << std::endl;
+        }
     }
 }
 ```
@@ -390,13 +422,14 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1` и `printer is jammed`.
-Успешный запрос расходует один из двух загруженных листов и записывает оставшееся количество через параметр-ссылку.
-Enum сообщает об успехе или конкретной причине ошибки.
+Выведутся `not enough money`, `2` и `sold out`.
+В автомате одна бутылка по цене `3`. Первая оплата в размере `2` отклоняется, и бутылка остаётся в автомате.
+Вторая оплата в размере `5` достаточна: бутылка продаётся, а в выходной параметр-ссылку записывается сдача, `5 - 3`.
+Последняя покупка не выполняется, потому что автомат уже пуст.
 
-Неудачный запрос не меняет ни принтер, ни `pagesRemaining`.
-Старое количество не используется как новый результат: вместо этого вызывающая функция обрабатывает `Jammed`.
-Здесь подробный признак ошибки объединяется с отдельным выходным значением.
+Enum сообщает конкретную причину ошибки, а ссылка передаёт полезный результат при успехе.
+У каждого вызова новые переменные для признака ошибки и сдачи. При неудаче сдача не меняется, и вызывающая функция не использует её как результат.
+Один автомат намеренно сохраняется между блоками, чтобы показать, как расходуется его запас.
 </details>
 
 ### 9. Нулевой указатель означает ошибку
@@ -474,22 +507,25 @@ TicketResult issueTicket(TicketMachine& machine)
 
 int main()
 {
-    TicketMachine machine{ true, 42 };
-    TicketResult result = issueTicket(machine);
-    if (result.success)
     {
-        std::cout << result.number << std::endl;
+        TicketMachine machine{ true, 42 };
+        TicketResult result = issueTicket(machine);
+        if (result.success)
+        {
+            std::cout << result.number << std::endl;
+        }
     }
-
-    machine.online = false;
-    result = issueTicket(machine);
-    if (result.success)
     {
-        std::cout << result.number << std::endl;
-    }
-    else
-    {
-        std::cout << "machine is offline" << std::endl;
+        TicketMachine machine{ false, 42 };
+        TicketResult result = issueTicket(machine);
+        if (result.success)
+        {
+            std::cout << result.number << std::endl;
+        }
+        else
+        {
+            std::cout << "machine is offline" << std::endl;
+        }
     }
 }
 ```
@@ -532,22 +568,25 @@ std::optional<int> issueTicket(TicketMachine& machine)
 
 int main()
 {
-    TicketMachine machine{ true, 42 };
-    std::optional<int> result = issueTicket(machine);
-    if (result.has_value())
     {
-        std::cout << *result << std::endl;
+        TicketMachine machine{ true, 42 };
+        std::optional<int> result = issueTicket(machine);
+        if (result.has_value())
+        {
+            std::cout << *result << std::endl;
+        }
     }
-
-    machine.online = false;
-    result = issueTicket(machine);
-    if (result.has_value())
     {
-        std::cout << *result << std::endl;
-    }
-    else
-    {
-        std::cout << "machine is offline" << std::endl;
+        TicketMachine machine{ false, 42 };
+        std::optional<int> result = issueTicket(machine);
+        if (result.has_value())
+        {
+            std::cout << *result << std::endl;
+        }
+        else
+        {
+            std::cout << "machine is offline" << std::endl;
+        }
     }
 }
 ```
@@ -647,10 +686,14 @@ bool validateOrder(int amount, int price, std::vector<ValidationError>& errors)
 int main()
 {
     std::vector<ValidationError> errors;
-    validateOrder(-1, -2, errors);
-    bool valid = validateOrder(3, 4, errors);
-    std::cout << valid << std::endl;
-    std::cout << errors.size() << std::endl;
+    {
+        [[maybe_unused]] bool valid = validateOrder(-1, -2, errors);
+    }
+    {
+        bool valid = validateOrder(3, 4, errors);
+        std::cout << valid << std::endl;
+        std::cout << errors.size() << std::endl;
+    }
 }
 ```
 
@@ -738,16 +781,20 @@ bool readTemperature(const TemperatureSensor& sensor, int* temperature)
 
 int main()
 {
-    TemperatureSensor sensor{ false, 17 };
-    int temperature = 21;
-    bool success = readTemperature(sensor, &temperature);
-    std::cout << success << std::endl;
-    std::cout << temperature << std::endl;
-
-    sensor.connected = true;
-    success = readTemperature(sensor, &temperature);
-    std::cout << success << std::endl;
-    std::cout << temperature << std::endl;
+    {
+        TemperatureSensor sensor{ false, 17 };
+        int temperature = 21;
+        bool success = readTemperature(sensor, &temperature);
+        std::cout << success << std::endl;
+        std::cout << temperature << std::endl;
+    }
+    {
+        TemperatureSensor sensor{ true, 17 };
+        int temperature = 21;
+        bool success = readTemperature(sensor, &temperature);
+        std::cout << success << std::endl;
+        std::cout << temperature << std::endl;
+    }
 }
 ```
 
@@ -755,11 +802,12 @@ int main()
 <summary>Ответ</summary>
 
 При включённых проверках assert выведутся `0`, `21`, `1` и `17`.
+Каждый блок представляет отдельный случай со своим датчиком, выходной переменной и признаком успеха.
 Этот интерфейс требует существующий выходной объект. Assert проверяет, что указатель не нулевой; оба вызова проходят эту проверку.
 Передача `nullptr` нарушила бы условие использования функции.
 
-Отключённый датчик — ожидаемая ошибка, о которой функция сообщает через `false`, поэтому программа может продолжить работу и снова подключить датчик.
-После подключения датчик передаёт новое измерение `17`.
+Отключённый датчик — ожидаемая ошибка, о которой функция сообщает через `false`, поэтому программа может продолжить работу.
+Подключённый датчик во втором блоке передаёт измерение `17`.
 Даже при отключённых проверках assert вызывающая функция обязана передавать существующий выходной объект.
 Assert и обычная обработка ошибок решают разные задачи.
 </details>
@@ -788,15 +836,18 @@ bool printPage(Printer& printer)
 
 int main()
 {
-    Printer printer{ true, 2 };
-    bool printed = printPage(printer);
-    assert(!printed);
-    assert(printer.pagesLoaded == 2);
-
-    printer.jammed = false;
-    printed = printPage(printer);
-    assert(printed);
-    assert(printer.pagesLoaded == 1);
+    {
+        Printer printer{ true, 2 };
+        bool printed = printPage(printer);
+        assert(!printed);
+        assert(printer.pagesLoaded == 2);
+    }
+    {
+        Printer printer{ false, 2 };
+        bool printed = printPage(printer);
+        assert(printed);
+        assert(printer.pagesLoaded == 1);
+    }
     std::cout << "tests passed" << std::endl;
 }
 ```
@@ -805,9 +856,9 @@ int main()
 <summary>Ответ</summary>
 
 При включённых проверках assert выведется `tests passed`.
-Первый запрос отклоняется из-за застрявшей бумаги; оба загруженных листа остаются.
-После устранения этой проблемы второй запрос выполняется успешно и расходует один лист.
-Проверки assert подтверждают признак успеха и получившееся состояние того же принтера.
+Принтер в первом блоке отклоняет запрос из-за застрявшей бумаги; оба загруженных листа остаются.
+В принтере второго блока бумага не застряла, поэтому печать выполняется успешно и расходует один лист.
+Проверки assert подтверждают признак успеха и получившееся состояние в каждом независимом случае.
 
 Вызовы `printPage` вынесены из assert, поэтому они выполняются и при отключённых проверках.
 Не помещайте необходимые действия только внутрь assert: его выражение может вообще не вычисляться.
