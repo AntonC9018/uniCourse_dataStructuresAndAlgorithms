@@ -30,25 +30,42 @@ Each code block is a separate program. Unless an example explicitly says otherwi
 ```cpp
 #include <iostream>
 
-bool isValidAmount(int amount)
+struct Printer
 {
-    return amount >= 0;
+    bool jammed;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed)
+    {
+        return false;
+    }
+    std::cout << "page printed" << std::endl;
+    return true;
 }
 
 int main()
 {
-    std::cout << isValidAmount(3) << std::endl;
-    std::cout << isValidAmount(-1) << std::endl;
+    Printer printer{ true };
+    bool printed = printPage(printer);
+    std::cout << printed << std::endl;
+
+    printer.jammed = false;
+    printed = printPage(printer);
+    std::cout << printed << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `1` and `0`: without `std::boolalpha`, these are the printed forms of `true` and `false`.
-The function uses `true` to mean success and `false` to mean failure.
-That convention belongs to this interface; the type `bool` itself does not prescribe what either value means.
-A bool communicates whether validation succeeded, but not the kind of failure.
+It prints `0`, `page printed`, and `1`.
+`Printer` models a printer, and `jammed` says whether paper is stuck in it.
+The first request fails because the printer is jammed. After the jam is cleared, the second request prints a page and succeeds.
+
+A bool tells the caller whether the operation succeeded, but not the failure kind.
+This interface uses `true` for success and `false` for failure.
 </details>
 
 ### 2. Printing an error
@@ -56,31 +73,39 @@ A bool communicates whether validation succeeded, but not the kind of failure.
 ```cpp
 #include <iostream>
 
-bool isValidAmount(int amount)
+struct Printer
 {
-    if (amount < 0)
+    bool jammed;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed)
     {
-        std::cerr << "amount must not be negative" << std::endl;
+        std::cerr << "printer is jammed" << std::endl;
         return false;
     }
+    std::cout << "page printed" << std::endl;
     return true;
 }
 
 int main()
 {
-    bool valid = isValidAmount(-1);
-    std::cout << valid << std::endl;
+    Printer printer{ true };
+    bool printed = printPage(printer);
+    std::cout << printed << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It writes `amount must not be negative` to standard error and `0` to standard output.
-`std::cerr` is an output stream for diagnostics, used here in the same way as `std::cout`.
-A terminal commonly shows both streams; their exact combined display depends on how they are captured.
+It writes `printer is jammed` to standard error and `0` to standard output.
+In `std::cerr`, `err` stands for *error*. It is an output stream for diagnostics, used here in the same way as `std::cout`.
 
-The message tells a person what went wrong. The caller still receives only `false`, so printing does not provide a structured failure kind to other code.
+The message tells a person what went wrong, but the caller receives only `false`: the specific failure kind is lost in the return value.
+Here that does not really matter, because the function checks only one thing: whether the printer is jammed.
+If more checks were added, the bool alone would not identify which one failed.
 </details>
 
 ### 3. Returning the failure kind
@@ -88,69 +113,132 @@ The message tells a person what went wrong. The caller still receives only `fals
 ```cpp
 #include <iostream>
 
-enum class ValidationError
+enum class GradeError
 {
     None,
-    NegativeAmount,
-    NegativePrice,
+    TooLow,
+    TooHigh,
 };
 
-ValidationError validateOrder(int amount, int price)
+GradeError validateGrade(int grade)
 {
-    if (amount < 0)
+    if (grade <= 0)
     {
-        return ValidationError::NegativeAmount;
+        return GradeError::TooLow;
     }
-    if (price < 0)
+    if (grade >= 10)
     {
-        return ValidationError::NegativePrice;
+        return GradeError::TooHigh;
     }
-    return ValidationError::None;
+    return GradeError::None;
 }
 
 int main()
 {
-    ValidationError result = validateOrder(-1, -2);
-    std::cout << (result == ValidationError::NegativeAmount) << std::endl;
-    std::cout << (result == ValidationError::NegativePrice) << std::endl;
-    std::cout << (validateOrder(3, 4) == ValidationError::None) << std::endl;
+    std::cout << (validateGrade(0) == GradeError::TooLow) << std::endl;
+    std::cout << (validateGrade(10) == GradeError::TooHigh) << std::endl;
+    std::cout << (validateGrade(5) == GradeError::None) << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `1`, `0`, and `1`.
-An enum lets the caller distinguish success from specific failure kinds without analyzing a message.
-Although both arguments in the first call are invalid, the first `return` ends the function immediately.
-Only `NegativeAmount` is reported; the price check is not reached.
+It prints `1`, `1`, and `1`.
+This interface accepts a grade strictly greater than `0` and strictly less than `10`.
+A single parameter is checked in two ways: `0` is too low, `10` is too high, and `5` is valid.
+The enum communicates the specific failure kind, so the caller can distinguish the two failed checks without analyzing a message.
 </details>
 
-### 4. A bool and an output pointer
+### 4. A printer with two failure kinds
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int* output)
+struct Printer
 {
-    if (input < 0)
+    bool jammed;
+    int pagesLoaded;
+};
+
+enum class PrintError
+{
+    None,
+    Jammed,
+    NoPaper,
+};
+
+PrintError printPage(Printer& printer)
+{
+    if (printer.jammed)
+    {
+        return PrintError::Jammed;
+    }
+    if (printer.pagesLoaded == 0)
+    {
+        return PrintError::NoPaper;
+    }
+    printer.pagesLoaded -= 1;
+    return PrintError::None;
+}
+
+int main()
+{
+    Printer printer{ true, 0 };
+    PrintError error = printPage(printer);
+    std::cout << (error == PrintError::Jammed) << std::endl;
+
+    printer.jammed = false;
+    error = printPage(printer);
+    std::cout << (error == PrintError::NoPaper) << std::endl;
+
+    printer.pagesLoaded = 1;
+    error = printPage(printer);
+    std::cout << (error == PrintError::None) << std::endl;
+    std::cout << printer.pagesLoaded << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `1`, `1`, `1`, and `0`.
+The printer now also tracks its loaded sheets. A successful print consumes one sheet; a failed request leaves the printer unchanged.
+
+At first, both problems are present, but the jam check returns immediately, so `Jammed` is reported.
+Clearing the jam reveals `NoPaper`. Loading a sheet makes the last request succeed and reduces `pagesLoaded` from `1` to `0`.
+Passing the printer by reference lets the function update that same printer object.
+</details>
+
+### 5. A bool and an output pointer
+
+```cpp
+#include <iostream>
+
+bool divideExactly(int dividend, int divisor, int* quotient)
+{
+    if (dividend < 0 || divisor <= 0)
     {
         return false;
     }
-    *output = input / 2;
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    *quotient = dividend / divisor;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, &value);
+    int quotient = 99;
+    bool success = divideExactly(8, 2, &quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 
-    success = tryHalf(-1, &value);
+    success = divideExactly(9, 2, &quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 }
 ```
 
@@ -158,39 +246,43 @@ int main()
 <summary>Answer</summary>
 
 It prints `1`, `4`, `0`, and `4`.
-The function returns its status and writes the computed value through the pointer parameter.
-It accepts non-negative inputs and uses integer division.
+This function accepts a non-negative dividend and a positive divisor, and succeeds only when division is exact.
+`8 / 2` is exactly `4`. For `9 / 2`, integer division would discard the fractional part, so the remainder check rejects it.
 
-On failure, it returns before assigning to `*output`, so this interface leaves the output value unchanged.
-The second `4` is the result of the previous successful call, not a new result for `-1`.
-Here, `output` must point to a valid integer object; it is not an optional parameter.
+The bool reports success, while the quotient is written through the pointer parameter.
+On failure, no assignment occurs: the last `4` is the previous result, not a result for `9 / 2`.
+`quotient` must point to a valid integer object.
 </details>
 
-### 5. The same output through a reference
+### 6. The same output through a reference
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int& output)
+bool divideExactly(int dividend, int divisor, int& quotient)
 {
-    if (input < 0)
+    if (dividend < 0 || divisor <= 0)
     {
         return false;
     }
-    output = input / 2;
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    quotient = dividend / divisor;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, value);
+    int quotient = 99;
+    bool success = divideExactly(8, 2, quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 
-    success = tryHalf(-1, value);
+    success = divideExactly(9, 2, quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 }
 ```
 
@@ -198,76 +290,99 @@ int main()
 <summary>Answer</summary>
 
 It prints the same `1`, `4`, `0`, and `4`.
-The reference parameter names the caller's integer, so assigning to `output` changes `value`.
-At the call site, pass `value` instead of its address.
-The success/failure contract is unchanged; a reference also cannot represent a missing output object with `nullptr`.
+The reference parameter names the caller's integer, so assigning to `quotient` changes the caller's object.
+Pass the variable itself instead of its address.
+The exact-division rule and the promise to leave the output unchanged on failure are the same as before.
 </details>
 
-### 6. Ignoring the status
+### 7. Ignoring the status
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int& output)
+struct TemperatureSensor
 {
-    if (input < 0)
+    bool connected;
+    int temperature;
+};
+
+bool readTemperature(const TemperatureSensor& sensor, int& temperature)
+{
+    if (!sensor.connected)
     {
         return false;
     }
-    output = input / 2;
+    temperature = sensor.temperature;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    tryHalf(-1, value);
-    std::cout << value << std::endl;
+    TemperatureSensor sensor{ false, 17 };
+    int temperature = 21;
+    readTemperature(sensor, temperature);
+    std::cout << temperature << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `99`.
-The call returns `false`, but that status is ignored.
-`value` keeps its old value; treating it as a successfully computed result would be a logic error.
-Use the output as a new result only after the status indicates success.
-Here, `99` is an ordinary initialized value, so reading it is defined; it is simply not the requested result.
+It prints `21`.
+The disconnected sensor cannot supply a new reading, so the function returns `false` without changing the output.
+The caller ignores that status and prints the old temperature.
+`21` is an initialized value, but treating it as a new measurement would be a logic error.
+Use the output as a new reading only after checking that the call succeeded.
 </details>
 
-### 7. An enum and an output value
+### 8. An enum and an output value
 
 ```cpp
 #include <iostream>
 
-enum class HalfError
+struct Printer
 {
-    None,
-    NegativeInput,
+    bool jammed;
+    int pagesLoaded;
 };
 
-HalfError tryHalf(int input, int& output)
+enum class PrintError
 {
-    if (input < 0)
+    None,
+    Jammed,
+    NoPaper,
+};
+
+PrintError printPage(Printer& printer, int& pagesRemaining)
+{
+    if (printer.jammed)
     {
-        return HalfError::NegativeInput;
+        return PrintError::Jammed;
     }
-    output = input / 2;
-    return HalfError::None;
+    if (printer.pagesLoaded == 0)
+    {
+        return PrintError::NoPaper;
+    }
+    printer.pagesLoaded -= 1;
+    pagesRemaining = printer.pagesLoaded;
+    return PrintError::None;
 }
 
 int main()
 {
-    int value = 99;
-    HalfError error = tryHalf(-1, value);
-    if (error == HalfError::None)
+    Printer printer{ false, 2 };
+    int pagesRemaining = 99;
+    PrintError error = printPage(printer, pagesRemaining);
+    if (error == PrintError::None)
     {
-        std::cout << value << std::endl;
+        std::cout << pagesRemaining << std::endl;
     }
-    else if (error == HalfError::NegativeInput)
+
+    printer.jammed = true;
+    error = printPage(printer, pagesRemaining);
+    if (error == PrintError::Jammed)
     {
-        std::cout << "negative input" << std::endl;
+        std::cout << "printer is jammed" << std::endl;
     }
 }
 ```
@@ -275,14 +390,16 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `negative input`.
-This combines the output-parameter pattern with an enum status.
-`None` means success; other members explain failure.
-The caller checks the status before treating the output as a result.
-An enum becomes especially useful when more than one failure kind is possible.
+It prints `1` and `printer is jammed`.
+The successful request consumes one of the two loaded sheets and writes the remaining count through the reference parameter.
+The enum reports either success or a specific failure kind.
+
+The failed request changes neither the printer nor `pagesRemaining`.
+The old count is not used as a new result: the caller handles `Jammed` instead.
+This combines a detailed status with a separate output value.
 </details>
 
-### 8. A null pointer means failure
+### 9. A null pointer means failure
 
 ```cpp
 #include <iostream>
@@ -327,42 +444,52 @@ The returned pointer refers to the caller's array, not a local copy inside `find
 The array remains alive while `found` is used; the loop's reference variable refers to its actual element.
 </details>
 
-### 9. Returning a custom result structure
+### 10. Returning a custom result structure
 
 ```cpp
 #include <iostream>
 
-struct HalfResult
+struct TicketMachine
 {
-    bool success;
-    int value;
+    bool online;
+    int nextTicket;
 };
 
-HalfResult tryHalf(int input)
+struct TicketResult
 {
-    if (input < 0)
+    bool success;
+    int number;
+};
+
+TicketResult issueTicket(TicketMachine& machine)
+{
+    if (!machine.online)
     {
         return { false, 0 };
     }
-    return { true, input / 2 };
+    int number = machine.nextTicket;
+    machine.nextTicket += 1;
+    return { true, number };
 }
 
 int main()
 {
-    HalfResult result = tryHalf(8);
+    TicketMachine machine{ true, 42 };
+    TicketResult result = issueTicket(machine);
     if (result.success)
     {
-        std::cout << result.value << std::endl;
+        std::cout << result.number << std::endl;
     }
 
-    result = tryHalf(-1);
+    machine.online = false;
+    result = issueTicket(machine);
     if (result.success)
     {
-        std::cout << result.value << std::endl;
+        std::cout << result.number << std::endl;
     }
     else
     {
-        std::cout << "failure" << std::endl;
+        std::cout << "machine is offline" << std::endl;
     }
 }
 ```
@@ -370,44 +497,57 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `4` and `failure`.
-The structure returns the status and the value together, without an output parameter.
-The failure case initializes `value` to `0`, but that field is not a successful result when `success` is false.
-This is the custom optional structure from the [optional lab](17_optional.md), applied to a fallible computation.
-The status field could instead be an enum if the caller needed a failure kind.
+It prints `42` and `machine is offline`.
+An online ticket machine issues the next ticket number and advances its counter.
+When offline, it cannot issue a ticket and leaves the counter unchanged.
+
+The structure returns the status and ticket number together, without an output parameter.
+On failure, `number` is initialized to `0`, but it does not represent an issued ticket.
+This is the custom optional structure from the [optional lab](17_optional.md), applied to an operation that can fail.
+An enum status field could provide a specific failure kind if the interface needed one.
 </details>
 
-### 10. Returning std::optional
+### 11. Returning std::optional
 
 ```cpp
 #include <iostream>
 #include <optional>
 
-std::optional<int> tryHalf(int input)
+struct TicketMachine
 {
-    if (input < 0)
+    bool online;
+    int nextTicket;
+};
+
+std::optional<int> issueTicket(TicketMachine& machine)
+{
+    if (!machine.online)
     {
         return std::nullopt;
     }
-    return input / 2;
+    int number = machine.nextTicket;
+    machine.nextTicket += 1;
+    return number;
 }
 
 int main()
 {
-    std::optional<int> result = tryHalf(8);
+    TicketMachine machine{ true, 42 };
+    std::optional<int> result = issueTicket(machine);
     if (result.has_value())
     {
         std::cout << *result << std::endl;
     }
 
-    result = tryHalf(-1);
+    machine.online = false;
+    result = issueTicket(machine);
     if (result.has_value())
     {
         std::cout << *result << std::endl;
     }
     else
     {
-        std::cout << "failure" << std::endl;
+        std::cout << "machine is offline" << std::endl;
     }
 }
 ```
@@ -415,13 +555,13 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints the same `4` and `failure`.
-`std::optional<int>` expresses either an integer result or its absence.
+It prints the same `42` and `machine is offline`.
+`std::optional<int>` expresses either an issued ticket number or its absence.
 `std::nullopt` supplies the empty state, and the caller checks `has_value()` before dereferencing.
 Like a bool status, the empty state alone does not explain the failure kind.
 </details>
 
-### 11. Collecting multiple errors
+### 12. Collecting multiple errors
 
 ```cpp
 #include <iostream>
@@ -475,7 +615,7 @@ Both checks run, recording `NegativeAmount` and `NegativePrice` in that order.
 The returned bool describes whether this call found any errors.
 </details>
 
-### 12. Reusing the error list
+### 13. Reusing the error list
 
 ```cpp
 #include <iostream>
@@ -524,7 +664,7 @@ An accumulating list can hold results from several validations.
 If the caller wants a fresh list for each call, it should create a new vector or call `errors.clear()` beforehand.
 </details>
 
-### 13. An assertion that passes
+### 14. An assertion that passes
 
 ```cpp
 #include <iostream>
@@ -547,7 +687,7 @@ When the condition is true, execution continues.
 Unlike a bool return value, an assertion does not report a recoverable failure to the caller.
 </details>
 
-### 14. An assertion that fails
+### 15. An assertion that fails
 
 ```cpp
 #include <iostream>
@@ -573,75 +713,90 @@ Then this program prints `after assert`.
 Do not use assertions as the only validation of expected bad input.
 </details>
 
-### 15. An assertion for an output-parameter contract
+### 16. An assertion for an output-parameter contract
 
 ```cpp
 #include <iostream>
 #include <cassert>
 
-bool tryHalf(int input, int* output)
+struct TemperatureSensor
 {
-    assert(output != nullptr);
-    if (input < 0)
+    bool connected;
+    int temperature;
+};
+
+bool readTemperature(const TemperatureSensor& sensor, int* temperature)
+{
+    assert(temperature != nullptr);
+    if (!sensor.connected)
     {
         return false;
     }
-    *output = input / 2;
+    *temperature = sensor.temperature;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(-1, &value);
+    TemperatureSensor sensor{ false, 17 };
+    int temperature = 21;
+    bool success = readTemperature(sensor, &temperature);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << temperature << std::endl;
 
-    success = tryHalf(8, &value);
+    sensor.connected = true;
+    success = readTemperature(sensor, &temperature);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << temperature << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-With assertions enabled, it prints `0`, `99`, `1`, and `4`.
-Passing a valid output object is a requirement of this interface.
-The assertion checks that the caller did not pass `nullptr`; both calls satisfy that requirement.
-A null pointer would be a programming mistake under this contract, not another supported failure result.
+With assertions enabled, it prints `0`, `21`, `1`, and `17`.
+This interface requires a valid output object. The assertion checks that its pointer is not null; both calls satisfy that check.
+Passing `nullptr` would violate the function's contract.
 
-A negative input is an expected failure and is reported with `false`, so the program can continue.
-If assertions are disabled, the caller still must satisfy the output-pointer requirement.
-This illustrates why assertions and ordinary error reporting serve different purposes.
+A disconnected sensor is an expected failure, reported with `false`, so the program can continue and reconnect it.
+Once connected, the sensor supplies the new reading `17`.
+Even with assertions disabled, the caller still must provide a valid output object.
+Assertions and ordinary error reporting serve different purposes.
 </details>
 
-### 16. Checking success and failure with assertions
+### 17. Checking success and failure with assertions
 
 ```cpp
 #include <iostream>
 #include <cassert>
 
-bool tryHalf(int input, int& output)
+struct Printer
 {
-    if (input < 0)
+    bool jammed;
+    int pagesLoaded;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed || printer.pagesLoaded == 0)
     {
         return false;
     }
-    output = input / 2;
+    printer.pagesLoaded -= 1;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, value);
-    assert(success);
-    assert(value == 4);
+    Printer printer{ true, 2 };
+    bool printed = printPage(printer);
+    assert(!printed);
+    assert(printer.pagesLoaded == 2);
 
-    success = tryHalf(-1, value);
-    assert(!success);
-    assert(value == 4);
+    printer.jammed = false;
+    printed = printPage(printer);
+    assert(printed);
+    assert(printer.pagesLoaded == 1);
     std::cout << "tests passed" << std::endl;
 }
 ```
@@ -650,10 +805,11 @@ int main()
 <summary>Answer</summary>
 
 With assertions enabled, it prints `tests passed`.
-The assertions check both the successful result and the promised unchanged output on failure.
-A mismatch would stop the program at the failed check.
+The first request is rejected because the printer is jammed; both loaded sheets remain.
+After clearing the jam, the second request succeeds and consumes one sheet.
+The assertions check the status and the resulting state of the same printer.
 
-The calls to `tryHalf` are separate from the assertions, so those calls still execute if assertions are disabled.
+The calls to `printPage` are separate from the assertions, so they still execute if assertions are disabled.
 Do not place required work only inside `assert`, because its expression may not be evaluated.
 With checks disabled, the printed message alone does not establish that the results were verified.
 </details>

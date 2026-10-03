@@ -30,25 +30,42 @@ slug: ru/cpp/labs/errors
 ```cpp
 #include <iostream>
 
-bool isValidAmount(int amount)
+struct Printer
 {
-    return amount >= 0;
+    bool jammed;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed)
+    {
+        return false;
+    }
+    std::cout << "page printed" << std::endl;
+    return true;
 }
 
 int main()
 {
-    std::cout << isValidAmount(3) << std::endl;
-    std::cout << isValidAmount(-1) << std::endl;
+    Printer printer{ true };
+    bool printed = printPage(printer);
+    std::cout << printed << std::endl;
+
+    printer.jammed = false;
+    printed = printPage(printer);
+    std::cout << printed << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1` и `0`: без `std::boolalpha` именно так выводятся `true` и `false`.
-Функция использует `true` для успеха и `false` для ошибки.
-Это соглашение данного интерфейса: сам тип `bool` не задаёт смысл этих значений.
-По bool можно узнать, прошла ли проверка, но нельзя узнать причину ошибки.
+Выведутся `0`, `page printed` и `1`.
+`Printer` моделирует принтер, а `jammed` показывает, застряла ли в нём бумага.
+Первый запрос не выполняется из-за застрявшей бумаги. После устранения этой проблемы второй запрос печатает страницу и завершается успешно.
+
+Bool сообщает вызывающей функции, выполнена ли операция, но не передаёт причину ошибки.
+Этот интерфейс использует `true` для успеха и `false` для ошибки.
 </details>
 
 ### 2. Вывод сообщения об ошибке
@@ -56,31 +73,39 @@ int main()
 ```cpp
 #include <iostream>
 
-bool isValidAmount(int amount)
+struct Printer
 {
-    if (amount < 0)
+    bool jammed;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed)
     {
-        std::cerr << "amount must not be negative" << std::endl;
+        std::cerr << "printer is jammed" << std::endl;
         return false;
     }
+    std::cout << "page printed" << std::endl;
     return true;
 }
 
 int main()
 {
-    bool valid = isValidAmount(-1);
-    std::cout << valid << std::endl;
+    Printer printer{ true };
+    bool printed = printPage(printer);
+    std::cout << printed << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-В стандартный поток ошибок выводится `amount must not be negative`, а в стандартный поток вывода — `0`.
-`std::cerr` — поток для диагностических сообщений; здесь он используется так же, как `std::cout`.
-В терминале обычно видны оба потока; их общий вид зависит от способа вывода и перенаправления.
+В стандартный поток ошибок выводится `printer is jammed`, а в стандартный поток вывода — `0`.
+В `std::cerr` часть `err` означает *error*, то есть «ошибка». Это поток для диагностических сообщений; здесь он используется так же, как `std::cout`.
 
-Сообщение объясняет человеку, что произошло. Вызывающая функция по-прежнему получает только `false`: вывод сообщения не передаёт другим функциям отдельный код причины ошибки.
+Сообщение объясняет человеку, что произошло, но вызывающая функция получает только `false`: конкретная причина ошибки в возвращаемом значении теряется.
+Здесь это не так важно, потому что функция проверяет только одно условие: застряла ли бумага в принтере.
+Если добавить другие проверки, по одному bool уже нельзя будет определить, какая из них не прошла.
 </details>
 
 ### 3. Возврат причины ошибки
@@ -88,69 +113,132 @@ int main()
 ```cpp
 #include <iostream>
 
-enum class ValidationError
+enum class GradeError
 {
     None,
-    NegativeAmount,
-    NegativePrice,
+    TooLow,
+    TooHigh,
 };
 
-ValidationError validateOrder(int amount, int price)
+GradeError validateGrade(int grade)
 {
-    if (amount < 0)
+    if (grade <= 0)
     {
-        return ValidationError::NegativeAmount;
+        return GradeError::TooLow;
     }
-    if (price < 0)
+    if (grade >= 10)
     {
-        return ValidationError::NegativePrice;
+        return GradeError::TooHigh;
     }
-    return ValidationError::None;
+    return GradeError::None;
 }
 
 int main()
 {
-    ValidationError result = validateOrder(-1, -2);
-    std::cout << (result == ValidationError::NegativeAmount) << std::endl;
-    std::cout << (result == ValidationError::NegativePrice) << std::endl;
-    std::cout << (validateOrder(3, 4) == ValidationError::None) << std::endl;
+    std::cout << (validateGrade(0) == GradeError::TooLow) << std::endl;
+    std::cout << (validateGrade(10) == GradeError::TooHigh) << std::endl;
+    std::cout << (validateGrade(5) == GradeError::None) << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1`, `0` и `1`.
-Enum позволяет отличить успех от конкретных причин ошибки, не разбирая текст сообщения.
-Хотя оба аргумента первого вызова недопустимы, первый `return` сразу завершает функцию.
-Возвращается только `NegativeAmount`; до проверки цены выполнение не доходит.
+Выведутся `1`, `1` и `1`.
+Этот интерфейс принимает оценку строго больше `0` и строго меньше `10`.
+Один параметр проверяется по двум условиям: `0` слишком мало, `10` слишком много, а `5` допустимо.
+Enum передаёт конкретную причину ошибки, поэтому вызывающая функция может различить две неудачные проверки, не разбирая текст сообщения.
 </details>
 
-### 4. Bool и выходной параметр-указатель
+### 4. Принтер с двумя причинами ошибки
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int* output)
+struct Printer
 {
-    if (input < 0)
+    bool jammed;
+    int pagesLoaded;
+};
+
+enum class PrintError
+{
+    None,
+    Jammed,
+    NoPaper,
+};
+
+PrintError printPage(Printer& printer)
+{
+    if (printer.jammed)
+    {
+        return PrintError::Jammed;
+    }
+    if (printer.pagesLoaded == 0)
+    {
+        return PrintError::NoPaper;
+    }
+    printer.pagesLoaded -= 1;
+    return PrintError::None;
+}
+
+int main()
+{
+    Printer printer{ true, 0 };
+    PrintError error = printPage(printer);
+    std::cout << (error == PrintError::Jammed) << std::endl;
+
+    printer.jammed = false;
+    error = printPage(printer);
+    std::cout << (error == PrintError::NoPaper) << std::endl;
+
+    printer.pagesLoaded = 1;
+    error = printPage(printer);
+    std::cout << (error == PrintError::None) << std::endl;
+    std::cout << printer.pagesLoaded << std::endl;
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Выведутся `1`, `1`, `1` и `0`.
+Принтер теперь хранит и количество загруженных листов. Успешная печать расходует один лист; неудачный запрос не меняет состояние принтера.
+
+Сначала есть обе проблемы, но проверка застрявшей бумаги сразу завершает функцию, поэтому возвращается `Jammed`.
+После устранения этой проблемы обнаруживается `NoPaper`. Если загрузить лист, последний запрос выполнится успешно, а `pagesLoaded` уменьшится с `1` до `0`.
+Передача принтера по ссылке позволяет функции менять тот же объект принтера.
+</details>
+
+### 5. Bool и выходной параметр-указатель
+
+```cpp
+#include <iostream>
+
+bool divideExactly(int dividend, int divisor, int* quotient)
+{
+    if (dividend < 0 || divisor <= 0)
     {
         return false;
     }
-    *output = input / 2;
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    *quotient = dividend / divisor;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, &value);
+    int quotient = 99;
+    bool success = divideExactly(8, 2, &quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 
-    success = tryHalf(-1, &value);
+    success = divideExactly(9, 2, &quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 }
 ```
 
@@ -158,39 +246,43 @@ int main()
 <summary>Ответ</summary>
 
 Выведутся `1`, `4`, `0` и `4`.
-Функция возвращает признак успеха, а вычисленное значение записывает через параметр-указатель.
-Она принимает неотрицательные числа и использует целочисленное деление.
+Функция принимает неотрицательное делимое и положительный делитель и завершается успешно только при делении без остатка.
+`8 / 2` — ровно `4`. При `9 / 2` целочисленное деление отбросило бы дробную часть, поэтому проверка остатка отклоняет такой случай.
 
-При ошибке функция завершает работу до присваивания в `*output`, поэтому выходное значение остаётся без изменений.
-Второе `4` — результат предыдущего успешного вызова, а не новый результат для `-1`.
-Здесь `output` должен указывать на существующий объект типа `int`: этот параметр обязателен.
+Bool сообщает об успехе, а частное записывается через параметр-указатель.
+При ошибке присваивания нет: последнее `4` — предыдущий результат, а не результат для `9 / 2`.
+`quotient` должен указывать на существующий объект типа `int`.
 </details>
 
-### 5. Тот же выходной параметр через ссылку
+### 6. Тот же выходной параметр через ссылку
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int& output)
+bool divideExactly(int dividend, int divisor, int& quotient)
 {
-    if (input < 0)
+    if (dividend < 0 || divisor <= 0)
     {
         return false;
     }
-    output = input / 2;
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    quotient = dividend / divisor;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, value);
+    int quotient = 99;
+    bool success = divideExactly(8, 2, quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 
-    success = tryHalf(-1, value);
+    success = divideExactly(9, 2, quotient);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << quotient << std::endl;
 }
 ```
 
@@ -198,76 +290,99 @@ int main()
 <summary>Ответ</summary>
 
 Выведутся те же `1`, `4`, `0` и `4`.
-Параметр-ссылка ссылается на переменную в вызывающей функции, поэтому присваивание в `output` меняет `value`.
-При вызове передаётся `value`, а не его адрес.
-Соглашение об успехе и ошибке не меняется; кроме того, ссылка не позволяет обозначить отсутствие выходного объекта через `nullptr`.
+Параметр-ссылка ссылается на переменную в вызывающей функции, поэтому присваивание в `quotient` меняет эту переменную.
+Передаётся сама переменная, а не её адрес.
+Правило деления без остатка и обещание не менять выходное значение при ошибке остаются прежними.
 </details>
 
-### 6. Игнорирование признака успеха
+### 7. Игнорирование признака успеха
 
 ```cpp
 #include <iostream>
 
-bool tryHalf(int input, int& output)
+struct TemperatureSensor
 {
-    if (input < 0)
+    bool connected;
+    int temperature;
+};
+
+bool readTemperature(const TemperatureSensor& sensor, int& temperature)
+{
+    if (!sensor.connected)
     {
         return false;
     }
-    output = input / 2;
+    temperature = sensor.temperature;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    tryHalf(-1, value);
-    std::cout << value << std::endl;
+    TemperatureSensor sensor{ false, 17 };
+    int temperature = 21;
+    readTemperature(sensor, temperature);
+    std::cout << temperature << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведется `99`.
-Вызов возвращает `false`, но этот признак ошибки игнорируется.
-В `value` остаётся старое значение; считать его успешно вычисленным результатом было бы логической ошибкой.
-Используйте выходное значение как новый результат только после проверки успеха.
-Здесь `99` — обычное инициализированное значение: читать его можно, но это не запрошенный результат.
+Выведется `21`.
+Отключённый датчик не может передать новое измерение, поэтому функция возвращает `false`, не меняя выходное значение.
+Вызывающая функция игнорирует этот признак ошибки и выводит старую температуру.
+`21` — инициализированное значение, но считать его новым измерением было бы логической ошибкой.
+Используйте выходное значение как новое измерение только после проверки успеха вызова.
 </details>
 
-### 7. Enum и выходное значение
+### 8. Enum и выходное значение
 
 ```cpp
 #include <iostream>
 
-enum class HalfError
+struct Printer
 {
-    None,
-    NegativeInput,
+    bool jammed;
+    int pagesLoaded;
 };
 
-HalfError tryHalf(int input, int& output)
+enum class PrintError
 {
-    if (input < 0)
+    None,
+    Jammed,
+    NoPaper,
+};
+
+PrintError printPage(Printer& printer, int& pagesRemaining)
+{
+    if (printer.jammed)
     {
-        return HalfError::NegativeInput;
+        return PrintError::Jammed;
     }
-    output = input / 2;
-    return HalfError::None;
+    if (printer.pagesLoaded == 0)
+    {
+        return PrintError::NoPaper;
+    }
+    printer.pagesLoaded -= 1;
+    pagesRemaining = printer.pagesLoaded;
+    return PrintError::None;
 }
 
 int main()
 {
-    int value = 99;
-    HalfError error = tryHalf(-1, value);
-    if (error == HalfError::None)
+    Printer printer{ false, 2 };
+    int pagesRemaining = 99;
+    PrintError error = printPage(printer, pagesRemaining);
+    if (error == PrintError::None)
     {
-        std::cout << value << std::endl;
+        std::cout << pagesRemaining << std::endl;
     }
-    else if (error == HalfError::NegativeInput)
+
+    printer.jammed = true;
+    error = printPage(printer, pagesRemaining);
+    if (error == PrintError::Jammed)
     {
-        std::cout << "negative input" << std::endl;
+        std::cout << "printer is jammed" << std::endl;
     }
 }
 ```
@@ -275,14 +390,16 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-Выведется `negative input`.
-Здесь выходной параметр объединяется с признаком ошибки в виде enum.
-`None` означает успех, а остальные значения объясняют причину ошибки.
-Вызывающая функция проверяет признак успеха, прежде чем использовать выходное значение как результат.
-Enum особенно полезен, когда возможны разные причины ошибки.
+Выведутся `1` и `printer is jammed`.
+Успешный запрос расходует один из двух загруженных листов и записывает оставшееся количество через параметр-ссылку.
+Enum сообщает об успехе или конкретной причине ошибки.
+
+Неудачный запрос не меняет ни принтер, ни `pagesRemaining`.
+Старое количество не используется как новый результат: вместо этого вызывающая функция обрабатывает `Jammed`.
+Здесь подробный признак ошибки объединяется с отдельным выходным значением.
 </details>
 
-### 8. Нулевой указатель означает ошибку
+### 9. Нулевой указатель означает ошибку
 
 ```cpp
 #include <iostream>
@@ -327,42 +444,52 @@ int main()
 Массив продолжает существовать, пока используется `found`; ссылка в цикле обозначает его настоящий элемент.
 </details>
 
-### 9. Возврат собственной структуры результата
+### 10. Возврат собственной структуры результата
 
 ```cpp
 #include <iostream>
 
-struct HalfResult
+struct TicketMachine
 {
-    bool success;
-    int value;
+    bool online;
+    int nextTicket;
 };
 
-HalfResult tryHalf(int input)
+struct TicketResult
 {
-    if (input < 0)
+    bool success;
+    int number;
+};
+
+TicketResult issueTicket(TicketMachine& machine)
+{
+    if (!machine.online)
     {
         return { false, 0 };
     }
-    return { true, input / 2 };
+    int number = machine.nextTicket;
+    machine.nextTicket += 1;
+    return { true, number };
 }
 
 int main()
 {
-    HalfResult result = tryHalf(8);
+    TicketMachine machine{ true, 42 };
+    TicketResult result = issueTicket(machine);
     if (result.success)
     {
-        std::cout << result.value << std::endl;
+        std::cout << result.number << std::endl;
     }
 
-    result = tryHalf(-1);
+    machine.online = false;
+    result = issueTicket(machine);
     if (result.success)
     {
-        std::cout << result.value << std::endl;
+        std::cout << result.number << std::endl;
     }
     else
     {
-        std::cout << "failure" << std::endl;
+        std::cout << "machine is offline" << std::endl;
     }
 }
 ```
@@ -370,44 +497,57 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-Выведутся `4` и `failure`.
-Структура возвращает признак успеха и значение вместе, без выходного параметра.
-При ошибке `value` инициализируется нулём, но при `success == false` это поле не является успешным результатом.
-Это собственная структура optional из [лабораторной по optional](16_optional.md), применённая к вычислению, которое может завершиться ошибкой.
-Если вызывающей функции нужна причина ошибки, вместо bool можно использовать поле типа enum.
+Выведутся `42` и `machine is offline`.
+Работающий автомат выдаёт следующий номер талона и увеличивает свой счётчик.
+Когда автомат отключён, он не может выдать талон и не меняет счётчик.
+
+Структура возвращает признак успеха и номер талона вместе, без выходного параметра.
+При ошибке `number` инициализируется нулём, но это не номер выданного талона.
+Это собственная структура optional из [лабораторной по optional](16_optional.md), применённая к операции, которая может завершиться ошибкой.
+Если интерфейсу нужна конкретная причина ошибки, поле с признаком успеха можно заменить на enum.
 </details>
 
-### 10. Возврат std::optional
+### 11. Возврат std::optional
 
 ```cpp
 #include <iostream>
 #include <optional>
 
-std::optional<int> tryHalf(int input)
+struct TicketMachine
 {
-    if (input < 0)
+    bool online;
+    int nextTicket;
+};
+
+std::optional<int> issueTicket(TicketMachine& machine)
+{
+    if (!machine.online)
     {
         return std::nullopt;
     }
-    return input / 2;
+    int number = machine.nextTicket;
+    machine.nextTicket += 1;
+    return number;
 }
 
 int main()
 {
-    std::optional<int> result = tryHalf(8);
+    TicketMachine machine{ true, 42 };
+    std::optional<int> result = issueTicket(machine);
     if (result.has_value())
     {
         std::cout << *result << std::endl;
     }
 
-    result = tryHalf(-1);
+    machine.online = false;
+    result = issueTicket(machine);
     if (result.has_value())
     {
         std::cout << *result << std::endl;
     }
     else
     {
-        std::cout << "failure" << std::endl;
+        std::cout << "machine is offline" << std::endl;
     }
 }
 ```
@@ -415,13 +555,13 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-Выведутся те же `4` и `failure`.
-`std::optional<int>` обозначает либо целочисленный результат, либо его отсутствие.
+Выведутся те же `42` и `machine is offline`.
+`std::optional<int>` обозначает либо номер выданного талона, либо его отсутствие.
 `std::nullopt` задаёт пустое состояние, а перед разыменованием вызывающая функция проверяет `has_value()`.
 Как и bool, само пустое состояние не объясняет причину ошибки.
 </details>
 
-### 11. Сбор нескольких ошибок
+### 12. Сбор нескольких ошибок
 
 ```cpp
 #include <iostream>
@@ -475,7 +615,7 @@ int main()
 Возвращённый bool показывает, найдены ли ошибки именно в этом вызове.
 </details>
 
-### 12. Повторное использование списка ошибок
+### 13. Повторное использование списка ошибок
 
 ```cpp
 #include <iostream>
@@ -524,7 +664,7 @@ int main()
 Если для каждого вызова нужен отдельный список, следует создать новый вектор или заранее вызвать `errors.clear()`.
 </details>
 
-### 13. Успешная проверка assert
+### 14. Успешная проверка assert
 
 ```cpp
 #include <iostream>
@@ -547,7 +687,7 @@ int main()
 В отличие от возвращённого bool, assert не сообщает вызывающей функции об ошибке, после которой можно продолжить работу.
 </details>
 
-### 14. Неуспешная проверка assert
+### 15. Неуспешная проверка assert
 
 ```cpp
 #include <iostream>
@@ -573,75 +713,90 @@ Assert обнаруживает нарушение предположения; �
 Не используйте assert как единственную проверку ожидаемых ошибок во входных данных.
 </details>
 
-### 15. Assert для проверки условия использования выходного параметра
+### 16. Assert для проверки условия использования выходного параметра
 
 ```cpp
 #include <iostream>
 #include <cassert>
 
-bool tryHalf(int input, int* output)
+struct TemperatureSensor
 {
-    assert(output != nullptr);
-    if (input < 0)
+    bool connected;
+    int temperature;
+};
+
+bool readTemperature(const TemperatureSensor& sensor, int* temperature)
+{
+    assert(temperature != nullptr);
+    if (!sensor.connected)
     {
         return false;
     }
-    *output = input / 2;
+    *temperature = sensor.temperature;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(-1, &value);
+    TemperatureSensor sensor{ false, 17 };
+    int temperature = 21;
+    bool success = readTemperature(sensor, &temperature);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << temperature << std::endl;
 
-    success = tryHalf(8, &value);
+    sensor.connected = true;
+    success = readTemperature(sensor, &temperature);
     std::cout << success << std::endl;
-    std::cout << value << std::endl;
+    std::cout << temperature << std::endl;
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-При включённых проверках assert выведутся `0`, `99`, `1` и `4`.
-Этот интерфейс требует передавать существующий выходной объект.
-Assert проверяет, что вызывающая функция не передала `nullptr`; в обоих вызовах это условие выполнено.
-Нулевой указатель при таком соглашении означал бы ошибку программиста, а не допустимый способ обозначить отсутствие выходного объекта.
+При включённых проверках assert выведутся `0`, `21`, `1` и `17`.
+Этот интерфейс требует существующий выходной объект. Assert проверяет, что указатель не нулевой; оба вызова проходят эту проверку.
+Передача `nullptr` нарушила бы условие использования функции.
 
-Отрицательное входное значение — ожидаемая ошибка, о которой функция сообщает через `false`, поэтому программа может продолжить работу.
-Даже при отключённых проверках assert вызывающая функция обязана выполнить требование к выходному указателю.
-Это показывает, почему assert и обычная обработка ошибок решают разные задачи.
+Отключённый датчик — ожидаемая ошибка, о которой функция сообщает через `false`, поэтому программа может продолжить работу и снова подключить датчик.
+После подключения датчик передаёт новое измерение `17`.
+Даже при отключённых проверках assert вызывающая функция обязана передавать существующий выходной объект.
+Assert и обычная обработка ошибок решают разные задачи.
 </details>
 
-### 16. Проверка успеха и ошибки через assert
+### 17. Проверка успеха и ошибки через assert
 
 ```cpp
 #include <iostream>
 #include <cassert>
 
-bool tryHalf(int input, int& output)
+struct Printer
 {
-    if (input < 0)
+    bool jammed;
+    int pagesLoaded;
+};
+
+bool printPage(Printer& printer)
+{
+    if (printer.jammed || printer.pagesLoaded == 0)
     {
         return false;
     }
-    output = input / 2;
+    printer.pagesLoaded -= 1;
     return true;
 }
 
 int main()
 {
-    int value = 99;
-    bool success = tryHalf(8, value);
-    assert(success);
-    assert(value == 4);
+    Printer printer{ true, 2 };
+    bool printed = printPage(printer);
+    assert(!printed);
+    assert(printer.pagesLoaded == 2);
 
-    success = tryHalf(-1, value);
-    assert(!success);
-    assert(value == 4);
+    printer.jammed = false;
+    printed = printPage(printer);
+    assert(printed);
+    assert(printer.pagesLoaded == 1);
     std::cout << "tests passed" << std::endl;
 }
 ```
@@ -650,10 +805,11 @@ int main()
 <summary>Ответ</summary>
 
 При включённых проверках assert выведется `tests passed`.
-Проверки подтверждают и успешный результат, и обещанное сохранение выходного значения при ошибке.
-Если ожидание не выполнится, программа остановится на соответствующей проверке.
+Первый запрос отклоняется из-за застрявшей бумаги; оба загруженных листа остаются.
+После устранения этой проблемы второй запрос выполняется успешно и расходует один лист.
+Проверки assert подтверждают признак успеха и получившееся состояние того же принтера.
 
-Вызовы `tryHalf` вынесены из assert, поэтому они выполняются и при отключённых проверках.
+Вызовы `printPage` вынесены из assert, поэтому они выполняются и при отключённых проверках.
 Не помещайте необходимые действия только внутрь assert: его выражение может вообще не вычисляться.
 При отключённых проверках само сообщение не доказывает, что результаты были проверены.
 </details>
