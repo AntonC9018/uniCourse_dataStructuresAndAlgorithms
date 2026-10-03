@@ -955,4 +955,4 @@ Do not place required work only inside `assert`, because its expression may not 
 With checks disabled, the printed message alone does not establish that the results were verified.
 </details>
 
-[Tagged unions and flags](32_tagged_unions_and_flags.md) and [exceptions](33_exceptions.md) have separate later labs.
+[Tagged unions and flags](34_tagged_unions_and_flags.md) and [exceptions](35_exceptions.md) have separate later labs.
