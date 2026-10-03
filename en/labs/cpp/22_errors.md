@@ -136,22 +136,38 @@ GradeError validateGrade(int grade)
     return GradeError::None;
 }
 
+void printGradeError(GradeError error)
+{
+    switch (error)
+    {
+    case GradeError::None:
+        std::cout << "valid grade" << std::endl;
+        break;
+    case GradeError::TooLow:
+        std::cout << "grade too low" << std::endl;
+        break;
+    case GradeError::TooHigh:
+        std::cout << "grade too high" << std::endl;
+        break;
+    }
+}
+
 int main()
 {
-    std::cout << static_cast<int>(validateGrade(0)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(11)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(10)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(5)) << std::endl;
+    printGradeError(validateGrade(0));
+    printGradeError(validateGrade(11));
+    printGradeError(validateGrade(10));
+    printGradeError(validateGrade(5));
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `1`, `2`, `0`, and `0`: the numeric values of `TooLow`, `TooHigh`, `None`, and `None`.
+It prints `grade too low`, `grade too high`, `valid grade`, and `valid grade`.
 This interface accepts integer grades from `1` through `10`, including `10`.
 A single parameter is checked in two ways: `0` is too low, `11` is too high, and both `10` and `5` are valid.
-The enum communicates the specific failure kind; `static_cast<int>` makes its value printable.
+The enum communicates the failure kind to the caller. The helper then translates that status into a message for a person.
 </details>
 
 ### 4. A printer with two failure kinds
@@ -186,22 +202,38 @@ PrintError printPage(Printer& printer)
     return PrintError::None;
 }
 
+void printPrinterError(PrintError error)
+{
+    switch (error)
+    {
+    case PrintError::None:
+        std::cout << "page printed" << std::endl;
+        break;
+    case PrintError::Jammed:
+        std::cout << "printer is jammed" << std::endl;
+        break;
+    case PrintError::NoPaper:
+        std::cout << "no paper" << std::endl;
+        break;
+    }
+}
+
 int main()
 {
     {
         Printer printer{ true, 0 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::Jammed) << std::endl;
+        printPrinterError(error);
     }
     {
         Printer printer{ false, 0 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::NoPaper) << std::endl;
+        printPrinterError(error);
     }
     {
         Printer printer{ false, 1 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::None) << std::endl;
+        printPrinterError(error);
         std::cout << printer.pagesLoaded << std::endl;
     }
 }
@@ -210,13 +242,13 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `1`, `1`, `1`, and `0`.
+It prints `printer is jammed`, `no paper`, `page printed`, and `0`.
 Each block creates a printer for a separate case. A successful print consumes one sheet; a failed request leaves that printer unchanged.
 
 In the first case, both problems are present, but the jam check returns immediately, so `Jammed` is reported.
 The second printer is not jammed but has no paper, so it reports `NoPaper`.
 The third printer has one sheet and succeeds, reducing `pagesLoaded` from `1` to `0`.
-Passing the printer by reference lets the function update that same printer object.
+The helper prints a message for each enum result without replacing the enum status returned to the caller.
 </details>
 
 ### 5. A bool and an output pointer
@@ -314,7 +346,65 @@ The exact-division rule and the promise to leave the output unchanged on failure
 Each block starts with a new quotient initialized to `99`.
 </details>
 
-### 7. Ignoring the status
+### 7. An output with no initial value
+
+```cpp
+#include <iostream>
+
+bool divideExactly(int dividend, int divisor, int& quotient)
+{
+    if (dividend < 0 || divisor <= 0)
+    {
+        return false;
+    }
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    quotient = dividend / divisor;
+    return true;
+}
+
+int main()
+{
+    {
+        int quotient;
+        bool success = divideExactly(8, 2, quotient);
+        if (success)
+        {
+            std::cout << quotient << std::endl;
+        }
+    }
+    {
+        int quotient;
+        bool success = divideExactly(9, 2, quotient);
+        if (success)
+        {
+            std::cout << quotient << std::endl;
+        }
+        else
+        {
+            std::cout << "not exact" << std::endl;
+        }
+    }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `4` and `not exact`.
+Each `quotient` is declared without an initial value.
+In the successful call, the function assigns `4` through the reference before the caller reads it.
+In the failed call, the function does not assign anything, and the caller never reads that quotient.
+
+This is allowed in standard C++: the integer object already exists, and binding a reference to it does not read its value.
+Writing through that reference can supply its first value. The same applies to passing its address to an output pointer.
+In C++20, reading this uninitialized integer before a successful assignment would be undefined behavior.
+Checking the status is essential when the output has no initial value.
+</details>
+
+### 8. Ignoring the status
 
 ```cpp
 #include <iostream>
@@ -356,7 +446,7 @@ The attribute marks the unused result explicitly; it does not handle the failure
 Use the output as a new reading only after checking that the call succeeded.
 </details>
 
-### 8. An enum and an output value
+### 9. An enum and an output value
 
 ```cpp
 #include <iostream>
@@ -432,7 +522,7 @@ Each call has fresh status and change variables. Failed calls leave their change
 The same machine is deliberately kept across the blocks to show its stock being consumed.
 </details>
 
-### 9. A null pointer means failure
+### 10. A null pointer means failure
 
 ```cpp
 #include <iostream>
@@ -477,7 +567,7 @@ The returned pointer refers to the caller's array, not a local copy inside `find
 The array remains alive while `found` is used; the loop's reference variable refers to its actual element.
 </details>
 
-### 10. Returning a custom result structure
+### 11. Returning a custom result structure
 
 ```cpp
 #include <iostream>
@@ -543,7 +633,7 @@ This is the custom optional structure from the [optional lab](17_optional.md), a
 An enum status field could provide a specific failure kind if the interface needed one.
 </details>
 
-### 11. Returning std::optional
+### 12. Returning std::optional
 
 ```cpp
 #include <iostream>
@@ -600,7 +690,7 @@ It prints the same `42` and `machine is offline`.
 Like a bool status, the empty state alone does not explain the failure kind.
 </details>
 
-### 12. Collecting multiple errors
+### 13. Collecting multiple errors
 
 ```cpp
 #include <iostream>
@@ -654,7 +744,7 @@ Both checks run, recording `NegativeAmount` and `NegativePrice` in that order.
 The returned bool describes whether this call found any errors.
 </details>
 
-### 13. Reusing the error list
+### 14. Reusing the error list
 
 ```cpp
 #include <iostream>
@@ -707,7 +797,7 @@ An accumulating list can hold results from several validations.
 If the caller wants a fresh list for each call, it should create a new vector or call `errors.clear()` beforehand.
 </details>
 
-### 14. An assertion that passes
+### 15. An assertion that passes
 
 ```cpp
 #include <iostream>
@@ -730,7 +820,7 @@ When the condition is true, execution continues.
 Unlike a bool return value, an assertion does not report a recoverable failure to the caller.
 </details>
 
-### 15. An assertion that fails
+### 16. An assertion that fails
 
 ```cpp
 #include <iostream>
@@ -756,7 +846,7 @@ Then this program prints `after assert`.
 Do not use assertions as the only validation of expected bad input.
 </details>
 
-### 16. An assertion for an output-parameter contract
+### 17. An assertion for an output-parameter contract
 
 ```cpp
 #include <iostream>
@@ -812,7 +902,7 @@ Even with assertions disabled, the caller still must provide a valid output obje
 Assertions and ordinary error reporting serve different purposes.
 </details>
 
-### 17. Checking success and failure with assertions
+### 18. Checking success and failure with assertions
 
 ```cpp
 #include <iostream>

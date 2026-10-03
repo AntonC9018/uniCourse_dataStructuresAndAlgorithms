@@ -136,22 +136,38 @@ GradeError validateGrade(int grade)
     return GradeError::None;
 }
 
+void printGradeError(GradeError error)
+{
+    switch (error)
+    {
+    case GradeError::None:
+        std::cout << "valid grade" << std::endl;
+        break;
+    case GradeError::TooLow:
+        std::cout << "grade too low" << std::endl;
+        break;
+    case GradeError::TooHigh:
+        std::cout << "grade too high" << std::endl;
+        break;
+    }
+}
+
 int main()
 {
-    std::cout << static_cast<int>(validateGrade(0)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(11)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(10)) << std::endl;
-    std::cout << static_cast<int>(validateGrade(5)) << std::endl;
+    printGradeError(validateGrade(0));
+    printGradeError(validateGrade(11));
+    printGradeError(validateGrade(10));
+    printGradeError(validateGrade(5));
 }
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1`, `2`, `0` и `0`: числовые значения `TooLow`, `TooHigh`, `None` и `None`.
+Выведутся `grade too low`, `grade too high`, `valid grade` и `valid grade`.
 Этот интерфейс принимает целочисленные оценки от `1` до `10` включительно.
 Один параметр проверяется по двум условиям: `0` слишком мало, `11` слишком много, а `10` и `5` допустимы.
-Enum передаёт конкретную причину ошибки; `static_cast<int>` позволяет вывести его значение.
+Enum передаёт причину ошибки вызывающей функции. Вспомогательная функция выводит понятное сообщение для каждого результата проверки.
 </details>
 
 ### 4. Принтер с двумя причинами ошибки
@@ -186,22 +202,38 @@ PrintError printPage(Printer& printer)
     return PrintError::None;
 }
 
+void printPrinterError(PrintError error)
+{
+    switch (error)
+    {
+    case PrintError::None:
+        std::cout << "page printed" << std::endl;
+        break;
+    case PrintError::Jammed:
+        std::cout << "printer is jammed" << std::endl;
+        break;
+    case PrintError::NoPaper:
+        std::cout << "no paper" << std::endl;
+        break;
+    }
+}
+
 int main()
 {
     {
         Printer printer{ true, 0 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::Jammed) << std::endl;
+        printPrinterError(error);
     }
     {
         Printer printer{ false, 0 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::NoPaper) << std::endl;
+        printPrinterError(error);
     }
     {
         Printer printer{ false, 1 };
         PrintError error = printPage(printer);
-        std::cout << (error == PrintError::None) << std::endl;
+        printPrinterError(error);
         std::cout << printer.pagesLoaded << std::endl;
     }
 }
@@ -210,13 +242,13 @@ int main()
 <details>
 <summary>Ответ</summary>
 
-Выведутся `1`, `1`, `1` и `0`.
+Выведутся `printer is jammed`, `no paper`, `page printed` и `0`.
 В каждом блоке создаётся принтер для отдельного случая. Успешная печать расходует один лист; неудачный запрос не меняет состояние этого принтера.
 
 В первом случае есть обе проблемы, но проверка застрявшей бумаги сразу завершает функцию, поэтому возвращается `Jammed`.
 Во втором принтере бумага не застряла, но листов нет, поэтому возвращается `NoPaper`.
 В третьем принтере есть один лист: печать выполняется успешно, и `pagesLoaded` уменьшается с `1` до `0`.
-Передача принтера по ссылке позволяет функции менять тот же объект принтера.
+Вспомогательная функция выводит сообщение для каждого значения enum. При этом вызывающая функция по-прежнему получает результат печати в виде enum.
 </details>
 
 ### 5. Bool и выходной параметр-указатель
@@ -314,7 +346,65 @@ int main()
 В каждом блоке создаётся новое частное, инициализированное значением `99`.
 </details>
 
-### 7. Игнорирование признака успеха
+### 7. Выходная переменная без начального значения
+
+```cpp
+#include <iostream>
+
+bool divideExactly(int dividend, int divisor, int& quotient)
+{
+    if (dividend < 0 || divisor <= 0)
+    {
+        return false;
+    }
+    if (dividend % divisor != 0)
+    {
+        return false;
+    }
+    quotient = dividend / divisor;
+    return true;
+}
+
+int main()
+{
+    {
+        int quotient;
+        bool success = divideExactly(8, 2, quotient);
+        if (success)
+        {
+            std::cout << quotient << std::endl;
+        }
+    }
+    {
+        int quotient;
+        bool success = divideExactly(9, 2, quotient);
+        if (success)
+        {
+            std::cout << quotient << std::endl;
+        }
+        else
+        {
+            std::cout << "not exact" << std::endl;
+        }
+    }
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Выведутся `4` и `not exact`.
+Обе переменные `quotient` объявлены без начального значения.
+При успешном вызове функция записывает `4` через ссылку до того, как вызывающая функция читает значение.
+При неудачном вызове функция ничего не записывает, и вызывающая функция не читает это частное.
+
+Стандартный C++ разрешает такой код: объект типа `int` уже существует, а создание ссылки на него не читает его значение.
+Запись через эту ссылку может задать его первое значение. То же относится к передаче его адреса через выходной параметр-указатель.
+В C++20 чтение этого неинициализированного числа до успешного присваивания было бы неопределённым поведением.
+Если выходная переменная не инициализирована, проверять признак успеха особенно важно.
+</details>
+
+### 8. Игнорирование признака успеха
 
 ```cpp
 #include <iostream>
@@ -356,7 +446,7 @@ int main()
 Используйте выходное значение как новое измерение только после проверки успеха вызова.
 </details>
 
-### 8. Enum и выходное значение
+### 9. Enum и выходное значение
 
 ```cpp
 #include <iostream>
@@ -432,7 +522,7 @@ Enum сообщает конкретную причину ошибки, а сс�
 Один автомат намеренно сохраняется между блоками, чтобы показать, как расходуется его запас.
 </details>
 
-### 9. Нулевой указатель означает ошибку
+### 10. Нулевой указатель означает ошибку
 
 ```cpp
 #include <iostream>
@@ -477,7 +567,7 @@ int main()
 Массив продолжает существовать, пока используется `found`; ссылка в цикле обозначает его настоящий элемент.
 </details>
 
-### 10. Возврат собственной структуры результата
+### 11. Возврат собственной структуры результата
 
 ```cpp
 #include <iostream>
@@ -543,7 +633,7 @@ int main()
 Если интерфейсу нужна конкретная причина ошибки, поле с признаком успеха можно заменить на enum.
 </details>
 
-### 11. Возврат std::optional
+### 12. Возврат std::optional
 
 ```cpp
 #include <iostream>
@@ -600,7 +690,7 @@ int main()
 Как и bool, само пустое состояние не объясняет причину ошибки.
 </details>
 
-### 12. Сбор нескольких ошибок
+### 13. Сбор нескольких ошибок
 
 ```cpp
 #include <iostream>
@@ -654,7 +744,7 @@ int main()
 Возвращённый bool показывает, найдены ли ошибки именно в этом вызове.
 </details>
 
-### 13. Повторное использование списка ошибок
+### 14. Повторное использование списка ошибок
 
 ```cpp
 #include <iostream>
@@ -707,7 +797,7 @@ int main()
 Если для каждого вызова нужен отдельный список, следует создать новый вектор или заранее вызвать `errors.clear()`.
 </details>
 
-### 14. Успешная проверка assert
+### 15. Успешная проверка assert
 
 ```cpp
 #include <iostream>
@@ -730,7 +820,7 @@ int main()
 В отличие от возвращённого bool, assert не сообщает вызывающей функции об ошибке, после которой можно продолжить работу.
 </details>
 
-### 15. Неуспешная проверка assert
+### 16. Неуспешная проверка assert
 
 ```cpp
 #include <iostream>
@@ -756,7 +846,7 @@ Assert обнаруживает нарушение предположения; �
 Не используйте assert как единственную проверку ожидаемых ошибок во входных данных.
 </details>
 
-### 16. Assert для проверки условия использования выходного параметра
+### 17. Assert для проверки условия использования выходного параметра
 
 ```cpp
 #include <iostream>
@@ -812,7 +902,7 @@ int main()
 Assert и обычная обработка ошибок решают разные задачи.
 </details>
 
-### 17. Проверка успеха и ошибки через assert
+### 18. Проверка успеха и ошибки через assert
 
 ```cpp
 #include <iostream>
