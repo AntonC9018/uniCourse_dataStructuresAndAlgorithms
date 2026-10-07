@@ -12,23 +12,27 @@ slug: en/cpp/labs/application-practice
 
 ## Practice
 
-Choose a game and build a complete, playable application. These tasks have no supplied solutions.
+Choose a game and build a complete, playable application.
+These tasks have no supplied solutions.
 
 If you are making a game, use a graphics library to display it.
 
-Use your domain modeling skills to represent the game's state with appropriate structures. Use procedural programming:
-pass the state into functions that implement the game's rules. Organize the program into headers (`.h`) and
-implementation files (`.cpp`), and use a build system to build the application.
+Use your domain modeling skills to represent the game's state with appropriate structures.
+Use procedural programming: pass the state into functions that implement the game's rules.
+Organize the program into headers (`.h`) and implementation
+files (`.cpp`), and use a build system to build the application.
 
 **Do not use global variables.** Keep the game's state in local variables and pass it to functions through parameters.
 
 ### 1. Tic-tac-toe
 
-Make a game for two players. Detect wins and draws, and allow a new game to start.
+Make a game for two players.
+Detect wins and draws, and allow a new game to start.
 
 ### 2. Connect Four
 
-Make a game for two players who drop pieces into columns. Detect four connected pieces and draws.
+Make a game for two players who drop pieces into columns.
+Detect four connected pieces and draws.
 
 ### 3. Memory matching
 
@@ -40,4 +44,5 @@ Make a game where the player uncovers cells, marks suspected mines, and wins by 
 
 ### 5. Pong
 
-Make a game with two paddles and a bouncing ball. Keep score and allow the match to restart.
+Make a game with two paddles and a bouncing ball.
+Keep score and allow the match to restart.
