@@ -16,7 +16,9 @@ Choose a game and build a complete, playable application. These tasks have no su
 
 If you are making a game, use a graphics library to display it.
 
-Use your domain modeling skills to represent the game's state with appropriate structures. Use procedural programming: pass the state into functions that implement the game's rules. Organize the program into headers (`.h`) and implementation files (`.cpp`), and use a build system to build the application.
+Use your domain modeling skills to represent the game's state with appropriate structures. Use procedural programming:
+pass the state into functions that implement the game's rules. Organize the program into headers (`.h`) and
+implementation files (`.cpp`), and use a build system to build the application.
 
 **Do not use global variables.** Keep the game's state in local variables and pass it to functions through parameters.
 

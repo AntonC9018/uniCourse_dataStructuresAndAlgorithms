@@ -15,4 +15,5 @@ slug: en/cpp/labs/build-systems
 - Premake: describing a project in Lua and generating build files.
 - Command-line flags for build tools, the compiler, and the linker.
 
-Build on the [preprocessor](23_preprocessor.md) and [linker](24_linker.md) labs: headers, implementation files, and static and dynamic libraries.
+Build on the [preprocessor](23_preprocessor.md) and [linker](24_linker.md) labs: headers, implementation files, and
+static and dynamic libraries.
