@@ -53,6 +53,10 @@ to show an already-used library type's template argument.
 
 ## Keep the course consistent
 
+Wrap authored Markdown prose at 120 characters. Prefer line breaks before new
+sentences; when a sentence needs multiple lines, avoid short trailing lines or
+single words on a line. Preserve code and generated website backlinks.
+
 Update both `en/` and `ru/` versions with the same examples, code, order, and
 meaning, unless the user explicitly requests one language. Translate naturally
 and preserve the existing frontmatter and website backlinks.
