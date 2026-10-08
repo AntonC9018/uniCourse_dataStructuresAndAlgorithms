@@ -974,10 +974,9 @@ With checks disabled, the printed message alone does not establish that the resu
 
 ## Practice tasks
 
-Model each domain with structs and write procedural functions.
+Model each domain with structs and functions.
 Decide what each function receives, what it changes, and how the caller learns whether it succeeded.
 Use the error-reporting techniques from this lab.
-The first task has a full solution; the remaining tasks have no supplied solutions.
 
 ### 1. Vending machine
 
@@ -1070,32 +1069,49 @@ PurchaseError buyProduct(
 
 int main()
 {
-    VendingMachine machine{
-        std::array<Product, 2>{ Product{ "water", Money{ 3 }, 2 }, Product{ "juice", Money{ 5 }, 1 } }
+    VendingMachine machine{};
+
+    const size_t waterIndex = 0;
+    machine.products[waterIndex] = { 
+        .name = "water", 
+        .price = Money{ 3 }, 
+        .stock = 2,
     };
+
+    const size_t juiceIndex = 1;
+    machine.products[juiceIndex] = { 
+        .name = "juice",
+        .price = Money{ 5 },
+        .stock = 1, 
+    };
+
     {
         Money change{ 99 };
-        PurchaseError error = buyProduct(machine, 1, Money{ 4 }, change);
+        PurchaseError error = buyProduct(machine, waterIndex, Money{ 4 }, change);
         assert(error == PurchaseError::NotEnoughMoney);
-        assert(machine.products[1].stock == 1);
+        assert(machine.products[waterIndex].stock == 1);
         assert(change.coins == 99);
         std::cout << "not enough money" << std::endl;
     }
     {
         Money change;
-        PurchaseError error = buyProduct(machine, 1, Money{ 7 }, change);
+        PurchaseError error = buyProduct(machine, juiceIndex, Money{ 7 }, change);
         assert(error == PurchaseError::None);
         if (error == PurchaseError::None)
         {
-            std::cout << machine.products[1].name << ": change " << change.coins << std::endl;
+            std::cout 
+                << machine.products[juiceIndex].name 
+                << ": change "
+                << change.coins
+                << std::endl;
         }
-        assert(machine.products[1].stock == 0);
+        assert(machine.products[juiceIndex].stock == 0);
     }
     {
         Money change{ 99 };
-        PurchaseError error = buyProduct(machine, 1, Money{ 7 }, change);
+        PurchaseError error = buyProduct(machine, juiceIndex, Money{ 7 }, change);
         assert(error == PurchaseError::SoldOut);
-        assert(machine.products[1].stock == 0);
+        assert(machine.products[juiceIndex].stock == 0);
         assert(change.coins == 99);
         std::cout << "sold out" << std::endl;
     }
