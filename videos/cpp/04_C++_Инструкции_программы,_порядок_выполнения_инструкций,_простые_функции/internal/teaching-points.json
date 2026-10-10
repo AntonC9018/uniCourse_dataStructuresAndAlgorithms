@@ -1,0 +1,733 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "Z8AFpeE7hOo",
+  "uploadId": "Z8AFpeE7hOo",
+  "transcriptSha256": "8d3b42748ace08f329c0e9a44aedce3344891ce14298d27ce6657db31b7bc4b0",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 199,
+      "endMilliseconds": 14599,
+      "kind": "fact",
+      "text": "In this course you never write machine-code instructions or interact with them directly, because a programming language abstracts that level away for you.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 199,
+          "endMilliseconds": 14599
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 16600,
+      "endMilliseconds": 21349,
+      "kind": "scope_boundary",
+      "text": "The full notion of abstraction is treated in more depth in the algorithms topic, so it is only introduced here in two words.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 16600,
+          "endMilliseconds": 21349
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 21359,
+      "endMilliseconds": 28870,
+      "kind": "explanation",
+      "text": "Abstraction means simplifying opaque low-level instructions into more understandable terms, which is what makes them writable as ordinary code.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 21359,
+          "endMilliseconds": 28870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 28880,
+      "endMilliseconds": 37389,
+      "kind": "scope_boundary",
+      "text": "Compiler installation is covered by a separate video and a setup lab that students do themselves, so it is not demonstrated in this lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 28880,
+          "endMilliseconds": 37389
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 37389,
+      "endMilliseconds": 54709,
+      "kind": "explanation",
+      "text": "Working with memory in C++ means performing operations such as adding numbers or copying a value from one memory cell to another.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 37389,
+          "endMilliseconds": 54709
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 54719,
+      "endMilliseconds": 70360,
+      "kind": "reason",
+      "text": "Even memory is not touched directly in C++ because you cannot write into a processor register or read from a fixed address, so all access goes through an abstraction layer.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 54719,
+          "endMilliseconds": 70360
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 63239,
+      "endMilliseconds": 70360,
+      "kind": "reason",
+      "text": "Memory is never accessed directly in C++ because you cannot write into a processor register or read from a fixed address, so all access goes through an abstraction layer.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 63239,
+          "endMilliseconds": 70360
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 70360,
+      "endMilliseconds": 77500,
+      "kind": "fact",
+      "text": "Consequently you work with memory at the level of variables rather than at the level of machine registers and addresses.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 70360,
+          "endMilliseconds": 77500
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 77500,
+      "endMilliseconds": 83500,
+      "kind": "explanation",
+      "text": "Variables are the mechanism through which your C++ program interacts with memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 77500,
+          "endMilliseconds": 83500
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 83500,
+      "endMilliseconds": 98000,
+      "kind": "explanation",
+      "text": "Besides memory you must define the order of actions in the program, which is done with program instructions, i.e. lines of source code sometimes called statements in English.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 83500,
+          "endMilliseconds": 98000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#from-machine-instructions-to-readable-actions"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 106600,
+      "endMilliseconds": 117029,
+      "kind": "fact",
+      "text": "A basic C++ program consists of a main function, and the lines of code inside its curly braces are the instructions that will be executed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 106600,
+          "endMilliseconds": 117029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#begin-with-main-and-one-output-statement"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 106900,
+      "endMilliseconds": 115200,
+      "kind": "scope_boundary",
+      "text": "What the main function is exactly is explained later, for now it is enough to know that the code inside its braces runs.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 106900,
+          "endMilliseconds": 115200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#begin-with-main-and-one-output-statement"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 119039,
+      "endMilliseconds": 133470,
+      "kind": "fact",
+      "text": "One such instruction writes to the console, so a program can print a string such as Hello World as the canonical minimal example.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 119039,
+          "endMilliseconds": 133470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#begin-with-main-and-one-output-statement"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 138710,
+      "endMilliseconds": 142390,
+      "kind": "fact",
+      "text": "To run the code you must first compile it, which is covered by separate videos.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 138710,
+          "endMilliseconds": 142390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-and-run-the-first-program"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 142390,
+      "endMilliseconds": 148150,
+      "kind": "scope_boundary",
+      "text": "Syntax details are deliberately left aside for now because nothing more than compilation is required for a basic program.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 142390,
+          "endMilliseconds": 148150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-and-run-the-first-program"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 148150,
+      "endMilliseconds": 157589,
+      "kind": "fact",
+      "text": "You can pass extra flags to the linking step when building a program.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 148150,
+          "endMilliseconds": 157589
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-and-run-the-first-program"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 157589,
+      "endMilliseconds": 163470,
+      "kind": "test_result",
+      "text": "Linking produces an executable file named a.out on Linux, and running it prints Hello World.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 157589,
+          "endMilliseconds": 163470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-and-run-the-first-program"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 166480,
+      "endMilliseconds": 171390,
+      "kind": "explanation",
+      "text": "The std::cout instruction prints a string, which is how the program produces its visible output.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 166480,
+          "endMilliseconds": 171390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#add-statements-and-observe-their-order"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 168840,
+      "endMilliseconds": 184000,
+      "kind": "explanation",
+      "text": "Instructions execute from top to bottom, so after printing Hello World the program can print a newline and then another name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 168840,
+          "endMilliseconds": 184000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#add-statements-and-observe-their-order"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 188630,
+      "endMilliseconds": 202159,
+      "kind": "test_result",
+      "text": "Running the compiled program shows Hello World, then a newline, then the name, confirming that the statements ran one after another.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 188630,
+          "endMilliseconds": 202159
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#add-statements-and-observe-their-order"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 199589,
+      "endMilliseconds": 209589,
+      "kind": "fact",
+      "text": "Two slashes at the beginning of a line turn that command into a comment, so it is not applied by the program.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 199589,
+          "endMilliseconds": 209589
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#comment-out-a-newline"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 209589,
+      "endMilliseconds": 217830,
+      "kind": "test_result",
+      "text": "After commenting out the newline instruction and rerunning, the terminal ends with a percent sign, which shows that no line break was printed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 209589,
+          "endMilliseconds": 217830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#comment-out-a-newline"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 217830,
+      "endMilliseconds": 228300,
+      "kind": "reason",
+      "text": "Omitting a newline in the middle of the program leaves the following text on the same line, because commands run one after another from top to bottom.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 217830,
+          "endMilliseconds": 228300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#comment-out-a-newline"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 230840,
+      "endMilliseconds": 245309,
+      "kind": "explanation",
+      "text": "A function is a named list of commands that can be created once and then reused from main.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 230840,
+          "endMilliseconds": 245309
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#define-a-function-without-calling-it"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 245309,
+      "endMilliseconds": 257000,
+      "kind": "reason",
+      "text": "Program execution always begins at main and its curly braces, so a defined function such as f produces no output until it is called from main.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 245309,
+          "endMilliseconds": 257000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#define-a-function-without-calling-it"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 258639,
+      "endMilliseconds": 269150,
+      "kind": "test_result",
+      "text": "Running the program at this point prints only main's output, demonstrating that the instructions listed in the named block are not executed on their own.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 258639,
+          "endMilliseconds": 269150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#define-a-function-without-calling-it"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 271320,
+      "endMilliseconds": 286310,
+      "kind": "reason",
+      "text": "The named-block syntax only creates a list of instructions under that name, so the body runs only if something in the program actually mentions and activates that list.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 271320,
+          "endMilliseconds": 286310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#define-a-function-without-calling-it"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 291120,
+      "endMilliseconds": 304469,
+      "kind": "explanation",
+      "text": "A call instruction makes the processor jump to the first instruction of the named list, execute it step by step, and then return, which is why a mention of the list is what starts it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 291120,
+          "endMilliseconds": 304469
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-function-from-main"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 308800,
+      "endMilliseconds": 319670,
+      "kind": "explanation",
+      "text": "In the full run main prints its own text and newline first, and only afterwards do the instructions from the named block run and print Hello and Anton.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 308800,
+          "endMilliseconds": 319670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-function-from-main"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 323280,
+      "endMilliseconds": 327670,
+      "kind": "fact",
+      "text": "The same function can be used several times in a program, so each mention of it triggers the same list of instructions again.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 323280,
+          "endMilliseconds": 327670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-same-function-twice"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 327680,
+      "endMilliseconds": 339960,
+      "kind": "explanation",
+      "text": "Recapping the order: the main line and its newline execute first, and then the instructions of the called function begin executing.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 327680,
+          "endMilliseconds": 339960
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 331199,
+          "endMilliseconds": 339960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-same-function-twice"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 339960,
+      "endMilliseconds": 356710,
+      "kind": "explanation",
+      "text": "The call instruction makes the processor jump to the first instruction of the called function and run its body, which here prints Hello World, a newline, and Anton followed by another newline.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 339960,
+          "endMilliseconds": 356710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-same-function-twice"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 356710,
+      "endMilliseconds": 372070,
+      "kind": "reason",
+      "text": "When no instructions remain in the function's list, the processor jumps back to the place where the function was last called and continues with the next instruction after that call.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 356710,
+          "endMilliseconds": 372070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-same-function-twice"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 372070,
+      "endMilliseconds": 394430,
+      "kind": "fact",
+      "text": "A second call to the same function makes the processor jump to its first instruction again, run the whole body once more, and return to the last call site, so the same code can repeat.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 372070,
+          "endMilliseconds": 394430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#call-the-same-function-twice"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 394430,
+      "endMilliseconds": 409319,
+      "kind": "fact",
+      "text": "Functions may call other functions, which is demonstrated by adding a function B that prints B and a newline.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 394430,
+          "endMilliseconds": 409319
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 398960,
+      "endMilliseconds": 409310,
+      "kind": "code_change",
+      "text": "Function B is extended to print B and a newline, and main is changed to call B so the nested call has something to exercise it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 398960,
+          "endMilliseconds": 409310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 409319,
+      "endMilliseconds": 423670,
+      "kind": "explanation",
+      "text": "The execution order for this program is: main runs first, then its print command, and then the call to function B is executed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 409319,
+          "endMilliseconds": 423670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 423670,
+      "endMilliseconds": 434670,
+      "kind": "fact",
+      "text": "A function call is itself an ordinary instruction, and the processor understands it exactly like any other instruction, so it jumps to the first instruction of B and runs B's three instructions in order.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 423670,
+          "endMilliseconds": 434670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 434670,
+      "endMilliseconds": 443560,
+      "kind": "explanation",
+      "text": "The third instruction of B calls function F, so the processor jumps to F's first instruction and runs it, and when F's instruction list is exhausted it returns to the point inside B where F was called.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 434670,
+          "endMilliseconds": 443560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 443560,
+      "endMilliseconds": 463120,
+      "kind": "reason",
+      "text": "Because that call to F was B's last instruction, B's own list ends too and control returns to the last call site of B in main, and since no instruction follows it the program terminates.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 443560,
+          "endMilliseconds": 463120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#nest-one-function-call-inside-another"
+      }
+    }
+  ]
+}
