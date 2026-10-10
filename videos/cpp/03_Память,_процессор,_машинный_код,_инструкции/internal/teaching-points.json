@@ -1,0 +1,1604 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "Bmae710korE",
+  "uploadId": "Bmae710korE",
+  "transcriptSha256": "31bb62862e67051386666e959a7f05d7efc48d6c0946e7c2341631688735306b",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 240,
+      "endMilliseconds": 14000,
+      "kind": "fact",
+      "text": "C++ is studied at a slightly lower level than C#, so you need a bit more background on bits, bytes, and how different data types occupy different amounts of memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 240,
+          "endMilliseconds": 14000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#purpose-and-terms"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 14200,
+      "endMilliseconds": 33300,
+      "kind": "explanation",
+      "text": "Memory is best imagined as a finite-length tape divided into cells, which is why computer memory reduces to a sequence of addressable cells.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 14200,
+          "endMilliseconds": 33300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 33300,
+      "endMilliseconds": 45500,
+      "kind": "scope_boundary",
+      "text": "By memory the lesson means only RAM; disk storage and processor cache are deliberately left out of the model.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 33300,
+          "endMilliseconds": 45500
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 45500,
+      "endMilliseconds": 52400,
+      "kind": "scope_boundary",
+      "text": "CPU registers are mentioned only as a future topic and will not be covered in depth now.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 45500,
+          "endMilliseconds": 52400
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 52400,
+      "endMilliseconds": 61700,
+      "kind": "fact",
+      "text": "RAM cells sit at definite positions laid out one after another with no gaps, which makes memory a contiguous sequence of cells.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 52400,
+          "endMilliseconds": 61700
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 61700,
+      "endMilliseconds": 77520,
+      "kind": "explanation",
+      "text": "You can write values into a single cell such as a letter or a number, but a whole string does not fit into one cell, which is why strings are handled separately later.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 61700,
+          "endMilliseconds": 77520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 77520,
+      "endMilliseconds": 86880,
+      "kind": "fact",
+      "text": "Every memory cell has its own fixed position, and the very beginning of the tape is position zero.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 77520,
+          "endMilliseconds": 86880
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 86280,
+      "endMilliseconds": 98300,
+      "kind": "fact",
+      "text": "The position of a cell is called its address and is taken as the start of that cell in memory, so the cell holding the letter A has address zero.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 86280,
+          "endMilliseconds": 98300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 98300,
+      "endMilliseconds": 120000,
+      "kind": "explanation",
+      "text": "Because each cell occupies one position, consecutive cells get addresses 0, 1, 2 and so on, so the cell holding 123 has address one and the next cell address two.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 98300,
+          "endMilliseconds": 120000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 120000,
+      "endMilliseconds": 141000,
+      "kind": "edge_case",
+      "text": "A cell can itself hold the address of another cell, and looking at the raw cell you cannot tell whether the 1 stored there is the number one or address one, which is what types are later used to disambiguate.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 120000,
+          "endMilliseconds": 141000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 141000,
+      "endMilliseconds": 154519,
+      "kind": "fact",
+      "text": "The two fundamental operations a program performs on RAM are writing a value into a cell and reading a value out of a cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 141000,
+          "endMilliseconds": 154519
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 148120,
+          "endMilliseconds": 154519
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 154519,
+      "endMilliseconds": 163000,
+      "kind": "scope_boundary",
+      "text": "The reason RAM matters for programming is deferred: the lesson points you to the algorithms video in this course as the place where that payoff is explained.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 154519,
+          "endMilliseconds": 163000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#ram-as-an-addressed-tape"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 162630,
+      "endMilliseconds": 176000,
+      "kind": "fact",
+      "text": "The second important component is the processor, whose abilities include reading data from memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 162630,
+          "endMilliseconds": 176000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-processor-and-its-instruction-set"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 176000,
+      "endMilliseconds": 185750,
+      "kind": "explanation",
+      "text": "The processor's main job is executing instructions, and an instruction is the smallest action it can perform, such as adding two numbers, subtracting, multiplying, or testing whether a number is divisible by one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 176000,
+          "endMilliseconds": 185750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-processor-and-its-instruction-set"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 185750,
+      "endMilliseconds": 200000,
+      "kind": "fact",
+      "text": "Different processors support different sets of these [redacted], so the instruction set depends on the specific chip.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 185750,
+          "endMilliseconds": 200000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-processor-and-its-instruction-set"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 200000,
+      "endMilliseconds": 225680,
+      "kind": "fact",
+      "text": "The set of instructions a processor understands is its ISA (instruction set architecture), and those are exactly the instructions you may use in your programs.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 200000,
+          "endMilliseconds": 218400
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 218400,
+          "endMilliseconds": 225680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-processor-and-its-instruction-set"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 225680,
+      "endMilliseconds": 234000,
+      "kind": "explanation",
+      "text": "To illustrate how instructions are represented, the lesson builds a small toy model with two memory spaces: the CPU's own working memory and RAM.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 225680,
+          "endMilliseconds": 234000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 234000,
+      "endMilliseconds": 251000,
+      "kind": "fact",
+      "text": "RAM spans a huge number of addresses and can be several gigabytes in size, which is why it serves as the program's main storage.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 234000,
+          "endMilliseconds": 251000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 251000,
+      "endMilliseconds": 262000,
+      "kind": "fact",
+      "text": "The processor holds its own memory cells of the same kind as RAM cells but far fewer in number, and these are called registers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 251000,
+          "endMilliseconds": 262000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 262000,
+      "endMilliseconds": 289000,
+      "kind": "explanation",
+      "text": "Registers are addressed and numbered independently of RAM, so the same cell can be called zero here and one there, and some specialized registers are addressed by index.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 262000,
+          "endMilliseconds": 289000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 289000,
+      "endMilliseconds": 299680,
+      "kind": "fact",
+      "text": "The processor can address these register cells individually, and that internal memory is the processor's working memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 289000,
+          "endMilliseconds": 299680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 292320,
+      "endMilliseconds": 304790,
+      "kind": "fact",
+      "text": "The two registers are identified by their indices, and the processor addresses those memory cells individually, which is what makes them usable as a small fast working memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 292320,
+          "endMilliseconds": 304790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 302080,
+      "endMilliseconds": 311029,
+      "kind": "reason",
+      "text": "This working memory exists despite having main memory because it is much faster and because processor instructions are built to interact with it rather than with main memory directly.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 302080,
+          "endMilliseconds": 311029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#registers-as-working-memory"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 313430,
+      "endMilliseconds": 318830,
+      "kind": "explanation",
+      "text": "A concrete example with two registers holding5 and 6 is used to illustrate what register contents look like.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 313430,
+          "endMilliseconds": 318830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 318840,
+      "endMilliseconds": 331550,
+      "kind": "explanation",
+      "text": "A launched program does not know the concrete values 5, 6 and 10; its task is only to compute the sum of the first two cells, which shows that the values are data rather than program.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 318840,
+          "endMilliseconds": 331550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 337749,
+      "endMilliseconds": 345390,
+      "kind": "explanation",
+      "text": "To start, the processor copies the first cell from main memory into its working memory, filling that register.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 337749,
+          "endMilliseconds": 345390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 345390,
+      "endMilliseconds": 357309,
+      "kind": "explanation",
+      "text": "The processor then copies the cell at address one from main memory into the next register of its working memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 345390,
+          "endMilliseconds": 357309
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 357309,
+      "endMilliseconds": 372919,
+      "kind": "explanation",
+      "text": "The addition operation works on register0 and register 1 and writes the result over the previous contents of register 0, which is how the sum is kept for later use.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 357309,
+          "endMilliseconds": 372919
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 365360,
+      "endMilliseconds": 372919,
+      "kind": "explanation",
+      "text": "The addition operation works on register 0 and register 1 and writes the result over the previous contents of register 0.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 365360,
+          "endMilliseconds": 372919
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 372919,
+      "endMilliseconds": 384870,
+      "kind": "explanation",
+      "text": "The next instruction can either print the answer or write it into cell three, and for the write the processor copies the value from the register into that cell of main memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 372919,
+          "endMilliseconds": 384870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 384870,
+      "endMilliseconds": 396350,
+      "kind": "fact",
+      "text": "Written out step by step, these steps are precisely the instructions of the program that sums the values at addresses 0 and 1 and stores the result in cell three.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 384870,
+          "endMilliseconds": 396350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-addition-program"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 396350,
+      "endMilliseconds": 410309,
+      "kind": "explanation",
+      "text": "A processor does not understand instructions stated in words, so each instruction must be given to it as a code, its opcode, before it can carry out the intended operation.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 396350,
+          "endMilliseconds": 410309
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 410309,
+      "endMilliseconds": 430070,
+      "kind": "fact",
+      "text": "Opcodes are written down for each processor in an accompanying document that lists which instructions it supports and which code each one has, essentially an instruction set architecture reference.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 410309,
+          "endMilliseconds": 430070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 430070,
+      "endMilliseconds": 442720,
+      "kind": "fact",
+      "text": "For the first operation the reference assigns code 64, meaning64 is the code that copies from memory into a register at the given address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 430070,
+          "endMilliseconds": 442720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 432520,
+      "endMilliseconds": 442720,
+      "kind": "fact",
+      "text": "The instruction set architecture book lists 64 as the code that copies from memory into a register by number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 432520,
+          "endMilliseconds": 442720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 442720,
+      "endMilliseconds": 458270,
+      "kind": "explanation",
+      "text": "Writing64 means giving two arguments: which memory location to read from and which register to write into.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 442720,
+          "endMilliseconds": 458270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 458270,
+      "endMilliseconds": 477830,
+      "kind": "explanation",
+      "text": "Copying memory address 0 into register 0 is expressed as instruction 64 followed by the address 0 and the register number 0, which the processor reads as the memory address and the register index.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 458270,
+          "endMilliseconds": 477830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 477830,
+      "endMilliseconds": 498430,
+      "kind": "fact",
+      "text": "The second step also uses opcode 64 because it is the same memory-to-register copy operation, only with different arguments, namely memory address one into register one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 477830,
+          "endMilliseconds": 498430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#encoding-the-two-loads"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 498430,
+      "endMilliseconds": 518670,
+      "kind": "fact",
+      "text": "The addition step is assumed to have opcode 72 in this example instruction set, where72 adds what is in register 0 and register 1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 498430,
+          "endMilliseconds": 518670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 513360,
+      "endMilliseconds": 521080,
+      "kind": "explanation",
+      "text": "The addition instruction is introduced as taking two parameters, raising the question of where the processor takes the first and the second number from.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 513360,
+          "endMilliseconds": 521080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 518670,
+      "endMilliseconds": 521080,
+      "kind": "explanation",
+      "text": "Opcode 72 is described as an instruction that takes two parameters, which raises the question of where the processor takes the first and the second number from.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 518670,
+          "endMilliseconds": 521080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 521080,
+      "endMilliseconds": 538350,
+      "kind": "fact",
+      "text": "This particular instruction is fixed: identifier 72 means add register0 and register 1 and store the result back into register 0, so no operands are supplied.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 521080,
+          "endMilliseconds": 538350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 538350,
+      "endMilliseconds": 556030,
+      "kind": "edge_case",
+      "text": "Another variant of the addition instruction could add register 0 with some other register passed as a parameter following the opcode, showing that not every add instruction is hard-wired to registers 0 and 1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 538350,
+          "endMilliseconds": 556030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 556030,
+      "endMilliseconds": 574560,
+      "kind": "explanation",
+      "text": "Because the instruction used here is fixed for registers 0 and 1, nothing follows the 72 identifier, and the next step copies from register 0 into memory cell three.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 556030,
+          "endMilliseconds": 574560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-fixed-add-instruction"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 574560,
+      "endMilliseconds": 596440,
+      "kind": "fact",
+      "text": "The store step is assumed to be opcode 65, copying from register 0 into memory address three, while loading ten into the first register uses opcode 64 with memory address zero as source and register one as destination.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 574560,
+          "endMilliseconds": 596440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-the-result-and-changing-operands"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 587440,
+      "endMilliseconds": 600120,
+      "kind": "fact",
+      "text": "Opcode 64 tells the processor to read from memory into a register, with the first number giving the source address and the next giving the destination register, so the numeric list directly encodes a load operation.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 587440,
+          "endMilliseconds": 600120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-the-result-and-changing-operands"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 600120,
+      "endMilliseconds": 617630,
+      "kind": "fact",
+      "text": "Opcode 65 is the copy operation from register to memory and it takes two arguments, source and destination, so writing 65 1 4 copies the contents of register 1 into memory address 4.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 600120,
+          "endMilliseconds": 617630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-the-result-and-changing-operands"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 617630,
+      "endMilliseconds": 625630,
+      "kind": "explanation",
+      "text": "When the processor executes the last instruction in the list, the value ends up in the memory cell named as the destination, which is how the program's effect becomes visible outside the registers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 617630,
+          "endMilliseconds": 625630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-the-result-and-changing-operands"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 625630,
+      "endMilliseconds": 641710,
+      "kind": "explanation",
+      "text": "The whole instruction list can be written simply as a sequence of numbers, and that sequence of numbers is what actually constitutes the program performing the described actions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 625630,
+          "endMilliseconds": 641710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-continuous-stream-of-machine-code"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 641710,
+      "endMilliseconds": 655629,
+      "kind": "fact",
+      "text": "Machine code means instructions written in the numeric form in which the processor can execute them directly, which is what any program ultimately reduces to.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 641710,
+          "endMilliseconds": 655629
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-continuous-stream-of-machine-code"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 655629,
+      "endMilliseconds": 669440,
+      "kind": "correction",
+      "text": "The apparent holes between individual instructions in the listing are only a visual convention of the display; in memory there are no holes, just a continuous stream of numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 655629,
+          "endMilliseconds": 669440
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 661320,
+          "endMilliseconds": 669440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-continuous-stream-of-machine-code"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 669440,
+      "endMilliseconds": 685790,
+      "kind": "reason",
+      "text": "Because the processor sees only a bare sequence of numbers, the open question is how it knows where one instruction ends and the next begins.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 669440,
+          "endMilliseconds": 685790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-continuous-stream-of-machine-code"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 685790,
+      "endMilliseconds": 703550,
+      "kind": "explanation",
+      "text": "The processor starts at the first position of the code list and executes it instruction by instruction, reading the numbers in order.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 685790,
+          "endMilliseconds": 703550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 703550,
+      "endMilliseconds": 722030,
+      "kind": "explanation",
+      "text": "On reading 64 the processor consults its built-in encoding, which says 64 means copy from memory to register and takes two arguments, so it consumes the next two numbers as those arguments.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 703550,
+          "endMilliseconds": 722030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 722030,
+      "endMilliseconds": 746519,
+      "kind": "explanation",
+      "text": "The first instruction resolves to copying the value at RAM address 0 into register 0, after which the processor moves on to read the next number as a fresh instruction.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 722030,
+          "endMilliseconds": 746519
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 737320,
+          "endMilliseconds": 741069
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 741069,
+      "endMilliseconds": 761069,
+      "kind": "reason",
+      "text": "The processor knows the previous instruction took exactly two arguments, so it interprets only two following numbers as arguments and then resumes reading instructions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 741069,
+          "endMilliseconds": 761069
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 761069,
+      "endMilliseconds": 778150,
+      "kind": "fact",
+      "text": "The next instruction is again 64, meaning a copy from RAM address 1 into register 0, so the second value is loaded the same way as the first.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 761069,
+          "endMilliseconds": 778150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-058",
+      "startMilliseconds": 778150,
+      "endMilliseconds": 799710,
+      "kind": "fact",
+      "text": "Opcode 72 is the addition of register 1 and register 2 with the result written into register 0, and it takes no arguments at all.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 778150,
+          "endMilliseconds": 799710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-059",
+      "startMilliseconds": 799710,
+      "endMilliseconds": 813440,
+      "kind": "explanation",
+      "text": "Because 72 has no arguments, the number immediately after it is already a new instruction, which is again 65, the copy from register to memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 799710,
+          "endMilliseconds": 813440
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 804560,
+          "endMilliseconds": 813430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#decoding-the-stream"
+      }
+    },
+    {
+      "id": "TP-060",
+      "startMilliseconds": 813430,
+      "endMilliseconds": 831000,
+      "kind": "fact",
+      "text": "Executable files on a computer contain exactly this machine code: instructions one after another together with the addresses and registers they operate on.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 813430,
+          "endMilliseconds": 831000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-061",
+      "startMilliseconds": 831000,
+      "endMilliseconds": 846709,
+      "kind": "reason",
+      "text": "Since the program is just numbers, those numbers can be placed directly into RAM, and that placement is what program execution consists of.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 831000,
+          "endMilliseconds": 846709
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-062",
+      "startMilliseconds": 846709,
+      "endMilliseconds": 866509,
+      "kind": "explanation",
+      "text": "Running a program means a region of RAM is allocated for its code and the machine code is loaded into that region from the executable file.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 846709,
+          "endMilliseconds": 866509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-063",
+      "startMilliseconds": 866509,
+      "endMilliseconds": 880199,
+      "kind": "reason",
+      "text": "The processor never executes the file itself but walks through RAM, because each number such as 64 occupies a single memory cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 866509,
+          "endMilliseconds": 880199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-064",
+      "startMilliseconds": 880199,
+      "endMilliseconds": 892399,
+      "kind": "fact",
+      "text": "A memory cell holds at most 255 because it is one byte, so the processor cannot inspect all cells at once and can only ask what is in a single cell and load it into a register.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 880199,
+          "endMilliseconds": 892399
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-065",
+      "startMilliseconds": 885560,
+      "endMilliseconds": 887990,
+      "kind": "explanation",
+      "text": "Because data is stored as one byte per cell, the CPU cannot view all memory at once.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 885560,
+          "endMilliseconds": 887990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-066",
+      "startMilliseconds": 887990,
+      "endMilliseconds": 894870,
+      "kind": "explanation",
+      "text": "The CPU can only ask what value is in one particular cell and load that value into a register for further operations.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 887990,
+          "endMilliseconds": 894870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#loading-an-executable-into-ram"
+      }
+    },
+    {
+      "id": "TP-067",
+      "startMilliseconds": 894870,
+      "endMilliseconds": 901920,
+      "kind": "scope_boundary",
+      "text": "The CPU has a dedicated special register for the current position, which is covered in detail later in the video about function execution.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 894870,
+          "endMilliseconds": 901920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-068",
+      "startMilliseconds": 901920,
+      "endMilliseconds": 910710,
+      "kind": "fact",
+      "text": "The IP (instruction pointer) register holds the address in RAM of the instruction currently being executed, which is how the CPU knows what to run next.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 901920,
+          "endMilliseconds": 910710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-069",
+      "startMilliseconds": 910710,
+      "endMilliseconds": 918390,
+      "kind": "explanation",
+      "text": "For illustration the current instruction might sit at address 32 in RAM, because memory does not necessarily start at address0 and other cells may precede it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 910710,
+          "endMilliseconds": 918390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-070",
+      "startMilliseconds": 918390,
+      "endMilliseconds": 930710,
+      "kind": "explanation",
+      "text": "Instructions are laid out at consecutive addresses, so the one after address 32 is at 33, then 34, then 35, which is what lets sequential execution work.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 918390,
+          "endMilliseconds": 930710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-071",
+      "startMilliseconds": 930710,
+      "endMilliseconds": 945230,
+      "kind": "fact",
+      "text": "Right after a program is launched, IP contains the address of the program's first instruction.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 930710,
+          "endMilliseconds": 945230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-072",
+      "startMilliseconds": 945230,
+      "endMilliseconds": 957000,
+      "kind": "explanation",
+      "text": "The processor locates the instruction at the address held in IP, looks at its operands, and then advances IP to move on.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 945230,
+          "endMilliseconds": 957000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-073",
+      "startMilliseconds": 950199,
+      "endMilliseconds": 961910,
+      "kind": "explanation",
+      "text": "The processor locates the instruction at the address held in IP, looks at its operands, then advances IP to the next instruction and repeats this cycle.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 950199,
+          "endMilliseconds": 961910
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#tracking-execution-with-ip"
+      }
+    },
+    {
+      "id": "TP-074",
+      "startMilliseconds": 961910,
+      "endMilliseconds": 973150,
+      "kind": "explanation",
+      "text": "The next question is how writing a number or a character into a memory cell actually works at the computer level.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 961910,
+          "endMilliseconds": 973150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-075",
+      "startMilliseconds": 973150,
+      "endMilliseconds": 983230,
+      "kind": "scope_boundary",
+      "text": "The detailed answer about writing values is deferred to the dedicated videos on numeral systems and on negative numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 973150,
+          "endMilliseconds": 983230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-076",
+      "startMilliseconds": 983230,
+      "endMilliseconds": 991350,
+      "kind": "fact",
+      "text": "A byte is defined as a single memory cell, which is the unit the CPU reads and writes.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 983230,
+          "endMilliseconds": 991350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-077",
+      "startMilliseconds": 991350,
+      "endMilliseconds": 996390,
+      "kind": "fact",
+      "text": "Each memory cell in turn consists of eight bits, so a byte carries eight binary digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 991350,
+          "endMilliseconds": 996390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-078",
+      "startMilliseconds": 996390,
+      "endMilliseconds": 1007990,
+      "kind": "edge_case",
+      "text": "Each bit can only be zero or one, that is either no current or current, and a bit can never be empty.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 996390,
+          "endMilliseconds": 1007990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-079",
+      "startMilliseconds": 1007990,
+      "endMilliseconds": 1018480,
+      "kind": "explanation",
+      "text": "Presence and absence of current are interpreted as the digits of the binary numeral system, so understanding numeral systems tells you what a cell can hold.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1007990,
+          "endMilliseconds": 1018480
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1012800,
+          "endMilliseconds": 1018480
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-080",
+      "startMilliseconds": 1018480,
+      "endMilliseconds": 1025470,
+      "kind": "explanation",
+      "text": "Because the bits are binary digits, a memory cell can store any number that fits into its bits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1018480,
+          "endMilliseconds": 1025470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-081",
+      "startMilliseconds": 1025470,
+      "endMilliseconds": 1037510,
+      "kind": "fact",
+      "text": "The largest value a byte holds occurs when all eight bits are ones, which equals 255 in decimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1025470,
+          "endMilliseconds": 1037510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-082",
+      "startMilliseconds": 1037510,
+      "endMilliseconds": 1045590,
+      "kind": "edge_case",
+      "text": "When no bit is set and all bits are zero, the byte obviously stores zero.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1037510,
+          "endMilliseconds": 1045590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-083",
+      "startMilliseconds": 1045590,
+      "endMilliseconds": 1055090,
+      "kind": "fact",
+      "text": "Consequently a single byte can store values from zero to 255, which is why sizes like one byte have a limited numeric range.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1045590,
+          "endMilliseconds": 1055090
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bytes-bits-and-the-range-zero-to-255"
+      }
+    },
+    {
+      "id": "TP-084",
+      "startMilliseconds": 1055090,
+      "endMilliseconds": 1073590,
+      "kind": "explanation",
+      "text": "Storing a character as zeros and ones in a byte is done through character encodings, with ASCII being the simplest and most popular one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1055090,
+          "endMilliseconds": 1073590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#characters-and-the-meaning-of-a-byte"
+      }
+    },
+    {
+      "id": "TP-085",
+      "startMilliseconds": 1073590,
+      "endMilliseconds": 1084490,
+      "kind": "explanation",
+      "text": "In ASCII each character is assigned its own associated number, which is what makes it representable as bits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1073590,
+          "endMilliseconds": 1084490
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#characters-and-the-meaning-of-a-byte"
+      }
+    },
+    {
+      "id": "TP-086",
+      "startMilliseconds": 1084490,
+      "endMilliseconds": 1087540,
+      "kind": "explanation",
+      "text": "A memory cell actually stores a number rather than a character, so it is the program that reads the cell and interprets the value as a character.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1084490,
+          "endMilliseconds": 1087540
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#characters-and-the-meaning-of-a-byte"
+      }
+    },
+    {
+      "id": "TP-087",
+      "startMilliseconds": 1087540,
+      "endMilliseconds": 1091919,
+      "kind": "scope_boundary",
+      "text": "This interpretation problem is the key point about memory cells, and adjacent cells can be combined to raise the maximum value storable because the number of available binary digits grows.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1087540,
+          "endMilliseconds": 1091919
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#characters-and-the-meaning-of-a-byte"
+      }
+    }
+  ]
+}
