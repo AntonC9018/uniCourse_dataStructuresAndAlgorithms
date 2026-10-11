@@ -125,10 +125,10 @@ T* find(HashTable* table, std::string_view key)
         }
 
         index++;
-        // Wrap around the edge.
+        // Переходим к началу массива.
         index = index % table->buckets.size();
 
-        // Traversed the whole array, didn't find the bucket.
+        // Обошли весь массив, но не нашли ячейку.
         if (index == startIndex)
         {
             return nullptr;
