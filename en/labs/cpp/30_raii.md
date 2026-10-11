@@ -7,14 +7,13 @@ slug: en/cpp/labs/raii
 # Constructors, Destructors, RAII
 
 - [Video about OOP, RAII](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16).
-- [Video about memory
-types](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14).
+- [Video about memory types](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14).
 - [Information about RAII](../../../en/05a_programming_fundamentals/02_RAII.md)
 
 ## Example
 
 ```cpp
-// File: HeapInt.h
+// Файл HeapInt.h
 #pragma once // 1
 #include <cassert>
 
@@ -33,7 +32,7 @@ public:
 
     inline ~HeapInt()
     {
-        // Note: delete checks for nullptr itself.
+        // Заметка: delete проверяет на nullptr сам.
         delete heapValue; // 5
     }
 
@@ -49,7 +48,7 @@ public:
     void operator=(HeapInt&& hello);
 };
 
-// File: main.cpp
+// Файл main.cpp
 #include "HeapInt.h"
 #include <utility>
 
@@ -64,7 +63,7 @@ void constructors()
     d = e; // 14
 }
 
-// File: HeapInt.cpp
+// Файл HeapInt.cpp
 #include "HeapInt.h"
 
 // ... 15
@@ -105,15 +104,15 @@ The class follows RAII: it allocates memory in its constructor and deletes it in
    {
        // : heapValue(new int{value})
 
-       // Memory allocation
+       // Выделение памяти
        // new int
        int* t = new int;
 
-       // Object initialization in dynamic memory
+       // Инициализация объекта в динамической памяти
        // {value}
        *t = value;
 
-       // Assigning the field
+       // Присваивание поля
        // : heapValue(...)
        this->heapValue = t;
    }
@@ -191,11 +190,9 @@ The class follows RAII: it allocates memory in its constructor and deletes it in
    <summary>Detail</summary>
 
    One might conclude that, since every `HeapInt` object has a non-null `heapValue`, there is no need
-to take memory from an object passed as `HeapInt&&`; instead, the
-value could simply be copied, because the memory will be deleted
+   to take memory from an object passed as `HeapInt&&`; instead, the value could simply be copied, because the memory will be deleted
    in the source object's destructor. However, for the `swap` task to work correctly,
-it is important to transfer ownership of the memory itself—at
-least when the destination object's `heapValue == nullptr`.
+   it is important to transfer ownership of the memory itself—at least when the destination object's `heapValue == nullptr`.
    Moving another object into one that was previously moved from is a valid operation.
 
    This check remains necessary because a move constructor exists.
@@ -250,8 +247,7 @@ least when the destination object's `heapValue == nullptr`.
     The assignment operator must copy the value pointed to by the other object's `heapValue`
     into the existing `heapValue`.
 
-The assignment operator that takes an rvalue-reference parameter
-must take ownership of the pointer from the source object.
+    The assignment operator that takes an rvalue-reference parameter must take ownership of the pointer from the source object.
     </details>
 
 12. In what other situation is the rvalue-reference overload of a constructor or assignment operator called?

@@ -6,8 +6,7 @@ slug: ru/cpp/labs/string-basic
 <!-- course-site-backlink:end -->
 # Строки
 
-- Сопровождающие
-[видео](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639):
+- Сопровождающие [видео](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639):
 - [Видео про виды памяти](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=22)
 
 ## Концепты

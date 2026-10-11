@@ -11,8 +11,7 @@ slug: ru/cpp/labs/dynamic-array
 Видео:
 - [Массивы](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11)
 - [Типы памяти](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
-- [Базовые техники
-программирования](https://www.youtube.com/watch?v=gLp7OtaNGrs&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=15)
+- [Базовые техники программирования](https://www.youtube.com/watch?v=gLp7OtaNGrs&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=15)
 
 
 Распишите код для структуры данных динамического массива:

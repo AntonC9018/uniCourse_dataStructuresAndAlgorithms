@@ -6,10 +6,9 @@ slug: en/cpp/labs/variables
 <!-- course-site-backlink:end -->
 # Variables and Types
 
-- [Video about variables and
-types](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
-- [Video on the basics and more in-depth material (up to
-pointers)](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [Video about variables and types](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
+- [Video on the basics and more in-depth material (up to pointers)](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [Video about type conversions (up to pointers)](https://www.youtube.com/watch?v=imkDyDE7Tkw&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=28)
 
 ## Concepts
 

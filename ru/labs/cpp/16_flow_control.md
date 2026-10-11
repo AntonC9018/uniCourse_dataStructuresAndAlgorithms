@@ -571,7 +571,7 @@ int F()
 struct Result
 {
    bool isDenominatorZero;
-   // Читать только при отсутствии ошибки.
+   // Should only be read if there is no error.
    int result;
 };
 

@@ -6,10 +6,8 @@ slug: en/cpp/labs/struct
 <!-- course-site-backlink:end -->
 # Structures
 
-- [In-depth video on basic syntax, section on
-structures](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8&t=2457)
-- [Video on programming techniques that explains how structures
-work](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)
+- [In-depth video on basic syntax, section on structures](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8&t=2457)
+- [Video on programming techniques that explains how structures work](https://www.youtube.com/watch?v=6JtlzvwhHr0&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=29)
 
 ## Concepts
 

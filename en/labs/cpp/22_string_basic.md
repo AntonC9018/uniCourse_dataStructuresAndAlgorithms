@@ -6,10 +6,8 @@ slug: en/cpp/labs/string-basic
 <!-- course-site-backlink:end -->
 # Strings
 
-- Accompanying
-[video](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639)
-- [Video about memory
-types](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=22)
+- Accompanying [video](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11&t=639)
+- [Video about memory types](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=22)
 
 ## Concepts
 
@@ -272,10 +270,10 @@ Therefore, in C++ **it is impossible to determine the actual buffer length from 
 You can get the literal's length by creating a reference to it
 before decay to `const char*` occurs:
 ```cpp
-// The size is part of the type; it can also be used as a pointer.
+// Размер есть в типе, можно использовать как указатель.
 const char(&s)[4]{"123"};
 
-// The type const char(&)[4] is inferred from the string literal.
+// Сам определяет тип const char(&)[4] из строки.
 auto& s{"123"};
 ```
 </details>

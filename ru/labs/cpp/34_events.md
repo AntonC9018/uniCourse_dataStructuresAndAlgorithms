@@ -101,7 +101,7 @@ slug: ru/cpp/labs/events
     {
         Payload payload;
 
-        // ... другая общая информация
+        // ... some more generic info
     };
 
     template<typename Payload>

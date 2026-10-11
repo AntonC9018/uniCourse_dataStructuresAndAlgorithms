@@ -6,8 +6,7 @@ slug: en/cpp/labs/oop-syntax
 <!-- course-site-backlink:end -->
 # Basic OOP
 
-- [Video](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16)
-up to `NumberWrapper`.
+- [Video](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) up to `NumberWrapper`.
 - [Information](../../../en/05_programming_fundamentals/linker_examples)
 
 ## Basic Concepts
@@ -101,9 +100,7 @@ up to `NumberWrapper`.
    <details>
    <summary>Answer</summary>
    
-   You cannot give just one method internal linkage.
-Giving the class internal linkage gives all of its methods internal linkage.
-A nested class can be used as a workaround.
+   You cannot give just one method internal linkage. Giving the class internal linkage gives all of its methods internal linkage. A nested class can be used as a workaround.
    [See the documentation](../../../en/05a_programming_fundamentals/05_module.md#private-members-in-the-header-file).
    </details>
 

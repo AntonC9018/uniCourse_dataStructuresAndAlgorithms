@@ -10,8 +10,7 @@ slug: en/cpp/labs/assessment-1
 
 - [Video](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9)
 
-Write out the steps of an algorithm for solving a problem,
-explaining the logic behind every decision as fully as possible.
+Write out the steps of an algorithm for solving a problem, explaining the logic behind every decision as fully as possible.
 
 Example problems:
 - Calculating the sum of the elements in a list;
@@ -69,7 +68,7 @@ Example problems:
    For example:
 
    ```
-   5. If a > b
+   5. If а > b
         1. a = 5
         2. b = 6
    6. Next step.

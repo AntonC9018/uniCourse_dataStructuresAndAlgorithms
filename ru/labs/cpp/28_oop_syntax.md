@@ -6,8 +6,7 @@ slug: ru/cpp/labs/oop-syntax
 <!-- course-site-backlink:end -->
 # Базовый ООП
 
-- [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16)
-до `NumberWrapper`.
+- [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.
 - [Информация](../../../en/05_programming_fundamentals/linker_examples)
 
 ## Базовые концепты
@@ -101,9 +100,7 @@ slug: ru/cpp/labs/oop-syntax
    <details>
    <summary>Ответ</summary>
    
-   Один конкретный — нельзя.
-Можно все методы в классе, приписав `static` к определению класса.
-Некоторым образом это можно обойти, используя вложенный класс.
+   Один конкретный — нельзя. Можно все методы в классе, приписав `static` к определению класса. Некоторым образом это можно обойти, используя вложенный класс. 
    [См. док](../../../en/05a_programming_fundamentals/05_module.md#private-members-in-the-header-file).
    </details>
 

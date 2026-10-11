@@ -6,10 +6,9 @@ slug: ru/cpp/labs/variables
 <!-- course-site-backlink:end -->
 # Переменные и типы
 
-- [Видео про переменные и
-типы](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
-- [Видео по основам, более углубленная информация (до
-указателей)](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [Видео про переменные и типы](https://www.youtube.com/watch?v=6ML34OuwZrc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=6)
+- [Видео по основам, более углубленная информация (до указателей)](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [Видео про конверсии типов (до указателей)](https://www.youtube.com/watch?v=imkDyDE7Tkw&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=28)
 
 ## Концепты
 

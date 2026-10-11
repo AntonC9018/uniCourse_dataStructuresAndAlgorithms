@@ -7,8 +7,7 @@ slug: ru/cpp/labs/object
 # Объекты
 
 - [Видео (теория)](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
-- [Видео (разбор
-примера)](https://www.youtube.com/watch?v=OvH8meqCnik&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18).
+- [Видео (разбор примера)](https://www.youtube.com/watch?v=OvH8meqCnik&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18).
 
 ## Концепты
 

@@ -7,8 +7,7 @@ slug: en/cpp/labs/c-array
 # C arrays (groups of variables)
 
 - [Arrays and indexes](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)
-- [A video that covers the fundamentals in more
-depth](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [A video that covers the fundamentals in more depth](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
 
 ## Concepts
 

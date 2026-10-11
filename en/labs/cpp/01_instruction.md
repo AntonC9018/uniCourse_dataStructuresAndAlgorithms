@@ -194,8 +194,7 @@ void A()
 <details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link because
-there is no `main` function. [See question 1](#1-empty-main)
+The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-empty-main)
 </details>
 
 ### 8. Function `main`
@@ -350,13 +349,13 @@ The program will compile successfully.
 
 The statements execute in this order:
 ```
-B(); // function called
+B(); // функцию вызвали
 std::cout << "B-before" << std::endl;
-A(); // function called
+A(); // функцию вызвали
 std::cout << "A" << std::endl;
-// A has finished
+// A завершилась
 std::cout << "B-after" << std::endl;
-// B has finished
+// B завершилась
 ```
 </details>
 

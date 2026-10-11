@@ -7,8 +7,7 @@ slug: en/cpp/labs/object
 # Objects
 
 - [Video (theory)](https://www.youtube.com/watch?v=8xXxJ0PZutE&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9).
-- [Video (example
-walkthrough)](https://www.youtube.com/watch?v=OvH8meqCnik&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18).
+- [Video (example walkthrough)](https://www.youtube.com/watch?v=OvH8meqCnik&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18).
 
 ## Concepts
 
@@ -67,7 +66,7 @@ Recall the syntax for declaring fields in structures.
 
 The syntax for declaring fields is similar to the syntax for declaring variables.
 ```
-type name;
+тип имя;
 ```
 </details>
 

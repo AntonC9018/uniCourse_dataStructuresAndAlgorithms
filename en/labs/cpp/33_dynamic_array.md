@@ -11,8 +11,7 @@ slug: en/cpp/labs/dynamic-array
 Videos:
 - [Arrays](https://www.youtube.com/watch?v=3aXFuiHxb9k&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=11)
 - [Memory Types](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
-- [Basic Programming
-Techniques](https://www.youtube.com/watch?v=gLp7OtaNGrs&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=15)
+- [Basic Programming Techniques](https://www.youtube.com/watch?v=gLp7OtaNGrs&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=15)
 
 
 Write the code for a dynamic array data structure:

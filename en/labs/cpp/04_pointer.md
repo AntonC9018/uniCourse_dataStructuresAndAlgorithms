@@ -7,8 +7,7 @@ slug: en/cpp/labs/pointer
 # Pointers
 
 - [Video about pointers](https://www.youtube.com/watch?v=859Y0Q8pyLg&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=8)
-- [Video covering the basics, with more in-depth
-information](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
+- [Video covering the basics, with more in-depth information](https://www.youtube.com/watch?v=9AhNOjjyAwU&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14)
 
 ## Concepts
 

@@ -341,8 +341,7 @@ else
 <summary>Answer (chain)</summary>
 
 This code cannot be represented as an `if`-`else` chain without duplicating code.
-There is nowhere to put `After B` and `After C` so that they
-execute according to the same rules without duplicating them.
+There is nowhere to put `After B` and `After C` so that they execute according to the same rules without duplicating them.
 You could duplicate them, as shown below, but that would make the code harder to maintain:
 
 ```cpp
@@ -406,7 +405,7 @@ void f(bool a, bool b, bool c)
 
 int main()
 {
-   // assume a, b, c were created earlier ...
+   // предполагается, что a, b, c были созданы ранее ...
    f(a, b, c);
 }
 ```
@@ -425,14 +424,14 @@ Example code without using a guard clause / early return:
 ```cpp
 void sendWelcomeEmail(User* user)
 {
-   // Each condition adds another level of nesting.
+   // Условия перечислены с увеличением вложенности.
    if (user != nullptr)
    {
        if (user->IsActive)
        {
            if (user->EmailConfirmed)
            {
-               // The code that performs the action is buried in the middle of the function.
+               // Код с самим действием спрятан в середине функции.
                std::cout << "Sending email to " << user->email << std::endl;
            }
            else
@@ -445,8 +444,8 @@ void sendWelcomeEmail(User* user)
            std::cout << "User is not active." << std::endl;
        }
    }
-   // Locality is lost:
-   // the handling code is far from the corresponding check in the source.
+   // Не соблюдается локальность:
+   // обработка удалена в исходном коде от связанной проверки.
    else
    {
        std::cout << "User not found." << std::endl;
@@ -458,11 +457,11 @@ The same code using a guard clause / early return:
 ```cpp
 void sendWelcomeEmail(User* user)
 {
-   // You can put the contract in a separate block
-   // (the conditions required to perform the main action),
-   // or move it into its own function.
+   // Можно блоком разграничить контракт 
+   // (необходимые условия для выполнения основного действия), 
+   // или вынести его в свою функцию.
    {
-       // Locality is preserved: conditions are next to the code that handles them.
+       // Соблюдена локальность: условия рядом с их обработкой.
        if (user == nullptr)
        {
            std::cout << "User not found." << std::endl;
@@ -482,7 +481,7 @@ void sendWelcomeEmail(User* user)
        }
    }
 
-   // The main code comes after all the checks, rather than in the middle.
+   // Основной код находится после всех проверок, а не в середине.
    std::cout << "Sending email to " << user->email << std::endl;
 }
 ```
@@ -520,15 +519,13 @@ while (true)
 
 `break` stops the loop; execution continues with the first statement after it.
 
-`continue` starts the next iteration of the loop (the remaining
-statements in the loop body are not executed for that iteration).
+`continue` starts the next iteration of the loop (the remaining statements in the loop body are not executed for that iteration).
 </details>
 
 <details>
 <summary>Answer</summary>
 
-"Increase by 2 on first iter" will be printed in the first loop
-iteration; `i++` will not execute because `continue` skips it.
+"Increase by 2 on first iter" will be printed in the first loop iteration; `i++` will not execute because `continue` skips it.
 
 "Increase by 1 normally" will be printed in the second loop iteration, 
 after all `if` checks have failed.

@@ -191,8 +191,7 @@ other = 6;
 
 The program will not compile at `int& other = r`.
 A non-const reference cannot bind to the object through a const reference by discarding `const`.
-Unlike `int b = r`, this would not create a separate integer:
-`other` would refer to the same object and allow writes to it.
+Unlike `int b = r`, this would not create a separate integer: `other` would refer to the same object and allow writes to it.
 The rule applies even though this particular `a` is non-const.
 Use `const int& other = r` to keep the restriction; then `other = 6` is also forbidden.
 </details>
@@ -557,7 +556,7 @@ Without the assignment, it prints `1`.
 
 ```cpp
 int arr[2]{ 1, 2 };
-const int* p = &arr[0];
+const int* p = arr;
 arr[0] = 3;
 std::cout << p[0] << std::endl;
 p += 1;
@@ -640,8 +639,7 @@ A `constexpr` variable must be initialized with a constant expression and is als
 Here, the whole `Sizes` object is initialized at compile time, so reading `sizes.count` is valid as an array bound.
 
 For the earlier `const int localSize = 3`, `constexpr` was not needed to use the value as a bound.
-For this structure, writing only `const Sizes sizes{ 3 }` would
-not make `sizes.count` a constant expression usable as a bound.
+For this structure, writing only `const Sizes sizes{ 3 }` would not make `sizes.count` a constant expression usable as a bound.
 `constexpr` explicitly provides that guarantee for this object.
 
 The [C++ array lab](14_cpp_array.md) uses the same idea for the size argument in `std::array<int, sizes.count>`.

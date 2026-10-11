@@ -40,8 +40,8 @@ for (int di; di < DATA_COUNT; di++)
     bool success = readDataFromFile(file, allData[di]);
     if (!success)
     {
-        // Здесь можно вернуть более подробную информацию,
-        // в зависимости от реализации парсера CSV.
+        // You might return more context here,
+        // depends on the implementation of the csv parser.
         std::cout << "Could not parse file " << fileName;
         hasErrors = true;
     }
@@ -67,24 +67,24 @@ for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
             {
                 switch (si)
                 {
-                    // Отсортированный массив
+                    // Sorted array
                     case 0:
                     {
-                        // Копируем из sortedData в items
+                        // Copy from sortedData into items
                         break;
                     }
 
-                    // Неотсортированный массив
+                    // Unsorted array
                     case 1:
                     {
-                        // Копируем из sortedData в случайном порядке
+                        // Copy from sortedData in some random order
                         break;
                     }
 
-                    // Неотсортированный
+                    // Unsorted
                     case 2:
                     {
-                        // Копируем в обратном порядке
+                        // Copy in reverse order
                         break;
                     }
                 }
@@ -93,14 +93,14 @@ for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
 
                 switch (ai)
                 {
-                    // Линейный поиск
+                    // Linear search
                     case 0:
                     {
                         // ...
                         break;
                     }
 
-                    // Двоичное дерево поиска
+                    // Binary search tree
                     case 1:
                     {
                         // ...
@@ -112,15 +112,15 @@ for (int ai = 0; ai < ALGORITHM_COUNT; ai++)
                 totalTime += experimentEndTime - experimentStartTime;
             }
 
-            // Сохраняем время для этого способа перемешивания
+            // Store the time for this type of shuffle
             // ...
         }
 
-        // Сохраняем время для каждого способа перемешивания при этом размере данных
+        // Store the times for each shuffle for this data size
     }
 
     {
-        // Печатаем суммарное время для этого алгоритма
+        // Print the total times for this algorithm
         std::array<std::string_view, ALGORITHM_COUNT> algorithmNames =
         {
             { "Linear" },

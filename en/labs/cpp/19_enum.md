@@ -124,8 +124,7 @@ The required wire can be determined using the following rules:
 1. If the portrait is Lenin, the bomb will not explode; nothing needs to be cut;
 2. A value is associated with the bulb color. Blue is 11, white is 15, red is 35.
    If the value on the dial is less than this value, cut the red wire.
-3.
-If the portrait is Hitler, the values associated with the bulb colors are shifted by 1 relative to the previous rule.
+3. If the portrait is Hitler, the values associated with the bulb colors are shifted by 1 relative to the previous rule. 
    That is, blue has the value of white (15), white has the value of red (35), and red has the value of blue (11).
 4. If the value associated with the bulb color equals the value on the dial, cut the green wire.
 5. Otherwise, cut the yellow wire.
@@ -217,10 +216,10 @@ to remove the added 3 if the first step already produced a positive result.
 
 ```
 int i = 1;
-int offset = -5; // one full array backward, plus two more positions
+int offset = -5; // 1 целый массив назад, и еще 2 позиции
 i = (((i + offset) % 3) + 3) % 3; // 2
 
-// _0_   offset = -5, i = 1  > -3 = no effect
+// _0_   offset = -5, i = 1  > -3 = нет эффекта
 // 0__   offset = -4         >
 // __0   offset = -3         >
 // _0_   offset = -2
@@ -228,8 +227,7 @@ i = (((i + offset) % 3) + 3) % 3; // 2
 // __0   offset = 0, i = 2
 ```
 
-There are other approaches as well; see [the
-information](https://stackoverflow.com/questions/14997165/fastest-way-to-get-a-positive-modulo-in-c-c).
+There are other approaches as well; see [the information](https://stackoverflow.com/questions/14997165/fastest-way-to-get-a-positive-modulo-in-c-c).
 
 </details>
 
@@ -266,7 +264,7 @@ BombDefusionDecision decideBombDefusion(BombCharacteristics bomb)
     {
         BombDefusionDecision result{};
 
-        // Already false after {} initialization.
+        // После {} и так false.
         // result.shouldDefuse = false;
 
         return result;

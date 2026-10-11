@@ -29,13 +29,13 @@ There are 2 customers, and each orders a different combination of items.
    For example:
    
    ```csharp
-   int client1_drink = 100; // 100 g of the drink
-   int client1_first = 0; // no first course
-   int client1_second = 250; // 250 g of the second course
+   int client1_drink = 100; // 100г напитка
+   int client1_first = 0; // нет первого
+   int client1_second = 250; // 250г второго
    
-   int client2_drink = 0; // no drink
-   int client2_first = 300; // 300 g of the first course
-   int client2_second = 0; // no second course
+   int client2_drink = 0; // 0 напитка
+   int client2_first = 300; // 300г первого
+   int client2_second = 0; // 0 второго
    ```
    </details>
 
