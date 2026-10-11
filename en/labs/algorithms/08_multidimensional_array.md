@@ -44,7 +44,7 @@ There will be 9 of them in total.
 
 20 | 21 | 22
 
-... больше рядов здесь
+... more rows here
 
 70 | 71 | 72
 
@@ -58,11 +58,11 @@ These addresses are stored in an array at the next level -- an array of row addr
 There will be only 3 such arrays.
 
 ```
-Адрес ряда (10|11|12) | Адрес ряда (20|21|22) | Адрес ряда (30|31|32) --> x
+Row address (10|11|12) | Row address (20|21|22) | Row address (30|31|32) --> x
 
-Адрес ряда (40|41|42) | Адрес ряда (50|51|52) | Адрес ряда (60|61|62) --> y
+Row address (40|41|42) | Row address (50|51|52) | Row address (60|61|62) --> y
 
-Адрес ряда (70|71|72) | Адрес ряда (80|81|82) | Адрес ряда (90|91|92) --> z
+Row address (70|71|72) | Row address (80|81|82) | Row address (90|91|92) --> z
 ```
 
 The final array will store the addresses of these arrays of row addresses: `x|y|z`.
@@ -78,7 +78,8 @@ For example, the interface will look like this:
 
 - `Iliffe createIliffe(std::span<size_t> sizes);`. `sizes` contains the size of each dimension
   (number of arrays, number of rows, number of columns)
-- `T* getElement(Iliffe* array, std::span<size_t> indices)` returns a pointer to the required element using the specified indices.
+- `T* getElement(Iliffe* array, std::span<size_t> indices)` returns
+a pointer to the required element using the specified indices.
   Check that the number of indices matches the number of dimensions specified during creation.
 
 You can use `template` to perform dimension checks at compile time instead of runtime:
@@ -126,7 +127,8 @@ The examples below show how indices change in row-major and column-major layouts
   0     3     6     1     4     7     2     5     8
 ```
 
-The same principle applies to multidimensional arrays: when iterating in memory order, index positions vary from right to left or from left to right.
+The same principle applies to multidimensional arrays: when iterating in
+memory order, index positions vary from right to left or from left to right.
 
 ### Finding an index
 
@@ -168,8 +170,10 @@ $$
 i = 9a + 3b + c
 $$
 
-The values 9, 3, and 1 for `a`, `b`, and `c`, respectively, indicate how many cells each index "costs", which is why they are called costs.
-Each cost is denoted by $` D_j `$, where $` j `$ is the dimension number, counted from right to left because this is row-major.
+The values 9, 3, and 1 for `a`, `b`, and `c`, respectively, indicate
+how many cells each index "costs", which is why they are called costs.
+Each cost is denoted by $` D_j `$, where $` j `$ is the dimension
+number, counted from right to left because this is row-major.
 
 If $` n_j `$ denotes the length of dimension $` j `$ (the length of its index interval),
 the expression for $` D_j `$ can be generalized recursively:
@@ -203,7 +207,9 @@ For non-standard index intervals, the straightforward approach calculates the me
 by subtracting the lower bound of the interval, so that the first available index maps to 0 -- the first linear index.
 The interval length is the upper bound - lower bound + 1 (because the upper bound is included in the interval).
 
-The lookup can be expressed by the following formula ($` l_j `$ is the lower bound for dimension $` j `$, $` h_j `$ is its upper bound, $` N `$ is the number of dimensions, $` k_j `$ is the value of the requested index in dimension $` j `$, and $` n_j `$ is the length of the index interval for dimension $` j `$):
+The lookup can be expressed by the following formula ($` l_j `$ is the lower bound for dimension $` j `$, $` h_j `$ is
+its upper bound, $` N `$ is the number of dimensions, $` k_j `$ is the value of the requested index in dimension $` j
+`$, and $` n_j `$ is the length of the index interval for dimension $` j `$):
 
 $$
 \begin{align}
@@ -215,7 +221,8 @@ $$
 \end{align}
 $$
 
-Thus, by calculating all $` D_j `$ and $` c `$ in advance, the index can be calculated without subtracting the lower bounds, which speeds up linear-index calculation.
+Thus, by calculating all $` D_j `$ and $` c `$ in advance, the index can be calculated without subtracting the lower
+bounds, which speeds up linear-index calculation.
 
 A Dope Vector consists of all $` D_j `$ values and the value $` c `$.
 
@@ -237,5 +244,6 @@ struct Range
 ```
 
 - `LinearRanged createLinearRanged(std::span<Range> ranges, Order order)` --
-  accepts index intervals, calculates their lengths and the Dope Vector itself, and stores the resulting information in a struct field.
+accepts index intervals, calculates their lengths and the Dope Vector
+itself, and stores the resulting information in a struct field.
 - `T* getElement(LinearRanged* array, std::span<SignedSize> indices)`.

@@ -10,7 +10,8 @@ slug: en/cpp/labs/assessment-1
 
 - [Video](https://www.youtube.com/watch?v=C6plSGSYuyc&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=9)
 
-Write out the steps of an algorithm for solving a problem, explaining the logic behind every decision as fully as possible.
+Write out the steps of an algorithm for solving a problem,
+explaining the logic behind every decision as fully as possible.
 
 Example problems:
 - Calculating the sum of the elements in a list;
@@ -68,7 +69,7 @@ Example problems:
    For example:
 
    ```
-   5. If а > b
+   5. If a > b
         1. a = 5
         2. b = 6
    6. Next step.
@@ -93,7 +94,7 @@ includes 3 primitive operations, but this is allowed (within reason).
   - 1 point for each correct answer;
   - 5 points for the reasoning behind each one.
 
-- A randomly selected basic comprehension question from the [structures lab](06_struct.md).
+- A randomly selected basic comprehension question from the [structures lab](07_struct.md).
   (It will not be about functions.)
 
   Grading (6 points):
