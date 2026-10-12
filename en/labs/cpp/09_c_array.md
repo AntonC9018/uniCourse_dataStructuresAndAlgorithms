@@ -252,7 +252,41 @@ after assignment does not affect `it`.
 `1` will be printed.
 </details>
 
-### 10. A pointer as the element type
+### 10. auto from an array element
+
+```cpp
+int arr[2]{ 3, 7 };
+auto value{ arr[1] };
+arr[1] = 9;
+std::cout << value << std::endl;
+std::cout << arr[1] << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`arr[1]` has type `int`, so `value` has type `int`.
+It is a copy, not an alias of the element.
+It prints `7` and `9`.
+</details>
+
+### 11. auto from an array element address
+
+```cpp
+int arr[2]{ 3, 7 };
+auto p{ &arr[1] };
+*p = 9;
+std::cout << arr[1] << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`&arr[1]` has type `int*`, so `p` has type `int*`.
+It prints `9`: the pointer accesses the array element itself.
+</details>
+
+### 12. A pointer as the element type
 ```cpp
 int a = 1;
 int b = 2;
@@ -279,7 +313,7 @@ In this example, the array stores pointers to `int` values (`int*`).
 - `b`, equivalent to `*arr[1]`, equals `3`.
 </details>
 
-### 11. Using an array as a pointer
+### 13. Using an array as a pointer
 ```cpp
 int arr[2]{};
 int* p = arr;
@@ -304,10 +338,28 @@ Here, `arr` is equivalent to `&arr[0]` or `&(arr[0])`.
 
 `*p`, `*arr`, and `arr[0]` all access the same array element.
 
-1 will be printed twice.
+It prints `1`, `1`, and `0`: the second array element remains zero.
 </details>
 
-### 12. Printing an array
+### 14. auto from an array expression
+
+```cpp
+int arr[2]{ 3, 7 };
+auto p{ arr };
+*p = 8;
+std::cout << arr[0] << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+In this initializer, `arr` decays to an `int*` pointing to its first element.
+`auto` therefore gives `p` the type `int*`; it does not copy the array.
+It prints `8`.
+Writing `auto p{ &arr[0] };` makes the same address explicit.
+</details>
+
+### 15. Printing an array
 ```cpp
 int arr[3]{ 1, 2, 3 };
 std::cout << arr;
@@ -325,7 +377,7 @@ it only sees a pointer, so what gets printed is that address, not the elements `
 To print the elements, print each one by index, as in the first examples.
 </details>
 
-### 13. Array assignment (1)
+### 16. Array assignment (1)
 ```cpp
 int arr1[2]{ 1, 2 };
 int arr2[2]{ 3, 4 };
@@ -339,21 +391,23 @@ from `arr2` to `arr1`, the program will not compile.
 This syntax simply does not work in C++.
 </details>
 
-### 14. Array assignment (2)
+### 17. Array assignment (2)
 ```cpp
 int arr1[2]{ 1, 2 };
 int arr2[2]{ 3, 4 };
-*arr1 = *arr2;
+int* first{ &arr1[0] };
+int* second{ &arr2[0] };
+*first = *second;
 ```
 <details>
 <summary>Answer</summary>
 
-In `*arr1 = *arr2`, the array names are used as expressions.
-In this case, they are treated as pointers to their first elements.
-Accordingly, this overwrites `arr1[0]` with `arr2[0]`, that is, with `3`.
+`first` points to `arr1[0]` and `second` points to `arr2[0]`.
+`*first = *second` copies the value `3` into `arr1[0]`; the other elements do not change.
+No whole-array assignment occurs.
 </details>
 
-### 15. Assigning an array to an `int` variable
+### 18. Assigning an array to an `int` variable
 ```cpp
 int arr[2]{ 1, 2 };
 int x = arr;
@@ -371,3 +425,208 @@ To store the address of the first element, use a pointer: `int* p = arr;`.
 </details>
 
 <!-- Missing: get address of item at index, different type than int -->
+
+## Structures and arrays
+
+### 1. An array field of addresses
+```cpp
+#include <iostream>
+
+struct A
+{
+    int* f[2];
+};
+
+int main()
+{
+    int var1;
+    int var2;
+    A a { .f = { &var1, &var2 } };
+    *a.f[0] = 1;
+    *a.f[1] = 2;
+    int** b = a.f;
+    int c = **b;
+
+    std::cout << var1 << std::endl;
+    std::cout << var2 << std::endl;
+
+    std::cout << a.f[0] << std::endl;
+    std::cout << a.f[1] << std::endl;
+
+    std::cout << b << std::endl;
+    std::cout << c << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+The line `A a { .f = { &var1, &var2 } };` initializes `a`,
+putting the address of `var1` into field `a.f[0]` and the address of `var2` into `a.f[1]`.
+
+In the line `*a.f[0] = ...`, execution follows the address stored in `a.f[0]`:
+`*a.f[0]` -> `*(a.f[0])` -> `*(&var1)` -> `var1`.
+
+In `int** b = a.f;`, `a.f` is equivalent to `&(a.f[0])`.
+This gives the address of the first element in array `f` in `a`.
+
+It prints:
+- `1`, `2` as the values of `var1` and `var2`;
+- the addresses of `var1` and `var2` as the values of `a.f[0]` and `a.f[1]`;
+- `c` is equal to `1`.
+
+</details>
+
+### 2. Structure size (2)
+```cpp
+#include <iostream>
+
+struct A
+{
+    int f1[4];
+    int* f2;
+};
+
+int main()
+{
+    std::cout << sizeof(A) << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+- `int f1[4]` is 4 `int`s, 4 bytes each — 16 bytes;
+- `int* f2` is 8 bytes on a 64-bit processor.
+
+The total is 24 bytes.
+</details>
+
+### 3. Initializing an array field
+```cpp
+#include <iostream>
+
+struct A
+{
+    int arr[2];
+};
+
+int main()
+{
+    A a { { 1, 2 } };
+    A b { { 3, 4 } };
+    b = a;
+
+    std::cout << b.arr[0] << std::endl;
+    std::cout << b.arr[1] << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+It prints `1`, `2`.
+</details>
+
+### 4. Copying a structure with an array field
+```cpp
+#include <iostream>
+
+struct A
+{
+    int arr[2];
+};
+
+int main()
+{
+    A a { { 1, 2 } };
+    A b { a };
+
+    a.arr[0] = 3;
+
+    std::cout << b.arr[0] << std::endl;
+    std::cout << b.arr[1] << std::endl;
+    std::cout << a.arr[0] << std::endl;
+    std::cout << a.arr[1] << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+`A b{ a }` copies the values of *all fields*, including the whole array, element by element.
+
+At the moment of copying, `a` holds `arr[0] = 1`, `arr[1] = 2`,
+so `b` receives the same values: `b.arr[0] = 1`, `b.arr[1] = 2`.
+But it is a separate copy in `b`'s own memory: the array `arr` itself
+is stored inside `A` by value, not by address.
+
+So `a.arr[0] = 3` affects only `a`, while `b` stays untouched.
+
+It prints `1`, `2`, `3`, `2`.
+</details>
+
+### 5. An array of structures
+```cpp
+#include <iostream>
+
+struct A
+{
+    int f1;
+    int f2;
+};
+
+int main()
+{
+    A arr[3]{};
+
+    arr[0].f2 = 1;
+
+    arr[1] = A{ 2, 3 };
+
+    A copy { arr[2] };
+    copy.f1 = 4;
+    copy.f2 = 5;
+
+    std::cout << arr[0].f1 << std::endl;
+    std::cout << arr[0].f2 << std::endl;
+    std::cout << arr[1].f1 << std::endl;
+    std::cout << arr[1].f2 << std::endl;
+    std::cout << arr[2].f1 << std::endl;
+    std::cout << arr[2].f2 << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+The line `A arr[3]{};`:
+- Defines an array of three variables of type `A`.
+ In total, memory is allocated for 6 `int`s.
+- The braces mean “initialize with zeros”.
+ Each array element is filled with the default `A`, namely `A{}`,
+ which means all 6 `int`s become zero.
+
+In `arr[0].f2 = 1;`, `arr[0]` accesses the memory of
+the first variable in the array.
+This variable has type `A` (not `int`! It is very important to understand this).
+Its second field (`.f2`) is assigned `1` (`= 1`).
+
+`arr[1] = A{ 2, 3 };` overwrites the entire second element
+with the result of expression `A{ 2, 3 }`.
+This overwrites both fields.
+
+`A copy { arr[2] };` reads the third element of the array,
+copying what is there into temporary variable `copy`.
+`copy` holds a copy of the value from `arr[2]` of type `A` (that is, it has a copy of all fields).
+Therefore, subsequent changes to `copy` do not affect `arr[2]`.
+
+```
+0
+1
+2
+3
+0
+0
+```
+</details>

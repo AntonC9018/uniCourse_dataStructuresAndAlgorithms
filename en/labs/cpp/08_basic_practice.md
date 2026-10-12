@@ -68,7 +68,8 @@ Choosing the larger number would require more of the other ingredient than we ha
 
 Find the number of portions for which there are enough eggs: $`a = X`$.
 
-Find the number of portions for which there is enough kefir: $`b = floor(\frac{Y}{250})`$, where $`250`$ is the amount of kefir required for 1 portion.
+Find the number of portions for which there is enough kefir: $`b = floor(\frac{Y}{250})`$,
+where $`250`$ is the amount of kefir required for 1 portion.
 $`floor`$ discards the fractional part because we count only complete portions.
 This is represented by the integer part of the result.
 For example, when $`Y = 300`$, the integer part is $`1`$,
@@ -91,7 +92,8 @@ Our algorithm depends on the state of the fridge ($`X`$ and $`Y`$).
 If the algorithm is generalised slightly, we can also introduce parameters for the amounts of eggs and kefir
 needed for one portion of pancakes.
 
-The algorithm produces a number represented by the expression $`p * 8`$ and changes the state of the fridge that was passed in.
+The algorithm produces a number represented by the expression
+$`p * 8`$ and changes the state of the fridge that was passed in.
 
 ### 4. Interface implementation
 
@@ -112,7 +114,7 @@ the thing it updates must be passed to it **by pointer**.
 
 Standard function syntax:
 ```cpp
-возвращаемый_тип имя(тип_параметра_1 имя_параметра_1, тип_параметра_2 имя_параметра_2)
+return_type name(parameter_type_1 parameter_name_1, parameter_type_2 parameter_name_2)
 ```
 
 The function can be named, for example, `приготовить_панкейки`. 
@@ -208,25 +210,25 @@ I chose `int`s for simplicity.
 Now we need to model a simple program setup
 and a recipe configuration.
 ```cpp
-// Создаем основную функцию. 
+// Create the main function.
 int main()
 {
-    // В ней нужно будет создать холодильник, заполнить его продуктами,
+    // Create a fridge and fill it with ingredients,
     Fridge fridge{
         .eggCount = 3,
         .kefirMl = 500,
     };
 
-    // после чего сделать панкейки.
-    // Для этого необходимо также создать конфигурацию рецепта.
+    // then make pancakes.
+    // You will also need to create a recipe configuration.
     PancakesRecipeConfiguration config{
         .pancakesPerPortion = 8;
         .kefirMlUsedPerPortion = 250;
     };
-    // Готовим панкейки:
+    // Make pancakes:
     int preparedPancakeCount{ cook_pancakes(&fridge, config) };
 
-    // После приготовления панкейков, печатаем, сколько их приготовили и сколько осталось продуктов.
+    // After making the pancakes, print how many were made and how many ingredients remain.
     std::cout 
         << "Cooked " 
         << preparedPancakeCount 
@@ -537,7 +539,8 @@ int main()
 
 - **Trip cost.**
   The trip distance, the fuel consumption of a car per 100 km, the price of a liter of fuel,
-  the number of nights in a hotel, and the price per night are given. The car makes a round trip — it drives there and back.
+  the number of nights in a hotel, and the price per night are given.
+The car makes a round trip — it drives there and back.
   Compute the total cost of the trip.
 
 - **Elevator trips.**
@@ -548,3 +551,9 @@ int main()
 - **Distance between points.**
   Two points in the plane with integer coordinates are given.
   Compute the distance between them: the square root of the sum of the squares of the differences in their coordinates.
+
+- **Vector length.**
+  A two-dimensional vector has coordinates `x` and `y`.
+  Model it with a struct and write a function returning its length: the square root of `x * x + y * y`.
+  You can use `std::sqrt` from `<cmath>`.
+  Try the vector `(3, 4)` and the zero vector.

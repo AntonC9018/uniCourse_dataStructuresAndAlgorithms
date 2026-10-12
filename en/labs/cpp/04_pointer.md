@@ -31,7 +31,7 @@ Also run the snippets to verify that your reasoning is correct.
 >
 > int main()
 > {
->     // сюда
+>     // your code here
 > }
 > ```
 
@@ -314,15 +314,15 @@ std::cout << std::endl;
 <summary>Answer</summary>
  
 ```cpp
-int a = 5; // скажем, адрес = 32
-int b = 6; // скажем, адрес = 36
-int* p = &a; // адрес p = 40, адрес в p = 32
-int** pp = &p; // адрес в pp = 40
+int a = 5; // say, address = 32
+int b = 6; // say, address = 36
+int* p = &a; // address of p = 40, address stored in p = 32
+int** pp = &p; // address stored in pp = 40
 **pp = 7; // *(*pp) --> *(40) --> *(p) --> *32 --> a
-         // то есть a = 7
-*pp = &b; // адрес в p = 36
+         // so a = 7
+*pp = &b; // address stored in p = 36
 **pp = 8; // *(*pp) --> *(40) --> *(p) --> *36 --> b
-         // то есть b = 8
+         // so b = 8
 
 std::cout << a;
 std::cout << std::endl;
@@ -332,7 +332,61 @@ std::cout << std::endl;
 ```
 </details>
 
-### 14. Pointer sizes
+### 14. auto from an address
+
+```cpp
+int value{ 5 };
+auto p{ &value };
+*p = 8;
+std::cout << value << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`&value` has type `int*`, so `p` has type `int*`.
+It prints `8`: writing through the inferred pointer changes `value`.
+</details>
+
+### 15. auto from a pointer and its value
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+auto copiedPointer{ p };
+auto copiedValue{ *p };
+*copiedPointer = 8;
+std::cout << value << std::endl;
+std::cout << copiedValue << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`p` has type `int*`; `*p` has type `int`.
+Thus `copiedPointer` points to the same variable, while `copiedValue` is an independent integer copy.
+It prints `8` and `5`.
+</details>
+
+### 16. auto from the address of a pointer
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+auto pp{ &p };
+**pp = 9;
+std::cout << value << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`&p` has type `int**`, so `pp` has type `int**`.
+`*pp` accesses `p`; `**pp` accesses `value`.
+It prints `9`.
+</details>
+
+### 17. Pointer sizes
 ```cpp
 int a = 7;
 int* pa = &a;
@@ -359,7 +413,7 @@ Pointers of any type have the same size because they only store memory addresses
 On 64-bit systems, any pointer is 64 bits in size (you are most likely on a 64-bit system).
 </details>
 
-### 15. Pointer and variable sizes
+### 18. Pointer and variable sizes
 
 ```cpp
 int a = 7;
@@ -387,7 +441,7 @@ std::cout << std::endl;
 The expression `*ap` has type `int`, so `sizeof(int)`, which is 4, is calculated.
 </details>
 
-### 16. Pointer to itself
+### 19. Pointer to itself
 ```cpp
 void* p = nullptr;
 p = static_cast<void*>(&p);
@@ -415,7 +469,7 @@ Two identical addresses are printed: the value stored in `p` matches the address
 If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` still happens implicitly.
 </details>
 
-### 17. Empty pointer initialization
+### 20. Empty pointer initialization
 ```cpp
 int* p{};
 std::cout << p << std::endl;
@@ -434,7 +488,7 @@ Unlike an uninitialized pointer, reading `p` itself here (for example, printing 
 Dereferencing `p` itself would still not be allowed, since it does not point to any variable.
 </details>
 
-### 18. Copying a variable and a pointer with similar names
+### 21. Copying a variable and a pointer with similar names
 
 ```cpp
 int x{ 0 };
@@ -463,4 +517,273 @@ so writing through the pointer does not affect it.
 - `y` — `0` (copied before the assignment),
 - `*px` — `1`,
 - `*py` — `1` (same address as `px`).
+</details>
+
+
+## Type-checking puzzles
+
+Each snippet is independent. Does it compile? Give the types of both sides of the last assignment.
+Most snippets are deliberately incorrect; explain a correction instead of trying to run them.
+
+### 1. An integer assigned to a pointer
+
+```cpp
+int value{ 5 };
+int* p{};
+p = value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+The right side has type `int`; the left side requires `int*`.
+Use `p = &value;` to store an address.
+</details>
+
+### 2. A pointer assigned to a double pointer
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int** pp{};
+pp = p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`p` has type `int*`, while `pp` requires `int**`.
+Use `pp = &p;` to point to the pointer variable.
+</details>
+
+### 3. A pointer assigned to an integer
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int result{};
+result = p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`p` is an address of type `int*`, not an integer value.
+Use `result = *p;` to copy the pointed-to value.
+</details>
+
+### 4. A pointer address assigned to a pointer
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int* other{};
+other = &p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&p` has type `int**`; `other` has type `int*`.
+Use `other = p;` to copy the stored address, or declare `other` as `int**` to store `&p`.
+</details>
+
+### 5. An integer address assigned to a double pointer
+
+```cpp
+int value{ 5 };
+int** pp{};
+pp = &value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&value` has type `int*`, not `int**`.
+An extra `*` in a declaration does not make it accept every kind of address.
+</details>
+
+### 6. Copying a pointer through a double pointer
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int** pp{ &p };
+int* other{};
+other = *pp;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+`*pp` has type `int*`, so the assignment is valid.
+`other` and `p` now point to the same integer.
+</details>
+
+### 7. One dereference instead of two
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int** pp{ &p };
+int result{};
+result = *pp;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`*pp` has type `int*`; `result` needs `int`.
+Use `result = **pp;` to read the integer.
+</details>
+
+### 8. Writing through two dereferences
+
+```cpp
+int value{ 5 };
+int* p{ &value };
+int** pp{ &p };
+**pp = 8;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+`**pp` accesses the `int` variable `value`.
+The assignment is valid and stores `8` in it.
+</details>
+
+### 9. A size_t address assigned to an int8_t pointer
+
+```cpp
+#include <cstddef>
+#include <cstdint>
+size_t count{ 3 };
+int8_t* p{};
+p = &count;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&count` has type `size_t*`, not `int8_t*`.
+Pointers preserve the pointed-to type; this assignment performs no numeric conversion.
+</details>
+
+### 10. An int8_t address assigned to a size_t pointer
+
+```cpp
+#include <cstddef>
+#include <cstdint>
+int8_t value{ 3 };
+size_t* p{};
+p = &value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&value` has type `int8_t*`; `p` requires `size_t*`.
+Having a numeric value that fits both types does not make their pointers compatible.
+</details>
+
+### 11. An int8_t value assigned to a size_t
+
+```cpp
+#include <cstddef>
+#include <cstdint>
+int8_t value{ 3 };
+size_t count{};
+count = value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+This is a numeric assignment, so the value is converted to `size_t`.
+`count` becomes `3`.
+It does not assign or reinterpret an address.
+</details>
+
+### 12. A size_t value assigned to a pointer
+
+```cpp
+#include <cstddef>
+size_t count{ 3 };
+size_t* p{};
+p = count;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`count` has type `size_t`; `p` requires `size_t*`.
+A type being large enough to hold numbers does not make those numbers pointers.
+</details>
+
+### 13. A double pointer with a different pointed-to type
+
+```cpp
+#include <cstddef>
+#include <cstdint>
+size_t count{ 3 };
+size_t* p{ &count };
+int8_t** pp{};
+pp = &p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&p` has type `size_t**`, while `pp` requires `int8_t**`.
+Matching the number of stars is not enough: the pointed-to types must also match.
+</details>
+
+### 14. A size_t address with the wrong pointer depth
+
+```cpp
+#include <cstddef>
+size_t count{ 3 };
+size_t** pp{};
+pp = &count;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&count` has type `size_t*`, not `size_t**`.
+First create a pointer to `count`, then take the address of that pointer.
+</details>
+
+### 15. Assigning an int8_t read through a pointer to a size_t
+
+```cpp
+#include <cstddef>
+#include <cstdint>
+int8_t small{ 3 };
+int8_t* p{ &small };
+size_t count{};
+count = *p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+`*p` has type `int8_t`, so this converts a numeric value to `size_t`.
+`count` becomes `3`; the pointer itself is not assigned.
 </details>

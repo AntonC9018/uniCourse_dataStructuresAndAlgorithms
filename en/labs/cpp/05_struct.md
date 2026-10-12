@@ -182,7 +182,8 @@ int main()
 
 It compiles and prints `1`.
 
-The expression `A{ 1, 2 }` has type `A`, so it cannot be stored in an `int` variable, as in the example with assigning a structure to an `int`.
+The expression `A{ 1, 2 }` has type `A`, so it cannot be stored in an
+`int` variable, as in the example with assigning a structure to an `int`.
 But `A{ 1, 2 }.f1` has type `int`, because field `f1` has type `int`.
 A value of type `int` can be stored in a variable of type `int`.
 </details>
@@ -342,10 +343,11 @@ int main()
 <details>
 <summary>Answer:</summary>
 
-In the initialization of `b`, `*pa` is essentially equivalent to directly accessing `a`. This is the same situation as above.
+In the initialization of `b`, `*pa` is essentially equivalent to directly accessing `a`.
+This is the same situation as above.
 </details>
 
-### 11. Structure address (1)
+### 11. Structure address (2)
 ```cpp
 #include <iostream>
 
@@ -411,7 +413,31 @@ This can also be written as `(*pa).f1`.
 In practice, it is equivalent to `a.f1`.
 </details>
 
-### 13. Overwriting through an address
+### 13. Dispute a claim about the pointer address
+
+A student claims that taking the address of `a` gives access to the structure with `->`.
+Do you agree?
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* a{ &value };
+(&a)->field = 8;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`a` has type `A*`, but `&a` has type `A**`: it points to a pointer variable, which has no `field`.
+Use `a->field = 8;` or `(*(&a))->field = 8;`.
+</details>
+
+### 14. Overwriting through an address
 ```cpp
 #include <iostream>
 
@@ -443,7 +469,7 @@ This means `a.f1 = 5`, `a.f2 = 6`.
 Similarly, `fp->f2` prints `6`.
 </details>
 
-### 14. Address of a structure type
+### 15. Address of a structure type
 ```cpp
 #include <iostream>
 
@@ -468,7 +494,7 @@ This is not allowed because structure `A` itself stores no data.
 Data can be stored in a *variable of type `A`*, which must be created first.
 </details>
 
-### 15. Address of a type field
+### 16. Address of a type field
 ```cpp
 #include <iostream>
 
@@ -492,7 +518,7 @@ int main()
 This is not allowed. The explanation is the same as in the previous example.
 </details>
 
-### 16. An address field
+### 17. An address field
 ```cpp
 #include <iostream>
 
@@ -520,55 +546,6 @@ In `*a.f1`, `*` is applied *after* `.`, that is:
 After that, `num` is overwritten with `2`.
 
 It prints the address of `num`, then `2`.
-</details>
-
-### 17. An array field of addresses
-```cpp
-#include <iostream>
-
-struct A
-{
-    int* f[2];
-};
-
-int main()
-{
-    int var1;
-    int var2;
-    A a { .f = { &var1, &var2 } };
-    *a.f[0] = 1;
-    *a.f[1] = 2;
-    int** b = a.f;
-    int c = **b;
-
-    std::cout << var1 << std::endl;
-    std::cout << var2 << std::endl;
-
-    std::cout << a.f[0] << std::endl;
-    std::cout << a.f[1] << std::endl;
-
-    std::cout << b << std::endl;
-    std::cout << c << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-The line `A a { .f = { &var1, &var2 } };` initializes `a`,
-putting the address of `var1` into field `a.f[0]` and the address of `var2` into `a.f[1]`.
-
-In the line `*a.f[0] = ...`, execution follows the address stored in `a.f[0]`:
-`*a.f[0]` -> `*(a.f[0])` -> `*(&var1)` -> `var1`.
-
-In `int** b = a.f;`, `a.f` is equivalent to `&(a.f[0])`.
-This gives the address of the first element in array `f` in `a`.
-
-It prints:
-- `1`, `2` as the values of `var1` and `var2`;
-- the addresses of `var1` and `var2` as the values of `a.f[0]` and `a.f[1]`;
-- `c` is equal to `1`.
-
 </details>
 
 ### 18. A nested structure
@@ -714,7 +691,8 @@ Each node holds a pointer to another node of the same type.
 
 The null pointer in the last node of the list (`nullptr`) marks the end of the list.
 
-The code prints `2`, then `1`, and then crashes on the last line when it dereferences a null pointer (segmentation fault).
+The code prints `2`, then `1`, and then crashes on the last
+line when it dereferences a null pointer (segmentation fault).
 </details>
 
 ### 22. Structure size (1)
@@ -744,32 +722,7 @@ Both forms are equivalent.
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
 </details>
 
-### 23. Structure size (2)
-```cpp
-#include <iostream>
-
-struct A
-{
-    int f1[4];
-    int* f2;
-};
-
-int main()
-{
-    std::cout << sizeof(A) << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-- `int f1[4]` is 4 `int`s, 4 bytes each — 16 bytes;
-- `int* f2` is 8 bytes on a 64-bit processor.
-
-The total is 24 bytes.
-</details>
-
-### 24. Field address from a structure address
+### 23. Field address from a structure address
 ```cpp
 #include <iostream>
 
@@ -799,7 +752,7 @@ This demonstrates that you can take the address of a field after applying `->`.
 It prints `2`.
 </details>
 
-### 25. Field address relative to a structure address
+### 24. Field address relative to a structure address
 ```cpp
 #include <iostream>
 
@@ -826,7 +779,7 @@ It prints `0`.
 The first field of a structure and the structure itself are always located at the same memory address.
 </details>
 
-### 26. (advanced level): Structure size (3)
+### 25. (advanced level): Structure size (3)
 ```cpp
 #include <iostream>
 
@@ -865,12 +818,13 @@ it goes into the next one.
 
 In total, this gives 3 slots of 4 bytes each.
 
-If a structure contains a field of another structure type, its slot is no smaller than the slots of that nested structure.
+If a structure contains a field of another structure type, its
+slot is no smaller than the slots of that nested structure.
 
 Alignment can be disabled using `#pragma pack`.
 </details>
 
-### 27. (advanced level): Structure size (4)
+### 26. (advanced level): Structure size (4)
 ```cpp
 #include <iostream>
 
@@ -896,7 +850,7 @@ The reason is that 2 objects cannot have the same memory address.
 Objects are covered in the next lab.
 </details>
 
-### 28. (advanced level): Field offsets
+### 27. (advanced level): Field offsets
 ```cpp
 #include <iostream>
 
@@ -916,76 +870,13 @@ int main()
 <details>
 <summary>Answer:</summary>
 
-`offsetof` is evaluated at compile time and gives the byte offset of a specified field from the beginning of a structure.
+`offsetof` is evaluated at compile time and gives the byte
+offset of a specified field from the beginning of a structure.
 
 It prints `0` for `a` and `4` for `b`.
 </details>
 
-### 29. Initializing an array field
-```cpp
-#include <iostream>
-
-struct A
-{
-    int arr[2];
-};
-
-int main()
-{
-    A a { { 1, 2 } };
-    A b { { 3, 4 } };
-    b = a;
-
-    std::cout << b.arr[0] << std::endl;
-    std::cout << b.arr[1] << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-It prints `1`, `2`.
-</details>
-
-### 30. Copying a structure with an array field
-```cpp
-#include <iostream>
-
-struct A
-{
-    int arr[2];
-};
-
-int main()
-{
-    A a { { 1, 2 } };
-    A b { a };
-
-    a.arr[0] = 3;
-
-    std::cout << b.arr[0] << std::endl;
-    std::cout << b.arr[1] << std::endl;
-    std::cout << a.arr[0] << std::endl;
-    std::cout << a.arr[1] << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-`A b{ a }` copies the values of *all fields*, including the whole array, element by element.
-
-At the moment of copying, `a` holds `arr[0] = 1`, `arr[1] = 2`,
-so `b` receives the same values: `b.arr[0] = 1`, `b.arr[1] = 2`.
-But it is a separate copy in `b`'s own memory: the array `arr` itself
-is stored inside `A` by value, not by address.
-
-So `a.arr[0] = 3` affects only `a`, while `b` stays untouched.
-
-It prints `1`, `2`, `3`, `2`.
-</details>
-
-### 31. Copying a structure with a pointer field
+### 28. Copying a structure with a pointer field
 ```cpp
 #include <iostream>
 
@@ -1025,74 +916,234 @@ while `s2.a` stays untouched.
 It prints `2`, `1`.
 </details>
 
-### 32. An array of structures
-```cpp
-#include <iostream>
+## Type-checking puzzles
 
+Each snippet is independent. Does it compile? Give the types of both sides of the last assignment.
+Most snippets are deliberately incorrect; explain a correction instead of trying to run them.
+
+### 1. A structure pointer assigned to a structure
+
+```cpp
 struct A
 {
-    int f1;
-    int f2;
+    int field;
 };
 
-int main()
-{
-    A arr[3]{};
-
-    arr[0].f2 = 1;
-
-    arr[1] = A{ 2, 3 };
-
-    A copy { arr[2] };
-    copy.f1 = 4;
-    copy.f2 = 5;
-
-    std::cout << arr[0].f1 << std::endl;
-    std::cout << arr[0].f2 << std::endl;
-    std::cout << arr[1].f1 << std::endl;
-    std::cout << arr[1].f2 << std::endl;
-    std::cout << arr[2].f1 << std::endl;
-    std::cout << arr[2].f2 << std::endl;
-}
+A value{ 5 };
+A* p{ &value };
+A copy{};
+copy = p;
 ```
 
 <details>
-<summary>Answer:</summary>
+<summary>Answer</summary>
 
-The line `A arr[3]{};`:
-- Defines an array of three variables of type `A`.
- In total, memory is allocated for 6 `int`s.
-- The braces mean “initialize with zeros”.
- Each array element is filled with the default `A`, namely `A{}`,
- which means all 6 `int`s become zero.
-
-In `arr[0].f2 = 1;`, `arr[0]` accesses the memory of
-the first variable in the array.
-This variable has type `A` (not `int`! It is very important to understand this).
-Its second field (`.f2`) is assigned `1` (`= 1`).
-
-`arr[1] = A{ 2, 3 };` overwrites the entire second element
-with the result of expression `A{ 2, 3 }`.
-This overwrites both fields.
-
-`A copy { arr[2] };` reads the third element of the array,
-copying what is there into temporary variable `copy`.
-`copy` holds a copy of the value from `arr[2]` of type `A` (that is, it has a copy of all fields).
-Therefore, subsequent changes to `copy` do not affect `arr[2]`.
-
-```
-0
-1
-2
-3
-0
-0
-```
+It does not compile.
+`p` has type `A*`, while `copy` has type `A`.
+Use `copy = *p;` to copy the structure.
 </details>
+
+### 2. A structure address assigned to a structure
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A copy{};
+copy = &value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`&value` has type `A*`, not `A`.
+Use `copy = value;` to copy the object.
+</details>
+
+### 3. A structure assigned to its pointer
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{};
+p = value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`value` has type `A`, while `p` requires `A*`.
+Use `p = &value;` to store the address.
+</details>
+
+### 4. A structure assigned to a double pointer
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A** pp{};
+pp = value;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`value` has type `A`, not `A**`.
+To get an `A**`, create an `A*` variable and take its address.
+</details>
+
+### 5. A double pointer assigned to a structure
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{ &value };
+A** pp{ &p };
+A copy{};
+copy = pp;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`pp` has type `A**`, not `A`.
+Use `copy = **pp;` to copy the structure reached through both pointers.
+</details>
+
+### 6. An integer pointer assigned to a structure pointer
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+int* field{ &value.field };
+A* p{};
+p = field;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`field` has type `int*`; `p` requires `A*`.
+The field address and the structure address have different types.
+</details>
+
+### 7. A structure pointer assigned to an integer pointer
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{ &value };
+int* field{};
+field = p;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`p` has type `A*`, not `int*`.
+Use `field = &p->field;` to address the integer field.
+</details>
+
+### 8. Copying the structure through two pointers
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{ &value };
+A** pp{ &p };
+A copy{};
+copy = **pp;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+`**pp` has type `A`, so this copies the structure.
+`copy.field` becomes `5`; changing it later does not change `value.field`.
+</details>
+
+### 9. Assigning an integer through a structure pointer
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{ &value };
+*p = 8;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+`*p` accesses an `A`, not an `int`.
+Use `p->field = 8;` to change the integer field.
+</details>
+
+### 10. An integer assigned from a structure field
+
+```cpp
+struct A
+{
+    int field;
+};
+
+A value{ 5 };
+A* p{ &value };
+int result{};
+result = p->field;
+```
+
+<details>
+<summary>Answer</summary>
+
+It compiles.
+`p->field` has type `int`, so the assignment is valid.
+`result` becomes `5`.
+</details>
+
 
 ## Assignment
 
-Explain in words what happens in the [`memory_example_2`](../../../en/05_programming_fundamentals/memory_example_2) example.
+Explain in words what happens in the
+[`memory_example_2`](../../../en/05_programming_fundamentals/memory_example_2) example.
 You can copy the code file and write comments directly in the code explaining what happens.
 Use the Excel table from the example to visualize the memory layout.
 

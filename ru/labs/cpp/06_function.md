@@ -550,7 +550,56 @@ int main()
 
 </details>
 
-### 18. Продвинутый уровень: адреса локальных переменных
+### 18. Приготовление рыбы: изменение входных данных и возврат объекта
+
+Считайте, что указатель на костёр действителен и топлива достаточно.
+
+```cpp
+#include <iostream>
+
+struct Fire
+{
+    int fuel;
+};
+
+struct RawFish
+{
+    int weight;
+    int fuelRequired;
+};
+
+struct CookedFish
+{
+    int weight;
+};
+
+CookedFish cookFish(Fire* fire, RawFish fish)
+{
+    fire->fuel -= fish.fuelRequired;
+    return CookedFish{ fish.weight };
+}
+
+int main()
+{
+    Fire fire{ 10 };
+    RawFish fish{ 100, 3 };
+    CookedFish cooked{ cookFish(&fire, fish) };
+    std::cout << fire.fuel << std::endl;
+    std::cout << fish.weight << std::endl;
+    std::cout << cooked.weight << std::endl;
+}
+```
+
+<details>
+<summary>Ответ</summary>
+
+Печатает `7`, `100` и `100`.
+Указатель позволяет функции расходовать топливо в переменной `fire` вызывающего кода.
+Сырая рыба передаётся по значению, а результат — новый объект `CookedFish`, возвращаемый по значению.
+У исходной переменной сырой рыбы по-прежнему вес `100`.
+</details>
+
+### 19. Продвинутый уровень: адреса локальных переменных
 ```cpp
 uintptr_t f()
 {
@@ -589,7 +638,7 @@ C++ компилятор не гарантирует этого, и на это 
 Поэтому и адреса всех локальных переменных будут те же.
 </details>
 
-### 19. Продвинутый уровень: данных в неинициализированных переменных
+### 20. Продвинутый уровень: данных в неинициализированных переменных
 ```cpp
 void f()
 {

@@ -642,7 +642,7 @@ When offline, it cannot issue a ticket and leaves the counter unchanged.
 
 The structure returns the status and ticket number together, without an output parameter.
 On failure, `number` is initialized to `0`, but it does not represent an issued ticket.
-This is the custom optional structure from the [optional lab](17_optional.md), applied to an operation that can fail.
+This is the custom optional structure from the [optional lab](18_optional.md), applied to an operation that can fail.
 An enum status field could provide a specific failure kind if the interface needed one.
 </details>
 
@@ -1037,7 +1037,7 @@ enum class PurchaseError
 
 PurchaseError buyProduct(
     VendingMachine& machine,
-    std::size_t productIndex,
+    size_t productIndex,
     Money payment,
     Money& change)
 {
@@ -1194,4 +1194,4 @@ On success, deduct the exchanged amount and fee from the balance; on failure, le
 Choose and document units and a rounding rule for monetary amounts.
 
 
-[Tagged unions and flags](34_tagged_unions_and_flags.md) and [exceptions](35_exceptions.md) have separate later labs.
+[Tagged unions and flags](35_tagged_unions_and_flags.md) and [exceptions](36_exceptions.md) have separate later labs.

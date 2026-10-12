@@ -6,7 +6,7 @@ slug: en/cpp/labs/advanced-practice
 <!-- course-site-backlink:end -->
 # Advanced Practice
 
-> This is a continuation of [Practice with Simple Problems](09_basic_practice.md).
+> This is a continuation of [Practice with Simple Problems](08_basic_practice.md).
 
 ## What you will develop in this assignment
 
@@ -81,7 +81,7 @@ slug: en/cpp/labs/advanced-practice
   ```cpp
   #include <cassert>
 
-  bool shelve_book(Bookshelf* shelf, std::size_t index, Book book)
+  bool shelve_book(Bookshelf* shelf, size_t index, Book book)
   {
       assert(shelf != nullptr); // shelve_book expects shelf to never be null
       if (index >= shelf->slots.size())
@@ -104,7 +104,7 @@ slug: en/cpp/labs/advanced-practice
   and return `true`; an empty slot refuses:
 
   ```cpp
-  bool take_book(Bookshelf& shelf, std::size_t index)
+  bool take_book(Bookshelf& shelf, size_t index)
   {
       if (index >= shelf.slots.size())
       {
@@ -191,7 +191,7 @@ slug: en/cpp/labs/advanced-practice
   Any failed check returns `false` and nothing is touched:
 
   ```cpp
-  bool move_food(Fridge& from, std::size_t fromIndex, Freezer& to, std::size_t toIndex)
+  bool move_food(Fridge& from, size_t fromIndex, Freezer& to, size_t toIndex)
   {
       if (fromIndex >= from.shelves.size())
       {
@@ -545,7 +545,7 @@ slug: en/cpp/labs/advanced-practice
   struct FoodMove
   {
       std::string_view name;
-      std::size_t toIndex;
+      size_t toIndex;
   };
   ```
 

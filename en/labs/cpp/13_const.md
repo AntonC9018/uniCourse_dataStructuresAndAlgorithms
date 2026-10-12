@@ -332,7 +332,7 @@ int main()
 <summary>Answer</summary>
 
 It prints `1`, `5`, and `3`.
-The [references lab](11_reference.md) used `increasePower(Arm&)` to change the caller's object.
+The [references lab](12_reference.md) used `increasePower(Arm&)` to change the caller's object.
 Adding `const` keeps the reference to the original object but restricts access through the parameter to reading.
 No `Position` object is copied when passing either argument.
 
@@ -642,5 +642,5 @@ For the earlier `const int localSize = 3`, `constexpr` was not needed to use the
 For this structure, writing only `const Sizes sizes{ 3 }` would not make `sizes.count` a constant expression usable as a bound.
 `constexpr` explicitly provides that guarantee for this object.
 
-The [C++ array lab](13_cpp_array.md) uses the same idea for the size argument in `std::array<int, sizes.count>`.
+The [C++ array lab](14_cpp_array.md) uses the same idea for the size argument in `std::array<int, sizes.count>`.
 </details>

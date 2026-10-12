@@ -43,7 +43,8 @@ int main()
 One variable, `a`, is created in `main`; it has the value 5.
 
 Then, when `func` is called, it creates another variable, `b`, with the value `6`.
-It occupies the next free slot after `a` in temporary memory (the stack), if we ignore other data needed for function calls.
+It occupies the next free slot after `a` in temporary memory
+(the stack), if we ignore other data needed for function calls.
 
 When `func` finishes, the second variable, `b`, ceases to exist —
 that is, its memory can no longer be referenced from `main`; however, the value 6
@@ -548,7 +549,56 @@ and an `int` cannot be created from a `Vector`.
 
 </details>
 
-### 18. Advanced level: addresses of local variables
+### 18. Cooking fish: changed input and returned object
+
+Assume the fire pointer is valid and there is enough fuel.
+
+```cpp
+#include <iostream>
+
+struct Fire
+{
+    int fuel;
+};
+
+struct RawFish
+{
+    int weight;
+    int fuelRequired;
+};
+
+struct CookedFish
+{
+    int weight;
+};
+
+CookedFish cookFish(Fire* fire, RawFish fish)
+{
+    fire->fuel -= fish.fuelRequired;
+    return CookedFish{ fish.weight };
+}
+
+int main()
+{
+    Fire fire{ 10 };
+    RawFish fish{ 100, 3 };
+    CookedFish cooked{ cookFish(&fire, fish) };
+    std::cout << fire.fuel << std::endl;
+    std::cout << fish.weight << std::endl;
+    std::cout << cooked.weight << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `7`, `100`, and `100`.
+The pointer lets the function consume fuel in the caller's `fire`.
+The raw fish is passed by value, and the result is a new `CookedFish` returned by value.
+The original raw-fish variable still has weight `100`.
+</details>
+
+### 19. Advanced level: addresses of local variables
 ```cpp
 uintptr_t f()
 {
@@ -587,7 +637,7 @@ When subsequent functions are called, their local variables
 That is why the local variables in these calls will likely have the same address.
 </details>
 
-### 19. Advanced level: data in uninitialized variables
+### 20. Advanced level: data in uninitialized variables
 ```cpp
 void f()
 {

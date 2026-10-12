@@ -83,7 +83,7 @@ arr[0] = 3;
 
 The program will not compile: indexing a const `std::array` provides read-only access to its elements.
 `arr[0]` can be read, but cannot be assigned to.
-This applies the [const-object rule](12_const.md) to a C++ array.
+This applies the [const-object rule](13_const.md) to a C++ array.
 </details>
 
 ### 5. Copying a const C++ array
@@ -319,6 +319,6 @@ In `std::array<T, N>`, `T` is the element type and `N` is the number of elements
 These are template arguments: here, the size argument must be a compile-time constant expression.
 Both the local `const int` initialized with `2` and the field of the `constexpr` structure meet that requirement.
 
-This uses the sizes introduced in the [const lab](12_const.md) in place of literal numbers.
+This uses the sizes introduced in the [const lab](13_const.md) in place of literal numbers.
 A size obtained from user input would not work, even if its variable were declared `const`.
 </details>
