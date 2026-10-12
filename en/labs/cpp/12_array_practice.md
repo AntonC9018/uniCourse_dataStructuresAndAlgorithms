@@ -15,11 +15,10 @@ Assume supplied indices are valid and quantities are sufficient unless the probl
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
 
-### 1. Feeding aquarium fish
+### 1. Hourly temperatures
 
-Three aquariums hold 10, 20, and 30 fish.
-Their fish need 1, 1.5, and 2 grams of feed per fish per day, respectively.
-Report the fish count and daily feed portion per fish for the second aquarium.
+At 8:00, 12:00, and 16:00, the temperatures were 18.5, 21, and 19.5 degrees.
+Report the noon temperature and how much warmer it was than at 8:00.
 
 <details>
 <summary>Possible solution</summary>
@@ -30,17 +29,16 @@ Report the fish count and daily feed portion per fish for the second aquarium.
 
 int main()
 {
-    std::array<int, 3> fishCounts{ 10, 20, 30 };
-    std::array<float, 3> feedGramsPerFish{ 1.0f, 1.5f, 2.0f };
-    int fishCount{ fishCounts[1] };
-    float feedPortion{ feedGramsPerFish[1] };
-    std::cout << fishCount << std::endl;
-    std::cout << feedPortion << std::endl;
+    std::array<float, 3> temperatures{ 18.5f, 21.0f, 19.5f };
+    float noonTemperature{ temperatures[1] };
+    float increase{ noonTemperature - temperatures[0] };
+    std::cout << noonTemperature << std::endl;
+    std::cout << increase << std::endl;
 }
 ```
 
-It prints `20` and `1.5`.
-Indexing selects the fish count and feeding requirement for the same aquarium.
+It prints `21` and `2.5`.
+Index `1` selects the noon measurement; subtracting the morning measurement gives the increase.
 The `f` suffix makes these decimal literals have type `float`.
 
 </details>
@@ -90,8 +88,8 @@ MachineCode compile(Compiler* compiler, SourceCode source, OptimizationLevel lev
 
 int main()
 {
-    Compiler msvc{ std::array<double, 3>{ 2.5, 1.5, 1.25 } };
-    Compiler gcc{ std::array<double, 3>{ 3.0, 1.75, 1.0 } };
+    Compiler msvc{ .instructionsPerLine{ 2.5, 1.5, 1.25 } };
+    Compiler gcc{ .instructionsPerLine{ 3.0, 1.75, 1.0 } };
     SourceCode source{ 101 };
     OptimizationLevel level{ 2 };
     MachineCode msvcResult{ compile(&msvc, source, level) };
@@ -179,21 +177,21 @@ Buy a given number of tickets for a selected category and calculate the money re
 A bakery has three recipes, each describing flour and sugar needed per batch.
 Choose a recipe and prepare a given number of batches, updating the ingredient store and the count of finished batches.
 
-### 7. Storage drawers
+### 7. Screw drawers
 
-A cabinet has four drawers; each drawer holds a fastener type and a count.
-Move the entire contents of one selected drawer into an empty drawer, leaving the original drawer empty.
+A cabinet has four drawers containing screws.
+Move all screws from a selected drawer into a supplied empty drawer, leaving the original drawer empty.
 
 ### 8. Train carriages
 
 A train has three carriages, each with a seat capacity and a passenger count.
 Move passengers from one selected carriage to another and report both carriages' free seats.
 
-### 9. Cropping a film frame
+### 9. Game score replay
 
-A film strip contains four frames, each with a width and height in pixels.
-Crop a selected frame by specified amounts from its left, right, top, and bottom edges.
-Return the cropped frame without changing the original, then replace a different frame with the result.
+A game records the player's total score after each of five rounds.
+Calculate how many points were earned during a selected round other than the first.
+Correct the recorded total for a supplied round and recalculate that round's earned points.
 
 ### 10. Hotel minibar
 
@@ -207,37 +205,39 @@ A player records which track is playing and the elapsed time within it.
 Seek to a supplied time in the current track and report how many seconds remain.
 Select another track and start it from the beginning.
 
-### 12. Mixing stage lights
+### 12. Mixing short recordings
 
-A lighting desk stores four colors, each with red, green, and blue intensities between 0 and 1.
-Mix two selected colors using a supplied fraction of the first color and the remaining fraction of the second.
-Store the resulting color in a selected spotlight without changing the desk's original colors.
+Two short recordings each contain three sound samples, with values between -1 and 1.
+Mix them into a new recording using 25% of the first recording and 75% of the second at each sample position.
+Keep the original recordings unchanged.
 
 ### 13. Theater seating
 
 A theater has three rows of four seats; each seat stores a ticket number, with zero meaning empty.
-Seat a customer at a supplied row and column, then move their ticket to another empty seat.
+Put a supplied ticket number in a supplied empty seat, then move it to another supplied empty seat.
+Both seats are given by row and column; no search is needed.
 Leave the original seat empty.
 
 ### 14. Robot delivery route
 
-A robot starts at a given position, and a delivery map stores four destinations as x/y coordinates.
+A robot starts at a given x/y position, and a delivery map stores four destinations as x/y coordinates.
 Move to two destinations chosen by index, in order.
-For each leg, report the movement vector; report the final position too.
+For each of the two moves, report the change in x and the change in y (the movement vector).
+Report the final position too.
 
 ### 15. Race finish photo
 
-A race records three finish times in seconds, already in finishing order.
-A finish photo shows the runners at the instant the winner finishes.
-Each runner's speed is constant over the 100-meter race.
-Calculate the two other runners' distances from the finish line at that instant.
+Three runners cover 100 meters in 10, 12, and 15 seconds.
+Assume each runs at a constant speed.
+A photo is taken when the fastest runner crosses the finish line, 10 seconds after the start.
+How many meters does each of the other two runners still have to run?
 
-### 16. Linking freight wagons
+### 16. Connecting two freight wagons
 
-Three freight wagons have cargo weights and are stored together.
-Connect them in order so each wagon knows which wagon follows it.
-Starting from the first wagon, follow the connections to add cargo to the last wagon without selecting it by index.
-Report the last wagon's new cargo weight.
+Two freight wagons have cargo weights and are stored together.
+Connect the first wagon to the second using a pointer.
+Through that connection, add cargo to the second wagon and report its new cargo weight.
+Only one connection needs to be followed.
 
 ### 17. Raw-byte storage (advanced)
 

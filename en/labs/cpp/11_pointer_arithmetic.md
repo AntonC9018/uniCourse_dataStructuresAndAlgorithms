@@ -152,7 +152,39 @@ The result is typically `4` — the difference between the addresses in bytes.
 
 </details>
 
-### 6. Field address relative to a structure address
+### 6. Subtracting byte-element pointers
+
+```cpp
+#include <array>
+#include <cstddef>
+#include <cstdint>
+#include <iostream>
+
+int main()
+{
+    std::array<uint8_t, 5> arr{};
+    uint8_t* first{ &arr[0] };
+    uint8_t* last{ &arr[4] };
+    ptrdiff_t distance{ last - first };
+    std::cout << distance << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `4`, the same number as the preceding example typically prints.
+Here the result is guaranteed: both pointers point into the same array, four elements apart.
+Each `uint8_t` occupies one byte, so the element distance is also the byte distance.
+No cast is needed.
+
+> The exact-width type `uint8_t` is available on implementations that support it.
+> Using byte-sized elements does not make pointer-to-integer mappings portable.
+> The guarantee here comes from subtracting the pointers directly.
+
+</details>
+
+### 7. Field address relative to a structure address
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -186,7 +218,7 @@ The first field of this structure and the structure itself are located at the sa
 
 </details>
 
-### 7. (advanced level): Field offsets
+### 8. (advanced level): Field offsets
 ```cpp
 #include <cstddef>
 #include <iostream>
@@ -216,7 +248,7 @@ It typically prints `0` for `a` and `4` for `b`.
 
 </details>
 
-### 8. The array object and its first element (advanced)
+### 9. The array object and its first element (advanced)
 
 ```cpp
 #include <array>
@@ -244,11 +276,14 @@ It typically prints `0`.
 > The standard does not require this layout for `std::array`.
 > `arr.data()` has type `int*`, while `&arr` has type `std::array<int, 2>*`.
 > Integer subtraction here assumes the implementation maps these equal addresses to equal numbers.
-> Casting both pointers to byte pointers would not make pointer subtraction between them valid.
+> `arr.data()` is guaranteed to point to the actual first element; the elements belong to `arr`.
+> The whole container and its first element are nevertheless distinct objects.
+> Casting their pointers to the same byte-pointer type does not by itself establish that they point into one array.
+> Pointer subtraction requires that shared array, even when the printed addresses match.
 
 </details>
 
-### 9. Advanced level: addresses of local variables
+### 10. Advanced level: addresses of local variables
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -290,7 +325,7 @@ When subsequent functions are called, their local variables
 That is why the local variables in these calls will likely have the same address.
 </details>
 
-### 10. Reading past a one-element array (advanced)
+### 11. Reading past a one-element array (advanced)
 
 ```cpp
 std::array<int, 1> value{ 5 };
@@ -313,7 +348,7 @@ But a separately declared variable is not necessarily placed immediately after t
 
 </details>
 
-### 11. Writing past an array (advanced)
+### 12. Writing past an array (advanced)
 
 ```cpp
 std::array<int, 2> arr{};
