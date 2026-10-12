@@ -31,18 +31,30 @@ slug: ru/cpp/labs/array-practice
 #include <array>
 #include <iostream>
 
-int countMatchsticks(std::array<int, 10> counts, std::array<int, 3> digits)
+struct DigitConfig
 {
-    return counts[digits[0]] + counts[digits[1]] + counts[digits[2]];
+    std::array<int, 10> matchsticksPerDigit;
+};
+
+struct DigitDisplay
+{
+    std::array<int, 3> digits;
+};
+
+int countMatchsticks(DigitConfig config, DigitDisplay display)
+{
+    return config.matchsticksPerDigit[display.digits[0]]
+        + config.matchsticksPerDigit[display.digits[1]]
+        + config.matchsticksPerDigit[display.digits[2]];
 }
 
 int main()
 {
-    std::array<int, 10> counts{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 };
-    std::array<int, 3> original{ 2, 0, 8 };
-    std::array<int, 3> replacement{ 7, 3, 1 };
-    int available{ countMatchsticks(counts, original) };
-    int needed{ countMatchsticks(counts, replacement) };
+    DigitConfig config{ .matchsticksPerDigit{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 } };
+    DigitDisplay original{ .digits{ 2, 0, 8 } };
+    DigitDisplay replacement{ .digits{ 7, 3, 1 } };
+    int available{ countMatchsticks(config, original) };
+    int needed{ countMatchsticks(config, replacement) };
     std::cout << available - needed << std::endl;
 }
 ```
@@ -50,7 +62,7 @@ int main()
 Печатает `8`.
 Для цифр числа 208 нужно `5 + 6 + 7 = 18` спичек, а для цифр числа 731 — `3 + 5 + 2 = 10`.
 Каждая цифра выбирает нужное количество спичек из таблицы.
-Например, `digits[0]` даёт `2`, а `counts[2]` даёт `5`.
+Для исходного числа `display.digits[0]` даёт `2`, а `config.matchsticksPerDigit[2]` даёт `5`.
 
 </details>
 

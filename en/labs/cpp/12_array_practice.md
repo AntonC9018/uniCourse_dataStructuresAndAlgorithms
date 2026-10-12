@@ -31,18 +31,30 @@ Write a function that counts the sticks needed for any three supplied digits.
 #include <array>
 #include <iostream>
 
-int countMatchsticks(std::array<int, 10> counts, std::array<int, 3> digits)
+struct DigitConfig
 {
-    return counts[digits[0]] + counts[digits[1]] + counts[digits[2]];
+    std::array<int, 10> matchsticksPerDigit;
+};
+
+struct DigitDisplay
+{
+    std::array<int, 3> digits;
+};
+
+int countMatchsticks(DigitConfig config, DigitDisplay display)
+{
+    return config.matchsticksPerDigit[display.digits[0]]
+        + config.matchsticksPerDigit[display.digits[1]]
+        + config.matchsticksPerDigit[display.digits[2]];
 }
 
 int main()
 {
-    std::array<int, 10> counts{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 };
-    std::array<int, 3> original{ 2, 0, 8 };
-    std::array<int, 3> replacement{ 7, 3, 1 };
-    int available{ countMatchsticks(counts, original) };
-    int needed{ countMatchsticks(counts, replacement) };
+    DigitConfig config{ .matchsticksPerDigit{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 } };
+    DigitDisplay original{ .digits{ 2, 0, 8 } };
+    DigitDisplay replacement{ .digits{ 7, 3, 1 } };
+    int available{ countMatchsticks(config, original) };
+    int needed{ countMatchsticks(config, replacement) };
     std::cout << available - needed << std::endl;
 }
 ```
@@ -50,7 +62,7 @@ int main()
 It prints `8`.
 The digits in 208 need `5 + 6 + 7 = 18` sticks; the digits in 731 need `3 + 5 + 2 = 10`.
 Each digit selects its count from the lookup table.
-For example, `digits[0]` gives `2`, and `counts[2]` gives `5`.
+For the original display, `display.digits[0]` gives `2`, and `config.matchsticksPerDigit[2]` gives `5`.
 
 </details>
 
