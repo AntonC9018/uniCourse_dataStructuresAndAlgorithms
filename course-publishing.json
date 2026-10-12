@@ -95,5 +95,125 @@
     "ru": "Основы программирования и структуры данных"
   },
   "root_lesson": "en/labs/common/01_computer_architecture.md",
-  "peer_repositories": []
+  "peer_repositories": [],
+  "ci": {
+    "maintenance_paths": [
+      "en",
+      "ru",
+      "docs",
+      "AGENTS.md",
+      "README.md"
+    ],
+    "run_compatibility_tests": false,
+    "required_pr_label": "ci-ready"
+  },
+  "deployment": {
+    "branch": "master",
+    "required_status_checks": [
+      "validate"
+    ],
+    "require_pull_requests": false,
+    "enforce_admins": false
+  },
+  "navigation": {
+    "group_labels": {
+      "common": {
+        "en": "Common",
+        "ru": "Общие темы"
+      },
+      "cpp": {
+        "en": "C++",
+        "ru": "C++"
+      },
+      "dsa": {
+        "en": "Data Structures and Algorithms",
+        "ru": "Структуры данных и алгоритмы"
+      },
+      "labs": {
+        "en": "Labs",
+        "ru": "Лабораторные работы"
+      }
+    },
+    "subject_order": [
+      "common",
+      "cpp",
+      "dsa"
+    ],
+    "lab_prefixes": [
+      "common/labs",
+      "cpp/labs",
+      "dsa/labs"
+    ],
+    "last_lessons": [
+      "cpp/labs/assessment-1"
+    ]
+  },
+  "slug_overrides": {
+    "labs/cpp/test1.md": "cpp/labs/assessment-1"
+  },
+  "smoke": {
+    "retries": 30,
+    "retry_delay_seconds": 10,
+    "timeout_seconds": 30,
+    "checks": [
+      {
+        "label": "root redirect",
+        "paths": [
+          "/"
+        ],
+        "contains": "{root_route}"
+      },
+      {
+        "label": "English lesson",
+        "paths": [
+          "{root_route}"
+        ],
+        "contains": "Computer Architecture"
+      },
+      {
+        "label": "Russian lesson",
+        "paths": [
+          "/ru/common/labs/computer-architecture/"
+        ],
+        "contains": "Архитектура компьютера"
+      },
+      {
+        "label": "search markup",
+        "paths": [
+          "{root_route}"
+        ],
+        "contains": "pagefind"
+      },
+      {
+        "label": "search index",
+        "paths": [
+          "/pagefind/pagefind.js",
+          "/_pagefind/pagefind.js"
+        ]
+      },
+      {
+        "label": "Mermaid inline SVG",
+        "paths": [
+          "/en/dsa/labs/graphs/"
+        ],
+        "contains": "mermaid-static"
+      },
+      {
+        "label": "Mermaid SVG asset",
+        "paths": [
+          "/mermaid/en-dsa-labs-graphs-0.svg"
+        ],
+        "contains": "<svg"
+      },
+      {
+        "label": "copied image",
+        "paths": [
+          "/assets/{repository}/en/04_compiler_and_ide/cpp_extension.png"
+        ]
+      }
+    ]
+  },
+  "maintenance": {
+    "heading_numbering": "section"
+  }
 }
