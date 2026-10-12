@@ -12,6 +12,9 @@ Use the concepts from the earlier labs to model each problem and write procedura
 Use `std::array` for fixed-size storage.
 Do not use loops.
 Assume supplied indices are valid and quantities are sufficient unless the problem says otherwise.
+For the shared-object exercises below, use arrays of pointers to the original objects.
+Assume every pointer refers to an object that stays alive throughout the exercise.
+All positions are supplied; no search is needed.
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
 
@@ -262,7 +265,47 @@ Connect the first wagon to the second using a pointer.
 Through that connection, add cargo to the second wagon and report its new cargo weight.
 Only one connection needs to be followed.
 
-### 17. Raw-byte storage (advanced)
+### 17. Game hotbar
+
+A backpack holds tools with durability, and three hotbar slots refer to those tools.
+Assign the same tool to two slots.
+Use it through one supplied slot, reducing its durability by a supplied amount.
+Show that both slots observe the change to the tool in the backpack.
+
+### 18. Lighting panels
+
+Two control panels each refer to three installed lamps with adjustable brightness.
+Let one lamp appear on both panels.
+Change its brightness through a supplied position on one panel, then read it through the other panel.
+
+### 19. Sports podium
+
+Three podium positions refer to racers in a roster; each racer has a money balance.
+Swap the first two positions, then award a supplied prize to the racer in a supplied position.
+Report that racer's balance from the roster.
+
+### 20. Battery charger
+
+Three occupied charger slots refer to existing batteries with charge amounts and capacities.
+Add a supplied charge amount to the battery in a supplied slot, then exchange two supplied slots.
+Report the charge of the moved battery.
+Assume the added charge fits within the battery's capacity.
+
+### 21. Photo albums
+
+Two albums each refer to three photos from a shared library; each photo has a width and height.
+Let one library photo appear in both albums.
+Rotate that photo through a supplied album position by swapping its width and height.
+The rotation edits the library photo; show the new dimensions through the other album.
+
+### 22. Shop displays
+
+Two shop displays each refer to three product stock records with prices and available quantities.
+Let one product appear on both displays.
+Sell one unit selected by a supplied display position, decreasing its stock and adding its price to the shop's cash.
+Report that product's remaining stock through the other display.
+
+### 23. Raw-byte storage (advanced)
 
 Store a coin and a measurement in a fixed byte buffer, recording the used byte count with a `size_t` position.
 Reserve space using the item's size and alignment,
