@@ -15,31 +15,35 @@ Assume supplied indices are valid and quantities are sufficient unless the probl
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
 
-### 1. Hourly temperatures
+### 1. Reading an access-code digit
 
-At 8:00, 12:00, and 16:00, the temperatures were 18.5, 21, and 19.5 degrees.
-Report the noon temperature and how much warmer it was than at 8:00.
+A four-digit access code is 3, 1, 4, 2.
+Write a function that returns the digit at a supplied position, counting positions from zero.
+Report the digit at position 2.
 
 <details>
 <summary>Possible solution</summary>
 
 ```cpp
 #include <array>
+#include <cstddef>
 #include <iostream>
+
+int digitAt(std::array<int, 4> digits, size_t position)
+{
+    return digits[position];
+}
 
 int main()
 {
-    std::array<float, 3> temperatures{ 18.5f, 21.0f, 19.5f };
-    float noonTemperature{ temperatures[1] };
-    float increase{ noonTemperature - temperatures[0] };
-    std::cout << noonTemperature << std::endl;
-    std::cout << increase << std::endl;
+    std::array<int, 4> digits{ 3, 1, 4, 2 };
+    int digit{ digitAt(digits, 2) };
+    std::cout << digit << std::endl;
 }
 ```
 
-It prints `21` and `2.5`.
-Index `1` selects the noon measurement; subtracting the morning measurement gives the increase.
-The `f` suffix makes these decimal literals have type `float`.
+It prints `4`.
+Position `2` selects the third digit.
 
 </details>
 

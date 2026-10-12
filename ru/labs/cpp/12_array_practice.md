@@ -15,31 +15,35 @@ slug: ru/cpp/labs/array-practice
 У первых трёх задач и продвинутой задачи о хранении в байтах есть возможные решения.
 Остальные задачи решите самостоятельно.
 
-### 1. Температура в течение дня
+### 1. Чтение цифры кода доступа
 
-В 8:00, 12:00 и 16:00 температура составляла 18.5, 21 и 19.5 градуса.
-Сообщите температуру в полдень и насколько она была выше, чем в 8:00.
+Код доступа состоит из четырёх цифр: 3, 1, 4, 2.
+Напишите функцию, которая возвращает цифру в заданной позиции, считая позиции с нуля.
+Выведите цифру в позиции 2.
 
 <details>
 <summary>Возможное решение</summary>
 
 ```cpp
 #include <array>
+#include <cstddef>
 #include <iostream>
+
+int digitAt(std::array<int, 4> digits, size_t position)
+{
+    return digits[position];
+}
 
 int main()
 {
-    std::array<float, 3> temperatures{ 18.5f, 21.0f, 19.5f };
-    float noonTemperature{ temperatures[1] };
-    float increase{ noonTemperature - temperatures[0] };
-    std::cout << noonTemperature << std::endl;
-    std::cout << increase << std::endl;
+    std::array<int, 4> digits{ 3, 1, 4, 2 };
+    int digit{ digitAt(digits, 2) };
+    std::cout << digit << std::endl;
 }
 ```
 
-Печатает `21` и `2.5`.
-Индекс `1` выбирает измерение в полдень; разность с утренним измерением даёт повышение температуры.
-Суффикс `f` задаёт тип `float` для дробных литералов.
+Печатает `4`.
+Позиция `2` соответствует третьей цифре.
 
 </details>
 
