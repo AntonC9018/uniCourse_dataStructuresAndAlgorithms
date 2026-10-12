@@ -92,8 +92,8 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Answer</summary>
 
-`p` will contain the address of the beginning of the entire array object.
-The array object covers all of its elements.
+`p` will contain the address of the beginning of the entire array.
+This address identifies the entire array, including all its elements.
 
 Here, the original elements are overwritten with `3, 4`.
 </details>
@@ -112,7 +112,7 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Answer</summary>
 
-`p` points to an object of type `std::array<int, 2>`, and the expression `*p` gives a value
+`p` points to an array of type `std::array<int, 2>`, and the expression `*p` gives a value
 of type `std::array<int, 2>`, so `arr1` receives a copy of the entire array.
 
 Since `arr1` is a copy, its changes will not affect `arr`.
@@ -131,7 +131,7 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Answer</summary>
 
-`*p` accesses the original array object.
+`*p` accesses the original array.
 `(*p)[0]` and `(*p)[1]` access its elements, so the assignments change `arr`.
 It prints `3` and `4`.
 </details>

@@ -445,7 +445,7 @@ int main()
 
   The algorithm is implemented with two functions: the helper `free_space` computes the free space,
   and the main `pour` calls it internally.
-  `pour` takes **two pointers** because it modifies **two different objects**,
+  `pour` takes **two pointers** because it modifies **two different structure variables**,
   and returns the transferred amount in addition to that side effect.
   `free_space` does not change anything, so passing the bottle by value is sufficient.
   </details>

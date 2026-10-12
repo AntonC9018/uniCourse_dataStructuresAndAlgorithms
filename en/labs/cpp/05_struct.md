@@ -815,11 +815,8 @@ int main()
 
 It prints `1`.
 
-According to the C++ standard, the size of an object cannot be less than 1,
-so that 2 objects of this type can be distinguished from each other.
-The reason is that 2 objects cannot have the same memory address.
-
-Objects are covered in the next lab.
+Even a variable of an empty structure type occupies at least one byte.
+This lets separate variables of this type have distinct addresses.
 </details>
 
 ### 26. Copying a structure with a pointer field
@@ -907,7 +904,7 @@ copy = &value;
 
 It does not compile.
 `&value` has type `A*`, not `A`.
-Use `copy = value;` to copy the object.
+Use `copy = value;` to copy the structure value.
 </details>
 
 ### 3. A structure assigned to its pointer
