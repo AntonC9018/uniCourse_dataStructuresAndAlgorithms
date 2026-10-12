@@ -548,56 +548,7 @@ After that, `num` is overwritten with `2`.
 It prints the address of `num`, then `2`.
 </details>
 
-### 18. An array field of addresses
-```cpp
-#include <iostream>
-
-struct A
-{
-    int* f[2];
-};
-
-int main()
-{
-    int var1;
-    int var2;
-    A a { .f = { &var1, &var2 } };
-    *a.f[0] = 1;
-    *a.f[1] = 2;
-    int** b = a.f;
-    int c = **b;
-
-    std::cout << var1 << std::endl;
-    std::cout << var2 << std::endl;
-
-    std::cout << a.f[0] << std::endl;
-    std::cout << a.f[1] << std::endl;
-
-    std::cout << b << std::endl;
-    std::cout << c << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-The line `A a { .f = { &var1, &var2 } };` initializes `a`,
-putting the address of `var1` into field `a.f[0]` and the address of `var2` into `a.f[1]`.
-
-In the line `*a.f[0] = ...`, execution follows the address stored in `a.f[0]`:
-`*a.f[0]` -> `*(a.f[0])` -> `*(&var1)` -> `var1`.
-
-In `int** b = a.f;`, `a.f` is equivalent to `&(a.f[0])`.
-This gives the address of the first element in array `f` in `a`.
-
-It prints:
-- `1`, `2` as the values of `var1` and `var2`;
-- the addresses of `var1` and `var2` as the values of `a.f[0]` and `a.f[1]`;
-- `c` is equal to `1`.
-
-</details>
-
-### 19. A nested structure
+### 18. A nested structure
 ```cpp
 #include <iostream>
 
@@ -637,7 +588,7 @@ This is called nesting, and it is used constantly in programming.
 Here, in the end, `a.f` equals `3`, and `a.nested.f` equals `6`.
 </details>
 
-### 20. Copying a nested structure
+### 19. Copying a nested structure
 ```cpp
 #include <iostream>
 
@@ -683,7 +634,7 @@ affect only `a`, while `b` stays untouched.
 It prints `1`, `2`, `3`, `4`.
 </details>
 
-### 21. Why will this code not compile?
+### 20. Why will this code not compile?
 
 ```cpp
 struct A
@@ -701,7 +652,7 @@ an infinite amount of memory. It is possible to include a pointer to another suc
 because its size does not depend on the size of the structure.
 </details>
 
-### 22. Linked list
+### 21. Linked list
 ```cpp
 #include <iostream>
 
@@ -744,7 +695,7 @@ The code prints `2`, then `1`, and then crashes on the last
 line when it dereferences a null pointer (segmentation fault).
 </details>
 
-### 23. Structure size (1)
+### 22. Structure size (1)
 ```cpp
 #include <iostream>
 
@@ -771,32 +722,7 @@ Both forms are equivalent.
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
 </details>
 
-### 24. Structure size (2)
-```cpp
-#include <iostream>
-
-struct A
-{
-    int f1[4];
-    int* f2;
-};
-
-int main()
-{
-    std::cout << sizeof(A) << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-- `int f1[4]` is 4 `int`s, 4 bytes each — 16 bytes;
-- `int* f2` is 8 bytes on a 64-bit processor.
-
-The total is 24 bytes.
-</details>
-
-### 25. Field address from a structure address
+### 23. Field address from a structure address
 ```cpp
 #include <iostream>
 
@@ -826,7 +752,7 @@ This demonstrates that you can take the address of a field after applying `->`.
 It prints `2`.
 </details>
 
-### 26. Field address relative to a structure address
+### 24. Field address relative to a structure address
 ```cpp
 #include <iostream>
 
@@ -853,7 +779,7 @@ It prints `0`.
 The first field of a structure and the structure itself are always located at the same memory address.
 </details>
 
-### 27. (advanced level): Structure size (3)
+### 25. (advanced level): Structure size (3)
 ```cpp
 #include <iostream>
 
@@ -898,7 +824,7 @@ slot is no smaller than the slots of that nested structure.
 Alignment can be disabled using `#pragma pack`.
 </details>
 
-### 28. (advanced level): Structure size (4)
+### 26. (advanced level): Structure size (4)
 ```cpp
 #include <iostream>
 
@@ -924,7 +850,7 @@ The reason is that 2 objects cannot have the same memory address.
 Objects are covered in the next lab.
 </details>
 
-### 29. (advanced level): Field offsets
+### 27. (advanced level): Field offsets
 ```cpp
 #include <iostream>
 
@@ -950,71 +876,7 @@ offset of a specified field from the beginning of a structure.
 It prints `0` for `a` and `4` for `b`.
 </details>
 
-### 30. Initializing an array field
-```cpp
-#include <iostream>
-
-struct A
-{
-    int arr[2];
-};
-
-int main()
-{
-    A a { { 1, 2 } };
-    A b { { 3, 4 } };
-    b = a;
-
-    std::cout << b.arr[0] << std::endl;
-    std::cout << b.arr[1] << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-It prints `1`, `2`.
-</details>
-
-### 31. Copying a structure with an array field
-```cpp
-#include <iostream>
-
-struct A
-{
-    int arr[2];
-};
-
-int main()
-{
-    A a { { 1, 2 } };
-    A b { a };
-
-    a.arr[0] = 3;
-
-    std::cout << b.arr[0] << std::endl;
-    std::cout << b.arr[1] << std::endl;
-    std::cout << a.arr[0] << std::endl;
-    std::cout << a.arr[1] << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-`A b{ a }` copies the values of *all fields*, including the whole array, element by element.
-
-At the moment of copying, `a` holds `arr[0] = 1`, `arr[1] = 2`,
-so `b` receives the same values: `b.arr[0] = 1`, `b.arr[1] = 2`.
-But it is a separate copy in `b`'s own memory: the array `arr` itself
-is stored inside `A` by value, not by address.
-
-So `a.arr[0] = 3` affects only `a`, while `b` stays untouched.
-
-It prints `1`, `2`, `3`, `2`.
-</details>
-
-### 32. Copying a structure with a pointer field
+### 28. Copying a structure with a pointer field
 ```cpp
 #include <iostream>
 
@@ -1053,72 +915,6 @@ while `s2.a` stays untouched.
 
 It prints `2`, `1`.
 </details>
-
-### 33. An array of structures
-```cpp
-#include <iostream>
-
-struct A
-{
-    int f1;
-    int f2;
-};
-
-int main()
-{
-    A arr[3]{};
-
-    arr[0].f2 = 1;
-
-    arr[1] = A{ 2, 3 };
-
-    A copy { arr[2] };
-    copy.f1 = 4;
-    copy.f2 = 5;
-
-    std::cout << arr[0].f1 << std::endl;
-    std::cout << arr[0].f2 << std::endl;
-    std::cout << arr[1].f1 << std::endl;
-    std::cout << arr[1].f2 << std::endl;
-    std::cout << arr[2].f1 << std::endl;
-    std::cout << arr[2].f2 << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-The line `A arr[3]{};`:
-- Defines an array of three variables of type `A`.
- In total, memory is allocated for 6 `int`s.
-- The braces mean “initialize with zeros”.
- Each array element is filled with the default `A`, namely `A{}`,
- which means all 6 `int`s become zero.
-
-In `arr[0].f2 = 1;`, `arr[0]` accesses the memory of
-the first variable in the array.
-This variable has type `A` (not `int`! It is very important to understand this).
-Its second field (`.f2`) is assigned `1` (`= 1`).
-
-`arr[1] = A{ 2, 3 };` overwrites the entire second element
-with the result of expression `A{ 2, 3 }`.
-This overwrites both fields.
-
-`A copy { arr[2] };` reads the third element of the array,
-copying what is there into temporary variable `copy`.
-`copy` holds a copy of the value from `arr[2]` of type `A` (that is, it has a copy of all fields).
-Therefore, subsequent changes to `copy` do not affect `arr[2]`.
-
-```
-0
-1
-2
-3
-0
-0
-```
-</details>
-
 
 ## Type-checking puzzles
 

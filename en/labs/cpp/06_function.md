@@ -549,35 +549,7 @@ and an `int` cannot be created from a `Vector`.
 
 </details>
 
-### 18. Returning the next array element address
-
-```cpp
-#include <iostream>
-
-int* nextElement(int* current)
-{
-    return current + 1;
-}
-
-int main()
-{
-    int arr[3]{ 4, 7, 9 };
-    int* next{ nextElement(&arr[0]) };
-    *next = 8;
-    std::cout << arr[1] << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-It prints `8`.
-The call returns an `int*` pointing to `arr[1]`, so writing through `next` changes that element.
-The array belongs to `main` and still exists after the function returns.
-The caller must ensure that a next element exists before dereferencing the returned pointer.
-</details>
-
-### 19. Cooking fish: changed input and returned object
+### 18. Cooking fish: changed input and returned object
 
 Assume the fire pointer is valid and there is enough fuel.
 
@@ -626,7 +598,7 @@ The raw fish is passed by value, and the result is a new `CookedFish` returned b
 The original raw-fish variable still has weight `100`.
 </details>
 
-### 20. Advanced level: addresses of local variables
+### 19. Advanced level: addresses of local variables
 ```cpp
 uintptr_t f()
 {
@@ -665,7 +637,7 @@ When subsequent functions are called, their local variables
 That is why the local variables in these calls will likely have the same address.
 </details>
 
-### 21. Advanced level: data in uninitialized variables
+### 20. Advanced level: data in uninitialized variables
 ```cpp
 void f()
 {

@@ -37,7 +37,36 @@ After this code executes, `p` equals `&arr[1]`.
 Reading from `*p` is equivalent to reading from `arr[1]`.
 </details>
 
-### 2. Accessing an array element through an expression
+### 2. Returning the next array element address
+
+```cpp
+#include <iostream>
+
+int* nextElement(int* current)
+{
+    return current + 1;
+}
+
+int main()
+{
+    int arr[3]{ 4, 7, 9 };
+    int* next{ nextElement(&arr[0]) };
+    *next = 8;
+    std::cout << arr[1] << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `8`.
+The call returns an `int*` pointing to `arr[1]`, so writing through `next` changes that element.
+The array belongs to `main` and still exists after the function returns.
+The caller must ensure that a next element exists before dereferencing the returned pointer.
+</details>
+
+
+### 3. Accessing an array element through an expression
 ```cpp
 int arr[2]{};
 int* p = &arr[0];
@@ -56,7 +85,7 @@ Note that `*(p + 1)` *does not change `p`*; it creates a *temporary address offs
 `*p` reads `0` from the first array element.
 </details>
 
-### 3. Subtracting pointers
+### 4. Subtracting pointers
 ```cpp
 int arr[2]{};
 int* pStart = &arr[0];
@@ -80,7 +109,7 @@ The result can also be negative.
 The code will print 1 and then -1.
 </details>
 
-### 4. (advanced level): Subtracting addresses
+### 5. (advanced level): Subtracting addresses
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -111,7 +140,7 @@ Instead, it operates on the pointers' numeric values.
 The result will be 4 — the difference between the addresses in bytes.
 </details>
 
-### 5. (advanced level): Going beyond a variable's bounds
+### 6. (advanced level): Going beyond a variable's bounds
 ```cpp
 int a = 5;
 int b = 6;
@@ -129,7 +158,7 @@ Technically, this is considered UB (undefined behavior).
 It might print 6, the value of variable `b`.
 </details>
 
-### 6. (advanced level): Going beyond an array's bounds
+### 7. (advanced level): Going beyond an array's bounds
 ```cpp
 int a[2]{};
 int b = 6;

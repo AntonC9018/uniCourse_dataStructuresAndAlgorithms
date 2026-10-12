@@ -21,7 +21,16 @@ pointers)](https://www.youtube.com/watch?v=imkDyDE7Tkw&list=PL4sUOB8DjVlWUcSaCu0
 
 Explain the type and value produced by each conversion.
 Run examples with defined behavior to check your reasoning.
-For fragments without `main`, use the source-file wrapper from the [variables lab](02_variables.md).
+> When `main` is not shown, place the code in a typical source file with a `main` function:
+> ```cpp
+> #include <iostream>
+> #include <cstdint>
+>
+> int main()
+> {
+>     // your code here
+> }
+> ```
 
 ### 1. `auto` and `static_cast`
 

@@ -93,7 +93,7 @@ includes 3 primitive operations, but this is allowed (within reason).
   - 1 point for each correct answer;
   - 5 points for the reasoning behind each one.
 
-- A randomly selected basic comprehension question from the [structures lab](07_struct.md).
+- A randomly selected basic comprehension question from the [structures lab](05_struct.md).
   (It will not be about functions.)
 
   Grading (6 points):

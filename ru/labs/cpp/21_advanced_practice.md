@@ -6,7 +6,7 @@ slug: ru/cpp/labs/advanced-practice
 <!-- course-site-backlink:end -->
 # Продвинутая практика
 
-> Это продолжение [Практики по простым задачам](10_basic_practice.md).
+> Это продолжение [Практики по простым задачам](08_basic_practice.md).
 
 ## Что нужно развить в данной работе
 
@@ -81,7 +81,7 @@ slug: ru/cpp/labs/advanced-practice
   ```cpp
   #include <cassert>
 
-  bool shelve_book(Bookshelf* shelf, std::size_t index, Book book)
+  bool shelve_book(Bookshelf* shelf, size_t index, Book book)
   {
       assert(shelf != nullptr); // shelve_book ожидает, что shelf никогда не nullptr
       if (index >= shelf->slots.size())
@@ -104,7 +104,7 @@ slug: ru/cpp/labs/advanced-practice
   и возвращаем `true`; для пустого слота возвращаем `false`:
 
   ```cpp
-  bool take_book(Bookshelf& shelf, std::size_t index)
+  bool take_book(Bookshelf& shelf, size_t index)
   {
       if (index >= shelf.slots.size())
       {
@@ -189,7 +189,7 @@ slug: ru/cpp/labs/advanced-practice
   Если хоть одна проверка не прошла, возвращаем `false` и ничего не трогаем:
 
   ```cpp
-  bool move_food(Fridge& from, std::size_t fromIndex, Freezer& to, std::size_t toIndex)
+  bool move_food(Fridge& from, size_t fromIndex, Freezer& to, size_t toIndex)
   {
       if (fromIndex >= from.shelves.size())
       {
@@ -541,7 +541,7 @@ slug: ru/cpp/labs/advanced-practice
   struct FoodMove
   {
       std::string_view name;
-      std::size_t toIndex;
+      size_t toIndex;
   };
   ```
 

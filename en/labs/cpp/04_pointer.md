@@ -666,8 +666,8 @@ The assignment is valid and stores `8` in it.
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::size_t count{ 3 };
-std::int8_t* p{};
+size_t count{ 3 };
+int8_t* p{};
 p = &count;
 ```
 
@@ -675,7 +675,7 @@ p = &count;
 <summary>Answer</summary>
 
 It does not compile.
-`&count` has type `std::size_t*`, not `std::int8_t*`.
+`&count` has type `size_t*`, not `int8_t*`.
 Pointers preserve the pointed-to type; this assignment performs no numeric conversion.
 </details>
 
@@ -684,8 +684,8 @@ Pointers preserve the pointed-to type; this assignment performs no numeric conve
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t value{ 3 };
-std::size_t* p{};
+int8_t value{ 3 };
+size_t* p{};
 p = &value;
 ```
 
@@ -693,7 +693,7 @@ p = &value;
 <summary>Answer</summary>
 
 It does not compile.
-`&value` has type `std::int8_t*`; `p` requires `std::size_t*`.
+`&value` has type `int8_t*`; `p` requires `size_t*`.
 Having a numeric value that fits both types does not make their pointers compatible.
 </details>
 
@@ -702,8 +702,8 @@ Having a numeric value that fits both types does not make their pointers compati
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t value{ 3 };
-std::size_t count{};
+int8_t value{ 3 };
+size_t count{};
 count = value;
 ```
 
@@ -711,7 +711,7 @@ count = value;
 <summary>Answer</summary>
 
 It compiles.
-This is a numeric assignment, so the value is converted to `std::size_t`.
+This is a numeric assignment, so the value is converted to `size_t`.
 `count` becomes `3`.
 It does not assign or reinterpret an address.
 </details>
@@ -720,8 +720,8 @@ It does not assign or reinterpret an address.
 
 ```cpp
 #include <cstddef>
-std::size_t count{ 3 };
-std::size_t* p{};
+size_t count{ 3 };
+size_t* p{};
 p = count;
 ```
 
@@ -729,7 +729,7 @@ p = count;
 <summary>Answer</summary>
 
 It does not compile.
-`count` has type `std::size_t`; `p` requires `std::size_t*`.
+`count` has type `size_t`; `p` requires `size_t*`.
 A type being large enough to hold numbers does not make those numbers pointers.
 </details>
 
@@ -738,9 +738,9 @@ A type being large enough to hold numbers does not make those numbers pointers.
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::size_t count{ 3 };
-std::size_t* p{ &count };
-std::int8_t** pp{};
+size_t count{ 3 };
+size_t* p{ &count };
+int8_t** pp{};
 pp = &p;
 ```
 
@@ -748,7 +748,7 @@ pp = &p;
 <summary>Answer</summary>
 
 It does not compile.
-`&p` has type `std::size_t**`, while `pp` requires `std::int8_t**`.
+`&p` has type `size_t**`, while `pp` requires `int8_t**`.
 Matching the number of stars is not enough: the pointed-to types must also match.
 </details>
 
@@ -756,8 +756,8 @@ Matching the number of stars is not enough: the pointed-to types must also match
 
 ```cpp
 #include <cstddef>
-std::size_t count{ 3 };
-std::size_t** pp{};
+size_t count{ 3 };
+size_t** pp{};
 pp = &count;
 ```
 
@@ -765,7 +765,7 @@ pp = &count;
 <summary>Answer</summary>
 
 It does not compile.
-`&count` has type `std::size_t*`, not `std::size_t**`.
+`&count` has type `size_t*`, not `size_t**`.
 First create a pointer to `count`, then take the address of that pointer.
 </details>
 
@@ -774,9 +774,9 @@ First create a pointer to `count`, then take the address of that pointer.
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t small{ 3 };
-std::int8_t* p{ &small };
-std::size_t count{};
+int8_t small{ 3 };
+int8_t* p{ &small };
+size_t count{};
 count = *p;
 ```
 
@@ -784,6 +784,6 @@ count = *p;
 <summary>Answer</summary>
 
 It compiles.
-`*p` has type `std::int8_t`, so this converts a numeric value to `std::size_t`.
+`*p` has type `int8_t`, so this converts a numeric value to `size_t`.
 `count` becomes `3`; the pointer itself is not assigned.
 </details>

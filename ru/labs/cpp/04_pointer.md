@@ -667,8 +667,8 @@ int** pp{ &p };
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::size_t count{ 3 };
-std::int8_t* p{};
+size_t count{ 3 };
+int8_t* p{};
 p = &count;
 ```
 
@@ -676,7 +676,7 @@ p = &count;
 <summary>Ответ</summary>
 
 Не компилируется.
-У `&count` тип `std::size_t*`, а не `std::int8_t*`.
+У `&count` тип `size_t*`, а не `int8_t*`.
 Указатели сохраняют тип объекта; это присваивание не выполняет числовое преобразование.
 </details>
 
@@ -685,8 +685,8 @@ p = &count;
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t value{ 3 };
-std::size_t* p{};
+int8_t value{ 3 };
+size_t* p{};
 p = &value;
 ```
 
@@ -694,7 +694,7 @@ p = &value;
 <summary>Ответ</summary>
 
 Не компилируется.
-У `&value` тип `std::int8_t*`, а для `p` требуется `std::size_t*`.
+У `&value` тип `int8_t*`, а для `p` требуется `size_t*`.
 Даже если число помещается в обоих типах, их указатели не становятся совместимыми.
 </details>
 
@@ -703,8 +703,8 @@ p = &value;
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t value{ 3 };
-std::size_t count{};
+int8_t value{ 3 };
+size_t count{};
 count = value;
 ```
 
@@ -712,7 +712,7 @@ count = value;
 <summary>Ответ</summary>
 
 Компилируется.
-Это числовое присваивание, поэтому значение преобразуется в `std::size_t`.
+Это числовое присваивание, поэтому значение преобразуется в `size_t`.
 В `count` записывается `3`.
 Адрес не присваивается и не переинтерпретируется.
 </details>
@@ -721,8 +721,8 @@ count = value;
 
 ```cpp
 #include <cstddef>
-std::size_t count{ 3 };
-std::size_t* p{};
+size_t count{ 3 };
+size_t* p{};
 p = count;
 ```
 
@@ -730,7 +730,7 @@ p = count;
 <summary>Ответ</summary>
 
 Не компилируется.
-У `count` тип `std::size_t`, а для `p` требуется `std::size_t*`.
+У `count` тип `size_t`, а для `p` требуется `size_t*`.
 Размер числового типа не превращает его значения в указатели.
 </details>
 
@@ -739,9 +739,9 @@ p = count;
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::size_t count{ 3 };
-std::size_t* p{ &count };
-std::int8_t** pp{};
+size_t count{ 3 };
+size_t* p{ &count };
+int8_t** pp{};
 pp = &p;
 ```
 
@@ -749,7 +749,7 @@ pp = &p;
 <summary>Ответ</summary>
 
 Не компилируется.
-У `&p` тип `std::size_t**`, а для `pp` требуется `std::int8_t**`.
+У `&p` тип `size_t**`, а для `pp` требуется `int8_t**`.
 Совпадения числа звёздочек недостаточно: типы объектов тоже должны совпадать.
 </details>
 
@@ -757,8 +757,8 @@ pp = &p;
 
 ```cpp
 #include <cstddef>
-std::size_t count{ 3 };
-std::size_t** pp{};
+size_t count{ 3 };
+size_t** pp{};
 pp = &count;
 ```
 
@@ -766,7 +766,7 @@ pp = &count;
 <summary>Ответ</summary>
 
 Не компилируется.
-У `&count` тип `std::size_t*`, а не `std::size_t**`.
+У `&count` тип `size_t*`, а не `size_t**`.
 Сначала создайте указатель на `count`, затем возьмите адрес этого указателя.
 </details>
 
@@ -775,9 +775,9 @@ pp = &count;
 ```cpp
 #include <cstddef>
 #include <cstdint>
-std::int8_t small{ 3 };
-std::int8_t* p{ &small };
-std::size_t count{};
+int8_t small{ 3 };
+int8_t* p{ &small };
+size_t count{};
 count = *p;
 ```
 
@@ -785,6 +785,6 @@ count = *p;
 <summary>Ответ</summary>
 
 Компилируется.
-У `*p` тип `std::int8_t`, поэтому числовое значение преобразуется в `std::size_t`.
+У `*p` тип `int8_t`, поэтому числовое значение преобразуется в `size_t`.
 В `count` записывается `3`; сам указатель не присваивается.
 </details>

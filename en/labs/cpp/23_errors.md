@@ -1037,7 +1037,7 @@ enum class PurchaseError
 
 PurchaseError buyProduct(
     VendingMachine& machine,
-    std::size_t productIndex,
+    size_t productIndex,
     Money payment,
     Money& change)
 {
