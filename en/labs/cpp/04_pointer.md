@@ -82,7 +82,28 @@ and not of some other type**.
 > `&` can give the address of *any object*, but that will be covered in lab 3.
 </details>
 
-### 2. Address of an uninitialized variable
+### 2. Whitespace in pointer declarations
+
+```cpp
+int value{ 5 };
+int* a{ &value };
+int *b{ &value };
+int * c{ &value };
+*a = 6;
+std::cout << *b << std::endl;
+std::cout << *c << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `6` twice.
+`int* a`, `int *b`, and `int * c` all declare an `int*`.
+Whitespace between these tokens does not change the declaration.
+All three pointers store the address of the same variable.
+</details>
+
+### 3. Address of an uninitialized variable
 
 Is something like this allowed?
 
@@ -102,7 +123,7 @@ It will be printed as an ordinary address.
 *Reading the value at* that address would not be allowed.
 </details>
 
-### 3. Dereference operator (writing)
+### 4. Dereference operator (writing)
 ```cpp
 int a { 1 };
 int* b{ &a };
@@ -122,7 +143,7 @@ located at the address in `b`, that is, to `a`.
 `*b = 2` -> `a = 2` writes `2` into `a`.
 </details>
 
-### 4. A number as an address
+### 5. A number as an address
 
 Is something like this allowed?
 
@@ -139,7 +160,7 @@ No. An address cannot be set directly like this; it must be obtained using
 the `&` operator on an object (for example, a variable).
 </details>
 
-### 5. Dereference operator (reading)
+### 6. Dereference operator (reading)
 ```cpp
 int a{ 5 };
 int b{ *(&a) };
@@ -158,7 +179,7 @@ Evaluating the expression `*(&a)`:
 `*(&a)` -> `*32` -> `a` -> `5`
 </details>
 
-### 6. Printing a complex expression
+### 7. Printing a complex expression
 ```cpp
 int a{ 5 };
 int* b{ &a };
@@ -175,7 +196,7 @@ std::cout << std::endl;
 - `5 + 7` -> `12`.
 </details>
 
-### 7. Pointer to a larger data type
+### 8. Pointer to a larger data type
 ```cpp
 uint8_t a{ 5 };
 int* b{ &a };
@@ -187,7 +208,7 @@ int* b{ &a };
 Compilation error (see the video about pointers)
 </details>
 
-### 8. Pointer to a smaller data type
+### 9. Pointer to a smaller data type
 ```cpp
 int a = 5;
 uint8_t* b = &a;
@@ -199,7 +220,7 @@ uint8_t* b = &a;
 Compilation error (see the video about pointers)
 </details>
 
-### 9. Dependence of the address on the value
+### 10. Dependence of the address on the value
 
 Will `b` and `c` contain the same address?
 ```cpp
@@ -224,7 +245,7 @@ which value is stored in `a`.
 </details>
 
 
-### 10. It is the same memory!
+### 11. It is the same memory!
 ```cpp
 int a = 5;
 int* ap = &a;
@@ -246,7 +267,7 @@ Both reads and writes occur at the same address.
 Writing to or reading from `*ap` is equivalent to working with `a` directly.
 </details>
 
-### 11. Assigning a value through a pointer
+### 12. Assigning a value through a pointer
 
 Is something like this allowed?
 ```cpp
@@ -264,7 +285,7 @@ A value can be assigned to an uninitialized variable through a pointer.
 This is allowed.
 </details>
 
-### 12. Reassigning a pointer
+### 13. Reassigning a pointer
 ```cpp
 int a = 5;
 
@@ -292,7 +313,7 @@ On the line `p = &b`, the *address* in `p` itself is overwritten with the addres
 
 </details>
 
-### 13. Double pointer
+### 14. Double pointer
 ```cpp
 int a = 5;
 int b = 6;
@@ -332,7 +353,7 @@ std::cout << std::endl;
 ```
 </details>
 
-### 14. auto from an address
+### 15. auto from an address
 
 ```cpp
 int value{ 5 };
@@ -348,7 +369,7 @@ std::cout << value << std::endl;
 It prints `8`: writing through the inferred pointer changes `value`.
 </details>
 
-### 15. auto from a pointer and its value
+### 16. auto from a pointer and its value
 
 ```cpp
 int value{ 5 };
@@ -368,7 +389,7 @@ Thus `copiedPointer` points to the same variable, while `copiedValue` is an inde
 It prints `8` and `5`.
 </details>
 
-### 16. auto from the address of a pointer
+### 17. auto from the address of a pointer
 
 ```cpp
 int value{ 5 };
@@ -386,7 +407,7 @@ std::cout << value << std::endl;
 It prints `9`.
 </details>
 
-### 17. Pointer sizes
+### 18. Pointer sizes
 ```cpp
 int a = 7;
 int* pa = &a;
@@ -413,7 +434,7 @@ Pointers of any type have the same size because they only store memory addresses
 On 64-bit systems, any pointer is 64 bits in size (you are most likely on a 64-bit system).
 </details>
 
-### 18. Pointer and variable sizes
+### 19. Pointer and variable sizes
 
 ```cpp
 int a = 7;
@@ -441,7 +462,7 @@ std::cout << std::endl;
 The expression `*ap` has type `int`, so `sizeof(int)`, which is 4, is calculated.
 </details>
 
-### 19. Pointer to itself
+### 20. Pointer to itself
 ```cpp
 void* p = nullptr;
 p = static_cast<void*>(&p);
@@ -469,7 +490,7 @@ Two identical addresses are printed: the value stored in `p` matches the address
 If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` still happens implicitly.
 </details>
 
-### 20. Empty pointer initialization
+### 21. Empty pointer initialization
 ```cpp
 int* p{};
 std::cout << p << std::endl;
@@ -488,7 +509,7 @@ Unlike an uninitialized pointer, reading `p` itself here (for example, printing 
 Dereferencing `p` itself would still not be allowed, since it does not point to any variable.
 </details>
 
-### 21. Copying a variable and a pointer with similar names
+### 22. Copying a variable and a pointer with similar names
 
 ```cpp
 int x{ 0 };

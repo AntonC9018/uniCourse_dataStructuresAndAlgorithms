@@ -36,7 +36,7 @@ struct Arm
 struct Person
 {
     std::array<Leg, 2> legs;
-    Arm arms[2];
+    std::array<Arm, 2> arms;
 };
 
 int main()

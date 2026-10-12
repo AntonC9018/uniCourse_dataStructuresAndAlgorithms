@@ -17,9 +17,11 @@ slug: ru/cpp/labs/pointer-arithmetic
 
 ## Примеры на понимание
 
+Для фрагментов без `main` подключите `<array>` и `<iostream>` и поместите код в `main`.
+
 ### 1. Переход адреса на 1
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* p = &arr[0];
 p = p + 1;
 *p = 2;
@@ -40,6 +42,7 @@ std::cout << std::endl;
 ### 2. Возврат адреса следующего элемента массива
 
 ```cpp
+#include <array>
 #include <iostream>
 
 int* nextElement(int* current)
@@ -49,7 +52,7 @@ int* nextElement(int* current)
 
 int main()
 {
-    int arr[3]{ 4, 7, 9 };
+    std::array<int, 3> arr{ 4, 7, 9 };
     int* next{ nextElement(&arr[0]) };
     *next = 8;
     std::cout << arr[1] << std::endl;
@@ -68,7 +71,7 @@ int main()
 
 ### 3. Переход по адресу из выражения
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* p = &arr[0];
 *(p + 1) = 6;
 
@@ -87,7 +90,7 @@ std::cout << arr[1] << std::endl;
 
 ### 4. Отнимание указателей
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* pStart = &arr[0];
 int* p = pStart + 1;
 
@@ -112,11 +115,12 @@ std::cout << std::endl;
 ### 5. (продвинутый уровень): Отнимание адресов
 ```cpp
 #include <cstdint>
+#include <array>
 #include <iostream>
 
 int main()
 {
-   int arr[2]{};
+   std::array<int, 2> arr{};
    int* a = &arr[0];
    int* b = &arr[1];
    uintptr_t a1 = reinterpret_cast<uintptr_t>(a);
@@ -140,45 +144,35 @@ int main()
 Ответ будет 4 — разница указателей в байтах.
 </details>
 
-### 6. (продвинутый уровень): Выход за переделы переменной
-```cpp
-int a = 5;
-int b = 6;
-int* pa = &a;
-int* pb = pa + 1;
+### 6. Чтение за пределами массива из одного элемента (углублённый уровень)
 
-std::cout << *pb;
-std::cout << std::endl;
+```cpp
+std::array<int, 1> value{ 5 };
+int* p{ value.data() };
+int* past{ p + 1 };
+std::cout << *past << std::endl;
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Технически, это считается UB (undefined behavior).
-Но концептуально, выведется 6 из переменной `b`.
+Получить указатель за последним элементом допустимо, но его разыменование — неопределённое поведение.
+Определённого результата вывода нет.
+Соседство другого объекта в памяти не делает этот указатель допустимым для чтения.
 </details>
 
-### 7. (продвинутый уровень): Выход за пределы массива
-```cpp
-int a[2]{};
-int b = 6;
-int* p = &a[2];
-*p = 7;
+### 7. Запись за пределами массива (углублённый уровень)
 
-std::cout << b;
-std::cout << std::endl;
+```cpp
+std::array<int, 2> arr{};
+int* past{ arr.data() + arr.size() };
+*past = 7;
 ```
 
 <details>
 <summary>Ответ</summary>
 
-Технически это такая же ситуация, как и выше.
-Запомните, что выходя за пределы массива, 
-вы технически можете добраться до памяти другой переменной.
-Выход за пределы массива не является ошибкой в C
-и никак не ограничивается во время выполнения программы.
-
-Здесь выведется 7.
+`past` — допустимый указатель за последним элементом, но запись через него — неопределённое поведение.
+Элементам соответствуют только индексы от нуля до `arr.size() - 1`.
+По адресу за последним элементом нет дополнительного элемента массива.
 </details>
-
-<!-- Missing: different pointer type -->

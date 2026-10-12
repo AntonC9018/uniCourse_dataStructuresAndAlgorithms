@@ -486,3 +486,49 @@ Use `auto&` when you want to change the original —
 for example, the elements of an array in a loop —
 and `const auto&` when you only want to read it.
 </details>
+
+## References to std::array
+
+Include `<array>` for these examples.
+
+### 1. Reference to an array
+```cpp
+std::array<int, 2> arr{ 1, 2 };
+std::array<int, 2>& other{ arr };
+other[0] = 3;
+std::cout << arr[0] << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+This illustrates creating a reference to an object of C++ array type.
+You can think of `other` as another name for `arr`.
+</details>
+
+### 2. Reference to an array element
+```cpp
+std::array<int, 2> arr{ 1, 2 };
+int& a = arr[0];
+a = 3;
+```
+
+<details>
+<summary>Answer</summary>
+
+`a = 3` overwrites the first element of the array
+because `a` refers to the first element, `arr[0]` (an object inside the array).
+</details>
+
+### 3. Address of an element through `data`
+```cpp
+std::array<int, 2> arr { 1, 2 };
+int& arr1 = *(arr.data() + 1);
+```
+
+<details>
+<summary>Answer</summary>
+
+This is similar to the code above, but the expression is more complex.
+Here, `arr1` becomes a reference to `arr[1]`.
+</details>

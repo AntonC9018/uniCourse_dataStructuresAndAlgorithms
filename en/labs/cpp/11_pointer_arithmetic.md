@@ -17,9 +17,11 @@ slug: en/cpp/labs/pointer-arithmetic
 
 ## Examples to aid understanding
 
+For fragments without `main`, include `<array>` and `<iostream>` and place the code in `main`.
+
 ### 1. Moving a pointer by 1
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* p = &arr[0];
 p = p + 1;
 *p = 2;
@@ -40,6 +42,7 @@ Reading from `*p` is equivalent to reading from `arr[1]`.
 ### 2. Returning the next array element address
 
 ```cpp
+#include <array>
 #include <iostream>
 
 int* nextElement(int* current)
@@ -49,7 +52,7 @@ int* nextElement(int* current)
 
 int main()
 {
-    int arr[3]{ 4, 7, 9 };
+    std::array<int, 3> arr{ 4, 7, 9 };
     int* next{ nextElement(&arr[0]) };
     *next = 8;
     std::cout << arr[1] << std::endl;
@@ -68,7 +71,7 @@ The caller must ensure that a next element exists before dereferencing the retur
 
 ### 3. Accessing an array element through an expression
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* p = &arr[0];
 *(p + 1) = 6;
 
@@ -87,7 +90,7 @@ Note that `*(p + 1)` *does not change `p`*; it creates a *temporary address offs
 
 ### 4. Subtracting pointers
 ```cpp
-int arr[2]{};
+std::array<int, 2> arr{};
 int* pStart = &arr[0];
 int* p = pStart + 1;
 
@@ -112,11 +115,12 @@ The code will print 1 and then -1.
 ### 5. (advanced level): Subtracting addresses
 ```cpp
 #include <cstdint>
+#include <array>
 #include <iostream>
 
 int main()
 {
-   int arr[2]{};
+   std::array<int, 2> arr{};
    int* a = &arr[0];
    int* b = &arr[1];
    uintptr_t a1 = reinterpret_cast<uintptr_t>(a);
@@ -140,44 +144,35 @@ Instead, it operates on the pointers' numeric values.
 The result will be 4 — the difference between the addresses in bytes.
 </details>
 
-### 6. (advanced level): Going beyond a variable's bounds
-```cpp
-int a = 5;
-int b = 6;
-int* pa = &a;
-int* pb = pa + 1;
+### 6. Reading past a one-element array (advanced)
 
-std::cout << *pb;
-std::cout << std::endl;
+```cpp
+std::array<int, 1> value{ 5 };
+int* p{ value.data() };
+int* past{ p + 1 };
+std::cout << *past << std::endl;
 ```
 
 <details>
 <summary>Answer</summary>
 
-Technically, this is considered UB (undefined behavior).
-It might print 6, the value of variable `b`.
+Forming the one-past pointer is valid; dereferencing it is undefined behavior.
+There is no defined output to predict.
+The pointer does not become valid just because another object might occupy nearby memory.
 </details>
 
-### 7. (advanced level): Going beyond an array's bounds
-```cpp
-int a[2]{};
-int b = 6;
-int* p = &a[2];
-*p = 7;
+### 7. Writing past an array (advanced)
 
-std::cout << b;
-std::cout << std::endl;
+```cpp
+std::array<int, 2> arr{};
+int* past{ arr.data() + arr.size() };
+*past = 7;
 ```
 
 <details>
 <summary>Answer</summary>
 
-This is essentially the same situation as above.
-Remember that going beyond an array's bounds can reach memory occupied by another variable.
-Going beyond an array's bounds does not necessarily cause a runtime error in C++
-and is not automatically prevented at runtime.
-
-In this example, it might print 7.
+`past` is a valid one-past pointer, but writing through it is undefined behavior.
+Only indices from zero up to `arr.size() - 1` identify elements.
+There is no extra element available at the one-past address.
 </details>
-
-<!-- Missing: different pointer type -->

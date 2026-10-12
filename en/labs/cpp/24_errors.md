@@ -30,6 +30,7 @@ Unless an example explicitly says otherwise, assertions are enabled.
 ### 1. Returning a bool
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -77,6 +78,7 @@ This interface uses `true` for success and `false` for failure.
 ### 2. Printing an error
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -119,6 +121,7 @@ If more checks were added, the bool alone would not identify which one failed.
 ### 3. Returning the failure kind
 
 ```cpp
+#include <array>
 #include <iostream>
 
 enum class GradeError
@@ -179,6 +182,7 @@ The helper then translates that status into a message for a person.
 ### 4. A printer with two failure kinds
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -261,6 +265,7 @@ The helper prints a message for each enum result without replacing the enum stat
 ### 5. A bool and an output pointer
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int* quotient)
@@ -311,6 +316,7 @@ On failure, no assignment occurs: the second block's quotient remains `99`, not 
 ### 6. The same output through a reference
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int& quotient)
@@ -357,6 +363,7 @@ Each block starts with a new quotient initialized to `99`.
 ### 7. An output with no initial value
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int& quotient)
@@ -417,6 +424,7 @@ Checking the status is essential when the output has no initial value.
 ### 8. Ignoring the status
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct TemperatureSensor
@@ -459,6 +467,7 @@ Use the output as a new reading only after checking that the call succeeded.
 ### 9. An enum and an output value
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct VendingMachine
@@ -538,6 +547,7 @@ The same machine is deliberately kept across the blocks to show its stock being 
 ### 10. A null pointer means failure
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <span>
 
@@ -555,7 +565,7 @@ int* findValue(std::span<int> values, int wanted)
 
 int main()
 {
-    int values[]{ 3, 5, 7 };
+    std::array<int, 3> values{ 3, 5, 7 };
     int* found = findValue(values, 5);
     if (found != nullptr)
     {
@@ -583,6 +593,7 @@ The array remains alive while `found` is used; the loop's reference variable ref
 ### 11. Returning a custom result structure
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct TicketMachine
@@ -642,13 +653,14 @@ When offline, it cannot issue a ticket and leaves the counter unchanged.
 
 The structure returns the status and ticket number together, without an output parameter.
 On failure, `number` is initialized to `0`, but it does not represent an issued ticket.
-This is the custom optional structure from the [optional lab](18_optional.md), applied to an operation that can fail.
+This is the custom optional structure from the [optional lab](19_optional.md), applied to an operation that can fail.
 An enum status field could provide a specific failure kind if the interface needed one.
 </details>
 
 ### 12. Returning std::optional
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <optional>
 
@@ -706,6 +718,7 @@ Like a bool status, the empty state alone does not explain the failure kind.
 ### 13. Collecting multiple errors
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <vector>
 
@@ -761,6 +774,7 @@ The returned bool describes whether this call found any errors.
 ### 14. Reusing the error list
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <vector>
 
@@ -814,6 +828,7 @@ If the caller wants a fresh list for each call, it should create a new vector or
 ### 15. An assertion that passes
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -837,6 +852,7 @@ Unlike a bool return value, an assertion does not report a recoverable failure t
 ### 16. An assertion that fails
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -865,6 +881,7 @@ Do not use assertions as the only validation of expected bad input.
 ### 17. An assertion for an output-parameter contract
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -922,6 +939,7 @@ Assertions and ordinary error reporting serve different purposes.
 ### 18. Checking success and failure with assertions
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -1006,6 +1024,7 @@ assumptions about the machine's state, checked with assertions.
 #include <array>
 #include <cassert>
 #include <cstddef>
+#include <array>
 #include <iostream>
 #include <string_view>
 
@@ -1194,4 +1213,4 @@ On success, deduct the exchanged amount and fee from the balance; on failure, le
 Choose and document units and a rounding rule for monetary amounts.
 
 
-[Tagged unions and flags](35_tagged_unions_and_flags.md) and [exceptions](36_exceptions.md) have separate later labs.
+[Tagged unions and flags](36_tagged_unions_and_flags.md) and [exceptions](37_exceptions.md) have separate later labs.
