@@ -68,8 +68,8 @@ Choosing the larger number would require more of the other ingredient than we ha
 
 Find the number of portions for which there are enough eggs: $`a = X`$.
 
-Find the number of portions for which there is enough kefir: $`b =
-floor(\frac{Y}{250})`$, where $`250`$ is the amount of kefir required for 1 portion.
+Find the number of portions for which there is enough kefir: $`b = floor(\frac{Y}{250})`$,
+where $`250`$ is the amount of kefir required for 1 portion.
 $`floor`$ discards the fractional part because we count only complete portions.
 This is represented by the integer part of the result.
 For example, when $`Y = 300`$, the integer part is $`1`$,
