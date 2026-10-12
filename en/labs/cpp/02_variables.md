@@ -236,7 +236,21 @@ The compiler reports a type incompatibility error.
 You cannot write the string literal `"abc"` to a cell that stores an `int`.
 </details>
 
-### 8. Uniform initialization
+### 8. Reversing the output expression
+
+```cpp
+"ggg" >> std::cout;
+```
+
+<details>
+<summary>Answer</summary>
+
+It does not compile.
+The output stream goes on the left, and output uses `<<`: `std::cout << "ggg";`.
+Changing both the operand order and the operator does not produce an equivalent expression.
+</details>
+
+### 9. Uniform initialization
 ```cpp
 int a{5};
 ```
@@ -265,7 +279,7 @@ int a{ 5.6 };
 ```
 </details>
 
-### 9. Empty initialization
+### 10. Empty initialization
 ```cpp
 int a{};
 std::cout << a << std::endl;
@@ -282,7 +296,7 @@ This is different from `int a;`, which leaves `a` uninitialized with garbage dat
 Unlike an uninitialized variable, reading from `a` here is allowed.
 </details>
 
-### 10. Assigning empty braces
+### 11. Assigning empty braces
 
 ```cpp
 int a{ 7 };
@@ -297,7 +311,7 @@ It prints `0`.
 `a = {}` assigns a value-initialized `int`, which is zero; it does not leave `a` uninitialized.
 </details>
 
-### 11. An int{} expression
+### 12. An int{} expression
 
 ```cpp
 int a{ 7 };
@@ -315,7 +329,7 @@ It prints `0` twice.
 The same expression can be used in an assignment or an initialization.
 </details>
 
-### 12. The `sizeof` operator
+### 13. The `sizeof` operator
 ```cpp
 std::cout << sizeof(int) << std::endl;
 std::cout << sizeof(uint8_t) << std::endl;
@@ -341,7 +355,7 @@ because types are known only at compile time and do not survive to run time.
 
 </details>
 
-### 13. `auto`
+### 14. `auto`
 
 What type will `a` have in this example?
 ```cpp
@@ -364,7 +378,7 @@ a = "abc"; // error: `a` is `int`, it cannot become a string later
 ```
 </details>
 
-### 14. `auto` without initialization
+### 15. `auto` without initialization
 ```cpp
 auto a;
 a = 5;
@@ -379,7 +393,7 @@ Assigning `5` on the next line does not fix it —
 the type must be fixed at the definition and cannot be inferred retroactively from a later assignment.
 </details>
 
-### 15. `auto` with uniform initialization
+### 16. `auto` with uniform initialization
 
 ```cpp
 auto a{ 5 };
@@ -392,7 +406,7 @@ auto a{ 5 };
 The braces contain one initializer expression, just as in `auto a = 5;`.
 </details>
 
-### 16. `auto` from another variable
+### 17. `auto` from another variable
 ```cpp
 int a{ 5 };
 auto b{ a + 5 };
@@ -406,7 +420,7 @@ auto b{ a + 5 };
 The same holds for any expression: `auto c{ a };` would also give `c` the type `int`.
 </details>
 
-### 17. Swapping variables
+### 18. Swapping variables
 ```cpp
 int a { 1 };
 int b { 2 };

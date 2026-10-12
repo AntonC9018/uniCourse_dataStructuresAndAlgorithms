@@ -30,6 +30,7 @@ slug: ru/cpp/labs/errors
 ### 1. Возврат bool
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -77,6 +78,7 @@ Bool сообщает вызывающей функции, выполнена л
 ### 2. Вывод сообщения об ошибке
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -119,6 +121,7 @@ int main()
 ### 3. Возврат причины ошибки
 
 ```cpp
+#include <array>
 #include <iostream>
 
 enum class GradeError
@@ -179,6 +182,7 @@ Enum передаёт причину ошибки вызывающей функ�
 ### 4. Принтер с двумя причинами ошибки
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct Printer
@@ -262,6 +266,7 @@ int main()
 ### 5. Bool и выходной параметр-указатель
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int* quotient)
@@ -312,6 +317,7 @@ Bool сообщает об успехе, а частное записывает�
 ### 6. Тот же выходной параметр через ссылку
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int& quotient)
@@ -358,6 +364,7 @@ int main()
 ### 7. Выходная переменная без начального значения
 
 ```cpp
+#include <array>
 #include <iostream>
 
 bool divideExactly(int dividend, int divisor, int& quotient)
@@ -417,6 +424,7 @@ int main()
 ### 8. Игнорирование признака успеха
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct TemperatureSensor
@@ -459,6 +467,7 @@ int main()
 ### 9. Enum и выходное значение
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct VendingMachine
@@ -537,6 +546,7 @@ Enum сообщает конкретную причину ошибки, а сс�
 ### 10. Нулевой указатель означает ошибку
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <span>
 
@@ -554,7 +564,7 @@ int* findValue(std::span<int> values, int wanted)
 
 int main()
 {
-    int values[]{ 3, 5, 7 };
+    std::array<int, 3> values{ 3, 5, 7 };
     int* found = findValue(values, 5);
     if (found != nullptr)
     {
@@ -582,6 +592,7 @@ int main()
 ### 11. Возврат собственной структуры результата
 
 ```cpp
+#include <array>
 #include <iostream>
 
 struct TicketMachine
@@ -641,7 +652,7 @@ int main()
 
 Структура возвращает признак успеха и номер талона вместе, без выходного параметра.
 При ошибке `number` инициализируется нулём, но это не номер выданного талона.
-Это собственная структура optional из [лабораторной по optional](17_optional.md),
+Это собственная структура optional из [лабораторной по optional](18_optional.md),
 применённая к операции, которая может завершиться ошибкой.
 Если интерфейсу нужна конкретная причина ошибки, поле с признаком успеха можно заменить на enum.
 </details>
@@ -649,6 +660,7 @@ int main()
 ### 12. Возврат std::optional
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <optional>
 
@@ -706,6 +718,7 @@ int main()
 ### 13. Сбор нескольких ошибок
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <vector>
 
@@ -761,6 +774,7 @@ int main()
 ### 14. Повторное использование списка ошибок
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <vector>
 
@@ -814,6 +828,7 @@ int main()
 ### 15. Успешная проверка assert
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -837,6 +852,7 @@ int main()
 ### 16. Неуспешная проверка assert
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -866,6 +882,7 @@ Assert обнаруживает нарушение предположения; �
 ### 17. Assert для проверки условия использования выходного параметра
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -924,6 +941,7 @@ Assert и обычная обработка ошибок решают разны
 ### 18. Проверка успеха и ошибки через assert
 
 ```cpp
+#include <array>
 #include <iostream>
 #include <cassert>
 
@@ -1009,6 +1027,7 @@ int main()
 #include <array>
 #include <cassert>
 #include <cstddef>
+#include <array>
 #include <iostream>
 #include <string_view>
 
@@ -1185,5 +1204,5 @@ sold out
 Выберите и опишите единицы денежных сумм и правило округления.
 
 
-[Размеченным объединениям и флагам](35_tagged_unions_and_flags.md) и
-[исключениям](36_exceptions.md) посвящены отдельные лабораторные в конце курса.
+[Размеченным объединениям и флагам](36_tagged_unions_and_flags.md) и
+[исключениям](37_exceptions.md) посвящены отдельные лабораторные в конце курса.

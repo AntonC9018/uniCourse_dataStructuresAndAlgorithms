@@ -56,7 +56,39 @@ So the following happens:
 - `auto` infers the type of the initializer expression and is replaced with `uint8_t`.
 </details>
 
-### 2. `static_cast` to a larger type
+### 2. A cast changes the expression type
+
+```cpp
+int value{ 7 };
+double half{ static_cast<double>(value) / 2 };
+int integerHalf{ value / 2 };
+std::cout << value << std::endl;
+std::cout << half << std::endl;
+std::cout << integerHalf << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `7`, `3.5`, and `3`.
+`static_cast<double>(value)` produces a `double` expression for the first division.
+It does not change the type or stored value of the `int` variable `value`.
+The second division still uses integers, so its result is `3`.
+
+Before division, both operands are brought to the same numeric type.
+One operand is already `double`, so the other is converted to `double` automatically.
+The `int` values used here fit in `double`, so their values are preserved.
+The compiler supplies a conversion equivalent to `static_cast<double>(2)`, just as it does for a smaller integer
+converted to a larger integer type.
+Written with both conversions explicit, the first division is:
+
+```cpp
+double half{ static_cast<double>(value) / static_cast<double>(2) };
+```
+
+</details>
+
+### 3. `static_cast` to a larger type
 
 ```cpp
 uint8_t a{ 5 };
@@ -72,7 +104,7 @@ you can assign `a` directly to `b`,
 which performs the conversion from `uint8_t` to `int` automatically.
 </details>
 
-### 3. `static_cast` of a negative number to a larger type
+### 4. `static_cast` of a negative number to a larger type
 
 ```cpp
 int8_t a{ -3 };
@@ -92,7 +124,7 @@ and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
 </details>
 
 
-### 4. `static_cast`
+### 5. `static_cast`
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -171,7 +203,7 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
-### 5. Bitwise operation (advanced level)
+### 6. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -229,7 +261,7 @@ which is why extending a negative value fills the upper bits with 1s instead.
 
 </details>
 
-### 6. Changing the sign (advanced level)
+### 7. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>

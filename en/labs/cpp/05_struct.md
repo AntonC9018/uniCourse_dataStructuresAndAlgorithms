@@ -17,7 +17,6 @@ slug: en/cpp/labs/struct
 - Field
 - Structure initialization
 - Pointer to a structure
-- Field offset
 - The `->` operator
 
 ## Examples for understanding
@@ -752,34 +751,7 @@ This demonstrates that you can take the address of a field after applying `->`.
 It prints `2`.
 </details>
 
-### 24. Field address relative to a structure address
-```cpp
-#include <iostream>
-
-struct A
-{
-    int f;
-};
-
-int main()
-{
-    A a { };
-    A* pa { &a };
-    int* pf { &pa->f };
-    ptrdiff_t diff { reinterpret_cast<uint8_t*>(pf) - reinterpret_cast<uint8_t*>(pa) };
-    std::cout << diff << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-It prints `0`.
-
-The first field of a structure and the structure itself are always located at the same memory address.
-</details>
-
-### 25. (advanced level): Structure size (3)
+### 24. (advanced level): Structure size (3)
 ```cpp
 #include <iostream>
 
@@ -824,7 +796,7 @@ slot is no smaller than the slots of that nested structure.
 Alignment can be disabled using `#pragma pack`.
 </details>
 
-### 26. (advanced level): Structure size (4)
+### 25. (advanced level): Structure size (4)
 ```cpp
 #include <iostream>
 
@@ -850,33 +822,7 @@ The reason is that 2 objects cannot have the same memory address.
 Objects are covered in the next lab.
 </details>
 
-### 27. (advanced level): Field offsets
-```cpp
-#include <iostream>
-
-struct A
-{
-    int a;
-    int b;
-};
-
-int main()
-{
-    std::cout << offsetof(A, a) << std::endl;
-    std::cout << offsetof(A, b) << std::endl;
-}
-```
-
-<details>
-<summary>Answer:</summary>
-
-`offsetof` is evaluated at compile time and gives the byte
-offset of a specified field from the beginning of a structure.
-
-It prints `0` for `a` and `4` for `b`.
-</details>
-
-### 28. Copying a structure with a pointer field
+### 26. Copying a structure with a pointer field
 ```cpp
 #include <iostream>
 
