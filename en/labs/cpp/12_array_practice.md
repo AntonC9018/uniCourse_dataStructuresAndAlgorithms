@@ -15,35 +15,42 @@ Assume supplied indices are valid and quantities are sufficient unless the probl
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
 
-### 1. Reading an access-code digit
+### 1. Rebuilding a matchstick display
 
-A four-digit access code is 3, 1, 4, 2.
-Write a function that returns the digit at a supplied position, counting positions from zero.
-Report the digit at position 2.
+Digits are built from matchsticks in the shape of a seven-segment display.
+Digits 0–9 need 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 sticks respectively.
+A display shows 208.
+Rebuild it as 731 using those sticks.
+How many sticks remain unused?
+Write a function that counts the sticks needed for any three supplied digits.
 
 <details>
 <summary>Possible solution</summary>
 
 ```cpp
 #include <array>
-#include <cstddef>
 #include <iostream>
 
-int digitAt(std::array<int, 4> digits, size_t position)
+int countMatchsticks(std::array<int, 10> counts, std::array<int, 3> digits)
 {
-    return digits[position];
+    return counts[digits[0]] + counts[digits[1]] + counts[digits[2]];
 }
 
 int main()
 {
-    std::array<int, 4> digits{ 3, 1, 4, 2 };
-    int digit{ digitAt(digits, 2) };
-    std::cout << digit << std::endl;
+    std::array<int, 10> counts{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 };
+    std::array<int, 3> original{ 2, 0, 8 };
+    std::array<int, 3> replacement{ 7, 3, 1 };
+    int available{ countMatchsticks(counts, original) };
+    int needed{ countMatchsticks(counts, replacement) };
+    std::cout << available - needed << std::endl;
 }
 ```
 
-It prints `4`.
-Position `2` selects the third digit.
+It prints `8`.
+The digits in 208 need `5 + 6 + 7 = 18` sticks; the digits in 731 need `3 + 5 + 2 = 10`.
+Each digit selects its count from the lookup table.
+For example, `digits[0]` gives `2`, and `counts[2]` gives `5`.
 
 </details>
 

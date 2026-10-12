@@ -15,35 +15,42 @@ slug: ru/cpp/labs/array-practice
 У первых трёх задач и продвинутой задачи о хранении в байтах есть возможные решения.
 Остальные задачи решите самостоятельно.
 
-### 1. Чтение цифры кода доступа
+### 1. Число из спичек
 
-Код доступа состоит из четырёх цифр: 3, 1, 4, 2.
-Напишите функцию, которая возвращает цифру в заданной позиции, считая позиции с нуля.
-Выведите цифру в позиции 2.
+Цифры выкладывают из спичек в форме семисегментного индикатора.
+Для цифр 0–9 нужно соответственно 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 спичек.
+Из спичек выложено число 208.
+Переложите спички так, чтобы получилось 731.
+Сколько спичек останется неиспользованными?
+Напишите функцию, которая считает, сколько спичек нужно для любых трёх заданных цифр.
 
 <details>
 <summary>Возможное решение</summary>
 
 ```cpp
 #include <array>
-#include <cstddef>
 #include <iostream>
 
-int digitAt(std::array<int, 4> digits, size_t position)
+int countMatchsticks(std::array<int, 10> counts, std::array<int, 3> digits)
 {
-    return digits[position];
+    return counts[digits[0]] + counts[digits[1]] + counts[digits[2]];
 }
 
 int main()
 {
-    std::array<int, 4> digits{ 3, 1, 4, 2 };
-    int digit{ digitAt(digits, 2) };
-    std::cout << digit << std::endl;
+    std::array<int, 10> counts{ 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 };
+    std::array<int, 3> original{ 2, 0, 8 };
+    std::array<int, 3> replacement{ 7, 3, 1 };
+    int available{ countMatchsticks(counts, original) };
+    int needed{ countMatchsticks(counts, replacement) };
+    std::cout << available - needed << std::endl;
 }
 ```
 
-Печатает `4`.
-Позиция `2` соответствует третьей цифре.
+Печатает `8`.
+Для цифр числа 208 нужно `5 + 6 + 7 = 18` спичек, а для цифр числа 731 — `3 + 5 + 2 = 10`.
+Каждая цифра выбирает нужное количество спичек из таблицы.
+Например, `digits[0]` даёт `2`, а `counts[2]` даёт `5`.
 
 </details>
 
