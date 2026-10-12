@@ -12,14 +12,14 @@ Use the concepts from the earlier labs to model each problem and write procedura
 Use `std::array` for fixed-size storage.
 Do not use loops.
 Assume supplied indices are valid and quantities are sufficient unless the problem says otherwise.
-The first three problems have possible solutions.
+The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
 
-### 1. Constants selected by index
+### 1. Feeding aquarium fish
 
-A shop has three price categories.
-Their base prices are 10, 20, and 30 coins, and their multipliers are 1, 1.5, and 2.
-Look up the price and multiplier for the second category.
+Three aquariums hold 10, 20, and 30 fish.
+Their fish need 1, 1.5, and 2 grams of feed per fish per day, respectively.
+Report the fish count and daily feed portion per fish for the second aquarium.
 
 <details>
 <summary>Possible solution</summary>
@@ -30,17 +30,17 @@ Look up the price and multiplier for the second category.
 
 int main()
 {
-    std::array<int, 3> prices{ 10, 20, 30 };
-    std::array<float, 3> multipliers{ 1.0f, 1.5f, 2.0f };
-    int price{ prices[1] };
-    float multiplier{ multipliers[1] };
-    std::cout << price << std::endl;
-    std::cout << multiplier << std::endl;
+    std::array<int, 3> fishCounts{ 10, 20, 30 };
+    std::array<float, 3> feedGramsPerFish{ 1.0f, 1.5f, 2.0f };
+    int fishCount{ fishCounts[1] };
+    float feedPortion{ feedGramsPerFish[1] };
+    std::cout << fishCount << std::endl;
+    std::cout << feedPortion << std::endl;
 }
 ```
 
 It prints `20` and `1.5`.
-The arrays contain fixed configuration values; indexing selects the value for one category.
+Indexing selects the fish count and feeding requirement for the same aquarium.
 The `f` suffix makes these decimal literals have type `float`.
 
 </details>
@@ -48,9 +48,10 @@ The `f` suffix makes these decimal literals have type `float`.
 ### 2. Compiling source code
 
 Source code has a line count, and machine code has an instruction count.
-A compiler stores instructions-per-line coefficients for three optimization levels: 2.5, 1.5, and 1.25.
-Compile 101 source lines using the third level.
-Keep only whole instructions in the result.
+There are three optimization levels: no optimization, basic optimization, and full optimization.
+The ratio of machine instructions per source line depends on the compiler and optimization level.
+In this simplified model, MSVC uses 2.5, 1.5, and 1.25; GCC uses 3, 1.75, and 1.
+Compile 101 source lines with each compiler at full optimization, keeping only whole instructions.
 
 <details>
 <summary>Possible solution</summary>
@@ -89,16 +90,20 @@ MachineCode compile(Compiler* compiler, SourceCode source, OptimizationLevel lev
 
 int main()
 {
-    Compiler compiler{ std::array<double, 3>{ 2.5, 1.5, 1.25 } };
+    Compiler msvc{ std::array<double, 3>{ 2.5, 1.5, 1.25 } };
+    Compiler gcc{ std::array<double, 3>{ 3.0, 1.75, 1.0 } };
     SourceCode source{ 101 };
     OptimizationLevel level{ 2 };
-    MachineCode result{ compile(&compiler, source, level) };
-    std::cout << result.instructionCount << std::endl;
+    MachineCode msvcResult{ compile(&msvc, source, level) };
+    MachineCode gccResult{ compile(&gcc, source, level) };
+    std::cout << msvcResult.instructionCount << std::endl;
+    std::cout << gccResult.instructionCount << std::endl;
 }
 ```
 
-It prints `126`.
-The level selects coefficient `1.25`; multiplication gives `126.25`, and conversion to `int` discards the fraction.
+It prints `126` and `101`.
+For MSVC, the level selects `1.25`; multiplication gives `126.25`, and conversion to `int` discards the fraction.
+For GCC, the same level selects `1`, producing `101` instructions.
 The cast changes the expression's type.
 The type of `source.lineCount` remains `int`.
 
@@ -106,10 +111,10 @@ The type of `source.lineCount` remains `int`.
 
 ### 3. Fridge slots
 
-A fridge has three slots, each holding milk and eggs.
-The slots initially contain `(100 ml, 2 eggs)`, `(300 ml, 0 eggs)`, and `(0 ml, 5 eggs)`.
-Pour 120 ml from the second slot into an empty cup.
-Report the remaining milk, the cup's contents, and the first slot's eggs.
+A fridge has three slots, each holding one milk bottle.
+The bottles contain 100 ml, 300 ml, and 200 ml.
+Pour 120 ml from the second bottle into an empty cup.
+Report the milk left in that bottle, the cup's contents, and the milk in the first bottle.
 
 <details>
 <summary>Possible solution</summary>
@@ -119,15 +124,14 @@ Report the remaining milk, the cup's contents, and the first slot's eggs.
 #include <cstddef>
 #include <iostream>
 
-struct Slot
+struct MilkBottle
 {
     int milkMl;
-    int eggs;
 };
 
 struct Fridge
 {
-    std::array<Slot, 3> slots;
+    std::array<MilkBottle, 3> slots;
 };
 
 struct Cup
@@ -144,100 +148,164 @@ void pourMilk(Fridge* fridge, size_t slotIndex, Cup* cup, int amountMl)
 int main()
 {
     Fridge fridge{
-        std::array<Slot, 3>{ Slot{ 100, 2 }, Slot{ 300, 0 }, Slot{ 0, 5 } }
+        std::array<MilkBottle, 3>{ MilkBottle{ 100 }, MilkBottle{ 300 }, MilkBottle{ 200 } }
     };
     Cup cup{};
     pourMilk(&fridge, 1, &cup, 120);
     std::cout << fridge.slots[1].milkMl << std::endl;
     std::cout << cup.milkMl << std::endl;
-    std::cout << fridge.slots[0].eggs << std::endl;
+    std::cout << fridge.slots[0].milkMl << std::endl;
 }
 ```
 
-It prints `180`, `120`, and `2`.
+It prints `180`, `120`, and `100`.
 The function changes the selected slot and the caller's cup through pointers.
-The other slots and the egg counts remain unchanged.
+The other bottles remain unchanged.
 
 </details>
 
 ### 4. Editing a file
 
 A file contains five lines, each with a character count.
-Add characters to one selected line, swap two selected lines, and move the first line after the third.
-Keep the relative order of the other lines when moving a line.
+Add characters to one selected line and swap two selected lines.
 
-### 5. Raw-byte storage (advanced)
-
-Store several small structs in a fixed byte buffer, recording how many bytes have been used with a `size_t` position.
-Reserve space by receiving the item's `sizeof` as a parameter, then advance the position.
-Return an address that the caller converts with `reinterpret_cast`.
-Account for alignment and available capacity, and demonstrate two different item types occupying separate storage.
-
-This problem needs additional knowledge of alignment and object lifetimes.
-Use suitably aligned storage and begin each object's lifetime before accessing its fields.
-For example, use placement `new`.
-Casting an address alone does not create an object.
-Restrict the exercise to trivial structs.
-
-### 6. Bus fares
+### 5. Bus fares
 
 A bus service has a table of fares for three passenger categories.
 Buy a given number of tickets for a selected category and calculate the money remaining from a supplied payment.
 
-### 7. Bakery batches
+### 6. Bakery batches
 
 A bakery has three recipes, each describing flour and sugar needed per batch.
 Choose a recipe and prepare a given number of batches, updating the ingredient store and the count of finished batches.
 
-### 8. Inventory transfer
+### 7. Storage drawers
 
-An inventory has four slots, each holding an item ID and a quantity.
-Move a given quantity between two selected slots that contain the same item, then swap two complete slots.
+A cabinet has four drawers; each drawer holds a fastener type and a count.
+Move the entire contents of one selected drawer into an empty drawer, leaving the original drawer empty.
 
-### 9. Train carriages
+### 8. Train carriages
 
 A train has three carriages, each with a seat capacity and a passenger count.
 Move passengers from one selected carriage to another and report both carriages' free seats.
 
-### 10. Photo sizes
+### 9. Cropping a film frame
 
-A photo has a width and height.
-Three export presets provide scale factors.
-Create an exported photo using a selected preset, keeping whole pixels and leaving the original photo unchanged.
+A film strip contains four frames, each with a width and height in pixels.
+Crop a selected frame by specified amounts from its left, right, top, and bottom edges.
+Return the cropped frame without changing the original, then replace a different frame with the result.
 
-### 11. Hotel minibar
+### 10. Hotel minibar
 
 A hotel room has a minibar with four product slots, and the hotel has a price table.
 Take specified quantities from two selected slots and update both their stock and the room's bill.
 
-### 12. Parcel pricing
+### 11. Playlist playback
 
-A parcel has a weight, and a delivery service has three destination categories with different price coefficients.
-Calculate a whole-number shipping price for a selected destination and apply it to the customer's balance.
+A playlist holds five tracks with durations in seconds.
+A player records which track is playing and the elapsed time within it.
+Seek to a supplied time in the current track and report how many seconds remain.
+Select another track and start it from the beginning.
 
-### 13. Playlist editing
+### 12. Mixing stage lights
 
-A playlist holds five tracks, each with an ID and duration.
-Replace one selected track, swap two tracks, and calculate the duration of the first three tracks.
+A lighting desk stores four colors, each with red, green, and blue intensities between 0 and 1.
+Mix two selected colors using a supplied fraction of the first color and the remaining fraction of the second.
+Store the resulting color in a selected spotlight without changing the desk's original colors.
 
-### 14. Greenhouse watering
+### 13. Theater seating
 
-A greenhouse has three beds with water reserves, and a watering program specifies amounts for the three bed types.
-Water a selected bed from a tank, updating both the bed and tank quantities.
+A theater has three rows of four seats; each seat stores a ticket number, with zero meaning empty.
+Seat a customer at a supplied row and column, then move their ticket to another empty seat.
+Leave the original seat empty.
 
-### 15. Laundry programs
+### 14. Robot delivery route
 
-A washing machine has three programs with different durations and detergent requirements.
-Run one selected program, consuming detergent and adding its duration to the machine's accumulated working time.
+A robot starts at a given position, and a delivery map stores four destinations as x/y coordinates.
+Move to two destinations chosen by index, in order.
+For each leg, report the movement vector; report the final position too.
 
-### 16. Robot movements
+### 15. Race finish photo
 
-A robot has a position, and its controller stores three movement commands as coordinate offsets.
-Apply three commands chosen by index in the supplied order.
-Report the robot's final position.
+A race records three finish times in seconds, already in finishing order.
+A finish photo shows the runners at the instant the winner finishes.
+Each runner's speed is constant over the 100-meter race.
+Calculate the two other runners' distances from the finish line at that instant.
 
-### 17. Exam scores
+### 16. Linking freight wagons
 
-An exam has three parts with different weights, and a student has a score for each part.
-Calculate a weighted result, keeping only the whole-number part.
-Allow the same scores to use a different set of weights.
+Three freight wagons have cargo weights and are stored together.
+Connect them in order so each wagon knows which wagon follows it.
+Starting from the first wagon, follow the connections to add cargo to the last wagon without selecting it by index.
+Report the last wagon's new cargo weight.
+
+### 17. Raw-byte storage (advanced)
+
+Store a coin and a measurement in a fixed byte buffer, recording the used byte count with a `size_t` position.
+Reserve space using the item's size and alignment,
+and return an address that the caller converts with `reinterpret_cast`.
+Assume the buffer has enough room for both items and any alignment padding.
+
+<details>
+<summary>Possible solution</summary>
+
+```cpp
+#include <array>
+#include <cstddef>
+#include <iostream>
+#include <memory>
+#include <new>
+
+struct Storage
+{
+    alignas(std::max_align_t) std::array<std::byte, 64> bytes{};
+    size_t position{};
+};
+
+void* reserve(Storage* storage, size_t itemSize, size_t itemAlignment)
+{
+    void* address{ storage->bytes.data() + storage->position };
+    size_t remaining{ storage->bytes.size() - storage->position };
+    [[maybe_unused]] void* aligned{ std::align(itemAlignment, itemSize, address, remaining) };
+    storage->position = storage->bytes.size() - remaining + itemSize;
+    return address;
+}
+
+struct Coin
+{
+    int value;
+};
+
+struct Measurement
+{
+    double value;
+};
+
+int main()
+{
+    Storage storage{};
+    void* coinAddress{ reserve(&storage, sizeof(Coin), alignof(Coin)) };
+    Coin* coin{ reinterpret_cast<Coin*>(coinAddress) };
+    [[maybe_unused]] Coin* createdCoin{ new (coin) Coin{ 5 } };
+
+    void* measurementAddress{ reserve(&storage, sizeof(Measurement), alignof(Measurement)) };
+    Measurement* measurement{ reinterpret_cast<Measurement*>(measurementAddress) };
+    [[maybe_unused]] Measurement* createdMeasurement{ new (measurement) Measurement{ 2.5 } };
+
+    std::cout << coin->value << std::endl;
+    std::cout << measurement->value << std::endl;
+    std::cout << storage.position << std::endl;
+}
+```
+
+It prints `5`, `2.5`, and typically `16` used bytes.
+`sizeof` supplies the object size, and `alignof` supplies the required alignment.
+`std::align` moves `address` forward if padding is needed and reduces `remaining` by that padding.
+The new position includes both the padding and the reserved object size.
+`reinterpret_cast` supplies the pointer type; placement `new` begins the object's lifetime and initializes its fields.
+
+> This advanced example introduces alignment and object lifetimes beyond the earlier labs.
+> Assume every reservation fits; a reusable allocator would also handle `std::align` returning a null pointer.
+> The exact used byte count depends on sizes and alignment; these trivial objects need no explicit destruction.
+
+</details>

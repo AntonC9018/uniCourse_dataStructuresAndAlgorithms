@@ -114,7 +114,7 @@ The result can also be negative.
 The code will print 1 and then -1.
 </details>
 
-### 5. (advanced level): Subtracting addresses
+### 5. Subtracting addresses
 ```cpp
 #include <cstdint>
 #include <array>
@@ -137,15 +137,19 @@ int main()
 <details>
 <summary>Answer</summary>
 
-`uintptr_t`, when available, is an unsigned integer type capable of holding a converted object pointer.
-`reinterpret_cast` performs this pointer-to-integer conversion.
+`uintptr_t` lets us treat an address as an integer.
+`reinterpret_cast<uintptr_t>` converts a pointer to this integer representation.
 
 The operation `b1 - a1` treats the addresses as numbers.
 The expression no longer retains information about the original pointer types.
 Instead, it operates on the pointers' numeric values.
 
-On implementations that map addresses to byte positions, the result is `sizeof(int)`, typically `4`.
-The pointer-to-integer mapping is implementation-defined, so this numeric distance is not universally guaranteed.
+The result is typically `4` — the difference between the addresses in bytes.
+
+> `uintptr_t` is available on implementations that provide a suitable unsigned integer type.
+> The result is `sizeof(int)` when numeric addresses correspond to byte positions and `int` occupies 4 bytes here.
+> The pointer-to-integer mapping is implementation-defined, so this numeric distance is not universally guaranteed.
+
 </details>
 
 ### 6. Field address relative to a structure address
@@ -173,11 +177,13 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `0` on implementations where pointer-to-integer conversion preserves equal addresses.
-For this simple structure, the first field and the structure have the same address.
-`reinterpret_cast<uintptr_t>` converts each pointer to an integer representation of its address.
-The subtraction here is integer arithmetic, not subtraction of pointers to different objects.
-The pointer-to-integer mapping is implementation-defined; it does not generally guarantee byte distances.
+It prints `0`.
+The first field of this structure and the structure itself are located at the same memory address.
+
+> The code subtracts integer representations of addresses, rather than pointers to different objects.
+> This output assumes the implementation preserves equal addresses when converting these pointers to integers.
+> The first-field rule applies to standard-layout structures, such as `A` here.
+
 </details>
 
 ### 7. (advanced level): Field offsets
@@ -204,8 +210,10 @@ int main()
 `offsetof` is evaluated at compile time and gives the byte
 offset of a specified field from the beginning of a structure.
 
-It prints `0` for `a`; the offset of `b` is typically `4` when `int` occupies 4 bytes.
-The exact offset depends on the implementation and its alignment rules.
+It typically prints `0` for `a` and `4` for `b`.
+
+> The exact offset depends on the implementation and its alignment rules.
+
 </details>
 
 ### 8. The array object and its first element (advanced)
@@ -228,12 +236,16 @@ int main()
 <details>
 <summary>Answer</summary>
 
-On common implementations it prints `0`: the first element starts at the beginning of the array object.
-The standard does not require this layout for `std::array`, so this result is not a portable guarantee.
-`arr.data()` has type `int*`, while `&arr` has type `std::array<int, 2>*`.
-Converting them to integers permits numeric subtraction, but does not change these original pointer types.
-Casting both pointers to byte pointers would not make their subtraction valid:
-pointer subtraction requires pointers into the same array, or its one-past position.
+The beginning of the entire array object is typically at the same address as its first element.
+Think of a `std::array` as its elements stored together.
+
+It typically prints `0`.
+
+> The standard does not require this layout for `std::array`.
+> `arr.data()` has type `int*`, while `&arr` has type `std::array<int, 2>*`.
+> Integer subtraction here assumes the implementation maps these equal addresses to equal numbers.
+> Casting both pointers to byte pointers would not make pointer subtraction between them valid.
+
 </details>
 
 ### 9. Advanced level: addresses of local variables
@@ -282,31 +294,46 @@ That is why the local variables in these calls will likely have the same address
 
 ```cpp
 std::array<int, 1> value{ 5 };
+int neighbor{ 6 };
 int* p{ value.data() };
 int* past{ p + 1 };
 std::cout << *past << std::endl;
+std::cout << neighbor << std::endl;
 ```
 
 <details>
 <summary>Answer</summary>
 
-Forming the one-past pointer is valid; dereferencing it is undefined behavior.
-There is no defined output to predict.
-The pointer does not become valid just because another object might occupy nearby memory.
+Advancing by one element goes past the only element of `value`.
+If `neighbor` happens to occupy that memory, reading through `past` might print `6` — its value.
+But a separately declared variable is not necessarily placed immediately after the array.
+
+> Forming the one-past pointer is valid; dereferencing it is undefined behavior.
+> There is no guaranteed first output, even if the addresses happen to be adjacent.
+
 </details>
 
 ### 11. Writing past an array (advanced)
 
 ```cpp
 std::array<int, 2> arr{};
+int neighbor{ 6 };
 int* past{ arr.data() + arr.size() };
 *past = 7;
+std::cout << neighbor << std::endl;
 ```
 
 <details>
 <summary>Answer</summary>
 
-`past` is a valid one-past pointer, but writing through it is undefined behavior.
-Only indices from zero up to `arr.size() - 1` identify elements.
-There is no extra element available at the one-past address.
+This is essentially the same situation as above.
+Remember that going beyond an array's bounds can reach memory occupied by another variable.
+Going beyond an array's bounds does not necessarily cause a runtime error in C++
+and is not automatically prevented at runtime.
+
+If `neighbor` happens to be stored at this address, the write might overwrite it and the program might print `7`.
+
+> `past` is a valid one-past pointer, but writing through it is undefined behavior.
+> The placement of `neighbor` and the output are not guaranteed.
+
 </details>

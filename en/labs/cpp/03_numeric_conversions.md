@@ -74,6 +74,18 @@ It prints `7`, `3.5`, and `3`.
 `static_cast<double>(value)` produces a `double` expression for the first division.
 It does not change the type or stored value of the `int` variable `value`.
 The second division still uses integers, so its result is `3`.
+
+Before division, both operands are brought to the same numeric type.
+One operand is already `double`, so the other is converted to `double` automatically.
+The `int` values used here fit in `double`, so their values are preserved.
+The compiler supplies a conversion equivalent to `static_cast<double>(2)`, just as it does for a smaller integer
+converted to a larger integer type.
+Written with both conversions explicit, the first division is:
+
+```cpp
+double half{ static_cast<double>(value) / static_cast<double>(2) };
+```
+
 </details>
 
 ### 3. `static_cast` to a larger type

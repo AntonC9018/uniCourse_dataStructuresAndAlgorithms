@@ -89,18 +89,21 @@ int value{ 5 };
 int* a{ &value };
 int *b{ &value };
 int * c{ &value };
-*a = 6;
+int     *     d{ &value };
+     *     a = 6;
 std::cout << *b << std::endl;
 std::cout << *c << std::endl;
+std::cout <<     *     d << std::endl;
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `6` twice.
-`int* a`, `int *b`, and `int * c` all declare an `int*`.
+It prints `6` three times.
+`int* a`, `int *b`, `int * c`, and `int     *     d` all declare an `int*`.
 Whitespace between these tokens does not change the declaration.
-All three pointers store the address of the same variable.
+All four pointers store the address of the same variable.
+Whitespace around the dereference operator also has no effect: `*a` and `     *     a` access the same object.
 </details>
 
 ### 3. Address of an uninitialized variable
