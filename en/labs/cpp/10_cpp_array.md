@@ -136,24 +136,7 @@ std::cout << arr[1] << std::endl;
 It prints `3` and `4`.
 </details>
 
-### 8. The array object and its first element
-
-```cpp
-std::array<int, 2> arr{ 1, 2 };
-std::cout << arr.data() << std::endl;
-std::cout << &arr << std::endl;
-```
-
-<details>
-<summary>Answer</summary>
-
-`arr.data()` has type `int*`; `&arr` has type `std::array<int, 2>*`.
-Both lines print addresses.
-Even if the printed addresses match on your implementation, the pointer types are different.
-Use `arr.data()` or `&arr[0]` when an element pointer is required.
-</details>
-
-### 9. Matrices (two-dimensional arrays)
+### 8. Matrices (two-dimensional arrays)
 ```cpp
 std::array<std::array<int, 2>, 3> arr{
     std::array{ 1, 2 },

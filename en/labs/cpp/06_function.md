@@ -598,46 +598,7 @@ The raw fish is passed by value, and the result is a new `CookedFish` returned b
 The original raw-fish variable still has weight `100`.
 </details>
 
-### 19. Advanced level: addresses of local variables
-```cpp
-uintptr_t f()
-{
-    int a;
-    return reinterpret_cast<uintptr_t>(&a);
-}
-
-uintptr_t g()
-{
-    int b;
-    return reinterpret_cast<uintptr_t>(&b);
-}
-
-int main()
-{
-    uintptr_t f1 { f() };
-    uintptr_t f2 { f() };
-    uintptr_t g1 { g() };
-
-    std::cout << f1 << std::endl;
-    std::cout << f2 << std::endl;
-    std::cout << g1 << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-The C++ language does not guarantee this, and you should not rely on it, but
-the same address will likely be printed 3 times.
-
-This happens because memory for local variables is allocated on the stack
-and is released after a function call ends.
-When subsequent functions are called, their local variables
-**will likely reuse memory that was allocated for local variables in an earlier function call**.
-That is why the local variables in these calls will likely have the same address.
-</details>
-
-### 20. Advanced level: data in uninitialized variables
+### 19. Advanced level: data in uninitialized variables
 ```cpp
 void f()
 {

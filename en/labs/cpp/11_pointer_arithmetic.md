@@ -13,6 +13,8 @@ slug: en/cpp/labs/pointer-arithmetic
 - What happens when you add a number to a pointer
 - What subtracting two pointers yields
 - UB when pointers do not point into the same memory block
+- Integer representations of addresses and `reinterpret_cast`
+- Field offsets
 - stack
 
 ## Examples to aid understanding
@@ -135,16 +137,148 @@ int main()
 <details>
 <summary>Answer</summary>
 
-`uintptr_t` is an integer type with the same size as an `int*` (probably 8 bytes).
+`uintptr_t`, when available, is an unsigned integer type capable of holding a converted object pointer.
+`reinterpret_cast` performs this pointer-to-integer conversion.
 
 The operation `b1 - a1` treats the addresses as numbers.
 The expression no longer retains information about the original pointer types.
 Instead, it operates on the pointers' numeric values.
 
-The result will be 4 — the difference between the addresses in bytes.
+On implementations that map addresses to byte positions, the result is `sizeof(int)`, typically `4`.
+The pointer-to-integer mapping is implementation-defined, so this numeric distance is not universally guaranteed.
 </details>
 
-### 6. Reading past a one-element array (advanced)
+### 6. Field address relative to a structure address
+```cpp
+#include <cstdint>
+#include <iostream>
+
+struct A
+{
+    int f;
+};
+
+int main()
+{
+    A a { };
+    A* pa { &a };
+    int* pf { &pa->f };
+    uintptr_t fieldAddress{ reinterpret_cast<uintptr_t>(pf) };
+    uintptr_t objectAddress{ reinterpret_cast<uintptr_t>(pa) };
+    uintptr_t diff{ fieldAddress - objectAddress };
+    std::cout << diff << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `0` on implementations where pointer-to-integer conversion preserves equal addresses.
+For this simple structure, the first field and the structure have the same address.
+`reinterpret_cast<uintptr_t>` converts each pointer to an integer representation of its address.
+The subtraction here is integer arithmetic, not subtraction of pointers to different objects.
+The pointer-to-integer mapping is implementation-defined; it does not generally guarantee byte distances.
+</details>
+
+### 7. (advanced level): Field offsets
+```cpp
+#include <cstddef>
+#include <iostream>
+
+struct A
+{
+    int a;
+    int b;
+};
+
+int main()
+{
+    std::cout << offsetof(A, a) << std::endl;
+    std::cout << offsetof(A, b) << std::endl;
+}
+```
+
+<details>
+<summary>Answer:</summary>
+
+`offsetof` is evaluated at compile time and gives the byte
+offset of a specified field from the beginning of a structure.
+
+It prints `0` for `a`; the offset of `b` is typically `4` when `int` occupies 4 bytes.
+The exact offset depends on the implementation and its alignment rules.
+</details>
+
+### 8. The array object and its first element (advanced)
+
+```cpp
+#include <array>
+#include <cstdint>
+#include <iostream>
+
+int main()
+{
+    std::array<int, 2> arr{ 1, 2 };
+    uintptr_t elementAddress{ reinterpret_cast<uintptr_t>(arr.data()) };
+    uintptr_t arrayAddress{ reinterpret_cast<uintptr_t>(&arr) };
+    uintptr_t diff{ elementAddress - arrayAddress };
+    std::cout << diff << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+On common implementations it prints `0`: the first element starts at the beginning of the array object.
+The standard does not require this layout for `std::array`, so this result is not a portable guarantee.
+`arr.data()` has type `int*`, while `&arr` has type `std::array<int, 2>*`.
+Converting them to integers permits numeric subtraction, but does not change these original pointer types.
+Casting both pointers to byte pointers would not make their subtraction valid:
+pointer subtraction requires pointers into the same array, or its one-past position.
+</details>
+
+### 9. Advanced level: addresses of local variables
+```cpp
+#include <cstdint>
+#include <iostream>
+
+uintptr_t f()
+{
+    int a;
+    return reinterpret_cast<uintptr_t>(&a);
+}
+
+uintptr_t g()
+{
+    int b;
+    return reinterpret_cast<uintptr_t>(&b);
+}
+
+int main()
+{
+    uintptr_t f1 { f() };
+    uintptr_t f2 { f() };
+    uintptr_t g1 { g() };
+
+    std::cout << f1 << std::endl;
+    std::cout << f2 << std::endl;
+    std::cout << g1 << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The C++ language does not guarantee this, and you should not rely on it, but
+the same address will likely be printed 3 times.
+
+This happens because memory for local variables is allocated on the stack
+and is released after a function call ends.
+When subsequent functions are called, their local variables
+**will likely reuse memory that was allocated for local variables in an earlier function call**.
+That is why the local variables in these calls will likely have the same address.
+</details>
+
+### 10. Reading past a one-element array (advanced)
 
 ```cpp
 std::array<int, 1> value{ 5 };
@@ -161,7 +295,7 @@ There is no defined output to predict.
 The pointer does not become valid just because another object might occupy nearby memory.
 </details>
 
-### 7. Writing past an array (advanced)
+### 11. Writing past an array (advanced)
 
 ```cpp
 std::array<int, 2> arr{};

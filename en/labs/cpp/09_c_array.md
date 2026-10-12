@@ -395,12 +395,19 @@ This syntax simply does not work in C++.
 ```cpp
 int arr1[2]{ 1, 2 };
 int arr2[2]{ 3, 4 };
+*arr1 = *arr2;
+```
+<details>
+<summary>Answer</summary>
+
+In this expression, each C-array name converts to a pointer to its first element.
+The assignment is equivalent to:
+
+```cpp
 int* first{ &arr1[0] };
 int* second{ &arr2[0] };
 *first = *second;
 ```
-<details>
-<summary>Answer</summary>
 
 `first` points to `arr1[0]` and `second` points to `arr2[0]`.
 `*first = *second` copies the value `3` into `arr1[0]`; the other elements do not change.
