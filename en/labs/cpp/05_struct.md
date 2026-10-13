@@ -181,10 +181,15 @@ int main()
 
 It compiles and prints `1`.
 
-The expression `A{ 1, 2 }` has type `A`, so it cannot be stored in an
-`int` variable, as in the example with assigning a structure to an `int`.
-But `A{ 1, 2 }.f1` has type `int`, because field `f1` has type `int`.
-A value of type `int` can be stored in a variable of type `int`.
+Here, `a` is initialized with the result of the expression `A{ 1, 2 }.f1`.
+The expression consists of `A{ 1, 2 }`, which evaluates to a temporary value of type `A`,
+followed by `.f1`, which accesses the `f1` field of that temporary value.
+That is, it first creates a temporary `A` with `f1 = 1, f2 = 2` — think of it as simply suspended in the air —
+and then reads only `f1` from it.
+
+The expression `A{ 1, 2 }.f1` has type `int`.
+In other words, it evaluates to the value of the `f1` field of that temporary `A`.
+That value, `1`, is then stored in variable `a`.
 </details>
 
 ### 6. Assigning a structure
