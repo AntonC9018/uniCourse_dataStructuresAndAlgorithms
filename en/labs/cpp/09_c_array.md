@@ -47,6 +47,8 @@ It declares an array of 2 elements, all initialized to zero by `{}`.
 An array is like several variables combined into one. 
 In this case, there are effectively 2 variables: `arr[0]` and `arr[1]`.
 
+The phrase “effectively” is intentional here, because in fact `arr[0]` and `arr[1]` are objects,
+not variables, but that is covered in another lesson.
 </details>
 
 <details>
@@ -242,7 +244,8 @@ std::cout << std::endl;
 <details>
 <summary>Answer</summary>
 
-On the line `int it { arr[index] }`, the *value `1`* is copied into the independent `int` variable `it`.
+On the line `int it { arr[index] }`, the *value `1`* is copied into `it`,
+not a reference to an array element, because the type of `it` is `int`.
 Since it is just an `int`, changing the array element from which its value originated
 after assignment does not affect `it`.
 

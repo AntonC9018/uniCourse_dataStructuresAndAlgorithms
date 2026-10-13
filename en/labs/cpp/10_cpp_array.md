@@ -112,7 +112,7 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Answer</summary>
 
-`p` points to an array of type `std::array<int, 2>`, and the expression `*p` gives a value
+`p` points to a variable of type `std::array<int, 2>`, and the expression `*p` gives a value
 of type `std::array<int, 2>`, so `arr1` receives a copy of the entire array.
 
 Since `arr1` is a copy, its changes will not affect `arr`.
@@ -131,7 +131,7 @@ std::cout << arr[1] << std::endl;
 <details>
 <summary>Answer</summary>
 
-`*p` accesses the original array.
+`*p` accesses the original variable `arr`.
 `(*p)[0]` and `(*p)[1]` access its elements, so the assignments change `arr`.
 It prints `3` and `4`.
 </details>

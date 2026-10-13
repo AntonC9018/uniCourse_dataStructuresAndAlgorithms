@@ -12,8 +12,6 @@ Use the concepts from the earlier labs to model each problem and write procedura
 Use `std::array` for fixed-size storage.
 Do not use loops.
 Assume supplied indices are valid and quantities are sufficient unless the problem says otherwise.
-For exercises with shared structures, use arrays of pointers to the original structure variables.
-Assume those variables remain available throughout the exercise.
 All positions are supplied; no search is needed.
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.
@@ -365,14 +363,13 @@ int main()
 ```
 
 It prints `5`, `2.5`, and typically `16` used bytes.
-`sizeof` supplies the structure size, and `alignof` supplies the required alignment.
+`sizeof` supplies the object size, and `alignof` supplies the required alignment.
 `std::align` moves `address` forward if padding is needed and reduces `remaining` by that padding.
-The new position includes both the padding and the reserved structure size.
-`reinterpret_cast` supplies the pointer type.
-Placement `new` creates the structure in the reserved memory and initializes its fields.
+The new position includes both the padding and the reserved object size.
+`reinterpret_cast` supplies the pointer type; placement `new` begins the object's lifetime and initializes its fields.
 
-> This advanced example introduces alignment and creating structures in raw storage beyond the earlier labs.
+> This advanced example introduces alignment and object lifetimes beyond the earlier labs.
 > Assume every reservation fits; a reusable allocator would also handle `std::align` returning a null pointer.
-> The exact used byte count depends on sizes and alignment; these structures contain only numeric fields.
+> The exact used byte count depends on sizes and alignment; these trivial objects need no explicit destruction.
 
 </details>

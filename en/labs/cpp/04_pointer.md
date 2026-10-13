@@ -79,6 +79,7 @@ At compile time, this type indicates
 that **the resulting address is specifically the address of a variable of type `int`,
 and not of some other type**.
 
+> `&` can give the address of *any object*, but that will be covered in lab 13.
 </details>
 
 ### 2. Whitespace in pointer declarations
@@ -159,7 +160,7 @@ std::cout << std::endl;
 <summary>Answer:</summary>
 
 No. An address cannot be set directly like this; it must be obtained using
-the `&` operator on a variable.
+the `&` operator on an object (for example, a variable).
 </details>
 
 ### 6. Dereference operator (reading)

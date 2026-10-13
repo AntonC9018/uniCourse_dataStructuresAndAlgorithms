@@ -815,8 +815,11 @@ int main()
 
 It prints `1`.
 
-Even a variable of an empty structure type occupies at least one byte.
-This lets separate variables of this type have distinct addresses.
+According to the C++ standard, the size of an object cannot be less than 1,
+so that 2 objects of this type can be distinguished from each other.
+The reason is that 2 objects cannot have the same memory address.
+
+Objects are covered in lab 13.
 </details>
 
 ### 26. Copying a structure with a pointer field

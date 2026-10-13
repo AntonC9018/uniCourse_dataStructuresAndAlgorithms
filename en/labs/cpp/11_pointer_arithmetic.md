@@ -200,8 +200,8 @@ int main()
     A* pa { &a };
     int* pf { &pa->f };
     uintptr_t fieldAddress{ reinterpret_cast<uintptr_t>(pf) };
-    uintptr_t structureAddress{ reinterpret_cast<uintptr_t>(pa) };
-    uintptr_t diff{ fieldAddress - structureAddress };
+    uintptr_t objectAddress{ reinterpret_cast<uintptr_t>(pa) };
+    uintptr_t diff{ fieldAddress - objectAddress };
     std::cout << diff << std::endl;
 }
 ```
@@ -268,7 +268,7 @@ int main()
 <details>
 <summary>Answer</summary>
 
-The beginning of the entire array is typically at the same address as its first element.
+The beginning of the entire array object is typically at the same address as its first element.
 Think of a `std::array` as its elements stored together.
 
 It typically prints `0`.
@@ -277,7 +277,7 @@ It typically prints `0`.
 > `arr.data()` has type `int*`, while `&arr` has type `std::array<int, 2>*`.
 > Integer subtraction here assumes the implementation maps these equal addresses to equal numbers.
 > `arr.data()` is guaranteed to point to the actual first element; the elements belong to `arr`.
-> The whole array contains its first element; a shared starting address does not make these pointers interchangeable.
+> The whole container and its first element are nevertheless distinct objects.
 > Casting their pointers to the same byte-pointer type does not by itself establish that they point into one array.
 > Pointer subtraction requires that shared array, even when the printed addresses match.
 
