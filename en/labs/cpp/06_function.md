@@ -549,7 +549,7 @@ and an `int` cannot be created from a `Vector`.
 
 </details>
 
-### 18. Cooking fish: changed input and returned object
+### 18. Cooking fish: changed input and returned value
 
 Assume the fire pointer is valid and there is enough fuel.
 

@@ -212,7 +212,7 @@ int main()
 It prints `0`.
 The first field of this structure and the structure itself are located at the same memory address.
 
-> The code subtracts integer representations of addresses, rather than pointers to different objects.
+> The code subtracts integer representations of addresses, rather than pointers to the structure and its field.
 > This output assumes the implementation preserves equal addresses when converting these pointers to integers.
 > The first-field rule applies to standard-layout structures, such as `A` here.
 
@@ -248,7 +248,7 @@ It typically prints `0` for `a` and `4` for `b`.
 
 </details>
 
-### 9. The array object and its first element (advanced)
+### 9. The whole array and its first element (advanced)
 
 ```cpp
 #include <array>

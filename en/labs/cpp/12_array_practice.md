@@ -12,8 +12,6 @@ Use the concepts from the earlier labs to model each problem and write procedura
 Use `std::array` for fixed-size storage.
 Do not use loops.
 Assume supplied indices are valid and quantities are sufficient unless the problem says otherwise.
-For the shared-object exercises below, use arrays of pointers to the original objects.
-Assume every pointer refers to an object that stays alive throughout the exercise.
 All positions are supplied; no search is needed.
 The first three problems and the advanced byte-storage problem have possible solutions.
 Solve the remaining problems yourself.

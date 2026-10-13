@@ -79,7 +79,7 @@ At compile time, this type indicates
 that **the resulting address is specifically the address of a variable of type `int`,
 and not of some other type**.
 
-> `&` can give the address of *any object*, but that will be covered in lab 3.
+> `&` can give the address of *any object*, but that will be covered in lab 13.
 </details>
 
 ### 2. Whitespace in pointer declarations
@@ -103,7 +103,7 @@ It prints `6` three times.
 `int* a`, `int *b`, `int * c`, and `int     *     d` all declare an `int*`.
 Whitespace between these tokens does not change the declaration.
 All four pointers store the address of the same variable.
-Whitespace around the dereference operator also has no effect: `*a` and `     *     a` access the same object.
+Whitespace around the dereference operator also has no effect: `*a` and `     *     a` access the same variable.
 </details>
 
 ### 3. Address of an uninitialized variable
