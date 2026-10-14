@@ -87,7 +87,7 @@ observed execution, and no compilation appears anywhere in this video's record
 - Video, `00:00:14.550`–`00:00:16.910`: *"Она на самом деле на стеке, но мы до этого
   дойдём позже."*
 - Ledger: run 427, S-001, same range, classified **`scope_boundary`** rather than `fact`
-  — one of only eight such classifications in the whole ledger, all listed in
+  — one of only seven such classifications in the whole ledger, all listed in
   `deferred-topics-and-cross-references.md`.
 - Actual: only objects with automatic storage duration. Globals, `static` locals and
   `new`-allocated objects are not on the stack. Fresh check, 2026-10-10:

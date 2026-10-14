@@ -9,11 +9,7 @@ Traceability: `english_authoring` run 444 (session `01a11d52-a02d-7252-8ccf-4406
   Reason: a branch-named link would not prove the text the note's claims were checked against; the
   pin keeps the checkpoint stable.
 
-- The application supplied a deterministic citation check before verification:
-  `transcript.md` at `d6b06478df12bc7fb0e14a9c58ecddcbb18c92a6`, `status: resolved`,
-  `commitCharacterCount: 40`, `commitHasFullFormat: true`, `source: local_git`. The verifier's
-  standing rule — a resolved full-format check is a valid pinned reference and no length defect may
-  be invented for it — was followed; the commit was copied verbatim, not reconstructed.
+- Independent current check (2026-10-14, not a worker finding): `git rev-parse --verify d6b06478df12bc7fb0e14a9c58ecddcbb18c92a6` resolves, and `git ls-tree` identifies the transcript blob at that revision. This confirms the pin itself; it does not establish that run 447 performed a local Git check. The validation run has no recorded tool rows for such a check, so no deterministic-check mechanism is attributed to the application or verifier.
 
 - Authoring validation failure and its repair (the author run's single correction round): the
   application rejected the first note because the immutable transcript citation had "no simplified

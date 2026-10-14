@@ -8,7 +8,7 @@ S-030 `[1566, 1587)`, and the final exclusive bound matches the transcript's cue
 exactly. Overlapping boundary cues are counted in each segment that contains them, as the
 worker was instructed to do: 174 cues appear in two segments' ranges.
 
-Totals across all segments: 1571 `teaching`, 11 `repetition`, 4 `wait`, 1 `caption_noise`.
+Structured accounting totals: 1569 `teaching` cues, 11 `repetition`, 4 `wait`, and 3 `caption_noise`. The corresponding category ranges are separate from cue totals; do not infer range counts from these cue counts.
 
 ## The disagreements
 
@@ -40,9 +40,7 @@ accounting worker could neither honour nor reject them:
 
 ## Consequence for a note
 
-- If the ledger is merged into `internal/teaching-points.json` as it stands, two empty
-  caption cues count as teaching. The effect is tiny (2 of 1587) but it means the
-  committed ledger's coverage claim ("every cue accounted") overstates what is actually
+- If the ledger is merged into `internal/teaching-points.json` as it stands, the two empty caption cues that the extraction marked as noise were counted as teaching by the accounting result. This is a two-cue classification difference, and it means the committed ledger's coverage claim ("every cue accounted") overstates what is actually
   teachable.
 - The `nonTeaching` markers are unreliable in *both* directions; a fixer or verifier should
   re-derive dispositions from the cue text rather than trust either worker's label.

@@ -57,7 +57,6 @@ repository's history.
 
 - `git log --all -S'Anton' -- '*.cpp'` — no commits.
 - `git grep -l 'Anton' -- '*.cpp'` — no files.
-- `git grep -ln 'Hello World'` — matches only lab Markdown, this folder's own note/ledger/transcript, and
-  `videos/cpp/06_Установка_GCC`. Never a `.cpp`.
+- At the authoring-time revision, `git grep -ln 'Hello World'` was used to distinguish committed source from prose. Current HEAD also contains this reconstructed research, so do not reuse a whole-checkout search result as a current inventory. Never a `.cpp`.
 
 This is the correct outcome, not a gap to fill. Do not manufacture a citation for the greeting program.

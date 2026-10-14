@@ -1,8 +1,6 @@
-# The transcript contains no C++ token at all
+# The transcript contains no C++ source-code spelling
 
-Established by author run 505 (`english_authoring`, codex rollout `01a1266d-9ca4-7511-91c7-acd21c9024da`),
-which is the only worker that examined this evidence. Re-confirmed against the pinned transcript on 2026-10-10
-(fresh check, not a worker finding).
+The authoring session used the transcript to distinguish spoken prose from source-code tokens. Current text was checked against the pinned transcript on 2026-10-14; that is an independent current check, not proof of what any worker inspected.
 
 `internal/transcript.md` at `d6b06478df12bc7fb0e14a9c58ecddcbb18c92a6` contains **zero occurrences** of:
 
@@ -14,7 +12,7 @@ which is the only worker that examined this evidence. Re-confirmed against the p
 The recording describes the program in Russian prose only: "инструкция письма в консоль" (`00:01:59`),
 "переход на новую строку" (`00:02:54`, and again at `00:03:41`), "команда", "функция с именем f",
 "мейн". The only concrete tokens the caption does preserve are the two string literals, `Hello World`
-(`00:02:37`) and `Антон` (`00:02:58`, `00:03:17`), and the executable name `a.out` (`00:02:33`).
+(`00:02:37`) and `Антон` (`00:02:58`, `00:03:17`), and the executable name rendered as `A.out` (preceded by a Cyrillic “а” in the cue at `00:02:33`).
 
 ## What this means for every code sample in `notes.en.md`
 

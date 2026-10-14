@@ -12,9 +12,7 @@
 - The note's wording, which is the retained form of the correction: "'originally Linux-only' is not
   accurate history: GCC's release history begins in 1987, before Linux. The useful lesson is that a
   Windows distribution makes GCC available on Windows."
-- Fresh re-check, 2026-10-10, <https://gcc.gnu.org/releases.html>: the table ends at
-  `0.9 (first beta release) March 22, 1987` and `1.0 May 23, 1987`. Linux 1.0 followed in September
-  1991, by which point GCC was already at `1.40` (June 1, 1991). The correction stands.
+- The retained source choice is the GCC release-history page; its history establishes the relevant ordering: GCC predates Linux. This dossier does not need exact Linux release dates.
 - Second half of the same correction: MSYS2 "does not emulate a Linux operating system". It is a
   Windows development environment supplying a Unix-like command layer and MinGW-w64 toolchains.
 - `factual_verification`, run 445 (opencode `space-bunny-free`, session

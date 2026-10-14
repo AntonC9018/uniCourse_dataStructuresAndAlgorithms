@@ -39,14 +39,17 @@ used the section `### Writing to a memory address` (line 235 of that blob) as th
 carries it at line 38 with the pointer sample immediately below, and marks the sample as **"not an operation
 taught in the video"**.
 
-Independent check while recreating this file (2026-10-10, not a worker finding): the section exists at that
-commit with exactly the sample the note reprints —
+Independent check while recreating this file (2026-10-14, not a worker finding): the section exists at that
+commit and supports the address-writing point, but its comments differ from the note. The pinned source uses
+`// 'value' becomes equal to 10.` followed by a blank line; the note has `// Hold address of the value.` and
+`// Write to valid location.` Do not describe the note sample as a verbatim reprint. The note’s code is:
 
 ```cpp
 int value = 0;
+// Hold address of the value.
 int* pointerToValue = &value;
 
-// `value` becomes equal to 10.
+// Write to valid location.
 *pointerToValue = 10;
 ```
 
@@ -55,7 +58,6 @@ The commit is an ancestor of HEAD.
 
 ## Why this is the single most load-bearing correction in the folder
 
-It is the only place where `notes.en.md` departs from what the instructor said, and it departs on the
-strength of an immutable repository link rather than model knowledge. It was never checked by a verifier —
+This is a consequential qualification for the note: it distinguishes the instructor's simplified explanation from the later pointer lesson, using an immutable source rather than an unsupported claim. It was never checked by a verifier —
 run 506 died on timeout — so if the qualification is ever dropped, nothing in this record will catch it.
 Keep it.

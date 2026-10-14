@@ -15,8 +15,6 @@ transcript; it is quoted only to identify the deferral, not to restate the lesso
 - `00:00:33.280`–`00:00:39.470` — what `int` means; postponed so the naming idea lands
   first.
 - `00:01:24.470`–`00:01:26.830` — how a name is resolved to an address.
-- `00:02:08.270`–`00:02:13.910` — the formal definition of an expression ("Выражение что
-  такое? Чуть-чуть позже до этого дойдём").
 - `00:04:33.560`–`00:04:38.350` — how a multi-byte number is laid out, delegated to a
   different video.
 - `00:07:47.230`–`00:07:53.280` — how the print instruction chooses a behaviour, because
@@ -24,8 +22,10 @@ transcript; it is quoted only to identify the deferral, not to restate the lesso
 - `00:08:24.630`–`00:08:27.430` — character codes, and what a type means beyond size.
 - `00:09:20.230`–`00:09:25.030` — types into which no numbers can be written.
 
-A note for this lesson should stay inside those eight boundaries; each is a promise the
+A note for this lesson should stay inside those seven boundaries; each is a promise the
 video makes about later material, so expanding one here contradicts the lesson.
+
+The expression definition at `00:02:08.270`–`00:02:13.910` is classified as an explanation by the extraction result, not as a `scope_boundary`; it still provides useful evidence that the definition is introduced there.
 
 ## Cross-references the video makes to other videos
 

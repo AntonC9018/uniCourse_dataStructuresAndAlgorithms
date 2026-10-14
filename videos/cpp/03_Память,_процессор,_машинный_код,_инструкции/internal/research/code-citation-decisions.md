@@ -2,11 +2,7 @@
 
 ## No immutable source exists for the taught encodings
 
-The lesson's program (`64 0 0 64 1 1 72 65 0 3`) appears nowhere in the repository's history
-except inside this folder's own notes. Verified 2026-10-10 by scanning every ref in the
-`uniCourse_dataStructuresAndAlgorithms` checkout (`git grep -l "64 1 1" $(git rev-list --all)`):
-the only hits are this folder's `notes.en.md`, across the authoring commit 79d34c4 and the
-research commits that followed it.
+The lesson's program (`64 0 0 64 1 1 72 65 0 3`) has no exact committed source citation in the note. At authoring revision `79d34c4`, the available repository search found the literal encoding in the note; the former all-ref shell one-liner was not a valid exhaustive history scan and is removed. Do not infer that search as proof about every file in every ref.
 
 - Consequence: the note's statement "No inspected repository commit contains the exact toy
   encoding used here" is correct, and citing any commit as the source of the taught code state

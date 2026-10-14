@@ -9,10 +9,9 @@
   all. Its "Code history trail" is video timestamps only (364s, 397s, 534s, 577s, 596s, 966s,
   1002s, 1035s), preceded by an explicit statement that no matching repository commit was
   established and that the repository's installation lesson describes a different workflow.
-- The one commit actually pinned by the author, and why it is deliberately *not* cited in the note:
+- A relevant commit found in history, but not recorded as a worker file read; it is deliberately *not* cited in the note:
   `074743b9a53b16554d3c67a26d9ef9cef025590c` ("Add compiler installation instructions"), which holds
-  `en/04_compiler_and_ide/doc.md` as blob `91709bf07c5bd712533ca8573854ee4dbcd38c7b`. It was read
-  via `git_read_file` for context. A commit that merely adds an exercise is not evidence for this
+  `en/04_compiler_and_ide/doc.md` as blob `91709bf07c5bd712533ca8573854ee4dbcd38c7b`. The worker event record does not show a read of this commit: run 443 has a `git_read_file` event at `d6b06478…`; this commit/blob pairing was derived from history and checked locally on 2026-10-14. A commit that merely adds an exercise is not evidence for this
   video's installation or code states, so the note links the lesson page without its adding commit.
   (Commit and blob verified locally on 2026-10-10 with `git ls-tree` / `git rev-parse`.)
 - The one repository link that *is* retained is relative, to the lab document the exercise lives in:

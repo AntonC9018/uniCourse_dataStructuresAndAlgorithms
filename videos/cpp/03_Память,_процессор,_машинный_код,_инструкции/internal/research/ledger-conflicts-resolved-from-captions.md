@@ -1,4 +1,4 @@
-# Three ledger-entry contradictions, resolved from the recorded captions
+# Ledger conflicts: two captions settle the value; one register target remains inferential
 
 The `english_authoring` note was written from the reconciled teaching-point ledger supplied to
 the authoring run (`english_authoring`, run 503, session
@@ -7,8 +7,7 @@ the `factual_verification` run (run 504, session `ses_ed9930e99ffeFqH04t4I7Xb5Hd
 `source_conflict` finding per entry. The committed ledger
 (`internal/teaching-points.json`, TP-045, TP-057, TP-058) still carries the conflicting wording.
 
-In all three cases the recorded captions in `internal/transcript.md` settle the conflict, and
-they side with the note, not the ledger.
+TP-045 and TP-058 are directly settled by their captions. For TP-057, the caption at 00:12:49 says only "сюда"; the register target is inferred from the earlier `64 1 1` construction and the arithmetic trace, not identified by that word alone.
 
 ## TP-045 (574560 – 596440 ms) — source address of "load ten into register one"
 
@@ -26,11 +25,10 @@ they side with the note, not the ledger.
   **о**" — so the destination is not legible from this cue alone.
 - Register *one* is nevertheless established by three independent parts of the record:
   1. the same instruction was built earlier as `64 1 1` (00:07:57 – 00:08:03);
-  2. the caption continues at 00:12:49 "берёт из оперативной памяти один и скидывает **сюда**",
-     pointing at the second register, the first one still holding the first input;
+  2. the caption at 00:12:49 reads "берёт из оперативной памяти один и скидывает сюда". It names no register; identifying the destination as register one is an inference from the surrounding trace;
   3. logical consistency — with `72` defined as R0 + R1 → R0, loading address 1 into register 0
      would add 6 + 6 and yield 12, contradicting the lesson's own 5 + 6 = 11 trace.
-- Note: register one. **Ledger is wrong; note is right.**
+- Note: register one, consistent with that inference. The cue itself does not settle the ledger conflict; the note’s value rests on the earlier construction and arithmetic consistency.
 
 ## TP-058 (778150 – 799710 ms) — register operands of opcode 72
 
