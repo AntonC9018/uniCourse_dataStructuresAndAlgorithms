@@ -48,11 +48,15 @@ std::cout << a << std::endl;
 ```
 
 <details>
-<summary>What type is <code>a</code>?</summary>
+<summary>Creating a variable</summary>
 
-`int`. The type comes before the variable name.
+In `int a = 5;`, `int` is the type, `a` is the name, and `5` is the starting value. `int` stores whole numbers. The next line reads and prints the value in `a`.
+</details>
 
-`int` means that an *integer* can be stored in `a`.
+<details>
+<summary>Answer</summary>
+
+Prints `5`; `a` has type `int`.
 </details>
 
 ### 2. Variable declaration
@@ -62,59 +66,21 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Give a variable a value before reading it</summary>
+
+`int a;` creates a local variable without giving it a starting value. Do not read it before writing a value into it. Here the printing line tries to do exactly that. Use `int a = 0;`, for example, to give it a known starting value.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-This code will not compile if the `-Werror` and `-Wall` flags are passed to the compiler.
-Without them, it will compile and run, but the result may not be what you expect.
-
-`a` is an *uninitialized variable*.
-It is important to understand that this **does not mean** that `a` has no value.
-`a` must have a value, since `a` is merely an abstraction of a
-memory cell, and a memory cell **cannot be empty**.
-
-An uninitialized variable in C++ is a variable
-into which no value has yet been deliberately written.
-
-Declaring a variable merely allocates a memory cell for that variable.
-That cell may have been used by another variable before.
-Such memory can retain its old value
-from a previous use.
-For this reason, **a variable may contain any number**,
-and, as the programmer, you cannot rely on what it will contain.
-
-> The contents of an uninitialized variable
-> are also called **garbage data**.
-
-<details>
-<summary>Why can a memory cell not be empty?</summary>
-
-Because memory consists of bytes, and each byte consists of 8 bits.
-Bits can store either 0 or 1, and nothing else.
-They cannot store “nothing”.
-Accordingly, a byte is made up entirely of bits,
-each of which is either 0 or 1.
-
-You might decide that 0 is “nothing”, but that is not always the case.
-0 can be deliberately written into a bit. 
-
-If 0 and “nothing” were the same thing,
-you would not be able to distinguish the two
-by reading a bit in isolation.
-Was it 0 because nothing has been written there yet,
-or because someone deliberately wrote it there earlier?
-</details>
-
+No reliable output.
 </details>
 
 <details>
-<summary>What happens if you read from variable <code>a</code>?</summary>
+<summary>Why a test run does not prove this is safe</summary>
 
-Since `a` is uninitialized, you will obtain whatever value
-was in the memory before it was allocated to `a`.
-
-However, reading from an uninitialized variable is considered UB (undefined behavior),
-which by definition means that anything can happen,
-and the compiler is allowed to assume that such a read is impossible.
+This is called undefined behavior in C++ versions through C++23: the language does not promise any particular result. Even seeing `0` once does not mean you can rely on it. Compiler warnings such as `-Wall` can help catch the mistake; `-Werror` turns warnings into errors.
 </details>
 
 ### 3. Defining a variable with the same name
@@ -125,19 +91,15 @@ std::cout << a << std::endl;
 ```
 
 <details>
-<summary>Correct answer:</summary>
+<summary>Creating a variable or changing its value</summary>
 
-You cannot define two variables with the same name.
-This is forbidden even if the second definition has a different type:
-```cpp
-int a = 5;
-double a = 6; // error too: redefinition of `a`
-```
-You can only overwrite the value of the existing variable:
-```cpp
-int a = 5;
-a = 6;
-```
+Writing `int a` creates a variable. You cannot create another variable with the same name in the same block, even with a different type. To change the existing value, write `a = 6;` without `int`.
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Does not compile.
 </details>
 
 ### 4. Assigning one variable to another
@@ -149,6 +111,18 @@ b = 7;
 std::cout << a << std::endl;
 ```
 
+<details>
+<summary>Assignment copies the current value</summary>
+
+`a = b` copies the value currently stored in `b` into `a`. It does not keep the variables connected. Here it copies `6`; changing `b` to `7` later does not change `a`.
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Prints `6`.
+</details>
+
 ### 5. Literals, variables and operators are expressions
 ```cpp
 int a = 5;
@@ -159,22 +133,15 @@ std::cout << c << std::endl;
 ```
 
 <details>
+<summary>An expression gives a value</summary>
+
+An expression is code that gives a value. A number such as `5` gives itself; reading `a` gives its stored value; `a + 6` adds two values. Here `a` is `5`, so `b` gets `5` and `c` gets `11`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-Literals, variables (when read) and operators applied to expressions are all expressions.
-Each of them evaluates to a single value with its own type:
-
-- `5` is a literal expression: it evaluates to itself, with type `int`;
-- `a` on the lines `int b = a;` and `int c = a + 6;` is a variable expression:
-  it evaluates to the value currently stored in `a` (here, `5`);
-- `a + 6` is an operator expression:
-  the operator `+` takes two expressions (`a` and `6`) and evaluates to a single value (`11`).
-
-So `int b = a;` copies the result of the variable expression `a` into `b`,
-and `int c = a + 6;` copies the result of the operator expression `a + 6` into `c`.
-
-When printing, `b` and `c` are also expressions: reading them produces the stored values `5` and `11`.
-It prints `5` and `11`.
+Prints `5` and `11` on separate lines.
 </details>
 
 ### 6. Assigning an expression to a variable
@@ -189,38 +156,25 @@ std::cout << b << std::endl;
 ```
 
 <details>
-<summary>What is going to happen?</summary>
+<summary>Store the result, not the formula</summary>
 
-On line 2, the *result of the expression* on the right-hand side of the assignment (`a + 6`) is written to `b`.
-Evaluating this expression means turning it into a single *value*.
-
-`a + 6` -> `5 + 6` -> `11`
-
-The result of evaluating the expression is the value 11, which is written to cell `b`.
-
-Further changes to `a` do not affect the previous operation, since its *result* has already been stored in `b`.
+In `int b = a + 6;`, the computer first calculates `a + 6` and then stores the result in `b`. Here that is `5 + 6`, or `11`. Changing `a` afterwards does not calculate `b` again.
 </details>
 
 <details>
-<summary>What counts as an expression here?</summary>
+<summary>Answer</summary>
 
-A literal (`5`, `6`, `7`), a variable read (`a`).
-Each of them evaluates to a single value with its own type (all `int` here).
+Prints `11`. The number literals, variable reads, `a + 6`, `a = 7`, and the printing expression are expressions.
+</details>
 
-Even the whole assignment (`a = 7`) is an expression.
-Why? Because its result can be assigned to e.g. another variable.
+<details>
+<summary>An assignment is also an expression</summary>
 
-For example the following code assigns `7` to `a` while evaluating `a = 7`,
-which itself evaluates to `7` (whatever both of them became after the assignment),
-which is then assigned to `c`.
+`a = 7` changes `a` and also gives back the assigned value. That lets you write:
 ```cpp
 int c = (a = 7);
 ```
-
-Even `b` on `std::cout << b << std::endl;` is an expression,
-because *its value is going to be passed to the printing function*,
-and it has to be *evaluated* to e.g. a number before getting sent to the print function.
-
+Both `a` and `c` then contain `7`.
 </details>
 
 ### 7. String value
@@ -229,11 +183,15 @@ int a = "abc";
 ```
 
 <details>
-<summary>Correct answer:</summary>
+<summary>The value must fit the type</summary>
 
-The compiler reports a type incompatibility error.
+`int` stores whole numbers. The text `"abc"` is not a whole number and cannot be used as the starting value of an `int`.
+</details>
 
-You cannot write the string literal `"abc"` to a cell that stores an `int`.
+<details>
+<summary>Answer</summary>
+
+Does not compile.
 </details>
 
 ### 8. Reversing the output expression
@@ -243,11 +201,15 @@ You cannot write the string literal `"abc"` to a cell that stores an `int`.
 ```
 
 <details>
+<summary>The order in a printing statement matters</summary>
+
+Put `std::cout` on the left and use `<<`: `std::cout << "ggg";`. Reversing the order and changing `<<` to `>>` does not do the same thing.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-It does not compile.
-The output stream goes on the left, and output uses `<<`: `std::cout << "ggg";`.
-Changing both the operand order and the operator does not produce an equivalent expression.
+Does not compile.
 </details>
 
 ### 9. Uniform initialization
@@ -256,27 +218,21 @@ int a{5};
 ```
 
 <details>
-<summary>Correct answer:</summary>
+<summary>Setting a starting value with braces</summary>
 
-This syntax is largely equivalent to the following:
-```cpp
-int a = 5;
-```
+`int a{5};` gives `a` the starting value `5`, much like `int a = 5;`. Braces also help catch mistakes: `int a{5.6};` is rejected because an `int` cannot keep the fractional part.
+</details>
 
-It differs in that the compiler reports an error
-when an assignment could result in a loss of information.
+<details>
+<summary>Answer</summary>
 
-For example, the following code compiles if no compiler flags are provided.
-When run, the number `5` will be stored in `a` (the fractional part will be discarded).
-```cpp
-int a = 5.6;
-```
+Compiles; `a` has type `int` and value `5`.
+</details>
 
-If curly braces are used instead, it will not compile.
-This strictness can help us notice possible mistakes.
-```cpp
-int a{ 5.6 };
-```
+<details>
+<summary>What happens without braces</summary>
+
+`int a = 5.6;` can compile, but stores only `5`: the fractional part is lost. The braces in `int a{5.6};` make the compiler reject that possible loss.
 </details>
 
 ### 10. Empty initialization
@@ -286,14 +242,15 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Empty braces give an int zero</summary>
+
+`int a{};` gives `a` the starting value `0`. This is different from `int a;`, which gives no starting value. Reading `a` is safe here.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-Empty braces mean the variable is value-initialized with a default value.
-
-For `int`, the default value is `0`, so `0` is written into `a` and `0` is printed.
-
-This is different from `int a;`, which leaves `a` uninitialized with garbage data (see example 2).
-Unlike an uninitialized variable, reading from `a` here is allowed.
+Prints `0`.
 </details>
 
 ### 11. Assigning empty braces
@@ -305,10 +262,15 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Assigning empty braces</summary>
+
+For an `int`, `a = {};` writes `0` into `a`. It replaces the old value `7`; it does not leave the variable without a value.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-It prints `0`.
-`a = {}` assigns a value-initialized `int`, which is zero; it does not leave `a` uninitialized.
+Prints `0`.
 </details>
 
 ### 12. An int{} expression
@@ -322,11 +284,15 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Using int{} as a value</summary>
+
+`int{}` is an expression with type `int` and value `0`. You can use it to change a variable or give a new variable its starting value. Here both `a` and `b` get `0`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-It prints `0` twice.
-`int{}` is an expression of type `int` with value zero.
-The same expression can be used in an assignment or an initialization.
+Prints `0` twice.
 </details>
 
 ### 13. The `sizeof` operator
@@ -336,23 +302,17 @@ std::cout << sizeof(uint8_t) << std::endl;
 int a;
 std::cout << sizeof(a) << std::endl;
 ```
+
 <details>
-<summary>Answer:</summary>
+<summary>Finding a size in bytes</summary>
 
-`sizeof` is evaluated at compile time and yields the size, in bytes, of a variable or type.
-It does not execute at run time: the compiler replaces `sizeof(...)` with a plain number,
-so `sizeof` itself does not even exist as a function at run time.
+`sizeof` gives the size of a type or variable in bytes. Because `a` is an `int`, `sizeof(a)` equals `sizeof(int)`. It does not read the value of `a`, so the missing starting value is not a problem here. `uint8_t` takes one byte; the size of `int` can depend on the system.
+</details>
 
-For example:
-- `sizeof(int)` produces `4`;
-- `sizeof(a)` is equivalent to `sizeof(type of a)`, that is, `sizeof(int)`, that is, `4`;
-- `sizeof(uint8_t)` produces `1` (8 bits — 1 byte).
+<details>
+<summary>Answer</summary>
 
-The operand is never actually computed.
-In `sizeof(a + 1)`, the expression `a + 1` is not evaluated;
-the compiler only looks at the type its result *would* have (here, `int`),
-because types are known only at compile time and do not survive to run time.
-
+On a system with a 4-byte `int`, prints `4`, `1`, and `4`. The first and last values depend on the size of `int`.
 </details>
 
 ### 14. `auto`
@@ -363,18 +323,24 @@ auto a = 5;
 ```
 
 <details>
-<summary>What does <code>auto</code> mean?</summary>
+<summary>Letting the compiler choose the type</summary>
 
-`auto` means that the type is automatically inferred from the type of the initializer expression,
-not just from the text on the right-hand side.
-Since the expression `5` has type `int`, `a` will have type `int`.
+`auto` asks the compiler to choose the type from the starting expression. The number `5` has type `int`, so `a` gets type `int`. The type is chosen once and cannot change later.
+</details>
 
-You can think of `auto` as being replaced with `int` during compilation.
+<details>
+<summary>Answer</summary>
 
-The inferred type is static (fixed at compile time) and cannot change later:
+`a` has type `int` and value `5`.
+</details>
+
+<details>
+<summary>The type stays the same</summary>
+
+Choosing the type automatically does not let it change later:
 ```cpp
 auto a = 5;
-a = "abc"; // error: `a` is `int`, it cannot become a string later
+a = "abc"; // error: a is still int
 ```
 </details>
 
@@ -385,12 +351,15 @@ a = 5;
 ```
 
 <details>
+<summary>auto needs a starting expression</summary>
+
+The compiler must choose the type at `auto a;`, but there is no starting expression to choose it from. Assigning `5` on the next line is too late. Write `auto a = 5;` instead.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-This will not compile: `auto` needs an initializer expression to infer the type from.
-With no expression, the compiler has nothing to replace `auto` with.
-Assigning `5` on the next line does not fix it —
-the type must be fixed at the definition and cannot be inferred retroactively from a later assignment.
+Does not compile.
 </details>
 
 ### 16. `auto` with uniform initialization
@@ -400,10 +369,15 @@ auto a{ 5 };
 ```
 
 <details>
+<summary>auto with braces</summary>
+
+With one expression in these braces, `auto` chooses its type. Here `5` has type `int`, just as in `auto a = 5;`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-`5` has type `int`, so `a` has type `int` and value `5`.
-The braces contain one initializer expression, just as in `auto a = 5;`.
+`a` has type `int` and value `5`.
 </details>
 
 ### 17. `auto` from another variable
@@ -413,11 +387,15 @@ auto b{ a + 5 };
 ```
 
 <details>
+<summary>auto uses the whole expression</summary>
+
+The starting expression does not have to be a number written directly in the code. Here `a + 5` adds two `int` values and gives `10`, also an `int`, so that is the type chosen for `b`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-`auto` looks at the type of the whole initializer expression, not just at whether it is a literal.
-`a + 5` has type `int`, so `b` becomes `int` with value `10`.
-The same holds for any expression: `auto c{ a };` would also give `c` the type `int`.
+`b` has type `int` and value `10`.
 </details>
 
 ### 18. Swapping variables
@@ -431,19 +409,23 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Overwriting loses the old value</summary>
+
+`a = b` replaces the `1` in `a` with `2`. Then `b = a` copies that `2` into `b`. The original `1` has already been lost, so these assignments cannot swap the values.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-At first glance, this code looks like an attempt to swap the values of `a` and `b`, so that
-`a` contains `2` and `b` contains `1`.
+Prints `2` twice; the values are not swapped.
+</details>
 
-However, `a = b` overwrites `a`, and its old value, `1`, is lost.
+<details>
+<summary>How to actually swap the values</summary>
 
-The correct code would be:
+Save the old value of `a` before overwriting it:
 ```cpp
-int a { 1 };
-int b { 2 };
-// temporary variable
-int temp { a };
+int temp{ a };
 a = b;
 b = temp;
 ```
