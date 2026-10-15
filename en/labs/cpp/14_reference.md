@@ -97,7 +97,27 @@ storage is allocated for it, typically on the stack.
 `5` will be printed 2 times.
 </details>
 
-### 6. Assigning a number to a reference
+### 6. Reference from a reference
+```cpp
+int a = 5;
+int& b = a;
+int& c = b;
+c = 6;
+std::cout << a << std::endl;
+std::cout << b << std::endl;
+std::cout << c << std::endl;
+```
+
+<details>
+<summary>Answer</summary>
+
+`int& c = b;` creates another reference to `a`, because `b` already refers to `a`.
+Both `b` and `c` are names for the same object, `a`.
+
+Assigning `6` through `c` overwrites `a`, so `6` will be printed 3 times.
+</details>
+
+### 7. Assigning a number to a reference
 ```cpp
 int a = 5;
 int& b = a;
@@ -111,7 +131,7 @@ std::cout << a << std::endl;
 Here, `a` will be overwritten with `6` through the name `b`.
 </details>
 
-### 7. Overwriting a variable that has a reference
+### 8. Overwriting a variable that has a reference
 ```cpp
 int a = 5;
 int& b = a;
@@ -128,7 +148,7 @@ Since `b` is a *reference* to `a`, reading from `b` reads from `a`.
 </details>
 
 
-### 8. Reference from an expression
+### 9. Reference from an expression
 ```cpp
 int a = 5;
 int& b = a + 7;
@@ -143,7 +163,7 @@ std::cout << b << std::endl;
 Since a non-const lvalue reference cannot bind to an rvalue, this code will not compile.
 </details>
 
-### 9. Assignment operator applied to a reference
+### 10. Assignment operator applied to a reference
 ```cpp
 int a = 5;
 int& b = a;
@@ -160,7 +180,7 @@ std::cout << b << std::endl;
 The same value will be printed for both variables (`12`).
 </details>
 
-### 10. Assigning a variable to a reference
+### 11. Assigning a variable to a reference
 ```cpp
 int a = 1;
 int b = 2;
@@ -188,7 +208,7 @@ The output will be:
 
 </details>
 
-### 11. Overwriting the referenced variable after assigning through the reference
+### 12. Overwriting the referenced variable after assigning through the reference
 ```cpp
 int a = 1;
 int b = 2;
@@ -216,7 +236,7 @@ The output will be:
 ```
 </details>
 
-### 12. Reference from a dereference
+### 13. Reference from a dereference
 ```cpp
 int a = 1;
 int* pa = &a;
@@ -237,7 +257,7 @@ All 3 expressions now refer to the same object, `a`.
 `3` will be printed 3 times.
 </details>
 
-### 13. Reassigning a pointer after creating a reference from it
+### 14. Reassigning a pointer after creating a reference from it
 ```cpp
 int a = 1;
 int b = 2;
@@ -260,7 +280,7 @@ The output will be:
 ```
 </details>
 
-### 14. Overwriting a variable through an address and a reference
+### 15. Overwriting a variable through an address and a reference
 ```cpp
 int a = 1;
 int& b = a;
@@ -277,7 +297,7 @@ Here, `*c = 2;` will overwrite `a`.
 </details>
 
 
-### 15. References to fields
+### 16. References to fields
 ```cpp
 #include <iostream>
 
@@ -318,7 +338,7 @@ References can be created to members of larger objects.
 Here, `3` and `4` will be printed everywhere.
 </details>
 
-### 16. Reference to a pointer (1)
+### 17. Reference to a pointer (1)
 ```cpp
 int a = 1;
 int b = 2;
@@ -343,7 +363,7 @@ The reference `rpa` reflects that change, so dereferencing it accesses `b`.
 `a` will be `1`, and `b` will be `3`.
 </details>
 
-### 17. Reference to a pointer (2)
+### 18. Reference to a pointer (2)
 ```cpp
 int a = 1;
 int b = 2;
@@ -366,7 +386,7 @@ any expression that ultimately yields an lvalue.
 `rb = 3` will write `3` into `b`.
 </details>
 
-### 18. Size of a reference
+### 19. Size of a reference
 
 Is it possible to obtain the size of a reference? What is the size of a reference?
 
@@ -395,7 +415,7 @@ Such an address is commonly 8 bytes on modern platforms.
 > Passing its address is a straightforward way to provide that information.
 </details>
 
-### 19. Example of using references (1)
+### 20. Example of using references (1)
 ```cpp
 #include <iostream>
 
@@ -420,7 +440,7 @@ Many compilers implement this by passing the *address* of the `appleAmount` vari
 but that detail is hidden from you.
 </details>
 
-### 20. Example of using references (2)
+### 21. Example of using references (2)
 ```cpp
 #include <iostream>
 
@@ -449,7 +469,7 @@ You can pass references to struct objects to a function.
 Here, the function increases the power.
 </details>
 
-### 21. `auto` makes a copy
+### 22. `auto` makes a copy
 ```cpp
 int a = 5;
 auto b = a;
@@ -466,7 +486,7 @@ std::cout << a << std::endl;
 `b = 6` overwrites only the copy, so `5` will be printed.
 </details>
 
-### 22. `auto&` makes a reference
+### 23. `auto&` makes a reference
 ```cpp
 int a = 5;
 auto& b = a;
