@@ -601,22 +601,55 @@ Here, “size known at compile time” describes the size template argument, not
 ### 24. Const does not always mean known at compile time
 
 ```cpp
-int input = 0;
-std::cin >> input;
-const int size = input;
-std::array<int, size> arr{};
+int computeSize()
+{
+    int width = 2;
+    int height = 3;
+    return width * height;
+}
+
+int main()
+{
+    const int size = computeSize();
+    std::array<int, size> arr{};
+}
 ```
 
 <details>
 <summary>Answer</summary>
 
 In standard C++, the program will not compile at `std::array<int, size> arr{}`.
-`size` cannot be reassigned, but its value comes from user input and is not a constant expression.
+`size` cannot be reassigned, but its initializer calls a function that is not declared `constexpr`.
+That call is not a constant expression, even if the compiler can optimize it to a fixed value.
 The size template argument of `std::array` must be a constant expression.
 
 </details>
 
-### 25. A constexpr structure and an array size
+### 25. A const structure and an array size
+
+```cpp
+struct Sizes
+{
+    int count;
+};
+
+int main()
+{
+    const Sizes sizes{ 3 };
+    std::array<int, sizes.count> arr{ 1, 2, 3 };
+    std::cout << arr[2] << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The program will not compile: `sizes.count` is not a constant expression usable as an array size.
+`const` prevents changes to `sizes`, but does not make its fields usable in constant expressions.
+The rule that allows `const int localSize = 3` as an array size does not extend to a const structure.
+</details>
+
+### 26. A constexpr structure and an array size
 
 ```cpp
 struct Sizes
