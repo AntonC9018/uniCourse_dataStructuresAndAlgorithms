@@ -778,7 +778,7 @@
       "startMilliseconds": 407830,
       "endMilliseconds": 417670,
       "kind": "test_result",
-      "text": "Compiling code that assigns 256 to a uint8_t variable is reported as an error because the value does not fit in the single byte.",
+      "text": "Compiling code that assigns 256 to a uint8_t variable produces a warning that the unsigned conversion changes the value from 256 to 0; the compilation proceeds.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -934,7 +934,7 @@
       "startMilliseconds": 494620,
       "endMilliseconds": 504630,
       "kind": "fact",
-      "text": "Character code 0 prints nothing, code 32 prints the letter A which is the space character, and code 33 is the exclamation mark.",
+      "text": "Character code 0 prints nothing, code 32 is the space character, and code 33 is the exclamation mark.",
       "evidence": [
         {
           "type": "transcript_range",
