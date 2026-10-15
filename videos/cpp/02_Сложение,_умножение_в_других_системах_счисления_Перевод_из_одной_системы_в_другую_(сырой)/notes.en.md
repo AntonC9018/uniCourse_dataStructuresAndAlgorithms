@@ -22,7 +22,7 @@ Keep these terms available as you work:
 
 A subscript names the base: `12₃` is one three and two units; `12₁₀` is one ten and two units. Each calculation block below states the base of all its numerals. Multiplication signs distinguish products such as `2 × D` from numerals such as `2D₁₆`.
 
-The [Number Systems lab](../../../en/labs/common/02_number_systems.md) offers related practice, including arithmetic without converting entire operands to decimal and conversion by coefficients and place values. The [commit-pinned transcript](https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/blob/d6b06478df12bc7fb0e14a9c58ecddcbb18c92a6/videos/cpp/02_Сложение,_умножение_в_других_системах_счисления_Перевод_из_одной_системы_в_другую_(сырой)/internal/transcript.md) records the calculation sequence; it contains transcription slips, so abbreviated spoken numerals are checked against their complete positional contributions. For example:
+The [Number Systems lab](../../../en/labs/common/02_number_systems.md) offers related practice, including arithmetic without converting entire operands to decimal and conversion by coefficients and place values. The [commit-pinned transcript](https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/blob/d6b06478df12bc7fb0e14a9c58ecddcbb18c92a6/videos/cpp/02_Сложение,_умножение_в_других_системах_счисления_Перевод_из_одной_системы_в_другую_%28сырой%29/internal/transcript.md) records the calculation sequence; it contains transcription slips, so abbreviated spoken numerals are checked against their complete positional contributions. For example:
 
 ```text
 12₃ = 1 × 3 + 2 × 1 = 5₁₀
