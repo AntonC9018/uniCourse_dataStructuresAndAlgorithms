@@ -39,21 +39,15 @@ auto a{ static_cast<uint8_t>(5) };
 ```
 
 <details>
-<summary>What does <code>static_cast&lt;uint8_t&gt;</code> do?</summary>
+<summary>Changing the type of a value</summary>
 
-`static_cast<uint8_t>(5)` is an expression
-whose result is the number `5` of type `uint8_t`.
+`static_cast<uint8_t>(5)` converts the value `5` to type `uint8_t`. The type in `<...>` says what to convert to; the expression in `(...)` supplies the value. `auto` then chooses `uint8_t` for `a`.
+</details>
 
-- `static_cast` says, “convert the result of an expression from one type to another”.
-- `<uint8_t>` indicates the type to convert to.
-- `(5)` in parentheses specifies the expression whose result must be converted.
+<details>
+<summary>Answer</summary>
 
-So the following happens:
-- The expression in parentheses (`(5)`) is evaluated, producing the number `5` of type `int`.
-- A `static_cast` to the type specified between `<...>`, namely `uint8_t`, is performed.
-  Since `5` fits in 1 byte, it converts without any problem.
-- `static_cast<uint8_t>(5)` is replaced with the number `5` of type `uint8_t`.
-- `auto` infers the type of the initializer expression and is replaced with `uint8_t`.
+`a` has type `uint8_t` and value `5`.
 </details>
 
 ### 2. A cast changes the expression type
@@ -68,24 +62,21 @@ std::cout << integerHalf << std::endl;
 ```
 
 <details>
+<summary>Dividing whole numbers or fractional numbers</summary>
+
+Converting `value` to `double` gives `7.0` for the first division, so dividing by `2` gives `3.5`. It does not change `value` itself. In `value / 2`, both numbers are still integers, so the fractional part is discarded and the result is `3`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-It prints `7`, `3.5`, and `3`.
-`static_cast<double>(value)` produces a `double` expression for the first division.
-It does not change the type or stored value of the `int` variable `value`.
-The second division still uses integers, so its result is `3`.
+Prints `7`, `3.5`, and `3` on separate lines.
+</details>
 
-Before division, both operands are brought to the same numeric type.
-One operand is already `double`, so the other is converted to `double` automatically.
-The `int` values used here fit in `double`, so their values are preserved.
-The compiler supplies a conversion equivalent to `static_cast<double>(2)`, just as it does for a smaller integer
-converted to a larger integer type.
-Written with both conversions explicit, the first division is:
+<details>
+<summary>Why the second number becomes double too</summary>
 
-```cpp
-double half{ static_cast<double>(value) / static_cast<double>(2) };
-```
-
+When one side of this division is a `double`, C++ converts the other side to `double` too. Here the first division works like `7.0 / 2.0`.
 </details>
 
 ### 3. `static_cast` to a larger type
@@ -96,12 +87,15 @@ int b{ static_cast<int>(a) };
 ```
 
 <details>
+<summary>Converting to a type with more room</summary>
+
+Every `uint8_t` value fits in `int`, so this conversion keeps the number unchanged. Here `b` gets the same `5` as `a`. You could also write `int b{ a };`: the compiler would do the conversion automatically.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-An implicit conversion equivalent to `static_cast<int>` occurs here, even though it is not written explicitly.
-Since every value that can be stored in `a` also fits in `b`,
-you can assign `a` directly to `b`,
-which performs the conversion from `uint8_t` to `int` automatically.
+`b` has type `int` and value `5`.
 </details>
 
 ### 4. `static_cast` of a negative number to a larger type
@@ -112,17 +106,22 @@ int b{ static_cast<int>(a) };
 ```
 
 <details>
-<summary>Answer</summary>
+<summary>Keeping a negative value</summary>
 
-Just like in the previous example, the conversion happens implicitly even without `static_cast`,
-because every value stored in `a` fits in `b`.
-
-The conversion preserves the value and therefore the sign:
-since `a` is negative, the upper bits of `b` are filled with 1.
-`-3` is `1111 1101` in 8 bits
-and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
+An `int` can store every `int8_t` value, including negative ones. Converting `a` keeps its value `-3`; giving the number more bits does not change its sign.
 </details>
 
+<details>
+<summary>Answer</summary>
+
+`b` has type `int` and value `-3`.
+</details>
+
+<details>
+<summary>How the bits keep a negative number</summary>
+
+For a negative number, the added upper bits are filled with `1`. For example, `-3` is `1111 1101` in 8 bits and `1111 1111 1111 1111 1111 1111 1111 1101` in 32 bits.
+</details>
 
 ### 5. `static_cast`
 ```cpp
@@ -139,59 +138,15 @@ int main()
 ```
 
 <details>
-<summary>What does <code>static_cast&lt;uint8_t&gt;</code> do?</summary>
+<summary>Keeping only eight bits</summary>
 
-In this example, `static_cast<uint8_t>` takes only the least significant byte of the number in `a`,
-discarding the upper 3 bytes. This is called truncation.
-
-Without `static_cast<uint8_t>`,
-the conversion occurs implicitly.
-The compiler does not report an error in this case
-if no warning flags are passed during compilation.
-
-> To have the compiler detect and reject such situations,
-> pass warning flags during compilation, for example:
-> ```
-> g++ test.cpp -Wall -Werror -Wconversion
-> ```
->
-> In addition, you can use brace initialization.
-> The following will also not compile:
-> ```cpp
-> uint8_t b { 256 }; // narrowing conversion
-> ```
->
-> And the following will probably produce a warning:
-> ```cpp
-> uint32_t a { 256 };
-> uint8_t b { a }; // narrowing conversion
-> ```
-
-
+`uint8_t` can store values from `0` to `255`. Converting a larger number to it keeps only the lowest 8 bits. Here `256` is `1 0000 0000` in binary. Keeping the last 8 bits leaves `0000 0000`, which is `0`. Copying that into `c` does not change it.
 </details>
 
 <details>
-<summary>Correct answer:</summary>
+<summary>Answer</summary>
 
-`static_cast<uint8_t>` truncates the value in `a`,
-leaving only the last byte (the least significant byte).
-
-The result is 0, because 256 is represented as `1 0000 0000` in binary,
-and truncating this number to 8 bits leaves only `0000 0000`,
-discarding the leading 1.
-
-The same value with all 32 bits written out,
-and each hexadecimal digit placed under its 4 bits:
-```
-0000 0000  0000 0000  0000 0001  0000 0000
-0    0     0    0     0    1     0    0
-```
-
-How to read this notation: the top row holds the bits, split into groups of 4
-(one group per hexadecimal digit, with a wider gap between whole bytes);
-the bottom row holds the hexadecimal digit for the 4 bits directly above it.
-Reading the bottom row gives `0x00000100`, which is 256.
-Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is 0.
+Prints `0`.
 </details>
 
 <details>
@@ -201,6 +156,12 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 - Value 258: `1 0000 0010` is stored, becoming `0000 0010` after truncation.
 - Value 511: `1 1111 1111` is stored, becoming `1111 1111` after truncation.
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
+</details>
+
+<details>
+<summary>What if you leave out the cast?</summary>
+
+`uint8_t b{ a };` is rejected because the value might not fit. Writing `static_cast<uint8_t>(a)` explicitly tells the compiler to perform the conversion even if some bits are lost.
 </details>
 
 ### 6. Bitwise operation (advanced level)
@@ -218,47 +179,25 @@ int main()
 ```
 
 <details>
-<summary>
+<summary>Flipping bits</summary>
 
-What does `~` do?
-
-</summary>
-
-It is a bitwise operator that inverts every bit in the binary representation of a number:
-it turns each 0 into 1 and each 1 into 0.
-For example, `1010 0011` -> `0101 1100`.
+`~` changes each `0` bit to `1` and each `1` to `0`. For example, `1010 0011` becomes `0101 1100`. There is a catch: C++ first converts the small `uint8_t` value to `int`, so `~a` is an `int`, not an 8-bit value. The braces in `uint8_t b{ ~a };` reject that conversion back to eight bits.
 </details>
 
 <details>
-<summary>Correct answer</summary>
+<summary>Answer</summary>
 
-- 0 is stored in an 8-bit variable.
-- The `~` operator is applied to the 8-bit value 0: `0000 0000` -> `1111 1111` (255).
-- The result is stored in the 8-bit variable `b`.
-- The result is stored unchanged in the 32-bit variable `c` (for printing).
+Does not compile as standard C++: the conversion in `uint8_t b{ ~a };` is not allowed.
+</details>
 
-Written out with each hexadecimal digit under its 4 bits:
+<details>
+<summary>How to keep the eight flipped bits</summary>
+
+Ask explicitly for the conversion back to `uint8_t`:
+```cpp
+uint8_t b{ static_cast<uint8_t>(~a) };
 ```
-a:
-0000 0000
-0    0
-
-b:
-1111 1111
-F    F
-
-c:
-0000 0000  0000 0000  0000 0000  1111 1111
-0    0     0    0     0    0     F    F
-```
-
-Since `b` is unsigned, the most significant bit counts as just another positive bit,
-so the upper 3 bytes of `c` are filled with 0 (zero extension):
-`c` holds `0x000000FF`, and the program prints 255.
-A signed type, by contrast, is going to interpret the most significant bit
-as having a negative coefficient,
-which is why extending a negative value fills the upper bits with 1s instead.
-
+The lowest 8 bits are then `1111 1111`, or `255`. With this change, the program prints `255`.
 </details>
 
 ### 7. Changing the sign (advanced level)
@@ -276,61 +215,19 @@ int main()
 ```
 
 <details>
+<summary>Converting between unsigned and signed values</summary>
 
-<summary>
-
-What does `static_cast<int8_t>` do?
-
-</summary>
-
-In this example, it interprets the unchanged bit representation of the number stored in `a` as a signed integer.
-
-For example, if `a` is 0, the result will be 0, because `0000 0000`
-is 0 as both a signed and an unsigned integer.
-
-If `a` is 128, that is, `1000 0000`, it becomes `-128`, because `1000 0000`
-represents -128 as a signed number.
+`uint8_t` stores numbers from `0` to `255`; `int8_t` stores numbers from `-128` to `127`. The value `127` fits in both, so converting it keeps the value. Copying it into the larger `int32_t` also keeps `127`.
 </details>
 
 <details>
+<summary>Answer</summary>
 
-<summary>
-
-What happens when a smaller signed `int8_t` value is assigned to `int32_t`?
-
-</summary>
-
-If the value is negative, the result will also be negative (the upper bits are filled with 1s).
-For example, -1 is written as `1111 1111` in 8 bits,
-and becomes `1111 1111 1111 1111 1111 1111 1111 1111` in 32 bits,
-which is also -1.
-
-If the value is positive, the result will also be positive (the upper bits are filled with 0s).
-For example, 10 is written as `0000 1010` in 8 bits,
-and becomes `0000 0000 0000 0000 0000 0000 0000 1010` in 32 bits,
-which is also 10.
-
-In short, `int32_t` will always store *the same numeric value*.
+Prints `127`.
 </details>
 
 <details>
-<summary>Correct answer:</summary>
+<summary>What happens with other values?</summary>
 
-- 127 is written to `a` as `0111 1111`.
-- `0111 1111` is converted unchanged to `b`, and as a signed number it is 127.
-- The value 127 is stored in `c` as 127 (see the explanation above for how).
-
-Written out with each hexadecimal digit under its 4 bits:
-```
-a, b:
-0111 1111
-7    F
-
-c:
-0000 0000  0000 0000  0000 0000  0111 1111
-0    0     0    0     0    0     7    F
-```
-
-Since `b` is positive, the upper 3 bytes of `c` are filled with 0:
-`c` holds `0x0000007F`, so the program prints 127.
+In C++20 and later, converting `128` (`1000 0000`) to `int8_t` gives `-128`: the same bits represent a negative number in the signed type. Before C++20, the result of such an out-of-range conversion depends on the compiler. A value that fits, such as `127` here, stays unchanged.
 </details>
