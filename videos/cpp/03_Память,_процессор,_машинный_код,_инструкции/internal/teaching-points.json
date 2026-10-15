@@ -811,7 +811,7 @@
       "startMilliseconds": 574560,
       "endMilliseconds": 596440,
       "kind": "fact",
-      "text": "The store step is assumed to be opcode 65, copying from register 0 into memory address three, while loading ten into the first register uses opcode 64 with memory address zero as source and register one as destination.",
+      "text": "The store step is assumed to be opcode 65, copying from register 0 into memory address three, while loading ten into the first register uses opcode 64 with memory address two as source and register one as destination.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -1037,7 +1037,7 @@
       "startMilliseconds": 761069,
       "endMilliseconds": 778150,
       "kind": "fact",
-      "text": "The next instruction is again 64, meaning a copy from RAM address 1 into register 0, so the second value is loaded the same way as the first.",
+      "text": "The next instruction is again 64, meaning a copy from RAM address 1 into register 1, so the second value is loaded the same way as the first.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -1055,7 +1055,7 @@
       "startMilliseconds": 778150,
       "endMilliseconds": 799710,
       "kind": "fact",
-      "text": "Opcode 72 is the addition of register 1 and register 2 with the result written into register 0, and it takes no arguments at all.",
+      "text": "Opcode 72 is the addition of register 0 and register 1 with the result written into register 0, and it takes no arguments at all.",
       "evidence": [
         {
           "type": "transcript_range",
