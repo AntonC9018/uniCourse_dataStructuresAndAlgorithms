@@ -559,7 +559,7 @@ Without the assignment, it prints `1`.
 std::array<int, 2> arr{ 1, 2 };
 const int* p = arr.data();
 arr[0] = 3;
-std::cout << p[0] << std::endl;
+std::cout << *p << std::endl;
 p += 1;
 std::cout << *p << std::endl;
 ```
@@ -569,8 +569,8 @@ std::cout << *p << std::endl;
 
 It prints `3` and `2`.
 The pointer receives the address of the array's first element.
-`p[0]` reads the current value of `arr[0]`, which was changed directly.
-The pointer can advance to the next element, but neither `p[0] = 4` nor `*p = 4` is allowed.
+`*p` reads the current value of `arr[0]`, which was changed directly.
+The pointer can advance to the next element, but `*p = 4` is not allowed.
 This combines array access and pointer arithmetic with read-only access through a pointer.
 </details>
 
