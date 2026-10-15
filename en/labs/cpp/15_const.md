@@ -537,7 +537,9 @@ Both non-const and const objects can be passed to a parameter of type `const Pos
 The local pointer parameter itself can still be reassigned, as in the earlier pointer example.
 </details>
 
-### 21. A const std::array
+## Const std::array
+
+### 1. A const std::array
 
 ```cpp
 const std::array<int, 2> arr{ 1, 2 };
@@ -551,149 +553,6 @@ std::cout << arr[0] << std::endl;
 The program will not compile: the elements of `arr` are const integers.
 They can be read, but `arr[0] = 3` attempts to change one of them.
 Without the assignment, it prints `1`.
-</details>
-
-### 22. Reading an array through a pointer to const
-
-```cpp
-std::array<int, 2> arr{ 1, 2 };
-const int* p = arr.data();
-arr[0] = 3;
-std::cout << *p << std::endl;
-p += 1;
-std::cout << *p << std::endl;
-```
-
-<details>
-<summary>Answer</summary>
-
-It prints `3` and `2`.
-The pointer receives the address of the array's first element.
-`*p` reads the current value of `arr[0]`, which was changed directly.
-The pointer can advance to the next element, but `*p = 4` is not allowed.
-This combines array access and pointer arithmetic with read-only access through a pointer.
-</details>
-
-### 23. Const integers as array sizes
-
-```cpp
-const int globalSize = 2;
-
-int main()
-{
-    const int localSize = 3;
-    std::array<int, globalSize> a{ 1, 2 };
-    std::array<int, localSize> b{ 3, 4, 5 };
-    std::cout << a[1] << std::endl;
-    std::cout << b[2] << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-It prints `2` and `5`.
-Both sizes are const integers initialized with constant expressions, so their values can be used at compile time.
-Being global is not required: the local `localSize` works too.
-Here, “size known at compile time” describes the size template argument, not the `static` storage keyword.
-</details>
-
-### 24. Const does not always mean known at compile time
-
-```cpp
-int computeSize()
-{
-    int width = 2;
-    int height = 3;
-    return width * height;
-}
-
-int main()
-{
-    const int size = computeSize();
-    std::array<int, size> arr{};
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-In standard C++, the program will not compile at `std::array<int, size> arr{}`.
-`size` cannot be reassigned, but its initializer calls a function that is not declared `constexpr`.
-That call is not a constant expression, even if the compiler can optimize it to a fixed value.
-The size template argument of `std::array` must be a constant expression.
-
-</details>
-
-### 25. A const structure and an array size
-
-```cpp
-struct Sizes
-{
-    int count;
-};
-
-int main()
-{
-    const Sizes sizes{ 3 };
-    std::array<int, sizes.count> arr{ 1, 2, 3 };
-    std::cout << arr[2] << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-The program will not compile: `sizes.count` is not a constant expression usable as an array size.
-`const` prevents changes to `sizes`, but does not make its fields usable in constant expressions.
-The rule that allows `const int localSize = 3` as an array size does not extend to a const structure.
-</details>
-
-### 26. A constexpr structure and an array size
-
-```cpp
-struct Sizes
-{
-    int count;
-};
-
-int main()
-{
-    constexpr Sizes sizes{ 3 };
-    std::array<int, sizes.count> arr{ 1, 2, 3 };
-    std::cout << arr[2] << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-It prints `3`.
-A `constexpr` variable must be initialized with a constant expression and is also const.
-Here, the whole `Sizes` object is initialized at compile time, so reading `sizes.count` is valid as a size template argument.
-
-For the earlier `const int localSize = 3`, `constexpr` was not needed to use the value as a bound.
-For this structure, writing only `const Sizes sizes{ 3 }` would not make `sizes.count` a constant expression usable as a bound.
-`constexpr` explicitly provides that guarantee for this object.
-
-This extends the literal size arguments introduced in the [C++ array lab](10_cpp_array.md).
-</details>
-
-## Const std::array
-
-### 1. A const C++ array
-
-```cpp
-const std::array<int, 2> arr{ 1, 2 };
-arr[0] = 3;
-```
-
-<details>
-<summary>Answer</summary>
-
-The program will not compile: indexing a const `std::array` provides read-only access to its elements.
-`arr[0]` can be read, but cannot be assigned to.
-This applies the [const-object rule](15_const.md) to a C++ array.
 </details>
 
 ### 2. Copying a const C++ array
@@ -729,25 +588,37 @@ Initializing `int*` from it would discard the pointed-to `const`.
 Use `const int* p = arr.data()` to read the elements; writing through that pointer remains forbidden.
 </details>
 
-### 4. A compile-time size as a template argument
+### 4. Reading an array through a pointer to const
 
 ```cpp
-#include <array>
-#include <iostream>
+std::array<int, 2> arr{ 1, 2 };
+const int* p = arr.data();
+arr[0] = 3;
+std::cout << *p << std::endl;
+p += 1;
+std::cout << *p << std::endl;
+```
 
-struct Sizes
-{
-    int count;
-};
+<details>
+<summary>Answer</summary>
+
+It prints `3` and `2`.
+The pointer receives the address of the array's first element.
+`*p` reads the current value of `arr[0]`, which was changed directly.
+The pointer can advance to the next element, but `*p = 4` is not allowed.
+This combines array access and pointer arithmetic with read-only access through a pointer.
+</details>
+
+### 5. Const integers as array sizes
+
+```cpp
+const int globalSize = 2;
 
 int main()
 {
-    const int count = 2;
-    std::array<int, count> a{ 1, 2 };
-
-    constexpr Sizes sizes{ 3 };
-    std::array<int, sizes.count> b{ 3, 4, 5 };
-
+    const int localSize = 3;
+    std::array<int, globalSize> a{ 1, 2 };
+    std::array<int, localSize> b{ 3, 4, 5 };
     std::cout << a[1] << std::endl;
     std::cout << b[2] << std::endl;
 }
@@ -757,10 +628,88 @@ int main()
 <summary>Answer</summary>
 
 It prints `2` and `5`.
-In `std::array<T, N>`, `T` is the element type and `N` is the number of elements.
-These are template arguments: here, the size argument must be a compile-time constant expression.
-Both the local `const int` initialized with `2` and the field of the `constexpr` structure meet that requirement.
+Both sizes are const integers initialized with constant expressions, so their values can be used at compile time.
+Being global is not required: the local `localSize` works too.
+Here, “size known at compile time” describes the size template argument, not the `static` storage keyword.
+</details>
 
-This uses the sizes introduced in the [const lab](15_const.md) in place of literal numbers.
-A size obtained from user input would not work, even if its variable were declared `const`.
+### 6. Const does not always mean known at compile time
+
+```cpp
+int computeSize()
+{
+    int width = 2;
+    int height = 3;
+    return width * height;
+}
+
+int main()
+{
+    const int size = computeSize();
+    std::array<int, size> arr{};
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+In standard C++, the program will not compile at `std::array<int, size> arr{}`.
+`size` cannot be reassigned, but its initializer calls a function that is not declared `constexpr`.
+That call is not a constant expression, even if the compiler can optimize it to a fixed value.
+The size template argument of `std::array` must be a constant expression.
+
+</details>
+
+### 7. A const structure and an array size
+
+```cpp
+struct Sizes
+{
+    int count;
+};
+
+int main()
+{
+    const Sizes sizes{ 3 };
+    std::array<int, sizes.count> arr{ 1, 2, 3 };
+    std::cout << arr[2] << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The program will not compile: `sizes.count` is not a constant expression usable as an array size.
+`const` prevents changes to `sizes`, but does not make its fields usable in constant expressions.
+The rule that allows `const int localSize = 3` as an array size does not extend to a const structure.
+</details>
+
+### 8. A constexpr structure and an array size
+
+```cpp
+struct Sizes
+{
+    int count;
+};
+
+int main()
+{
+    constexpr Sizes sizes{ 3 };
+    std::array<int, sizes.count> arr{ 1, 2, 3 };
+    std::cout << arr[2] << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `3`.
+A `constexpr` variable must be initialized with a constant expression and is also const.
+Here, the whole `Sizes` object is initialized at compile time, so reading `sizes.count` is valid as a size template argument.
+
+For the earlier `const int localSize = 3`, `constexpr` was not needed to use the value as a bound.
+For this structure, writing only `const Sizes sizes{ 3 }` would not make `sizes.count` a constant expression usable as a bound.
+`constexpr` explicitly provides that guarantee for this object.
+
+This extends the literal size arguments introduced in the [C++ array lab](10_cpp_array.md).
 </details>
