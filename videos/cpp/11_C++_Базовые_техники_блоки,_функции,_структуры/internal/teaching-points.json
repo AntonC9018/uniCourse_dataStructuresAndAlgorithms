@@ -81,7 +81,7 @@
       "startMilliseconds": 65190,
       "endMilliseconds": 78670,
       "kind": "fact",
-      "text": "The worked example assigns the player position 0:0, the enemy 2:1 and the second player 3:3, illustrating how objects carry concrete coordinates.",
+      "text": "The worked example places a tree at 0:0, the enemy at 2:1 and the player at 3:3, illustrating how objects carry concrete coordinates.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -171,7 +171,7 @@
       "startMilliseconds": 135460,
       "endMilliseconds": 151430,
       "kind": "explanation",
-      "text": "In the case where the enemy is above-left of the player at 3:2 versus 1:1, the x difference is 2 and the y difference is 1.",
+      "text": "In the case where the enemy is at 3:2 and the player at 1:1, the player lies above-left of the enemy, and the x difference is 2 while the y difference is 1.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -495,7 +495,7 @@
       "startMilliseconds": 360440,
       "endMilliseconds": 379110,
       "kind": "test_result",
-      "text": "Running the program prints the expected result, namely the expected minimum distance together with distances 1 2 3 and 1 2 3 4 5, confirming the computation is correct.",
+      "text": "Running the program prints only the two computed distances, 3 and 5; the spoken sequences 1 2 3 and 1 2 3 4 5 are counting the board's cells, not additional program output, confirming the computation is correct.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -2709,7 +2709,7 @@
       "startMilliseconds": 1744000,
       "endMilliseconds": 1752440,
       "kind": "fact",
-      "text": "Here the return cell holds a single number rather than a whole position, because the function is declared to return position-typed or scalar data as specified in its signature.",
+      "text": "Here the return cell holds a single number rather than a whole position, because the distance function is declared to return int, so the destination cell type follows that declaration.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -3159,7 +3159,7 @@
       "startMilliseconds": 2049310,
       "endMilliseconds": 2053230,
       "kind": "code_change",
-      "text": "The interface is declared explicitly with the C++ string type for the two name parameters, since the signature must state the parameter types.",
+      "text": "The interface is declared explicitly with std::string_view for the two name parameters, since the signature must state the parameter types.",
       "evidence": [
         {
           "type": "transcript_range",
@@ -3249,7 +3249,7 @@
       "startMilliseconds": 2107960,
       "endMilliseconds": 2128750,
       "kind": "code_change",
-      "text": "The two anonymous types are renamed to Player and Enemy so that each call receives the type that matches the entity it moves, which makes the code self-documenting.",
+      "text": "The call site is updated to pass the player and enemy position values with the names \"player\" and \"enemy\"; this step does not rename the anonymous types to Player and Enemy or define entity types.",
       "evidence": [
         {
           "type": "transcript_range",
