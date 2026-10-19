@@ -693,6 +693,12 @@ This creates a linked list, a data structure used very often in programming.
 
 Each node holds a pointer to another node of the same type.
 
+```mermaid
+flowchart LR
+    startNode["Node start<br/>value = 2"] -->|next| endNode["Node end<br/>value = 1"]
+    endNode -->|next| nullNode["nullptr"]
+```
+
 The null pointer in the last node of the list (`nullptr`) marks the end of the list.
 
 The code prints `2`, then `1`, and then crashes on the last
@@ -792,6 +798,13 @@ it goes into the next one.
  The remaining 3 bytes of the first slot are unused (padding bytes);
 - `uint8_t f3` goes into the third slot;
 - The remaining 3 bytes of the third slot are unused.
+
+```mermaid
+block-beta
+columns 12
+  slot0["slot 0"]:4 slot1["slot 1"]:4 slot2["slot 2"]:4
+  f1["f1<br/>1 byte"] pad1["padding<br/>3 bytes"]:3 f2["f2<br/>4 bytes"]:4 f3["f3<br/>1 byte"] pad2["padding<br/>3 bytes"]:3
+```
 
 In total, this gives 3 slots of 4 bytes each.
 

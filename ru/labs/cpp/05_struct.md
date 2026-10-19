@@ -697,6 +697,12 @@ int main()
 
 Суть в том, что структура имеет ссылку на другую такую же.
 
+```mermaid
+flowchart LR
+    startNode["Node start<br/>value = 2"] -->|next| endNode["Node end<br/>value = 1"]
+    endNode -->|next| nullNode["nullptr"]
+```
+
 Конец списка указывается отсутствием указателя в последнем звене списка (`nullptr`).
 
 Код выведет 2, 1, а затем крашнется на последней строчке при
@@ -796,6 +802,13 @@ alignment делает так, что между полями остаются �
  Оставшиеся 3 байта первого окошка будут пустовать (padding bytes);
 - `uint8_t f3` попадет в третье окошко;
 - Оставшиеся 3 байта 3-го окошка будут пустовать.
+
+```mermaid
+block-beta
+columns 12
+  slot0["slot 0"]:4 slot1["slot 1"]:4 slot2["slot 2"]:4
+  f1["f1<br/>1 byte"] pad1["padding<br/>3 bytes"]:3 f2["f2<br/>4 bytes"]:4 f3["f3<br/>1 byte"] pad2["padding<br/>3 bytes"]:3
+```
 
 В сумме получаем 3 окошка по 4 байта.
 
