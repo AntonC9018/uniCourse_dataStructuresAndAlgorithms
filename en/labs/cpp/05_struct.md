@@ -799,12 +799,7 @@ it goes into the next one.
 - `uint8_t f3` goes into the third slot;
 - The remaining 3 bytes of the third slot are unused.
 
-```mermaid
-block-beta
-columns 12
-  slot0["slot 0"]:4 slot1["slot 1"]:4 slot2["slot 2"]:4
-  f1["f1<br/>1 byte"] pad1["padding<br/>3 bytes"]:3 f2["f2<br/>4 bytes"]:4 f3["f3<br/>1 byte"] pad2["padding<br/>3 bytes"]:3
-```
+![Struct alignment: fields packed into 4-byte slots](../../../ru/labs/cpp/images/05_struct_alignment.svg)
 
 In total, this gives 3 slots of 4 bytes each.
 
