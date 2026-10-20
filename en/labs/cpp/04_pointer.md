@@ -82,7 +82,83 @@ and not of some other type**.
 > `&` can give the address of *any object*, but that will be covered in lab 13.
 </details>
 
-### 2. Whitespace in pointer declarations
+### 2. Address of an uninitialized variable
+
+Is something like this allowed?
+
+```cpp
+int a;
+int* b{ &a };
+std::cout << b;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer:</summary>
+
+You can take the address of an uninitialized variable.
+It will be printed as an ordinary address.
+
+*Reading the value at* that address would not be allowed.
+</details>
+
+### 3. Dereference operator (writing)
+```cpp
+int a { 1 };
+int* b{ &a };
+*b = 2;
+std::cout << a;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer:</summary>
+
+The address of the variable `a` was stored in `b`.
+
+In the line `*b = 2`, `*b` lets us refer to the variable
+located at the address in `b`, that is, to `a`.
+
+`*b = 2` -> `a = 2` writes `2` into `a`.
+</details>
+
+### 4. A number as an address
+
+Is something like this allowed?
+
+```cpp
+int* b{ 32 };
+std::cout << *b;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Answer:</summary>
+
+No. An address cannot be set directly like this; it must be obtained using
+the `&` operator on an object (for example, a variable).
+</details>
+
+### 5. Dereference operator (reading)
+```cpp
+int a{ 5 };
+int b{ *(&a) };
+std::cout << b;
+std::cout << std::endl;
+```
+
+<details>
+<summary>Correct answer:</summary>
+
+Evaluating the expression `*(&a)`:
+- `&a` becomes the address of variable `a` (say, 32).
+- `*32` follows the address, allowing access to variable `a`.
+- When `a` is used as an expression, it yields the value 5.
+
+`*(&a)` -> `*32` -> `a` -> `5`
+</details>
+
+### 6. Whitespace in pointer declarations
 
 ```cpp
 int value{ 5 };
@@ -104,82 +180,6 @@ It prints `6` three times.
 Whitespace between these tokens does not change the declaration.
 All four pointers store the address of the same variable.
 Whitespace around the dereference operator also has no effect: `*a` and `     *     a` access the same variable.
-</details>
-
-### 3. Address of an uninitialized variable
-
-Is something like this allowed?
-
-```cpp
-int a;
-int* b{ &a };
-std::cout << b;
-std::cout << std::endl;
-```
-
-<details>
-<summary>Answer:</summary>
-
-You can take the address of an uninitialized variable.
-It will be printed as an ordinary address.
-
-*Reading the value at* that address would not be allowed.
-</details>
-
-### 4. Dereference operator (writing)
-```cpp
-int a { 1 };
-int* b{ &a };
-*b = 2;
-std::cout << a;
-std::cout << std::endl;
-```
-
-<details>
-<summary>Answer:</summary>
-
-The address of the variable `a` was stored in `b`.
-
-In the line `*b = 2`, `*b` lets us refer to the variable
-located at the address in `b`, that is, to `a`.
-
-`*b = 2` -> `a = 2` writes `2` into `a`.
-</details>
-
-### 5. A number as an address
-
-Is something like this allowed?
-
-```cpp
-int* b{ 32 };
-std::cout << *b;
-std::cout << std::endl;
-```
-
-<details>
-<summary>Answer:</summary>
-
-No. An address cannot be set directly like this; it must be obtained using
-the `&` operator on an object (for example, a variable).
-</details>
-
-### 6. Dereference operator (reading)
-```cpp
-int a{ 5 };
-int b{ *(&a) };
-std::cout << b;
-std::cout << std::endl;
-```
-
-<details>
-<summary>Correct answer:</summary>
-
-Evaluating the expression `*(&a)`:
-- `&a` becomes the address of variable `a` (say, 32).
-- `*32` follows the address, allowing access to variable `a`.
-- When `a` is used as an expression, it yields the value 5.
-
-`*(&a)` -> `*32` -> `a` -> `5`
 </details>
 
 ### 7. Printing a complex expression
