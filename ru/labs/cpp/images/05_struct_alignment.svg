@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 212" role="img" aria-labelledby="title desc">
+  <title id="title">Struct alignment into 4-byte slots</title>
+  <desc id="desc">The fields f1, padding, f2, f3, and padding are laid out in one continuous row of 12 bytes. Curly braces above the row group the bytes into slot 0, slot 1, and slot 2, four bytes each.</desc>
+  <rect x="16" y="12" width="928" height="186" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" fill="#24292f">
+    <text x="224" y="48" text-anchor="middle" font-size="17" font-weight="600">slot 0</text>
+    <text x="480" y="48" text-anchor="middle" font-size="17" font-weight="600">slot 1</text>
+    <text x="736" y="48" text-anchor="middle" font-size="17" font-weight="600">slot 2</text>
+  </g>
+
+  <g fill="none" stroke="#57606a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 96 90 C 96 82 102 74 112 74 L 208 74 C 216 74 220 68 224 62 C 228 68 232 74 240 74 L 336 74 C 346 74 352 82 352 90"/>
+    <path d="M 352 90 C 352 82 358 74 368 74 L 464 74 C 472 74 476 68 480 62 C 484 68 488 74 496 74 L 592 74 C 602 74 608 82 608 90"/>
+    <path d="M 608 90 C 608 82 614 74 624 74 L 720 74 C 728 74 732 68 736 62 C 740 68 744 74 752 74 L 848 74 C 858 74 864 82 864 90"/>
+  </g>
+
+  <g stroke="#8c959f" stroke-width="1">
+    <rect x="96" y="90" width="64" height="56" fill="#f2cc60"/>
+    <rect x="160" y="90" width="64" height="56" fill="#ffffff"/>
+    <rect x="224" y="90" width="64" height="56" fill="#ffffff"/>
+    <rect x="288" y="90" width="64" height="56" fill="#ffffff"/>
+    <rect x="352" y="90" width="64" height="56" fill="#2f81f7"/>
+    <rect x="416" y="90" width="64" height="56" fill="#2f81f7"/>
+    <rect x="480" y="90" width="64" height="56" fill="#2f81f7"/>
+    <rect x="544" y="90" width="64" height="56" fill="#2f81f7"/>
+    <rect x="608" y="90" width="64" height="56" fill="#f2cc60"/>
+    <rect x="672" y="90" width="64" height="56" fill="#ffffff"/>
+    <rect x="736" y="90" width="64" height="56" fill="#ffffff"/>
+    <rect x="800" y="90" width="64" height="56" fill="#ffffff"/>
+  </g>
+
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <g fill="#24292f">
+      <text x="128" y="113" font-size="14" font-weight="600">f1</text>
+      <text x="128" y="132" font-size="12">1 byte</text>
+      <text x="256" y="113" font-size="14" font-weight="600">padding</text>
+      <text x="256" y="132" font-size="12">3 bytes</text>
+      <text x="640" y="113" font-size="14" font-weight="600">f3</text>
+      <text x="640" y="132" font-size="12">1 byte</text>
+      <text x="768" y="113" font-size="14" font-weight="600">padding</text>
+      <text x="768" y="132" font-size="12">3 bytes</text>
+    </g>
+    <g fill="#ffffff">
+      <text x="480" y="113" font-size="14" font-weight="600">f2</text>
+      <text x="480" y="132" font-size="12">4 bytes</text>
+    </g>
+  </g>
+
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">
+    <rect x="360" y="164" width="14" height="14" rx="3" fill="#f2cc60" stroke="#8c959f"/>
+    <text x="382" y="176">uint8_t</text>
+    <rect x="464" y="164" width="14" height="14" rx="3" fill="#2f81f7" stroke="#8c959f"/>
+    <text x="486" y="176">int</text>
+    <rect x="526" y="164" width="14" height="14" rx="3" fill="#ffffff" stroke="#8c959f"/>
+    <text x="548" y="176">padding</text>
+  </g>
+</svg>

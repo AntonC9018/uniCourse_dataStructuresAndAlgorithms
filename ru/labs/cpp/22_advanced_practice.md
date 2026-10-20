@@ -870,6 +870,181 @@ slug: ru/cpp/labs/advanced-practice
   Если всё занято, они ждут, пока что-нибудь освободится.
   Симулируйте, пока все не исчерпают квоту.
 
+- **Рейс грузовика.** Грузовик должен проехать заданное количество часов.
+  В списке 3 водителя.
+  Про каждого известно, сколько он может ехать без отдыха
+  и сколько отдыха ему нужно за час езды.
+  Напишите функцию, которая генерирует события рейса:
+  кто сколько ехал и сколько времени грузовик простоял.
+  Водитель едет до своего лимита (или пока не закончится рейс), а затем отдыхает
+  по формуле «часы езды × норма отдыха». Пока он отдыхает,
+  за руль садится другой водитель, а после отдыха он снова готов ехать.
+  Грузовик простаивает, только когда отдыхают все водители одновременно,
+  и ждёт, пока первый из них не отдохнёт.
+
+  <details>
+  <summary>
+  Возможное решение
+  </summary>
+
+  Состояние рейса — это сколько ещё осталось ехать
+  и сколько ещё осталось отдохнуть каждому водителю.
+  Оставшийся отдых хранится в самом водителе — так же,
+  как в барбершопе мастер хранит клиента, которого стрижёт:
+
+  ```cpp
+  #include <array>
+  #include <cassert>
+  #include <iostream>
+  #include <span>
+  #include <string_view>
+
+  struct Driver
+  {
+      std::string_view name;
+      double maxDriveHours;    // сколько водитель может ехать без отдыха
+      double restPerDriveHour; // сколько отдыха нужно за час езды
+      double restLeft{ 0.0 };  // сколько отдыха ещё осталось
+  };
+  ```
+
+  Событие — это вид, имя водителя и длительность.
+  У события простоя нет водителя, поэтому имя остаётся пустым:
+
+  ```cpp
+  enum class EventKind
+  {
+      Drive,
+      Idle,
+  };
+
+  struct Event
+  {
+      EventKind kind;
+      std::string_view driver; // у события Idle имя пустое
+      double hours;
+  };
+  ```
+
+  Генератор работает, пока не закончится рейс.
+  Сначала он ищет водителя, у которого отдых уже закончился.
+  Такой водитель проезжает один отрезок пути — до своего лимита или до конца рейса —
+  а затем должен отдохнуть столько, сколько ему положено за часы езды.
+  Если никто не готов, грузовик простаивает, пока не закончится самый короткий
+  оставшийся отдых; это время вычитается из остатка отдыха у всех водителей.
+  Каждый шаг записывает ровно одно событие:
+
+  ```cpp
+  // Записывает события рейса в events, возвращает их количество.
+  size_t generate_events(
+      std::span<Driver> drivers,
+      double tripHours,
+      std::span<Event> events)
+  {
+      size_t count{ 0 };
+      while (tripHours > 0.0)
+      {
+          size_t freeIndex{ drivers.size() };
+          for (size_t i{ 0 }; i < drivers.size(); i++)
+          {
+              if (drivers[i].restLeft <= 0.0)
+              {
+                  freeIndex = i;
+                  break;
+              }
+          }
+
+          if (freeIndex < drivers.size())
+          {
+              Driver& driver{ drivers[freeIndex] };
+              double hours{ driver.maxDriveHours };
+              if (hours > tripHours)
+              {
+                  hours = tripHours;
+              }
+              tripHours -= hours;
+              driver.restLeft = driver.restPerDriveHour * hours;
+
+              assert(count < events.size());
+              events[count] = Event{ EventKind::Drive, driver.name, hours };
+              count++;
+              continue;
+          }
+
+          // Все отдыхают: грузовик ждёт первого, кто освободится.
+          double idleHours{ drivers[0].restLeft };
+          for (const Driver& driver : drivers)
+          {
+              if (driver.restLeft < idleHours)
+              {
+                  idleHours = driver.restLeft;
+              }
+          }
+          for (Driver& driver : drivers)
+          {
+              driver.restLeft -= idleHours;
+          }
+
+          assert(count < events.size());
+          events[count] = Event{ EventKind::Idle, std::string_view{}, idleHours };
+          count++;
+      }
+      return count;
+  }
+  ```
+
+  При печати `switch` выбирает ветку по виду события, а у события простоя нет имени:
+
+  ```cpp
+  void print_event(const Event& event)
+  {
+      switch (event.kind)
+      {
+          case EventKind::Drive:
+              std::cout << event.driver << " drove " << event.hours << " h" << std::endl;
+              break;
+          case EventKind::Idle:
+              std::cout << "truck idle for " << event.hours << " h" << std::endl;
+              break;
+      }
+  }
+  ```
+
+  Использование из `main`:
+  ```cpp
+  int main()
+  {
+      std::array<Driver, 3> drivers{
+          Driver{ .name = "alice", .maxDriveHours = 4.0, .restPerDriveHour = 0.5 },
+          Driver{ .name = "bob", .maxDriveHours = 3.0, .restPerDriveHour = 1.0 },
+          Driver{ .name = "cid", .maxDriveHours = 2.0, .restPerDriveHour = 2.0 },
+      };
+
+      std::array<Event, 32> events{};
+      size_t count{ generate_events(drivers, 12.0, events) };
+      for (size_t i{ 0 }; i < count; i++)
+      {
+          print_event(events[i]);
+      }
+  }
+  ```
+
+  Первой едет alice: она проезжает свои 4 часа, и ей положено
+  2 часа отдыха.
+  Затем едет bob: 3 часа езды и 3 часа отдыха, потом cid: 2 часа езды и 4 часа отдыха.
+  Теперь отдыхают все, поэтому грузовик простаивает 2 часа — столько длится самый
+  короткий отдых.
+  Оставшиеся 3 часа проезжает alice:
+
+  ```text
+  alice drove 4 h
+  bob drove 3 h
+  cid drove 2 h
+  truck idle for 2 h
+  alice drove 3 h
+  ```
+  </details>
+
 - **Объятия в семье.** В семье 5 человек.
   Каждый хочет обнять каждого другого ровно один раз.
   Каждый человек хранит указатели на тех, кого уже обнял.

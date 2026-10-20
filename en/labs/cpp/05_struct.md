@@ -693,6 +693,12 @@ This creates a linked list, a data structure used very often in programming.
 
 Each node holds a pointer to another node of the same type.
 
+```mermaid
+flowchart LR
+    startNode["Node start<br/>value = 2"] -->|next| endNode["Node end<br/>value = 1"]
+    endNode -->|next| nullNode["nullptr"]
+```
+
 The null pointer in the last node of the list (`nullptr`) marks the end of the list.
 
 The code prints `2`, then `1`, and then crashes on the last
@@ -792,6 +798,8 @@ it goes into the next one.
  The remaining 3 bytes of the first slot are unused (padding bytes);
 - `uint8_t f3` goes into the third slot;
 - The remaining 3 bytes of the third slot are unused.
+
+![Struct alignment: fields packed into 4-byte slots](../../../ru/labs/cpp/images/05_struct_alignment.svg)
 
 In total, this gives 3 slots of 4 bytes each.
 

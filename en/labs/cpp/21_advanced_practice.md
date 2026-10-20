@@ -875,6 +875,177 @@ slug: en/cpp/labs/advanced-practice
   If none is free, they wait until one becomes available.
   Simulate until everyone has used up their quota.
 
+- **Truck trip.** A truck has to drive for a given number of hours.
+  The list has 3 drivers.
+  For each driver you know how long they can drive without rest
+  and how much rest they need per hour of driving.
+  Write a function that generates the trip's events:
+  who drove by how much, and how much time the truck stayed idle.
+  A driver drives up to their limit (or until the trip ends), then rests
+  for hours driven × rate; another driver takes over while they rest,
+  and after resting they are ready again.
+  The truck idles only while every driver is resting at once,
+  until the first of them finishes resting.
+
+  <details>
+  <summary>
+  Possible solution
+  </summary>
+
+  The trip state is: how much driving is left, and how much rest each driver still owes.
+  The owed rest lives in the driver itself, the same way a barbershop worker
+  keeps the client they are cutting:
+
+  ```cpp
+  #include <array>
+  #include <cassert>
+  #include <iostream>
+  #include <span>
+  #include <string_view>
+
+  struct Driver
+  {
+      std::string_view name;
+      double maxDriveHours;    // how long the driver can drive without rest
+      double restPerDriveHour; // rest owed for each hour of driving
+      double restLeft{ 0.0 };  // rest this driver still owes
+  };
+  ```
+
+  An event is a kind, a driver name, and a duration.
+  An idle event has no driver, so the name stays empty:
+
+  ```cpp
+  enum class EventKind
+  {
+      Drive,
+      Idle,
+  };
+
+  struct Event
+  {
+      EventKind kind;
+      std::string_view driver; // empty for Idle
+      double hours;
+  };
+  ```
+
+  The generator loops while driving is left.
+  First it looks for a driver whose rest has run out.
+  Such a driver takes one leg — up to their limit, or the rest of the trip —
+  and then owes rest for what they drove.
+  If nobody is ready, the truck idles until the first driver's rest runs out,
+  which is the shortest outstanding rest; that much time is subtracted from every driver.
+  Each step writes exactly one event:
+
+  ```cpp
+  // Writes the trip's events into events, returns how many were written.
+  size_t generate_events(
+      std::span<Driver> drivers,
+      double tripHours,
+      std::span<Event> events)
+  {
+      size_t count{ 0 };
+      while (tripHours > 0.0)
+      {
+          size_t freeIndex{ drivers.size() };
+          for (size_t i{ 0 }; i < drivers.size(); i++)
+          {
+              if (drivers[i].restLeft <= 0.0)
+              {
+                  freeIndex = i;
+                  break;
+              }
+          }
+
+          if (freeIndex < drivers.size())
+          {
+              Driver& driver{ drivers[freeIndex] };
+              double hours{ driver.maxDriveHours };
+              if (hours > tripHours)
+              {
+                  hours = tripHours;
+              }
+              tripHours -= hours;
+              driver.restLeft = driver.restPerDriveHour * hours;
+
+              assert(count < events.size());
+              events[count] = Event{ EventKind::Drive, driver.name, hours };
+              count++;
+              continue;
+          }
+
+          // Every driver is resting: the truck waits for the first free one.
+          double idleHours{ drivers[0].restLeft };
+          for (const Driver& driver : drivers)
+          {
+              if (driver.restLeft < idleHours)
+              {
+                  idleHours = driver.restLeft;
+              }
+          }
+          for (Driver& driver : drivers)
+          {
+              driver.restLeft -= idleHours;
+          }
+
+          assert(count < events.size());
+          events[count] = Event{ EventKind::Idle, std::string_view{}, idleHours };
+          count++;
+      }
+      return count;
+  }
+  ```
+
+  Printing switches on the kind; an idle event has no name to print:
+
+  ```cpp
+  void print_event(const Event& event)
+  {
+      switch (event.kind)
+      {
+          case EventKind::Drive:
+              std::cout << event.driver << " drove " << event.hours << " h" << std::endl;
+              break;
+          case EventKind::Idle:
+              std::cout << "truck idle for " << event.hours << " h" << std::endl;
+              break;
+      }
+  }
+  ```
+
+  Usage from `main`:
+  ```cpp
+  int main()
+  {
+      std::array<Driver, 3> drivers{
+          Driver{ .name = "alice", .maxDriveHours = 4.0, .restPerDriveHour = 0.5 },
+          Driver{ .name = "bob", .maxDriveHours = 3.0, .restPerDriveHour = 1.0 },
+          Driver{ .name = "cid", .maxDriveHours = 2.0, .restPerDriveHour = 2.0 },
+      };
+
+      std::array<Event, 32> events{};
+      size_t count{ generate_events(drivers, 12.0, events) };
+      for (size_t i{ 0 }; i < count; i++)
+      {
+          print_event(events[i]);
+      }
+  }
+  ```
+
+  alice drives her 4-hour limit and owes 2 hours of rest, bob drives 3 and owes 3,
+  cid drives 2 and owes 4; then every driver rests, so the truck idles
+  for the shortest rest, 2 hours. alice drives the remaining 3 hours:
+
+  ```text
+  alice drove 4 h
+  bob drove 3 h
+  cid drove 2 h
+  truck idle for 2 h
+  alice drove 3 h
+  ```
+  </details>
+
 - **Family hugs.** A family has 5 people.
   Everybody wants to hug every other member exactly once.
   Each person stores pointers to the people they already hugged.

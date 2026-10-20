@@ -209,7 +209,7 @@ Move all screws from a selected drawer into a supplied empty drawer, leaving the
 ### 8. Train carriages
 
 A train has three carriages, each with a seat capacity and a passenger count.
-Move passengers from one selected carriage to another and report both carriages' free seats.
+Transfer as many passengers as possible from one selected carriage to another and report both carriages' free seats.
 
 ### 9. Game score replay
 
