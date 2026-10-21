@@ -37,14 +37,15 @@ int main()
 <!-- Nothing, main, int, 1, compilation error, runtime error -->
 
 <details>
+<summary>Where the program starts</summary>
+
+The program starts by running `main`. The code inside its curly braces is its body. Here the body is empty, so there is nothing to print.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-This program will compile successfully.
-
-The `main` function will run automatically when this program is started.
-
-The function itself contains no statements in its body (the curly braces are empty).
-For this reason, running `main` will print nothing.
+Compiles and prints nothing.
 </details>
 
 ### 2. Printing a string
@@ -57,26 +58,21 @@ int main()
 ```
 
 <details>
-<summary>Intuition for <code>std::cout &lt;&lt;</code></summary>
+<summary>Printing text</summary>
 
-`std` is short for *standard*.
-You can think of `std::` as indicating a name from the standard library.
-
-The name `cout` combines:
-- `c` stands for the word "console";
-- `out` is short for "output", as in output to the console.
-
-`<<` sort of **pushes** the following string into `std::cout`.
+`std::cout <<` sends text to the console. Before using it, add `#include <iostream>` at the top of the file. This example is missing that line.
 </details>
 
 <details>
 <summary>Answer</summary>
 
-This program will not compile.
-A compilation error will occur because 
-there is no `#include <iostream>` line before `int main()` 
-(the `<iostream>` header is not included).
-Without this line, the compiler does not know what `std::cout` is.
+Does not compile.
+</details>
+
+<details>
+<summary>Where the name cout comes from</summary>
+
+`std` is short for “standard”; `std::` points to a name from the standard library. In `cout`, `c` stands for “console” and `out` for “output”. You can think of `<<` as pushing the following value into `std::cout`.
 </details>
 
 ### 3. Corrected code for printing a string
@@ -91,19 +87,21 @@ int main()
 ```
 
 <details>
-<summary>Answer</summary>
+<summary>Ending a line</summary>
 
-This program will compile.
-When it runs, the statements in the `main` function will execute,
-printing "Hello world".
+`std::cout` prints the text, and `std::endl` ends the line, like pressing Enter. Here these two steps run in order inside `main`.
 </details>
 
 <details>
-<summary>What does <code>std::endl</code> do?</summary>
+<summary>Answer</summary>
 
-`endl` stands for "end line" (`end` + `line`).
-It ends the current line of output (like pressing Enter)
-and flushes the output so it appears on the screen right away.
+Compiles and prints `Hello world`, followed by a newline.
+</details>
+
+<details>
+<summary>One more thing about endl</summary>
+
+`endl` is short for “end line”. It also sends any waiting output to the screen right away.
 </details>
 
 ### 4. Printing on the same line
@@ -117,13 +115,19 @@ int main()
 ```
 
 <details>
-<summary>Answer</summary>
+<summary>Printing several things in one statement</summary>
 
-This code is equivalent to the following:
+You can put several `<<` operations in one statement. They print in order. Here this is the same as:
 ```cpp
 std::cout << "Hello world";
 std::cout << std::endl;
 ```
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Compiles and prints `Hello world`, followed by a newline.
 </details>
 
 ### 5. Empty function `A`
@@ -136,17 +140,21 @@ void A()
 <!-- Nothing, A, void, 0, compilation error, runtime error -->
 
 <details>
+<summary>A program needs main</summary>
+
+Defining `A` does not tell the program where to start. A complete program needs a function named `main`. This code defines only `A`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link successfully because there is no `main` function
-(the linking stage will be covered in more detail in a later lesson).
+Cannot build a complete program: `main` is missing.
+</details>
 
-```
-(.text+0x1b): undefined reference to `main'
-collect2: error: ld returned 1 exit status
-```
+<details>
+<summary>If the error mentions ld</summary>
 
-`ld` is the name of the linker program.
+Building a program includes a step called linking. This is where the missing `main` is reported. `ld` is the name of the tool doing that step. Linking is covered later.
 </details>
 
 ### 6. Function `A`
@@ -160,23 +168,15 @@ void A()
 <!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
 
 <details>
+<summary>Including iostream</summary>
+
+The compiler needs `#include <iostream>` before it can recognize `std::cout` and `std::endl`. This line is missing here. After adding it, you will also need `main` to make a complete program.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-A compilation error will occur because the `<iostream>` header is not included
-(there is no `#include <iostream>` line).
-The compiler does not know what `std::cout` is.
-
-```
-test.cpp: In function ‘void A()’:
-test.cpp:3:10: error: ‘cout’ is not a member of ‘std’
-    3 |     std::cout << "Hello World";
-      |          ^~~~
-test.cpp:1:1: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
-  +++ |+#include <iostream>
-    1 | void A()
-```
-
-To fix this, add `#include <iostream>` as the first line.
+Does not compile.
 </details>
 
 ### 7. Corrected function `A`
@@ -192,9 +192,15 @@ void A()
 <!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
 
 <details>
+<summary>A function does not run by itself</summary>
+
+Including `<iostream>` makes the printing code recognizable, but it does not start `A`. The program still needs `main`, which can call `A`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link because there is no `main` function. [See question 1](#1-empty-main)
+Cannot build a complete program: `main` is missing.
 </details>
 
 ### 8. Function `main`
@@ -210,13 +216,15 @@ int main()
 <!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
 
 <details>
+<summary>Running the code in main</summary>
+
+This time `<iostream>` is included and `main` is defined. When the program starts, the statement inside `main` prints the text and ends the line.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-The program will compile successfully:
-- the `main` function is defined;
-- the `<iostream>` header is included before `std::cout` is used.
-
-When run, it will print "Hello World."
+Compiles and prints `Hello World.`, followed by a newline.
 </details>
 
 ### 9. Function `Main`
@@ -232,10 +240,15 @@ int Main()
 <!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
 
 <details>
+<summary>Uppercase and lowercase letters matter</summary>
+
+C++ treats `Main` and `main` as different names. The program needs `main`, with a lowercase `m`; defining `Main` does not replace it.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-C++ is case-sensitive for function names and the names of other entities.
-There is no `main` function, so the program will not link, just as in [the earlier example](#5-empty-function-a).
+Cannot build a complete program: `main` is missing.
 </details>
 
 ### 10. `COUT` instead of `cout`
@@ -251,18 +264,15 @@ int main()
 <!-- Nothing, A, void, 0, Hello World, compilation error, runtime error -->
 
 <details>
+<summary>Use the exact name</summary>
+
+The printing name is `std::cout`, all lowercase. `std::COUT` is a different name that the compiler does not recognize.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-A compilation error will occur because C++ is case-sensitive:
-`cout` must be written in lowercase.
-`COUT` in all caps is a different name, and there is no such name in `std`.
-
-```
-test.cpp: In function ‘int main()’:
-test.cpp:5:10: error: ‘COUT’ is not a member of ‘std’
-    5 |     std::COUT << "Hello World." << std::endl;
-      |          ^~~~
-```
+Does not compile.
 </details>
 
 ### 11. Comment
@@ -277,10 +287,15 @@ int main()
 ```
 
 <details>
+<summary>Comments are ignored</summary>
+
+`//` starts a comment that continues to the end of the line. The compiler ignores that text. Here the line printing `Hello` is a comment, so only the line printing `World` runs.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-Only World will be printed.
-The line that prints Hello is commented out (`//` at the beginning), so it will not execute.
+Prints only `World`, followed by a newline.
 </details>
 
 ### 12. Everything commented out
@@ -293,13 +308,15 @@ int main()
 ```
 
 <details>
+<summary>Commented code does not need to compile</summary>
+
+Both printing lines are comments. The compiler sees an empty `main`, so it does not need `<iostream>` for this code.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-It will compile without any issues.
-Comments are ignored during compilation, so
-the compiler does not need to know about `std::cout`.
-
-When run, it will print nothing.
+Compiles and prints nothing.
 </details>
 
 ### 13. A function calls a function
@@ -317,9 +334,15 @@ void B()
 ```
 
 <details>
+<summary>Calling a function still needs a starting point</summary>
+
+`B` can call `A`, but neither function starts automatically. Without `main`, there is nowhere for the program to start.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-The source code will compile, but the program will not link because there is no `main` function.
+Cannot build a complete program: `main` is missing.
 </details>
 
 ### 14. `main` calls a function that calls a function
@@ -343,19 +366,19 @@ int main()
 ```
 
 <details>
+<summary>What happens during a function call</summary>
+
+Statements run in order. When one function calls another, it waits for that function to finish, then continues after the call. Here `main` calls `B`; `B` prints `B-before`, calls `A`, then prints `B-after`.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-The program will compile successfully.
-
-The statements execute in this order:
-```
-B(); // функцию вызвали
-std::cout << "B-before" << std::endl;
-A(); // функцию вызвали
-std::cout << "A" << std::endl;
-// A завершилась
-std::cout << "B-after" << std::endl;
-// B завершилась
+Compiles and prints:
+```text
+B-before
+A
+B-after
 ```
 </details>
 
@@ -383,15 +406,15 @@ int main()
 ```
 
 <details>
+<summary>Put the function before its call</summary>
+
+The compiler reads the file from top to bottom. It needs to know about a function before reaching a call to it. Here `B` calls `A` before `A` is defined. Moving `A` above `B` fixes this.
+</details>
+
+<details>
 <summary>Answer</summary>
 
-This program will not compile.
-The call to `A();` in function `B` appears **before the definition of function `A` in the source file**.
-
-Calling `B();` in the `main` function does not cause the same problem because
-**function `B` is defined before it is called**.
-
-In this example, `A` must be defined before `B` calls it.
+Does not compile.
 </details>
 
 ## Practice
