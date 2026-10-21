@@ -1,0 +1,1063 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "6ML34OuwZrc",
+  "uploadId": "6ML34OuwZrc",
+  "transcriptSha256": "1cc502ef2a410fb189cde4948680c1da785c0674927a684082fd4a4deb42fcd2",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 160,
+      "endMilliseconds": 9300,
+      "kind": "fact",
+      "text": "You cannot reference memory directly by raw addresses in a program; you go through a variable instead.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 160,
+          "endMilliseconds": 9300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 9320,
+      "endMilliseconds": 14550,
+      "kind": "explanation",
+      "text": "A variable is an abstraction over a memory cell, which is why program code can name it instead of writing its address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 9320,
+          "endMilliseconds": 14550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 14550,
+      "endMilliseconds": 17710,
+      "kind": "scope_boundary",
+      "text": "Variables physically live on the stack, but the stack layout is deliberately left for later in the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 14550,
+          "endMilliseconds": 17710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 17720,
+      "endMilliseconds": 24500,
+      "kind": "fact",
+      "text": "Declaring a variable with a type and a name, such as int followed by a name, creates the named memory cell that later assignments will write into.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 17720,
+          "endMilliseconds": 24500
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 24560,
+      "endMilliseconds": 33160,
+      "kind": "explanation",
+      "text": "Memory can be pictured as a row of cells with sequential addresses, drawn here to explain why cells need names.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 24560,
+          "endMilliseconds": 33160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 33280,
+      "endMilliseconds": 39470,
+      "kind": "scope_boundary",
+      "text": "The exact meaning of the int type keyword is deliberately postponed so the naming idea can be established first.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 33280,
+          "endMilliseconds": 39470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 39470,
+      "endMilliseconds": 58600,
+      "kind": "explanation",
+      "text": "Once a cell carries a name from its declaration, code can refer to it by that name as well as by its memory address, which is what makes variables usable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 39470,
+          "endMilliseconds": 58600
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 58600,
+      "endMilliseconds": 73400,
+      "kind": "reason",
+      "text": "Program code cannot hardcode a fixed address such as 32 to reach a cell, because the address is an implementation detail while the name is the contract.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 58600,
+          "endMilliseconds": 73400
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 65960,
+      "endMilliseconds": 82470,
+      "kind": "reason",
+      "text": "Because a program cannot use the raw address, it must obtain the address indirectly from the cell's name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 65960,
+          "endMilliseconds": 82470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 82470,
+      "endMilliseconds": 86830,
+      "kind": "scope_boundary",
+      "text": "That name-to-address resolution is possible but is explained only later in the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 82470,
+          "endMilliseconds": 86830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 82470,
+      "endMilliseconds": 91510,
+      "kind": "fact",
+      "text": "The only way a program can refer to a memory cell is by using its declared name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 82470,
+          "endMilliseconds": 91510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#named-storage"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 91510,
+      "endMilliseconds": 100270,
+      "kind": "explanation",
+      "text": "A cell supports two operations that matter for programs: writing a value into it and reading the value back out.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 91510,
+          "endMilliseconds": 100270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 100270,
+      "endMilliseconds": 113980,
+      "kind": "fact",
+      "text": "The assignment statement with a name on the left and a number on the right creates the named cell and writes that number into it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 100270,
+          "endMilliseconds": 113980
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 114080,
+      "endMilliseconds": 121030,
+      "kind": "explanation",
+      "text": "Reading is equally supported: a value can be taken out of one cell and written into another cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 114080,
+          "endMilliseconds": 121030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 121030,
+      "endMilliseconds": 128270,
+      "kind": "code_change",
+      "text": "Declaring a new variable with int and a name is how a new memory cell is created in code.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 121030,
+          "endMilliseconds": 128270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 128270,
+      "endMilliseconds": 133910,
+      "kind": "explanation",
+      "text": "The right-hand side of an assignment is an expression, a notion whose formal definition is deliberately deferred.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 128270,
+          "endMilliseconds": 133910
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 133910,
+      "endMilliseconds": 147319,
+      "kind": "fact",
+      "text": "In the simplest case the right-hand expression is just a variable name, and a name on the right side is read as the value currently stored in that variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 133910,
+          "endMilliseconds": 147319
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 140680,
+      "endMilliseconds": 147319,
+      "kind": "fact",
+      "text": "A variable name written on the right side of an assignment is read as the value currently held in that variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 140680,
+          "endMilliseconds": 147319
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 147319,
+      "endMilliseconds": 152110,
+      "kind": "explanation",
+      "text": "The value of a variable means the number that was stored in it by an earlier assignment.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 147319,
+          "endMilliseconds": 152110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 152110,
+      "endMilliseconds": 157990,
+      "kind": "fact",
+      "text": "In an assignment whose right side is a variable name, the stored value is copied from that variable into the target variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 152110,
+          "endMilliseconds": 157990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-and-copying-values"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 157990,
+      "endMilliseconds": 167830,
+      "kind": "explanation",
+      "text": "Stored values can also be combined with mathematical operations, which is what makes assignments do real computation.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 157990,
+          "endMilliseconds": 167830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 167830,
+      "endMilliseconds": 176000,
+      "kind": "explanation",
+      "text": "An assignment statement splits into two parts around the equals sign, with a destination on the left and an expression on the right.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 167830,
+          "endMilliseconds": 176000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 176000,
+      "endMilliseconds": 188230,
+      "kind": "reason",
+      "text": "The left side names where the result is stored while the right side is an expression that is evaluated first to produce that result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 176000,
+          "endMilliseconds": 188230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 188230,
+      "endMilliseconds": 195230,
+      "kind": "explanation",
+      "text": "A complex expression can be written with explicit parentheses to make it clear that the assignment applies to the whole expression.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 188230,
+          "endMilliseconds": 195230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 195230,
+      "endMilliseconds": 203780,
+      "kind": "explanation",
+      "text": "An expression counts as complex when the right side contains a mathematical operation rather than a bare variable name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 195230,
+          "endMilliseconds": 203780
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 203780,
+      "endMilliseconds": 218080,
+      "kind": "explanation",
+      "text": "A mathematical operation is evaluated by computing both of its operands as values first and then combining those numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 203780,
+          "endMilliseconds": 218080
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 210159,
+          "endMilliseconds": 218080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 218080,
+      "endMilliseconds": 231230,
+      "kind": "explanation",
+      "text": "The processor never operates on variable references themselves; it looks up the value stored in each named cell instead.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 218080,
+          "endMilliseconds": 231230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 231230,
+      "endMilliseconds": 241710,
+      "kind": "explanation",
+      "text": "Concretely, executing an expression substitutes each variable reference with the value held in that cell, so two cells both containing five contribute the number five.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 231230,
+          "endMilliseconds": 241710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 241710,
+      "endMilliseconds": 249890,
+      "kind": "fact",
+      "text": "After the operation yields its result, the assignment writes that result into the variable named on the left of the equals sign.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 241710,
+          "endMilliseconds": 249890
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#evaluating-arithmetic-before-assignment"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 249890,
+      "endMilliseconds": 273560,
+      "kind": "fact",
+      "text": "The int type declares that the cell holds a whole number occupying four bytes of memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 249890,
+          "endMilliseconds": 273560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 273560,
+      "endMilliseconds": 278350,
+      "kind": "scope_boundary",
+      "text": "The detailed layout of how multi-byte numbers are stored is delegated to a separate video rather than covered here.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 273560,
+          "endMilliseconds": 278350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 278350,
+      "endMilliseconds": 291960,
+      "kind": "explanation",
+      "text": "Since one memory cell is one byte, an int variable occupies four consecutive cells rather than a single cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 278350,
+          "endMilliseconds": 291960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 286000,
+      "endMilliseconds": 292000,
+      "kind": "fact",
+      "text": "A memory cell is one byte and an int occupies four cells, so declaring the variable as int reserves four bytes of memory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 286000,
+          "endMilliseconds": 292000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 294880,
+      "endMilliseconds": 301390,
+      "kind": "explanation",
+      "text": "The int variable i is laid out starting at address 32 and ending at address 36 exclusive, so address 36 already belongs to the next variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 294880,
+          "endMilliseconds": 301390
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-6e15f86f83ef29eb4f9cd421-7a58835426470cc13c6ad974-641cb72579240857.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 306320,
+      "endMilliseconds": 315000,
+      "kind": "fact",
+      "text": "A second int variable a follows i immediately and occupies addresses 36 to 40 exclusive, showing that same-type variables get equal-sized contiguous slots.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 306320,
+          "endMilliseconds": 315000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#types-set-storage-size"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 318469,
+      "endMilliseconds": 324520,
+      "kind": "reason",
+      "text": "To store just one byte with values from 0 to 255 a one-byte type is needed instead of the four-byte int.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 318469,
+          "endMilliseconds": 324520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 324520,
+      "endMilliseconds": 334430,
+      "kind": "fact",
+      "text": "As an int, i currently holds values from about minus 4 billion to plus 4 billion because that signed range fits in four bytes.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 324520,
+          "endMilliseconds": 334430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 353840,
+      "endMilliseconds": 364000,
+      "kind": "code_change",
+      "text": "Including the C++ standard integer header gives access to fixed-width types such as uint8_t, which is the way to force a variable to occupy exactly one byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 353840,
+          "endMilliseconds": 364000
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-f5515815d0ca6033fea090dd-9327c8dda986714eb69a87b6-be927201d78f0048.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 367400,
+      "endMilliseconds": 376000,
+      "kind": "explanation",
+      "text": "The u in uint8_t means unsigned, so the variable covers only 0 to 255 because no sign bit is used for negative values.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 367400,
+          "endMilliseconds": 376000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 367400,
+      "endMilliseconds": 379670,
+      "kind": "explanation",
+      "text": "The u in uint8_t marks it unsigned so its range is 0 to 255, whereas a signed one-byte type would span from minus 128 to 127.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 367400,
+          "endMilliseconds": 379670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 379680,
+      "endMilliseconds": 393000,
+      "kind": "explanation",
+      "text": "The name uint8_t decomposes into integer type, 8 bits which is one byte, and the t suffix meaning type.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 379680,
+          "endMilliseconds": 393000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-one-byte"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 393000,
+      "endMilliseconds": 403550,
+      "kind": "edge_case",
+      "text": "Since uint8_t holds at most 255, writing a larger value such as 256 causes an overflow.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 393000,
+          "endMilliseconds": 403550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#an-out-of-range-assignment"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 407830,
+      "endMilliseconds": 417670,
+      "kind": "test_result",
+      "text": "Compiling code that assigns 256 to a uint8_t variable produces a warning that the unsigned conversion changes the value from 256 to 0; the compilation proceeds.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 407830,
+          "endMilliseconds": 417670
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-47b63a4a7a508cc94a38c298-7f1730c676387315da46243a-6b39db2a1f7ebd63.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#an-out-of-range-assignment"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 424000,
+      "endMilliseconds": 436720,
+      "kind": "explanation",
+      "text": "The variable name behaves as an expression inside the print call, so something can even be added to it before printing.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 424000,
+          "endMilliseconds": 436720
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-68571c832e5971f53a14ea95-d73399ec24420ec8a12df83c-1b4502788e4bd1ea.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 441759,
+      "endMilliseconds": 448400,
+      "kind": "correction",
+      "text": "The value must additionally be converted to int before printing, otherwise printing produces zero despite the assigned value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 441759,
+          "endMilliseconds": 448400
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-26bbfa0092700db2c8258f44-5c2fdc7a55da85c34b3975f9-fd488c2914170e2b.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 441759,
+      "endMilliseconds": 454220,
+      "kind": "correction",
+      "text": "Printing yields zero even though 256 was stored, and the cause is the one-byte overflow rather than the value chosen.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 441759,
+          "endMilliseconds": 454220
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 454220,
+      "endMilliseconds": 462440,
+      "kind": "edge_case",
+      "text": "With a maximum of 255 in a one-byte variable, adding one to the maximum value wraps the number to zero, which is what overflow looks like.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 454220,
+          "endMilliseconds": 462440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 464220,
+      "endMilliseconds": 467230,
+      "kind": "correction",
+      "text": "The correct approach was to store the value in another, wider variable before printing it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 464220,
+          "endMilliseconds": 467230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 467230,
+      "endMilliseconds": 473280,
+      "kind": "scope_boundary",
+      "text": "The full mechanism behind choosing how a value is printed is deferred to a later lesson because it depends on function overloading.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 467230,
+          "endMilliseconds": 473280
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 473280,
+      "endMilliseconds": 494620,
+      "kind": "explanation",
+      "text": "The print instruction resolves its behaviour from the argument type: a value coming from an int variable is printed as a number, while a value coming from a uint8_t variable is printed as a character.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 473280,
+          "endMilliseconds": 494620
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-expressions-and-converted-values"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 494620,
+      "endMilliseconds": 504630,
+      "kind": "fact",
+      "text": "Character code 0 prints nothing, code 32 is the space character, and code 33 is the exclamation mark.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 494620,
+          "endMilliseconds": 504630
+        },
+        {
+          "type": "video_frame",
+          "frame": "inspection-caed93988299bde9424ce766-7974fc2b132f533ac9af606d-d1574e77336e8bf8.png"
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#character-codes"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 504630,
+      "endMilliseconds": 507430,
+      "kind": "scope_boundary",
+      "text": "Details about character codes and what a type means beyond size are postponed to later in the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 504630,
+          "endMilliseconds": 507430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#character-codes"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 507430,
+      "endMilliseconds": 522080,
+      "kind": "explanation",
+      "text": "A type is the first component of a declaration and tells how many bytes the variable will occupy in memory once declared with it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 507430,
+          "endMilliseconds": 522080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-declaration"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 515560,
+      "endMilliseconds": 542080,
+      "kind": "explanation",
+      "text": "The type stated in a declaration fixes how many bytes the variable occupies, and int is itself such a type name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 515560,
+          "endMilliseconds": 542080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-declaration"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 542080,
+      "endMilliseconds": 560230,
+      "kind": "reason",
+      "text": "int is called an integer type because only whole numbers can be written into a variable declared with it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 542080,
+          "endMilliseconds": 560230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-declaration"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 560230,
+      "endMilliseconds": 565030,
+      "kind": "scope_boundary",
+      "text": "Some data types accept no numbers at all, and that distinction is deliberately left to a later part of the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 560230,
+          "endMilliseconds": 565030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-declaration"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 565040,
+      "endMilliseconds": 579920,
+      "kind": "reason",
+      "text": "Writing int before the name a makes the compiler allocate four memory cells for it, since an int is a four-byte number type.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 565040,
+          "endMilliseconds": 579920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-declaration"
+      }
+    }
+  ]
+}
