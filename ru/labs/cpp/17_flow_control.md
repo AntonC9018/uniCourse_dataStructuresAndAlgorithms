@@ -121,7 +121,7 @@ if (pc)
 <summary>Ответ</summary>
 
 `if`, когда ему передают указатель, проверяет, если указатель не является нулевым (`nullptr`).
-`a is true` тут не выведется, а `b is true` и `pc is true` выведется.
+`a is true` тут не выведется, а `pb is true` и `pc is true` выведутся.
 
 `if (b)` -> `if (0)` -> `if (false)`.
 `b is true` не выведется.
