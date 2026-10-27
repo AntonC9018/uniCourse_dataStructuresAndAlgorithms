@@ -508,6 +508,10 @@ while (true)
        i += 2;
        continue;
    }
+   if (i == 0)
+   {
+       std::cout << "Iteration continued? Or skipped?" << std::endl;
+   }
 
    std::cout << "Increase by 1 normally" << std::endl;
    i++;
@@ -525,13 +529,19 @@ while (true)
 <details>
 <summary>Answer</summary>
 
-"Increase by 2 on first iter" will be printed in the first loop iteration; `i++` will not execute because `continue` skips it.
+"Increase by 2 on first iter" will be printed in the first loop iteration;
+`i++` will not execute because `continue` skips it.
+
+`continue` jumps straight back to the loop condition, with `i` already equal to `2`.
+`i == 0` is only true in the first iteration, and that is the iteration `continue` cuts short,
+so the second block that checks `i == 0` never runs in any iteration:
+"Iteration continued? Or skipped?" is never printed.
 
 "Increase by 1 normally" will be printed in the second loop iteration, 
 after all `if` checks have failed.
 
-"Exit" will be printed in the third iteration, while the `i == 0` check and the `i++` statement will not execute,
-because `break` stops the loop.
+"Exit" will be printed in the third iteration, while the `i == 0` checks and the `i++` statement
+will not execute, because `break` stops the loop.
 
 ```
 Increase by 2 on first iter
