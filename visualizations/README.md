@@ -25,6 +25,20 @@ Expected final states: expression `a = 7`, `b = 11`, stdout `11`; failed swap `a
 The last frame holds for 3.5 seconds; key lesson moments get extra emphasis and pauses.
 The inspection slider is independent of video playback.
 
+## Layout alternatives (throwaway)
+
+Run `python3 visualizations/layout-prototype.py` and open `layout-prototype.html`.
+The page embeds both existing manual traces with playback, step controls, and a state slider.
+Use the bottom arrows or keyboard left/right to compare `?variant=A`, `B`, and `C`:
+
+- A evaluates beneath the active source line, keeping attention on the code.
+- B uses a fixed central evaluation workspace between code and memory.
+- C places contiguous memory across the top, above code and evaluation.
+
+These studies compare geometry; their transfer motion is schematic. They do not change the
+Manim layout. Greyed-out future storage is already applied to the shared renderer and videos.
+The tradeoffs are shown below each study. A layout decision is still pending.
+
 ## Visual contract
 
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
@@ -146,8 +160,9 @@ positions and shared animation coordinates. One-, two-, and three-row evaluation
 longer code panels, separate routing ports, and route lengths were checked against the canvas.
 Full-scene fades remain disabled.
 
-The review page is supplied as a file. T3's inline browser preview could not run because its host
-is missing browser shared libraries; this task does not change host browser configuration.
+The review page is supplied as a file. T3's preview checker lacks host browser libraries.
+The layout comparison was checked separately in headless Chromium using the existing Nix shell
+browser, across both full traces and all three variants, with no JavaScript errors.
 
 ## Interactivity in Markdown
 
