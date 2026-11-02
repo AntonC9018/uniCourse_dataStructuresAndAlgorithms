@@ -31,7 +31,9 @@ Run `python3 visualizations/layout-prototype.py` and open `layout-prototype.html
 The page embeds both existing manual traces with playback, step controls, and a state slider.
 Use the bottom arrows or keyboard left/right to compare `?variant=A`, `B`, and `C`:
 
-- A evaluates beneath the active source line, keeping attention on the code.
+- A opens a temporary evaluation row beneath the active source line. Later lines slide down
+  while the expression is evaluated, then close up after its value is stored or printed.
+  A write keeps the row open until the transfer animation finishes.
 - B uses a fixed central evaluation workspace between code and memory.
 - C places contiguous memory across the top, above code and evaluation.
 
