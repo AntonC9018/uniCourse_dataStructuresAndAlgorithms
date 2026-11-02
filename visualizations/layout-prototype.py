@@ -53,8 +53,8 @@ const traces = __TRACES__;
 const variants = ['A','B','C'];
 const names = ['Inline evaluation','Central workspace','Memory first'];
 const descriptions = [
- 'A · Evaluate directly beneath the active source line. The eye stays with the code; '
- + 'the expression changes position as execution advances. Memory stays fixed on the right.',
+ 'A · Open a temporary evaluation row beneath the active line. Later lines move down '
+ + 'while evaluating, then close up after the value is stored or printed. Memory stays fixed.',
  'B · Code → evaluation → memory. A fixed central workspace gives reads and writes '
  + 'short routes. Three columns leave less room for long code or large memory layouts.',
  'C · Memory spans the top; code and evaluation sit below. More horizontal room for '
@@ -62,7 +62,7 @@ const descriptions = [
 ];
 let variant = new URLSearchParams(location.search).get('variant') || 'A';
 if (!variants.includes(variant)) variant='A';
-let scenario=0, index=0, playing=false, timer;
+let scenario=0, index=0, playing=false, timer, transferTimer, previousLayout;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
  '"':'&quot;',"'":'&#39;'}[c]));
@@ -83,26 +83,45 @@ function colored(x,y,value,trace,size=25) {
  }
  return out;
 }
-function geometry() {
- if (variant==='A') return {code:[40,60,550,520], line:110, cy:125,
-  eval:[100,145+indexLine()*110,440,64], slots:[[710,140,224,64],[934,140,224,64]]};
+function geometry(evaluationOpen) {
+ if (variant==='A') return {code:[40,60,550,48+traces[scenario].source.length*58
+   +(evaluationOpen?88:0)], line:58, cy:112, gap:evaluationOpen?88:0,
+  eval:[100,132+indexLine()*58,440,64], slots:[[710,140,224,64],[934,140,224,64]]};
  if (variant==='B') return {code:[28,70,435,480], line:86, cy:145,
   eval:[488,255,270,120], slots:[[792,265,224,64],[1016,265,224,64]]};
  return {code:[40,292,560,350], line:66, cy:350,
   eval:[692,350,520,150], slots:[[430,112,224,64],[654,112,224,64]]};
 }
 function indexLine() { return traces[scenario].steps[index].line; }
-function draw(animate=false) {
+function draw(animate=false, shift=false) {
+ clearTimeout(transferTimer);
  const trace=traces[scenario], step=trace.steps[index];
- const previous=trace.steps[Math.max(0,index-1)], g=geometry();
+ const previous=trace.steps[Math.max(0,index-1)];
  const transfer=animate && step.transfer!==null;
+ // A result remains visible until consumed, including during a write animation.
+ const evaluationOpen=variant!=='A' || Boolean(step.expression &&
+  (transfer || (!step.write && !step.stdout)));
+ const g=geometry(evaluationOpen), key=variant+scenario;
+ const old=previousLayout?.key===key ? previousLayout : null;
+ const move=animate || shift;
+ const rows=trace.source.map((_,i)=>g.cy+i*g.line+(i>step.line?(g.gap || 0):0));
  const values=transfer && step.write ? previous.values : step.values;
  let out='<defs><marker id="tip" markerWidth="10" markerHeight="10" refX="8" refY="5" '
   +'orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10" '
   +'fill="context-stroke"/></marker></defs>';
- out+=rect(...g.code);
+ let code=rect(...g.code);
+ if(move && old && old.height!==g.code[3]) {
+  code=code.replace('/>',`><animate attributeName="height" from="${old.height}" `
+   +`to="${g.code[3]}" dur="0.22s" fill="freeze"/></rect>`);
+ }
+ out+=code;
  trace.source.forEach((source,i)=>{
-  const y=g.cy+i*g.line, active=i===step.line;
+  const y=0, active=i===step.line;
+  out+=`<g transform="translate(0 ${rows[i]})">`;
+  if(move && old && old.rows[i]!==rows[i]) {
+   out+=`<animateTransform attributeName="transform" type="translate" `
+    +`from="0 ${old.rows[i]}" to="0 ${rows[i]}" dur="0.22s" fill="freeze"/>`;
+  }
   if(active) out+=rect(g.code[0]+8,y-32,4,44,step.write?'#f5e58b':'#9cbaff','none',0);
   out+=text(g.code[0]+22,y,i+1,18,'#a0afc2');
   if(active) {
@@ -110,14 +129,21 @@ function draw(animate=false) {
    out+=rect(g.code[0]+62+start*25*.602-3,y-30,(end-start)*25*.602+6,40,'#2e4059');
   }
   out+=colored(g.code[0]+62,y,source,trace);
+  out+='</g>';
  });
  let [ex,ey,ew,eh]=g.eval;
- out+=rect(ex,ey,ew,eh,'#202e42');
- if(variant!=='A') out+=text(ex+22,ey+32,'Expression evaluation',18,'#a0afc2');
+ if(evaluationOpen) {
+  out+='<g data-evaluation="open">';
+  if(move && old && !old.open) out+='<animate attributeName="opacity" from="0" '
+   +'to="1" dur="0.22s" fill="freeze"/>';
+  out+=rect(ex,ey,ew,eh,'#202e42');
+  if(variant!=='A') out+=text(ex+22,ey+32,'Expression evaluation',18,'#a0afc2');
+ }
  const tx=ex+24, ty=ey+eh-22;
- if(!(transfer && step.write)) {
+ if(evaluationOpen && !(transfer && step.write)) {
   out+=colored(tx,ty,transfer && step.read ? previous.expression : step.expression,trace,30);
  }
+ if(evaluationOpen) out+='</g>';
  trace.variables.forEach((v,i)=>{
   const [x,y,w,h]=g.slots[i], live=values[i]!==null || step.declared.includes(v.name)
    || (transfer && step.write===v.name);
@@ -171,7 +197,8 @@ function draw(animate=false) {
  $('state').textContent=trace.variables.map((v,i)=>v.name+' = '+(step.values[i]===null?
   (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
   +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
- if(transfer) setTimeout(()=>{if(index===trace.steps.indexOf(step) && traces[scenario]===trace) draw();},1000);
+ previousLayout={key,rows,height:g.code[3],open:evaluationOpen};
+ if(transfer) transferTimer=setTimeout(()=>draw(false,true),1000);
 }
 function stop() {playing=false; clearTimeout(timer); $('play').textContent='Play';}
 function advance(delta) {stop();index=Math.max(0,Math.min(traces[scenario].steps.length-1,index+delta));draw(true);}
