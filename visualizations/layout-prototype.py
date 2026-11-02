@@ -194,9 +194,6 @@ function prefixMarkup(x,y,parts,trace,state) {
  const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
  const assigning=state==='assigning';
  let name=`<g transform="translate(${center} ${y-11})">`;
- // The destination is underlined alongside the memory cell for the whole write.
- if(assigning) name+='<g opacity="0">'+fade(0,1,0.15)+fade(1,0,0.2,arrivalTime+0.15)
-  +rect(-width/2-2,19,width+4,3,'#f5e58b','none',1)+'</g>';
  name+='<g>'+(assigning?pulse(arrivalTime-0.1):'')
   +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
   +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
