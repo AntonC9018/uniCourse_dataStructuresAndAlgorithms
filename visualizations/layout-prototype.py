@@ -67,6 +67,12 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
  '"':'&quot;',"'":'&#39;'}[c]));
 const mono='DejaVu Sans Mono,monospace';
+const ease='calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"';
+const transferSeconds=1.85;
+function fade(from,to,duration=0.5,begin=0) {
+ return `<animate attributeName="opacity" from="${from}" to="${to}" `
+  +`dur="${duration}s" begin="${begin}s" ${ease} fill="freeze"/>`;
+}
 function text(x,y,value,size=26,color='#eef3fa',anchor='start') {
  return `<text x="${x}" y="${y}" font-family="${mono}" font-size="${size}" `
  + `fill="${color}" text-anchor="${anchor}" xml:space="preserve">${esc(value)}</text>`;
@@ -112,15 +118,21 @@ function draw(animate=false, shift=false) {
  let code=rect(...g.code);
  if(move && old && old.height!==g.code[3]) {
   code=code.replace('/>',`><animate attributeName="height" from="${old.height}" `
-   +`to="${g.code[3]}" dur="0.22s" fill="freeze"/></rect>`);
+   +`to="${g.code[3]}" dur="0.5s" ${ease} fill="freeze"/></rect>`);
  }
  out+=code;
+ // Retain a fading evaluation row while the space closes, instead of removing it abruptly.
+ if(move && old?.open && !evaluationOpen) {
+  out+='<g>'+fade(1,0,0.35)+rect(...old.eval,'#202e42')
+   +(step.write ? '' : colored(old.eval[0]+24,old.eval[1]+old.eval[3]-22,
+     old.expression,trace,30))+'</g>';
+ }
  trace.source.forEach((source,i)=>{
   const y=0, active=i===step.line;
   out+=`<g transform="translate(0 ${rows[i]})">`;
   if(move && old && old.rows[i]!==rows[i]) {
    out+=`<animateTransform attributeName="transform" type="translate" `
-    +`from="0 ${old.rows[i]}" to="0 ${rows[i]}" dur="0.22s" fill="freeze"/>`;
+    +`from="0 ${old.rows[i]}" to="0 ${rows[i]}" dur="0.5s" ${ease} fill="freeze"/>`;
   }
   if(active) out+=rect(g.code[0]+8,y-32,4,44,step.write?'#f5e58b':'#9cbaff','none',0);
   out+=text(g.code[0]+22,y,i+1,18,'#a0afc2');
@@ -135,13 +147,25 @@ function draw(animate=false, shift=false) {
  if(evaluationOpen) {
   out+='<g data-evaluation="open">';
   if(move && old && !old.open) out+='<animate attributeName="opacity" from="0" '
-   +'to="1" dur="0.22s" fill="freeze"/>';
+   +'to="1" dur="0.5s" ${ease} fill="freeze"/>';
   out+=rect(ex,ey,ew,eh,'#202e42');
   if(variant!=='A') out+=text(ex+22,ey+32,'Expression evaluation',18,'#a0afc2');
  }
  const tx=ex+24, ty=ey+eh-22;
- if(evaluationOpen && !(transfer && step.write)) {
-  out+=colored(tx,ty,transfer && step.read ? previous.expression : step.expression,trace,30);
+ if(evaluationOpen) {
+  if(transfer && step.read) {
+   const [start,end]=step.read_span;
+   out+=colored(tx,ty,previous.expression.slice(0,start),trace,30);
+   out+='<g>'+fade(1,0,0.2,1.15)
+    +colored(tx+start*30*.602,ty,previous.expression.slice(start,end),trace,30)+'</g>';
+   out+=colored(tx+end*30*.602,ty,previous.expression.slice(end),trace,30);
+  } else {
+   const changed=move && old?.open && old.expression!==step.expression;
+   if(changed) out+='<g>'+fade(1,0,0.25)
+    +colored(tx,ty,old.expression,trace,30)+'</g>';
+   out+='<g>'+(transfer && step.write ? fade(1,0,0.25) : changed ? fade(0,1,0.35) : '')
+    +colored(tx,ty,step.expression,trace,30)+'</g>';
+  }
  }
  if(evaluationOpen) out+='</g>';
  trace.variables.forEach((v,i)=>{
@@ -152,8 +176,26 @@ function draw(animate=false, shift=false) {
   out+=text(x+w/2,y-18,v.name,26,live?v.color:'#697382','middle');
   out+=rect(x,y,w,h,live?'#192331':'#171d27',live?
    (active?(step.write?'#f5e58b':'#9cbaff'):v.color):'#47515f',0);
-  if(live && !(transfer && step.write===v.name)) out+=text(x+w/2,y+43,
-   values[i]===null?'?':values[i],30,values[i]===null?'#a0afc2':'#eef3fa','middle');
+  if(live) {
+   const pulse=transfer && active;
+   const centerX=x+w/2, centerY=y+h/2;
+   out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
+   if(pulse) {
+    const begin=step.write ? 1.2 : 0;
+    out+=`<animateTransform attributeName="transform" type="scale" `
+     +`values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" `
+     +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
+   }
+   if(transfer && step.write===v.name) {
+    if(previous.values[i]!==null) out+='<g>'+fade(1,0,0.25)
+     +text(0,11,previous.values[i],30,'#eef3fa','middle')+'</g>';
+    // The arriving glyph hands off to the slot value at the exact same coordinates.
+    out+='<g opacity="0">'+fade(0,1,0.2,1.55)
+     +text(0,11,step.values[i],30,'#eef3fa','middle')+'</g>';
+   } else out+=text(0,11,values[i]===null?'?':values[i],30,
+    values[i]===null?'#a0afc2':'#eef3fa','middle');
+   out+='</g></g>';
+  }
  });
  if(transfer) {
   const name=step.read || step.write, vi=trace.variables.findIndex(v=>v.name===name);
@@ -161,32 +203,31 @@ function draw(animate=false, shift=false) {
   let sx,sy,dx,dy,path,arrow;
   const operand=step.read ? step.read_span[0] : 0;
   const cx=tx+(operand+String(step.transfer).length/2)*30*.602, cy=ty-11;
+  // A smooth curve joins the actual glyph centers, avoiding a final positional jump.
+  sx=mx+mw/2; sy=my+mh/2;
+  dx=cx; dy=cy;
   if(variant==='C') {
-   sx=mx+mw/2; sy=my+mh+18; dx=cx; dy=ey-16;
-   path=`M ${sx} ${sy} C ${sx} ${sy+90}, ${dx} ${dy-90}, ${dx} ${dy}`;
+   path=step.write ? `M ${dx} ${dy} C ${dx} ${sy+125}, ${sx} ${dy}, ${sx} ${sy}`
+    : `M ${sx} ${sy} C ${sx} ${dy}, ${dx} ${sy+125}, ${dx} ${dy}`;
   } else {
-   sx=mx+mw/2; sy=my+mh+18; dx=ex+ew+16; dy=cy;
-   // A bottom lane clears all contiguous memory cells and their labels.
-   const lane=Math.max(my+mh+70,dy+70);
-   path=`M ${sx} ${sy} L ${sx} ${lane} `
-    +`L ${dx+25} ${lane} Q ${dx} ${lane} ${dx} ${dy}`;
-  }
-  if(step.write) {
-   // Reversing the SVG path changes direction without duplicating a stationary result.
-   const temp=document.createElementNS('http://www.w3.org/2000/svg','path');
-   temp.setAttribute('d',path);
-   const length=temp.getTotalLength(), points=[];
-   for(let t=1;t>=0;t-=1/80) { const p=temp.getPointAtLength(t*length);points.push(`${p.x} ${p.y}`); }
-   const p=temp.getPointAtLength(0);points.push(`${p.x} ${p.y}`);
-   path='M '+points.join(' L ');
+   const lane=Math.max(my+mh+95,dy+70), gutter=ex+ew+65;
+   const memoryPart=`M ${sx} ${sy} C ${sx} ${lane}, ${sx} ${lane}, ${gutter+40} ${lane} `
+    +`Q ${gutter} ${lane}, ${gutter} ${lane-40} `;
+   const evalPart=`C ${gutter} ${dy+20}, ${gutter} ${dy}, ${dx} ${dy}`;
+   path=step.write
+    ? `M ${dx} ${dy} C ${gutter} ${dy}, ${gutter} ${dy+20}, ${gutter} ${lane-40} `
+      +`Q ${gutter} ${lane}, ${gutter+40} ${lane} `
+      +`C ${sx} ${lane}, ${sx} ${lane}, ${sx} ${sy}`
+    : memoryPart+evalPart;
   }
   const color=step.write?'#f5e58b':'#9cbaff';
   arrow=`<path d="${path}" fill="none" stroke="${color}" stroke-width="3" `
    +`marker-end="url(#tip)"/>`;
-  out+=arrow;
-  out+=`<g><rect x="-28" y="-24" width="56" height="44" rx="8" fill="#101722"/>`
-   +text(0,10,step.transfer,30,color,'middle')
-   +`<animateMotion dur="0.9s" path="${path}" fill="freeze"/></g>`;
+  out+='<g opacity="0">'+fade(0,0.65,0.25)+fade(0.65,0,0.25,1.5)+arrow+'</g>';
+  out+=`<g opacity="0">`+fade(0,1,0.18)+fade(1,0,0.2,1.55)
+   +text(0,11,step.transfer,30,'#eef3fa','middle')
+   +`<animateMotion dur="1.55s" path="${path}" `
+   +`keyPoints="0;1" ${ease} fill="freeze"/></g>`;
  }
  if(step.stdout) out+=text(62,687,'Output: '+step.stdout,26);
  $('stage').innerHTML=out;
@@ -197,15 +238,17 @@ function draw(animate=false, shift=false) {
  $('state').textContent=trace.variables.map((v,i)=>v.name+' = '+(step.values[i]===null?
   (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
   +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
- previousLayout={key,rows,height:g.code[3],open:evaluationOpen};
- if(transfer) transferTimer=setTimeout(()=>draw(false,true),1000);
+ previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
+  expression:step.expression};
+ if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
 }
 function stop() {playing=false; clearTimeout(timer); $('play').textContent='Play';}
 function advance(delta) {stop();index=Math.max(0,Math.min(traces[scenario].steps.length-1,index+delta));draw(true);}
 function tick() {
  if(!playing)return;
  if(index===traces[scenario].steps.length-1){stop();return;}
- index++;draw(true);timer=setTimeout(tick,1800);
+ index++;draw(true);timer=setTimeout(tick,(traces[scenario].steps[index].transfer!==null
+  ? transferSeconds+traces[scenario].steps[index].hold : traces[scenario].steps[index].hold)*1000);
 }
 $('play').onclick=()=>{
  if(playing){stop();return;}

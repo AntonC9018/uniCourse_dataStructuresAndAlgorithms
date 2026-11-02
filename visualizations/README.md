@@ -43,9 +43,12 @@ The tradeoffs are shown below each study. A layout decision is still pending.
 
 ### Variant A video
 
-[Expression video, 1280 × 720 at 24 fps](renders/layout-a-expression-720p.mp4).
+[Expression video, 1280 × 720 at 60 fps](renders/layout-a-expression-720p.mp4).
 This exports the actual prototype SVG, including temporary evaluation rows, with a fixed
-animation clock. It does not use the older Manim layout.
+animation clock. Panel motion and transfers ease in and out; expression changes crossfade.
+Reads pulse the source value; writes pulse the destination as the value arrives. Transfer
+paths use rounded bends and finish at the actual glyph coordinates. It does not use the older
+Manim layout.
 
 After generating `layout-prototype.html`, run:
 

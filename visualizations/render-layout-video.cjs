@@ -43,10 +43,10 @@ async function main() {
       return traces[scenario].steps;
     }, example === 'expression' ? 0 : 1);
     encoder = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe',
-      '-framerate', '24', '-i', '-', '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
+      '-framerate', '60', '-i', '-', '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
       '-crf', '18', '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
     const completion = once(encoder, 'close');
-    const fps = 24;
+    const fps = 60;
     async function segment(seconds, step, animate, shift = false) {
       await page.evaluate(({ step, animate, shift }) => {
         index = step;
@@ -64,7 +64,7 @@ async function main() {
     }
     for (let step = 0; step < steps.length; step++) {
       if (steps[step].transfer !== null) {
-        await segment(1, step, true);
+        await segment(1.85, step, true);
         await segment(steps[step].hold, step, false, true);
       } else {
         await segment(steps[step].hold, step, false, true);
