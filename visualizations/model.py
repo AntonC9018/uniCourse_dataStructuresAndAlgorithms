@@ -21,6 +21,8 @@ class Step:
     stdout: str = ""
     hold: float = 1.2
     read_span: tuple[int, int] | None = None
+    declared: tuple[str, ...] = ()
+    focus: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -47,7 +49,7 @@ EXPRESSION = Timeline(
         Step(1, "11", (5, None)),
         Step(1, "11", (5, 11), write="b", transfer=11),
         Step(2, "7", (5, 11)),
-        Step(2, "7", (7, 11), write="a", transfer=7),
+        Step(2, "7", (7, 11), write="a", transfer=7, focus=("b",), hold=2.2),
         Step(3, "b", (7, 11), read="b"),
         Step(3, "11", (7, 11), read="b", transfer=11, read_span=(0, 1)),
         Step(3, "11", (7, 11), stdout="11", hold=3.5),
@@ -65,10 +67,10 @@ SWAP = Timeline(
         Step(1, "2", (1, 2), write="b", transfer=2),
         Step(2, "b", (1, 2), read="b"),
         Step(2, "2", (1, 2), read="b", transfer=2, read_span=(0, 1)),
-        Step(2, "2", (2, 2), write="a", transfer=2),
+        Step(2, "2", (2, 2), write="a", transfer=2, hold=2.2),
         Step(3, "a", (2, 2), read="a"),
         Step(3, "2", (2, 2), read="a", transfer=2, read_span=(0, 1)),
-        Step(3, "2", (2, 2), write="b", transfer=2, hold=3.5),
+        Step(3, "2", (2, 2), write="b", transfer=2, hold=3.5, focus=("a", "b")),
     ),
     expression_spans=((6, 7), (6, 7), (4, 5), (4, 5)),
 )
