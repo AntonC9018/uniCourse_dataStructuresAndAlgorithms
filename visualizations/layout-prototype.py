@@ -89,6 +89,34 @@ function colored(x,y,value,trace,size=25) {
  }
  return out;
 }
+// Preserve shared glyphs; gather outgoing glyphs and grow the evaluated result in place.
+function transformExpression(x,y,before,after,trace) {
+ const advance=30*.602, used=new Set(), center=after.length*advance/2;
+ let out='<g data-expression-transform="matching-glyphs">';
+ for(let i=0;i<before.length;i++) {
+  let match=-1;
+  for(let j=0;j<after.length;j++) {
+   if(!used.has(j) && before[i]===after[j]) {match=j;used.add(j);break;}
+  }
+  const destination=match<0?center:match*advance;
+  out+=`<g transform="translate(${x+i*advance} ${y})">`
+   +`<animateTransform attributeName="transform" type="translate" `
+   +`from="${x+i*advance} ${y}" to="${x+destination} ${y}" dur="0.65s" ${ease} fill="freeze"/>`;
+  out+='<g>';
+  if(match<0) out+=fade(1,0,0.4)
+   +`<animateTransform attributeName="transform" type="scale" from="1" to="0.15" `
+   +`dur="0.45s" ${ease} fill="freeze"/>`;
+  out+=colored(0,0,before[i],trace,30)+'</g></g>';
+ }
+ for(let j=0;j<after.length;j++) if(!used.has(j)) {
+  out+=`<g transform="translate(${x+j*advance} ${y})"><g opacity="0">`
+   +fade(0,1,0.4,0.25)
+   +`<animateTransform attributeName="transform" type="scale" from="0.15" to="1" `
+   +`begin="0.25s" dur="0.4s" ${ease} fill="freeze"/>`
+   +colored(0,0,after[j],trace,30)+'</g></g>';
+ }
+ return out+'</g>';
+}
 function geometry(evaluationOpen) {
  if (variant==='A') return {code:[40,60,550,48+traces[scenario].source.length*58
    +(evaluationOpen?88:0)], line:58, cy:112, gap:evaluationOpen?88:0,
@@ -152,6 +180,7 @@ function draw(animate=false, shift=false) {
   if(variant!=='A') out+=text(ex+22,ey+32,'Expression evaluation',18,'#a0afc2');
  }
  const tx=ex+24, ty=ey+eh-22;
+ const copySource=move && evaluationOpen && !transfer && (!old?.open || old.line!==step.line);
  if(evaluationOpen) {
   if(transfer && step.read) {
    const [start,end]=step.read_span;
@@ -159,11 +188,23 @@ function draw(animate=false, shift=false) {
    out+='<g>'+fade(1,0,0.2,1.15)
     +colored(tx+start*30*.602,ty,previous.expression.slice(start,end),trace,30)+'</g>';
    out+=colored(tx+end*30*.602,ty,previous.expression.slice(end),trace,30);
+  } else if(copySource) {
+   // The code stays in place while its copy moves into the newly opened row.
+   const start=trace.expression_spans[step.line][0];
+   const sourceX=g.code[0]+62+start*25*.602, sourceY=rows[step.line];
+   out+='<g opacity="0">'+fade(0,1,0.12,0.85)
+    +colored(tx,ty,step.expression,trace,30)+'</g>';
+   out+=`<g data-source-copy="expression" transform="translate(${sourceX} ${sourceY})">`
+    +`<animateTransform attributeName="transform" type="translate" `
+    +`from="${sourceX} ${sourceY}" to="${tx} ${ty}" begin="0.2s" dur="0.65s" `
+    +`${ease} fill="freeze"/><g>`
+    +`<animateTransform attributeName="transform" type="scale" from="1" to="1.2" `
+    +`begin="0.2s" dur="0.65s" ${ease} fill="freeze"/>`
+    +fade(1,0,0.12,0.85)+colored(0,0,step.expression,trace,25)+'</g></g>';
   } else {
    const changed=move && old?.open && old.expression!==step.expression;
-   if(changed) out+='<g>'+fade(1,0,0.25)
-    +colored(tx,ty,old.expression,trace,30)+'</g>';
-   out+='<g>'+(transfer && step.write ? fade(1,0,0.25) : changed ? fade(0,1,0.35) : '')
+   if(changed) out+=transformExpression(tx,ty,old.expression,step.expression,trace);
+   else out+='<g>'+(transfer && step.write ? fade(1,0,0.25) : '')
     +colored(tx,ty,step.expression,trace,30)+'</g>';
   }
  }
@@ -172,8 +213,8 @@ function draw(animate=false, shift=false) {
   const [x,y,w,h]=g.slots[i], live=values[i]!==null || step.declared.includes(v.name)
    || (transfer && step.write===v.name);
   const active=step.transfer!==null && [step.read,step.write].includes(v.name);
-  out+=text(x,y-48,v.address,18,live?'#a0afc2':'#697382');
-  out+=text(x+w/2,y-18,v.name,26,live?v.color:'#697382','middle');
+  out+=text(x,y-16,v.address,18,live?'#a0afc2':'#697382');
+  out+=text(x+w/2,y+h+34,v.name,26,live?v.color:'#697382','middle');
   out+=rect(x,y,w,h,live?'#192331':'#171d27',live?
    (active?(step.write?'#f5e58b':'#9cbaff'):v.color):'#47515f',0);
   if(live) {
@@ -210,14 +251,16 @@ function draw(animate=false, shift=false) {
    path=step.write ? `M ${dx} ${dy} C ${dx} ${sy+125}, ${sx} ${dy}, ${sx} ${sy}`
     : `M ${sx} ${sy} C ${sx} ${dy}, ${dx} ${sy+125}, ${dx} ${dy}`;
   } else {
-   const lane=Math.max(my+mh+95,dy+70), gutter=ex+ew+65;
-   const memoryPart=`M ${sx} ${sy} C ${sx} ${lane}, ${sx} ${lane}, ${gutter+40} ${lane} `
+   const lane=Math.max(my+mh+110,dy+70), gutter=ex+ew+65;
+   // The side port passes beside the centered label below the cell.
+   const port=sx+(step.write?72:-72);
+   const memoryPart=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${lane}, ${gutter+40} ${lane} `
     +`Q ${gutter} ${lane}, ${gutter} ${lane-40} `;
    const evalPart=`C ${gutter} ${dy+20}, ${gutter} ${dy}, ${dx} ${dy}`;
    path=step.write
     ? `M ${dx} ${dy} C ${gutter} ${dy}, ${gutter} ${dy+20}, ${gutter} ${lane-40} `
       +`Q ${gutter} ${lane}, ${gutter+40} ${lane} `
-      +`C ${sx} ${lane}, ${sx} ${lane}, ${sx} ${sy}`
+      +`C ${port} ${lane}, ${port} ${sy}, ${sx} ${sy}`
     : memoryPart+evalPart;
   }
   const color=step.write?'#f5e58b':'#9cbaff';
@@ -225,6 +268,8 @@ function draw(animate=false, shift=false) {
    +`marker-end="url(#tip)"/>`;
   out+='<g opacity="0">'+fade(0,0.65,0.25)+fade(0.65,0,0.25,1.5)+arrow+'</g>';
   out+=`<g opacity="0">`+fade(0,1,0.18)+fade(1,0,0.2,1.55)
+   +rect(-Math.max(28,String(step.transfer).length*30*.602/2+12),-25,
+     Math.max(56,String(step.transfer).length*30*.602+24),50,'#192331',color,9)
    +text(0,11,step.transfer,30,'#eef3fa','middle')
    +`<animateMotion dur="1.55s" path="${path}" `
    +`keyPoints="0;1" ${ease} fill="freeze"/></g>`;
@@ -239,7 +284,7 @@ function draw(animate=false, shift=false) {
   (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
   +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
  previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
-  expression:step.expression};
+  expression:step.expression,line:step.line};
  if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
 }
 function stop() {playing=false; clearTimeout(timer); $('play').textContent='Play';}
