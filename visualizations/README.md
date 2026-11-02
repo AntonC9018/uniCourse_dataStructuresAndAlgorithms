@@ -28,18 +28,23 @@ The inspection slider is independent of video playback.
 ## Chosen layout: under memory (B)
 
 Layout 2, **Under memory**, is the selected direction. Code stays fixed on the left. Compact,
-contiguous memory sits above a fixed **Expression evaluation** strip on the right, and the output
-line appears just below that strip. A bracket links the active line to the strip and glides with
-the active-line highlight when the statement changes.
+contiguous memory sits above a fixed, unlabeled evaluation pane on the right, and the output line
+appears just below it. Pane text, memory, and output share one left edge. A bracket links the
+active line to the pane and glides with the active-line highlight when the statement changes.
 
 - [Expression test video](renders/layout-memory-strip-expression-720p.mp4), 1280 × 720, 60 fps.
-- Each statement copies its highlighted expression once: the span lifts off in an opaque box,
-  follows the bracket, and becomes the evaluation text. The source line stays intact.
+- Each statement is copied once, whole: it lifts off in an opaque box, descends through the
+  empty right side of the code, and replaces the previous statement as it lands.
+  The source line stays intact, and the evaluated span keeps its code highlight in the pane.
+- A write's destination stays grey in the copied statement until its value arrives in memory;
+  during the write it is underlined, and it takes the variable color with a pulse on arrival.
 - Reads and writes are short vertical hops through side ports beside the variable names.
   A 0.55-second preparation outlines the operand or result together with its memory cell.
+  Arrows stop at the moving box's outline and fade before it lands.
 - The old operand or memory value stays until the boxed value arrives. Memory borders return
-  to the variable color after arrival, and a written or printed result leaves the strip.
-- Evaluation keeps shared glyphs, gathers the others, and grows the result without a blank frame.
+  to the variable color after arrival. Printing copies the value to the output line.
+- Evaluation keeps shared glyphs, gathers the others, and grows the result without a blank frame;
+  the rest of the statement slides to fit the result.
 
 Run `python3 visualizations/layout-prototype.py` and open `layout-prototype.html`.
 It opens on B, with playback, step controls, and a state slider for both traces.
