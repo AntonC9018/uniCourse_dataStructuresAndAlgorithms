@@ -6,13 +6,11 @@
 <text x="70" y="404" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">Expression evaluation</text>
 <text x="100" y="466" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">2</text>
 <text x="76" y="116" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">1</text>
-<text x="116" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"></text>
 <text x="116.0" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">int</text>
 <text x="161.15" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> </text>
 <text x="176.20000000000002" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#61d4c4" xml:space="preserve">a</text>
 <text x="191.25000000000003" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">{1};</text>
 <text x="76" y="168" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">2</text>
-<text x="116" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"></text>
 <text x="116.0" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">int</text>
 <text x="161.15" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> </text>
 <text x="176.20000000000002" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#ffbd69" xml:space="preserve">b</text>
@@ -21,13 +19,11 @@
 <rect x="173.2" y="190" width="21.049999999999997" height="40" fill="#2e4059" stroke="none" stroke-width="1"/>
 <line x1="173.2" y1="230" x2="194.25" y2="230" stroke="#9cbaff" stroke-width="2"/>
 <text x="76" y="220" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">3</text>
-<text x="116" y="220" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"></text>
 <text x="116.0" y="220" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#61d4c4" xml:space="preserve">a</text>
 <text x="131.05" y="220" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> = </text>
 <text x="176.20000000000002" y="220" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#ffbd69" xml:space="preserve">b</text>
 <text x="191.25000000000003" y="220" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">;</text>
 <text x="76" y="272" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">4</text>
-<text x="116" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"></text>
 <text x="116.0" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#ffbd69" xml:space="preserve">b</text>
 <text x="131.05" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> = </text>
 <text x="176.20000000000002" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#61d4c4" xml:space="preserve">a</text>

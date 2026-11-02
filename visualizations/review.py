@@ -50,9 +50,11 @@ and losing a value during a failed swap?</p>
 <div id="snapshot"></div></details>
 <p><small>Illustrative ABI: 4-byte int, 8-byte pointer, little-endian; synthetic decimal
 addresses start at 64. Each int occupies one slot; byte detail is reserved for byte-level
-examples. ? marks an unknown value, including a declaration that has not executed.
+examples. Future storage is hidden; ? marks an explicitly declared, uninitialized variable.
 Variable names are below their slots; starting addresses are above. Slots wrap as whole integers.
-Blue outlines mark reads; yellow outlines mark writes. Expression evaluation shows temporary
+Blue outlines mark reads; yellow outlines mark writes. Values follow the transfer arrows,
+and overwritten values leave before replacements arrive. Neutral outlines emphasize key results.
+Expression evaluation shows temporary
 results. The highlighted source expression is copied into that panel; memory reads then
 replace its operands. Printed output appears at the bottom.
 Fixed dark media background is provisional. No automatic C++ tracing or maintenance integration.</small></p>

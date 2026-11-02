@@ -82,14 +82,38 @@ def expression_value(expression: str, start: int = 0, length: int | None = None)
     return Text(EVAL_X + start * EVAL_SIZE * 0.602, EVAL_BASELINE, value, EVAL_SIZE)
 
 
-def source_expression(timeline: Timeline, line: int) -> Text:
-    start, end = timeline.expression_spans[line]
+def colored_text(timeline: Timeline, text: Text) -> list[Text]:
+    colors = {v.name: v.color for v in timeline.variables}
+    x = text.x
+    tokens = []
+    for token in re.split(r"(\b[a-zA-Z_]\w*\b)", text.value):
+        if token:
+            tokens.append(Text(x, text.y, token, text.size, colors.get(token, text.color)))
+        x += len(token) * text.size * 0.602
+    return tokens
+
+
+def source_expression(timeline: Timeline, line: int, write: str | None = None) -> Text:
+    if write:
+        match = re.search(r"\b" + re.escape(write) + r"\b", timeline.source[line])
+        start, end = match.span()
+    else:
+        start, end = timeline.expression_spans[line]
     return Text(116 + start * 25 * 0.602, 116 + line * 52,
                 timeline.source[line][start:end], 25)
 
 
-def frame(timeline: Timeline, index: int, *, show_expression: bool = True) -> list[Rect | Text | Line]:
+def memory_value(timeline: Timeline, name: str, value: int) -> Text:
+    slot = memory_layout(timeline)[next(i for i,v in enumerate(timeline.variables) if v.name == name)]
+    return centered_text(slot.x + slot.w / 2, slot.y + 42, str(value), EVAL_SIZE)
+
+
+def frame(timeline: Timeline, index: int, *, show_expression: bool = True,
+          phase: str = "after", hide_values: tuple[str, ...] = ()) -> list[Rect | Text | Line]:
     step = timeline.steps[index]
+    previous = timeline.steps[max(0, index - 1)]
+    values = previous.values if phase == "transfer" and step.write else step.values
+    expression = previous.expression if phase == "transfer" and step.read else step.expression
     shapes = [
         Rect(0, 0, WIDTH, HEIGHT, BG),
         Rect(48, 64, 530, 258, PANEL),
@@ -97,26 +121,28 @@ def frame(timeline: Timeline, index: int, *, show_expression: bool = True) -> li
         Text(70, 404, "Expression evaluation", 20, MUTED),
     ]
     if show_expression:
-        shapes.append(expression_text(step.expression))
+        shapes.extend(colored_text(timeline, expression_text(expression)))
     for i, source in enumerate(timeline.source):
         y = 116 + i * 52
         if i == step.line:
-            selected = source_expression(timeline, i)
+            selected = source_expression(timeline, i, step.write)
             span_width = len(selected.value) * selected.size * 0.602
-            shapes += [Rect(59, y - 30, 4, 44, READ),
+            highlight = WRITE if step.write else READ
+            shapes += [Rect(59, y - 30, 4, 44, highlight),
                        Rect(selected.x - 3, y - 30, span_width + 6, 40, "#2e4059"),
                        Line(selected.x - 3, y + 10,
-                            selected.x + span_width + 3, y + 10, READ, 2)]
+                            selected.x + span_width + 3, y + 10, highlight, 2)]
         shapes.append(Text(76, y, str(i + 1), 20, MUTED))
-        # Split identifiers so variable colors also survive in the SVG output.
-        x = 116
-        colors = {v.name: v.color for v in timeline.variables}
-        for token in re.split(r"(\b[a-zA-Z_]\w*\b)", source):
-            shapes.append(Text(x, y, token, 25, colors.get(token, FG)))
-            x += len(token) * 25 * 0.602
-    for var, value, slot in zip(timeline.variables, step.values, memory_layout(timeline)):
-        active = var.name in (step.read, step.write)
-        edge = WRITE if var.name == step.write else READ if active else var.color
+        shapes.extend(colored_text(timeline, Text(116, y, source, 25)))
+    for var, value, slot in zip(timeline.variables, values, memory_layout(timeline)):
+        live = value is not None or var.name in step.declared
+        if not live and not (phase == "transfer" and var.name == step.write):
+            continue
+        active = step.transfer is not None and var.name in (step.read, step.write)
+        edge = WRITE if var.name == step.write and active else READ if active else var.color
+        if phase == "after" and var.name in step.focus:
+            edge = FG
+            active = True
         # Addresses label the beginning of storage; names label the whole variable.
         shapes += [Text(slot.x, slot.y - 16, str(var.address), 18, MUTED),
                    centered_text(slot.x + slot.w / 2, slot.y + slot.h + 34,
@@ -128,10 +154,11 @@ def frame(timeline: Timeline, index: int, *, show_expression: bool = True) -> li
                 x = slot.x + offset * cell_width
                 shapes += [Rect(x, slot.y, cell_width, slot.h, PANEL, edge, 3 if active else 1),
                            centered_text(x + cell_width / 2, slot.y + 42,
+                                         "" if var.name in hide_values else
                                          f"{octets[offset]:02X}" if octets else "?", 25,
                                          FG if octets else MUTED)]
         else:
-            display = str(value) if value is not None else "?"
+            display = "" if var.name in hide_values else str(value) if value is not None else "?"
             shapes += [Rect(slot.x, slot.y, slot.w, slot.h, PANEL, edge, 3 if active else 1),
                        centered_text(slot.x + slot.w / 2, slot.y + 42,
                                      display, EVAL_SIZE, FG if value is not None else MUTED)]

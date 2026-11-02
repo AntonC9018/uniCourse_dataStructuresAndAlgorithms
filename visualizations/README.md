@@ -22,7 +22,8 @@ after the MP4 files exist. Generated HTML is ignored by the course repository.
 - Numbered SVGs are individual states; unnumbered SVGs are the final snapshots.
 
 Expected final states: expression `a = 7`, `b = 11`, stdout `11`; failed swap `a = 2`, `b = 2`.
-The last frame holds for 3.5 seconds. The inspection slider is independent of video playback.
+The last frame holds for 3.5 seconds; key lesson moments get extra emphasis and pauses.
+The inspection slider is independent of video playback.
 
 ## Visual contract
 
@@ -31,15 +32,17 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - `a` is teal `#61d4c4`; `b` is amber `#ffbd69`, including source identifiers.
 - The active line has a blue stripe; its evaluated expression has a focused highlight and
   underline. On entry to a source line, that expression is copied into the evaluation panel.
-  Read slots have a blue outline;
-  write slots have a yellow outline. A copied value lands on the operand being substituted.
+  Read slots turn blue when the read begins; write slots and source destinations turn yellow
+  before a write. Temporary arrows show the route, and values slide along those exact paths.
+  Overwritten glyphs leave the slot before the replacement arrives. Unchanged content stays still.
 - Variables occupy adjacent horizontal slots, in address order. Each 4-byte integer occupies
   one 224-pixel slot. Rows wrap before an integer would be split. Wider whole variables fit
   where space permits or move to the next row.
 - A variable name is centered below its memory slot. Its decimal starting address is aligned
   with the slot's left edge, above it. Values are centered inside the slots.
-- Unknown values use `?`, including declarations that have not executed. Reserved display slots
-  do not imply that the corresponding C++ objects are already alive.
+- Storage is hidden before initialization. An explicitly declared but uninitialized variable
+  uses `?`; future declarations are not drawn as unknown live objects. A new slot appears empty
+  when its first value is about to arrive.
 - Individual hex bytes appear only with `byte_detail=True`, for examples teaching byte layout,
   casts, or partial writes. The assumed ABI has 4-byte `int`, 8-byte pointers, and little-endian
   storage; this is illustrative, not portable C++ layout.
@@ -55,9 +58,12 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - `Variable(name, address, size=4, color=...)` describes a synthetic storage slot.
 - `Step(line, expression, values, read=None, write=None, transfer=None, stdout="", hold=1.2)`
   captures one visible evaluation state. `line` is zero-based; `values` follows variable order.
-  A `None` value means the value is unknown, shown as `?`. A write state contains values
-  **after** the
-  write. `transfer` is the decimal value copied from a read or into a write.
+  A `None` value means storage is not yet live unless its name is in `declared`; an explicitly
+  declared unknown value is shown as `?`. A write state contains values **after** the write.
+  `transfer` is the decimal value copied from a read or into a write.
+  `focus` lists slots to emphasize after the transfer, using a neutral outline to avoid implying
+  an extra read. The expression trace emphasizes the unchanged `b`; the swap emphasizes both
+  final values. The old value leaves on every overwrite, even when the new value is equal.
   `read_span=(start, end)` identifies the operand in the preceding expression, with an exclusive
   end index. Its replacement literal determines the destination of the moving value.
 - `Timeline(name, title, source, variables, steps, byte_detail=False)` groups category data
@@ -70,11 +76,11 @@ library. `WORD_WIDTH`, palette, font, expression position, and `memory_layout` l
 Read/write animation positions come from the same packed slots as the static renderer.
 
 `scenes.py` maps those same primitives to native Manim vector objects. `TimelineScene` handles
-atomic state transitions, source-to-panel expression copies, memory reads/writes, timing,
-and the final pause. Unchanged content
-is never faded. Expression text has a fixed left edge so substitution preserves other operands.
-To add a scene, subclass it
-and set `timeline`; the two concrete classes contain no drawing logic. SVG text uses browser font
+atomic state transitions, source-to-panel expression copies, arrow routes, overwrites, timing,
+and the final pause. Only the overwritten glyph fades; unchanged content never fades.
+Expression text has a fixed left edge so substitution preserves other operands.
+To add a scene, subclass it and set `timeline`; the two concrete classes contain no drawing logic.
+SVG text uses browser font
 metrics and Manim uses Pango, so glyph baselines can differ slightly; the layout data is identical.
 
 The current canvas fits three memory rows and four source lines. Memory wraps horizontally
@@ -125,8 +131,8 @@ the currently pinned Pillow 13 package.
 Both final videos decode without errors using `ffmpeg -v error -i <file> -f null -`.
 They are H.264, 1280 × 720, 24 fps. Transitions switch atomically with no full-scene fades.
 All generated SVGs parse as XML; trace reads/writes match their transferred values.
-Source-copy, read-flight, substitution, unknown-value, and final-state frames were inspected
-visually.
+Source-copy, read/write-arrow, overwritten-value, and final-emphasis frames were inspected
+visually. Unknown and undeclared states were checked independently in the shared drawing model.
 Packing was checked with enough integer slots to force multiple rows, including the label
 positions and shared animation coordinates. Full-scene fades remain disabled.
 
