@@ -33,13 +33,16 @@ appears just below it. Pane text, memory, and output share one left edge. A brac
 active line to the pane and glides with the active-line highlight when the statement changes.
 
 - [Expression test video](renders/layout-memory-strip-expression-720p.mp4), 1280 × 720, 60 fps.
-- Each statement is copied once, whole: it lifts off in an opaque box, descends through the
-  empty right side of the code, and replaces the previous statement as it lands.
-  The source line stays intact, and the evaluated span keeps its code highlight in the pane.
+- Each statement is copied once, whole and unhurried (1.2 s of travel, with extra step time):
+  it lifts off in an opaque box, descends through the empty right side of the code, and
+  replaces the previous statement as it lands. The source line stays intact.
+- In the pane, brace initialization reads as `int b = a + 6;`. Statement context is muted;
+  the evaluated span keeps its code highlight and full syntax colors.
 - A write's destination stays grey in the copied statement until its value arrives in memory;
   during the write it is underlined, and it takes the variable color with a pulse on arrival.
 - Reads and writes are short vertical hops through side ports beside the variable names.
-  A 0.55-second preparation outlines the operand or result together with its memory cell.
+  A 0.55-second preparation marks the operand or result with a tight, filled outline drawn
+  beneath its glyphs, together with its memory cell; highlighted cell borders draw on top.
   Arrows stop at the moving box's outline and fade before it lands.
 - The old operand or memory value stays until the boxed value arrives. Memory borders return
   to the variable color after arrival. Printing copies the value to the output line.
