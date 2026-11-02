@@ -41,6 +41,23 @@ These studies compare geometry; their transfer motion is schematic. They do not 
 Manim layout. Greyed-out future storage is already applied to the shared renderer and videos.
 The tradeoffs are shown below each study. A layout decision is still pending.
 
+### Variant A video
+
+[Expression video, 1280 × 720 at 24 fps](renders/layout-a-expression-720p.mp4).
+This exports the actual prototype SVG, including temporary evaluation rows, with a fixed
+animation clock. It does not use the older Manim layout.
+
+After generating `layout-prototype.html`, run:
+
+```sh
+node visualizations/render-layout-video.cjs expression
+```
+
+The exporter requires Playwright, Chromium, and ffmpeg. Set `PLAYWRIGHT_MODULE` to an installed
+Playwright package when it is outside Node's module search path, and optionally set
+`COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE` to the Chromium executable from the existing Nix shell.
+Use `swap` instead of `expression` to export the other trace.
+
 ## Visual contract
 
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
