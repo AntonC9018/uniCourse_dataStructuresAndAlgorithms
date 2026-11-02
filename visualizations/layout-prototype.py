@@ -72,8 +72,18 @@ const ease='calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"';
 const transferTiming={prepare:0.55,travel:1.55,replace:0.2,settle:0.7};
 const arrivalTime=transferTiming.prepare+transferTiming.travel;
 const transferSeconds=arrivalTime+transferTiming.settle;
+// The statement copy is deliberately slow; steps that copy get this much extra time.
+const copyTravelSeconds=1.2, copySeconds=0.3+copyTravelSeconds;
 // Every non-transfer transition (line glide, source copy, transformation, print) ends by then.
-const stepAnimationSeconds=1.05;
+const stepAnimationSeconds=copySeconds+0.2;
+function copiesStatement(i) {
+ const steps=traces[scenario].steps;
+ return i===0 || steps[i-1].line!==steps[i].line;
+}
+function stepSeconds(i) {
+ const step=traces[scenario].steps[i];
+ return step.hold+(step.transfer!==null ? transferSeconds : copiesStatement(i) ? copySeconds : 0);
+}
 const charWidth=25*.602, evalWidth=30*.602;
 function animateAttr(name,from,to,duration=0.45,begin=0) {
  return `<animate attributeName="${name}" from="${from}" to="${to}" `
@@ -161,15 +171,26 @@ function pulse(begin) {
 function statementParts(trace,g,line) {
  const [start,end]=trace.expression_spans[line], source=trace.source[line];
  if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
- const prefix=source.slice(0,start);
+ let prefix=source.slice(0,start), suffix=source.slice(end);
+ // Brace initialization reads as an assignment of the evaluated value.
+ if(prefix.endsWith('{') && suffix.startsWith('}')) {
+  prefix=prefix.slice(0,-1)+' = '; suffix=suffix.slice(1);
+ }
  const name=trace.steps.find(s=>s.line===line && s.write)?.write;
  const match=name ? [...prefix.matchAll(new RegExp('\\b'+name+'\\b','g'))].pop() : null;
- return {prefix,suffix:source.slice(end),target:match?{name,at:match.index}:null};
+ return {prefix,suffix,target:match?{name,at:match.index}:null};
+}
+// Statement context around the evaluated span is muted so the expression stands out.
+function context(x,y,value) { return value ? text(x,y,value,30,'#6f7c8f') : ''; }
+// A filled outline sits beneath the glyphs it marks, without covering neighbouring glyphs.
+function markBox(x,y,length,stroke,fill) {
+ return `<rect x="${x-3}" y="${y-32}" width="${length*evalWidth+6}" height="42" rx="6" `
+  +`fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
 }
 function prefixMarkup(x,y,parts,trace,state) {
  const {prefix,target}=parts;
- if(!target) return colored(x,y,prefix,trace,30);
- const color=trace.variables.find(v=>v.name===target.name).color, grey='#697382';
+ if(!target) return context(x,y,prefix);
+ const color=trace.variables.find(v=>v.name===target.name).color, grey='#6f7c8f';
  const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
  const arriving=state==='arriving';
  let name=`<g transform="translate(${center} ${y-11})">`;
@@ -181,9 +202,8 @@ function prefixMarkup(x,y,parts,trace,state) {
   +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
   +(arriving?`<animate attributeName="fill" from="${grey}" to="${color}" `
    +`begin="${arrivalTime}s" dur="0.2s" fill="freeze"/>`:'')+'</text></g></g>';
- return colored(x,y,prefix.slice(0,target.at),trace,30)+name
-  +colored(x+(target.at+target.name.length)*evalWidth,y,
-   prefix.slice(target.at+target.name.length),trace,30);
+ return context(x,y,prefix.slice(0,target.at))+name
+  +context(x+(target.at+target.name.length)*evalWidth,y,prefix.slice(target.at+target.name.length));
 }
 // The evaluated span keeps the same background as its highlight in the code.
 function expressionBackground(g,x,y,length,animations='') {
@@ -201,7 +221,7 @@ function settledPane(trace,g,step,x,y) {
  return expressionBackground(g,start,y,step.expression.length)
   +prefixMarkup(x,y,parts,trace,step.write?'written':'pending')
   +colored(start,y,step.expression,trace,30)
-  +colored(start+step.expression.length*evalWidth,y,parts.suffix,trace,30);
+  +context(start+step.expression.length*evalWidth,y,parts.suffix);
 }
 function spanBox(trace,g,line,y) {
  const [start,end]=trace.expression_spans[line];
@@ -297,40 +317,39 @@ function draw(animate=false, shift=false) {
    const dx=(String(step.transfer).length-(to-from))*evalWidth;
    out+=expressionBackground(g,start,ty,before.length,dx ? animateAttr('width',
     before.length*evalWidth+8,length*evalWidth+8,transferTiming.replace,arrivalTime) : '');
-   out+=prefixMarkup(tx,ty,parts,trace,'pending');
-   out+=colored(start,ty,before.slice(0,from),trace,30);
    // Preparation links the operand to its memory cell before the copy departs.
    out+='<g data-read-highlight="operand" opacity="0">'+fade(0,1,0.15)
     +fade(1,0,0.2,arrivalTime-0.3)
-    +rect(start+from*evalWidth-8,ty-34,(to-from)*evalWidth+16,46,'none','#9cbaff',6)
-    +'</g>';
+    +markBox(start+from*evalWidth,ty,to-from,'#9cbaff','#2c4775')+'</g>';
+   out+=prefixMarkup(tx,ty,parts,trace,'pending');
+   out+=colored(start,ty,before.slice(0,from),trace,30);
    out+='<g data-replacement-old="operand">'+fade(1,0,transferTiming.replace,arrivalTime)
     +colored(start+from*evalWidth,ty,before.slice(from,to),trace,30)+'</g>';
    out+='<g data-replacement-new="operand" opacity="0">'
     +fade(0,1,transferTiming.replace,arrivalTime)
     +colored(start+from*evalWidth,ty,String(step.transfer),trace,30)+'</g>';
-   out+=glide(colored(start+to*evalWidth,ty,before.slice(to)+parts.suffix,trace,30),
-    dx,arrivalTime,transferTiming.replace);
+   out+=glide(colored(start+to*evalWidth,ty,before.slice(to),trace,30)
+    +context(start+before.length*evalWidth,ty,parts.suffix),dx,arrivalTime,transferTiming.replace);
   } else if(transfer && step.write) {
    // The result stays; its boxed copy carries the value to the outlined destination.
-   out+=expressionBackground(g,start,ty,length)+prefixMarkup(tx,ty,parts,trace,'arriving')
-    +colored(start,ty,step.expression,trace,30)
+   out+=expressionBackground(g,start,ty,length)
     +'<g data-write-source="result" opacity="0">'+fade(0,1,0.15)
-    +fade(1,0,0.2,arrivalTime+0.15)
-    +rect(start-8,ty-34,length*evalWidth+16,46,'none','#f5e58b',6)+'</g>'
-    +colored(start+length*evalWidth,ty,parts.suffix,trace,30);
+    +fade(1,0,0.2,arrivalTime+0.15)+markBox(start,ty,length,'#f5e58b','#4a4630')+'</g>'
+    +prefixMarkup(tx,ty,parts,trace,'arriving')
+    +colored(start,ty,step.expression,trace,30)
+    +context(start+length*evalWidth,ty,parts.suffix);
   } else if(copySource) {
    // The highlighted statement lifts off as a boxed copy and follows the bracket into the
    // pane, where the previous statement clears as it lands. The source line stays intact.
    const [spanStart]=trace.expression_spans[step.line];
    const sourceX=g.code[0]+62+(g.wholeLine?0:spanStart*charWidth), sourceY=rows[step.line];
-   const begin=lineChanged ? 0.3 : 0.15, travel=0.6, total=begin+travel;
+   const begin=lineChanged ? 0.3 : 0.15, travel=copyTravelSeconds, total=begin+travel;
    const path=g.copyBend
     ? `M ${sourceX} ${sourceY} C ${g.copyBend} ${sourceY}, ${g.copyBend} ${sourceY}, `
      +`${g.copyBend} ${(sourceY+ty)/2} C ${g.copyBend} ${ty}, ${g.copyBend} ${ty}, ${tx} ${ty}`
     : `M ${sourceX} ${sourceY} L ${tx} ${ty}`;
    const width=(parts.prefix.length+length+parts.suffix.length)*evalWidth;
-   if(old?.pane) out+='<g>'+fade(1,0,0.2,begin+travel*0.3)+old.pane+'</g>';
+   if(old?.pane) out+='<g>'+fade(1,0,0.3,begin+travel*0.2)+old.pane+'</g>';
    out+=`<g data-source-copy="statement">`
     +`<animateMotion dur="${total}s" path="${path}" keyPoints="0;0;1" `
     +`keyTimes="0;${(begin/total).toFixed(4)};1" calcMode="spline" `
@@ -349,11 +368,13 @@ function draw(animate=false, shift=false) {
       animateAttr('width',before*evalWidth+8,length*evalWidth+8,0.55))
      +prefixMarkup(tx,ty,parts,trace,step.write?'written':'pending')
      +transformExpression(start,ty,old.expression,step.expression,trace)
-     +glide(colored(start+before*evalWidth,ty,parts.suffix,trace,30),dx,0,0.55);
+     +glide(context(start+before*evalWidth,ty,parts.suffix),dx,0,0.55);
    } else out+=settledPane(trace,g,step,tx,ty);
   }
  }
  if(evaluationOpen) out+='</g>';
+ // Adjacent cells share an edge: grey borders go first, live ones next, active ones last.
+ const borders=[];
  trace.variables.forEach((v,i)=>{
   const [x,y,w,h]=g.slots[i], live=values[i]!==null || step.declared.includes(v.name)
    || (transfer && step.write===v.name);
@@ -362,10 +383,11 @@ function draw(animate=false, shift=false) {
   const highlight=step.write?'#f5e58b':'#9cbaff';
   out+=text(x,y-16,v.address,18,live?'#a0afc2':'#697382');
   out+=text(x+w/2,y+h+34,v.name,26,live?v.color:'#697382','middle');
-  out+=animated(rect(x,y,w,h,live?'#192331':'#171d27',live?
+  out+=rect(x,y,w,h,live?'#192331':'#171d27','none',0);
+  borders.push([active?2:live?1:0,animated(rect(x,y,w,h,'none',live?
    (active?highlight:v.color):'#47515f',0),
    active ? `<animate attributeName="stroke" from="${highlight}" to="${v.color}" `
-    +`begin="${arrivalTime+0.15}s" dur="0.35s" fill="freeze"/>` : '');
+    +`begin="${arrivalTime+0.15}s" dur="0.35s" fill="freeze"/>` : '')]);
   if(live) {
    const centerX=x+w/2, centerY=y+h/2;
    out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
@@ -386,6 +408,7 @@ function draw(animate=false, shift=false) {
    out+='</g></g>';
   }
  });
+ out+=borders.sort((a,b)=>a[0]-b[0]).map(border=>border[1]).join("");
  if(transfer) {
   const name=step.read || step.write, vi=trace.variables.findIndex(v=>v.name===name);
   const [mx,my,mw,mh]=g.slots[vi];
@@ -500,8 +523,7 @@ function advance(delta) {stop();index=Math.max(0,Math.min(traces[scenario].steps
 function tick() {
  if(!playing)return;
  if(index===traces[scenario].steps.length-1){stop();return;}
- index++;draw(true);timer=setTimeout(tick,(traces[scenario].steps[index].transfer!==null
-  ? transferSeconds+traces[scenario].steps[index].hold : traces[scenario].steps[index].hold)*1000);
+ index++;draw(true);timer=setTimeout(tick,stepSeconds(index)*1000);
 }
 $('play').onclick=()=>{
  if(playing){stop();return;}

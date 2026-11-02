@@ -78,7 +78,9 @@ async function main() {
         await segment(transferDuration, step, true);
         await segment(steps[step].hold, step, false, true);
       } else {
-        await segment(steps[step].hold, step, false, true);
+        // Statement copies take extra time before the usual hold.
+        const extra = await page.evaluate(i => copiesStatement(i) ? copySeconds : 0, step);
+        await segment(steps[step].hold + extra, step, false, true);
       }
     }
     if (errors.length) throw Error(errors.join('\n'));
