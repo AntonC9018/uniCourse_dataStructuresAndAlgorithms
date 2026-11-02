@@ -31,20 +31,31 @@ Run `python3 visualizations/layout-prototype.py` and open `layout-prototype.html
 The page embeds both existing manual traces with playback, step controls, and a state slider.
 Use the bottom arrows or keyboard left/right to compare `?variant=A`, `B`, and `C`:
 
-- A opens a temporary evaluation row beneath the active source line. Later lines slide down
-  while the expression is evaluated, then close up after its value is stored or printed.
-  A write keeps the row open until the transfer animation finishes.
-- B uses a fixed central evaluation workspace between code and memory.
-- C places contiguous memory across the top, above code and evaluation.
+- A: **Bridge row**. Evaluation stays attached to the active source line and extends toward
+  memory. The expression copies diagonally to the row's right end. Other source lines slide
+  down until evaluation finishes; memory stays fixed.
+- B: **Under memory**. A fixed evaluation strip sits below memory. Code stays still, and a
+  bracket connects the active line to evaluation. Reads and writes follow short vertical paths.
+- C: **Code above memory**. Code has a wide viewport above a full-width memory band. Inline
+  evaluation opens beneath the active line, with its content aligned near the memory cells.
+  Longer source scrolls to keep evaluation visible. Transfers travel mostly vertically.
 
+All three use 112-pixel integer cells. This checkpoint exercises the existing two-variable
+traces; multi-row memory and long expressions still need a separate layout pass.
 These studies compare geometry; their transfer motion is schematic. They do not change the
 Manim layout. Greyed-out future storage is already applied to the shared renderer and videos.
 The tradeoffs are shown below each study. A layout decision is still pending.
 
-### Variant A video
+### Comparison videos
 
-[Expression video, 1280 × 720 at 60 fps](renders/layout-a-expression-720p.mp4).
-This exports the actual prototype SVG, including temporary evaluation rows, with a fixed
+Each video uses the same trace and timing at 1280 × 720, 60 fps:
+
+- [Bridge row](renders/layout-bridge-expression-720p.mp4).
+- [Under memory](renders/layout-memory-strip-expression-720p.mp4).
+- [Code above memory](renders/layout-memory-band-expression-720p.mp4).
+- [Previous inline layout, for reference](renders/layout-a-expression-720p.mp4).
+
+The exporter records the actual prototype SVG, including temporary evaluation rows, with a fixed
 animation clock. Panel motion and transfers ease in and out. Opening evaluation copies the
 highlighted source expression into the pane, preserving the original code. Evaluation matches
 shared characters, gathers outgoing characters, and grows the result into place.
@@ -59,7 +70,9 @@ starting edge above. It does not use the older Manim layout.
 After generating `layout-prototype.html`, run:
 
 ```sh
-node visualizations/render-layout-video.cjs expression
+node visualizations/render-layout-video.cjs expression bridge
+node visualizations/render-layout-video.cjs expression memory-strip
+node visualizations/render-layout-video.cjs expression memory-band
 ```
 
 The exporter requires Playwright, Chromium, and ffmpeg. Set `PLAYWRIGHT_MODULE` to an installed
@@ -67,7 +80,7 @@ Playwright package when it is outside Node's module search path, and optionally 
 `COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE` to the Chromium executable from the existing Nix shell.
 Use `swap` instead of `expression` to export the other trace.
 
-## Visual contract
+## Original Manim visual contract
 
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
   Fixed dark media is a proposal for this checkpoint, not a settled theme policy for the epic.

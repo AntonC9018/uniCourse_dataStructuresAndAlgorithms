@@ -1,8 +1,8 @@
-/** Export the actual variant A SVG to a deterministic 1280 × 720 MP4.
+/** Export a layout comparison SVG to a deterministic 1280 × 720 MP4.
  * Generate layout-prototype.html first. Requires Playwright, Chromium and ffmpeg.
  * PLAYWRIGHT_MODULE optionally selects an installed Playwright package.
  * COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE optionally selects the browser binary.
- * Usage: node visualizations/render-layout-video.cjs [expression|swap]
+ * Usage: node visualizations/render-layout-video.cjs [expression|swap] [bridge|memory-strip|memory-band]
  */
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const { spawn } = require('node:child_process');
@@ -13,7 +13,11 @@ const { pathToFileURL } = require('node:url');
 async function main() {
   const example = process.argv[2] || 'expression';
   if (!['expression', 'swap'].includes(example)) throw Error('Choose expression or swap');
-  const target = path.join(__dirname, 'renders', `layout-a-${example}-720p.mp4`);
+  const layouts={bridge:'A','memory-strip':'B','memory-band':'C'};
+  const layout=process.argv[3] || 'bridge';
+  const selectedVariant=layouts[layout];
+  if(!selectedVariant) throw Error('Choose bridge, memory-strip or memory-band');
+  const target = path.join(__dirname, 'renders', `layout-${layout}-${example}-720p.mp4`);
   const browser = await chromium.launch({
     headless: true,
     ...(process.env.COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE
@@ -27,7 +31,7 @@ async function main() {
     // The export clock drives transitions; wall-clock callbacks must not change frames.
     await page.addInitScript(() => { window.setTimeout = () => 0; });
     await page.goto(pathToFileURL(path.join(__dirname, 'layout-prototype.html')).href
-      + '?variant=A');
+      + '?variant='+selectedVariant);
     await page.evaluate(() => {
       for (const child of document.body.children) {
         if (child.id !== 'stage') child.style.display = 'none';
@@ -37,9 +41,9 @@ async function main() {
     });
     const steps = await page.evaluate(selected => {
       scenario = selected;
-      previousLayout = { key: 'A' + scenario, open: false,
-        height: 48 + traces[scenario].source.length * 58,
-        rows: traces[scenario].source.map((_, i) => 112 + i * 58) };
+      const initial=geometry(false);
+      previousLayout = { key: variant + scenario, open: false, height:initial.code[3],
+        rows:traces[scenario].source.map((_,i)=>initial.cy+i*initial.line) };
       return traces[scenario].steps;
     }, example === 'expression' ? 0 : 1);
     encoder = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe',
@@ -56,10 +60,15 @@ async function main() {
         svg.pauseAnimations();
         svg.setCurrentTime(0);
       }, { step, animate, shift });
+      // After all effects settle, reuse the exact final pixels for the remaining hold.
+      const animationEnd=animate?transferDuration-0.1:1.05;
+      let png;
       for (let frame = 0; frame < Math.ceil(seconds * fps); frame++) {
-        await page.evaluate(time => document.getElementById('stage').setCurrentTime(time),
-          frame / fps);
-        const png = await page.screenshot({ animations: 'allow' });
+        if(!png || (frame-1)/fps<animationEnd) {
+          await page.evaluate(time => document.getElementById('stage').setCurrentTime(time),
+            frame / fps);
+          png = await page.screenshot({ animations: 'allow' });
+        }
         if (!encoder.stdin.write(png)) await once(encoder.stdin, 'drain');
       }
     }
