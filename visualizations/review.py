@@ -49,8 +49,9 @@ and losing a value during a failed swap?</p>
 <output id="counter"></output><button id="next" aria-label="Next state">→</button></div>
 <div id="snapshot"></div></details>
 <p><small>Illustrative ABI: 4-byte int, 8-byte pointer, little-endian; synthetic decimal
-addresses start at 64. Hex bytes increase left to right. ·· means the declaration has
-not executed. Blue → reads; yellow ← writes. The value badge is a copy in transit.
+addresses start at 64. Each int occupies one slot; byte detail is reserved for byte-level
+examples. · means the declaration has not executed. Blue → reads; yellow ← writes.
+A copied value moves into the subexpression it replaces.
 Fixed dark media background is provisional. No automatic C++ tracing or maintenance integration.</small></p>
 <script>
 const examples = EXAMPLES;

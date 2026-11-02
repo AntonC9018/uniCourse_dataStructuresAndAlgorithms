@@ -1,10 +1,10 @@
 """Native Manim adapter for the same primitives serialized by the SVG renderer."""
 from functools import cache
 
-from manim import Scene, FadeIn, Text as ManimText, RoundedRectangle, VGroup
+from manim import Scene, Text as ManimText, VGroup
 from manim import Rectangle, Line as ManimLine, config
 
-from drawing import WIDTH, HEIGHT, BG, FG, PANEL, FONT, EVAL_CENTER, frame, memory_center
+from drawing import WIDTH, HEIGHT, BG, PANEL, FONT, EVAL_SIZE, frame, memory_center, expression_value
 from drawing import Rect, Text, Line
 from model import EXPRESSION, SWAP
 
@@ -52,34 +52,47 @@ class TimelineScene(Scene):
     """A subclass supplies a Timeline, with no renderer or layout overrides."""
     timeline = EXPRESSION
 
-    def badge(self, value):
-        text = ManimText(str(value), font=FONT, font_size=24, color=FG)
-        box = RoundedRectangle(width=max(0.8, text.width + 0.3), height=0.5,
-                               corner_radius=0.06, fill_color=PANEL, fill_opacity=1,
-                               stroke_color=FG, stroke_width=1)
-        return VGroup(box, text)
-
     def construct(self):
         current = None
         for index, step in enumerate(self.timeline.steps):
-            # Writes move the evaluated value before revealing the changed bytes.
-            if step.write and step.transfer is not None and current is not None:
-                badge = self.badge(step.transfer).move_to(point(EVAL_CENTER))
-                self.add(badge)
-                self.play(badge.animate.move_to(
-                    point(memory_center(self.timeline, step.write))), run_time=0.75)
-                self.remove(badge)
+            moving = None
+            operand_mask = None
+            if step.transfer is not None and current is not None:
+                if step.read:
+                    # The span refers to the variable in the preceding expression.
+                    # Land at the replacement literal, before exposing the new state.
+                    previous = self.timeline.steps[index - 1]
+                    start, end = step.read_span
+                    assert previous.expression[start:end] == step.read
+                    operand = expression_value(previous.expression, start, end - start)
+                    operand_mask = mobject(Rect(operand.x, operand.y - EVAL_SIZE,
+                                                (end - start) * EVAL_SIZE * 0.602,
+                                                EVAL_SIZE * 1.3, PANEL)).copy()
+                    self.add(operand_mask)
+                    literal = str(step.transfer)
+                    assert step.expression == (previous.expression[:start] + literal
+                                               + previous.expression[end:])
+                    moving = mobject(expression_value(step.expression, start, len(literal))).copy()
+                    destination = moving.get_center().copy()
+                    moving.move_to(point(memory_center(self.timeline, step.read)))
+                elif step.write:
+                    moving = mobject(expression_value(step.expression)).copy()
+                    destination = point(memory_center(self.timeline, step.write))
+                if moving is not None:
+                    self.add(moving)
+                    self.play(moving.animate.move_to(destination), run_time=0.75)
+
+            # Replace state between rendered frames. Fading an opaque background
+            # faded the whole scene, including unchanged text and cells.
             following = VGroup(*(mobject(s).copy() for s in frame(self.timeline, index)))
-            self.play(FadeIn(following), run_time=0.25)
+            if operand_mask is not None:
+                self.remove(operand_mask)
+            if moving is not None:
+                self.remove(moving)
             if current is not None:
                 self.remove(current)
+            self.add(following)
             current = following
-            if step.read and step.transfer is not None:
-                badge = self.badge(step.transfer).move_to(
-                    point(memory_center(self.timeline, step.read)))
-                self.add(badge)
-                self.play(badge.animate.move_to(point(EVAL_CENTER)), run_time=0.75)
-                self.remove(badge)
             self.wait(step.hold)
 
 
