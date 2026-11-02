@@ -2,7 +2,8 @@
  * Generate layout-prototype.html first. Requires Playwright, Chromium and ffmpeg.
  * PLAYWRIGHT_MODULE optionally selects an installed Playwright package.
  * COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE optionally selects the browser binary.
- * Usage: node visualizations/render-layout-video.cjs [expression|swap] [bridge|memory-strip|memory-band]
+ * Usage: node visualizations/render-layout-video.cjs [expression|swap]
+ *   [memory-strip|bridge|memory-band]; memory-strip (layout 2, B) is the default.
  */
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const { spawn } = require('node:child_process');
@@ -14,7 +15,7 @@ async function main() {
   const example = process.argv[2] || 'expression';
   if (!['expression', 'swap'].includes(example)) throw Error('Choose expression or swap');
   const layouts={bridge:'A','memory-strip':'B','memory-band':'C'};
-  const layout=process.argv[3] || 'bridge';
+  const layout=process.argv[3] || 'memory-strip';
   const selectedVariant=layouts[layout];
   if(!selectedVariant) throw Error('Choose bridge, memory-strip or memory-band');
   const target = path.join(__dirname, 'renders', `layout-${layout}-${example}-720p.mp4`);
@@ -41,9 +42,8 @@ async function main() {
     });
     const steps = await page.evaluate(selected => {
       scenario = selected;
-      const initial=geometry(false);
-      previousLayout = { key: variant + scenario, open: false, height:initial.code[3],
-        rows:traces[scenario].source.map((_,i)=>initial.cy+i*initial.line) };
+      index = 0;
+      resetLayout();
       return traces[scenario].steps;
     }, example === 'expression' ? 0 : 1);
     encoder = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe',
@@ -51,7 +51,8 @@ async function main() {
       '-crf', '18', '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
     const completion = once(encoder, 'close');
     const fps = 60;
-    const transferDuration = await page.evaluate(() => transferSeconds);
+    const [transferDuration, stepDuration] = await page.evaluate(
+      () => [transferSeconds, stepAnimationSeconds]);
     async function segment(seconds, step, animate, shift = false) {
       await page.evaluate(({ step, animate, shift }) => {
         index = step;
@@ -61,7 +62,7 @@ async function main() {
         svg.setCurrentTime(0);
       }, { step, animate, shift });
       // After all effects settle, reuse the exact final pixels for the remaining hold.
-      const animationEnd=animate?transferDuration-0.1:1.05;
+      const animationEnd=animate?transferDuration-0.1:stepDuration;
       let png;
       for (let frame = 0; frame < Math.ceil(seconds * fps); frame++) {
         if(!png || (frame-1)/fps<animationEnd) {
