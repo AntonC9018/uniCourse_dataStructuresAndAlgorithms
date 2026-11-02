@@ -11,9 +11,9 @@ READ, WRITE = "#9cbaff", "#f5e58b"
 FONT = "DejaVu Sans Mono"
 WORD_WIDTH = 224
 MEMORY_X, MEMORY_RIGHT, MEMORY_TOP = 652, 1182, 112
-MEMORY_ROW_HEIGHT = 142
+MEMORY_ROW_HEIGHT = 164
 SLOT_HEIGHT = 64
-EVAL_X, EVAL_BASELINE, EVAL_SIZE = 100, 466, 30
+EVAL_SIZE = 30
 
 
 @dataclass(frozen=True)
@@ -72,14 +72,55 @@ def centered_text(center_x: float, baseline: float, value: str,
     return Text(center_x - len(value) * size * 0.602 / 2, baseline, value, size, color)
 
 
-def expression_text(expression: str) -> Text:
-    # A stable left edge keeps the other operands still when a read changes width.
-    return Text(EVAL_X, EVAL_BASELINE, expression, EVAL_SIZE)
+def code_panel(timeline: Timeline) -> Rect:
+    panel = Rect(48, 64, 530, len(timeline.source) * 52 + 50, PANEL)
+    if panel.y + panel.h > HEIGHT - 80:
+        raise ValueError("This prototype canvas supports at most ten source lines")
+    return panel
 
 
-def expression_value(expression: str, start: int = 0, length: int | None = None) -> Text:
+def evaluation_panel(timeline: Timeline) -> Rect:
+    # Reserve the complete layout from the start, so later declarations never
+    # make the evaluation window jump during playback.
+    slots = memory_layout(timeline)
+    top = max((s.y + s.h + 34 for s in slots), default=176) + 36
+    panel = Rect(MEMORY_X, top, WIDTH - 48 - MEMORY_X, 130, PANEL)
+    if panel.y + panel.h > HEIGHT - 16:
+        raise ValueError("This prototype canvas supports at most three memory rows")
+    return panel
+
+
+def expression_text(timeline: Timeline, expression: str) -> Text:
+    panel = evaluation_panel(timeline)
+    return Text(panel.x + 32, panel.y + 100, expression, EVAL_SIZE)
+
+
+def expression_value(timeline: Timeline, expression: str,
+                     start: int = 0, length: int | None = None) -> Text:
     value = expression[start:] if length is None else expression[start:start + length]
-    return Text(EVAL_X + start * EVAL_SIZE * 0.602, EVAL_BASELINE, value, EVAL_SIZE)
+    text = expression_text(timeline, value)
+    return Text(text.x + start * EVAL_SIZE * 0.602, text.y, value, text.size)
+
+
+def text_center(text: Text) -> tuple[float, float]:
+    return (text.x + len(text.value) * text.size * 0.602 / 2,
+            text.y - text.size * 0.36)
+
+
+def transfer_route(timeline: Timeline, name: str, destination: tuple[float, float],
+                   *, write: bool = False) -> list[tuple[float, float]]:
+    index = next(i for i, v in enumerate(timeline.variables) if v.name == name)
+    slot = memory_layout(timeline)[index]
+    memory = memory_center(timeline, name)
+    # Separate ports flank the centered name, while separate gutters keep the
+    # paths clear of the evaluation heading and all wrapped memory rows.
+    offset = max(56, len(name) * 26 * 0.602 / 2 + 20)
+    port = memory[0] + min(offset, slot.w / 2 - 16) * (1 if write else -1)
+    gutter = 644 if write else 636
+    gap = slot.y + slot.h + 52
+    route = [memory, (port, memory[1]), (port, gap), (gutter, gap),
+             (gutter, destination[1]), destination]
+    return list(reversed(route)) if write else route
 
 
 def colored_text(timeline: Timeline, text: Text) -> list[Text]:
@@ -114,14 +155,12 @@ def frame(timeline: Timeline, index: int, *, show_expression: bool = True,
     previous = timeline.steps[max(0, index - 1)]
     values = previous.values if phase == "transfer" and step.write else step.values
     expression = previous.expression if phase == "transfer" and step.read else step.expression
-    shapes = [
-        Rect(0, 0, WIDTH, HEIGHT, BG),
-        Rect(48, 64, 530, 258, PANEL),
-        Rect(48, 368, 530, 150, PANEL),
-        Text(70, 404, "Expression evaluation", 20, MUTED),
-    ]
+    panel = evaluation_panel(timeline)
+    code = code_panel(timeline)
+    shapes = [Rect(0, 0, WIDTH, HEIGHT, BG), code, panel,
+              Text(panel.x + 22, panel.y + 36, "Expression evaluation", 20, MUTED)]
     if show_expression:
-        shapes.extend(colored_text(timeline, expression_text(expression)))
+        shapes.extend(colored_text(timeline, expression_text(timeline, expression)))
     for i, source in enumerate(timeline.source):
         y = 116 + i * 52
         if i == step.line:
@@ -163,7 +202,7 @@ def frame(timeline: Timeline, index: int, *, show_expression: bool = True,
                        centered_text(slot.x + slot.w / 2, slot.y + 42,
                                      display, EVAL_SIZE, FG if value is not None else MUTED)]
     if step.stdout:
-        shapes.append(Text(70, 650, "Output: " + step.stdout, 26))
+        shapes.append(Text(70, max(650, code.y + code.h + 48), "Output: " + step.stdout, 26))
     return shapes
 
 

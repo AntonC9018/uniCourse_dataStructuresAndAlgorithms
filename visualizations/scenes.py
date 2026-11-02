@@ -8,7 +8,7 @@ from manim import Rectangle, Line as ManimLine, config
 
 from drawing import WIDTH, HEIGHT, BG, PANEL, FONT, EVAL_SIZE, frame, memory_center, expression_value
 from drawing import (Rect, Text, Line, source_expression, expression_text, colored_text,
-                     memory_layout, memory_value, READ, WRITE, FG, EVAL_X, EVAL_BASELINE)
+                     memory_layout, memory_value, READ, WRITE, FG, text_center, transfer_route)
 from model import EXPRESSION, SWAP
 
 config.pixel_width, config.pixel_height = WIDTH, HEIGHT
@@ -81,16 +81,14 @@ class TimelineScene(Scene):
         source = source_expression(self.timeline, step.line)
         assert source.value == step.expression
         copied = self.text_group(source)
-        target = self.text_group(expression_text(step.expression))
-        start = source.x + len(source.value) * source.size * 0.602 / 2
-        end = EVAL_X + len(step.expression) * EVAL_SIZE * 0.602 / 2
+        target = self.text_group(expression_text(self.timeline, step.expression))
+        start = text_center(source)
+        destination = text_center(expression_text(self.timeline, step.expression))
         self.wait(0.35)
-        # Leave the source through its right edge, then enter from below the
-        # evaluation panel. Neither the copy nor its arrow crosses other lines.
-        self.slide(copied, [(start, source.y - source.size * 0.36),
-                            (604, source.y - source.size * 0.36),
-                            (604, 550), (end, 550),
-                            (end, EVAL_BASELINE - EVAL_SIZE * 0.36)], READ)
+        # The source copy exits along its own line and travels in the inter-column
+        # gap, entering evaluation horizontally below its heading.
+        self.slide(copied, [start, (612, start[1]),
+                            (612, destination[1]), destination], READ, duration=0.95)
         self.play(Transform(copied, target), run_time=0.2)
         self.remove(copied)
 
@@ -99,7 +97,6 @@ class TimelineScene(Scene):
         previous = self.timeline.steps[index - 1]
         name = step.read or step.write
         var = next(v for v in self.timeline.variables if v.name == name)
-        slot = memory_layout(self.timeline)[self.timeline.variables.index(var)]
         memory = memory_center(self.timeline, name)
         hidden = (name,) if step.write else ()
         self.show_state(index, phase="transfer", hide_values=hidden)
@@ -111,33 +108,26 @@ class TimelineScene(Scene):
                 # Only the overwritten glyph leaves; the slot and scene stay steady.
                 self.play(FadeOut(removed, shift=UP * 0.45), run_time=0.45)
                 self.wait(0.2)
-            copied = self.text_group(expression_value(step.expression))
+            copied = self.text_group(expression_value(self.timeline, step.expression))
         else:
             start, end = step.read_span
             assert previous.expression[start:end] == name
             literal = str(step.transfer)
             assert step.expression == previous.expression[:start] + literal + previous.expression[end:]
-            operand = expression_value(previous.expression, start, end - start)
+            operand = expression_value(self.timeline, previous.expression, start, end - start)
             mask = mobject(Rect(operand.x, operand.y - EVAL_SIZE,
                                 (end - start) * EVAL_SIZE * 0.602,
                                 EVAL_SIZE * 1.3, PANEL)).copy()
             self.add(mask)
-            copied = mobject(replace(expression_value(step.expression, start, len(literal)),
+            copied = mobject(replace(expression_value(self.timeline, step.expression, start, len(literal)),
                                      color=var.color)).copy()
             copied.move_to(point(memory))
-        destination = (EVAL_X + (step.read_span[0] + len(str(step.transfer)) / 2)
-                       * EVAL_SIZE * 0.602 if step.read else
-                       EVAL_X + len(step.expression) * EVAL_SIZE * 0.602 / 2,
-                       EVAL_BASELINE - EVAL_SIZE * 0.36)
-        # Use the outside edge of a slot to avoid its centered name. All memory
-        # arrows share the gutter and enter the expression from below its text.
-        edge_x = slot.x + slot.w - 18
-        lane_y = slot.y + slot.h + 60
-        route = [memory, (edge_x, memory[1]), (edge_x, lane_y), (620, lane_y),
-                 (620, 550), (destination[0], 550), destination]
-        if step.write:
-            route.reverse()
-        self.slide(copied, route, READ if step.read else WRITE)
+        target_text = (expression_value(self.timeline, step.expression,
+                                        step.read_span[0], len(str(step.transfer)))
+                       if step.read else expression_text(self.timeline, step.expression))
+        route = transfer_route(self.timeline, name, text_center(target_text),
+                               write=bool(step.write))
+        self.slide(copied, route, READ if step.read else WRITE, duration=0.95)
         self.remove(copied)
         if step.read:
             self.remove(mask)
