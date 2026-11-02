@@ -25,60 +25,45 @@ Expected final states: expression `a = 7`, `b = 11`, stdout `11`; failed swap `a
 The last frame holds for 3.5 seconds; key lesson moments get extra emphasis and pauses.
 The inspection slider is independent of video playback.
 
-## Layout alternatives (throwaway)
+## Chosen layout: under memory (B)
+
+Layout 2, **Under memory**, is the selected direction. Code stays fixed on the left. Compact,
+contiguous memory sits above a fixed **Expression evaluation** strip on the right, and the output
+line appears just below that strip. A bracket links the active line to the strip and glides with
+the active-line highlight when the statement changes.
+
+- [Expression test video](renders/layout-memory-strip-expression-720p.mp4), 1280 × 720, 60 fps.
+- Each statement copies its highlighted expression once: the span lifts off in an opaque box,
+  follows the bracket, and becomes the evaluation text. The source line stays intact.
+- Reads and writes are short vertical hops through side ports beside the variable names.
+  A 0.55-second preparation outlines the operand or result together with its memory cell.
+- The old operand or memory value stays until the boxed value arrives. Memory borders return
+  to the variable color after arrival, and a written or printed result leaves the strip.
+- Evaluation keeps shared glyphs, gathers the others, and grows the result without a blank frame.
 
 Run `python3 visualizations/layout-prototype.py` and open `layout-prototype.html`.
-The page embeds both existing manual traces with playback, step controls, and a state slider.
-Use the bottom arrows or keyboard left/right to compare `?variant=A`, `B`, and `C`:
+It opens on B, with playback, step controls, and a state slider for both traces.
+The bottom arrows, keyboard left/right, or `?variant=A` and `?variant=C` show the reference
+alternatives: A, **Bridge row**, attaches evaluation to the active line; C, **Code above memory**,
+opens evaluation beneath the line above a full-width memory band.
 
-- A: **Bridge row**. Evaluation stays attached to the active source line and extends toward
-  memory. The expression copies diagonally to the row's right end. Other source lines slide
-  down until evaluation finishes; memory stays fixed.
-- B: **Under memory**. A fixed evaluation strip sits below memory. Code stays still, and a
-  bracket connects the active line to evaluation. Reads and writes follow short vertical paths.
-- C: **Code above memory**. Code has a wide viewport above a full-width memory band. Inline
-  evaluation opens beneath the active line, with its content aligned near the memory cells.
-  Longer source scrolls to keep evaluation visible. Transfers travel mostly vertically.
+All layouts use 112-pixel integer cells. Multi-row memory and long expressions still need a
+separate layout pass. The Manim layout is unchanged.
 
-All three use 112-pixel integer cells. This checkpoint exercises the existing two-variable
-traces; multi-row memory and long expressions still need a separate layout pass.
-These studies compare geometry; their transfer motion is schematic. They do not change the
-Manim layout. Greyed-out future storage is already applied to the shared renderer and videos.
-The tradeoffs are shown below each study. A layout decision is still pending.
-
-### Comparison videos
-
-Each video uses the same trace and timing at 1280 × 720, 60 fps:
-
-- [Bridge row](renders/layout-bridge-expression-720p.mp4).
-- [Under memory](renders/layout-memory-strip-expression-720p.mp4).
-- [Code above memory](renders/layout-memory-band-expression-720p.mp4).
-- [Previous inline layout, for reference](renders/layout-a-expression-720p.mp4).
-
-The exporter records the actual prototype SVG, including temporary evaluation rows, with a fixed
-animation clock. Panel motion and transfers ease in and out. Opening evaluation copies the
-highlighted source expression into the pane, preserving the original code. Evaluation matches
-shared characters, gathers outgoing characters, and grows the result into place.
-Reads first highlight the operand and its memory cell together for 0.55 seconds, then move the
-boxed copy. The original operand and any overwritten memory value remain visible throughout
-travel; they are replaced when the copy arrives. Reads pulse the source value; writes pulse the
-destination as the value arrives. The browser player and video exporter share the transfer
-clock. Transfer paths use rounded bends and finish at the actual glyph coordinates. Moving
-values have opaque boxes above the arrows. Variable names sit below cells; addresses label the
-starting edge above. It does not use the older Manim layout.
-
-After generating `layout-prototype.html`, run:
+The exporter records the actual prototype SVG with a fixed animation clock. After generating the
+HTML, render the test video (B is the default; `swap`, `bridge`, and `memory-band` also work):
 
 ```sh
-node visualizations/render-layout-video.cjs expression bridge
-node visualizations/render-layout-video.cjs expression memory-strip
-node visualizations/render-layout-video.cjs expression memory-band
+node visualizations/render-layout-video.cjs expression
 ```
 
-The exporter requires Playwright, Chromium, and ffmpeg. Set `PLAYWRIGHT_MODULE` to an installed
-Playwright package when it is outside Node's module search path, and optionally set
+It requires Playwright, Chromium, and ffmpeg. Set `PLAYWRIGHT_MODULE` to an installed Playwright
+package when it is outside Node's module search path, and optionally set
 `COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE` to the Chromium executable from the existing Nix shell.
-Use `swap` instead of `expression` to export the other trace.
+Earlier comparison renders remain for reference:
+[bridge row](renders/layout-bridge-expression-720p.mp4),
+[code above memory](renders/layout-memory-band-expression-720p.mp4), and the
+[previous inline layout](renders/layout-a-expression-720p.mp4).
 
 ## Original Manim visual contract
 
@@ -202,8 +187,9 @@ longer code panels, separate routing ports, and route lengths were checked again
 Full-scene fades remain disabled.
 
 The review page is supplied as a file. T3's preview checker lacks host browser libraries.
-The layout comparison was checked separately in headless Chromium using the existing Nix shell
+The layout prototype was checked separately in headless Chromium using the existing Nix shell
 browser, across both full traces and all three variants, with no JavaScript errors.
+For B, every exported segment settles before the exporter reuses its last frame.
 
 ## Interactivity in Markdown
 
