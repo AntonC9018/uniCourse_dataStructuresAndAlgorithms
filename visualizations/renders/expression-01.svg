@@ -2,9 +2,9 @@
 <title>a + 6</title>
 <rect x="0" y="0" width="1280" height="720" fill="#101722" stroke="none" stroke-width="1"/>
 <rect x="48" y="64" width="530" height="258" fill="#192331" stroke="none" stroke-width="1"/>
-<rect x="48" y="368" width="530" height="150" fill="#192331" stroke="none" stroke-width="1"/>
-<text x="70" y="404" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">Expression evaluation</text>
-<text x="100" y="466" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">5</text>
+<rect x="652" y="246" width="580" height="130" fill="#192331" stroke="none" stroke-width="1"/>
+<text x="674" y="282" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">Expression evaluation</text>
+<text x="684" y="346" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">5</text>
 <rect x="59" y="86" width="4" height="44" fill="#f5e58b" stroke="none" stroke-width="1"/>
 <rect x="173.2" y="86" width="21.049999999999997" height="40" fill="#2e4059" stroke="none" stroke-width="1"/>
 <line x1="173.2" y1="126" x2="194.25" y2="126" stroke="#f5e58b" stroke-width="2"/>

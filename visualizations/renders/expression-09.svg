@@ -2,9 +2,9 @@
 <title>a + 6</title>
 <rect x="0" y="0" width="1280" height="720" fill="#101722" stroke="none" stroke-width="1"/>
 <rect x="48" y="64" width="530" height="258" fill="#192331" stroke="none" stroke-width="1"/>
-<rect x="48" y="368" width="530" height="150" fill="#192331" stroke="none" stroke-width="1"/>
-<text x="70" y="404" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">Expression evaluation</text>
-<text x="100" y="466" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">11</text>
+<rect x="652" y="246" width="580" height="130" fill="#192331" stroke="none" stroke-width="1"/>
+<text x="674" y="282" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">Expression evaluation</text>
+<text x="684" y="346" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">11</text>
 <text x="76" y="116" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">1</text>
 <text x="116.0" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">int</text>
 <text x="161.15" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> </text>

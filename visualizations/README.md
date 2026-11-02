@@ -35,9 +35,15 @@ The inspection slider is independent of video playback.
   Read slots turn blue when the read begins; write slots and source destinations turn yellow
   before a write. Temporary arrows show the route, and values slide along those exact paths.
   Overwritten glyphs leave the slot before the replacement arrives. Unchanged content stays still.
+- Code occupies the left column; its panel height follows the number of source lines.
+  Evaluation sits directly below memory in the right column, with its top derived from the
+  final wrapped row. Its position stays fixed during a clip, including before declarations.
 - Variables occupy adjacent horizontal slots, in address order. Each 4-byte integer occupies
   one 224-pixel slot. Rows wrap before an integer would be split. Wider whole variables fit
   where space permits or move to the next row.
+- Read and write routes use separate vertical ports on opposite sides of each variable name.
+  Separate gutters beside evaluation keep arrows away from its heading. Source copies use the
+  inter-column gap and enter evaluation horizontally, clear of other source lines.
 - A variable name is centered below its memory slot. Its decimal starting address is aligned
   with the slot's left edge, above it. Values are centered inside the slots.
 - Storage is hidden before initialization. An explicitly declared but uninitialized variable
@@ -74,6 +80,7 @@ The inspection slider is independent of video playback.
 `frame(timeline, index)`. `svg(primitives, title)` serializes them using only Python's standard
 library. `WORD_WIDTH`, palette, font, expression position, and `memory_layout` live here.
 Read/write animation positions come from the same packed slots as the static renderer.
+`code_panel`, `evaluation_panel`, and `transfer_route` own content sizing and routing geometry.
 
 `scenes.py` maps those same primitives to native Manim vector objects. `TimelineScene` handles
 atomic state transitions, source-to-panel expression copies, arrow routes, overwrites, timing,
@@ -83,7 +90,7 @@ To add a scene, subclass it and set `timeline`; the two concrete classes contain
 SVG text uses browser font
 metrics and Manim uses Pango, so glyph baselines can differ slightly; the layout data is identical.
 
-The current canvas fits three memory rows and four source lines. Memory wraps horizontally
+The current canvas fits three memory rows and ten source lines. Memory wraps horizontally
 at variable boundaries. Objects wider than one row must first be represented as integer-sized
 slots; pointer-arrow routing remains part of the pointer prototype.
 No automatic AST/GDB tracing, tag grammar, uploads, source hashes, or maintenance integration
@@ -134,7 +141,9 @@ All generated SVGs parse as XML; trace reads/writes match their transferred valu
 Source-copy, read/write-arrow, overwritten-value, and final-emphasis frames were inspected
 visually. Unknown and undeclared states were checked independently in the shared drawing model.
 Packing was checked with enough integer slots to force multiple rows, including the label
-positions and shared animation coordinates. Full-scene fades remain disabled.
+positions and shared animation coordinates. One-, two-, and three-row evaluation placements,
+longer code panels, separate routing ports, and route lengths were checked against the canvas.
+Full-scene fades remain disabled.
 
 The review page is supplied as a file. T3's inline browser preview could not run because its host
 is missing browser shared libraries; this task does not change host browser configuration.
