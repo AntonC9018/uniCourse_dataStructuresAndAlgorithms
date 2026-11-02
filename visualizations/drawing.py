@@ -9,9 +9,11 @@ WIDTH, HEIGHT = 1280, 720
 BG, PANEL, FG, MUTED = "#101722", "#192331", "#eef3fa", "#a0afc2"
 READ, WRITE = "#9cbaff", "#f5e58b"
 FONT = "DejaVu Sans Mono"
-SLOT_WIDTH = 448
-ARROW_HEAD = 10
-EVAL_X, EVAL_BASELINE, EVAL_SIZE = 100, 507, 30
+WORD_WIDTH = 224
+MEMORY_X, MEMORY_RIGHT, MEMORY_TOP = 652, 1182, 112
+MEMORY_ROW_HEIGHT = 142
+SLOT_HEIGHT = 64
+EVAL_X, EVAL_BASELINE, EVAL_SIZE = 100, 466, 30
 
 
 @dataclass(frozen=True)
@@ -44,9 +46,30 @@ class Line:
     width: float = 2
 
 
+def memory_layout(timeline: Timeline) -> list[Rect]:
+    """Pack whole variables into rows, keeping every integer slot intact."""
+    x, y = MEMORY_X, MEMORY_TOP
+    slots = []
+    for var in timeline.variables:
+        width = WORD_WIDTH * var.size / 4
+        if width > MEMORY_RIGHT - MEMORY_X:
+            raise ValueError("Split oversized objects into integer-sized slots before layout")
+        if x + width > MEMORY_RIGHT:
+            x, y = MEMORY_X, y + MEMORY_ROW_HEIGHT
+        slots.append(Rect(x, y, width, SLOT_HEIGHT, PANEL))
+        x += width
+    return slots
+
+
 def memory_center(timeline: Timeline, name: str) -> tuple[float, float]:
     index = next(i for i, var in enumerate(timeline.variables) if var.name == name)
-    return (876, 248 + index * 160 - EVAL_SIZE * 0.36)
+    slot = memory_layout(timeline)[index]
+    return (slot.x + slot.w / 2, slot.y + 42 - EVAL_SIZE * 0.36)
+
+
+def centered_text(center_x: float, baseline: float, value: str,
+                  size: float = 26, color: str = FG) -> Text:
+    return Text(center_x - len(value) * size * 0.602 / 2, baseline, value, size, color)
 
 
 def expression_text(expression: str) -> Text:
@@ -63,18 +86,13 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
     step = timeline.steps[index]
     shapes = [
         Rect(0, 0, WIDTH, HEIGHT, BG),
-        Text(48, 65, timeline.title, 32),
-        Text(1030, 65, f"{index + 1:02} / {len(timeline.steps):02}", 22, MUTED),
-        Line(48, 95, 1232, 95, MUTED),
-        Rect(48, 132, 530, 258, PANEL),
-        Rect(48, 420, 530, 150, PANEL),
-        Text(70, 452, "C++  →", 18, MUTED),
+        Rect(48, 64, 530, 258, PANEL),
+        Rect(48, 368, 530, 150, PANEL),
+        Text(70, 404, "Expression evaluation", 20, MUTED),
         expression_text(step.expression),
-        Text(652, 150, "int / 4 B", 20, MUTED),
-        Text(1040, 150, "hex / B" if timeline.byte_detail else "int", 18, MUTED),
     ]
     for i, source in enumerate(timeline.source):
-        y = 184 + i * 52
+        y = 116 + i * 52
         if i == step.line:
             shapes += [Rect(59, y - 30, 508, 44, "#2e4059"),
                        Rect(59, y - 30, 4, 44, READ)]
@@ -85,40 +103,29 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
         for token in re.split(r"(\b[a-zA-Z_]\w*\b)", source):
             shapes.append(Text(x, y, token, 25, colors.get(token, FG)))
             x += len(token) * 25 * 0.602
-    for i, (var, value) in enumerate(zip(timeline.variables, step.values)):
-        y = 230 + i * 160
+    for var, value, slot in zip(timeline.variables, step.values, memory_layout(timeline)):
         active = var.name in (step.read, step.write)
         edge = WRITE if var.name == step.write else READ if active else var.color
-        shapes.append(Text(652, y - 36, var.name, 26, var.color))
+        # Addresses label the beginning of storage; names label the whole variable.
+        shapes += [Text(slot.x, slot.y - 16, str(var.address), 18, MUTED),
+                   centered_text(slot.x + slot.w / 2, slot.y + slot.h + 34,
+                                 var.name, 26, var.color)]
         if timeline.byte_detail:
             octets = value.to_bytes(var.size, "little", signed=True) if value is not None else None
-            cell_width = SLOT_WIDTH / var.size
+            cell_width = slot.w / var.size
             for offset in range(var.size):
-                x = 652 + offset * cell_width
-                shapes += [Rect(x, y - 17, cell_width, 54, PANEL, edge, 3 if active else 1),
-                           Text(x + cell_width / 2 - 25 * 0.602, y + 18,
-                                f"{octets[offset]:02X}" if octets else "··", 25,
-                                FG if octets else MUTED),
-                           Text(x + cell_width / 2 - 17 * 0.602, y + 63,
-                                str(var.address + offset), 17, MUTED)]
+                x = slot.x + offset * cell_width
+                shapes += [Rect(x, slot.y, cell_width, slot.h, PANEL, edge, 3 if active else 1),
+                           centered_text(x + cell_width / 2, slot.y + 42,
+                                         f"{octets[offset]:02X}" if octets else "?", 25,
+                                         FG if octets else MUTED)]
         else:
-            display = str(value) if value is not None else "·"
-            shapes += [Rect(652, y - 17, SLOT_WIDTH, 54, PANEL, edge, 3 if active else 1),
-                       Text(876 - len(display) * EVAL_SIZE * 0.602 / 2, y + 18,
-                            display, EVAL_SIZE, FG if value is not None else MUTED),
-                       Text(652, y + 63, str(var.address), 17, MUTED)]
-        if active:
-            # Read: arrow out of memory. Write: arrow into memory. Color is redundant.
-            start, end = (1148, 1122) if step.write else (1122, 1148)
-            shapes += [Line(start, y + 9, end, y + 9, edge, 3),
-                       Line(end, y + 9, end + (ARROW_HEAD if step.write else -ARROW_HEAD),
-                            y - 1, edge, 3),
-                       Line(end, y + 9, end + (ARROW_HEAD if step.write else -ARROW_HEAD),
-                            y + 19, edge, 3)]
-    shapes += [Rect(652, 500, 530, 70, PANEL),
-               Text(672, 544, "stdout  > " + step.stdout, 23),
-               Text(48, 644, "int: 4 B    LE    @64" if timeline.byte_detail else "@64", 19, MUTED),
-               Text(48, 681, "· : ∅     → : R     ← : W", 19, MUTED)]
+            display = str(value) if value is not None else "?"
+            shapes += [Rect(slot.x, slot.y, slot.w, slot.h, PANEL, edge, 3 if active else 1),
+                       centered_text(slot.x + slot.w / 2, slot.y + 42,
+                                     display, EVAL_SIZE, FG if value is not None else MUTED)]
+    shapes += [Rect(652, 560, 530, 70, PANEL),
+               Text(672, 604, "stdout  > " + step.stdout, 23)]
     return shapes
 
 

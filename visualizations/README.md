@@ -29,19 +29,21 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
   Fixed dark media is a proposal for this checkpoint, not a settled theme policy for the epic.
 - `a` is teal `#61d4c4`; `b` is amber `#ffbd69`, including source identifiers.
-- The active source line has a blue stripe and background. Read slots have a blue outline and an
-  outward arrow; write slots have a yellow outline and an inward arrow. Direction remains legible
-  without color. A moving number represents a copied value and lands on the operand
-  being substituted.
-- Each integer occupies one memory slot with its decimal value and starting address.
-  Individual hex bytes appear only when a timeline explicitly sets `byte_detail=True`,
-  for examples that teach byte layout, casts, or partial writes.
-  The assumed ABI has 4-byte `int` and 8-byte pointers. This is illustrative,
-  not portable C++ layout.
-- `·` means the declaration has not executed; it does not imply zero or uninitialized object bytes.
-  Future rows reserve display space, not live C++ objects.
-- No prose is baked into media. `int`, `ptr`, `LE`, `stdout`, `R`, `W`, and `B` are shared notation.
-  Review-page explanations are outside the media. No translated lab content changes in this step.
+- The active source line has a blue stripe and background. Read slots have a blue outline;
+  write slots have a yellow outline. A copied value lands on the operand being substituted.
+- Variables occupy adjacent horizontal slots, in address order. Each 4-byte integer occupies
+  one 224-pixel slot. Rows wrap before an integer would be split. Wider whole variables fit
+  where space permits or move to the next row.
+- A variable name is centered below its memory slot. Its decimal starting address is aligned
+  with the slot's left edge, above it. Values are centered inside the slots.
+- Unknown values use `?`, including declarations that have not executed. Reserved display slots
+  do not imply that the corresponding C++ objects are already alive.
+- Individual hex bytes appear only with `byte_detail=True`, for examples teaching byte layout,
+  casts, or partial writes. The assumed ABI has 4-byte `int`, 8-byte pointers, and little-endian
+  storage; this is illustrative, not portable C++ layout.
+- The temporary expression panel is labeled **Expression evaluation**. Decorative titles,
+  counters, type headers, footer notation, and the `C++ →` label have been removed.
+  The English panel label can be localized when these prototypes are integrated into the labs.
 
 ## Shared library boundary
 
@@ -50,7 +52,8 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - `Variable(name, address, size=4, color=...)` describes a synthetic storage slot.
 - `Step(line, expression, values, read=None, write=None, transfer=None, stdout="", hold=1.2)`
   captures one visible evaluation state. `line` is zero-based; `values` follows variable order.
-  A `None` value means the declaration is pending. A write state contains the values **after** the
+  A `None` value means the value is unknown, shown as `?`. A write state contains values
+  **after** the
   write. `transfer` is the decimal value copied from a read or into a write.
   `read_span=(start, end)` identifies the operand in the preceding expression, with an exclusive
   end index. Its replacement literal determines the destination of the moving value.
@@ -59,8 +62,8 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 
 `drawing.py` owns style and layout, returning `Rect`, `Text`, and `Line` primitives from
 `frame(timeline, index)`. `svg(primitives, title)` serializes them using only Python's standard
-library. `SLOT_WIDTH`, `ARROW_HEAD`, palette, font, evaluation position, and memory positions
-live here.
+library. `WORD_WIDTH`, palette, font, expression position, and `memory_layout` live here.
+Read/write animation positions come from the same packed slots as the static renderer.
 
 `scenes.py` maps those same primitives to native Manim vector objects. `TimelineScene` handles
 atomic state transitions, moving copied values, timing, and the final pause. Unchanged content
@@ -69,8 +72,9 @@ To add a scene, subclass it
 and set `timeline`; the two concrete classes contain no drawing logic. SVG text uses browser font
 metrics and Manim uses Pango, so glyph baselines can differ slightly; the layout data is identical.
 
-The present layout is deliberately bounded to two 4-byte integer rows and four source lines.
-Pointers will require extending this shared layout for 8-byte rows and routing pointer arrows.
+The current canvas fits three memory rows and four source lines. Memory wraps horizontally
+at variable boundaries. Objects wider than one row must first be represented as integer-sized
+slots; pointer-arrow routing remains part of the pointer prototype.
 No automatic AST/GDB tracing, tag grammar, uploads, source hashes, or maintenance integration
 is implemented here. `course-publishing.json` will point at this directory when integration
 is designed.
@@ -116,9 +120,9 @@ the currently pinned Pillow 13 package.
 Both final videos decode without errors using `ffmpeg -v error -i <file> -f null -`.
 They are H.264, 1280 × 720, 24 fps. Transitions switch atomically with no full-scene fades.
 All generated SVGs parse as XML; trace reads/writes match their transferred values.
-Read-flight, substitution, and final-state frames were inspected visually. A fixed title region
-was checked across every video frame: mean brightness variation stayed below 0.08/255,
-confirming that transitions no longer dim unchanged content.
+Read-flight, substitution, unknown-value, and final-state frames were inspected visually.
+Packing was checked with enough integer slots to force multiple rows, including the label
+positions and shared animation coordinates. Full-scene fades remain disabled.
 
 The review page is supplied as a file. T3's inline browser preview could not run because its host
 is missing browser shared libraries; this task does not change host browser configuration.

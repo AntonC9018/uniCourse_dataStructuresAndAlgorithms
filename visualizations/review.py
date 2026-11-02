@@ -50,8 +50,10 @@ and losing a value during a failed swap?</p>
 <div id="snapshot"></div></details>
 <p><small>Illustrative ABI: 4-byte int, 8-byte pointer, little-endian; synthetic decimal
 addresses start at 64. Each int occupies one slot; byte detail is reserved for byte-level
-examples. · means the declaration has not executed. Blue → reads; yellow ← writes.
-A copied value moves into the subexpression it replaces.
+examples. ? marks an unknown value, including a declaration that has not executed.
+Variable names are below their slots; starting addresses are above. Slots wrap as whole integers.
+Blue outlines mark reads; yellow outlines mark writes. Expression evaluation shows temporary
+results; a copied value moves into the subexpression it replaces.
 Fixed dark media background is provisional. No automatic C++ tracing or maintenance integration.</small></p>
 <script>
 const examples = EXAMPLES;
