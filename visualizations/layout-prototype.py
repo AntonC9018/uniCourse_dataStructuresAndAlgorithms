@@ -301,7 +301,7 @@ function draw(animate=false, shift=false) {
    out+=colored(start,ty,before.slice(0,from),trace,30);
    // Preparation links the operand to its memory cell before the copy departs.
    out+='<g data-read-highlight="operand" opacity="0">'+fade(0,1,0.15)
-    +fade(1,0,transferTiming.replace,arrivalTime)
+    +fade(1,0,0.2,arrivalTime-0.3)
     +rect(start+from*evalWidth-8,ty-34,(to-from)*evalWidth+16,46,'none','#9cbaff',6)
     +'</g>';
    out+='<g data-replacement-old="operand">'+fade(1,0,transferTiming.replace,arrivalTime)
@@ -419,10 +419,13 @@ function draw(animate=false, shift=false) {
   }
   path=step.write?writePath:readPath;
   const color=step.write?'#f5e58b':'#9cbaff';
-  arrow=`<path d="${path}" fill="none" stroke="${color}" stroke-width="3" `
-   +`marker-end="url(#tip)"/>`;
+  // The arrow is trimmed to the box outline at both ends, so it never crosses a value glyph,
+  // and it is gone before the box fades out on arrival.
+  const [halfWidth,halfHeight]=valueBoxHalfSize(step.transfer);
+  arrow=`<path data-arrow="${color}" data-box="${halfWidth+4} ${halfHeight+4}" d="${path}" `
+   +`fill="none" stroke="${color}" stroke-width="3"/>`;
   out+='<g opacity="0">'+fade(0,0.65,0.25,transferTiming.prepare)
-   +fade(0.65,0,0.25,arrivalTime)+arrow+'</g>';
+   +fade(0.65,0,0.2,arrivalTime-0.2)+arrow+'</g>';
   out+=valueBox(name,step.transfer,color,path,transferTiming.prepare,transferTiming.travel,
    arrivalTime);
  }
@@ -443,6 +446,7 @@ function draw(animate=false, shift=false) {
   } else out+=text(ox,oy,label+step.stdout,26);
  }
  $('stage').innerHTML=out;
+ trimArrows();
  $('description').textContent=descriptions[variants.indexOf(variant)];
  $('variantName').textContent=variant+' · '+names[variants.indexOf(variant)];
  $('scrub').max=trace.steps.length-1; $('scrub').value=index;
@@ -455,12 +459,38 @@ function draw(animate=false, shift=false) {
   pane:evaluationOpen ? settledPane(trace,g,step,tx,ty) : ''};
  if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
 }
+function valueBoxHalfSize(value) {
+ const width=String(value).length*evalWidth;
+ return [Math.max(28,width/2+12),25];
+}
+// Shorten each transfer arrow so it starts and ends at the moving box's outline,
+// then draw its head at the new end, pointing along the path.
+function trimArrows() {
+ for(const arrow of document.querySelectorAll('#stage [data-arrow]')) {
+  const [halfWidth,halfHeight]=arrow.dataset.box.split(' ').map(Number);
+  const length=arrow.getTotalLength();
+  const exit=(at,toward)=>{
+   const a=arrow.getPointAtLength(at), b=arrow.getPointAtLength(toward);
+   const dx=Math.abs(b.x-a.x)||1e-6, dy=Math.abs(b.y-a.y)||1e-6, d=Math.hypot(dx,dy);
+   return Math.min(halfWidth*d/dx,halfHeight*d/dy);
+  };
+  const start=exit(0,Math.min(length,4)), end=exit(length,Math.max(0,length-4));
+  const visible=Math.max(0,length-start-end-10);
+  arrow.setAttribute('stroke-dasharray',`0 ${start} ${visible} ${length}`);
+  const tip=arrow.getPointAtLength(length-end), back=arrow.getPointAtLength(length-end-10);
+  const angle=Math.atan2(tip.y-back.y,tip.x-back.x)*180/Math.PI;
+  const head=document.createElementNS('http://www.w3.org/2000/svg','path');
+  head.setAttribute('d','M -10 -6 L 0 0 L -10 6 Z');
+  head.setAttribute('fill',arrow.dataset.arrow);
+  head.setAttribute('transform',`translate(${tip.x} ${tip.y}) rotate(${angle})`);
+  arrow.after(head);
+ }
+}
 // A boxed value fades in at departure, travels along the route, and vanishes on arrival.
 function valueBox(name,value,color,path,begin,travel,arrival) {
- const width=String(value).length*evalWidth;
  return `<g data-transfer-value="${name}" opacity="0">`
   +fade(0,1,0.12,begin)+fade(1,0,transferTiming.replace,arrival)
-  +rect(-Math.max(28,width/2+12),-25,Math.max(56,width+24),50,'#192331',color,9)
+  +rect(-valueBoxHalfSize(value)[0],-25,2*valueBoxHalfSize(value)[0],50,'#192331',color,9)
   +text(0,11,value,30,'#eef3fa','middle')
   +`<animateMotion begin="${begin}s" dur="${travel}s" path="${path}" `
   +`keyPoints="0;1" ${ease} fill="freeze"/></g>`;
