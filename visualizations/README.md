@@ -48,10 +48,13 @@ This exports the actual prototype SVG, including temporary evaluation rows, with
 animation clock. Panel motion and transfers ease in and out. Opening evaluation copies the
 highlighted source expression into the pane, preserving the original code. Evaluation matches
 shared characters, gathers outgoing characters, and grows the result into place.
-Reads pulse the source value; writes pulse the destination as the value arrives. Transfer
-paths use rounded bends and finish at the actual glyph coordinates. Moving values have opaque
-boxes above the arrows. Variable names sit below cells; addresses label the starting edge above.
-It does not use the older Manim layout.
+Reads first highlight the operand and its memory cell together for 0.55 seconds, then move the
+boxed copy. The original operand and any overwritten memory value remain visible throughout
+travel; they are replaced when the copy arrives. Reads pulse the source value; writes pulse the
+destination as the value arrives. The browser player and video exporter share the transfer
+clock. Transfer paths use rounded bends and finish at the actual glyph coordinates. Moving
+values have opaque boxes above the arrows. Variable names sit below cells; addresses label the
+starting edge above. It does not use the older Manim layout.
 
 After generating `layout-prototype.html`, run:
 

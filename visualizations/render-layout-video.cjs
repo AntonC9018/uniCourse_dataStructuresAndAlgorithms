@@ -47,6 +47,7 @@ async function main() {
       '-crf', '18', '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
     const completion = once(encoder, 'close');
     const fps = 60;
+    const transferDuration = await page.evaluate(() => transferSeconds);
     async function segment(seconds, step, animate, shift = false) {
       await page.evaluate(({ step, animate, shift }) => {
         index = step;
@@ -64,7 +65,7 @@ async function main() {
     }
     for (let step = 0; step < steps.length; step++) {
       if (steps[step].transfer !== null) {
-        await segment(1.85, step, true);
+        await segment(transferDuration, step, true);
         await segment(steps[step].hold, step, false, true);
       } else {
         await segment(steps[step].hold, step, false, true);

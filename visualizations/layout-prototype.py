@@ -68,7 +68,9 @@ const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
  '"':'&quot;',"'":'&#39;'}[c]));
 const mono='DejaVu Sans Mono,monospace';
 const ease='calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"';
-const transferSeconds=1.85;
+const transferTiming={prepare:0.55,travel:1.55,replace:0.2,settle:0.7};
+const arrivalTime=transferTiming.prepare+transferTiming.travel;
+const transferSeconds=arrivalTime+transferTiming.settle;
 function fade(from,to,duration=0.5,begin=0) {
  return `<animate attributeName="opacity" from="${from}" to="${to}" `
   +`dur="${duration}s" begin="${begin}s" ${ease} fill="freeze"/>`;
@@ -185,8 +187,16 @@ function draw(animate=false, shift=false) {
   if(transfer && step.read) {
    const [start,end]=step.read_span;
    out+=colored(tx,ty,previous.expression.slice(0,start),trace,30);
-   out+='<g>'+fade(1,0,0.2,1.15)
+   // Preparation links the operand to its memory cell before the copy departs.
+   out+='<g data-read-highlight="operand" opacity="0">'+fade(0,1,0.15)
+    +fade(1,0,transferTiming.replace,arrivalTime)
+    +rect(tx+start*30*.602-8,ty-34,(end-start)*30*.602+16,46,'none','#9cbaff',6)
+    +'</g>';
+   out+='<g data-replacement-old="operand">'+fade(1,0,transferTiming.replace,arrivalTime)
     +colored(tx+start*30*.602,ty,previous.expression.slice(start,end),trace,30)+'</g>';
+   out+='<g data-replacement-new="operand" opacity="0">'
+    +fade(0,1,transferTiming.replace,arrivalTime)
+    +colored(tx+start*30*.602,ty,String(step.transfer),trace,30)+'</g>';
    out+=colored(tx+end*30*.602,ty,previous.expression.slice(end),trace,30);
   } else if(copySource) {
    // The code stays in place while its copy moves into the newly opened row.
@@ -222,16 +232,18 @@ function draw(animate=false, shift=false) {
    const centerX=x+w/2, centerY=y+h/2;
    out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
    if(pulse) {
-    const begin=step.write ? 1.2 : 0;
+    const begin=step.write ? arrivalTime-0.2 : 0;
     out+=`<animateTransform attributeName="transform" type="scale" `
      +`values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" `
      +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
    }
    if(transfer && step.write===v.name) {
-    if(previous.values[i]!==null) out+='<g>'+fade(1,0,0.25)
+    if(previous.values[i]!==null) out+='<g data-replacement-old="memory">'
+     +fade(1,0,transferTiming.replace,arrivalTime)
      +text(0,11,previous.values[i],30,'#eef3fa','middle')+'</g>';
     // The arriving glyph hands off to the slot value at the exact same coordinates.
-    out+='<g opacity="0">'+fade(0,1,0.2,1.55)
+    out+='<g data-replacement-new="memory" opacity="0">'
+     +fade(0,1,transferTiming.replace,arrivalTime)
      +text(0,11,step.values[i],30,'#eef3fa','middle')+'</g>';
    } else out+=text(0,11,values[i]===null?'?':values[i],30,
     values[i]===null?'#a0afc2':'#eef3fa','middle');
@@ -266,12 +278,16 @@ function draw(animate=false, shift=false) {
   const color=step.write?'#f5e58b':'#9cbaff';
   arrow=`<path d="${path}" fill="none" stroke="${color}" stroke-width="3" `
    +`marker-end="url(#tip)"/>`;
-  out+='<g opacity="0">'+fade(0,0.65,0.25)+fade(0.65,0,0.25,1.5)+arrow+'</g>';
-  out+=`<g opacity="0">`+fade(0,1,0.18)+fade(1,0,0.2,1.55)
+  out+='<g opacity="0">'+fade(0,0.65,0.25,transferTiming.prepare)
+   +fade(0.65,0,0.25,arrivalTime)+arrow+'</g>';
+  out+=`<g data-transfer-value="${name}" opacity="0">`
+   +fade(0,1,0.12,transferTiming.prepare)
+   +fade(1,0,transferTiming.replace,arrivalTime)
    +rect(-Math.max(28,String(step.transfer).length*30*.602/2+12),-25,
      Math.max(56,String(step.transfer).length*30*.602+24),50,'#192331',color,9)
    +text(0,11,step.transfer,30,'#eef3fa','middle')
-   +`<animateMotion dur="1.55s" path="${path}" `
+   +`<animateMotion begin="${transferTiming.prepare}s" dur="${transferTiming.travel}s" `
+   +`path="${path}" `
    +`keyPoints="0;1" ${ease} fill="freeze"/></g>`;
  }
  if(step.stdout) out+=text(62,687,'Output: '+step.stdout,26);
