@@ -39,8 +39,8 @@ active line to the pane and glides with the active-line highlight when the state
 - In the pane, brace initialization reads as `int b = a + 6;`. Statement context is muted;
   the evaluated span keeps its code highlight and full syntax colors.
 - A write's destination stays grey in the copied statement until assignment starts; it then takes
-  the variable color while the value travels, and is underlined during the write. The memory cell
-  changes only when the value arrives, with a pulse to mark the update.
+  the variable color while the value travels. The memory cell changes only when the value arrives,
+  with a pulse to mark the update.
 - Reads and writes are short vertical hops through side ports beside the variable names.
   A 0.55-second preparation marks the operand or result with a tight, filled outline drawn
   beneath its glyphs, together with its memory cell; highlighted cell borders draw on top.
