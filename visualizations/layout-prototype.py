@@ -167,7 +167,7 @@ function pulse(begin) {
   +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
 }
 // Layout B copies the whole statement: the evaluated span sits between its context, and the
-// write destination stays grey in that context until its value has arrived in memory.
+// write destination stays grey until assignment begins.
 function statementParts(trace,g,line) {
  const [start,end]=trace.expression_spans[line], source=trace.source[line];
  if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
@@ -192,16 +192,15 @@ function prefixMarkup(x,y,parts,trace,state) {
  if(!target) return context(x,y,prefix);
  const color=trace.variables.find(v=>v.name===target.name).color, grey='#6f7c8f';
  const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
- const arriving=state==='arriving';
+ const assigning=state==='assigning';
  let name=`<g transform="translate(${center} ${y-11})">`;
  // The destination is underlined alongside the memory cell for the whole write.
- if(arriving) name+='<g opacity="0">'+fade(0,1,0.15)+fade(1,0,0.2,arrivalTime+0.15)
+ if(assigning) name+='<g opacity="0">'+fade(0,1,0.15)+fade(1,0,0.2,arrivalTime+0.15)
   +rect(-width/2-2,19,width+4,3,'#f5e58b','none',1)+'</g>';
- name+='<g>'+(arriving?pulse(arrivalTime-0.1):'')
+ name+='<g>'+(assigning?pulse(arrivalTime-0.1):'')
   +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
   +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
-  +(arriving?`<animate attributeName="fill" from="${grey}" to="${color}" `
-   +`begin="${arrivalTime}s" dur="0.2s" fill="freeze"/>`:'')+'</text></g></g>';
+  +(assigning?animateAttr('fill',grey,color,0.2,transferTiming.prepare):'')+'</text></g></g>';
  return context(x,y,prefix.slice(0,target.at))+name
   +context(x+(target.at+target.name.length)*evalWidth,y,prefix.slice(target.at+target.name.length));
 }
@@ -335,7 +334,7 @@ function draw(animate=false, shift=false) {
    out+=expressionBackground(g,start,ty,length)
     +'<g data-write-source="result" opacity="0">'+fade(0,1,0.15)
     +fade(1,0,0.2,arrivalTime+0.15)+markBox(start,ty,length,'#f5e58b','#4a4630')+'</g>'
-    +prefixMarkup(tx,ty,parts,trace,'arriving')
+    +prefixMarkup(tx,ty,parts,trace,'assigning')
     +colored(start,ty,step.expression,trace,30)
     +context(start+length*evalWidth,ty,parts.suffix);
   } else if(copySource) {
