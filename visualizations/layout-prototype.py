@@ -71,7 +71,18 @@ const mono='DejaVu Sans Mono,monospace';
 const ease='calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"';
 const transferTiming={prepare:0.55,travel:1.55,replace:0.2,settle:0.7};
 const arrivalTime=transferTiming.prepare+transferTiming.travel;
-const transferSeconds=arrivalTime+transferTiming.settle;
+const writeHighlight={fade:0.2,hold:1};
+const writeDepartureTime=writeHighlight.fade+writeHighlight.hold;
+const writeArrivalTime=writeDepartureTime+transferTiming.travel;
+function transferDepartureTime(step) {
+ return step.write && variant==='B'?writeDepartureTime:transferTiming.prepare;
+}
+function transferArrivalTime(step) {
+ return transferDepartureTime(step)+transferTiming.travel;
+}
+function transferSecondsFor(step) {
+ return transferArrivalTime(step)+transferTiming.settle;
+}
 // The statement copy is deliberately slow; steps that copy get this much extra time.
 const copyTravelSeconds=1.2, copySeconds=0.3+copyTravelSeconds;
 // Every non-transfer transition (line glide, source copy, transformation, print) ends by then.
@@ -82,7 +93,7 @@ function copiesStatement(i) {
 }
 function stepSeconds(i) {
  const step=traces[scenario].steps[i];
- return step.hold+(step.transfer!==null ? transferSeconds : copiesStatement(i) ? copySeconds : 0);
+ return step.hold+(step.transfer!==null ? transferSecondsFor(step) : copiesStatement(i) ? copySeconds : 0);
 }
 const charWidth=25*.602, evalWidth=30*.602;
 function animateAttr(name,from,to,duration=0.45,begin=0) {
@@ -167,7 +178,7 @@ function pulse(begin) {
   +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
 }
 // Layout B copies the whole statement: the evaluated span sits between its context, and the
-// write destination stays grey until assignment begins.
+// write destination changes to its variable color before the value starts moving.
 function statementParts(trace,g,line) {
  const [start,end]=trace.expression_spans[line], source=trace.source[line];
  if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
@@ -194,10 +205,10 @@ function prefixMarkup(x,y,parts,trace,state) {
  const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
  const assigning=state==='assigning';
  let name=`<g transform="translate(${center} ${y-11})">`;
- name+='<g>'+(assigning?pulse(arrivalTime-0.1):'')
+ name+='<g>'+(assigning?pulse(writeArrivalTime-0.1):'')
   +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
   +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
-  +(assigning?animateAttr('fill',grey,color,0.2,transferTiming.prepare):'')+'</text></g></g>';
+  +(assigning?animateAttr('fill',grey,color,writeHighlight.fade):'')+'</text></g></g>';
  return context(x,y,prefix.slice(0,target.at))+name
   +context(x+(target.at+target.name.length)*evalWidth,y,prefix.slice(target.at+target.name.length));
 }
@@ -238,6 +249,7 @@ function draw(animate=false, shift=false) {
  const trace=traces[scenario], step=trace.steps[index];
  const previous=trace.steps[Math.max(0,index-1)];
  const transfer=animate && step.transfer!==null;
+ const arrival=transfer ? transferArrivalTime(step) : arrivalTime;
  // A result remains visible until consumed, including during a write animation.
  const evaluationOpen=variant==='B' || Boolean(step.expression &&
   (transfer || (!step.write && !step.stdout)));
@@ -330,7 +342,7 @@ function draw(animate=false, shift=false) {
    // The result stays; its boxed copy carries the value to the outlined destination.
    out+=expressionBackground(g,start,ty,length)
     +'<g data-write-source="result" opacity="0">'+fade(0,1,0.15)
-    +fade(1,0,0.2,arrivalTime+0.15)+markBox(start,ty,length,'#f5e58b','#4a4630')+'</g>'
+    +fade(1,0,0.2,arrival+0.15)+markBox(start,ty,length,'#f5e58b','#4a4630')+'</g>'
     +prefixMarkup(tx,ty,parts,trace,'assigning')
     +colored(start,ty,step.expression,trace,30)
     +context(start+length*evalWidth,ty,parts.suffix);
@@ -383,21 +395,21 @@ function draw(animate=false, shift=false) {
   borders.push([active?2:live?1:0,animated(rect(x,y,w,h,'none',live?
    (active?highlight:v.color):'#47515f',0),
    active ? `<animate attributeName="stroke" from="${highlight}" to="${v.color}" `
-    +`begin="${arrivalTime+0.15}s" dur="0.35s" fill="freeze"/>` : '')]);
+    +`begin="${arrival+0.15}s" dur="0.35s" fill="freeze"/>` : '')]);
   if(live) {
    const centerX=x+w/2, centerY=y+h/2;
    out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
    if(active) {
-    const begin=step.write ? arrivalTime-0.2 : 0;
+    const begin=step.write ? arrival-0.2 : 0;
     out+=pulse(begin);
    }
    if(transfer && step.write===v.name) {
     if(previous.values[i]!==null) out+='<g data-replacement-old="memory">'
-     +fade(1,0,transferTiming.replace,arrivalTime)
+     +fade(1,0,transferTiming.replace,arrival)
      +text(0,11,previous.values[i],30,'#eef3fa','middle')+'</g>';
     // The arriving glyph hands off to the slot value at the exact same coordinates.
     out+='<g data-replacement-new="memory" opacity="0">'
-     +fade(0,1,transferTiming.replace,arrivalTime)
+     +fade(0,1,transferTiming.replace,arrival)
      +text(0,11,step.values[i],30,'#eef3fa','middle')+'</g>';
    } else out+=text(0,11,values[i]===null?'?':values[i],30,
     values[i]===null?'#a0afc2':'#eef3fa','middle');
@@ -443,10 +455,10 @@ function draw(animate=false, shift=false) {
   const [halfWidth,halfHeight]=valueBoxHalfSize(step.transfer);
   arrow=`<path data-arrow="${color}" data-box="${halfWidth+4} ${halfHeight+4}" d="${path}" `
    +`fill="none" stroke="${color}" stroke-width="3"/>`;
-  out+='<g opacity="0">'+fade(0,0.65,0.25,transferTiming.prepare)
-   +fade(0.65,0,0.2,arrivalTime-0.2)+arrow+'</g>';
-  out+=valueBox(name,step.transfer,color,path,transferTiming.prepare,transferTiming.travel,
-   arrivalTime);
+  const departure=transferDepartureTime(step);
+  out+='<g opacity="0">'+fade(0,0.65,0.25,departure)
+   +fade(0.65,0,0.2,arrival-0.2)+arrow+'</g>';
+  out+=valueBox(name,step.transfer,color,path,departure,transferTiming.travel,arrival);
  }
  if(step.stdout) {
   const [ox,oy]=output, label='Output: ';
@@ -476,7 +488,7 @@ function draw(animate=false, shift=false) {
  previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
   expression:step.expression,line:step.line,tx,tether,stdout:step.stdout,
   pane:evaluationOpen ? settledPane(trace,g,step,tx,ty) : ''};
- if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
+ if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSecondsFor(step)*1000);
 }
 function valueBoxHalfSize(value) {
  const width=String(value).length*evalWidth;
