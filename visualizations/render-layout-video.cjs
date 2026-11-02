@@ -51,8 +51,7 @@ async function main() {
       '-crf', '18', '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
     const completion = once(encoder, 'close');
     const fps = 60;
-    const [transferDuration, stepDuration] = await page.evaluate(
-      () => [transferSeconds, stepAnimationSeconds]);
+    const stepDuration = await page.evaluate(() => stepAnimationSeconds);
     async function segment(seconds, step, animate, shift = false) {
       await page.evaluate(({ step, animate, shift }) => {
         index = step;
@@ -62,7 +61,7 @@ async function main() {
         svg.setCurrentTime(0);
       }, { step, animate, shift });
       // After all effects settle, reuse the exact final pixels for the remaining hold.
-      const animationEnd=animate?transferDuration-0.1:stepDuration;
+      const animationEnd=animate?seconds-0.1:stepDuration;
       let png;
       for (let frame = 0; frame < Math.ceil(seconds * fps); frame++) {
         if(!png || (frame-1)/fps<animationEnd) {
@@ -75,6 +74,8 @@ async function main() {
     }
     for (let step = 0; step < steps.length; step++) {
       if (steps[step].transfer !== null) {
+        const transferDuration = await page.evaluate(
+          i => transferSecondsFor(traces[scenario].steps[i]), step);
         await segment(transferDuration, step, true);
         await segment(steps[step].hold, step, false, true);
       } else {
