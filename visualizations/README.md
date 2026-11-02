@@ -45,10 +45,13 @@ The tradeoffs are shown below each study. A layout decision is still pending.
 
 [Expression video, 1280 × 720 at 60 fps](renders/layout-a-expression-720p.mp4).
 This exports the actual prototype SVG, including temporary evaluation rows, with a fixed
-animation clock. Panel motion and transfers ease in and out; expression changes crossfade.
+animation clock. Panel motion and transfers ease in and out. Opening evaluation copies the
+highlighted source expression into the pane, preserving the original code. Evaluation matches
+shared characters, gathers outgoing characters, and grows the result into place.
 Reads pulse the source value; writes pulse the destination as the value arrives. Transfer
-paths use rounded bends and finish at the actual glyph coordinates. It does not use the older
-Manim layout.
+paths use rounded bends and finish at the actual glyph coordinates. Moving values have opaque
+boxes above the arrows. Variable names sit below cells; addresses label the starting edge above.
+It does not use the older Manim layout.
 
 After generating `layout-prototype.html`, run:
 
