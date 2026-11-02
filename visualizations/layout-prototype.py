@@ -141,21 +141,75 @@ function geometry(evaluationOpen) {
   slots:slots(720,230)};
  // B centers the composition vertically; output sits right under evaluation.
  if (variant==='B') return {code:[40,160,520,height], line:58, cy:212,
-  eval:[640,392,540,88], tx:688, slots:slots(660,236), tether:true, copyBend:610,
-  port:50, output:[664,544], printFromEvaluation:true};
+  eval:[640,392,540,76], tx:664, slots:slots(660,236), tether:true,
+  // Copies descend through the empty right side of the code, clear of memory labels.
+  copyBend:122+Math.max(...traces[scenario].source.map(s=>s.length))*charWidth,
+  port:50, output:[664,530], printFromEvaluation:true, wholeLine:true};
  const scroll=Math.max(0,indexLine()-3)*58;
  return {code:[40,28,1200,410], line:58, cy:86-scroll, gap:evaluationOpen?88:0,
   eval:[100,106+indexLine()*58-scroll,1080,64], tx:560,
   slots:slots((1280-count*112)/2,520), viewport:true};
 }
 function indexLine() { return traces[scenario].steps[index].line; }
+function pulse(begin) {
+ return `<animateTransform attributeName="transform" type="scale" `
+  +`values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" `
+  +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
+}
+// Layout B copies the whole statement: the evaluated span sits between its context, and the
+// write destination stays grey in that context until its value has arrived in memory.
+function statementParts(trace,g,line) {
+ const [start,end]=trace.expression_spans[line], source=trace.source[line];
+ if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
+ const prefix=source.slice(0,start);
+ const name=trace.steps.find(s=>s.line===line && s.write)?.write;
+ const match=name ? [...prefix.matchAll(new RegExp('\\b'+name+'\\b','g'))].pop() : null;
+ return {prefix,suffix:source.slice(end),target:match?{name,at:match.index}:null};
+}
+function prefixMarkup(x,y,parts,trace,state) {
+ const {prefix,target}=parts;
+ if(!target) return colored(x,y,prefix,trace,30);
+ const color=trace.variables.find(v=>v.name===target.name).color, grey='#697382';
+ const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
+ const arriving=state==='arriving';
+ let name=`<g transform="translate(${center} ${y-11})">`;
+ // The destination is underlined alongside the memory cell for the whole write.
+ if(arriving) name+='<g opacity="0">'+fade(0,1,0.15)+fade(1,0,0.2,arrivalTime+0.15)
+  +rect(-width/2-2,19,width+4,3,'#f5e58b','none',1)+'</g>';
+ name+='<g>'+(arriving?pulse(arrivalTime-0.1):'')
+  +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
+  +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
+  +(arriving?`<animate attributeName="fill" from="${grey}" to="${color}" `
+   +`begin="${arrivalTime}s" dur="0.2s" fill="freeze"/>`:'')+'</text></g></g>';
+ return colored(x,y,prefix.slice(0,target.at),trace,30)+name
+  +colored(x+(target.at+target.name.length)*evalWidth,y,
+   prefix.slice(target.at+target.name.length),trace,30);
+}
+// The evaluated span keeps the same background as its highlight in the code.
+function expressionBackground(g,x,y,length,animations='') {
+ return g.wholeLine
+  ? animated(rect(x-4,y-33,length*evalWidth+8,44,'#2e4059','none',6),animations) : '';
+}
+function glide(markup,dx,begin,duration) {
+ if(!dx) return markup;
+ return `<g><animateTransform attributeName="transform" type="translate" from="0 0" `
+  +`to="${dx} 0" begin="${begin}s" dur="${duration}s" ${ease} fill="freeze"/>`+markup+'</g>';
+}
+// The settled evaluation pane for a step, also used as the copy that arrives from the code.
+function settledPane(trace,g,step,x,y) {
+ const parts=statementParts(trace,g,step.line), start=x+parts.prefix.length*evalWidth;
+ return expressionBackground(g,start,y,step.expression.length)
+  +prefixMarkup(x,y,parts,trace,step.write?'written':'pending')
+  +colored(start,y,step.expression,trace,30)
+  +colored(start+step.expression.length*evalWidth,y,parts.suffix,trace,30);
+}
 function spanBox(trace,g,line,y) {
  const [start,end]=trace.expression_spans[line];
  return [g.code[0]+62+start*charWidth-3,y-30,(end-start)*charWidth+6,40];
 }
 function tetherPath(g,y) {
  const [ex,ey,,eh]=g.eval;
- return `M ${g.code[0]+g.code[2]+5} ${y-10} H ${g.copyBend} V ${ey+eh/2} H ${ex}`;
+ return `M ${g.code[0]+g.code[2]+5} ${y-10} H ${g.code[0]+g.code[2]+50} V ${ey+eh/2} H ${ex}`;
 }
 // Export and scenario starts behave as if the page had just shown an empty, settled layout.
 function resetLayout() {
@@ -179,8 +233,6 @@ function draw(animate=false, shift=false) {
  const lineChanged=move && old?.rows && old.line!==undefined && old.line!==step.line;
  const output=g.output || [62,687];
  const printing=g.printFromEvaluation && move && step.stdout && old?.stdout!==step.stdout;
- // In B the strip persists, so a written or printed result must leave it explicitly.
- const consumed=variant==='B' && !transfer && Boolean(step.write || step.stdout);
  let out='<defs><marker id="tip" markerWidth="10" markerHeight="10" refX="8" refY="5" '
   +'orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10" '
   +'fill="context-stroke"/></marker></defs>';
@@ -234,61 +286,71 @@ function draw(animate=false, shift=false) {
   out+='<g data-evaluation="open">';
   if(move && old && !old.open) out+=fade(0,1,0.5);
   out+=rect(ex,ey,ew,eh,'#202e42');
-  if(variant==='B') out+=text(ex+ew-16,ey+24,'Expression evaluation',16,'#a0afc2','end');
  }
- const tx=g.tx, ty=ey+eh-22;
+ const tx=g.tx, ty=g.wholeLine ? ey+eh/2+11 : ey+eh-22;
+ const parts=statementParts(trace,g,step.line), start=tx+parts.prefix.length*evalWidth;
+ const length=step.expression.length;
  const copySource=move && evaluationOpen && !transfer && (!old?.open || old.line!==step.line);
  if(evaluationOpen) {
   if(transfer && step.read) {
-   const [start,end]=step.read_span;
-   out+=colored(tx,ty,previous.expression.slice(0,start),trace,30);
+   const [from,to]=step.read_span, before=previous.expression;
+   const dx=(String(step.transfer).length-(to-from))*evalWidth;
+   out+=expressionBackground(g,start,ty,before.length,dx ? animateAttr('width',
+    before.length*evalWidth+8,length*evalWidth+8,transferTiming.replace,arrivalTime) : '');
+   out+=prefixMarkup(tx,ty,parts,trace,'pending');
+   out+=colored(start,ty,before.slice(0,from),trace,30);
    // Preparation links the operand to its memory cell before the copy departs.
    out+='<g data-read-highlight="operand" opacity="0">'+fade(0,1,0.15)
     +fade(1,0,transferTiming.replace,arrivalTime)
-    +rect(tx+start*evalWidth-8,ty-34,(end-start)*evalWidth+16,46,'none','#9cbaff',6)
+    +rect(start+from*evalWidth-8,ty-34,(to-from)*evalWidth+16,46,'none','#9cbaff',6)
     +'</g>';
    out+='<g data-replacement-old="operand">'+fade(1,0,transferTiming.replace,arrivalTime)
-    +colored(tx+start*evalWidth,ty,previous.expression.slice(start,end),trace,30)+'</g>';
+    +colored(start+from*evalWidth,ty,before.slice(from,to),trace,30)+'</g>';
    out+='<g data-replacement-new="operand" opacity="0">'
     +fade(0,1,transferTiming.replace,arrivalTime)
-    +colored(tx+start*evalWidth,ty,String(step.transfer),trace,30)+'</g>';
-   out+=colored(tx+end*evalWidth,ty,previous.expression.slice(end),trace,30);
+    +colored(start+from*evalWidth,ty,String(step.transfer),trace,30)+'</g>';
+   out+=glide(colored(start+to*evalWidth,ty,before.slice(to)+parts.suffix,trace,30),
+    dx,arrivalTime,transferTiming.replace);
   } else if(transfer && step.write) {
-   // The result is outlined with its destination, then hands off to the moving box.
-   const width=step.expression.length*evalWidth;
-   out+='<g data-write-source="result">'+fade(1,0,0.12,transferTiming.prepare)
-    +colored(tx,ty,step.expression,trace,30)
-    +'<g opacity="0">'+fade(0,1,0.15)
-    +rect(tx-8,ty-34,width+16,46,'none','#f5e58b',6)+'</g></g>';
+   // The result stays; its boxed copy carries the value to the outlined destination.
+   out+=expressionBackground(g,start,ty,length)+prefixMarkup(tx,ty,parts,trace,'arriving')
+    +colored(start,ty,step.expression,trace,30)
+    +'<g data-write-source="result" opacity="0">'+fade(0,1,0.15)
+    +fade(1,0,0.2,arrivalTime+0.15)
+    +rect(start-8,ty-34,length*evalWidth+16,46,'none','#f5e58b',6)+'</g>'
+    +colored(start+length*evalWidth,ty,parts.suffix,trace,30);
   } else if(copySource) {
-   // The highlighted span lifts off as a boxed copy and follows the bracket into the strip;
-   // the source line stays intact underneath. The copy itself becomes the evaluation text.
-   const start=trace.expression_spans[step.line][0];
-   const sourceX=g.code[0]+62+start*charWidth, sourceY=rows[step.line];
+   // The highlighted statement lifts off as a boxed copy and follows the bracket into the
+   // pane, where the previous statement clears as it lands. The source line stays intact.
+   const [spanStart]=trace.expression_spans[step.line];
+   const sourceX=g.code[0]+62+(g.wholeLine?0:spanStart*charWidth), sourceY=rows[step.line];
    const begin=lineChanged ? 0.3 : 0.15, travel=0.6, total=begin+travel;
    const path=g.copyBend
-    ? `M ${sourceX} ${sourceY} C ${g.copyBend} ${sourceY}, ${g.copyBend} ${ty}, ${tx} ${ty}`
+    ? `M ${sourceX} ${sourceY} C ${g.copyBend} ${sourceY}, ${g.copyBend} ${sourceY}, `
+     +`${g.copyBend} ${(sourceY+ty)/2} C ${g.copyBend} ${ty}, ${g.copyBend} ${ty}, ${tx} ${ty}`
     : `M ${sourceX} ${sourceY} L ${tx} ${ty}`;
-   const width=step.expression.length*charWidth;
-   out+=`<g data-source-copy="expression">`
+   const width=(parts.prefix.length+length+parts.suffix.length)*evalWidth;
+   if(old?.pane) out+='<g>'+fade(1,0,0.2,begin+travel*0.3)+old.pane+'</g>';
+   out+=`<g data-source-copy="statement">`
     +`<animateMotion dur="${total}s" path="${path}" keyPoints="0;0;1" `
     +`keyTimes="0;${(begin/total).toFixed(4)};1" calcMode="spline" `
-    +`keySplines="0 0 1 1;0.4 0 0.2 1" fill="freeze"/><g>`
-    +`<animateTransform attributeName="transform" type="scale" from="1" to="1.2" `
+    +`keySplines="0 0 1 1;0.4 0 0.2 1" fill="freeze"/><g transform="scale(${25/30})">`
+    +`<animateTransform attributeName="transform" type="scale" from="${25/30}" to="1" `
     +`begin="${begin}s" dur="${travel}s" ${ease} fill="freeze"/>`
     +'<g opacity="0">'+fade(0,1,0.15,begin-0.15)+fade(1,0,0.12,total)
-    +`<rect x="-5" y="-29" width="${width+10}" height="38" rx="6" fill="#2e4059" `
+    +`<rect x="-8" y="-36" width="${width+16}" height="48" rx="7" fill="#2e4059" `
     +`stroke="#9cbaff" stroke-width="2"/></g>`
-    +colored(0,0,step.expression,trace,25)+'</g></g>';
-  } else if(consumed) {
-   if(printing) {
-    // The printed value leaves evaluation and settles after the output label.
-    out+='<g>'+fade(1,0,0.12,0.2)+colored(tx,ty,step.expression,trace,30)+'</g>';
-   }
+    +settledPane(trace,g,step,0,0)+'</g></g>';
   } else {
    const changed=move && !transfer && old?.open && old.expression!==step.expression;
-   if(changed) out+=transformExpression(tx,ty,old.expression,step.expression,trace);
-   else out+=colored(tx,ty,step.expression,trace,30);
+   if(changed) {
+    const before=old.expression.length, dx=(length-before)*evalWidth;
+    out+=expressionBackground(g,start,ty,before,
+      animateAttr('width',before*evalWidth+8,length*evalWidth+8,0.55))
+     +prefixMarkup(tx,ty,parts,trace,step.write?'written':'pending')
+     +transformExpression(start,ty,old.expression,step.expression,trace)
+     +glide(colored(start+before*evalWidth,ty,parts.suffix,trace,30),dx,0,0.55);
+   } else out+=settledPane(trace,g,step,tx,ty);
   }
  }
  if(evaluationOpen) out+='</g>';
@@ -309,9 +371,7 @@ function draw(animate=false, shift=false) {
    out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
    if(active) {
     const begin=step.write ? arrivalTime-0.2 : 0;
-    out+=`<animateTransform attributeName="transform" type="scale" `
-     +`values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" `
-     +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
+    out+=pulse(begin);
    }
    if(transfer && step.write===v.name) {
     if(previous.values[i]!==null) out+='<g data-replacement-old="memory">'
@@ -331,7 +391,7 @@ function draw(animate=false, shift=false) {
   const [mx,my,mw,mh]=g.slots[vi];
   let sx,sy,dx,dy,path,arrow;
   const operand=step.read ? step.read_span[0] : 0;
-  const cx=tx+(operand+String(step.transfer).length/2)*evalWidth, cy=ty-11;
+  const cx=start+(operand+String(step.transfer).length/2)*evalWidth, cy=ty-11;
   // A smooth curve joins the actual glyph centers, avoiding a final positional jump.
   sx=mx+mw/2; sy=my+mh/2;
   dx=cx; dy=cy;
@@ -373,7 +433,8 @@ function draw(animate=false, shift=false) {
    out+='<g>'+(printing?'<g opacity="0">'+fade(0,1,0.25):'<g>')
     +text(ox,oy,label,26,'#a0afc2')+'</g>';
    if(printing) {
-    const path=`M ${tx+width/2} ${ty-11} C ${tx+width/2} ${oy-30}, ${vx+width/2} ${ty+20}, `
+    const path=`M ${start+width/2} ${ty-11} C ${start+width/2} ${oy-30}, `
+     +`${vx+width/2} ${ty+20}, `
      +`${vx+width/2} ${oy-11}`;
     out+=valueBox('stdout',step.stdout,'#a0afc2',path,0.2,0.6,0.8);
     out+='<g opacity="0">'+fade(0,1,0.15,0.8)+text(vx,oy,step.stdout,30)+'</g>';
@@ -390,7 +451,8 @@ function draw(animate=false, shift=false) {
   (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
   +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
  previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
-  expression:consumed?'':step.expression,line:step.line,tx,tether,stdout:step.stdout};
+  expression:step.expression,line:step.line,tx,tether,stdout:step.stdout,
+  pane:evaluationOpen ? settledPane(trace,g,step,tx,ty) : ''};
  if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
 }
 // A boxed value fades in at departure, travels along the route, and vanishes on arrival.
