@@ -50,7 +50,7 @@ and losing a value during a failed swap?</p>
 <div id="snapshot"></div></details>
 <p><small>Illustrative ABI: 4-byte int, 8-byte pointer, little-endian; synthetic decimal
 addresses start at 64. Each int occupies one slot; byte detail is reserved for byte-level
-examples. Future storage is hidden; ? marks an explicitly declared, uninitialized variable.
+examples. Future storage is greyed out until allocation; ? marks a declared, uninitialized variable.
 Variable names are below their slots; starting addresses are above. Slots wrap as whole integers,
 and the evaluation window sits below the final memory row. Code stays in the left column.
 Blue outlines mark reads; yellow outlines mark writes. Values follow the transfer arrows,
