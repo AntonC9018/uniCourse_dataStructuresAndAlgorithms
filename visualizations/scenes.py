@@ -1,11 +1,11 @@
 """Native Manim adapter for the same primitives serialized by the SVG renderer."""
 from functools import cache
 
-from manim import Scene, Text as ManimText, VGroup
+from manim import Scene, Text as ManimText, Transform, VGroup
 from manim import Rectangle, Line as ManimLine, config
 
 from drawing import WIDTH, HEIGHT, BG, PANEL, FONT, EVAL_SIZE, frame, memory_center, expression_value
-from drawing import Rect, Text, Line
+from drawing import Rect, Text, Line, source_expression, expression_text
 from model import EXPRESSION, SWAP
 
 config.pixel_width, config.pixel_height = WIDTH, HEIGHT
@@ -55,6 +55,22 @@ class TimelineScene(Scene):
     def construct(self):
         current = None
         for index, step in enumerate(self.timeline.steps):
+            if index == 0 or step.line != self.timeline.steps[index - 1].line:
+                # Reveal the new source selection with an empty evaluation panel.
+                # The source remains in place while its expression is copied.
+                entry = VGroup(*(mobject(s).copy() for s in
+                                 frame(self.timeline, index, show_expression=False)))
+                if current is not None:
+                    self.remove(current)
+                self.add(entry)
+                current = entry
+                copied = mobject(source_expression(self.timeline, step.line)).copy()
+                target = mobject(expression_text(step.expression)).copy()
+                assert source_expression(self.timeline, step.line).value == step.expression
+                self.add(copied)
+                self.wait(0.35)
+                self.play(Transform(copied, target), run_time=0.85)
+                self.remove(copied)
             moving = None
             operand_mask = None
             if step.transfer is not None and current is not None:

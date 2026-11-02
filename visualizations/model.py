@@ -31,6 +31,7 @@ class Timeline:
     variables: tuple[Variable, ...]
     steps: tuple[Step, ...]
     byte_detail: bool = False
+    expression_spans: tuple[tuple[int, int], ...] = ()
 
 
 VARIABLES = (Variable("a", 64), Variable("b", 68, color="#ffbd69"))
@@ -51,6 +52,7 @@ EXPRESSION = Timeline(
         Step(3, "11", (7, 11), read="b", transfer=11, read_span=(0, 1)),
         Step(3, "11", (7, 11), stdout="11", hold=3.5),
     ),
+    expression_spans=((6, 7), (6, 11), (4, 5), (13, 14)),
 )
 SWAP = Timeline(
     "swap", "a = b; b = a;",
@@ -68,5 +70,6 @@ SWAP = Timeline(
         Step(3, "2", (2, 2), read="a", transfer=2, read_span=(0, 1)),
         Step(3, "2", (2, 2), write="b", transfer=2, hold=3.5),
     ),
+    expression_spans=((6, 7), (6, 7), (4, 5), (4, 5)),
 )
 TIMELINES = (EXPRESSION, SWAP)

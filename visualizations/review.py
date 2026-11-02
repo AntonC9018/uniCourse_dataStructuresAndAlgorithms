@@ -53,7 +53,8 @@ addresses start at 64. Each int occupies one slot; byte detail is reserved for b
 examples. ? marks an unknown value, including a declaration that has not executed.
 Variable names are below their slots; starting addresses are above. Slots wrap as whole integers.
 Blue outlines mark reads; yellow outlines mark writes. Expression evaluation shows temporary
-results; a copied value moves into the subexpression it replaces.
+results. The highlighted source expression is copied into that panel; memory reads then
+replace its operands. Printed output appears at the bottom.
 Fixed dark media background is provisional. No automatic C++ tracing or maintenance integration.</small></p>
 <script>
 const examples = EXAMPLES;
