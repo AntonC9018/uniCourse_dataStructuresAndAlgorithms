@@ -51,14 +51,14 @@ input[type=range] {flex:1; min-width:120px; accent-color:#9cbaff}
 <script>
 const traces = __TRACES__;
 const variants = ['A','B','C'];
-const names = ['Inline evaluation','Central workspace','Memory first'];
+const names = ['Bridge row','Under memory','Code above memory'];
 const descriptions = [
- 'A · Open a temporary evaluation row beneath the active line. Later lines move down '
- + 'while evaluating, then close up after the value is stored or printed. Memory stays fixed.',
- 'B · Code → evaluation → memory. A fixed central workspace gives reads and writes '
- + 'short routes. Three columns leave less room for long code or large memory layouts.',
- 'C · Memory spans the top; code and evaluation sit below. More horizontal room for '
- + 'contiguous storage, with vertical read/write paths. The eye travels between two levels.'
+ '1 · Bridge row: evaluation stays attached to the active line and reaches toward compact '
+ + 'memory. The expression copies diagonally to the end of the row; later source lines move down.',
+ '2 · Under memory: source and memory stay fixed. A bracket links the active line to a fixed '
+ + 'evaluation strip; reads and writes make short vertical hops.',
+ '3 · Code above memory: an inline evaluation row sits above a full-width memory band. '
+ + 'Transfers run vertically through the open space beside the source; longer code scrolls.'
 ];
 let variant = new URLSearchParams(location.search).get('variant') || 'A';
 if (!variants.includes(variant)) variant='A';
@@ -120,13 +120,18 @@ function transformExpression(x,y,before,after,trace) {
  return out+'</g>';
 }
 function geometry(evaluationOpen) {
- if (variant==='A') return {code:[40,60,550,48+traces[scenario].source.length*58
-   +(evaluationOpen?88:0)], line:58, cy:112, gap:evaluationOpen?88:0,
-  eval:[100,132+indexLine()*58,440,64], slots:[[710,140,224,64],[934,140,224,64]]};
- if (variant==='B') return {code:[28,70,435,480], line:86, cy:145,
-  eval:[488,255,270,120], slots:[[792,265,224,64],[1016,265,224,64]]};
- return {code:[40,292,560,350], line:66, cy:350,
-  eval:[692,350,520,150], slots:[[430,112,224,64],[654,112,224,64]]};
+ const count=traces[scenario].variables.length;
+ const slots=(x,y)=>traces[scenario].variables.map((_,i)=>[x+i*112,y,112,64]);
+ const height=48+traces[scenario].source.length*58;
+ if (variant==='A') return {code:[40,60,560,height+(evaluationOpen?88:0)], line:58, cy:112,
+  gap:evaluationOpen?88:0, eval:[100,132+indexLine()*58,600,64], tx:600,
+  slots:slots(720,230)};
+ if (variant==='B') return {code:[40,60,520,height], line:58, cy:112,
+  eval:[640,300,540,80], tx:688, slots:slots(660,150), tether:true};
+ const scroll=Math.max(0,indexLine()-3)*58;
+ return {code:[40,28,1200,410], line:58, cy:86-scroll, gap:evaluationOpen?88:0,
+  eval:[100,106+indexLine()*58-scroll,1080,64], tx:560,
+  slots:slots((1280-count*112)/2,520), viewport:true};
 }
 function indexLine() { return traces[scenario].steps[index].line; }
 function draw(animate=false, shift=false) {
@@ -135,7 +140,7 @@ function draw(animate=false, shift=false) {
  const previous=trace.steps[Math.max(0,index-1)];
  const transfer=animate && step.transfer!==null;
  // A result remains visible until consumed, including during a write animation.
- const evaluationOpen=variant!=='A' || Boolean(step.expression &&
+ const evaluationOpen=variant==='B' || Boolean(step.expression &&
   (transfer || (!step.write && !step.stdout)));
  const g=geometry(evaluationOpen), key=variant+scenario;
  const old=previousLayout?.key===key ? previousLayout : null;
@@ -154,9 +159,11 @@ function draw(animate=false, shift=false) {
  // Retain a fading evaluation row while the space closes, instead of removing it abruptly.
  if(move && old?.open && !evaluationOpen) {
   out+='<g>'+fade(1,0,0.35)+rect(...old.eval,'#202e42')
-   +(step.write ? '' : colored(old.eval[0]+24,old.eval[1]+old.eval[3]-22,
+   +(step.write ? '' : colored(old.tx,old.eval[1]+old.eval[3]-22,
      old.expression,trace,30))+'</g>';
  }
+ if(g.viewport) out+='<defs><clipPath id="code-viewport">'
+  +rect(...g.code)+'</clipPath></defs><g clip-path="url(#code-viewport)">';
  trace.source.forEach((source,i)=>{
   const y=0, active=i===step.line;
   out+=`<g transform="translate(0 ${rows[i]})">`;
@@ -173,15 +180,22 @@ function draw(animate=false, shift=false) {
   out+=colored(g.code[0]+62,y,source,trace);
   out+='</g>';
  });
+ if(g.viewport) out+='</g>';
+ if(g.tether) {
+  const y=rows[step.line]-10;
+  out+=`<path data-code-tether="bracket" d="M 565 ${y} H 610 V 344 H 640" `
+   +`fill="none" stroke="#697d99" stroke-width="2"/>`;
+ }
+ if(variant==='C') out+=rect(40,488,1200,158,'#141e2b');
  let [ex,ey,ew,eh]=g.eval;
  if(evaluationOpen) {
   out+='<g data-evaluation="open">';
   if(move && old && !old.open) out+='<animate attributeName="opacity" from="0" '
    +'to="1" dur="0.5s" ${ease} fill="freeze"/>';
   out+=rect(ex,ey,ew,eh,'#202e42');
-  if(variant!=='A') out+=text(ex+22,ey+32,'Expression evaluation',18,'#a0afc2');
+  if(variant==='B') out+=text(ex+ew-126,ey+24,'Evaluation',16,'#a0afc2');
  }
- const tx=ex+24, ty=ey+eh-22;
+ const tx=g.tx, ty=ey+eh-22;
  const copySource=move && evaluationOpen && !transfer && (!old?.open || old.line!==step.line);
  if(evaluationOpen) {
   if(transfer && step.read) {
@@ -212,7 +226,7 @@ function draw(animate=false, shift=false) {
     +`begin="0.2s" dur="0.65s" ${ease} fill="freeze"/>`
     +fade(1,0,0.12,0.85)+colored(0,0,step.expression,trace,25)+'</g></g>';
   } else {
-   const changed=move && old?.open && old.expression!==step.expression;
+   const changed=move && !transfer && old?.open && old.expression!==step.expression;
    if(changed) out+=transformExpression(tx,ty,old.expression,step.expression,trace);
    else out+='<g>'+(transfer && step.write ? fade(1,0,0.25) : '')
     +colored(tx,ty,step.expression,trace,30)+'</g>';
@@ -259,22 +273,29 @@ function draw(animate=false, shift=false) {
   // A smooth curve joins the actual glyph centers, avoiding a final positional jump.
   sx=mx+mw/2; sy=my+mh/2;
   dx=cx; dy=cy;
-  if(variant==='C') {
-   path=step.write ? `M ${dx} ${dy} C ${dx} ${sy+125}, ${sx} ${dy}, ${sx} ${sy}`
-    : `M ${sx} ${sy} C ${sx} ${dy}, ${dx} ${sy+125}, ${dx} ${dy}`;
+  let readPath,writePath;
+  if(variant==='A') {
+   // Route beside the names, through the short gap at the end of the bridge.
+   const above=dy<sy, lane=above?my-48:my+mh+64;
+   const port=above?sx:sx+(step.write?36:-36);
+   readPath=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${lane}, 710 ${lane} `
+    +`C 680 ${lane}, 680 ${dy}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C 680 ${dy}, 680 ${lane}, 710 ${lane} `
+    +`C ${port} ${lane}, ${port} ${sy}, ${sx} ${sy}`;
+  } else if(variant==='B') {
+   // Names sit below memory; side ports avoid crossing their centered glyphs.
+   const port=sx+(step.write?36:-36), middle=(my+mh+dy)/2;
+   readPath=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${middle}, ${port} ${middle} `
+    +`C ${port} ${dy}, ${dx} ${middle}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C ${dx} ${middle}, ${port} ${dy}, ${port} ${middle} `
+    +`C ${port} ${middle}, ${port} ${sy}, ${sx} ${sy}`;
   } else {
-   const lane=Math.max(my+mh+110,dy+70), gutter=ex+ew+65;
-   // The side port passes beside the centered label below the cell.
-   const port=sx+(step.write?72:-72);
-   const memoryPart=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${lane}, ${gutter+40} ${lane} `
-    +`Q ${gutter} ${lane}, ${gutter} ${lane-40} `;
-   const evalPart=`C ${gutter} ${dy+20}, ${gutter} ${dy}, ${dx} ${dy}`;
-   path=step.write
-    ? `M ${dx} ${dy} C ${gutter} ${dy}, ${gutter} ${dy+20}, ${gutter} ${lane-40} `
-      +`Q ${gutter} ${lane}, ${gutter+40} ${lane} `
-      +`C ${port} ${lane}, ${port} ${sy}, ${sx} ${sy}`
-    : memoryPart+evalPart;
+   // The centered memory band aligns with the evaluation work area beside the code.
+   const middle=(sy+dy)/2;
+   readPath=`M ${sx} ${sy} C ${sx} ${middle}, ${dx} ${middle}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C ${dx} ${middle}, ${sx} ${middle}, ${sx} ${sy}`;
   }
+  path=step.write?writePath:readPath;
   const color=step.write?'#f5e58b':'#9cbaff';
   arrow=`<path d="${path}" fill="none" stroke="${color}" stroke-width="3" `
    +`marker-end="url(#tip)"/>`;
@@ -300,7 +321,7 @@ function draw(animate=false, shift=false) {
   (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
   +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
  previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
-  expression:step.expression,line:step.line};
+  expression:step.expression,line:step.line,tx};
  if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSeconds*1000);
 }
 function stop() {playing=false; clearTimeout(timer); $('play').textContent='Play';}
