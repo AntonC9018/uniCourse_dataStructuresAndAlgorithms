@@ -9,9 +9,9 @@ WIDTH, HEIGHT = 1280, 720
 BG, PANEL, FG, MUTED = "#101722", "#192331", "#eef3fa", "#a0afc2"
 READ, WRITE = "#9cbaff", "#f5e58b"
 FONT = "DejaVu Sans Mono"
-CELL = 112
+SLOT_WIDTH = 448
 ARROW_HEAD = 10
-EVAL_CENTER = (313, 493)
+EVAL_X, EVAL_BASELINE, EVAL_SIZE = 100, 507, 30
 
 
 @dataclass(frozen=True)
@@ -46,7 +46,17 @@ class Line:
 
 def memory_center(timeline: Timeline, name: str) -> tuple[float, float]:
     index = next(i for i, var in enumerate(timeline.variables) if var.name == name)
-    return (876, 240 + index * 160)
+    return (876, 248 + index * 160 - EVAL_SIZE * 0.36)
+
+
+def expression_text(expression: str) -> Text:
+    # A stable left edge keeps the other operands still when a read changes width.
+    return Text(EVAL_X, EVAL_BASELINE, expression, EVAL_SIZE)
+
+
+def expression_value(expression: str, start: int = 0, length: int | None = None) -> Text:
+    value = expression[start:] if length is None else expression[start:start + length]
+    return Text(EVAL_X + start * EVAL_SIZE * 0.602, EVAL_BASELINE, value, EVAL_SIZE)
 
 
 def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
@@ -59,10 +69,9 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
         Rect(48, 132, 530, 258, PANEL),
         Rect(48, 420, 530, 150, PANEL),
         Text(70, 452, "C++  →", 18, MUTED),
-        Text(EVAL_CENTER[0] - len(step.expression) * 30 * 0.602 / 2,
-             507, step.expression, 30),
+        expression_text(step.expression),
         Text(652, 150, "int / 4 B", 20, MUTED),
-        Text(1040, 150, "hex / B", 18, MUTED),
+        Text(1040, 150, "hex / B" if timeline.byte_detail else "int", 18, MUTED),
     ]
     for i, source in enumerate(timeline.source):
         y = 184 + i * 52
@@ -80,16 +89,24 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
         y = 230 + i * 160
         active = var.name in (step.read, step.write)
         edge = WRITE if var.name == step.write else READ if active else var.color
-        shapes += [Text(652, y - 36, var.name, 26, var.color),
-                   Text(690, y - 36, "= " + (str(value) if value is not None else "·"),
-                        26, FG if value is not None else MUTED)]
-        octets = value.to_bytes(var.size, "little", signed=True) if value is not None else None
-        for offset in range(var.size):
-            x = 652 + offset * CELL
-            shapes += [Rect(x, y - 17, CELL, 54, PANEL, edge, 3 if active else 1),
-                       Text(x + 39, y + 18, f"{octets[offset]:02X}" if octets else "··",
-                            25, FG if octets else MUTED),
-                       Text(x + 39, y + 63, str(var.address + offset), 17, MUTED)]
+        shapes.append(Text(652, y - 36, var.name, 26, var.color))
+        if timeline.byte_detail:
+            octets = value.to_bytes(var.size, "little", signed=True) if value is not None else None
+            cell_width = SLOT_WIDTH / var.size
+            for offset in range(var.size):
+                x = 652 + offset * cell_width
+                shapes += [Rect(x, y - 17, cell_width, 54, PANEL, edge, 3 if active else 1),
+                           Text(x + cell_width / 2 - 25 * 0.602, y + 18,
+                                f"{octets[offset]:02X}" if octets else "··", 25,
+                                FG if octets else MUTED),
+                           Text(x + cell_width / 2 - 17 * 0.602, y + 63,
+                                str(var.address + offset), 17, MUTED)]
+        else:
+            display = str(value) if value is not None else "·"
+            shapes += [Rect(652, y - 17, SLOT_WIDTH, 54, PANEL, edge, 3 if active else 1),
+                       Text(876 - len(display) * EVAL_SIZE * 0.602 / 2, y + 18,
+                            display, EVAL_SIZE, FG if value is not None else MUTED),
+                       Text(652, y + 63, str(var.address), 17, MUTED)]
         if active:
             # Read: arrow out of memory. Write: arrow into memory. Color is redundant.
             start, end = (1148, 1122) if step.write else (1122, 1148)
@@ -100,8 +117,8 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
                             y + 19, edge, 3)]
     shapes += [Rect(652, 500, 530, 70, PANEL),
                Text(672, 544, "stdout  > " + step.stdout, 23),
-               Text(48, 644, "int: 4 B    ptr: 8 B    LE    @64", 19, MUTED),
-               Text(48, 681, "·· : ∅     → : R     ← : W", 19, MUTED)]
+               Text(48, 644, "int: 4 B    LE    @64" if timeline.byte_detail else "@64", 19, MUTED),
+               Text(48, 681, "· : ∅     → : R     ← : W", 19, MUTED)]
     return shapes
 
 

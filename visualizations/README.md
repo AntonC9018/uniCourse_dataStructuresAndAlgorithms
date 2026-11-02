@@ -29,14 +29,16 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
   Fixed dark media is a proposal for this checkpoint, not a settled theme policy for the epic.
 - `a` is teal `#61d4c4`; `b` is amber `#ffbd69`, including source identifiers.
-- The active source line has a blue stripe and background. Read bytes have a blue outline and an
-  outward arrow; write bytes have a yellow outline and an inward arrow. Direction remains legible
-  without color. A moving number badge represents a copied value, not an address or pointer.
-- Integers occupy four individually addressed bytes, with decimal addresses beginning at 64.
-  Values are decimal above the row; bytes are two-digit hex, little-endian, left to right.
+- The active source line has a blue stripe and background. Read slots have a blue outline and an
+  outward arrow; write slots have a yellow outline and an inward arrow. Direction remains legible
+  without color. A moving number represents a copied value and lands on the operand
+  being substituted.
+- Each integer occupies one memory slot with its decimal value and starting address.
+  Individual hex bytes appear only when a timeline explicitly sets `byte_detail=True`,
+  for examples that teach byte layout, casts, or partial writes.
   The assumed ABI has 4-byte `int` and 8-byte pointers. This is illustrative,
   not portable C++ layout.
-- `··` means the declaration has not executed; it does not imply zero or uninitialized object bytes.
+- `·` means the declaration has not executed; it does not imply zero or uninitialized object bytes.
   Future rows reserve display space, not live C++ objects.
 - No prose is baked into media. `int`, `ptr`, `LE`, `stdout`, `R`, `W`, and `B` are shared notation.
   Review-page explanations are outside the media. No translated lab content changes in this step.
@@ -50,14 +52,20 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
   captures one visible evaluation state. `line` is zero-based; `values` follows variable order.
   A `None` value means the declaration is pending. A write state contains the values **after** the
   write. `transfer` is the decimal value copied from a read or into a write.
-- `Timeline(name, title, source, variables, steps)` groups category-specific data.
+  `read_span=(start, end)` identifies the operand in the preceding expression, with an exclusive
+  end index. Its replacement literal determines the destination of the moving value.
+- `Timeline(name, title, source, variables, steps, byte_detail=False)` groups category data
+  and selects whole-variable slots by default.
 
 `drawing.py` owns style and layout, returning `Rect`, `Text`, and `Line` primitives from
 `frame(timeline, index)`. `svg(primitives, title)` serializes them using only Python's standard
-library. `CELL`, `ARROW_HEAD`, palette, font, evaluation position, and memory positions live here.
+library. `SLOT_WIDTH`, `ARROW_HEAD`, palette, font, evaluation position, and memory positions
+live here.
 
 `scenes.py` maps those same primitives to native Manim vector objects. `TimelineScene` handles
-frame transitions, moving copy badges, timing, and the final pause. To add a scene, subclass it
+atomic state transitions, moving copied values, timing, and the final pause. Unchanged content
+is never faded. Expression text has a fixed left edge so substitution preserves other operands.
+To add a scene, subclass it
 and set `timeline`; the two concrete classes contain no drawing logic. SVG text uses browser font
 metrics and Manim uses Pango, so glyph baselines can differ slightly; the layout data is identical.
 
@@ -106,9 +114,11 @@ the currently pinned Pillow 13 package.
 ## Verification for this checkpoint
 
 Both final videos decode without errors using `ffmpeg -v error -i <file> -f null -`.
-They are H.264, 1280 × 720, 24 fps: expression 21.67 s, failed swap 21.00 s.
+They are H.264, 1280 × 720, 24 fps. Transitions switch atomically with no full-scene fades.
 All generated SVGs parse as XML; trace reads/writes match their transferred values.
-Rendered evaluation and final-state frames were inspected visually, including punctuation sizing.
+Read-flight, substitution, and final-state frames were inspected visually. A fixed title region
+was checked across every video frame: mean brightness variation stayed below 0.08/255,
+confirming that transitions no longer dim unchanged content.
 
 The review page is supplied as a file. T3's inline browser preview could not run because its host
 is missing browser shared libraries; this task does not change host browser configuration.
