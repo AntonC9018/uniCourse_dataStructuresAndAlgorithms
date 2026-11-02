@@ -121,14 +121,14 @@ function transformExpression(x,y,before,after,trace) {
    +`<animateTransform attributeName="transform" type="translate" `
    +`from="${x+i*evalWidth} ${y}" to="${x+destination} ${y}" dur="0.55s" `
    +`${ease} fill="freeze"/>`
-   +glyph(before[i],match<0 ? fade(1,0,0.3,0.25)
-    +`<animateTransform attributeName="transform" type="scale" from="1" to="0.25" `
+   +glyph(before[i],match<0 ? fade(1,0,0.25,0.35)
+    +`<animateTransform attributeName="transform" type="scale" from="1" to="0.45" `
     +`dur="0.55s" ${ease} fill="freeze"/>` : '')+'</g>';
  }
  for(let j=0;j<after.length;j++) if(!used.has(j)) {
-  out+=`<g transform="translate(${x+j*evalWidth} ${y})" opacity="0">`+fade(0,1,0.25,0.3)
-   +glyph(after[j],`<animateTransform attributeName="transform" type="scale" from="0.2" `
-    +`to="1" begin="0.3s" dur="0.4s" ${ease} fill="freeze"/>`)+'</g>';
+  out+=`<g transform="translate(${x+j*evalWidth} ${y})" opacity="0">`+fade(0,1,0.2,0.2)
+   +glyph(after[j],`<animateTransform attributeName="transform" type="scale" from="0.3" `
+    +`to="1" begin="0.2s" dur="0.45s" ${ease} fill="freeze"/>`)+'</g>';
  }
  return out+'</g>';
 }
