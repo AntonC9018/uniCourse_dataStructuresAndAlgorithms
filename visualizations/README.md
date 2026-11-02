@@ -29,7 +29,9 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - A fixed 1280 × 720 canvas, DejaVu Sans Mono, dark background `#101722`, panels `#192331`.
   Fixed dark media is a proposal for this checkpoint, not a settled theme policy for the epic.
 - `a` is teal `#61d4c4`; `b` is amber `#ffbd69`, including source identifiers.
-- The active source line has a blue stripe and background. Read slots have a blue outline;
+- The active line has a blue stripe; its evaluated expression has a focused highlight and
+  underline. On entry to a source line, that expression is copied into the evaluation panel.
+  Read slots have a blue outline;
   write slots have a yellow outline. A copied value lands on the operand being substituted.
 - Variables occupy adjacent horizontal slots, in address order. Each 4-byte integer occupies
   one 224-pixel slot. Rows wrap before an integer would be split. Wider whole variables fit
@@ -41,7 +43,8 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
 - Individual hex bytes appear only with `byte_detail=True`, for examples teaching byte layout,
   casts, or partial writes. The assumed ABI has 4-byte `int`, 8-byte pointers, and little-endian
   storage; this is illustrative, not portable C++ layout.
-- The temporary expression panel is labeled **Expression evaluation**. Decorative titles,
+- Output appears as a plain bottom line only after the program prints; there is no empty output
+  panel. The temporary expression panel is labeled **Expression evaluation**. Decorative titles,
   counters, type headers, footer notation, and the `C++ →` label have been removed.
   The English panel label can be localized when these prototypes are integrated into the labs.
 
@@ -58,7 +61,8 @@ The last frame holds for 3.5 seconds. The inspection slider is independent of vi
   `read_span=(start, end)` identifies the operand in the preceding expression, with an exclusive
   end index. Its replacement literal determines the destination of the moving value.
 - `Timeline(name, title, source, variables, steps, byte_detail=False)` groups category data
-  and selects whole-variable slots by default.
+  and selects whole-variable slots by default. `expression_spans` records the character range
+  evaluated on each source line; the same range drives highlighting and the copy animation.
 
 `drawing.py` owns style and layout, returning `Rect`, `Text`, and `Line` primitives from
 `frame(timeline, index)`. `svg(primitives, title)` serializes them using only Python's standard
@@ -66,7 +70,8 @@ library. `WORD_WIDTH`, palette, font, expression position, and `memory_layout` l
 Read/write animation positions come from the same packed slots as the static renderer.
 
 `scenes.py` maps those same primitives to native Manim vector objects. `TimelineScene` handles
-atomic state transitions, moving copied values, timing, and the final pause. Unchanged content
+atomic state transitions, source-to-panel expression copies, memory reads/writes, timing,
+and the final pause. Unchanged content
 is never faded. Expression text has a fixed left edge so substitution preserves other operands.
 To add a scene, subclass it
 and set `timeline`; the two concrete classes contain no drawing logic. SVG text uses browser font
@@ -120,9 +125,19 @@ the currently pinned Pillow 13 package.
 Both final videos decode without errors using `ffmpeg -v error -i <file> -f null -`.
 They are H.264, 1280 × 720, 24 fps. Transitions switch atomically with no full-scene fades.
 All generated SVGs parse as XML; trace reads/writes match their transferred values.
-Read-flight, substitution, unknown-value, and final-state frames were inspected visually.
+Source-copy, read-flight, substitution, unknown-value, and final-state frames were inspected
+visually.
 Packing was checked with enough integer slots to force multiple rows, including the label
 positions and shared animation coordinates. Full-scene fades remain disabled.
 
 The review page is supplied as a file. T3's inline browser preview could not run because its host
 is missing browser shared libraries; this task does not change host browser configuration.
+
+## Interactivity in Markdown
+
+GitHub removes JavaScript from rendered repository markup, so the custom step buttons and slider
+cannot run inside a GitHub lesson. Use the video there and link to the standalone interactive HTML.
+The course website can host that HTML, or embed an interactive player with renderer integration;
+this prototype does not implement that integration.
+
+[GitHub's markup pipeline](https://github.com/github/markup#github-markup) documents sanitization.

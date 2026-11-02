@@ -11,8 +11,9 @@
 <text x="161.15" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> </text>
 <text x="176.20000000000002" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#61d4c4" xml:space="preserve">a</text>
 <text x="191.25000000000003" y="116" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">{5};</text>
-<rect x="59" y="138" width="508" height="44" fill="#2e4059" stroke="none" stroke-width="1"/>
 <rect x="59" y="138" width="4" height="44" fill="#9cbaff" stroke="none" stroke-width="1"/>
+<rect x="203.3" y="138" width="81.25" height="40" fill="#2e4059" stroke="none" stroke-width="1"/>
+<line x1="203.3" y1="178" x2="284.55" y2="178" stroke="#9cbaff" stroke-width="2"/>
 <text x="76" y="168" font-family="DejaVu Sans Mono,monospace" font-size="20" fill="#a0afc2" xml:space="preserve">2</text>
 <text x="116" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"></text>
 <text x="116.0" y="168" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">int</text>
@@ -41,6 +42,4 @@
 <text x="980.174" y="210" font-family="DejaVu Sans Mono,monospace" font-size="26" fill="#ffbd69" xml:space="preserve">b</text>
 <rect x="876.0" y="112" width="224.0" height="64" fill="#192331" stroke="#f5e58b" stroke-width="3"/>
 <text x="969.94" y="154" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">11</text>
-<rect x="652" y="560" width="530" height="70" fill="#192331" stroke="none" stroke-width="1"/>
-<text x="672" y="604" font-family="DejaVu Sans Mono,monospace" font-size="23" fill="#eef3fa" xml:space="preserve">stdout  &gt; </text>
 </svg>

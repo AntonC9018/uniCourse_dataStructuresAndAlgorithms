@@ -82,20 +82,31 @@ def expression_value(expression: str, start: int = 0, length: int | None = None)
     return Text(EVAL_X + start * EVAL_SIZE * 0.602, EVAL_BASELINE, value, EVAL_SIZE)
 
 
-def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
+def source_expression(timeline: Timeline, line: int) -> Text:
+    start, end = timeline.expression_spans[line]
+    return Text(116 + start * 25 * 0.602, 116 + line * 52,
+                timeline.source[line][start:end], 25)
+
+
+def frame(timeline: Timeline, index: int, *, show_expression: bool = True) -> list[Rect | Text | Line]:
     step = timeline.steps[index]
     shapes = [
         Rect(0, 0, WIDTH, HEIGHT, BG),
         Rect(48, 64, 530, 258, PANEL),
         Rect(48, 368, 530, 150, PANEL),
         Text(70, 404, "Expression evaluation", 20, MUTED),
-        expression_text(step.expression),
     ]
+    if show_expression:
+        shapes.append(expression_text(step.expression))
     for i, source in enumerate(timeline.source):
         y = 116 + i * 52
         if i == step.line:
-            shapes += [Rect(59, y - 30, 508, 44, "#2e4059"),
-                       Rect(59, y - 30, 4, 44, READ)]
+            selected = source_expression(timeline, i)
+            span_width = len(selected.value) * selected.size * 0.602
+            shapes += [Rect(59, y - 30, 4, 44, READ),
+                       Rect(selected.x - 3, y - 30, span_width + 6, 40, "#2e4059"),
+                       Line(selected.x - 3, y + 10,
+                            selected.x + span_width + 3, y + 10, READ, 2)]
         shapes.append(Text(76, y, str(i + 1), 20, MUTED))
         # Split identifiers so variable colors also survive in the SVG output.
         x = 116
@@ -124,8 +135,8 @@ def frame(timeline: Timeline, index: int) -> list[Rect | Text | Line]:
             shapes += [Rect(slot.x, slot.y, slot.w, slot.h, PANEL, edge, 3 if active else 1),
                        centered_text(slot.x + slot.w / 2, slot.y + 42,
                                      display, EVAL_SIZE, FG if value is not None else MUTED)]
-    shapes += [Rect(652, 560, 530, 70, PANEL),
-               Text(672, 604, "stdout  > " + step.stdout, 23)]
+    if step.stdout:
+        shapes.append(Text(70, 650, "Output: " + step.stdout, 26))
     return shapes
 
 
