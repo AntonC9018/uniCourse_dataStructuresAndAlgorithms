@@ -32,4 +32,7 @@
 <text x="756.174" y="210" font-family="DejaVu Sans Mono,monospace" font-size="26" fill="#61d4c4" xml:space="preserve">a</text>
 <rect x="652" y="112" width="224.0" height="64" fill="#192331" stroke="#f5e58b" stroke-width="3"/>
 <text x="754.97" y="154" font-family="DejaVu Sans Mono,monospace" font-size="30" fill="#eef3fa" xml:space="preserve">1</text>
+<rect x="876.0" y="112" width="224.0" height="64" fill="#171d27" stroke="#47515f" stroke-width="1"/>
+<text x="876.0" y="96" font-family="DejaVu Sans Mono,monospace" font-size="18" fill="#697382" xml:space="preserve">68</text>
+<text x="980.174" y="210" font-family="DejaVu Sans Mono,monospace" font-size="26" fill="#697382" xml:space="preserve">b</text>
 </svg>

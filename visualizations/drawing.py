@@ -7,6 +7,7 @@ from model import Timeline
 
 WIDTH, HEIGHT = 1280, 720
 BG, PANEL, FG, MUTED = "#101722", "#192331", "#eef3fa", "#a0afc2"
+PENDING_FILL, PENDING_EDGE, PENDING_LABEL = "#171d27", "#47515f", "#697382"
 READ, WRITE = "#9cbaff", "#f5e58b"
 FONT = "DejaVu Sans Mono"
 WORD_WIDTH = 224
@@ -176,6 +177,10 @@ def frame(timeline: Timeline, index: int, *, show_expression: bool = True,
     for var, value, slot in zip(timeline.variables, values, memory_layout(timeline)):
         live = value is not None or var.name in step.declared
         if not live and not (phase == "transfer" and var.name == step.write):
+            shapes += [Rect(slot.x, slot.y, slot.w, slot.h, PENDING_FILL, PENDING_EDGE),
+                       Text(slot.x, slot.y - 16, str(var.address), 18, PENDING_LABEL),
+                       centered_text(slot.x + slot.w / 2, slot.y + slot.h + 34,
+                                     var.name, 26, PENDING_LABEL)]
             continue
         active = step.transfer is not None and var.name in (step.read, step.write)
         edge = WRITE if var.name == step.write and active else READ if active else var.color

@@ -46,9 +46,10 @@ The inspection slider is independent of video playback.
   inter-column gap and enter evaluation horizontally, clear of other source lines.
 - A variable name is centered below its memory slot. Its decimal starting address is aligned
   with the slot's left edge, above it. Values are centered inside the slots.
-- Storage is hidden before initialization. An explicitly declared but uninitialized variable
-  uses `?`; future declarations are not drawn as unknown live objects. A new slot appears empty
-  when its first value is about to arrive.
+- Future storage is shown in grey until allocation, with a blank value and muted name/address.
+  A slot acquires its variable color when allocated. An explicitly declared but uninitialized
+  variable uses `?`; future declarations do not show an unknown value. A new slot is empty
+  while its first value arrives.
 - Individual hex bytes appear only with `byte_detail=True`, for examples teaching byte layout,
   casts, or partial writes. The assumed ABI has 4-byte `int`, 8-byte pointers, and little-endian
   storage; this is illustrative, not portable C++ layout.
@@ -64,7 +65,7 @@ The inspection slider is independent of video playback.
 - `Variable(name, address, size=4, color=...)` describes a synthetic storage slot.
 - `Step(line, expression, values, read=None, write=None, transfer=None, stdout="", hold=1.2)`
   captures one visible evaluation state. `line` is zero-based; `values` follows variable order.
-  A `None` value means storage is not yet live unless its name is in `declared`; an explicitly
+  A `None` value means storage is greyed out unless its name is in `declared`; an explicitly
   declared unknown value is shown as `?`. A write state contains values **after** the write.
   `transfer` is the decimal value copied from a read or into a write.
   `focus` lists slots to emphasize after the transfer, using a neutral outline to avoid implying

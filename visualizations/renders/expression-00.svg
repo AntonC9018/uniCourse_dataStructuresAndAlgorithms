@@ -30,4 +30,10 @@
 <text x="251.45" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve"> &lt;&lt; </text>
 <text x="311.65" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#ffbd69" xml:space="preserve">b</text>
 <text x="326.7" y="272" font-family="DejaVu Sans Mono,monospace" font-size="25" fill="#eef3fa" xml:space="preserve">;</text>
+<rect x="652" y="112" width="224.0" height="64" fill="#171d27" stroke="#47515f" stroke-width="1"/>
+<text x="652" y="96" font-family="DejaVu Sans Mono,monospace" font-size="18" fill="#697382" xml:space="preserve">64</text>
+<text x="756.174" y="210" font-family="DejaVu Sans Mono,monospace" font-size="26" fill="#697382" xml:space="preserve">a</text>
+<rect x="876.0" y="112" width="224.0" height="64" fill="#171d27" stroke="#47515f" stroke-width="1"/>
+<text x="876.0" y="96" font-family="DejaVu Sans Mono,monospace" font-size="18" fill="#697382" xml:space="preserve">68</text>
+<text x="980.174" y="210" font-family="DejaVu Sans Mono,monospace" font-size="26" fill="#697382" xml:space="preserve">b</text>
 </svg>
