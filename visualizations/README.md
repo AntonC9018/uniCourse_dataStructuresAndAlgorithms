@@ -106,8 +106,8 @@ python3 visualizations/website-controls-prototype.py
 ```
 
 Open `visualizations/website-controls-prototype.html?variant=A` for compact transport controls,
-`?variant=B` for a step navigator, or `?variant=C` for statement chapters. The floating switcher
-and left/right arrow keys change variants while preserving playback state.
+`?variant=B` for a step navigator, or `?variant=C` for statement chapters. The preferred compact
+layout is the default; the comparison footer has been removed.
 
 The compact transport is the preferred direction. Click a line in either the lesson's code block
 or the animation to jump to the start of that statement. Earlier writes and output are restored,
