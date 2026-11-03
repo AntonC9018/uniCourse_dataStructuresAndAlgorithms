@@ -96,6 +96,24 @@ Expected final states: expression `a = 7`, `b = 11`, stdout `11`; failed swap `a
 The last frame holds for 3.5 seconds; key lesson moments get extra emphasis and pauses.
 The inspection slider is independent of video playback.
 
+## Website controls prototype
+
+Question: which controls make animated execution useful inside an existing lesson?
+The throwaway prototype remains on `labs/visualizations` until a design is selected.
+
+```sh
+python3 visualizations/website-controls-prototype.py
+```
+
+Open `visualizations/website-controls-prototype.html?variant=A` for compact transport controls,
+`?variant=B` for a step navigator, or `?variant=C` for statement chapters. The floating switcher
+and left/right arrow keys change variants while preserving playback state.
+
+The prototype embeds the same SVG renderer used for the exported videos. Next and Replay animate
+the transition; Back and direct step selection show the settled state. Play/Pause freezes and
+resumes the SVG clock, and speed controls change both movement and holds. Expression and failed
+swap examples share this player. No production website integration is included in this study.
+
 ## Chosen layout: under memory (B)
 
 Layout 2, **Under memory**, is the selected direction. Code stays fixed on the left. Compact,
