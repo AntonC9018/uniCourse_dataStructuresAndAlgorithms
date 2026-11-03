@@ -1,0 +1,582 @@
+"""Throwaway layout comparison for #57, using the existing manual traces.
+
+Three variants on one page, switchable with ?variant=A, B, or C.
+Run from the course root: python3 visualizations/layout-prototype.py.
+"""
+from dataclasses import asdict
+import json
+from pathlib import Path
+
+from model import TIMELINES
+
+PAGE = r'''<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Expression layout alternatives</title>
+<style>
+:root {color-scheme:dark; font-family:var(--font-sans,system-ui); color:var(--foreground,#eef3fa)}
+body {margin:0; padding-bottom:76px}
+button,select {font:inherit; color:inherit; background:var(--secondary,#233044);
+ border:1px solid var(--border,#47515f); border-radius:8px; padding:8px 12px; cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible {outline:3px solid #9cbaff}
+button[aria-pressed=true] {border-color:#9cbaff; background:#2e4059}
+p {line-height:1.5; margin:10px 0; color:var(--muted-foreground,#a0afc2)}
+.controls {display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0}
+svg {display:block; width:100%; background:#101722; border-radius:12px}
+input[type=range] {flex:1; min-width:120px; accent-color:#9cbaff}
+#switcher {position:fixed; bottom:12px; left:50%; transform:translateX(-50%);
+ display:flex; align-items:center; gap:8px; padding:8px; border-radius:14px;
+ background:var(--popover,#192331); border:1px solid var(--border,#47515f);
+ box-shadow:0 4px 20px #0007; white-space:nowrap}
+#variantName {font-size:14px; min-width:155px; text-align:center}
+#state {font-family:var(--font-mono,monospace); font-size:13px; min-height:36px}
+</style>
+<p>Three layout studies · same expression and failed-swap traces · grey storage until allocation.</p>
+<div class="controls">
+ <label>Example <select id="scenario"><option value="0">Expression</option>
+ <option value="1">Failed swap</option></select></label>
+ <button id="play">Play</button><button id="back" aria-label="Previous step">← Step</button>
+ <button id="next" aria-label="Next step">Step →</button>
+ <input id="scrub" aria-label="Trace step" type="range" min="0" value="0">
+ <span id="count"></span>
+</div>
+<svg id="stage" viewBox="0 0 1280 720" role="img" aria-label="Code evaluation and memory"></svg>
+<p id="description"></p><div id="state" aria-live="polite"></div>
+<nav id="switcher" aria-label="Layout variant">
+ <button id="prevVariant" aria-label="Previous layout">←</button>
+ <span id="variantName"></span>
+ <button id="nextVariant" aria-label="Next layout">→</button>
+</nav>
+<script>
+const traces = __TRACES__;
+const variants = ['A','B','C'];
+const names = ['Bridge row','Under memory','Code above memory'];
+const descriptions = [
+ '1 · Bridge row: evaluation stays attached to the active line and reaches toward compact '
+ + 'memory. The expression copies diagonally to the end of the row; later source lines move down.',
+ '2 · Under memory: source and memory stay fixed. A bracket links the active line to a fixed '
+ + 'evaluation strip; reads and writes make short vertical hops.',
+ '3 · Code above memory: an inline evaluation row sits above a full-width memory band. '
+ + 'Transfers run vertically through the open space beside the source; longer code scrolls.'
+];
+// Layout 2 (B) is the selected direction; A and C stay available for reference.
+let variant = new URLSearchParams(location.search).get('variant') || 'B';
+if (!variants.includes(variant)) variant='B';
+let scenario=0, index=0, playing=false, timer, transferTimer, previousLayout;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
+ '"':'&quot;',"'":'&#39;'}[c]));
+const mono='DejaVu Sans Mono,monospace';
+const ease='calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"';
+const transferTiming={prepare:0.55,travel:1.55,replace:0.2,settle:0.7};
+const arrivalTime=transferTiming.prepare+transferTiming.travel;
+const writeHighlight={fade:0.2,hold:1};
+const writeDepartureTime=writeHighlight.fade+writeHighlight.hold;
+const writeArrivalTime=writeDepartureTime+transferTiming.travel;
+function transferDepartureTime(step) {
+ return step.write && variant==='B'?writeDepartureTime:transferTiming.prepare;
+}
+function transferArrivalTime(step) {
+ return transferDepartureTime(step)+transferTiming.travel;
+}
+function transferSecondsFor(step) {
+ return transferArrivalTime(step)+transferTiming.settle;
+}
+// The statement copy is deliberately slow; steps that copy get this much extra time.
+const copyTravelSeconds=1.2, copySeconds=0.3+copyTravelSeconds;
+// Every non-transfer transition (line glide, source copy, transformation, print) ends by then.
+const stepAnimationSeconds=copySeconds+0.2;
+function copiesStatement(i) {
+ const steps=traces[scenario].steps;
+ return i===0 || steps[i-1].line!==steps[i].line;
+}
+function stepSeconds(i) {
+ const step=traces[scenario].steps[i];
+ return step.hold+(step.transfer!==null ? transferSecondsFor(step) : copiesStatement(i) ? copySeconds : 0);
+}
+const charWidth=25*.602, evalWidth=30*.602;
+function animateAttr(name,from,to,duration=0.45,begin=0) {
+ return `<animate attributeName="${name}" from="${from}" to="${to}" `
+  +`dur="${duration}s" begin="${begin}s" ${ease} fill="freeze"/>`;
+}
+function animated(element,animations) {
+ return animations ? element.replace(/\/>$/,'>'+animations+'</'+element.match(/^<(\w+)/)[1]+'>')
+  : element;
+}
+function fade(from,to,duration=0.5,begin=0) {
+ return `<animate attributeName="opacity" from="${from}" to="${to}" `
+  +`dur="${duration}s" begin="${begin}s" ${ease} fill="freeze"/>`;
+}
+function text(x,y,value,size=26,color='#eef3fa',anchor='start') {
+ if(String(value).includes('\n')) return String(value).split('\n')
+  .map((line,i)=>text(x,y+i*36,line,size,color,anchor)).join('');
+ return `<text x="${x}" y="${y}" font-family="${mono}" font-size="${size}" `
+ + `fill="${color}" text-anchor="${anchor}" xml:space="preserve">${esc(value)}</text>`;
+}
+function rect(x,y,w,h,fill='#192331',stroke='none',radius=8) {
+ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${radius}" `
+ + `fill="${fill}" stroke="${stroke}" stroke-width="3"/>`;
+}
+function colored(x,y,value,trace,size=25) {
+ let out='';
+ for (const token of value.split(/(\b[a-zA-Z_]\w*\b)/)) {
+  out+=text(x,y,token,size,trace.variables.find(v=>v.name===token)?.color || '#eef3fa');
+  x+=token.length*size*.602;
+ }
+ return out;
+}
+// Preserve shared glyphs; gather outgoing glyphs and grow the evaluated result in place.
+// Glyphs scale around their own centers, and the result starts growing before the old
+// glyphs vanish, so the row is never empty mid-transformation.
+function transformExpression(x,y,before,after,trace) {
+ const used=new Set(), center=after.length*evalWidth/2, middle=-11;
+ const glyph=(ch,animations)=>`<g transform="translate(${evalWidth/2} ${middle})"><g>`
+  +animations+colored(-evalWidth/2,-middle,ch,trace,30)+'</g></g>';
+ let out='<g data-expression-transform="matching-glyphs">';
+ for(let i=0;i<before.length;i++) {
+  let match=-1;
+  for(let j=0;j<after.length;j++) {
+   if(!used.has(j) && before[i]===after[j]) {match=j;used.add(j);break;}
+  }
+  const destination=match<0?center-evalWidth/2:match*evalWidth;
+  out+=`<g transform="translate(${x+i*evalWidth} ${y})">`
+   +`<animateTransform attributeName="transform" type="translate" `
+   +`from="${x+i*evalWidth} ${y}" to="${x+destination} ${y}" dur="0.55s" `
+   +`${ease} fill="freeze"/>`
+   +glyph(before[i],match<0 ? fade(1,0,0.25,0.35)
+    +`<animateTransform attributeName="transform" type="scale" from="1" to="0.45" `
+    +`dur="0.55s" ${ease} fill="freeze"/>` : '')+'</g>';
+ }
+ for(let j=0;j<after.length;j++) if(!used.has(j)) {
+  out+=`<g transform="translate(${x+j*evalWidth} ${y})" opacity="0">`+fade(0,1,0.2,0.2)
+   +glyph(after[j],`<animateTransform attributeName="transform" type="scale" from="0.3" `
+    +`to="1" begin="0.2s" dur="0.45s" ${ease} fill="freeze"/>`)+'</g>';
+ }
+ return out+'</g>';
+}
+function geometry(evaluationOpen) {
+ const count=traces[scenario].variables.length;
+ const slots=(x,y)=>traces[scenario].variables.map((_,i)=>[x+i*112,y,112,64]);
+ const height=48+traces[scenario].source.length*58;
+ if (variant==='A') return {code:[40,60,560,height+(evaluationOpen?88:0)], line:58, cy:112,
+  gap:evaluationOpen?88:0, eval:[100,132+indexLine()*58,600,64], tx:600,
+  slots:slots(720,230)};
+ // B centers the composition vertically; output sits right under evaluation.
+ if (variant==='B') return {code:[40,160,520,height], line:58, cy:212,
+  eval:[640,392,592,76], tx:664, slots:slots(660,236), tether:true,
+  // Copies descend through the empty right side of the code, clear of memory labels.
+  copyBend:122+Math.max(...traces[scenario].source.map(s=>s.length))*charWidth,
+  port:50, output:[664,530], printFromEvaluation:true, wholeLine:true};
+ const scroll=Math.max(0,indexLine()-3)*58;
+ return {code:[40,28,1200,410], line:58, cy:86-scroll, gap:evaluationOpen?88:0,
+  eval:[100,106+indexLine()*58-scroll,1080,64], tx:560,
+  slots:slots((1280-count*112)/2,520), viewport:true};
+}
+function indexLine() { return traces[scenario].steps[index].line; }
+function pulse(begin) {
+ return `<animateTransform attributeName="transform" type="scale" `
+  +`values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" `
+  +`keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;
+}
+// Layout B copies the whole statement: the evaluated span sits between its context, and the
+// write destination changes to its variable color before the value starts moving.
+function statementParts(trace,g,line) {
+ const [start,end]=trace.expression_spans[line], source=trace.source[line];
+ if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
+ let prefix=source.slice(0,start), suffix=source.slice(end);
+ // Empty value-initialization has a real source span (`{}`), not an invented literal.
+ if(/^\s*\{\s*\}\s*$/.test(source.slice(start,end)) &&
+    /^(?:const\s+int|int(?:\s+const)?|auto)\s+\w+\s*$/.test(prefix)) {
+  prefix=prefix.trimEnd()+' = ';
+ }
+ // Brace initialization reads as an assignment of the evaluated value.
+ if(prefix.trimEnd().endsWith('{') && suffix.trimStart().startsWith('}')) {
+  prefix=prefix.trimEnd().slice(0,-1).trimEnd();
+  prefix+=prefix.endsWith('=')?' ':' = ';
+  suffix=suffix.trimStart().slice(1);
+ }
+ const name=trace.steps.find(s=>s.line===line && s.write)?.write;
+ const match=name ? [...prefix.matchAll(new RegExp('\\b'+name+'\\b','g'))].pop() : null;
+ return {prefix,suffix,target:match?{name,at:match.index}:null};
+}
+// Statement context around the evaluated span is muted so the expression stands out.
+function context(x,y,value) { return value ? text(x,y,value,30,'#6f7c8f') : ''; }
+// A filled outline sits beneath the glyphs it marks, without covering neighbouring glyphs.
+function markBox(x,y,length,stroke,fill) {
+ return `<rect x="${x-3}" y="${y-32}" width="${length*evalWidth+6}" height="42" rx="6" `
+  +`fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+}
+function prefixMarkup(x,y,parts,trace,state) {
+ const {prefix,target}=parts;
+ if(!target) return context(x,y,prefix);
+ const color=trace.variables.find(v=>v.name===target.name).color, grey='#6f7c8f';
+ const width=target.name.length*evalWidth, center=x+target.at*evalWidth+width/2;
+ const assigning=state==='assigning';
+ let name=`<g transform="translate(${center} ${y-11})">`;
+ name+='<g>'+(assigning?pulse(writeArrivalTime-0.1):'')
+  +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
+  +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
+  +(assigning?animateAttr('fill',grey,color,writeHighlight.fade):'')+'</text></g></g>';
+ return context(x,y,prefix.slice(0,target.at))+name
+  +context(x+(target.at+target.name.length)*evalWidth,y,prefix.slice(target.at+target.name.length));
+}
+// The evaluated span keeps the same background as its highlight in the code.
+function expressionBackground(g,x,y,length,animations='') {
+ return g.wholeLine
+  ? animated(rect(x-4,y-33,length*evalWidth+8,44,'#2e4059','none',6),animations) : '';
+}
+function glide(markup,dx,begin,duration) {
+ if(!dx) return markup;
+ return `<g><animateTransform attributeName="transform" type="translate" from="0 0" `
+  +`to="${dx} 0" begin="${begin}s" dur="${duration}s" ${ease} fill="freeze"/>`+markup+'</g>';
+}
+// The settled evaluation pane for a step, also used as the copy that arrives from the code.
+function settledPane(trace,g,step,x,y) {
+ const parts=statementParts(trace,g,step.line), start=x+parts.prefix.length*evalWidth;
+ return expressionBackground(g,start,y,step.expression.length)
+  +prefixMarkup(x,y,parts,trace,step.write?'written':'pending')
+  +colored(start,y,step.expression,trace,30)
+  +context(start+step.expression.length*evalWidth,y,parts.suffix);
+}
+function spanBox(trace,g,line,y) {
+ const [start,end]=trace.expression_spans[line];
+ return [g.code[0]+62+start*charWidth-3,y-30,(end-start)*charWidth+6,40];
+}
+function tetherPath(g,y) {
+ const [ex,ey,,eh]=g.eval;
+ return `M ${g.code[0]+g.code[2]+5} ${y-10} H ${g.code[0]+g.code[2]+50} V ${ey+eh/2} H ${ex}`;
+}
+// Export and scenario starts behave as if the page had just shown an empty, settled layout.
+function resetLayout() {
+ const g=geometry(variant==='B');
+ previousLayout={key:variant+scenario, open:variant==='B', height:g.code[3],
+  rows:traces[scenario].source.map((_,i)=>g.cy+i*g.line), eval:g.eval, expression:'', tx:g.tx};
+}
+function draw(animate=false, shift=false) {
+ clearTimeout(transferTimer);
+ const trace=traces[scenario], step=trace.steps[index];
+ const previous=trace.steps[Math.max(0,index-1)];
+ const transfer=animate && step.transfer!==null;
+ const arrival=transfer ? transferArrivalTime(step) : arrivalTime;
+ // A result remains visible until consumed, including during a write animation.
+ const evaluationOpen=variant==='B' || Boolean(step.expression &&
+  (transfer || (!step.write && !step.stdout)));
+ const g=geometry(evaluationOpen), key=variant+scenario;
+ const old=previousLayout?.key===key ? previousLayout : null;
+ const move=animate || shift;
+ const rows=trace.source.map((_,i)=>g.cy+i*g.line+(i>step.line?(g.gap || 0):0));
+ const values=transfer && step.write ? previous.values : step.values;
+ const lineChanged=move && old?.rows && old.line!==undefined && old.line!==step.line;
+ const output=g.output || [62,687];
+ const printing=g.printFromEvaluation && move && step.stdout && old?.stdout!==step.stdout;
+ let out='<defs><marker id="tip" markerWidth="10" markerHeight="10" refX="8" refY="5" '
+  +'orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10" '
+  +'fill="context-stroke"/></marker></defs>';
+ let code=rect(...g.code);
+ if(move && old && old.height!==g.code[3]) {
+  code=animated(code,animateAttr('height',old.height,g.code[3],0.5));
+ }
+ out+=code;
+ // Retain a fading evaluation row while the space closes, instead of removing it abruptly.
+ if(move && old?.open && !evaluationOpen) {
+  out+='<g>'+fade(1,0,0.35)+rect(...old.eval,'#202e42')
+   +(step.write ? '' : colored(old.tx,old.eval[1]+old.eval[3]-22,
+     old.expression,trace,30))+'</g>';
+ }
+ if(g.viewport) out+='<defs><clipPath id="code-viewport">'
+  +rect(...g.code)+'</clipPath></defs><g clip-path="url(#code-viewport)">';
+ // The active-line stripe and span highlight glide between lines instead of jumping.
+ {
+  const y=rows[step.line], box=spanBox(trace,g,step.line,y);
+  let stripe=rect(g.code[0]+8,y-32,4,44,step.write?'#f5e58b':'#9cbaff','none',0);
+  let span=rect(...box,'#2e4059','none',6);
+  if(lineChanged) {
+   const oldY=old.rows[old.line], oldBox=spanBox(trace,g,old.line,oldY);
+   stripe=animated(stripe,animateAttr('y',oldY-32,y-32));
+   span=animated(span,animateAttr('x',oldBox[0],box[0])+animateAttr('y',oldBox[1],box[1])
+    +animateAttr('width',oldBox[2],box[2]));
+  }
+  out+='<g data-active-line="highlight">'+stripe+span+'</g>';
+ }
+ trace.source.forEach((source,i)=>{
+  out+=`<g transform="translate(0 ${rows[i]})">`;
+  if(move && old && old.rows[i]!==rows[i]) {
+   out+=`<animateTransform attributeName="transform" type="translate" `
+    +`from="0 ${old.rows[i]}" to="0 ${rows[i]}" dur="0.5s" ${ease} fill="freeze"/>`;
+  }
+  out+=text(g.code[0]+22,0,i+1,18,'#a0afc2');
+  out+=colored(g.code[0]+62,0,source,trace);
+  out+='</g>';
+ });
+ if(g.viewport) out+='</g>';
+ let tether;
+ if(g.tether) {
+  tether=tetherPath(g,rows[step.line]);
+  out+=animated(`<path data-code-tether="bracket" d="${tether}" `
+   +`fill="none" stroke="#697d99" stroke-width="2"/>`,
+   lineChanged && old.tether ? animateAttr('d',old.tether,tether) : '');
+ }
+ if(variant==='C') out+=rect(40,488,1200,158,'#141e2b');
+ let [ex,ey,ew,eh]=g.eval;
+ if(evaluationOpen) {
+  out+='<g data-evaluation="open">';
+  if(move && old && !old.open) out+=fade(0,1,0.5);
+  out+=rect(ex,ey,ew,eh,'#202e42');
+ }
+ const tx=g.tx, ty=g.wholeLine ? ey+eh/2+11 : ey+eh-22;
+ const parts=statementParts(trace,g,step.line), start=tx+parts.prefix.length*evalWidth;
+ const length=step.expression.length;
+ const copySource=move && evaluationOpen && !transfer && (!old?.open || old.line!==step.line);
+ if(evaluationOpen) {
+  if(transfer && step.read) {
+   const [from,to]=step.read_span, before=previous.expression;
+   const dx=(String(step.transfer).length-(to-from))*evalWidth;
+   out+=expressionBackground(g,start,ty,before.length,dx ? animateAttr('width',
+    before.length*evalWidth+8,length*evalWidth+8,transferTiming.replace,arrivalTime) : '');
+   // Preparation links the operand to its memory cell before the copy departs.
+   out+='<g data-read-highlight="operand" opacity="0">'+fade(0,1,0.15)
+    +fade(1,0,0.2,arrivalTime-0.3)
+    +markBox(start+from*evalWidth,ty,to-from,'#9cbaff','#2c4775')+'</g>';
+   out+=prefixMarkup(tx,ty,parts,trace,'pending');
+   out+=colored(start,ty,before.slice(0,from),trace,30);
+   out+='<g data-replacement-old="operand">'+fade(1,0,transferTiming.replace,arrivalTime)
+    +colored(start+from*evalWidth,ty,before.slice(from,to),trace,30)+'</g>';
+   out+='<g data-replacement-new="operand" opacity="0">'
+    +fade(0,1,transferTiming.replace,arrivalTime)
+    +colored(start+from*evalWidth,ty,String(step.transfer),trace,30)+'</g>';
+   out+=glide(colored(start+to*evalWidth,ty,before.slice(to),trace,30)
+    +context(start+before.length*evalWidth,ty,parts.suffix),dx,arrivalTime,transferTiming.replace);
+  } else if(transfer && step.write) {
+   // The result stays; its boxed copy carries the value to the outlined destination.
+   out+=expressionBackground(g,start,ty,length)
+    +'<g data-write-source="result" opacity="0">'+fade(0,1,0.15)
+    +fade(1,0,0.2,arrival+0.15)+markBox(start,ty,length,'#f5e58b','#4a4630')+'</g>'
+    +prefixMarkup(tx,ty,parts,trace,'assigning')
+    +colored(start,ty,step.expression,trace,30)
+    +context(start+length*evalWidth,ty,parts.suffix);
+  } else if(copySource) {
+   // The highlighted statement lifts off as a boxed copy and follows the bracket into the
+   // pane, where the previous statement clears as it lands. The source line stays intact.
+   const [spanStart]=trace.expression_spans[step.line];
+   const sourceX=g.code[0]+62+(g.wholeLine?0:spanStart*charWidth), sourceY=rows[step.line];
+   const begin=lineChanged ? 0.3 : 0.15, travel=copyTravelSeconds, total=begin+travel;
+   const path=g.copyBend
+    ? `M ${sourceX} ${sourceY} C ${g.copyBend} ${sourceY}, ${g.copyBend} ${sourceY}, `
+     +`${g.copyBend} ${(sourceY+ty)/2} C ${g.copyBend} ${ty}, ${g.copyBend} ${ty}, ${tx} ${ty}`
+    : `M ${sourceX} ${sourceY} L ${tx} ${ty}`;
+   const width=(parts.prefix.length+length+parts.suffix.length)*evalWidth;
+   if(old?.pane) out+='<g>'+fade(1,0,0.3,begin+travel*0.2)+old.pane+'</g>';
+   out+=`<g data-source-copy="statement">`
+    +`<animateMotion dur="${total}s" path="${path}" keyPoints="0;0;1" `
+    +`keyTimes="0;${(begin/total).toFixed(4)};1" calcMode="spline" `
+    +`keySplines="0 0 1 1;0.4 0 0.2 1" fill="freeze"/><g transform="scale(${25/30})">`
+    +`<animateTransform attributeName="transform" type="scale" from="${25/30}" to="1" `
+    +`begin="${begin}s" dur="${travel}s" ${ease} fill="freeze"/>`
+    +'<g opacity="0">'+fade(0,1,0.15,begin-0.15)+fade(1,0,0.12,total)
+    +`<rect x="-8" y="-36" width="${width+16}" height="48" rx="7" fill="#2e4059" `
+    +`stroke="#9cbaff" stroke-width="2"/></g>`
+    +settledPane(trace,g,step,0,0)+'</g></g>';
+  } else {
+   const changed=move && !transfer && old?.open && old.expression!==step.expression;
+   if(changed) {
+    const before=old.expression.length, dx=(length-before)*evalWidth;
+    out+=expressionBackground(g,start,ty,before,
+      animateAttr('width',before*evalWidth+8,length*evalWidth+8,0.55))
+     +prefixMarkup(tx,ty,parts,trace,step.write?'written':'pending')
+     +transformExpression(start,ty,old.expression,step.expression,trace)
+     +glide(context(start+before*evalWidth,ty,parts.suffix),dx,0,0.55);
+   } else out+=settledPane(trace,g,step,tx,ty);
+  }
+ }
+ if(evaluationOpen) out+='</g>';
+ // Adjacent cells share an edge: grey borders go first, live ones next, active ones last.
+ const borders=[];
+ trace.variables.forEach((v,i)=>{
+  const [x,y,w,h]=g.slots[i], live=values[i]!==null || step.declared.includes(v.name)
+   || (transfer && step.write===v.name);
+  // Only the transfer itself highlights memory; the border settles back after arrival.
+  const active=transfer && [step.read,step.write].includes(v.name);
+  const highlight=step.write?'#f5e58b':'#9cbaff';
+  out+=text(x,y-16,v.address,18,live?'#a0afc2':'#697382');
+  out+=text(x+w/2,y+h+34,v.name,26,live?v.color:'#697382','middle');
+  out+=rect(x,y,w,h,live?'#192331':'#171d27','none',0);
+  borders.push([active?2:live?1:0,animated(rect(x,y,w,h,'none',live?
+   (active?highlight:v.color):'#47515f',0),
+   active ? `<animate attributeName="stroke" from="${highlight}" to="${v.color}" `
+    +`begin="${arrival+0.15}s" dur="0.35s" fill="freeze"/>` : '')]);
+  if(live) {
+   const centerX=x+w/2, centerY=y+h/2;
+   out+=`<g transform="translate(${centerX} ${centerY})"><g>`;
+   if(active) {
+    const begin=step.write ? arrival-0.2 : 0;
+    out+=pulse(begin);
+   }
+   if(transfer && step.write===v.name) {
+    if(previous.values[i]!==null) out+='<g data-replacement-old="memory">'
+     +fade(1,0,transferTiming.replace,arrival)
+     +text(0,11,previous.values[i],30,'#eef3fa','middle')+'</g>';
+    // The arriving glyph hands off to the slot value at the exact same coordinates.
+    out+='<g data-replacement-new="memory" opacity="0">'
+     +fade(0,1,transferTiming.replace,arrival)
+     +text(0,11,step.values[i],30,'#eef3fa','middle')+'</g>';
+   } else out+=text(0,11,values[i]===null?'?':values[i],30,
+    values[i]===null?'#a0afc2':'#eef3fa','middle');
+   out+='</g></g>';
+  }
+ });
+ out+=borders.sort((a,b)=>a[0]-b[0]).map(border=>border[1]).join("");
+ if(transfer) {
+  const name=step.read || step.write, vi=trace.variables.findIndex(v=>v.name===name);
+  const [mx,my,mw,mh]=g.slots[vi];
+  let sx,sy,dx,dy,path,arrow;
+  const operand=step.read ? step.read_span[0] : 0;
+  const cx=start+(operand+String(step.transfer).length/2)*evalWidth, cy=ty-11;
+  // A smooth curve joins the actual glyph centers, avoiding a final positional jump.
+  sx=mx+mw/2; sy=my+mh/2;
+  dx=cx; dy=cy;
+  let readPath,writePath;
+  if(variant==='A') {
+   // Route beside the names, through the short gap at the end of the bridge.
+   const above=dy<sy, lane=above?my-48:my+mh+64;
+   const port=above?sx:sx+(step.write?36:-36);
+   readPath=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${lane}, 710 ${lane} `
+    +`C 680 ${lane}, 680 ${dy}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C 680 ${dy}, 680 ${lane}, 710 ${lane} `
+    +`C ${port} ${lane}, ${port} ${sy}, ${sx} ${sy}`;
+  } else if(variant==='B') {
+   // Names sit below memory; side ports keep the boxed value clear of their glyphs.
+   const port=sx+(step.write?g.port:-g.port), middle=(my+mh+dy)/2;
+   readPath=`M ${sx} ${sy} C ${port} ${sy}, ${port} ${middle}, ${port} ${middle} `
+    +`C ${port} ${dy}, ${dx} ${middle}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C ${dx} ${middle}, ${port} ${dy}, ${port} ${middle} `
+    +`C ${port} ${middle}, ${port} ${sy}, ${sx} ${sy}`;
+  } else {
+   // The centered memory band aligns with the evaluation work area beside the code.
+   const middle=(sy+dy)/2;
+   readPath=`M ${sx} ${sy} C ${sx} ${middle}, ${dx} ${middle}, ${dx} ${dy}`;
+   writePath=`M ${dx} ${dy} C ${dx} ${middle}, ${sx} ${middle}, ${sx} ${sy}`;
+  }
+  path=step.write?writePath:readPath;
+  const color=step.write?'#f5e58b':'#9cbaff';
+  // The arrow is trimmed to the box outline at both ends, so it never crosses a value glyph,
+  // and it is gone before the box fades out on arrival.
+  const [halfWidth,halfHeight]=valueBoxHalfSize(step.transfer);
+  arrow=`<path data-arrow="${color}" data-box="${halfWidth+4} ${halfHeight+4}" d="${path}" `
+   +`fill="none" stroke="${color}" stroke-width="3"/>`;
+  const departure=transferDepartureTime(step);
+  out+='<g opacity="0">'+fade(0,0.65,0.25,departure)
+   +fade(0.65,0,0.2,arrival-0.2)+arrow+'</g>';
+  out+=valueBox(name,step.transfer,color,path,departure,transferTiming.travel,arrival);
+ }
+ if(step.stdout) {
+  const [ox,oy]=output, label=trace.output_label??'Output: ';
+  if(g.printFromEvaluation) {
+   const vx=ox+label.length*26*.602;
+   const previousOutput=old?.stdout || '';
+   const appended=step.stdout.startsWith(previousOutput)?step.stdout.slice(previousOutput.length):step.stdout;
+   const chunk=appended.replace(/\n$/,'');
+   const lines=previousOutput.split('\n');
+   const destinationX=vx+lines[lines.length-1].length*evalWidth;
+   const destinationY=oy+(lines.length-1)*36;
+   out+='<g>'+(printing?'<g opacity="0">'+fade(0,1,0.25):'<g>')
+    +text(ox,oy,label,26,'#a0afc2')+'</g>';
+   if(printing) {
+    const width=chunk.length*evalWidth;
+    const path=`M ${start+step.expression.length*evalWidth/2} ${ty-11} `
+     +`C ${start+step.expression.length*evalWidth/2} ${destinationY-30}, `
+     +`${destinationX+width/2} ${ty+20}, ${destinationX+width/2} ${destinationY-11}`;
+    out+=text(vx,oy,previousOutput,30);
+    if(chunk) out+=valueBox('stdout',chunk,'#a0afc2',path,0.2,0.6,0.8);
+    out+='<g opacity="0">'+fade(0,1,0.15,0.8)
+     +text(destinationX,destinationY,appended,30)+'</g>';
+   } else out+=text(vx,oy,step.stdout,30);
+   out+='</g>';
+  } else out+=text(ox,oy,label+step.stdout,26);
+ }
+ $('stage').innerHTML=out;
+ trimArrows();
+ $('description').textContent=descriptions[variants.indexOf(variant)];
+ $('variantName').textContent=variant+' · '+names[variants.indexOf(variant)];
+ $('scrub').max=trace.steps.length-1; $('scrub').value=index;
+ $('count').textContent=`${index+1} / ${trace.steps.length}`;
+ $('state').textContent=trace.variables.map((v,i)=>v.name+' = '+(step.values[i]===null?
+  (step.declared.includes(v.name)?'uninitialized':'unallocated'):step.values[i])).join(' · ')
+  +' · expression: '+step.expression+(step.stdout?' · output: '+step.stdout:'');
+ previousLayout={key,rows,height:g.code[3],open:evaluationOpen,eval:g.eval,
+  expression:step.expression,line:step.line,tx,tether,stdout:step.stdout,
+  pane:evaluationOpen ? settledPane(trace,g,step,tx,ty) : ''};
+ if(transfer) transferTimer=setTimeout(()=>draw(false,true),transferSecondsFor(step)*1000);
+}
+function valueBoxHalfSize(value) {
+ const width=String(value).length*evalWidth;
+ return [Math.max(28,width/2+12),25];
+}
+// Shorten each transfer arrow so it starts and ends at the moving box's outline,
+// then draw its head at the new end, pointing along the path.
+function trimArrows() {
+ for(const arrow of document.querySelectorAll('#stage [data-arrow]')) {
+  const [halfWidth,halfHeight]=arrow.dataset.box.split(' ').map(Number);
+  const length=arrow.getTotalLength();
+  const exit=(at,toward)=>{
+   const a=arrow.getPointAtLength(at), b=arrow.getPointAtLength(toward);
+   const dx=Math.abs(b.x-a.x)||1e-6, dy=Math.abs(b.y-a.y)||1e-6, d=Math.hypot(dx,dy);
+   return Math.min(halfWidth*d/dx,halfHeight*d/dy);
+  };
+  const start=exit(0,Math.min(length,4)), end=exit(length,Math.max(0,length-4));
+  const visible=Math.max(0,length-start-end-10);
+  arrow.setAttribute('stroke-dasharray',`0 ${start} ${visible} ${length}`);
+  const tip=arrow.getPointAtLength(length-end), back=arrow.getPointAtLength(length-end-10);
+  const angle=Math.atan2(tip.y-back.y,tip.x-back.x)*180/Math.PI;
+  const head=document.createElementNS('http://www.w3.org/2000/svg','path');
+  head.setAttribute('d','M -10 -6 L 0 0 L -10 6 Z');
+  head.setAttribute('fill',arrow.dataset.arrow);
+  head.setAttribute('transform',`translate(${tip.x} ${tip.y}) rotate(${angle})`);
+  arrow.after(head);
+ }
+}
+// A boxed value fades in at departure, travels along the route, and vanishes on arrival.
+function valueBox(name,value,color,path,begin,travel,arrival) {
+ return `<g data-transfer-value="${name}" opacity="0">`
+  +fade(0,1,0.12,begin)+fade(1,0,transferTiming.replace,arrival)
+  +rect(-valueBoxHalfSize(value)[0],-25,2*valueBoxHalfSize(value)[0],50,'#192331',color,9)
+  +text(0,11,value,30,'#eef3fa','middle')
+  +`<animateMotion begin="${begin}s" dur="${travel}s" path="${path}" `
+  +`keyPoints="0;1" ${ease} fill="freeze"/></g>`;
+}
+function stop() {playing=false; clearTimeout(timer); $('play').textContent='Play';}
+function advance(delta) {stop();index=Math.max(0,Math.min(traces[scenario].steps.length-1,index+delta));draw(true);}
+function tick() {
+ if(!playing)return;
+ if(index===traces[scenario].steps.length-1){stop();return;}
+ index++;draw(true);timer=setTimeout(tick,stepSeconds(index)*1000);
+}
+$('play').onclick=()=>{
+ if(playing){stop();return;}
+ if(index===traces[scenario].steps.length-1)index=0;
+ playing=true;$('play').textContent='Pause';draw();timer=setTimeout(tick,1000);
+};
+$('next').onclick=()=>advance(1); $('back').onclick=()=>advance(-1);
+$('scrub').oninput=e=>{stop();index=Number(e.target.value);draw();};
+$('scenario').onchange=e=>{stop();scenario=Number(e.target.value);index=0;resetLayout();draw();};
+function changeVariant(delta) {
+ variant=variants[(variants.indexOf(variant)+delta+3)%3];
+ const url=new URL(location.href);url.searchParams.set('variant',variant);
+ try { history.replaceState(null,'',url); } catch (error) {
+  if(error.name!=='SecurityError') throw error;
+ }
+ draw();
+}
+$('prevVariant').onclick=()=>changeVariant(-1);$('nextVariant').onclick=()=>changeVariant(1);
+document.addEventListener('keydown',e=>{
+ if(e.target.closest('input,textarea,select,[contenteditable]'))return;
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();changeVariant(e.key==='ArrowLeft'?-1:1);}
+});
+draw();
+</script>
+</html>'''
+
+if __name__ == '__main__':
+    target = Path(__file__).with_name('layout-prototype.html')
+    target.write_text(PAGE.replace('__TRACES__', json.dumps([asdict(t) for t in TIMELINES])))
+    print(target)

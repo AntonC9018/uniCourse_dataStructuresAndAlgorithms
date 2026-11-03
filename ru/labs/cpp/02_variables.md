@@ -151,6 +151,16 @@ b = 7;
 std::cout << a << std::endl;
 ```
 
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/91b71430-0272-435e-b03a-6d296b43b624"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/91b71430-0272-435e-b03a-6d296b43b624"></video>
+
+</details>
+
 ### 5. Литералы, переменные и операторы — это выражения
 ```cpp
 int a = 5;
@@ -159,6 +169,16 @@ int c = a + 6;
 std::cout << b << std::endl;
 std::cout << c << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/c87766e5-78e8-4d2d-bc69-57ed505dae46"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/c87766e5-78e8-4d2d-bc69-57ed505dae46"></video>
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -189,6 +209,16 @@ int b = a + 6;
 a = 7;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/01babebd-f6d0-4649-aa9c-90adc944f193"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/01babebd-f6d0-4649-aa9c-90adc944f193"></video>
+
+</details>
 
 <details>
 <summary>Что произойдёт?</summary>
@@ -289,6 +319,16 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/a75eec18-6aff-4706-a63c-617d2fa20068"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/a75eec18-6aff-4706-a63c-617d2fa20068"></video>
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Пустые фигурные скобки означают, что в переменную сразу записывается значение по умолчанию.
@@ -308,6 +348,16 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/8655c66d-2e6e-4d36-98cd-d9a72d83468d"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/8655c66d-2e6e-4d36-98cd-d9a72d83468d"></video>
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Печатает `0`.
@@ -324,6 +374,16 @@ int b = int{};
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/b42e23ad-8138-42bb-8640-ab976d7ad5b4"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/b42e23ad-8138-42bb-8640-ab976d7ad5b4"></video>
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -417,6 +477,16 @@ auto b{ a + 5 };
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/32768a65-66ed-4364-a652-15d7e7f968a9"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/32768a65-66ed-4364-a652-15d7e7f968a9"></video>
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 `auto` учитывает тип всего выражения, а не то, является ли оно литералом.
@@ -433,6 +503,16 @@ b = a;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/c2292472-6cf4-4ba1-86be-de79c4b39585"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/c2292472-6cf4-4ba1-86be-de79c4b39585"></video>
+
+</details>
 
 <details>
 <summary>Ответ</summary>
