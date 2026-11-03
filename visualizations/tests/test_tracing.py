@@ -94,6 +94,7 @@ int main() {
             "int a{1}; int b=a%0;",
             "double a{1.5};", "bool a{true};", "static int a{1};",
             "int a{1}; while(a) a=0;", "int a{1}; if(a) a=0;",
+            "int a{1}; alignas(16) int b{2}; a=b;",
             "int a{1}; std::cout << a << a;",  # multiple evaluated operands
             "#define VALUE 1\nint a{VALUE};",
             "int __course_checkpoint{5};",

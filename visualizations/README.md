@@ -37,7 +37,8 @@ addresses, so declaration order may differ from the manual reference fixtures. N
 are published. Unchanged-value writes, such as the failed swap, remain visible writes.
 
 The approved layout currently fits up to three four-byte integers, six source lines of 30 columns,
-31-column evaluated statements, and four output lines. The pane has a little more width than the
+31-column evaluated statements, and four output lines. Declaration attributes and noncontiguous
+frame locations are rejected rather than drawn as adjacent cells. The pane has a little more width than the
 prototype to accommodate two-digit results alongside `std::endl`. Ineligible examples remain
 unchanged; later prototypes can extend coverage without guessing unsupported behavior.
 

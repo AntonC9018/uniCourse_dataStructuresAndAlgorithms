@@ -227,6 +227,8 @@ def _statement(node: dict, program: str, initialized: dict, names: list) -> Stat
         if len(children) != 1 or children[0].get("kind") != "VarDecl":
             raise Unsupported("one scalar declaration per statement is required")
         variable = children[0]
+        if any(child.get("kind", "").endswith("Attr") for child in variable.get("inner", [])):
+            raise Unsupported("declaration attributes need a separate memory-layout visualization")
         if variable.get("type", {}).get("qualType") not in {"int", "const int"}:
             raise Unsupported("only scalar int variables fit this category")
         target, declaration = variable["name"], True
