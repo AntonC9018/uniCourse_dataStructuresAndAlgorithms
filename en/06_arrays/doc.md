@@ -241,6 +241,16 @@ int main()
     // and copies each int from `arr`.
     std::array<int, 4> copy = arr;
 
+    // The length is part of the type, so arrays of different sizes
+    // are incompatible types and can't be assigned to each other,
+    // whether the target is larger or smaller than the source.
+    std::array<int, 8> larger{};
+    std::array<int, 2> smaller{};
+    // larger = arr;  // Error: std::array<int, 4> is not std::array<int, 8>
+    // smaller = arr; // Error: std::array<int, 4> is not std::array<int, 2>
+    // arr = larger;  // Error: std::array<int, 8> is not std::array<int, 4>
+    // arr = smaller; // Error: std::array<int, 2> is not std::array<int, 4>
+
     // Now some more magic: it can actually understand that 
     // you mean the `int` type and the length automatically, 
     // if you use the brace initialization with concrete values.
