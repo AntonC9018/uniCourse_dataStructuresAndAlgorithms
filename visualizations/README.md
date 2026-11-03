@@ -109,6 +109,11 @@ Open `visualizations/website-controls-prototype.html?variant=A` for compact tran
 `?variant=B` for a step navigator, or `?variant=C` for statement chapters. The floating switcher
 and left/right arrow keys change variants while preserving playback state.
 
+The compact transport is the preferred direction. Click a line in either the lesson's code block
+or the animation to jump to the start of that statement. Earlier writes and output are restored,
+playback pauses, and Next animates execution from that point. Code lines also support keyboard
+selection with Enter or Space.
+
 The prototype embeds the same SVG renderer used for the exported videos. Next and Replay animate
 the transition; Back and direct step selection show the settled state. Play/Pause freezes and
 resumes the SVG clock, and speed controls change both movement and holds. Expression and failed
