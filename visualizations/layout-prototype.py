@@ -109,6 +109,8 @@ function fade(from,to,duration=0.5,begin=0) {
   +`dur="${duration}s" begin="${begin}s" ${ease} fill="freeze"/>`;
 }
 function text(x,y,value,size=26,color='#eef3fa',anchor='start') {
+ if(String(value).includes('\n')) return String(value).split('\n')
+  .map((line,i)=>text(x,y+i*36,line,size,color,anchor)).join('');
  return `<text x="${x}" y="${y}" font-family="${mono}" font-size="${size}" `
  + `fill="${color}" text-anchor="${anchor}" xml:space="preserve">${esc(value)}</text>`;
 }
@@ -162,7 +164,7 @@ function geometry(evaluationOpen) {
   slots:slots(720,230)};
  // B centers the composition vertically; output sits right under evaluation.
  if (variant==='B') return {code:[40,160,520,height], line:58, cy:212,
-  eval:[640,392,540,76], tx:664, slots:slots(660,236), tether:true,
+  eval:[640,392,592,76], tx:664, slots:slots(660,236), tether:true,
   // Copies descend through the empty right side of the code, clear of memory labels.
   copyBend:122+Math.max(...traces[scenario].source.map(s=>s.length))*charWidth,
   port:50, output:[664,530], printFromEvaluation:true, wholeLine:true};
@@ -183,9 +185,15 @@ function statementParts(trace,g,line) {
  const [start,end]=trace.expression_spans[line], source=trace.source[line];
  if(!g.wholeLine) return {prefix:'',suffix:'',target:null};
  let prefix=source.slice(0,start), suffix=source.slice(end);
+ // Empty value-initialization has a real source span (`{}`), not an invented literal.
+ if(/^\s*\{\s*\}\s*$/.test(source.slice(start,end)) &&
+    /^(?:const\s+)?(?:int|auto)\s+\w+\s*$/.test(prefix)) {
+  prefix=prefix.trimEnd()+' = ';
+ }
  // Brace initialization reads as an assignment of the evaluated value.
- if(prefix.endsWith('{') && suffix.startsWith('}')) {
-  prefix=prefix.slice(0,-1)+' = '; suffix=suffix.slice(1);
+ if(prefix.trimEnd().endsWith('{') && suffix.trimStart().startsWith('}')) {
+  prefix=prefix.trimEnd().slice(0,-1).trimEnd()+' = ';
+  suffix=suffix.trimStart().slice(1);
  }
  const name=trace.steps.find(s=>s.line===line && s.write)?.write;
  const match=name ? [...prefix.matchAll(new RegExp('\\b'+name+'\\b','g'))].pop() : null;
@@ -461,17 +469,26 @@ function draw(animate=false, shift=false) {
   out+=valueBox(name,step.transfer,color,path,departure,transferTiming.travel,arrival);
  }
  if(step.stdout) {
-  const [ox,oy]=output, label='Output: ';
+  const [ox,oy]=output, label=trace.output_label??'Output: ';
   if(g.printFromEvaluation) {
-   const vx=ox+label.length*26*.602, width=step.stdout.length*evalWidth;
+   const vx=ox+label.length*26*.602;
+   const previousOutput=old?.stdout || '';
+   const appended=step.stdout.startsWith(previousOutput)?step.stdout.slice(previousOutput.length):step.stdout;
+   const chunk=appended.replace(/\n$/,'');
+   const lines=previousOutput.split('\n');
+   const destinationX=vx+lines[lines.length-1].length*evalWidth;
+   const destinationY=oy+(lines.length-1)*36;
    out+='<g>'+(printing?'<g opacity="0">'+fade(0,1,0.25):'<g>')
     +text(ox,oy,label,26,'#a0afc2')+'</g>';
    if(printing) {
-    const path=`M ${start+width/2} ${ty-11} C ${start+width/2} ${oy-30}, `
-     +`${vx+width/2} ${ty+20}, `
-     +`${vx+width/2} ${oy-11}`;
-    out+=valueBox('stdout',step.stdout,'#a0afc2',path,0.2,0.6,0.8);
-    out+='<g opacity="0">'+fade(0,1,0.15,0.8)+text(vx,oy,step.stdout,30)+'</g>';
+    const width=chunk.length*evalWidth;
+    const path=`M ${start+step.expression.length*evalWidth/2} ${ty-11} `
+     +`C ${start+step.expression.length*evalWidth/2} ${destinationY-30}, `
+     +`${destinationX+width/2} ${ty+20}, ${destinationX+width/2} ${destinationY-11}`;
+    out+=text(vx,oy,previousOutput,30);
+    if(chunk) out+=valueBox('stdout',chunk,'#a0afc2',path,0.2,0.6,0.8);
+    out+='<g opacity="0">'+fade(0,1,0.15,0.8)
+     +text(destinationX,destinationY,appended,30)+'</g>';
    } else out+=text(vx,oy,step.stdout,30);
    out+='</g>';
   } else out+=text(ox,oy,label+step.stdout,26);

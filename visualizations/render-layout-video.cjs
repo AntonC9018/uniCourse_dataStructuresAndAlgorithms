@@ -10,6 +10,7 @@ const { spawn } = require('node:child_process');
 const { once } = require('node:events');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
+const fs = require('node:fs');
 
 async function main() {
   const example = process.argv[2] || 'expression';
@@ -18,7 +19,9 @@ async function main() {
   const layout=process.argv[3] || 'memory-strip';
   const selectedVariant=layouts[layout];
   if(!selectedVariant) throw Error('Choose bridge, memory-strip or memory-band');
-  const target = path.join(__dirname, 'renders', `layout-${layout}-${example}-720p.mp4`);
+  const target = process.env.VISUALIZATION_OUTPUT ||
+    path.join(__dirname, 'renders', `layout-${layout}-${example}-720p.mp4`);
+  const input = process.env.VISUALIZATION_INPUT || path.join(__dirname, 'layout-prototype.html');
   const browser = await chromium.launch({
     headless: true,
     ...(process.env.COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE
@@ -31,7 +34,7 @@ async function main() {
     page.on('pageerror', error => errors.push(String(error)));
     // The export clock drives transitions; wall-clock callbacks must not change frames.
     await page.addInitScript(() => { window.setTimeout = () => 0; });
-    await page.goto(pathToFileURL(path.join(__dirname, 'layout-prototype.html')).href
+    await page.goto(pathToFileURL(input).href
       + '?variant='+selectedVariant);
     await page.evaluate(() => {
       for (const child of document.body.children) {
@@ -46,6 +49,22 @@ async function main() {
       resetLayout();
       return traces[scenario].steps;
     }, example === 'expression' ? 0 : 1);
+    if (process.env.VISUALIZATION_FORMAT === 'static') {
+      const svg = await page.evaluate(() => {
+        index = traces[scenario].steps.length - 1;
+        draw();
+        const stage=document.getElementById('stage');
+        stage.setAttribute('xmlns','http://www.w3.org/2000/svg');
+        stage.setAttribute('width','1280');stage.setAttribute('height','720');
+        const background=document.createElementNS(stage.namespaceURI,'rect');
+        for(const [key,value] of Object.entries({width:1280,height:720,fill:'#101722'}))
+          background.setAttribute(key,value);
+        stage.prepend(background);
+        return stage.outerHTML;
+      });
+      fs.writeFileSync(target, svg);
+      return;
+    }
     encoder = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe',
       '-framerate', '60', '-i', '-', '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
       '-crf', '18', '-movflags', '+faststart', target], { stdio: ['pipe', 'inherit', 'inherit'] });
