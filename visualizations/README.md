@@ -86,9 +86,10 @@ slider for every state, including `a + 6`, `5 + 6`, `11`, and the subsequent wri
 It is self-contained and requires no server. Generate it with `python3 visualizations/review.py`
 after the MP4 files exist. Generated HTML is ignored by the course repository.
 
-- [Expression SVG](renders/expression.svg) and [MP4](renders/expression.mp4).
-- [Failed swap SVG](renders/swap.svg) and [MP4](renders/swap.mp4).
-- Numbered SVGs are individual states; unnumbered SVGs are the final snapshots.
+Generated SVGs and videos live in the ignored `visualizations/renders/` directory. Run the
+commands under **Reproduce** to create `expression.svg`, `expression.mp4`, `swap.svg`, and
+`swap.mp4` locally. Numbered SVGs are individual states; unnumbered SVGs are the final snapshots.
+Published lesson media lives in GitHub attachments referenced by `assets.json`.
 
 Expected final states: expression `a = 7`, `b = 11`, stdout `11`; failed swap `a = 2`, `b = 2`.
 The last frame holds for 3.5 seconds; key lesson moments get extra emphasis and pauses.
@@ -101,7 +102,7 @@ contiguous memory sits above a fixed, unlabeled evaluation pane on the right, an
 appears just below it. Pane text, memory, and output share one left edge. A bracket links the
 active line to the pane and glides with the active-line highlight when the statement changes.
 
-- [Expression test video](renders/layout-memory-strip-expression-720p.mp4), 1280 × 720, 60 fps.
+- The expression test video is exported at 1280 × 720, 60 fps.
 - Each statement is copied once, whole and unhurried (1.2 s of travel, with extra step time):
   it lifts off in an opaque box, descends through the empty right side of the code, and
   replaces the previous statement as it lands. The source line stays intact.
@@ -138,10 +139,9 @@ node visualizations/render-layout-video.cjs expression
 It requires Playwright, Chromium, and ffmpeg. Set `PLAYWRIGHT_MODULE` to an installed Playwright
 package when it is outside Node's module search path, and optionally set
 `COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE` to the Chromium executable from the existing Nix shell.
-Earlier comparison renders remain for reference:
-[bridge row](renders/layout-bridge-expression-720p.mp4),
-[code above memory](renders/layout-memory-band-expression-720p.mp4), and the
-[previous inline layout](renders/layout-a-expression-720p.mp4).
+The output is `visualizations/renders/layout-memory-strip-expression-720p.mp4`. To reproduce
+the comparison layouts, pass `bridge` or `memory-band` as the second argument. Generated
+comparisons remain local and are not committed.
 
 ## Original Manim visual contract
 
