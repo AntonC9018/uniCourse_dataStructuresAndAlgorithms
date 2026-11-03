@@ -61,6 +61,16 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d"></video>
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Выведутся `5` и `6`.
