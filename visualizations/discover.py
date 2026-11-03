@@ -59,7 +59,8 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
                              if path.is_relative_to(repo / lang.root)), 'en')
             summary = SUMMARIES.get(language, SUMMARIES['en'])
             insertions.append((fence.end, '\n<details>\n<summary>' + summary + '</summary>\n\n'
-                               '<!-- <visualization type="animation" /> -->\n\n</details>\n'))
+                               '<!-- <visualization type="animation"> -->\n\n'
+                               '<!-- </visualization> -->\n\n</details>\n'))
         if apply and insertions:
             for at, markup in reversed(insertions):
                 original = original[:at] + markup + original[at:]

@@ -25,8 +25,9 @@ python3 course_maintenance/publish.py visualizations generate --course-repo .
 ```
 
 Discovery adds minimal tags in collapsed, localized execution-trace blocks. Maintenance renders
-only missing or changed media, uploads to the durable [asset issue], and fills the marker and bare
-attachment paragraph. The site projection turns that paragraph into a video player. Identical English/Russian sources share one language-neutral attachment. Assets and
+only missing or changed media, uploads to the durable [asset issue], and places the bare attachment
+URL between paired visualization markers. The site projection turns the block into a video player.
+Identical English/Russian sources share one language-neutral attachment. Assets and
 exact sources are recorded in `assets.json`; no source hash or manually authored trace is needed.
 Old assets remain available. Moving a tag or rerunning unchanged maintenance performs no upload.
 
