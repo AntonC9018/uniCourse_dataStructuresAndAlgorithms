@@ -478,6 +478,16 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization type="animation"
+     src="https://github.com/user-attachments/assets/08e680f6-4e8c-4658-82d0-1501fa9d3116"> -->
+<video controls
+  src="https://github.com/user-attachments/assets/08e680f6-4e8c-4658-82d0-1501fa9d3116"></video>
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `auto` figures out the type (`int`) but not the reference:
