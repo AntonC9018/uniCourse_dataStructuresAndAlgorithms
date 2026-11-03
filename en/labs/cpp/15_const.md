@@ -64,9 +64,9 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization type="animation"
-     src="https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d"> -->
-<video controls
-  src="https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d"></video>
+     src="https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d" /> -->
+
+https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d
 
 </details>
 
