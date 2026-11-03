@@ -3,12 +3,80 @@
 Review checkpoint for [#57], the first prototype in [epic #50]. Does one visual language make
 expression evaluation, copying a value, and overwriting a value understandable?
 
-This is a manual trace and a provisional shared library, awaiting design review. The failed swap
-uses exactly the same renderer as the expression example. Later categories should import the base
-rather than copy its layout. The labs have not been edited.
+The under-memory expression timeline is approved and integrated automatically into applicable
+C++ examples. The original manual traces remain as reference fixtures; generated lesson assets
+come from compiler-checked sources and GDB-verified runtime state. Other categories remain separate.
 
 [#57]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/57
 [epic #50]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/50
+
+## Automatic lesson integration
+
+`discover.py` inventories all outside-answer C++ fences under the configured lab roots. Clang
+checks syntax and types; an AST whitelist accepts only flat, side-effect-free integer examples.
+Pointers, references, structures, casts, booleans, control flow, ill-formed snippets and undefined
+reads/arithmetic are skipped with explicit reasons. A plain literal-initialized cell gets no
+visualization. Empty initialization, value copies, arithmetic, assignments and output do.
+
+```sh
+python3 visualizations/discover.py --report /tmp/visualization-inventory.json
+python3 visualizations/discover.py --apply
+python3 course_maintenance/publish.py visualizations generate --course-repo .
+```
+
+Discovery adds minimal tags in collapsed, localized execution-trace blocks. Maintenance renders
+only missing or changed media, uploads to the durable [asset issue], and fills the marker and raw
+video embed. Identical English/Russian sources share one language-neutral attachment. Assets and
+exact sources are recorded in `assets.json`; no source hash or manually authored trace is needed.
+Old assets remain available. Moving a tag or rerunning unchanged maintenance performs no upload.
+
+Generation uses Clang AST types and operation ranges to build expression reductions. GDB verifies
+every post-statement value, output, integer size, and frame location before rendering. Addresses
+are normalized relative to observed stack offsets, starting at 64. Cells are ordered by those
+addresses, so declaration order may differ from the manual reference fixtures. No ASLR addresses
+are published. Unchanged-value writes, such as the failed swap, remain visible writes.
+
+The approved layout currently fits up to three four-byte integers, six source lines of 30 columns,
+31-column evaluated statements, and four output lines. The pane has a little more width than the
+prototype to accommodate two-digit results alongside `std::endl`. Ineligible examples remain
+unchanged; later prototypes can extend coverage without guessing unsupported behavior.
+
+Local dependencies are Clang with C++ standard headers, Python-enabled GDB, Node, Chromium,
+ffmpeg, and DejaVu Sans Mono. Playwright is pinned in `package-lock.json`:
+
+```sh
+npm ci --prefix visualizations
+export COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE=/path/to/chromium
+# Optional when tools are outside PATH:
+export CLANGXX=/path/to/clang++
+export GDB=/path/to/gdb
+```
+
+The existing course-management Nix shell supplies Chromium, ffmpeg, and fonts. Compiler/GDB
+paths can point to existing declarative installations. No global Python or npm install is needed.
+`PLAYWRIGHT_MODULE` can select an existing compatible Playwright package instead of the local one.
+
+For a single source, inspect the derived trace or render it directly:
+
+```sh
+python3 visualizations/generate.py probe --source /tmp/snippet.cpp
+python3 visualizations/generate.py trace --source /tmp/snippet.cpp
+python3 visualizations/generate.py render --source /tmp/snippet.cpp --output /tmp/trace.mp4
+python3 visualizations/generate.py render --source /tmp/snippet.cpp \
+  --type static --output /tmp/trace.svg
+```
+
+The same approved SVG player supplies static snapshots and 720p/60 fps animations. Multiple printed
+values append to the visible output; only the newly printed value moves. Empty-brace initialization
+retains its real source highlight and transforms into zero. Compiler/GDB tests run locally with
+`python3 -m unittest discover -s visualizations/tests`. CI never installs or runs these tools:
+maintenance checks tag/source/manifest consistency and anonymous asset availability only.
+
+See [the maintenance contract] for grammar, source-fence lookup, cache invalidation, failure
+recovery, and read-only CI behavior.
+
+[asset issue]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/67
+[the maintenance contract]: ../course_maintenance/docs/visualization-assets.md
 
 ## Review
 
@@ -143,9 +211,8 @@ metrics and Manim uses Pango, so glyph baselines can differ slightly; the layout
 The current canvas fits three memory rows and ten source lines. Memory wraps horizontally
 at variable boundaries. Objects wider than one row must first be represented as integer-sized
 slots; pointer-arrow routing remains part of the pointer prototype.
-No automatic AST/GDB tracing, tag grammar, uploads, source hashes, or maintenance integration
-is implemented here. `course-publishing.json` will point at this directory when integration
-is designed.
+The original Manim adapter is retained for reference. Automatic lesson integration uses the
+approved SVG player and the compiler-backed adapter described above.
 
 ## Reproduce
 
