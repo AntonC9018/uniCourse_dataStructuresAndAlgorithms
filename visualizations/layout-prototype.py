@@ -165,8 +165,6 @@ function geometry(evaluationOpen) {
  // B centers the composition vertically; output sits right under evaluation.
  if (variant==='B') return {code:[40,160,520,height], line:58, cy:212,
   eval:[640,392,592,76], tx:664, slots:slots(660,236), tether:true,
-  // Copies descend through the empty right side of the code, clear of memory labels.
-  copyBend:122+Math.max(...traces[scenario].source.map(s=>s.length))*charWidth,
   port:50, output:[664,530], printFromEvaluation:true, wholeLine:true};
  const scroll=Math.max(0,indexLine()-3)*58;
  return {code:[40,28,1200,410], line:58, cy:86-scroll, gap:evaluationOpen?88:0,
@@ -216,8 +214,10 @@ function prefixMarkup(x,y,parts,trace,state) {
  let name=`<g transform="translate(${center} ${y-11})">`;
  name+='<g>'+(assigning?pulse(writeArrivalTime-0.1):'')
   +`<text x="${-width/2}" y="11" font-family="${mono}" font-size="30" `
-  +`fill="${state==='written'?color:grey}" xml:space="preserve">${esc(target.name)}`
-  +(assigning?animateAttr('fill',grey,color,writeHighlight.fade):'')+'</text></g></g>';
+  +`data-assignment-target="${esc(target.name)}" fill="${grey}" `
+  +`xml:space="preserve">${esc(target.name)}`
+  +(assigning?animateAttr('fill',grey,color,writeHighlight.fade)
+    +animateAttr('fill',color,grey,0.35,writeArrivalTime+0.15):'')+'</text></g></g>';
  return context(x,y,prefix.slice(0,target.at))+name
   +context(x+(target.at+target.name.length)*evalWidth,y,prefix.slice(target.at+target.name.length));
 }
@@ -356,15 +356,12 @@ function draw(animate=false, shift=false) {
     +colored(start,ty,step.expression,trace,30)
     +context(start+length*evalWidth,ty,parts.suffix);
   } else if(copySource) {
-   // The highlighted statement lifts off as a boxed copy and follows the bracket into the
+   // The highlighted statement moves directly from its source into the
    // pane, where the previous statement clears as it lands. The source line stays intact.
    const [spanStart]=trace.expression_spans[step.line];
    const sourceX=g.code[0]+62+(g.wholeLine?0:spanStart*charWidth), sourceY=rows[step.line];
    const begin=lineChanged ? 0.3 : 0.15, travel=copyTravelSeconds, total=begin+travel;
-   const path=g.copyBend
-    ? `M ${sourceX} ${sourceY} C ${g.copyBend} ${sourceY}, ${g.copyBend} ${sourceY}, `
-     +`${g.copyBend} ${(sourceY+ty)/2} C ${g.copyBend} ${ty}, ${g.copyBend} ${ty}, ${tx} ${ty}`
-    : `M ${sourceX} ${sourceY} L ${tx} ${ty}`;
+   const path=`M ${sourceX} ${sourceY} L ${tx} ${ty}`;
    const width=(parts.prefix.length+length+parts.suffix.length)*evalWidth;
    if(old?.pane) out+='<g>'+fade(1,0,0.3,begin+travel*0.2)+old.pane+'</g>';
    out+=`<g data-source-copy="statement">`
@@ -390,7 +387,7 @@ function draw(animate=false, shift=false) {
   }
  }
  if(evaluationOpen) out+='</g>';
- // Adjacent cells share an edge: grey borders go first, live ones next, active ones last.
+ // Base strokes stay within each cell. Activity is a separate inset outline.
  const borders=[];
  trace.variables.forEach((v,i)=>{
   const [x,y,w,h]=g.slots[i], live=values[i]!==null || step.declared.includes(v.name)
@@ -401,10 +398,11 @@ function draw(animate=false, shift=false) {
   out+=text(x,y-16,v.address,18,live?'#a0afc2':'#697382');
   out+=text(x+w/2,y+h+34,v.name,26,live?v.color:'#697382','middle');
   out+=rect(x,y,w,h,live?'#192331':'#171d27','none',0);
-  borders.push([active?2:live?1:0,animated(rect(x,y,w,h,'none',live?
-   (active?highlight:v.color):'#47515f',0),
-   active ? `<animate attributeName="stroke" from="${highlight}" to="${v.color}" `
-    +`begin="${arrival+0.15}s" dur="0.35s" fill="freeze"/>` : '')]);
+  let border=rect(x+1.5,y+1.5,w-3,h-3,'none',live?v.color:'#47515f',0);
+  if(active) border+=`<g data-memory-highlight="${esc(v.name)}">`
+   +fade(1,0,0.35,arrival+0.15)
+   +rect(x+4.5,y+4.5,w-9,h-9,'none',highlight,0)+'</g>';
+  borders.push([active?2:live?1:0,border]);
   if(live) {
    const centerX=x+w/2, centerY=y+h/2;
    out+=`<g transform="translate(${centerX} ${centerY})"><g>`;

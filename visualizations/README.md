@@ -105,16 +105,17 @@ active line to the pane and glides with the active-line highlight when the state
 
 - The expression test video is exported at 1280 × 720, 60 fps.
 - Each statement is copied once, whole and unhurried (1.2 s of travel, with extra step time):
-  it lifts off in an opaque box, descends through the empty right side of the code, and
+  it lifts off in an opaque box, travels directly to the evaluation pane, and
   replaces the previous statement as it lands. The source line stays intact.
 - In the pane, brace initialization reads as `int b = a + 6;`. Statement context is muted;
   the evaluated span keeps its code highlight and full syntax colors.
 - A write's destination changes to its variable color, then stays highlighted for one second before
   the value flies to memory. The memory cell changes only when the value arrives, with a pulse to
-  mark the update.
+  mark the update. The destination name returns to neutral after the write finishes.
 - Reads and writes are short vertical hops through side ports beside the variable names.
   A 0.55-second preparation marks the operand or result with a tight, filled outline drawn
-  beneath its glyphs, together with its memory cell; highlighted cell borders draw on top.
+  beneath its glyphs, together with its memory cell. Memory highlights sit inside each cell,
+  so adjacent outlines never overlap.
   Arrows stop at the moving box's outline and fade before it lands.
 - The old operand or memory value stays until the boxed value arrives. Memory borders return
   to the variable color after arrival. Printing copies the value to the output line.
