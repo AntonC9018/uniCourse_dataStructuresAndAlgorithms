@@ -187,12 +187,13 @@ function statementParts(trace,g,line) {
  let prefix=source.slice(0,start), suffix=source.slice(end);
  // Empty value-initialization has a real source span (`{}`), not an invented literal.
  if(/^\s*\{\s*\}\s*$/.test(source.slice(start,end)) &&
-    /^(?:const\s+)?(?:int|auto)\s+\w+\s*$/.test(prefix)) {
+    /^(?:const\s+int|int(?:\s+const)?|auto)\s+\w+\s*$/.test(prefix)) {
   prefix=prefix.trimEnd()+' = ';
  }
  // Brace initialization reads as an assignment of the evaluated value.
  if(prefix.trimEnd().endsWith('{') && suffix.trimStart().startsWith('}')) {
-  prefix=prefix.trimEnd().slice(0,-1).trimEnd()+' = ';
+  prefix=prefix.trimEnd().slice(0,-1).trimEnd();
+  prefix+=prefix.endsWith('=')?' ':' = ';
   suffix=suffix.trimStart().slice(1);
  }
  const name=trace.steps.find(s=>s.line===line && s.write)?.write;

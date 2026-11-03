@@ -33,12 +33,16 @@ def applicable(timeline) -> None:
         raise Unsupported('this layout supports one to three integer variables')
     if len(timeline.source) > 6 or max(map(len, timeline.source)) > 30:
         raise Unsupported('source exceeds the approved layout: six lines, 30 columns')
+    positions = sorted(variable.address for variable in timeline.variables)
+    if any(right - left != 4 for left, right in zip(positions, positions[1:])):
+        raise Unsupported('noncontiguous integer storage needs a separate memory-layout visualization')
     for step in timeline.steps:
         source = timeline.source[step.line]
         begin, end = timeline.expression_spans[step.line]
         prefix, suffix = source[:begin], source[end:]
         if prefix.rstrip().endswith('{') and suffix.lstrip().startswith('}'):
-            prefix = prefix.rstrip()[:-1].rstrip() + ' = '
+            prefix = prefix.rstrip()[:-1].rstrip()
+            prefix += ' ' if prefix.endswith('=') else ' = '
             suffix = suffix.lstrip()[1:]
         elif source[begin:end].replace(' ', '') == '{}' and '=' not in prefix:
             prefix = prefix.rstrip() + ' = '
