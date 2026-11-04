@@ -1,0 +1,1494 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "859Y0Q8pyLg",
+  "uploadId": "859Y0Q8pyLg",
+  "transcriptSha256": "bf980b9ed09d65ff9f2cdecf43c2660459a8220c0b6d352b58ec4ca7df555605",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 5190,
+      "endMilliseconds": 10790,
+      "kind": "fact",
+      "text": "The demo program declares variable i with value 10 and variable a with value 5, so any later discussion of memory cells can refer to these two concrete cells.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 5190,
+          "endMilliseconds": 10790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-the-initial-variables"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 14030,
+      "endMilliseconds": 22960,
+      "kind": "explanation",
+      "text": "Printing a on screen writes its current value 5 followed by a newline, which shows that the cell for a holds a plain number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 14030,
+          "endMilliseconds": 22960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-the-initial-variables"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 29760,
+      "endMilliseconds": 50190,
+      "kind": "explanation",
+      "text": "Passing a to cout passes the value stored in that cell, so 10 for a in the current example is what the print function receives, not the identity of the variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 29760,
+          "endMilliseconds": 50190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-the-initial-variables"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 52200,
+      "endMilliseconds": 67790,
+      "kind": "code_change",
+      "text": "Assigning i = 15 overwrites the value 10 that was in that memory cell, and the subsequent print of the cell now yields 15 because reads see the current cell content.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 52200,
+          "endMilliseconds": 67790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#overwriting-a-value"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 68270,
+      "endMilliseconds": 77200,
+      "kind": "test_result",
+      "text": "Compiling and running the program after the overwrite prints 15, confirming that the overwritten cell content is what the program observes.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 68270,
+          "endMilliseconds": 77200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#overwriting-a-value"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 77200,
+      "endMilliseconds": 82280,
+      "kind": "fact",
+      "text": "Statements execute in the order they are written in the program, so the print reflects the overwrite because it comes after the assignment.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 77200,
+          "endMilliseconds": 82280
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#overwriting-a-value"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 82280,
+      "endMilliseconds": 89600,
+      "kind": "explanation",
+      "text": "Besides plain values, a memory cell can also store an address, which is what makes later pointer work possible.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 82280,
+          "endMilliseconds": 89600
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 89479,
+      "endMilliseconds": 103990,
+      "kind": "code_change",
+      "text": "A new variable is declared and the literal address 32 is written into its cell, turning that cell into a holder of a memory address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 89479,
+          "endMilliseconds": 103990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 105990,
+      "endMilliseconds": 118100,
+      "kind": "fact",
+      "text": "A variable whose cell stores a memory address as a value is called a pointer, so the example cell is a pointer to variable i.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 105990,
+          "endMilliseconds": 118100
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 118310,
+      "endMilliseconds": 127380,
+      "kind": "fact",
+      "text": "A pointer and a plain int differ only in how the program interprets the stored number, since both cells ultimately hold numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 118310,
+          "endMilliseconds": 127380
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 127400,
+      "endMilliseconds": 135390,
+      "kind": "reason",
+      "text": "Memory cells can only hold numbers, which is why a pointer cannot literally store a memory location and must store the address as a number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 127400,
+          "endMilliseconds": 135390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 135390,
+      "endMilliseconds": 142550,
+      "kind": "explanation",
+      "text": "The number stored in the pointer is always interpreted by the program as an address of some other cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 135390,
+          "endMilliseconds": 142550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 142550,
+      "endMilliseconds": 150550,
+      "kind": "explanation",
+      "text": "The address a pointer carries must be the address of a cell holding an integer, i.e. the address of an int, so the target is found correctly.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 142550,
+          "endMilliseconds": 150550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 150550,
+      "endMilliseconds": 165239,
+      "kind": "fact",
+      "text": "Because the target variable has type int, what is actually stored in the pointer cell is the address of an int variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 150550,
+          "endMilliseconds": 165239
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 165239,
+      "endMilliseconds": 172680,
+      "kind": "explanation",
+      "text": "The pointer holds only the starting position, so the program must additionally remember which other cells belong to the same value before it can read it back.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 165239,
+          "endMilliseconds": 172680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 172680,
+      "endMilliseconds": 180590,
+      "kind": "reason",
+      "text": "An int occupies four memory cells that must be read together and interpreted as one whole number, so the program must track all four cells behind the stored address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 172680,
+          "endMilliseconds": 180590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 180590,
+      "endMilliseconds": 194000,
+      "kind": "explanation",
+      "text": "The stored value 32 is therefore not just a number but the start address leading to four memory cells that the program must read as a unit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 180590,
+          "endMilliseconds": 194000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#storing-an-address"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 201480,
+      "endMilliseconds": 220150,
+      "kind": "reason",
+      "text": "The type for the address variable cannot be int because the cell holds a number carrying the extra requirements of being an address of a four-cell int block, so it is declared with the asterisk form.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 201480,
+          "endMilliseconds": 220150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 224270,
+      "endMilliseconds": 243550,
+      "kind": "fact",
+      "text": "The asterisk type represents the address of the beginning of an int, i.e. the start of the four-cell block, hiding all of that structure behind one type name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 224270,
+          "endMilliseconds": 243550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 243560,
+      "endMilliseconds": 250400,
+      "kind": "explanation",
+      "text": "In the int-asterisk type the asterisk means the value is an address while int means the size is four cells, so the two parts of the type carry the two pieces of information needed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 243560,
+          "endMilliseconds": 250400
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 250400,
+      "endMilliseconds": 255150,
+      "kind": "fact",
+      "text": "Because the int part states a size of four, all cells of the target value are treated as one whole number when the value is read.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 250400,
+          "endMilliseconds": 255150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 255590,
+      "endMilliseconds": 260160,
+      "kind": "fact",
+      "text": "The declaration is finished with the variable's name, and the pointer variable is named iad because it holds the address of variable i.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 255590,
+          "endMilliseconds": 260160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 260160,
+      "endMilliseconds": 262720,
+      "kind": "scope_boundary",
+      "text": "Initialization of the pointer is deliberately postponed here and will be dealt with a little later in the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 260160,
+          "endMilliseconds": 262720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 262720,
+      "endMilliseconds": 277490,
+      "kind": "explanation",
+      "text": "A variable declaration consists of the type specifying what and how many cells are stored together, followed by the variable's name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 262720,
+          "endMilliseconds": 277490
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 277490,
+      "endMilliseconds": 294190,
+      "kind": "fact",
+      "text": "Declaring a variable as int means it stores a whole number, and the four cells of that number are counted as a single unit because int asserts that size.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 277490,
+          "endMilliseconds": 294190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 294190,
+      "endMilliseconds": 307110,
+      "kind": "explanation",
+      "text": "Declaring the variable with the asterisk-typed int means the cell stores the address of some int, that is the address from which all four cells are read together.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 294190,
+          "endMilliseconds": 307110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 307110,
+      "endMilliseconds": 315230,
+      "kind": "fact",
+      "text": "The name iad was chosen only because it stands for the address of i, and any other name for the new variable would work equally well.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 307110,
+          "endMilliseconds": 315230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#declaring-an-int-pointer"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 315230,
+      "endMilliseconds": 322800,
+      "kind": "fact",
+      "text": "Writing an address into the cell requires the reference operator applied to the variable name, which yields the address of that variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 315230,
+          "endMilliseconds": 322800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#taking-the-address-of-i"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 315240,
+      "endMilliseconds": 332190,
+      "kind": "explanation",
+      "text": "The reference to a variable created by the address-of operator behaves differently from an ordinary use of that name because at run time the name is replaced by whatever is stored in the address cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 315240,
+          "endMilliseconds": 332190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#taking-the-address-of-i"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 332190,
+      "endMilliseconds": 355909,
+      "kind": "correction",
+      "text": "Applying the address-of operator yields the address of the variable itself rather than the address of the value stored in it, so the pointer refers to the memory cell, not to the number it holds.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 332190,
+          "endMilliseconds": 355909
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#taking-the-address-of-i"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 355909,
+      "endMilliseconds": 368270,
+      "kind": "fact",
+      "text": "The ampersand operator means 'give me the address of this cell', so the pointer variable receives that address value in the illustrative example.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 355909,
+          "endMilliseconds": 368270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#taking-the-address-of-i"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 368270,
+      "endMilliseconds": 382830,
+      "kind": "fact",
+      "text": "The real address is some other value than the toy address used in the example, which is why the lesson compiles and runs the program to print it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 368270,
+          "endMilliseconds": 382830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 382830,
+      "endMilliseconds": 398840,
+      "kind": "explanation",
+      "text": "Printing the address shows a value prefixed with 0x, which marks the following digits as hexadecimal, so letters like F and B in the output are hexadecimal digits of a memory address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 382830,
+          "endMilliseconds": 398840
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 390520,
+      "endMilliseconds": 398840,
+      "kind": "explanation",
+      "text": "The digits after the 0x prefix are hexadecimal, which is how the printed address of the variable is displayed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 390520,
+          "endMilliseconds": 398840
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 398840,
+      "endMilliseconds": 413870,
+      "kind": "correction",
+      "text": "The variable is actually stored at the address printed by the program, not at the made-up address 32 written in the illustrative example.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 398840,
+          "endMilliseconds": 413870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 413870,
+      "endMilliseconds": 422550,
+      "kind": "fact",
+      "text": "You can convert the hexadecimal address to decimal to obtain a concrete address value, which is what the numeric address really is.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 413870,
+          "endMilliseconds": 422550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 422550,
+      "endMilliseconds": 441000,
+      "kind": "edge_case",
+      "text": "Addresses are randomized on each program run, so two runs print different values and no fixed address should be assumed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 422550,
+          "endMilliseconds": 441000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 441000,
+      "endMilliseconds": 457469,
+      "kind": "scope_boundary",
+      "text": "Virtual memory is only mentioned briefly here: the printed address does not correspond to a physical cell with that number, because the operating system maps it to another cell.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 441000,
+          "endMilliseconds": 457469
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#printing-the-real-address"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 457469,
+      "endMilliseconds": 473479,
+      "kind": "explanation",
+      "text": "A variable supports two operations plus taking its address: you can write into it and read from it, and the address-of operator additionally yields a pointer to its memory cell, from which data can also be read.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 457469,
+          "endMilliseconds": 473479
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 464440,
+      "endMilliseconds": 473479,
+      "kind": "explanation",
+      "text": "Given an address, you can write a value into the pointed-to cell directly by assigning to the dereferenced expression.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 464440,
+          "endMilliseconds": 473479
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 473479,
+      "endMilliseconds": 485230,
+      "kind": "fact",
+      "text": "The dereference operator applied to a pointer is used to write 40 into the cell the pointer references.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 473479,
+          "endMilliseconds": 485230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 485230,
+      "endMilliseconds": 497670,
+      "kind": "explanation",
+      "text": "The asterisk means 'go to the following address', so the cell reached through the pointer is the target of the write.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 485230,
+          "endMilliseconds": 497670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 497670,
+      "endMilliseconds": 509630,
+      "kind": "explanation",
+      "text": "Written in steps, dereferencing reads the address stored in the pointer variable and jumps to that memory cell before storing the value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 497670,
+          "endMilliseconds": 509630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 509630,
+      "endMilliseconds": 516390,
+      "kind": "explanation",
+      "text": "At the moment of the write the target cell still held 15, and the next assignment replaces that value with 40.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 509630,
+          "endMilliseconds": 516390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 522230,
+      "endMilliseconds": 536390,
+      "kind": "explanation",
+      "text": "By the same logic, dereferencing means writing into the referenced cell, because both the variable name and the dereferenced pointer name stand for the cell itself when used as the target of an assignment.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 522230,
+          "endMilliseconds": 536390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 542279,
+      "endMilliseconds": 555870,
+      "kind": "explanation",
+      "text": "Dereferencing gives access to the referenced memory cell, so you can both write into it and read from it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 542279,
+          "endMilliseconds": 555870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 555870,
+      "endMilliseconds": 577470,
+      "kind": "reason",
+      "text": "When a dereferenced pointer appears on the right-hand side of an expression, reading works the same way, since the expression evaluates to whatever the pointed-to cell contains.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 555870,
+          "endMilliseconds": 577470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 577470,
+      "endMilliseconds": 597590,
+      "kind": "explanation",
+      "text": "Substituting the variable's name in an expression yields the value stored in that cell, which is why printing the pointer variable produced the value 100.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 577470,
+          "endMilliseconds": 597590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 597590,
+      "endMilliseconds": 610440,
+      "kind": "explanation",
+      "text": "The dereferenced pointer expression is equivalent to 'go to this address', giving access to the cell with that address, and with nothing else done to it the expression evaluates to that cell's contents.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 597590,
+          "endMilliseconds": 610440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 610440,
+      "endMilliseconds": 624320,
+      "kind": "explanation",
+      "text": "Evaluation first reads the address 32 from the pointer variable, then jumps to that address, so the address value is replaced by a reference to the variable's memory cell before yielding the cell's value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 610440,
+          "endMilliseconds": 624320
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 617640,
+      "endMilliseconds": 627430,
+      "kind": "explanation",
+      "text": "Taking the address of a variable stores a reference to that variable's memory in the pointer variable itself, which is why the printed bytes of the pointer are its address.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 617640,
+          "endMilliseconds": 627430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 627430,
+      "endMilliseconds": 647670,
+      "kind": "explanation",
+      "text": "Reading through a pointer follows the stored address to the variable and yields its current value, which is how the value 40 ends up inside the print function.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 627430,
+          "endMilliseconds": 647670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-through-the-pointer"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 647670,
+      "endMilliseconds": 667870,
+      "kind": "reason",
+      "text": "The declared pointee type constrains what an address may be stored in: uint8_t occupies a single byte with a maximum value of 255, so an address of a non-int variable cannot be written into it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 647670,
+          "endMilliseconds": 667870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-a-byte-pointer-is-a-different-type"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 667870,
+      "endMilliseconds": 693160,
+      "kind": "edge_case",
+      "text": "If an address of a differently sized variable could be stored, the bytes it would point at are not the target variable's cells, so reading them would access memory not owned by that variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 667870,
+          "endMilliseconds": 693160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-a-byte-pointer-is-a-different-type"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 693160,
+      "endMilliseconds": 700320,
+      "kind": "edge_case",
+      "text": "Such unused cells are not guaranteed to be zero and may hold arbitrary leftover data, so any read from them yields meaningless values.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 693160,
+          "endMilliseconds": 700320
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-a-byte-pointer-is-a-different-type"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 700320,
+      "endMilliseconds": 714030,
+      "kind": "explanation",
+      "text": "The memory allocator hands out memory in aligned four-byte blocks, so the leftover cells of a variable's block are never reused as storage for the next variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 700320,
+          "endMilliseconds": 714030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-the-memory-diagram"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 714030,
+      "endMilliseconds": 734790,
+      "kind": "fact",
+      "text": "Because values sit in four-byte blocks, a variable starting at 32 occupies 32-35, the next one starts at 36, and a following eight-byte value starts at 40 and runs to 48.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 714030,
+          "endMilliseconds": 734790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-the-memory-diagram"
+      }
+    },
+    {
+      "id": "TP-058",
+      "startMilliseconds": 734790,
+      "endMilliseconds": 774680,
+      "kind": "explanation",
+      "text": "Storing an address writes its binary representation across the whole four-byte block, so a small address such as 32 occupies only the last cell of its block and the remaining cells stay empty.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 734790,
+          "endMilliseconds": 774680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-the-memory-diagram"
+      }
+    },
+    {
+      "id": "TP-059",
+      "startMilliseconds": 774680,
+      "endMilliseconds": 782199,
+      "kind": "explanation",
+      "text": "Small stored values such as 15 likewise fit in a single cell, so only one cell of the block is filled and the others remain empty.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 774680,
+          "endMilliseconds": 782199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-the-memory-diagram"
+      }
+    },
+    {
+      "id": "TP-060",
+      "startMilliseconds": 782199,
+      "endMilliseconds": 806310,
+      "kind": "scope_boundary",
+      "text": "The byte-level encoding of numbers is deferred to a separate video, since understanding the principle here does not require that detail.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 782199,
+          "endMilliseconds": 806310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-the-memory-diagram"
+      }
+    },
+    {
+      "id": "TP-061",
+      "startMilliseconds": 806310,
+      "endMilliseconds": 824670,
+      "kind": "reason",
+      "text": "If the address of the variable starting at 36 could be stored in the pointer, dereferencing it would read the whole four-byte block as one number even though only part of that block belongs to the variable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 806310,
+          "endMilliseconds": 824670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-062",
+      "startMilliseconds": 824670,
+      "endMilliseconds": 833109,
+      "kind": "fact",
+      "text": "The trailing bytes of a variable's block lie outside the variable, so program code has no right to read them and may treat only the leading byte as the variable's value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 824670,
+          "endMilliseconds": 833109
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-063",
+      "startMilliseconds": 833109,
+      "endMilliseconds": 854920,
+      "kind": "reason",
+      "text": "Reading or writing all four bytes at once would pull in the unused cells because the pointer's declared pointee type says the target is a full int.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 833109,
+          "endMilliseconds": 845800
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 845800,
+          "endMilliseconds": 854920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-064",
+      "startMilliseconds": 854920,
+      "endMilliseconds": 877030,
+      "kind": "reason",
+      "text": "Dereferencing an int pointer always consumes the entire four-byte block as one integer, which is why such a pointer must match the type it addresses.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 854920,
+          "endMilliseconds": 877030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-065",
+      "startMilliseconds": 877030,
+      "endMilliseconds": 892910,
+      "kind": "reason",
+      "text": "To read only a single cell, the pointer must be declared as a pointer to the same type as the pointed-to variable instead of to a wider int.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 877030,
+          "endMilliseconds": 892910
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-066",
+      "startMilliseconds": 892910,
+      "endMilliseconds": 912950,
+      "kind": "reason",
+      "text": "Type checking acts as a barrier that prevents assigning an address of a different-sized variable, so you cannot partially rewrite only part of a value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 892910,
+          "endMilliseconds": 912950
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-067",
+      "startMilliseconds": 912950,
+      "endMilliseconds": 932199,
+      "kind": "edge_case",
+      "text": "If the mismatch were allowed, a uint8_t pointer would rewrite only the first byte and leave the old value in the rest, while an int pointer would shift the existing byte into a different position and produce a much larger garbage number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 912950,
+          "endMilliseconds": 932199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-068",
+      "startMilliseconds": 924000,
+      "endMilliseconds": 935470,
+      "kind": "explanation",
+      "text": "Writing 15 through a one-byte cast on a 32-bit int does not overwrite just that byte but clobbers the entire four-byte value, which is why such code is forbidden.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 924000,
+          "endMilliseconds": 935470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-069",
+      "startMilliseconds": 932199,
+      "endMilliseconds": 935480,
+      "kind": "fact",
+      "text": "Because such a write silently corrupts the value instead of failing, assigning an address to a pointer of a mismatched type is forbidden by the compiler.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 932199,
+          "endMilliseconds": 935480
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#matching-the-pointer-to-the-object"
+      }
+    },
+    {
+      "id": "TP-070",
+      "startMilliseconds": 935470,
+      "endMilliseconds": 944749,
+      "kind": "scope_boundary",
+      "text": "The type system can be bypassed with an explicit cast, and the lesson shows how rather than forbidding it outright.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 935470,
+          "endMilliseconds": 944749
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#casting-to-a-byte-pointer"
+      }
+    },
+    {
+      "id": "TP-071",
+      "startMilliseconds": 944749,
+      "endMilliseconds": 963269,
+      "kind": "explanation",
+      "text": "A cast tells the compiler which type to read the memory as, so casting an int pointer lets it be interpreted as a pointer to a single byte instead of to four bytes at once.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 944749,
+          "endMilliseconds": 963269
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#casting-to-a-byte-pointer"
+      }
+    },
+    {
+      "id": "TP-072",
+      "startMilliseconds": 966090,
+      "endMilliseconds": 976040,
+      "kind": "test_result",
+      "text": "After the cast the program reads back 8 out of the int's first byte, confirming the reinterpretation works.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 966090,
+          "endMilliseconds": 976040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#casting-to-a-byte-pointer"
+      }
+    },
+    {
+      "id": "TP-073",
+      "startMilliseconds": 976040,
+      "endMilliseconds": 992949,
+      "kind": "reason",
+      "text": "Because the machine is little-endian, the lowest byte sits first in memory, so touching it changes how the whole number reads back.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 976040,
+          "endMilliseconds": 992949
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#casting-to-a-byte-pointer"
+      }
+    },
+    {
+      "id": "TP-074",
+      "startMilliseconds": 993560,
+      "endMilliseconds": 1012040,
+      "kind": "edge_case",
+      "text": "A value larger than 255 does not fit in a single byte, so the excess spills into the following byte of the same int.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1004279,
+          "endMilliseconds": 1009030
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 993560,
+          "endMilliseconds": 1012040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-500-becomes-264"
+      }
+    },
+    {
+      "id": "TP-075",
+      "startMilliseconds": 1009040,
+      "endMilliseconds": 1065490,
+      "kind": "test_result",
+      "text": "Writing 8 through the byte-cast pointer prints 264 instead of 8, because the neighbouring byte kept the high part of the original 500.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1009040,
+          "endMilliseconds": 1065490
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-500-becomes-264"
+      }
+    },
+    {
+      "id": "TP-076",
+      "startMilliseconds": 1065490,
+      "endMilliseconds": 1091000,
+      "kind": "explanation",
+      "text": "256 is the smallest number that does not fit in one byte, and its leading 1 lands in the next byte while the first byte becomes0.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1065490,
+          "endMilliseconds": 1091000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-the-next-result-is-257"
+      }
+    },
+    {
+      "id": "TP-077",
+      "startMilliseconds": 1085840,
+      "endMilliseconds": 1095159,
+      "kind": "reason",
+      "text": "The program prints 257 because 256 pushed its high part into the next byte, leaving1 there independently of the low byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1085840,
+          "endMilliseconds": 1095159
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-the-next-result-is-257"
+      }
+    },
+    {
+      "id": "TP-078",
+      "startMilliseconds": 1091000,
+      "endMilliseconds": 1095159,
+      "kind": "explanation",
+      "text": "Treating the address as a single byte rewrites only the first cell of the four bytes, leaving the other three untouched.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1091000,
+          "endMilliseconds": 1095159
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-the-next-result-is-257"
+      }
+    },
+    {
+      "id": "TP-079",
+      "startMilliseconds": 1095159,
+      "endMilliseconds": 1103140,
+      "kind": "explanation",
+      "text": "Each byte of the int advances independently of its neighbours, so a write to one byte says nothing about the others.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1095159,
+          "endMilliseconds": 1103140
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-the-next-result-is-257"
+      }
+    },
+    {
+      "id": "TP-080",
+      "startMilliseconds": 1103140,
+      "endMilliseconds": 1124710,
+      "kind": "scope_boundary",
+      "text": "Writing single bytes of an int through a cast is not something to use in practice, but the underlying byte layout still has to be understood.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1103140,
+          "endMilliseconds": 1124710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#returning-to-whole-integer-writes"
+      }
+    },
+    {
+      "id": "TP-081",
+      "startMilliseconds": 1124710,
+      "endMilliseconds": 1141110,
+      "kind": "fact",
+      "text": "With plain int syntax and no casts, an assignment through the pointer overwrites all four bytes of the int at once.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1124710,
+          "endMilliseconds": 1141110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#returning-to-whole-integer-writes"
+      }
+    },
+    {
+      "id": "TP-082",
+      "startMilliseconds": 1141110,
+      "endMilliseconds": 1146350,
+      "kind": "reason",
+      "text": "It overwrites all four bytes because the pointer's type is int rather than a byte, so the new number is written as one whole value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1141110,
+          "endMilliseconds": 1146350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#returning-to-whole-integer-writes"
+      }
+    }
+  ]
+}
