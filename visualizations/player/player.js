@@ -357,11 +357,18 @@
     return animated(`<path d="${d}" fill="none" stroke="${P.tether}" stroke-width="2"/>`,
       oldLine !== null ? animateAttr('d', path(oldLine), d) : '');
   }
-  function lineTargets(c) {
-    const { m, g, S } = c;
+  // Code-line controls outlive every redraw, so keyboard focus stays on them; only their
+  // placement follows the geometry.
+  function lineTargets(m, S) {
     return m.source.map((source, i) => `<rect class="cv-line" data-line="${i}" tabindex="0" role="button" `
-      + `aria-label="${esc(format(S.jump, { line: i + 1, code: source }))}" x="${g.code.x + 12}" `
-      + `y="${g.lineY(i) - 34}" width="${round(g.code.w - 24)}" height="48" rx="6"/>`).join('');
+      + `aria-label="${esc(format(S.jump, { line: i + 1, code: source }))}" rx="6" height="48"/>`).join('');
+  }
+  function placeLineTargets(g, targets) {
+    targets.forEach((target, i) => {
+      target.setAttribute('x', g.code.x + 12);
+      target.setAttribute('y', g.lineY(i) - 34);
+      target.setAttribute('width', round(g.code.w - 24));
+    });
   }
 
   function linkMarkup(c, l, { grow = null, fadeOut = null } = {}) {
@@ -561,7 +568,7 @@
     const copying = animate && copies(c.m.steps, c.index);
     const oldLine = lineChanged ? prev.line : null;
     return code(c, oldLine) + tether(c, oldLine) + arrows(c) + memory(c) + pane(c, copying)
-      + output(c) + transfers(c) + lineTargets(c);
+      + output(c) + transfers(c);
   }
   function describe(c) {
     const { m, S, step } = c, op = step.op;
@@ -615,7 +622,10 @@
         + `data-action="${action}" aria-label="${esc(label)}" title="${esc(label)}">${icon(iconName)}`
         + `<span class="cv-label">${esc(label)}</span></button>`;
       root.innerHTML = '<div class="cv-view">'
-        + `<svg class="cv-stage" role="img" aria-label="${esc(S.stage)}" xmlns="http://www.w3.org/2000/svg"></svg></div>`
+        // The drawing is redrawn on every step and hidden from assistive technology; the
+        // line controls above it are stable elements, so a redraw never discards focus.
+        + `<svg class="cv-stage" role="group" aria-label="${esc(S.stage)}" xmlns="http://www.w3.org/2000/svg">`
+        + `<g class="cv-scene" aria-hidden="true"></g><g class="cv-lines">${lineTargets(this.m, S)}</g></svg></div>`
         + '<div class="cv-controls"><div class="cv-transport">'
         + button('play', S.play, 'play', ' cv-primary') + button('back', S.back, 'back') + button('next', S.next, 'next')
         + button('replay', S.replay, 'replay', ' cv-icon-only')
@@ -628,6 +638,8 @@
       this.host.append(root);
       this.root = root;
       this.svg = root.querySelector('.cv-stage');
+      this.scene = root.querySelector('.cv-scene');
+      this.lines = [...root.querySelectorAll('.cv-line')];
       this.playButton = root.querySelector('[data-action=play]');
       this.scrub = root.querySelector('.cv-scrub');
       this.count = root.querySelector('.cv-count');
@@ -703,7 +715,8 @@
       this.animated = animate;
       this.svg.setAttribute('viewBox', `0 0 ${Math.ceil(g.width)} ${Math.ceil(g.height)}`);
       this.svg.style.maxWidth = `${Math.ceil(g.width * MAX_SCALE)}px`;
-      this.svg.innerHTML = `<rect width="100%" height="100%" fill="${this.P.bg}"/>` + scene(c);
+      this.scene.innerHTML = `<rect width="100%" height="100%" fill="${this.P.bg}"/>` + scene(c);
+      placeLineTargets(g, this.lines);
       this.finishPaths();
       this.seek(0);
       this.update(describe(c));
@@ -711,7 +724,7 @@
 
     // Growing and followed arcs animate their dash offset over their measured length.
     finishPaths() {
-      for (const path of this.svg.querySelectorAll('[data-grow],[data-follow]')) {
+      for (const path of this.scene.querySelectorAll('[data-grow],[data-follow]')) {
         const length = path.getTotalLength(), grow = path.dataset.grow !== undefined;
         const begin = Number(grow ? path.dataset.grow : path.dataset.follow), dur = grow ? 0.6 : T.follow;
         path.setAttribute('stroke-dasharray', `${length} ${length}`);
@@ -739,8 +752,13 @@
       this.playButton.querySelector('.cv-label').textContent = label;
       this.playButton.setAttribute('aria-label', label);
       this.playButton.title = label;
-      this.root.querySelector('[data-action=back]').disabled = this.index === 0;
-      this.root.querySelector('[data-action=next]').disabled = this.index === last;
+      for (const [action, disabled] of [['back', this.index === 0], ['next', this.index === last]]) {
+        const button = this.root.querySelector(`[data-action=${action}]`);
+        // A focused button that becomes disabled would drop focus to the page; the player
+        // keeps it, so the arrow keys still step.
+        if (disabled && document.activeElement === button) this.root.focus({ preventScroll: true });
+        button.disabled = disabled;
+      }
       this.scrub.value = this.index;
       this.count.textContent = `${this.index + 1} / ${last + 1}`;
       if (description !== undefined && this.status.textContent !== description) this.status.textContent = description;

@@ -36,6 +36,9 @@ Nothing else is required from the page.
   scrub slider. Clicking a code line, or Enter/Space on it, jumps to the start of that line.
   With the player focused: ←/→ step, Space plays or pauses, Home/End jump to the ends.
   Next and Replay animate; Back, Reset and the slider show the settled state.
+- **Focus.** Redraws replace only the drawing; code-line controls and buttons are created once,
+  so steps, animations and theme changes keep keyboard focus. A focused button that becomes
+  disabled hands focus to the player, where the arrow keys still step.
 - **Reduced motion.** With `prefers-reduced-motion: reduce`, every step cuts to its end state.
 
 ## Visual language
