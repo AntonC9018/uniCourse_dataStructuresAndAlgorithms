@@ -63,6 +63,13 @@ The default shell (`nix develop`) adds Node and Chromium for headless screenshot
 nix develop .#visualizations --command python3 -m unittest discover -s visualizations/tests
 ```
 
+The player's browser tests run headless Chromium through Playwright, in the default shell:
+
+```sh
+nix develop --command npm ci --prefix visualizations
+nix develop --command npm test --prefix visualizations
+```
+
 ## Interactivity in Markdown
 
 GitHub removes JavaScript from rendered repository markup ([GitHub markup]), so the player runs
