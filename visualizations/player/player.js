@@ -560,7 +560,7 @@
     shown.split('\n').forEach((line, i) => { out += text(vx, oy + i * 36, line, PANE_SIZE, P.fg); });
     if (printing) {
       const lines = shown.split('\n'), x = vx + lines[lines.length - 1].length * EVAL_CHAR, y = oy + (lines.length - 1) * 36;
-      const sx = g.tx + (op.span[0] + op.value.length / 2) * EVAL_CHAR, w = op.value.length * EVAL_CHAR;
+      const sx = g.tx + (op.span[0] + op.span[1]) / 2 * EVAL_CHAR, w = op.value.length * EVAL_CHAR;
       const p = (...values) => values.map(round).join(' ');
       out += valueBox(c, op.value.trim() ? op.value : glyphs(op.value), P.muted, `M ${p(sx, g.ty - 11)} C ${p(sx, y - 30)}, ${p(x + w / 2, g.ty + 20)}, ${p(x + w / 2, y - 11)}`, 0.2, 0.7, 0.9);
       out += `<g opacity="0">${show(0.9)}${text(x, y, op.value, PANE_SIZE, P.fg)}</g>`;
