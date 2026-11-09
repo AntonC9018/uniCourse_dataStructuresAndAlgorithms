@@ -15,7 +15,7 @@ design is in [#55] and [#56].
 - `player/` holds the site engine (`player.js`, `player.css`), the manual pointer and struct
   fixtures, and a local demo. [`player/README.md`](player/README.md) documents the engine and
   the format.
-- `struct-prototype.py` is the static struct-layout study for [#62].
+- `layout.py` emits the static struct-layout view from [#62], replacing its prototype.
 
 [epic #50]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/50
 [#55]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/55
@@ -69,6 +69,19 @@ python3 visualizations/generate.py trace --source /tmp/snippet.cpp
 `trace` prints the unified format as deterministic JSON (sorted keys). `revision` hashes the
 tracer modules (including record layouts) and the flake lock. Maintenance keys stored traces
 by this revision, so a toolchain or format change re-traces every example.
+
+## Static struct layouts
+
+Place `<!-- <visualization template="layout"> -->` and `<!-- </visualization> -->` inside
+an answer block. Maintenance uses the nearest preceding top-level C++ fence, just as for
+execution traces. Plain tags retain the step-through player.
+
+Both `probe --template layout` and `trace --template layout` use Clang without executing the
+snippet. Plain aggregate fields may be `uint8_t`, `int8_t`, `int`, `size_t`, `uint64_t`
+(including `std::` spellings), or pointers. Unsupported field types are rejected explicitly.
+The slot grid shows byte offsets, padding, field sizes, struct size and alignment. Hover,
+click or keyboard focus links field rows with their bytes; the definition and size rows
+highlight the whole object. Theme changes preserve focus.
 
 ## Toolchain and tests
 

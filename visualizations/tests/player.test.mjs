@@ -120,3 +120,45 @@ test('a generated struct trace plays shallow copies in both themes', async () =>
   }
   assert.deepEqual(errors, []);
 });
+
+test('static layout links rows and bytes in both themes and initializes lazily', async () => {
+  const layout = { format: 1, kind: 'layout', records: [{ name: 'A', size: 12, alignment: 4,
+    fields: [
+      { name: 'f1', type: 'uint8_t', offset: 0, size: 1, kind: 'int' },
+      { name: 'f2', type: 'int', offset: 4, size: 4, kind: 'int' },
+      { name: 'f3', type: 'uint8_t', offset: 8, size: 1, kind: 'int' },
+    ] }] };
+  await page.setContent(`<!doctype html><html lang="en" data-theme="dark"><meta charset="utf-8">
+    <style>${read('player.css')}</style><details><summary>Answer</summary>
+    <div class="course-visualization"><script type="application/json">${JSON.stringify(layout)}</script>
+    </div></details><script>${read('player.js')}</script>`);
+  assert.equal(await page.locator('.cv-layout').count(), 0);
+  await page.locator('summary').click();
+  await page.waitForSelector('.cv-layout');
+  const row = page.locator('.cv-layout-row[data-layout-key="0:1"]');
+  const bytes = page.locator('.cv-byte[data-layout-key="0:1"]');
+  for (const theme of ['dark', 'light']) {
+    await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+    await page.waitForFunction(value => document.querySelector('.cv-player').dataset.cvTheme === value, theme);
+    await page.mouse.move(1000, 800);
+    await page.locator('.cv-layout').screenshot({ path: `/tmp/issue77-${theme}-idle.png` });
+    await row.hover();
+    assert.equal(await page.locator('.cv-byte.cv-linked').count(), 4);
+    await page.locator('.cv-layout').screenshot({ path: `/tmp/issue77-${theme}-hover.png` });
+    await bytes.first().hover();
+    assert.equal(await row.evaluate(e => e.classList.contains('cv-linked')), true);
+    await row.focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await page.locator('.cv-byte.cv-linked').count(), 4);
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Escape');
+    await page.mouse.move(1000, 800);
+    await page.locator('summary').focus();
+  }
+  await row.focus();
+  await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
+  assert.equal(await row.evaluate(e => e === document.activeElement), true);
+  await page.locator('.cv-layout-row[data-layout-key="0:all"]').first().hover();
+  assert.equal(await page.locator('.cv-byte.cv-linked').count(), 12);
+  assert.equal(await page.locator('.cv-controls').count(), 0);
+});

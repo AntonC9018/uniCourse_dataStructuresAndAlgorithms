@@ -25,7 +25,7 @@ def type_name(node: dict) -> str:
     return type_spelling(node).removeprefix('const ')
 
 
-def layouts(ast: dict, directory: Path) -> dict[str, Record]:
+def layouts(ast: dict, directory: Path, *, layout_only: bool = False) -> dict[str, Record]:
     """Validate definitions before requesting layouts; never execute record methods."""
     definitions = {}
     for statement in ast.get('inner', []):
@@ -49,6 +49,10 @@ def layouts(ast: dict, directory: Path) -> dict[str, Record]:
             qualified = type_spelling(child)
             allowed = qualified == 'int' or bool(re.fullmatch(r'int \*+', qualified))
             allowed |= any(qualified == record + ' *' for record in definitions)
+            if layout_only:
+                allowed = qualified in ('uint8_t', 'int8_t', 'int', 'size_t', 'uint64_t',
+                                        'std::uint8_t', 'std::int8_t', 'std::size_t', 'std::uint64_t')
+                allowed |= bool(re.fullmatch(r'(?:const )?[\w:]+ \*+', qualified))
             if not allowed:
                 raise Unsupported(f'struct {name}.{child.get("name")}: unsupported field type {qualified}')
             if child.get('isBitfield') or child.get('inner') or not child.get('name'):
@@ -74,6 +78,10 @@ def layouts(ast: dict, directory: Path) -> dict[str, Record]:
             # (the gap after a field can include padding).
             fields.append({'name': member, 'offset': int(offset),
                            'kind': 'ptr' if '*' in qualified else 'int'})
+            if layout_only:
+                node = next(c for c in definitions[name]['inner']
+                            if c.get('kind') == 'FieldDecl' and c['name'] == member)
+                fields[-1]['type'] = type_spelling(node)
         if not sizes or [f['name'] for f in fields] != [
                 c['name'] for c in definitions[name]['inner'] if c.get('kind') == 'FieldDecl']:
             raise Unsupported(f'Clang returned an incomplete layout for {name}')
@@ -83,7 +91,13 @@ def layouts(ast: dict, directory: Path) -> dict[str, Record]:
     # AST constant evaluation supplies sizeof for each allowed field type. Dumping a tiny
     # companion translation unit avoids relying on the host Python ABI.
     probe = directory / 'sizes.cpp'
-    probe.write_text('enum { __course_int = sizeof(int), __course_ptr = sizeof(int*) };')
+    types = {'int': 'int', 'ptr': 'int*'}
+    if layout_only:
+        types.update({f'{name}_{i}': ('void*' if item['kind'] == 'ptr' else item['type'])
+                      for name, record in records.items() for i, item in enumerate(record.fields)})
+    probe.write_text('#include <cstdint>\n#include <cstddef>\nusing namespace std;\n'
+                     + ''.join(f'enum {{ __course_{key} = sizeof({value}) }};\n'
+                               for key, value in types.items()))
     sizes = run([tool('CLANGXX', 'clang++'), '-std=c++20', '-fsyntax-only', '-Xclang',
                  '-ast-dump=json', str(probe)])
     tree = json.loads(sizes.stdout)
@@ -98,7 +112,8 @@ def layouts(ast: dict, directory: Path) -> dict[str, Record]:
         for child in node.get('inner', []):
             walk(child)
     walk(tree)
-    for record in records.values():
-        for item in record.fields:
-            item['size'] = values['__course_ptr' if item['kind'] == 'ptr' else '__course_int']
+    for name, record in records.items():
+        for i, item in enumerate(record.fields):
+            key = f'{name}_{i}' if layout_only else item['kind']
+            item['size'] = values['__course_' + key]
     return records

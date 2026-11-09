@@ -132,3 +132,16 @@ theme and language switches:
 python3 visualizations/player/fixtures.py
 nix develop --command python3 visualizations/player/demo.py
 ```
+
+## Static layout variant
+
+A version 1 trace with `kind: "layout"` has `records` instead of timeline source, variables
+and steps. Each record contains `name`, `size`, `alignment`, and ordered `fields`. Each field
+contains `name`, `type` (display spelling), `kind` (`int` or `ptr`), `offset`, and `size`.
+All sizes and offsets are bytes derived from Clang. Gaps and trailing padding are inferred
+from these ranges. The validator checks record alignment, field sizes, ordering and bounds.
+
+The same global engine lazily creates a static slot grid when the answer opens. Field and
+byte buttons stay in the DOM during theme changes, retaining keyboard focus. Clicking locks
+highlighting; clicking again or Escape clears the lock. Hover and focus link rows to bytes.
+There are no transport controls in this view.

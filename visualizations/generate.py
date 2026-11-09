@@ -20,7 +20,7 @@ TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
 TRACER_SOURCES = tuple(ROOT / name for name in
                        ('generate.py', 'tracing.py', 'execution.py', 'records.py',
-                        'toolchain.py', 'trace_format.py'))
+                        'toolchain.py', 'trace_format.py', 'layout.py'))
 
 # What the player draws legibly inside a lesson column.
 MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 10, 32
@@ -99,10 +99,14 @@ def main() -> int:
         parser.error('--source is required')
     from tracing import Unsupported, trace
     try:
-        if args.template != TEMPLATE:
+        if args.template not in (TEMPLATE, 'layout'):
             raise Unsupported(f'unknown template {args.template!r}')
-        result = trace(args.source.read_text(), runtime=args.operation != 'probe')
-        applicable(result)
+        if args.template == 'layout':
+            from layout import trace as layout_trace
+            result = layout_trace(args.source.read_text())
+        else:
+            result = trace(args.source.read_text(), runtime=args.operation != 'probe')
+            applicable(result)
     except Unsupported as exc:
         if args.operation == 'probe':
             print(json.dumps({'supported': False, 'reason': str(exc)}))
@@ -113,7 +117,7 @@ def main() -> int:
         print(f'error: {exc}', file=sys.stderr)
         return 1
     if args.operation == 'probe':
-        print(json.dumps({'supported': True, 'template': TEMPLATE}))
+        print(json.dumps({'supported': True, 'template': args.template}))
     else:
         print(json.dumps(result, sort_keys=True))
     return 0
