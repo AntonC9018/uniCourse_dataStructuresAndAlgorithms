@@ -33,6 +33,16 @@ class LayoutTests(unittest.TestCase):
             with self.subTest(source=source), self.assertRaises(Unsupported):
                 trace(source)
 
+    def test_shadowed_type_names(self):
+        # The snippet's own alias decides the size, not the companion's <cstdint>.
+        record = trace('using uint8_t = uint64_t; struct A { uint8_t x; };')['records'][0]
+        self.assertEqual((record['size'], record['fields'][0]['size']), (8, 8))
+        self.assertEqual(record['fields'][0]['type'], 'uint8_t')
+        for source in ('struct uint8_t { int a; int b; }; struct A { uint8_t x; };',
+                       'using size_t = double; struct A { size_t x; };'):
+            with self.subTest(source=source), self.assertRaises(Unsupported):
+                trace(source)
+
     def test_invalid_layout(self):
         result = trace('struct A { int a; int b; };')
         for key, value in [('offset', 2), ('size', 20), ('kind', 'float')]:
