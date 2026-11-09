@@ -1,14 +1,18 @@
 """Aggregate tracing against Clang's ABI and GDB, including pointer aliasing."""
 import json
+from contextlib import redirect_stderr, redirect_stdout
+from io import StringIO
 import os
 from pathlib import Path
 import shutil
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import tracing
+import generate
 from tracing import Unsupported
 from trace_format import validate
 
@@ -57,11 +61,36 @@ p->next->x=9; c=*p; (*p).x=7; std::cout << a.x;'''
         self.assertEqual(last['values']['b.x'], 7)
         self.assertEqual(last['targets'], {'b.next': 'a', 'c.next': 'a', 'p': 'b'})
 
-    def test_temporary_aggregate_assignment_and_struct_double_pointer(self):
+    def test_elided_aggregate_initialization_and_struct_double_pointer(self):
         result = tracing.trace('struct S {int x;}; S a=S{1}; S b{}; S *p=&a; '
-                               'S **pp=&p; b=**pp; *p=S{9};')
+                               'S **pp=&p; b=**pp; p->x=9;')
         self.assertEqual(result['steps'][-1]['values']['a.x'], 9)
         self.assertEqual(result['steps'][-1]['values']['b.x'], 1)
+
+    def test_probe_and_trace_reject_materialized_temporaries_before_execution(self):
+        for source in ('struct S {int x;}; S a{1}; a=S{2}; int b=3;',
+                       'struct S {int x;}; S a{1}; int b=3; a=S{2};',
+                       'struct S {int x;}; S a{1}; S *p=&a; *p=S{2};'):
+            with self.subTest(source=source), tempfile.TemporaryDirectory() as temporary:
+                path = Path(temporary) / 'source.cpp'
+                path.write_text(source)
+                results = {}
+                for operation in ('probe', 'trace'):
+                    stdout, stderr = StringIO(), StringIO()
+                    with (patch.object(sys, 'argv', ['generate.py', operation, '--source', str(path)]),
+                          patch.object(tracing, 'execute') as execute,
+                          redirect_stdout(stdout), redirect_stderr(stderr)):
+                        status = generate.main()
+                    execute.assert_not_called()
+                    if operation == 'probe':
+                        self.assertEqual(status, 0)
+                        results[operation] = json.loads(stdout.getvalue())
+                    else:
+                        self.assertEqual(status, 1)
+                        results[operation] = stderr.getvalue().strip()
+                self.assertFalse(results['probe']['supported'])
+                self.assertIn('materialized temporaries', results['probe']['reason'])
+                self.assertEqual(results['trace'], 'unsupported: ' + results['probe']['reason'])
 
     def test_uninitialized_fields_are_tracked_independently(self):
         result = tracing.trace('struct S {int x; int *p;}; S a; a.x=3; a.p=&a.x; S b=a;')

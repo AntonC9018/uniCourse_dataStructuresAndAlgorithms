@@ -221,7 +221,11 @@ class _Evaluator:
     def rvalue(self, node: dict) -> tuple[Value, str | None]:
         """The value of `node`, and the variable it was read from, if it was read."""
         kind, children = node.get("kind"), node.get("inner", [])
-        if kind in {"ExprWithCleanups", "MaterializeTemporaryExpr"} and len(children) == 1:
+        if kind == "MaterializeTemporaryExpr":
+            # Hidden stack slots can separate named locals. Probe cannot predict their
+            # allocation, so reject before either mode reaches layout or execution.
+            raise Unsupported("materialized temporaries need a separate memory-layout visualization")
+        if kind == "ExprWithCleanups" and len(children) == 1:
             return self.rvalue(children[0])
         if kind == "ImplicitCastExpr" and len(children) == 1:
             cast = node.get("castKind")
