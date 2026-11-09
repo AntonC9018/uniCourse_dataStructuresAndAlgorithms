@@ -10,8 +10,13 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'player'))
 import fixtures  # noqa: E402
 import generate  # noqa: E402
-from generate import applicable  # noqa: E402
+import generate as _generate  # noqa: E402
 from tracing import Unsupported  # noqa: E402
+
+
+def applicable(trace, snippet=None):
+    """Check a fixture, whose own source lines stand in for the snippet."""
+    _generate.applicable(trace, '\n'.join(trace['source']) if snippet is None else snippet)
 
 
 class LayoutEligibilityTests(unittest.TestCase):
@@ -55,6 +60,18 @@ class LayoutEligibilityTests(unittest.TestCase):
         trace['steps'][-1]['pane'] = 'x' * 32
         with self.assertRaisesRegex(Unsupported, 'pane'):
             applicable(trace)
+
+
+class SpacingTests(unittest.TestCase):
+    def test_spacing_inside_a_statement_is_rejected(self):
+        trace = fixtures.reassign()
+        for snippet in ('int     *     d{ &value };', '     *     d = 6;', 'int a  = 5;'):
+            with self.subTest(snippet), self.assertRaisesRegex(Unsupported, 'spacing'):
+                applicable(trace, snippet)
+
+    def test_indentation_literals_and_comments_keep_their_spacing(self):
+        applicable(fixtures.reassign(),
+                   '    int a{ 5 };\nstd::cout << "a  b";  // two  spaces\nchar c{ \'  \' };')
 
 
 class RevisionTests(unittest.TestCase):
