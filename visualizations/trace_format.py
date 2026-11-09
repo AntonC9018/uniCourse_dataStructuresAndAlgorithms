@@ -7,6 +7,7 @@ evaluation; `from_timeline` converts the compiler-backed tracer's integer `Timel
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 import re
 
 FORMAT = 1
@@ -47,6 +48,16 @@ def leaves(variables: list[dict]) -> dict[str, dict]:
         else:
             cells[variable['name']] = variable
     return cells
+
+
+def addresses(variables: list[dict]) -> dict[str, int]:
+    """The address of every variable and every struct field (`variable.field`)."""
+    result = {}
+    for variable in variables:
+        result[variable['name']] = variable['address']
+        for item in variable['fields'] if variable['kind'] == 'struct' else ():
+            result[variable['name'] + '.' + item['name']] = variable['address'] + item['offset']
+    return result
 
 
 def cells_of(variables: list[dict], name: str) -> list[str]:
@@ -126,6 +137,17 @@ def _variables(variables, where: str) -> dict[str, dict]:
     return leaves(variables)
 
 
+@dataclass(frozen=True)
+class _Storage:
+    """Lookups over validated variables: `cells` by leaf, `addresses` by variable or leaf."""
+    variables: list[dict]
+    cells: dict[str, dict]
+    addresses: dict[str, int]
+
+    def cells_of(self, name: str) -> list[str]:
+        return cells_of(self.variables, name)
+
+
 def _value(value, where: str) -> None:
     _check(value is None or value == UNKNOWN or type(value) is int, where,
            'a value is an integer, "?" (declared, unknown) or null (no storage yet)')
@@ -143,7 +165,60 @@ def _replacement(before: str, after: str, span: tuple[int, int], where: str) -> 
     return replaced
 
 
-def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, where: str) -> None:
+_LITERAL = re.compile(r'-?\d+')
+
+
+def _stored(text: str, where: str) -> list:
+    """The cell values an operation's text stands for: one per field for `{…}`, `nullptr` as 0."""
+    braced = text.startswith('{') and text.endswith('}')
+    items = [item.strip() for item in text[1:-1].split(',')] if braced else [text]
+    result = []
+    for item in items:
+        _check(item in ('nullptr', UNKNOWN) or bool(_LITERAL.fullmatch(item)), where,
+               f'{text!r} is not a value: expected an integer, nullptr, "?" or {{…}} of them')
+        result.append(0 if item == 'nullptr' else item if item == UNKNOWN else int(item))
+    return result
+
+
+def _memory(op: dict, step: dict, previous: dict, storage: _Storage, where: str) -> None:
+    """An operation's value agrees with memory: a read shows what `name` held before the step,
+    a write what it holds after, and an address is where `name` is stored."""
+    kind, name = op['kind'], op['name']
+    if kind == 'addr':
+        address = storage.addresses[name]
+        _check(_stored(op['value'], where) == [address], where + '.value',
+               f'the address of {name} is {address}, not {op["value"]!r}')
+        return
+    cells = storage.cells_of(name)
+    values = (step if kind == 'write' else previous)['values']
+    expected = [values[cell] for cell in cells]
+    shown = str(expected[0]) if len(cells) == 1 else '{' + ', '.join(map(str, expected)) + '}'
+    when = 'after the write' if kind == 'write' else 'before the read'
+    _check(_stored(op['value'], where) == expected, where + '.value',
+           f'{name} holds {shown} {when}, not {op["value"]!r}')
+
+
+def _pointers(step: dict, storage: _Storage, where: str) -> None:
+    """Targets agree with memory: only pointers have one, a pointer with a target holds its
+    address, and a pointer holding a nonzero value has a target."""
+    for name, target in step['targets'].items():
+        _check(storage.cells.get(name, {}).get('kind') == 'ptr', f'{where}.targets.{name}',
+               'only pointers have targets')
+        _check(target in storage.addresses, f'{where}.targets.{name}', f'unknown variable {target!r}')
+    for name, cell in storage.cells.items():
+        if cell['kind'] != 'ptr':
+            continue
+        value, target = step['values'][name], step['targets'].get(name)
+        if target is not None:
+            address = storage.addresses[target]
+            _check(value == address, f'{where}.targets.{name}',
+                   f'{name} holds {value!r}, but {target} is at {address}')
+        else:
+            _check(type(value) is not int or value == 0, f'{where}.targets.{name}',
+                   f'{name} holds the address {value} but points nowhere')
+
+
+def _operation(op, step: dict, previous: dict, storage: _Storage, where: str) -> None:
     _check(isinstance(op, dict) and op.get('kind') in OPERATIONS, where,
            f'kind must be one of {OPERATIONS}')
     kind = op['kind']
@@ -155,10 +230,11 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
         _check(isinstance(op[key], str) and op[key], f'{where}.{key}', 'expected text')
     for key in ('name', 'via'):
         if key in op:
-            _check(op[key] in names, f'{where}.{key}', f'unknown variable {op[key]!r}')
+            _check(op[key] in storage.addresses, f'{where}.{key}', f'unknown variable {op[key]!r}')
     if kind == 'deref':
-        _check(op['target'] in names, where + '.target', f'unknown variable {op["target"]!r}')
-        _check(cells.get(op['via'], {}).get('kind') == 'ptr', where + '.via', 'must be a pointer')
+        _check(op['target'] in storage.addresses, where + '.target',
+               f'unknown variable {op["target"]!r}')
+        _check(storage.cells.get(op['via'], {}).get('kind') == 'ptr', where + '.via', 'must be a pointer')
         pointee = previous['targets'].get(op['via'])
         _check(pointee is not None and (op['target'] == pointee
                                         or op['target'].startswith(pointee + '.')),
@@ -168,7 +244,15 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
         replaced = _replacement(previous['pane'], step['pane'], span, where)
         expected = op['target'] if kind == 'deref' else op['value']
         _check(replaced == expected, where, f'the replacement {replaced!r} is not {expected!r}')
-        return
+    else:
+        _unchanged_pane(op, step, previous, where)
+    if kind in ('read', 'addr', 'write'):
+        _memory(op, step, previous, storage, where)
+
+
+def _unchanged_pane(op: dict, step: dict, previous: dict, where: str) -> None:
+    """A write or print keeps the pane; its spans cover what it stores or prints."""
+    kind = op['kind']
     _check(step['pane'] == previous['pane'], where, f'a {kind} does not change the pane')
     start, end = _span(op['span'], step['pane'], where + '.span')
     _check(step['pane'][start:end] == op['value'], where + '.span', 'does not cover the value')
@@ -181,9 +265,9 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
                where, 'stdout must grow by the printed value and optional whitespace')
 
 
-def _changes(step: dict, previous: dict, variables: list, where: str) -> None:
+def _changes(step: dict, previous: dict, storage: _Storage, where: str) -> None:
     op = step['op'] or {}
-    written = set(cells_of(variables, op['name'])) if op.get('kind') == 'write' else set()
+    written = set(storage.cells_of(op['name'])) if op.get('kind') == 'write' else set()
     for name, value in step['values'].items():
         old = previous['values'][name]
         _check(value == old or name in written or (not op and old is None and value == UNKNOWN),
@@ -212,7 +296,7 @@ def validate(trace) -> None:
                 _span(span, source[index], f'trace.spans[{index}]')
     variables = trace['variables']
     cells = _variables(variables, 'trace.variables')
-    names = set(cells) | {variable['name'] for variable in variables}
+    storage = _Storage(variables, cells, addresses(variables))
     steps = trace['steps']
     _check(isinstance(steps, list) and steps, 'trace.steps', 'expected a nonempty list')
     previous = None
@@ -229,12 +313,7 @@ def validate(trace) -> None:
         for name, value in step['values'].items():
             _value(value, f'{where}.values.{name}')
         _check(isinstance(step['targets'], dict), where + '.targets', 'expected an object')
-        for name, target in step['targets'].items():
-            _check(cells.get(name, {}).get('kind') == 'ptr', f'{where}.targets.{name}',
-                   'only pointers have targets')
-            _check(target in names, f'{where}.targets.{name}', f'unknown variable {target!r}')
-            _check(type(step['values'][name]) is int, f'{where}.targets.{name}',
-                   'a pointer with a target holds an address')
+        _pointers(step, storage, where)
         _check(isinstance(step['stdout'], str), where + '.stdout', 'expected text')
         _check(type(step['hold']) in (int, float) and step['hold'] >= 0, where + '.hold',
                'expected seconds')
@@ -242,8 +321,8 @@ def validate(trace) -> None:
             _check(step['op'] is None, where + '.op', 'the first step has no operation')
         else:
             if step['op'] is not None:
-                _operation(step['op'], step, previous, names, cells, where + '.op')
-            _changes(step, previous, variables, where)
+                _operation(step['op'], step, previous, storage, where + '.op')
+            _changes(step, previous, storage, where)
         previous = step
 
 
