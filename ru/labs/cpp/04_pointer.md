@@ -173,6 +173,17 @@ std::cout <<     *     d << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#6-пробелы-в-объявлениях-указателей)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Трижды печатает `6`.
@@ -232,6 +243,17 @@ int* b = &a;
 a = 6;
 int* c = &a;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#10-зависимость-адреса-от-значения)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Правильный ответ:</summary>
@@ -366,6 +388,17 @@ std::cout << value << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#15-auto-из-адреса)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 У `&value` тип `int*`, поэтому у `p` тоже тип `int*`.
@@ -401,6 +434,17 @@ auto pp{ &p };
 **pp = 9;
 std::cout << value << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#17-auto-из-адреса-указателя)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -530,6 +574,17 @@ std::cout << *py << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#22-копирование-переменной-и-указателя-с-похожими-именами)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 `int y{ x }` копирует *значение* из `x` — дальше `y` независима от `x`,
@@ -644,6 +699,17 @@ other = *pp;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#6-копирование-указателя-через-двойной-указатель)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Компилируется.
@@ -677,6 +743,17 @@ int* p{ &value };
 int** pp{ &p };
 **pp = 8;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#8-запись-через-два-разыменования)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>

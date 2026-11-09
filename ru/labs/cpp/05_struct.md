@@ -42,6 +42,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#1-инициализация-структуры)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 По умолчанию, можно использовать синтаксис инициализации через фигурные скобки
@@ -68,6 +79,17 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#2-выражение-типа-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -154,6 +176,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#4-операции-с-полями)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Можно считывать из и вписывать в каждое из полей по отдельности.
@@ -210,6 +243,17 @@ int main()
     std::cout << b.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#6-присваивание-структуры)
+
+<!-- </visualization> -->
+
+</details>
 <details>
 <summary>Ответ:</summary>
 
@@ -242,6 +286,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#7-адреса-полей)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -281,6 +336,17 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-присваивание-переменной-структуры-1)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -347,6 +413,17 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-адрес-структуры-1)
+
+<!-- </visualization> -->
+
+</details>
 <details>
 <summary>Ответ:</summary>
 
@@ -376,6 +453,17 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#11-адрес-структуры-2)
+
+<!-- </visualization> -->
+
+</details>
 <details>
 <summary>Ответ:</summary>
 
@@ -407,6 +495,17 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#12-оператор--)
+
+<!-- </visualization> -->
+
+</details>
 <details>
 <summary>Ответ:</summary>
 
@@ -762,6 +861,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#23-адрес-поля-из-адреса-структуры)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Здесь демонстрируется тот факт, что можно брать адрес поля после применения `->`.
@@ -870,6 +980,17 @@ int main()
     std::cout << s2.a << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#26-копирование-структуры-с-полем-указателем)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -1061,6 +1182,17 @@ copy = **pp;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-копирование-структуры-через-два-указателя)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Компилируется.
@@ -1102,6 +1234,17 @@ A* p{ &value };
 int result{};
 result = p->field;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-целое-число-присваивается-из-поля-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
