@@ -1,0 +1,221 @@
+/* Course visualization player: layout of the controls and both palettes.
+ * player.js reads the --cv-* stage colours from here, so this file owns every colour.
+ * The player sets data-cv-theme from Starlight's <html data-theme>. */
+
+.course-visualization {
+  container-type: inline-size;
+  margin: 1rem 0;
+}
+.course-visualization > script { display: none; }
+
+.course-visualization .cv-player {
+  /* Dark: the approved prototype palette. */
+  --cv-bg: #101722;
+  --cv-panel: #192331;
+  --cv-pane: #202e42;
+  --cv-fg: #eef3fa;
+  --cv-muted: #a0afc2;
+  --cv-grey: #697382;
+  --cv-context: #6f7c8f;
+  --cv-read: #9cbaff;
+  --cv-read-fill: #2c4775;
+  --cv-write: #f5e58b;
+  --cv-write-fill: #4a4630;
+  --cv-deref-fill: #3a4658;
+  --cv-highlight: #2e4059;
+  --cv-dead-fill: #171d27;
+  --cv-dead-stroke: #47515f;
+  --cv-gap-stroke: #2c3442;
+  --cv-tether: #697d99;
+  --cv-var-0: #61d4c4;
+  --cv-var-1: #ffbd69;
+  --cv-var-2: #c39bff;
+  --cv-var-3: #ff8fb1;
+  --cv-var-4: #a6e06b;
+  --cv-field-0: #c5e478;
+  --cv-field-1: #e79be6;
+  --cv-field-2: #ff8a80;
+  --cv-field-3: #7fd8ff;
+  /* Controls. */
+  --cv-chrome: #1a212d;
+  --cv-border: #363e4c;
+  --cv-button: #262d3a;
+  --cv-button-hover: #323b4c;
+  --cv-button-border: #454d5e;
+  --cv-text: #e6e9f1;
+  --cv-subtle: #a4abbb;
+  --cv-accent: #a8b4ff;
+  --cv-accent-text: #161a36;
+
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--cv-border);
+  border-radius: 0.5rem;
+  background: var(--cv-chrome);
+  color: var(--cv-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.course-visualization .cv-player[data-cv-theme='light'] {
+  /* Light: a cool paper stage; stroke and text colours keep at least 3:1 against it. */
+  --cv-bg: #f5f7fb;
+  --cv-panel: #ffffff;
+  --cv-pane: #e7edf6;
+  --cv-fg: #17202c;
+  --cv-muted: #4f5c6e;
+  --cv-grey: #8a94a3;
+  --cv-context: #6a7586;
+  --cv-read: #2f64d6;
+  --cv-read-fill: #d9e5ff;
+  --cv-write: #b07d00;
+  --cv-write-fill: #fbefc6;
+  --cv-deref-fill: #e3e7ee;
+  --cv-highlight: #d9e3f3;
+  --cv-dead-fill: #eef1f5;
+  --cv-dead-stroke: #b9c1cc;
+  --cv-gap-stroke: #c9d0da;
+  --cv-tether: #8f9db2;
+  --cv-var-0: #0b8a7c;
+  --cv-var-1: #b86a00;
+  --cv-var-2: #7448d0;
+  --cv-var-3: #c42e66;
+  --cv-var-4: #4b8710;
+  --cv-field-0: #6d8c00;
+  --cv-field-1: #a2379f;
+  --cv-field-2: #cc3d32;
+  --cv-field-3: #1679b5;
+  --cv-chrome: #f3f5f9;
+  --cv-border: #d3d9e2;
+  --cv-button: #ffffff;
+  --cv-button-hover: #e9eef6;
+  --cv-button-border: #c3cad5;
+  --cv-text: #1d2430;
+  --cv-subtle: #5a6576;
+  --cv-accent: #4453c9;
+  --cv-accent-text: #ffffff;
+}
+.course-visualization .cv-player:focus-visible {
+  outline: 3px solid var(--cv-accent);
+  outline-offset: 2px;
+}
+
+.course-visualization .cv-view { background: var(--cv-bg); }
+.course-visualization .cv-stage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background: var(--cv-bg);
+  font-family: 'DejaVu Sans Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.course-visualization .cv-stage text { white-space: pre; }
+.course-visualization .cv-line {
+  fill: var(--cv-read);
+  fill-opacity: 0;
+  cursor: pointer;
+  outline: none;
+}
+.course-visualization .cv-line:hover { fill-opacity: 0.1; }
+.course-visualization .cv-line:focus-visible {
+  fill-opacity: 0.08;
+  stroke: var(--cv-read);
+  stroke-width: 2;
+}
+
+.course-visualization .cv-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.65rem 0.8rem 0.7rem;
+  border-top: 1px solid var(--cv-border);
+}
+.course-visualization .cv-transport,
+.course-visualization .cv-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+.course-visualization .cv-progress { flex-wrap: nowrap; gap: 0.75rem; }
+.course-visualization .cv-button,
+.course-visualization .cv-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--cv-button-border);
+  border-radius: 0.4rem;
+  background: var(--cv-button);
+  color: inherit;
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.course-visualization .cv-speed { padding: 0.3rem 0.4rem; font-size: 0.8rem; }
+.course-visualization .cv-button:hover:not(:disabled),
+.course-visualization .cv-speed:hover { background: var(--cv-button-hover); }
+.course-visualization .cv-button:disabled { opacity: 0.4; cursor: default; }
+.course-visualization .cv-button:focus-visible,
+.course-visualization .cv-speed:focus-visible,
+.course-visualization .cv-scrub:focus-visible {
+  outline: 3px solid var(--cv-accent);
+  outline-offset: 2px;
+}
+.course-visualization .cv-primary {
+  min-width: 6.2rem;
+  justify-content: center;
+  border-color: var(--cv-accent);
+  background: var(--cv-accent);
+  color: var(--cv-accent-text);
+  font-weight: 650;
+}
+.course-visualization .cv-primary:hover:not(:disabled) {
+  background: var(--cv-accent);
+  filter: brightness(1.08);
+}
+.course-visualization .cv-icon {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin: 0;
+}
+.course-visualization .cv-icon-only .cv-label { display: none; }
+.course-visualization .cv-reset { margin-left: auto; }
+.course-visualization .cv-scrub {
+  flex: 1;
+  min-width: 4rem;
+  margin: 0;
+  accent-color: var(--cv-accent);
+}
+.course-visualization .cv-count {
+  min-width: 4.5em;
+  color: var(--cv-subtle);
+  font: 0.75rem/1 ui-monospace, 'DejaVu Sans Mono', monospace;
+  text-align: right;
+  white-space: nowrap;
+}
+.course-visualization .cv-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.course-visualization .cv-error { margin: 0; color: inherit; font-style: italic; }
+
+/* Phones: icon-only secondary buttons, so the transport fits on one row. */
+@container (max-width: 30rem) {
+  .course-visualization .cv-button:not(.cv-primary) .cv-label { display: none; }
+  .course-visualization .cv-button { padding: 0.3rem 0.5rem; }
+  .course-visualization .cv-primary { min-width: 5.4rem; }
+  .course-visualization .cv-controls { padding: 0.55rem 0.6rem 0.6rem; }
+}
