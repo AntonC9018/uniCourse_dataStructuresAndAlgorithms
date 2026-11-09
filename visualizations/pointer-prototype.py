@@ -210,6 +210,7 @@ const copySeconds=T.copyBegin+T.copyTravel+0.2;
 function copies(i){const s=traces[scenario].steps; return i===0||s[i-1].line!==s[i].line;}
 function stepSeconds(i){const s=traces[scenario].steps[i]; return s.hold+(s.op?opSeconds(s.op):copies(i)?copySeconds:0);}
 
+function show(at){return `<set attributeName="opacity" to="1" begin="${at}s" fill="freeze"/>`;}
 function hide(at){return `<set attributeName="opacity" to="0" begin="${at}s" fill="freeze"/>`;}
 function fade(from,to,dur=0.5,begin=0){return `<animate attributeName="opacity" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animateAttr(name,from,to,dur=0.45,begin=0){return `<animate attributeName="${name}" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
@@ -344,7 +345,7 @@ function memory(trace,g,step,prev,op){
   out+=`<g transform="translate(${cx} ${cy})"><g>`+(writing?pulse(at-0.2):active?pulse(0):'');
   if(writing) {
    if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${text(0,11,prev.values[c.name],30,FG,'middle')}</g>`;
-   out+=`<g opacity="0">${fade(0,1,T.replace,at)}${text(0,11,step.values[c.name],30,FG,'middle')}</g>`;
+   out+=`<g opacity="0">${show(at)}${text(0,11,step.values[c.name],30,FG,'middle')}</g>`;
   } else out+=text(0,11,values[c.name],30,FG,'middle');
   out+='</g></g>';
  }
@@ -353,7 +354,7 @@ function memory(trace,g,step,prev,op){
 function valueBox(value,color,path,begin,travel,end){
  const half=Math.max(28,String(value).length*evalChar/2+12);
  return `<g opacity="0">${fade(0,0.55,0.25,begin)}${fade(0.55,0,0.2,end-0.2)}<path d="${path}" fill="none" stroke="${color}" stroke-width="3"/></g>`
-  +`<g opacity="0">${fade(0,1,0.12,begin)}${fade(1,0,T.replace,end)}`
+  +`<g opacity="0">${fade(0,1,0.12,begin)}${hide(end)}`
   +rect(-half,-25,2*half,50,'#192331',color,9)+text(0,11,value,30,FG,'middle')
   +`<animateMotion begin="${begin}s" dur="${travel}s" path="${path}" keyPoints="0;1" ${ease} fill="freeze"/></g>`;
 }
@@ -402,7 +403,7 @@ function pane(trace,g,step,prev,op,copying,lineChanged){
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at-0.1)}${markBox(tx+s*evalChar,ty,e-s,stroke,fill)}</g>`;
   out+=colored(tx,ty,before.slice(0,s),trace);
   out+=`<g>${hide(at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
-  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
+  out+=`<g opacity="0">${show(at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
   // The rest of the line slides with the settling value, so the two never overlap.
   return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at+0.1,0.3);
  }
@@ -423,7 +424,7 @@ function output(g,step,prev,op){
   const lines=shown.split('\n'), x=vx+lines[lines.length-1].length*evalChar, y=oy+(lines.length-1)*36;
   const sx=g.tx+(op.span[0]+op.value.length/2)*evalChar, w=op.value.length*evalChar;
   out+=valueBox(op.value,MUTED,`M ${sx} ${g.ty-11} C ${sx} ${y-30}, ${x+w/2} ${g.ty+20}, ${x+w/2} ${y-11}`,0.2,0.7,0.9);
-  out+=`<g opacity="0">${fade(0,1,0.15,0.9)}${text(x,y,op.value,30)}</g>`;
+  out+=`<g opacity="0">${show(0.9)}${text(x,y,op.value,30)}</g>`;
  }
  return out;
 }

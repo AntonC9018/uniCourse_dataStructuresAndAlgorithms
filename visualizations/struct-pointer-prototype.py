@@ -302,6 +302,7 @@ const copySeconds=T.copyBegin+T.copyTravel+0.2;
 function copies(i){const s=traces[scenario].steps; return i===0||s[i-1].line!==s[i].line;}
 function stepSeconds(i){const s=traces[scenario].steps[i]; return s.hold+(s.op?opSeconds(s.op):copies(i)?copySeconds:0);}
 
+function show(at){return `<set attributeName="opacity" to="1" begin="${at}s" fill="freeze"/>`;}
 function hide(at){return `<set attributeName="opacity" to="0" begin="${at}s" fill="freeze"/>`;}
 function fade(from,to,dur=0.5,begin=0){return `<animate attributeName="opacity" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animateAttr(name,from,to,dur=0.45,begin=0){return `<animate attributeName="${name}" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
@@ -328,9 +329,9 @@ function colored(x,y,value,trace,size=30,muteKeywords=true){
  }
  return out;
 }
-// Top-level variables sit GAP pixels apart so neighbouring frames never touch; addresses
-// and byte widths are unaffected.
-const GAP=28, FRAME={side:8,top:36,bottom:40};
+// Top-level variables sit GAP pixels apart, so neighbouring frames hug their cells and
+// their borders just touch; addresses and byte widths are unaffected.
+const FRAME={side:4,top:36,bottom:40,stroke:2.5}, GAP=2*FRAME.side+FRAME.stroke;
 function geometry(trace){
  const lh=56, h=44+trace.source.length*lh, top=Math.max(24,Math.round((720-h)/2));
  const g={code:[40,top,560,h],lh,cy:top+50,memY:270};
@@ -428,7 +429,7 @@ function memory(trace,g,step,prev,op){
  }
  for(const s of g.groups){
   const on=g.leaves.some(l=>l.group===s.name&&live(l)), f=frameOf(s);
-  out+=rect(f.x,f.y,f.w,f.h,'none',on?s.color:'#47515f',10,2.5);
+  out+=rect(f.x,f.y,f.w,f.h,'none',on?s.color:'#47515f',6,FRAME.stroke);
   out+=text(s.x+s.w/2,f.y+f.h+32,s.name,26,on?s.color:GREY,'middle');
  }
  if(op?.kind==='addr'){
@@ -448,7 +449,7 @@ function memory(trace,g,step,prev,op){
   out+=`<g transform="translate(${cx} ${cy})"><g>`+(changing?pulse(at-0.2):'');
   if(changing && prev.values[c.name]!==step.values[c.name]) {
    if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${shown(prev.values[c.name])}</g>`;
-   out+=`<g opacity="0">${fade(0,1,T.replace,at)}${shown(step.values[c.name])}</g>`;
+   out+=`<g opacity="0">${show(at)}${shown(step.values[c.name])}</g>`;
   } else out+=shown(changing?step.values[c.name]:values[c.name]);
   out+='</g></g>';
  }
@@ -461,7 +462,7 @@ function memory(trace,g,step,prev,op){
 function valueBox(value,color,path,begin,travel,end){
  const half=Math.max(28,String(value).length*evalChar/2+12);
  return `<g opacity="0">${fade(0,0.55,0.25,begin)}${fade(0.55,0,0.2,end-0.2)}<path d="${path}" fill="none" stroke="${color}" stroke-width="3"/></g>`
-  +`<g opacity="0">${fade(0,1,0.12,begin)}${fade(1,0,T.replace,end)}`
+  +`<g opacity="0">${fade(0,1,0.12,begin)}${hide(end)}`
   +rect(-half,-25,2*half,50,'#192331',color,9)+text(0,11,value,30,FG,'middle')
   +`<animateMotion begin="${begin}s" dur="${travel}s" path="${path}" keyPoints="0;1" ${ease} fill="freeze"/></g>`;
 }
@@ -505,7 +506,7 @@ function pane(trace,g,step,prev,op,copying,lineChanged){
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at-0.1)}${markBox(tx+s*evalChar,ty,e-s,stroke,fill)}</g>`;
   out+=colored(tx,ty,before.slice(0,s),trace);
   out+=`<g>${hide(at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
-  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
+  out+=`<g opacity="0">${show(at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
   // The rest of the line slides with the settling value, so the two never overlap.
   return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at+0.1,0.3);
  }
@@ -526,7 +527,7 @@ function output(g,step,prev,op){
   const lines=shown.split('\n'), x=vx+lines[lines.length-1].length*evalChar, y=oy+(lines.length-1)*36;
   const sx=g.tx+(op.span[0]+op.value.length/2)*evalChar, w=op.value.length*evalChar;
   out+=valueBox(op.value,MUTED,`M ${sx} ${g.ty-11} C ${sx} ${y-30}, ${x+w/2} ${g.ty+20}, ${x+w/2} ${y-11}`,0.2,0.7,0.9);
-  out+=`<g opacity="0">${fade(0,1,0.15,0.9)}${text(x,y,op.value,30)}</g>`;
+  out+=`<g opacity="0">${show(0.9)}${text(x,y,op.value,30)}</g>`;
  }
  return out;
 }
