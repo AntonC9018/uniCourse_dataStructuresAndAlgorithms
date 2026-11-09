@@ -99,25 +99,32 @@ The inspection slider is independent of video playback.
 ## Website controls prototype
 
 Question: which controls make animated execution useful inside an existing lesson?
-The throwaway prototype remains on `labs/visualizations` until a design is selected.
+**Decided:** compact transport (variant A). The step navigator (B) and statement chapters (C)
+were comparison studies and are rejected. The remaining work is production integration, not
+another control-layout study.
 
 ```sh
 python3 visualizations/website-controls-prototype.py
 ```
 
-Open `visualizations/website-controls-prototype.html?variant=A` for compact transport controls,
-`?variant=B` for a step navigator, or `?variant=C` for statement chapters. The preferred compact
-layout is the default; the comparison footer has been removed.
+Open `visualizations/website-controls-prototype.html?variant=A` for the chosen compact transport,
+or `?variant=B` and `?variant=C` for the rejected comparisons. The chosen layout is the default,
+and the comparison footer has been removed.
 
-The compact transport is the preferred direction. Click a line in either the lesson's code block
-or the animation to jump to the start of that statement. Earlier writes and output are restored,
-playback pauses, and Next animates execution from that point. Code lines also support keyboard
-selection with Enter or Space.
+Click a line in either the lesson's code block or the animation to jump to the start of that
+statement. Earlier writes and output are restored, playback pauses, and Next animates execution
+from that point. Code lines also support keyboard selection with Enter or Space.
 
 The prototype embeds the same SVG renderer used for the exported videos. Next and Replay animate
 the transition; Back and direct step selection show the settled state. Play/Pause freezes and
 resumes the SVG clock, and speed controls change both movement and holds. Expression and failed
-swap examples share this player. No production website integration is included in this study.
+swap examples share this player.
+
+Shipping this control layout inside lessons is separate work: the course website does not embed
+an interactive player yet, and the maintenance integration in [#56] settles how assets and tags
+reach a lesson. Until then the prototype stays on `labs/visualizations`.
+
+[#56]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/56
 
 ## Chosen layout: under memory (B)
 
