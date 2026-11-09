@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Compiler-backed tracer adapter consumed by course maintenance.
 
-`trace` prints one example's trace as JSON; `revision` versions every trace.
+`trace` prints one example's trace in the unified player format (`trace_format.py`);
+`revision` versions every trace.
 """
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
@@ -16,7 +16,7 @@ import sys
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
-TRACER_SOURCES = tuple(ROOT / name for name in ('generate.py', 'tracing.py', 'model.py'))
+TRACER_SOURCES = tuple(ROOT / name for name in ('generate.py', 'tracing.py', 'model.py', 'trace_format.py'))
 
 
 def revision() -> str:
@@ -93,7 +93,8 @@ def main() -> int:
     if args.operation == 'probe':
         print(json.dumps({'supported': True, 'template': TEMPLATE}))
     else:
-        print(json.dumps({'template': TEMPLATE, 'timeline': asdict(timeline)}, sort_keys=True))
+        from trace_format import from_timeline
+        print(json.dumps(from_timeline(timeline), sort_keys=True))
     return 0
 
 
