@@ -482,6 +482,8 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#22-auto-makes-a-copy)
+
 <!-- </visualization> -->
 
 </details>

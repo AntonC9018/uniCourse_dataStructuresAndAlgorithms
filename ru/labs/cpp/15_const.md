@@ -65,6 +65,8 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#2-копирование-константного-числа)
+
 <!-- </visualization> -->
 
 </details>

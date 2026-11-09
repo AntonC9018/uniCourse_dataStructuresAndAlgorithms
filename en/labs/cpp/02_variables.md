@@ -154,6 +154,8 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#4-assigning-one-variable-to-another)
+
 <!-- </visualization> -->
 
 </details>
@@ -171,6 +173,8 @@ std::cout << c << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#5-literals-variables-and-operators-are-expressions)
 
 <!-- </visualization> -->
 
@@ -210,6 +214,8 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#6-assigning-an-expression-to-a-variable)
 
 <!-- </visualization> -->
 
@@ -317,6 +323,8 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#10-empty-initialization)
+
 <!-- </visualization> -->
 
 </details>
@@ -345,6 +353,8 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#11-assigning-empty-braces)
+
 <!-- </visualization> -->
 
 </details>
@@ -370,6 +380,8 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#12-an-int-expression)
 
 <!-- </visualization> -->
 
@@ -471,6 +483,8 @@ auto b{ a + 5 };
 
 <!-- <visualization> -->
 
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#17-auto-from-another-variable)
+
 <!-- </visualization> -->
 
 </details>
@@ -497,6 +511,8 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#18-swapping-variables)
 
 <!-- </visualization> -->
 
