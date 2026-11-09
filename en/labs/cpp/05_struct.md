@@ -835,7 +835,7 @@ Both forms are equivalent.
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
 <!-- <visualization template="layout"> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#22-structure-size-1)
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#22-structure-size-1)
 
 <!-- </visualization> -->
 
@@ -921,7 +921,7 @@ it goes into the next one.
 
 <!-- <visualization template="layout"> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
 
 <!-- </visualization> -->
 
