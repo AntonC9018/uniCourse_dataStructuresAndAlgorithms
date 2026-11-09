@@ -218,7 +218,7 @@ int main()
 
 <!-- <visualization template="layout"> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#7-адрес-поля-относительно-адреса-структуры)
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#7-адрес-поля-относительно-адреса-структуры)
 
 <!-- </visualization> -->
 
@@ -253,7 +253,7 @@ int main()
 
 <!-- <visualization template="layout"> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#8-продвинутый-уровень-смещения-полей)
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#8-продвинутый-уровень-смещения-полей)
 
 <!-- </visualization> -->
 

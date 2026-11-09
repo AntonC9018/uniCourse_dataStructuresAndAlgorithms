@@ -218,7 +218,7 @@ The first field of this structure and the structure itself are located at the sa
 
 <!-- <visualization template="layout"> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer-arithmetic/#7-field-address-relative-to-a-structure-address)
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer-arithmetic/#7-field-address-relative-to-a-structure-address)
 
 <!-- </visualization> -->
 
@@ -254,7 +254,7 @@ It typically prints `0` for `a` and `4` for `b`.
 
 <!-- <visualization template="layout"> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer-arithmetic/#8-advanced-level-field-offsets)
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer-arithmetic/#8-advanced-level-field-offsets)
 
 <!-- </visualization> -->
 
