@@ -1,12 +1,13 @@
-"""THROWAWAY study: structs in memory, copies, `.` and `->`, and pointers to structs. ?variant=A/B.
+"""THROWAWAY study: structs in memory, copies, `.` and `->`, and pointers to structs.
 
 Question: how does a struct variable read in the player, and where does a pointer to a struct
 land compared with a pointer to one of its fields? Builds on the locked pointer arcs (#59) and
 the under-memory (B) player of #57. Traces are manual; production layouts come from Clang (#62).
 
-Variants differ only in how a struct groups its fields:
-A · flat fields with a bracket and the struct name underneath; a pointee bar marks the target.
-B · a frame around the struct's fields; an arc to the struct lands on the frame.
+A struct is a frame around its field cells. An arc to the struct ends on the frame; an arc to
+a field passes through the frame onto the field. Fields keep one colour per field name; frames,
+variable names and arcs use the variable's colour. Top-level variables are spaced apart so
+neighbouring frames never touch. (Rejected: a bracket under flat fields with a pointee bar.)
 
 The JavaScript is copied from pointer-prototype.py and adapted; it is not meant to be shared.
 Run from the course root: python3 visualizations/struct-pointer-prototype.py
@@ -17,6 +18,8 @@ import re
 from pathlib import Path
 
 COLORS = ('#61d4c4', '#ffbd69', '#c39bff', '#ff8fb1', '#a6e06b')
+# Field colours, assigned per field name so `a.f1` and `b.f1` match.
+FIELD_COLORS = ('#c5e478', '#e79be6', '#ff8a80', '#7fd8ff')
 
 
 def scalar(name, address, size, kind='int'):
@@ -36,6 +39,10 @@ class Trace:
     def __init__(self, name, title, source, variables):
         self.name, self.title, self.source = name, title, source
         self.leaves, self.groups = [], []
+        field_colors = {}
+        for var in variables:
+            for f in var['fields'] or []:
+                field_colors.setdefault(f['name'], FIELD_COLORS[len(field_colors)])
         for color, var in zip(COLORS, variables):
             if var['fields'] is None:
                 self.leaves.append(dict(name=var['name'], label=var['name'], group=None,
@@ -47,7 +54,8 @@ class Trace:
                 names.append(var['name'] + '.' + f['name'])
                 self.leaves.append(dict(name=names[-1], label=f['name'], group=var['name'],
                                         address=var['address'] + f['offset'], size=f['size'],
-                                        kind=f['kind'], color=color))
+                                        kind=f['kind'], color=color,
+                                        fieldColor=field_colors[f['name']]))
             self.groups.append(dict(name=var['name'], type=var['type'], address=var['address'],
                                     size=var['size'], color=color, fields=names))
         self.values = {leaf['name']: None for leaf in self.leaves}
@@ -120,7 +128,8 @@ class Trace:
         fields = self._fields(name)
         sources = self._fields(self.carry) if isinstance(self.carry, str) else [None] * len(fields)
         for field, value, source in zip(fields, values, sources):
-            self.values[field] = int(value) if value.isdigit() else value
+            # Memory holds numbers: a null pointer is stored, and shown, as 0.
+            self.values[field] = 0 if value == 'nullptr' else int(value) if value.isdigit() else value
             self.targets.pop(field, None)
             if isinstance(self.carry, tuple):
                 self.targets[field] = self.carry[1]
@@ -146,6 +155,21 @@ class Trace:
 
 
 TWO_INTS = [('f1', 0, 4, 'int'), ('f2', 4, 4, 'int')]
+
+
+def adjacent_copy():
+    # Lesson 05, example 6: two one-field structs right next to each other.
+    t = Trace('adjacent', 'Initializing a structure from another',
+              ['struct A { int f; };', 'A a{ 1 };', 'A b{ a };', 'a.f = 2;',
+               'std::cout << a.f << std::endl;', 'std::cout << b.f << std::endl;'],
+              [struct('a', 'A', 64, [('f', 0, 4, 'int')]),
+               struct('b', 'A', 68, [('f', 0, 4, 'int')])])
+    t.statement(1, 'a = {1}').write('a')
+    t.statement(2).read('a').write('b', hold=1.6)
+    t.statement(3).write('a.f')
+    t.statement(4).print('a.f')
+    t.statement(5).print('b.f')
+    return t.json()
 
 
 def copy_assignment():
@@ -245,37 +269,20 @@ p {line-height:1.5; margin:10px 0; color:#a0afc2}
 .controls {display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0}
 svg {display:block; width:100%; background:#101722; border-radius:12px}
 input[type=range] {flex:1; min-width:120px; accent-color:#9cbaff}
-#switcher {position:fixed; bottom:12px; left:50%; transform:translateX(-50%);
- display:flex; align-items:center; gap:8px; padding:8px; border-radius:14px; background:#fff;
- color:#111; box-shadow:0 4px 20px #0009; white-space:nowrap}
-#switcher button {background:#eee; color:#111; border-color:#bbb}
-#variantName {font-size:14px; min-width:220px; text-align:center}
 #state {font-family:monospace; font-size:13px; min-height:36px}
 </style>
 <p><strong>Struct and pointer study.</strong> Struct variables, whole-struct copies, <code>.</code>
 and <code>-&gt;</code>, and pointers to structs and to fields. Ints and fields 4 bytes, pointers 8,
-addresses from 64. Variants differ only in how a struct groups its fields.</p>
+addresses from 64. A struct is a frame around its fields.</p>
 <div class="controls">
  <label>Example <select id="scenario"></select></label>
  <button id="play">Play</button><button id="back">← Step</button><button id="next">Step →</button>
  <input id="scrub" aria-label="Trace step" type="range" min="0" value="0"><span id="count"></span>
 </div>
 <svg id="stage" viewBox="0 0 1280 720" role="img" aria-label="Code, memory and pointers"></svg>
-<p id="description"></p><div id="state" aria-live="polite"></div>
-<nav id="switcher" aria-label="Prototype variant">
- <button id="prevVariant" aria-label="Previous variant">←</button><span id="variantName"></span>
- <button id="nextVariant" aria-label="Next variant">→</button>
-</nav>
+<div id="state" aria-live="polite"></div>
 <script>
 const traces=__TRACES__;
-const variants=['A','B'], variantNames=['Bracket below','Frame around'];
-const descriptions=[
- 'A · Bracket below: fields are ordinary cells in the struct\'s colour; a bracket and the struct name '
- +'sit under them. A pointer\'s arc ends on a bar spanning exactly what it points to: the whole struct, or one field.',
- 'B · Frame around: a struct is a framed box holding its field cells. An arc to the struct lands on the '
- +'frame; an arc to a field lands on that field inside it.'];
-let variant=new URLSearchParams(location.search).get('variant')||'A';
-if(!variants.includes(variant)) variant='A';
 let scenario=0,index=0,playing=false,timer,settleTimer;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -283,7 +290,7 @@ const mono='DejaVu Sans Mono,monospace', ease='calcMode="spline" keyTimes="0;1" 
 const FG='#eef3fa', MUTED='#a0afc2', GREY='#697382', READ='#9cbaff', WRITE='#f5e58b', CONTEXT='#6f7c8f';
 const MEMX=640, BASE=64, codeChar=25*.602, evalChar=30*.602;
 const T={prepare:0.55,travel:1.1,replace:0.2,settle:0.6,follow:0.9,writeHold:0.8,copyBegin:0.15,copyTravel:1.0};
-const KEYWORDS=new Set(['int','std','cout','endl','struct','nullptr']);
+const KEYWORDS=new Set(['int','std','cout','endl','struct']);
 const departure=op=>op.kind==='write'?T.writeHold:op.kind==='print'?0.2:T.prepare;
 function arrival(op) {
  if(op.kind==='deref') return T.prepare+T.follow;
@@ -295,6 +302,7 @@ const copySeconds=T.copyBegin+T.copyTravel+0.2;
 function copies(i){const s=traces[scenario].steps; return i===0||s[i-1].line!==s[i].line;}
 function stepSeconds(i){const s=traces[scenario].steps[i]; return s.hold+(s.op?opSeconds(s.op):copies(i)?copySeconds:0);}
 
+function hide(at){return `<set attributeName="opacity" to="0" begin="${at}s" fill="freeze"/>`;}
 function fade(from,to,dur=0.5,begin=0){return `<animate attributeName="opacity" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animateAttr(name,from,to,dur=0.45,begin=0){return `<animate attributeName="${name}" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animated(el,anims){return anims?el.replace(/\/>$/,'>'+anims+'</'+el.match(/^<(\w+)/)[1]+'>'):el;}
@@ -304,63 +312,72 @@ function rect(x,y,w,h,fill='#192331',stroke='none',radius=8,width=3){
  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="${width}"/>`;}
 function pulse(begin){return `<animateTransform attributeName="transform" type="scale" values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;}
 function markBox(x,y,len,stroke,fill){return `<rect x="${x-3}" y="${y-32}" width="${len*evalChar+6}" height="42" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;}
-function glide(markup,dx,begin,dur){return dx?`<g><animateTransform attributeName="transform" type="translate" from="0 0" to="${dx} 0" begin="${begin}s" dur="${dur}s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
-// Variables keep their colour; a field name after `.` or `->` stays neutral, like the lesson text.
+// Starts `from` pixels right of its place and slides home after `begin`.
+function settle(markup,from,begin){return from?`<g transform="translate(${from} 0)"><animateTransform attributeName="transform" type="translate" from="${from} 0" to="0 0" begin="${begin}s" dur="0.3s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
+function glide(markup,dx,begin,dur){
+ return dx?`<g><animateTransform attributeName="transform" type="translate" from="0 0" to="${dx} 0" begin="${begin}s" dur="${dur}s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
+// Variables keep their colour; a field name after `.` or `->` takes its field's colour.
 function colored(x,y,value,trace,size=30,muteKeywords=true){
  let out='', member=false;
  for(const token of value.split(/(\b[a-zA-Z_]\w*\b)/)){
   const owner=!member&&(trace.groups.find(g=>g.name===token)||trace.leaves.find(l=>!l.group&&l.name===token));
-  out+=text(x,y,token,size,owner?owner.color:muteKeywords&&KEYWORDS.has(token)?CONTEXT:FG);
+  const field=!owner&&trace.leaves.find(l=>l.group&&l.label===token);
+  out+=text(x,y,token,size,owner?owner.color:field?field.fieldColor:muteKeywords&&KEYWORDS.has(token)?CONTEXT:FG);
   if(token) member=/(\.|->)$/.test(token);
   x+=token.length*size*.602;
  }
  return out;
 }
+// Top-level variables sit GAP pixels apart so neighbouring frames never touch; addresses
+// and byte widths are unaffected.
+const GAP=28, FRAME={side:8,top:36,bottom:40};
 function geometry(trace){
  const lh=56, h=44+trace.source.length*lh, top=Math.max(24,Math.round((720-h)/2));
- const g={code:[40,top,560,h],lh,cy:top+50,memY:262};
- g.pane=[640,462,600,76]; g.out=[664,598]; g.tx=664; g.ty=462+38+11;
+ const g={code:[40,top,560,h],lh,cy:top+50,memY:270};
+ g.pane=[640,476,600,76]; g.out=[664,612]; g.tx=664; g.ty=476+38+11;
+ const starts=[...trace.groups.map(s=>s.address),...trace.leaves.filter(l=>!l.group).map(l=>l.address)].sort((a,b)=>a-b);
  const end=Math.max(...trace.leaves.map(l=>l.address+l.size),...trace.groups.map(s=>s.address+s.size));
- const byte=Math.min(24,600/(end-BASE));
- const at=(address,size)=>({x:MEMX+(address-BASE)*byte,y:g.memY,w:size*byte,h:64});
+ g.byte=Math.min(24,(600-GAP*(starts.length-1))/(end-starts[0]));
+ g.end=end;
+ g.xOf=address=>MEMX+(address-starts[0])*g.byte+GAP*starts.filter(s=>s>starts[0]&&s<=address).length;
+ const at=(address,size)=>({x:g.xOf(address),y:g.memY,w:size*g.byte,h:64});
  g.leaves=trace.leaves.map(l=>({...l,...at(l.address,l.size)}));
- g.groups=trace.groups.map(s=>({...s,...at(s.address,s.size),fieldsEnd:Math.max(...trace.leaves.filter(l=>l.group===s.name).map(l=>l.address+l.size))}));
- for(const s of g.groups) s.used=(s.fieldsEnd-s.address)*byte;
+ g.groups=trace.groups.map(s=>({...s,...at(s.address,s.size)}));
  return g;
 }
 const lineY=(g,i)=>g.cy+i*g.lh;
 const leafNamed=(g,name)=>g.leaves.find(l=>l.name===name);
-// A box is either one cell or a whole struct (its fields, without tail padding).
-function box(g,name){
- const s=g.groups.find(s=>s.name===name);
- return s?{...s,w:s.used,group:true}:leafNamed(g,name);
-}
-const frameTop=c=>c.y-12;
-function landingY(c){return variant==='B'&&c.group?frameTop(c)-2:c.y-9;}
+// A box is one cell or a whole struct; a struct is drawn as a frame around its fields.
+const box=(g,name)=>g.groups.find(s=>s.name===name)||leafNamed(g,name);
+const isStruct=c=>Boolean(c.fields);
+const frameOf=s=>({x:s.x-FRAME.side,y:s.y-FRAME.top,w:s.w+2*FRAME.side,h:s.h+FRAME.top+FRAME.bottom});
 const labelWidth=c=>String(c.address).length*16*.602;
-const labelCenter=c=>[c.x+3+labelWidth(c)/2,c.y-(variant==='B'?28:20)-6];
+const labelCenter=c=>[c.x+3+labelWidth(c)/2,c.y-18];
 const valueCenter=c=>[c.x+c.w/2,c.y+32];
 function leavesOf(g,name){const s=g.groups.find(s=>s.name===name); return s?g.leaves.filter(l=>l.group===name):[leafNamed(g,name)];}
 
 // Persistent pointer arcs, as locked in #59: both ends near the centre, spread when shared.
+// An arc to a struct ends on its frame; an arc to a field passes through the frame onto the
+// field. Ends on a cell keep clear of its address label.
 function links(g,step){
  const list=g.leaves.filter(l=>l.kind==='ptr'&&step.targets[l.name]).map(l=>({from:l,to:box(g,step.targets[l.name])}));
  const centre=c=>c.x+c.w/2, ports=new Map();
- const key=c=>c.name;
  for(const l of list) for(const [cell,other,k] of [[l.from,l.to,'sx'],[l.to,l.from,'ex']]) {
-  if(!ports.has(key(cell))) ports.set(key(cell),{cell,ends:[]});
-  ports.get(key(cell)).ends.push({l,k,other:centre(other)});
+  if(!ports.has(cell.name)) ports.set(cell.name,{cell,ends:[]});
+  ports.get(cell.name).ends.push({l,k,other:centre(other)});
  }
  for(const {cell,ends} of ports.values()) {
   const side=end=>end.other<centre(cell)?0:1;
   ends.sort((p,q)=>side(p)-side(q)||q.other-p.other);
-  ends.forEach((end,i)=>end.l[end.k]=centre(cell)+(i-(ends.length-1)/2)*20);
+  const spread=20*(ends.length-1), low=isStruct(cell)?cell.x+12:cell.x+3+labelWidth(cell)+14, high=cell.x+cell.w-12;
+  const first=Math.min(Math.max(centre(cell)-spread/2,low),Math.max(low,high-spread));
+  ends.forEach((end,i)=>end.l[end.k]=first+i*20);
  }
  const range=l=>[Math.min(l.sx,l.ex),Math.max(l.sx,l.ex)];
  for(const l of list) {
   const [a,b]=range(l), {sx,ex}=l;
   l.level=list.filter(o=>o!==l&&range(o)[0]>=a&&range(o)[1]<=b).length;
-  const sy=l.from.y-2, ey=landingY(l.to), apex=g.memY-112-l.level*40;
+  const sy=l.from.y-2, ey=isStruct(l.to)?frameOf(l.to).y-1:l.to.y-3, apex=g.memY-FRAME.top-84-l.level*40;
   l.d=`M ${sx} ${sy} C ${sx} ${apex}, ${ex} ${apex}, ${ex} ${ey-9}`; l.head=[ex,ey,90];
  }
  return list;
@@ -368,14 +385,12 @@ function links(g,step){
 function linkMarkup(l,{grow=null,fadeOut=null}={}) {
  const [x,y,angle]=l.head, color=l.from.color;
  const head=`<path d="M -11 -6.5 L 0 0 L -11 6.5 Z" fill="${color}" transform="translate(${x} ${y}) rotate(${angle})"/>`;
- // Variant A: a bar spanning the pointee says how much the pointer designates.
- const bar=variant==='A'?`<rect x="${l.to.x+3}" y="${l.to.y-8}" width="${l.to.w-6}" height="3" rx="1.5" fill="${color}"/>`:'';
  return `<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
   +(fadeOut!==null?fade(1,0,0.3,fadeOut):'')
   +`<path d="${l.d}" fill="none" stroke="#101722" stroke-width="9"`+(grow!==null?` data-grow="${grow}"`:'')+'/>'
   +`<path d="${l.d}" fill="none" stroke="${color}" stroke-width="2.5"`
   +(grow!==null?` data-grow="${grow}"`:'')+'/>'
-  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}${bar}</g>`:head+bar)+'</g>';
+  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>';
 }
 function arrows(g,step,prev,op){
  const now=links(g,step);
@@ -394,60 +409,51 @@ function arrows(g,step,prev,op){
  }
  return out;
 }
-function outline(c,color,inset=4.5){return rect(c.x+inset,c.y+inset,c.w-2*inset,c.h-2*inset,'none',color,0,3);}
+// Highlights cover a struct's frame for struct operations and one cell for field operations.
+function outline(c,color){
+ if(isStruct(c)){const f=frameOf(c); return rect(f.x+3,f.y+3,f.w-6,f.h-6,'none',color,8,3);}
+ return rect(c.x+4.5,c.y+4.5,c.w-9,c.h-9,'none',color,0,3);
+}
 function memory(trace,g,step,prev,op){
  const values=op?.kind==='write'?prev.values:step.values, at=op?arrival(op):0;
- const live=l=>values[l.name]!==null||(op?.kind==='write'&&leavesOf(g,op.name).includes(l));
+ const writing=new Set(op?.kind==='write'?leavesOf(g,op.name).map(l=>l.name):[]);
+ const live=l=>values[l.name]!==null||writing.has(l.name);
  let out='';
  // Unused bytes (tail padding, gaps between variables) are dashed, as in the pointer study.
  const spans=g.leaves.map(l=>[l.address,l.address+l.size]).sort((a,b)=>a[0]-b[0]);
- const end=Math.max(...g.groups.map(s=>s.address+s.size),...spans.map(s=>s[1]));
- const byte=g.leaves[0].w/g.leaves[0].size;
- let cursor=BASE;
- for(const [a,b] of [...spans,[end,end]]){
-  if(a>cursor) out+=`<rect x="${MEMX+(cursor-BASE)*byte+3}" y="${g.memY+3}" width="${(a-cursor)*byte-6}" height="58" fill="none" stroke="#2c3442" stroke-dasharray="5 5"/>`;
+ let cursor=spans[0][0];
+ for(const [a,b] of [...spans,[g.end,g.end]]){
+  if(a>cursor) out+=`<rect x="${g.xOf(cursor)+3}" y="${g.memY+3}" width="${(a-cursor)*g.byte-6}" height="58" fill="none" stroke="#2c3442" stroke-dasharray="5 5"/>`;
   cursor=Math.max(cursor,b);
  }
  for(const s of g.groups){
-  const on=g.leaves.some(l=>l.group===s.name&&live(l)), color=on?s.color:'#47515f';
-  if(variant==='A'){
-   const y=s.y+s.h+46;
-   out+=`<path d="M ${s.x+4} ${y-8} V ${y} H ${s.x+s.used-4} V ${y-8}" fill="none" stroke="${on?MUTED:GREY}" stroke-width="2"/>`;
-   out+=text(s.x+s.used/2,y+32,s.name,26,on?s.color:GREY,'middle');
-  } else {
-   out+=rect(s.x-2,frameTop(s),s.used+4,s.h+24+30,'none',color,10,2.5);
-   out+=text(s.x+s.used/2,s.y+s.h+76,s.name,26,on?s.color:GREY,'middle');
-  }
+  const on=g.leaves.some(l=>l.group===s.name&&live(l)), f=frameOf(s);
+  out+=rect(f.x,f.y,f.w,f.h,'none',on?s.color:'#47515f',10,2.5);
+  out+=text(s.x+s.w/2,f.y+f.h+32,s.name,26,on?s.color:GREY,'middle');
  }
  if(op?.kind==='addr'){
   const c=leavesOf(g,op.name)[0], [lx,ly]=labelCenter(c);
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at+0.1)}${rect(lx-labelWidth(c)/2-5,ly-13,labelWidth(c)+10,24,'#2c4775',READ,5,2)}</g>`;
  }
  for(const c of g.leaves){
-  const on=live(c), changing=op?.kind==='write'&&leavesOf(g,op.name).includes(c);
-  const addressY=c.y-(variant==='B'?28:20);
-  out+=text(c.x+3,addressY,c.address,16,on?MUTED:GREY);
-  out+=c.group?text(c.x+c.w/2,c.y+c.h+28,c.label,20,on?c.color:GREY,'middle')
-   :text(c.x+c.w/2,c.y+c.h+34,c.label,26,on?c.color:GREY,'middle');
+  const on=live(c), changing=writing.has(c.name), color=c.fieldColor||c.color;
+  out+=text(c.x+3,c.y-12,c.address,16,on?MUTED:GREY);
+  out+=c.group?text(c.x+c.w/2,c.y+c.h+28,c.label,20,on?color:GREY,'middle')
+   :text(c.x+c.w/2,c.y+c.h+34,c.label,26,on?color:GREY,'middle');
   out+=rect(c.x,c.y,c.w,c.h,on?'#192331':'#171d27','none',0);
-  // In B the frame carries the struct colour, so its fields use a quieter outline.
-  const border=!on?'#47515f':variant==='B'&&c.group?'#55657a':c.color;
-  out+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',border,0,variant==='B'&&c.group?2:3);
+  out+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',on?color:'#47515f',0,3);
   if(!on) continue;
-  const [cx,cy]=[c.x+c.w/2,c.y+c.h/2], value=values[c.name], size=String(value).length*18>c.w-12?22:30;
-  const shown=v=>text(0,size/3+1,v,size,v==='?'?GREY:FG,'middle');
+  const [cx,cy]=[c.x+c.w/2,c.y+c.h/2];
+  const shown=v=>{const size=String(v).length*18>c.w-12?22:30; return text(0,size/3+1,v,size,v==='?'?GREY:FG,'middle');};
   out+=`<g transform="translate(${cx} ${cy})"><g>`+(changing?pulse(at-0.2):'');
   if(changing && prev.values[c.name]!==step.values[c.name]) {
-   if(prev.values[c.name]!==null) out+=`<g>${fade(1,0,T.replace,at)}${shown(prev.values[c.name])}</g>`;
+   if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${shown(prev.values[c.name])}</g>`;
    out+=`<g opacity="0">${fade(0,1,T.replace,at)}${shown(step.values[c.name])}</g>`;
-  } else out+=shown(changing?step.values[c.name]:value);
+  } else out+=shown(changing?step.values[c.name]:values[c.name]);
   out+='</g></g>';
  }
- // Highlights cover a whole struct for struct operations and one cell for field operations.
- if(op?.kind==='read'||op?.kind==='write'){
-  const c=box(g,op.name), color=op.kind==='write'?WRITE:READ;
-  out+=`<g>${fade(1,0,0.35,at+0.15)}${outline(c,color)}</g>`;
- }
+ if(op?.kind==='read'||op?.kind==='write')
+  out+=`<g>${fade(1,0,0.35,at+0.15)}${outline(box(g,op.name),op.kind==='write'?WRITE:READ)}</g>`;
  if(op?.kind==='deref')
   out+=`<g opacity="0">${fade(0,1,0.2,at-0.15)}${outline(box(g,op.target),FG)}</g>`;
  return out;
@@ -464,12 +470,12 @@ function transfers(g,step,prev,op){
  const at=arrival(op), begin=departure(op), ty=g.ty-11, below=g.memY+150;
  const spanCenter=(s,len)=>g.tx+(s+len/2)*evalChar;
  if(op.kind==='read'){
-  const [sx,sy]=valueCenter(box(g,op.name)), dx=spanCenter(op.span[0],String(op.value).length);
+  const [sx,sy]=valueCenter(box(g,op.name)), dx=spanCenter(op.span[0],op.span[1]-op.span[0]);
   return valueBox(op.value,READ,`M ${sx} ${sy} C ${sx} ${below}, ${dx} ${below}, ${dx} ${ty}`,begin,T.travel,at);
  }
  if(op.kind==='addr'){
   // The address comes from the label above storage: taking an address reads no value.
-  const c=leavesOf(g,op.name)[0], [sx,sy]=labelCenter(c), dx=spanCenter(op.span[0],op.value.length);
+  const c=leavesOf(g,op.name)[0], [sx,sy]=labelCenter(c), dx=spanCenter(op.span[0],op.span[1]-op.span[0]);
   const side=c.x-20;
   return valueBox(op.value,READ,`M ${sx} ${sy} C ${side} ${sy}, ${side} ${g.memY+64}, ${side} ${below} C ${side} ${ty}, ${dx} ${ty-60}, ${dx} ${ty}`,begin,T.travel,at);
  }
@@ -498,9 +504,10 @@ function pane(trace,g,step,prev,op,copying,lineChanged){
   const [stroke,fill]=op.kind==='deref'?[FG,'#3a4658']:[READ,'#2c4775'];
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at-0.1)}${markBox(tx+s*evalChar,ty,e-s,stroke,fill)}</g>`;
   out+=colored(tx,ty,before.slice(0,s),trace);
-  out+=`<g>${fade(1,0,T.replace,at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
-  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace)}</g>`;
-  return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at,T.replace);
+  out+=`<g>${hide(at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
+  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
+  // The rest of the line slides with the settling value, so the two never overlap.
+  return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at+0.1,0.3);
  }
  if(op?.kind==='write'){
   const at=arrival(op), v=step.pane.lastIndexOf('= ')+2;
@@ -573,8 +580,6 @@ function draw(animate=false){
  out+=arrows(g,step,prev,op)+memory(trace,g,step,prev,op)+pane(trace,g,step,prev,op,copying,lineChanged)
   +output(g,step,prev,op)+transfers(g,step,prev,op);
  const svg=$('stage'); svg.innerHTML=out; finishPaths(); svg.setCurrentTime(0);
- $('description').textContent=descriptions[variants.indexOf(variant)];
- $('variantName').textContent=variant+' · '+variantNames[variants.indexOf(variant)];
  $('scrub').max=trace.steps.length-1; $('scrub').value=index;
  $('count').textContent=`${index+1} / ${trace.steps.length}`;
  $('state').textContent=describe(step)+' · '+trace.leaves.map(c=>c.name+' = '
@@ -593,18 +598,11 @@ $('next').onclick=()=>advance(1);$('back').onclick=()=>advance(-1);
 $('scrub').oninput=e=>{stop();index=Number(e.target.value);draw();};
 traces.forEach((t,i)=>$('scenario').add(new Option(t.title,i)));
 $('scenario').onchange=e=>{stop();scenario=Number(e.target.value);index=0;draw();};
-function changeVariant(d){variant=variants[(variants.indexOf(variant)+d+2)%2];
- const url=new URL(location.href);url.searchParams.set('variant',variant);
- try{history.replaceState(null,'',url);}catch(error){if(error.name!=='SecurityError')throw error;}
- draw();}
-$('prevVariant').onclick=()=>changeVariant(-1);$('nextVariant').onclick=()=>changeVariant(1);
-document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select,[contenteditable]'))return;
- if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();changeVariant(e.key==='ArrowLeft'?-1:1);}});
 draw();
 </script>
 </html>'''
 
-TRACES = [copy_assignment(), arrow_operator(), copy_through_pointer(), field_address(),
+TRACES = [adjacent_copy(), copy_assignment(), arrow_operator(), copy_through_pointer(), field_address(),
           shallow_copy()]
 
 if __name__ == '__main__':

@@ -210,6 +210,7 @@ const copySeconds=T.copyBegin+T.copyTravel+0.2;
 function copies(i){const s=traces[scenario].steps; return i===0||s[i-1].line!==s[i].line;}
 function stepSeconds(i){const s=traces[scenario].steps[i]; return s.hold+(s.op?opSeconds(s.op):copies(i)?copySeconds:0);}
 
+function hide(at){return `<set attributeName="opacity" to="0" begin="${at}s" fill="freeze"/>`;}
 function fade(from,to,dur=0.5,begin=0){return `<animate attributeName="opacity" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animateAttr(name,from,to,dur=0.45,begin=0){return `<animate attributeName="${name}" from="${from}" to="${to}" dur="${dur}s" begin="${begin}s" ${ease} fill="freeze"/>`;}
 function animated(el,anims){return anims?el.replace(/\/>$/,'>'+anims+'</'+el.match(/^<(\w+)/)[1]+'>'):el;}
@@ -219,7 +220,10 @@ function rect(x,y,w,h,fill='#192331',stroke='none',radius=8,width=3){
  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="${width}"/>`;}
 function pulse(begin){return `<animateTransform attributeName="transform" type="scale" values="1;1.14;1" keyTimes="0;0.45;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1" begin="${begin}s" dur="0.65s" fill="freeze"/>`;}
 function markBox(x,y,len,stroke,fill){return `<rect x="${x-3}" y="${y-32}" width="${len*evalChar+6}" height="42" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;}
-function glide(markup,dx,begin,dur){return dx?`<g><animateTransform attributeName="transform" type="translate" from="0 0" to="${dx} 0" begin="${begin}s" dur="${dur}s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
+// Starts `from` pixels right of its place and slides home after `begin`.
+function settle(markup,from,begin){return from?`<g transform="translate(${from} 0)"><animateTransform attributeName="transform" type="translate" from="${from} 0" to="0 0" begin="${begin}s" dur="0.3s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
+function glide(markup,dx,begin,dur){
+ return dx?`<g><animateTransform attributeName="transform" type="translate" from="0 0" to="${dx} 0" begin="${begin}s" dur="${dur}s" ${ease} fill="freeze"/>${markup}</g>`:markup;}
 function colored(x,y,value,trace,size=30,muteKeywords=true){
  let out='';
  for(const token of value.split(/(\b[a-zA-Z_]\w*\b)/)){
@@ -339,7 +343,7 @@ function memory(trace,g,step,prev,op){
   const [cx,cy]=[c.x+c.w/2,c.y+c.h/2];
   out+=`<g transform="translate(${cx} ${cy})"><g>`+(writing?pulse(at-0.2):active?pulse(0):'');
   if(writing) {
-   if(prev.values[c.name]!==null) out+=`<g>${fade(1,0,T.replace,at)}${text(0,11,prev.values[c.name],30,FG,'middle')}</g>`;
+   if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${text(0,11,prev.values[c.name],30,FG,'middle')}</g>`;
    out+=`<g opacity="0">${fade(0,1,T.replace,at)}${text(0,11,step.values[c.name],30,FG,'middle')}</g>`;
   } else out+=text(0,11,values[c.name],30,FG,'middle');
   out+='</g></g>';
@@ -358,13 +362,13 @@ function transfers(g,step,prev,op){
  const at=arrival(op), begin=departure(op), ty=g.ty-11;
  const spanCenter=(s,len)=>g.tx+(s+len/2)*evalChar;
  if(op.kind==='read'){
-  const [sx,sy]=valueCenter(cellNamed(g,op.name)), dx=spanCenter(op.span[0],String(op.value).length);
+  const [sx,sy]=valueCenter(cellNamed(g,op.name)), dx=spanCenter(op.span[0],op.span[1]-op.span[0]);
   const port=sx-50, mid=(g.memY+64+ty)/2;
   return valueBox(op.value,READ,`M ${sx} ${sy} C ${port} ${sy}, ${port} ${mid}, ${port} ${mid} C ${port} ${ty}, ${dx} ${mid}, ${dx} ${ty}`,begin,T.travel,at);
  }
  if(op.kind==='addr'){
   // The address comes from the label above storage: taking an address reads no value.
-  const c=cellNamed(g,op.name), [sx,sy]=labelCenter(c), dx=spanCenter(op.span[0],String(op.value).length);
+  const c=cellNamed(g,op.name), [sx,sy]=labelCenter(c), dx=spanCenter(op.span[0],op.span[1]-op.span[0]);
   const side=c.x-28;
   return valueBox(op.value,READ,`M ${sx} ${sy} C ${side} ${sy}, ${side} ${g.memY+64}, ${side} ${(g.memY+64+ty)/2} C ${side} ${ty}, ${dx} ${ty-60}, ${dx} ${ty}`,begin,T.travel,at);
  }
@@ -397,9 +401,10 @@ function pane(trace,g,step,prev,op,copying,lineChanged){
   const [stroke,fill]=op.kind==='deref'?[FG,'#3a4658']:[READ,'#2c4775'];
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at-0.1)}${markBox(tx+s*evalChar,ty,e-s,stroke,fill)}</g>`;
   out+=colored(tx,ty,before.slice(0,s),trace);
-  out+=`<g>${fade(1,0,T.replace,at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
-  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace)}</g>`;
-  return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at,T.replace);
+  out+=`<g>${hide(at)}${colored(tx+s*evalChar,ty,before.slice(s,e),trace)}</g>`;
+  out+=`<g opacity="0">${fade(0,1,T.replace,at)}${settle(colored(tx+s*evalChar,ty,step.pane.slice(s,s+len),trace),(e-s-len)/2*evalChar,at+0.1)}</g>`;
+  // The rest of the line slides with the settling value, so the two never overlap.
+  return out+glide(colored(tx+e*evalChar,ty,before.slice(e),trace),dx,at+0.1,0.3);
  }
  if(op?.kind==='write'){
   const at=arrival(op), v=step.pane.lastIndexOf('= ')+2;
