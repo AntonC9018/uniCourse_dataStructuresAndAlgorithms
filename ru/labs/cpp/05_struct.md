@@ -230,8 +230,10 @@ int main()
 ### 6. Присваивание структуры
 
 ```cpp
-struct A 
-{ 
+#include <iostream>
+
+struct A
+{
     int f;
 };
 int main()
@@ -974,10 +976,10 @@ struct A
 
 int main()
 {
-    A s1{ nullptr, 1 };
+    A s1 { .pa = nullptr, .a = 1 };
     s1.pa = &s1.a;
 
-    A s2{ s1 };
+    A s2 { s1 };
     *s2.pa = 2;
 
     std::cout << s1.a << std::endl;
