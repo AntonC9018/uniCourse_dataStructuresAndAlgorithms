@@ -67,7 +67,7 @@ red, blue), each at least 3:1 against the stage. Reads use `#2f64d6` on `#d9e5ff
 ## Trace format, version 1
 
 `../trace_format.py` defines the format, validates it (`validate(trace)`), builds traces by hand
-(`Builder`) and converts the tracer's integer timelines (`from_timeline`).
+(`Builder`). The compiler-backed tracer emits this format directly.
 
 ```text
 trace     = {format: 1, source: [line…], variables: [variable…], steps: [step…],
@@ -124,7 +124,8 @@ The double-pointer fixture shows a full reduction: `**pp = 7` → `**72 = 7` (re
 
 `fixtures.py` writes the manual pointer and struct traces from the approved prototypes to
 `fixtures/*.json`; the tests check they are current. `demo.py` writes `demo.html` (git-ignored)
-with real tracer outputs for lesson 2 examples and every fixture, each in a `<details>`, plus
+with real tracer outputs for lesson 2 and pointer lesson examples and every fixture, each in a
+`<details>`, plus
 theme and language switches:
 
 ```sh

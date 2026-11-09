@@ -222,6 +222,7 @@ class _Evaluator:
                 literal = children[0]
                 if literal.get("kind") == "CXXNullPtrLiteralExpr" or (
                         literal.get("kind") == "IntegerLiteral" and literal.get("value") == "0"):
+                    self._reduce("eval", node, value=Pointer())
                     return Pointer(), None
             if cast == "NoOp":
                 return self.rvalue(children[0])
@@ -271,9 +272,7 @@ class _Evaluator:
             value, _ = self.rvalue(children[0])
         else:
             value = Pointer() if depth else 0
-        # An empty pointer initializer reads as the null pointer it makes.
-        spelling = "nullptr" if value == Pointer() and not children else None
-        self._reduce("eval", node, value=value, spelling=spelling)
+        self._reduce("eval", node, value=value)
         return value
 
     @staticmethod

@@ -5,9 +5,10 @@ pane on the right, values moving between them. This work belongs to [epic #50]; 
 design is in [#55] and [#56].
 
 - `discover.py` finds lesson examples the tracer supports and tags them.
-- `tracing.py` traces an example with Clang and GDB into an integer `Timeline` (`model.py`).
-- `trace_format.py` defines the unified trace format the site plays, converts timelines to it,
-  validates traces and builds manual ones.
+- `tracing.py` uses Clang AST types and ranges to emit unified integer and pointer traces.
+- `execution.py` runs whitelisted statements under GDB and observes every post-statement state.
+- `toolchain.py` selects compiler/debugger executables and bounds tool execution.
+- `trace_format.py` defines and validates the unified format and builds manual traces.
 - `generate.py` is the command line maintenance uses: `trace`, `probe` and `revision`.
 - `player/` holds the site engine (`player.js`, `player.css`), the manual pointer and struct
   fixtures, and a local demo. [`player/README.md`](player/README.md) documents the engine and
@@ -22,9 +23,15 @@ design is in [#55] and [#56].
 ## Tracing lesson examples
 
 `discover.py` inventories all outside-answer C++ fences under the configured lab roots. Clang
-checks syntax and types; an AST whitelist accepts only flat, side-effect-free integer examples.
-Pointers, references, structures, casts, booleans, control flow, ill-formed snippets and
-undefined reads or arithmetic are skipped with explicit reasons. A plain literal-initialized
+checks syntax and types; an AST whitelist accepts flat integer and pointer examples.
+Address-of, dereference chains, pointer reads/copies, shared targets and reassignment through
+pointers are supported, including pointers to pointers. Null pointers are stored and reduced
+to `0`. The pane follows lesson notation: `**pp` → `**72` → `*p` → `*64` → `a`.
+
+Pointer arithmetic/comparison, arrays, references, structures, casts, heap allocation,
+non-int pointees, qualified pointers, control flow, ill-formed snippets and undefined reads or
+arithmetic are skipped with explicit reasons. Computed-address dereferences (`*(&a)`) and
+address-of dereferences (`&*p`) are also outside this subset. A plain literal-initialized
 cell gets no visualization; empty initialization, value copies, arithmetic, assignments and
 output do.
 
@@ -38,8 +45,9 @@ traces every tag in CI inside the pinned toolchain and stores the results by con
 changed examples are traced again; a tag that cannot be traced fails the build.
 
 Generation uses Clang AST types and operation ranges to build expression reductions. GDB
-verifies every post-statement value, output, integer size and frame location. Addresses are
-normalized relative to observed stack offsets, starting at 64, so no ASLR addresses are
+verifies every post-statement value, output, storage size and frame location. Pointer targets
+come from GDB values mapped back to live variables; predicted targets must agree with them. Addresses are
+normalized relative to observed stack offsets, aligned near 64, so no ASLR addresses are
 published. Cells are ordered by address, so declaration order may differ from the source.
 Unchanged-value writes, such as the failed swap, remain visible writes.
 
@@ -49,7 +57,7 @@ python3 visualizations/generate.py trace --source /tmp/snippet.cpp
 ```
 
 `trace` prints the unified format as deterministic JSON (sorted keys). `revision` hashes the
-tracer and converter sources and the flake lock; maintenance keys stored traces by it, so a
+tracer, execution, toolchain and format sources and the flake lock; maintenance keys stored traces by it, so a
 toolchain or format change re-traces every example.
 
 ## Toolchain and tests

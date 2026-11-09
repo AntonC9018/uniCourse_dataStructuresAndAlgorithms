@@ -2,7 +2,8 @@
 """Write `demo.html`: the player inside a lesson-like page, for checking the engine locally.
 
 It traces a few examples from `en/labs/cpp/02_variables.md` and `04_pointer.md` with the
-compiler-backed tracer and adds the pointer and struct fixtures. Each player sits in a collapsed `<details>`, as on the
+compiler-backed tracer and adds the pointer and struct fixtures. Each player sits in a
+collapsed `<details>`, as on the
 site; the buttons in the header switch `<html data-theme>` and `lang`, as Starlight does.
 Run from the course root, inside the default shell (Clang and GDB):
   nix develop --command python3 visualizations/player/demo.py

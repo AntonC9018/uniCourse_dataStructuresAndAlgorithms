@@ -160,8 +160,8 @@ class StaticPointerTraceTests(unittest.TestCase):
 
     def test_null_pointers_are_stored_as_zero(self):
         trace = self.trace("int* p{}; int* q = nullptr; int* r = 0; int a{1}; p = &a; q = p;")
-        self.assertEqual(panes(trace, 0), ["int* p = {}", "int* p = nullptr", "int* p = nullptr"])
-        self.assertEqual(panes(trace, 1), ["int* q = nullptr", "int* q = nullptr"])
+        self.assertEqual(panes(trace, 0), ["int* p = {}", "int* p = 0", "int* p = 0"])
+        self.assertEqual(panes(trace, 1), ["int* q = nullptr", "int* q = 0", "int* q = 0"])
         self.assertEqual(panes(trace, 2), ["int* r = 0", "int* r = 0"])
         self.assertEqual(trace["steps"][2]["values"]["p"], 0)
         self.assertEqual(trace["steps"][2]["targets"], {})
@@ -327,6 +327,25 @@ class RuntimeTraceTests(unittest.TestCase):
         self.assertEqual(traced, predicted)
         self.assertEqual(final(traced, "targets"), {"p": "b", "pp": "p"})
         self.assertTrue(all(64 <= address < 128 for address in addresses(traced).values()))
+
+    def test_null_copy_and_reassignment_are_verified(self):
+        traced = tracing.trace("int a{5}; int* p = nullptr; int* q = p; p = &a; "
+                               "q = p; *q = 9; p = nullptr; std::cout << *q;")
+        self.assertEqual(final(traced, "stdout"), "9")
+        self.assertEqual(final(traced, "targets"), {"q": "a"})
+        self.assertEqual(final(traced)["p"], 0)
+        writes = [step for step in traced["steps"]
+                  if step["op"] and step["op"]["kind"] == "write"]
+        self.assertEqual(writes[1]["op"]["value"], "0")
+        self.assertEqual(writes[-1]["op"]["value"], "0")
+
+    def test_three_pointer_levels_read_and_write(self):
+        traced = tracing.trace("int a{5}; int* p{&a}; int** pp{&p}; int*** ppp{&pp}; "
+                               "***ppp = 9; int b = ***ppp; std::cout << b;")
+        self.assertEqual(final(traced, "stdout"), "9")
+        self.assertEqual(final(traced, "targets"), {"p": "a", "pp": "p", "ppp": "pp"})
+        self.assertEqual([op["kind"] for op in ops(traced, 4)],
+                         ["read", "deref", "read", "deref", "read", "deref", "write"])
 
     def test_static_layout_matches_the_frame(self):
         for source in ["int a{1}; int* p{&a}; int b{2}; int** pp{&p}; int c{3};",
