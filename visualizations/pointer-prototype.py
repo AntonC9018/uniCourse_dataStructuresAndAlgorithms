@@ -237,15 +237,15 @@ function links(g,values){
  const list=g.cells.filter(c=>c.kind==='ptr'&&values[c.name]!==null)
   .map(c=>({from:c,to:cellAt(g,values[c.name])})).filter(l=>l.to);
  if(variant==='A') {
-  // Arcs leave the pointer cell well right of its own label, rise clear of the address row,
-  // and drop vertically onto the centre of the pointee's label, stopping short of the digits.
-  // Adjacent links in a chain therefore meet without crossing; enclosing arcs rise higher.
-  const ends=l=>[l.from.x+48,l.to.x+labelWidth(l.to)/2];
+  // Arcs leave the left quarter of the pointer cell and drop onto the centre of the
+  // pointee. A chain's links then occupy disjoint spans and never cross; address labels
+  // stay untouched. Enclosing arcs rise higher.
+  const ends=l=>[l.from.x+l.from.w/4,l.to.x+l.to.w/2];
   const range=l=>[Math.min(...ends(l)),Math.max(...ends(l))];
   for(const l of list) {
    const [a,b]=range(l), [sx,ex]=ends(l);
    l.level=list.filter(o=>o!==l&&range(o)[0]>=a&&range(o)[1]<=b).length;
-   const sy=l.from.y-2, ey=l.to.y-40, apex=l.to.y-128-l.level*40;
+   const sy=l.from.y-2, ey=l.to.y-3, apex=l.to.y-112-l.level*40;
    l.d=`M ${sx} ${sy} C ${sx} ${apex}, ${ex} ${apex}, ${ex} ${ey-9}`; l.head=[ex,ey,90];
   }
  } else {
