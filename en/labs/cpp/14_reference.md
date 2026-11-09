@@ -480,9 +480,9 @@ std::cout << a << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
-https://github.com/user-attachments/assets/08e680f6-4e8c-4658-82d0-1501fa9d3116
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#22-auto-makes-a-copy)
 
 <!-- </visualization> -->
 

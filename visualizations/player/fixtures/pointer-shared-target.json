@@ -1,0 +1,404 @@
+{
+ "format": 1,
+ "source": [
+  "int a = 5;",
+  "int* p = &a;",
+  "int* q = p;",
+  "*q = 6;",
+  "std::cout << *p << std::endl;"
+ ],
+ "steps": [
+  {
+   "hold": 1.0,
+   "line": 0,
+   "op": null,
+   "pane": "int a = 5",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": null,
+    "p": null,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 0,
+   "op": {
+    "destination": [
+     4,
+     5
+    ],
+    "kind": "write",
+    "name": "a",
+    "span": [
+     8,
+     9
+    ],
+    "value": "5"
+   },
+   "pane": "int a = 5",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "p": null,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 1,
+   "op": null,
+   "pane": "int* p = &a",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "p": null,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 1,
+   "op": {
+    "kind": "addr",
+    "name": "a",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* p = 64",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "p": null,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 1,
+   "op": {
+    "destination": [
+     5,
+     6
+    ],
+    "kind": "write",
+    "name": "p",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* p = 64",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": null,
+   "pane": "int* q = p",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": {
+    "kind": "read",
+    "name": "p",
+    "span": [
+     9,
+     10
+    ],
+    "value": "64"
+   },
+   "pane": "int* q = 64",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 2,
+   "op": {
+    "destination": [
+     5,
+     6
+    ],
+    "kind": "write",
+    "name": "q",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* q = 64",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": null,
+   "pane": "*q = 6",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": {
+    "kind": "read",
+    "name": "q",
+    "span": [
+     1,
+     2
+    ],
+    "value": "64"
+   },
+   "pane": "*64 = 6",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": {
+    "kind": "deref",
+    "span": [
+     0,
+     3
+    ],
+    "target": "a",
+    "via": "q"
+   },
+   "pane": "a = 6",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 5,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 3,
+   "op": {
+    "destination": [
+     0,
+     1
+    ],
+    "kind": "write",
+    "name": "a",
+    "span": [
+     4,
+     5
+    ],
+    "value": "6"
+   },
+   "pane": "a = 6",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": null,
+   "pane": "std::cout << *p << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "read",
+    "name": "p",
+    "span": [
+     14,
+     15
+    ],
+    "value": "64"
+   },
+   "pane": "std::cout << *64 << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "deref",
+    "span": [
+     13,
+     16
+    ],
+    "target": "a",
+    "via": "p"
+   },
+   "pane": "std::cout << a << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "read",
+    "name": "a",
+    "span": [
+     13,
+     14
+    ],
+    "value": "6"
+   },
+   "pane": "std::cout << 6 << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  },
+  {
+   "hold": 3,
+   "line": 4,
+   "op": {
+    "kind": "print",
+    "span": [
+     13,
+     14
+    ],
+    "value": "6"
+   },
+   "pane": "std::cout << 6 << std::endl",
+   "stdout": "6\n",
+   "targets": {
+    "p": "a",
+    "q": "a"
+   },
+   "values": {
+    "a": 6,
+    "p": 64,
+    "q": 64
+   }
+  }
+ ],
+ "title": "Two pointers to one variable",
+ "variables": [
+  {
+   "address": 64,
+   "color": 0,
+   "kind": "int",
+   "name": "a",
+   "size": 4
+  },
+  {
+   "address": 72,
+   "color": 2,
+   "kind": "ptr",
+   "name": "p",
+   "size": 8
+  },
+  {
+   "address": 80,
+   "color": 4,
+   "kind": "ptr",
+   "name": "q",
+   "size": 8
+  }
+ ]
+}

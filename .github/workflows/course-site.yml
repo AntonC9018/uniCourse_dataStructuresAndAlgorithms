@@ -55,11 +55,37 @@ jobs:
           # Preserve the generated .nojekyll file for Pagefind assets.
           include-hidden-files: true
 
+  # The course's own tracer and player, tested in the toolchain the flake pins.
+  visualization-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout course
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          submodules: recursive
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+
+      - name: Cache Nix store
+        uses: DeterminateSystems/magic-nix-cache-action@84c0677f58dcedf3b91f8223ce36a9ea5b3c84b7 # v15
+
+      - name: Tracer tests (Clang and GDB)
+        run: nix develop .#visualizations --command python3 -m unittest discover -s visualizations/tests
+
+      # Chromium comes from the flake, so Playwright downloads no browser.
+      - name: Player browser tests
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: |
+          nix develop --command npm ci --prefix visualizations
+          nix develop --command npm test --prefix visualizations
+
   deploy:
     # CI-4: pushes to master only (direct commits + PR merges). PRs never
-    # reach this job; failed validation never reaches it via needs:.
+    # reach this job; failed validation or tests never reach it via needs:.
     if: github.event_name == 'push'
-    needs: validate
+    needs: [validate, visualization-tests]
     runs-on: ubuntu-latest
     permissions:
       pages: write

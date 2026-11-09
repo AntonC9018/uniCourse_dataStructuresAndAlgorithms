@@ -217,13 +217,23 @@
     "heading_numbering": "section"
   },
   "visualizations": {
-    "templates": "visualizations",
     "roots": [
       "en/labs/cpp",
       "ru/labs/cpp"
     ],
-    "manifest": "visualizations/assets.json",
-    "repository": "AntonC9018/uniCourse_dataStructuresAndAlgorithms",
-    "issue": 67
+    "labels": {
+      "layout": {
+        "en": "▶ Explore this layout on the course site",
+        "ru": "▶ Расположение полей в памяти на сайте курса"
+      }
+    }
+  },
+  "site_assets": {
+    "scripts": [
+      "visualizations/player/player.js"
+    ],
+    "styles": [
+      "visualizations/player/player.css"
+    ]
   }
 }

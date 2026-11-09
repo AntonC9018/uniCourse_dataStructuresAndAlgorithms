@@ -63,9 +63,9 @@ std::cout << b << std::endl;
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
-https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#2-копирование-константного-числа)
 
 <!-- </visualization> -->
 

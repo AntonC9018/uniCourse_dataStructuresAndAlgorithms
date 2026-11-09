@@ -63,9 +63,9 @@ std::cout << b << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
-https://github.com/user-attachments/assets/69d14f5d-404c-4910-bbac-093033a8eb4d
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#2-copying-a-const-integer)
 
 <!-- </visualization> -->
 

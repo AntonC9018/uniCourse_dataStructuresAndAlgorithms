@@ -1,0 +1,805 @@
+{
+ "format": 1,
+ "source": [
+  "int a = 5;",
+  "int b = 6;",
+  "int* p = &a;",
+  "int** pp = &p;",
+  "**pp = 7;",
+  "*pp = &b;",
+  "**pp = 8;",
+  "std::cout << a << std::endl;",
+  "std::cout << b << std::endl;"
+ ],
+ "steps": [
+  {
+   "hold": 1.0,
+   "line": 0,
+   "op": null,
+   "pane": "int a = 5",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": null,
+    "b": null,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 0,
+   "op": {
+    "destination": [
+     4,
+     5
+    ],
+    "kind": "write",
+    "name": "a",
+    "span": [
+     8,
+     9
+    ],
+    "value": "5"
+   },
+   "pane": "int a = 5",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "b": null,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 1,
+   "op": null,
+   "pane": "int b = 6",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "b": null,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 1,
+   "op": {
+    "destination": [
+     4,
+     5
+    ],
+    "kind": "write",
+    "name": "b",
+    "span": [
+     8,
+     9
+    ],
+    "value": "6"
+   },
+   "pane": "int b = 6",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": null,
+   "pane": "int* p = &a",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": {
+    "kind": "addr",
+    "name": "a",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* p = 64",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": null,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 2,
+   "op": {
+    "destination": [
+     5,
+     6
+    ],
+    "kind": "write",
+    "name": "p",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* p = 64",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": null,
+   "pane": "int** pp = &p",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": {
+    "kind": "addr",
+    "name": "p",
+    "span": [
+     11,
+     13
+    ],
+    "value": "72"
+   },
+   "pane": "int** pp = 72",
+   "stdout": "",
+   "targets": {
+    "p": "a"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 3,
+   "op": {
+    "destination": [
+     6,
+     8
+    ],
+    "kind": "write",
+    "name": "pp",
+    "span": [
+     11,
+     13
+    ],
+    "value": "72"
+   },
+   "pane": "int** pp = 72",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": null,
+   "pane": "**pp = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "read",
+    "name": "pp",
+    "span": [
+     2,
+     4
+    ],
+    "value": "72"
+   },
+   "pane": "**72 = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "deref",
+    "span": [
+     1,
+     4
+    ],
+    "target": "p",
+    "via": "pp"
+   },
+   "pane": "*p = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "read",
+    "name": "p",
+    "span": [
+     1,
+     2
+    ],
+    "value": "64"
+   },
+   "pane": "*64 = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 4,
+   "op": {
+    "kind": "deref",
+    "span": [
+     0,
+     3
+    ],
+    "target": "a",
+    "via": "p"
+   },
+   "pane": "a = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 5,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 4,
+   "op": {
+    "destination": [
+     0,
+     1
+    ],
+    "kind": "write",
+    "name": "a",
+    "span": [
+     4,
+     5
+    ],
+    "value": "7"
+   },
+   "pane": "a = 7",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 5,
+   "op": null,
+   "pane": "*pp = &b",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 5,
+   "op": {
+    "kind": "addr",
+    "name": "b",
+    "span": [
+     6,
+     8
+    ],
+    "value": "68"
+   },
+   "pane": "*pp = 68",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 5,
+   "op": {
+    "kind": "read",
+    "name": "pp",
+    "span": [
+     1,
+     3
+    ],
+    "value": "72"
+   },
+   "pane": "*72 = 68",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 5,
+   "op": {
+    "kind": "deref",
+    "span": [
+     0,
+     3
+    ],
+    "target": "p",
+    "via": "pp"
+   },
+   "pane": "p = 68",
+   "stdout": "",
+   "targets": {
+    "p": "a",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 64,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.6,
+   "line": 5,
+   "op": {
+    "destination": [
+     0,
+     1
+    ],
+    "kind": "write",
+    "name": "p",
+    "span": [
+     4,
+     6
+    ],
+    "value": "68"
+   },
+   "pane": "p = 68",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 6,
+   "op": null,
+   "pane": "**pp = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 6,
+   "op": {
+    "kind": "read",
+    "name": "pp",
+    "span": [
+     2,
+     4
+    ],
+    "value": "72"
+   },
+   "pane": "**72 = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 6,
+   "op": {
+    "kind": "deref",
+    "span": [
+     1,
+     4
+    ],
+    "target": "p",
+    "via": "pp"
+   },
+   "pane": "*p = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 6,
+   "op": {
+    "kind": "read",
+    "name": "p",
+    "span": [
+     1,
+     2
+    ],
+    "value": "68"
+   },
+   "pane": "*68 = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 6,
+   "op": {
+    "kind": "deref",
+    "span": [
+     0,
+     3
+    ],
+    "target": "b",
+    "via": "p"
+   },
+   "pane": "b = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 6,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 6,
+   "op": {
+    "destination": [
+     0,
+     1
+    ],
+    "kind": "write",
+    "name": "b",
+    "span": [
+     4,
+     5
+    ],
+    "value": "8"
+   },
+   "pane": "b = 8",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 7,
+   "op": null,
+   "pane": "std::cout << a << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 7,
+   "op": {
+    "kind": "read",
+    "name": "a",
+    "span": [
+     13,
+     14
+    ],
+    "value": "7"
+   },
+   "pane": "std::cout << 7 << std::endl",
+   "stdout": "",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 7,
+   "op": {
+    "kind": "print",
+    "span": [
+     13,
+     14
+    ],
+    "value": "7"
+   },
+   "pane": "std::cout << 7 << std::endl",
+   "stdout": "7\n",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 8,
+   "op": null,
+   "pane": "std::cout << b << std::endl",
+   "stdout": "7\n",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 8,
+   "op": {
+    "kind": "read",
+    "name": "b",
+    "span": [
+     13,
+     14
+    ],
+    "value": "8"
+   },
+   "pane": "std::cout << 8 << std::endl",
+   "stdout": "7\n",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  },
+  {
+   "hold": 3,
+   "line": 8,
+   "op": {
+    "kind": "print",
+    "span": [
+     13,
+     14
+    ],
+    "value": "8"
+   },
+   "pane": "std::cout << 8 << std::endl",
+   "stdout": "7\n8\n",
+   "targets": {
+    "p": "b",
+    "pp": "p"
+   },
+   "values": {
+    "a": 7,
+    "b": 8,
+    "p": 68,
+    "pp": 72
+   }
+  }
+ ],
+ "title": "Pointer to a pointer",
+ "variables": [
+  {
+   "address": 64,
+   "color": 0,
+   "kind": "int",
+   "name": "a",
+   "size": 4
+  },
+  {
+   "address": 68,
+   "color": 1,
+   "kind": "int",
+   "name": "b",
+   "size": 4
+  },
+  {
+   "address": 72,
+   "color": 2,
+   "kind": "ptr",
+   "name": "p",
+   "size": 8
+  },
+  {
+   "address": 80,
+   "color": 3,
+   "kind": "ptr",
+   "name": "pp",
+   "size": 8
+  }
+ ]
+}

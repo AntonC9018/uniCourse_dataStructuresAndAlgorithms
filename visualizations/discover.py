@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'course_maintenance'))
 from publishing.config import load_config
-from publishing.visualization_assets import discover_files
+from publishing.visualization_traces import markdown_files
 from publishing.visualization_tags import CPP_LANGUAGES, scan_document
 from generate import applicable
 from tracing import Unsupported, trace
@@ -29,7 +29,7 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
     if config.visualizations is None:
         raise ValueError('configure visualizations in course-publishing.json first')
     cache, selected, skipped = {}, [], []
-    for path in discover_files(repo, config.visualizations):
+    for path in markdown_files(repo, config.visualizations):
         original = path.read_text()
         scanned = scan_document(original, path)
         if scanned.errors:
@@ -41,8 +41,7 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
                 continue
             if fence.source not in cache:
                 try:
-                    timeline = trace(fence.source, runtime=False)
-                    applicable(timeline)
+                    applicable(trace(fence.source, runtime=False), fence.source)
                     cache[fence.source] = None
                 except Unsupported as exc:
                     cache[fence.source] = str(exc)
@@ -58,9 +57,11 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
             language = next((lang.code for lang in config.languages
                              if path.is_relative_to(repo / lang.root)), 'en')
             summary = SUMMARIES.get(language, SUMMARIES['en'])
+            # Blank lines on both sides keep the block apart from an answer that follows.
+            after = '' if original[fence.end:].startswith(('\n', '\r\n')) else '\n'
             insertions.append((fence.end, '\n<details>\n<summary>' + summary + '</summary>\n\n'
-                               '<!-- <visualization type="animation"> -->\n\n'
-                               '<!-- </visualization> -->\n\n</details>\n'))
+                               '<!-- <visualization> -->\n\n'
+                               '<!-- </visualization> -->\n\n</details>\n' + after))
         if apply and insertions:
             for at, markup in reversed(insertions):
                 original = original[:at] + markup + original[at:]
