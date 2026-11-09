@@ -734,6 +734,12 @@ int main()
 Обе записи эквивалентны.
 
 Результат будет 8, потому что в каждой структуре по 2 `int`, каждый из которых занимает 4 байта.
+<!-- <visualization template="layout"> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#22-размер-структуры-1)
+
+<!-- </visualization> -->
+
 </details>
 
 ### 23. Адрес поля из адреса структуры
@@ -803,7 +809,11 @@ alignment делает так, что между полями остаются �
 - `uint8_t f3` попадет в третье окошко;
 - Оставшиеся 3 байта 3-го окошка будут пустовать.
 
-![Выравнивание структуры: поля, упакованные в окошки по 4 байта](images/05_struct_alignment.svg)
+<!-- <visualization template="layout"> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
+
+<!-- </visualization> -->
 
 В сумме получаем 3 окошка по 4 байта.
 

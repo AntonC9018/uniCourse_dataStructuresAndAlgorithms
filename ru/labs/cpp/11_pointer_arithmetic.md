@@ -216,6 +216,12 @@ int main()
 > Такой вывод предполагает, что преобразование этих указателей в числа сохраняет равенство адресов.
 > Правило о первом поле относится к структурам со стандартным размещением, как `A` здесь.
 
+<!-- <visualization template="layout"> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#7-адрес-поля-относительно-адреса-структуры)
+
+<!-- </visualization> -->
+
 </details>
 
 ### 8. (продвинутый уровень): Смещения полей
@@ -244,6 +250,12 @@ int main()
 Обычно выведется `0` для `a` и `4` для `b`.
 
 > Точное смещение зависит от реализации и её правил выравнивания.
+
+<!-- <visualization template="layout"> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#8-продвинутый-уровень-смещения-полей)
+
+<!-- </visualization> -->
 
 </details>
 

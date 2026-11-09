@@ -730,6 +730,12 @@ int main()
 Both forms are equivalent.
 
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
+<!-- <visualization template="layout"> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#22-structure-size-1)
+
+<!-- </visualization> -->
+
 </details>
 
 ### 23. Field address from a structure address
@@ -799,7 +805,11 @@ it goes into the next one.
 - `uint8_t f3` goes into the third slot;
 - The remaining 3 bytes of the third slot are unused.
 
-![Struct alignment: fields packed into 4-byte slots](../../../ru/labs/cpp/images/05_struct_alignment.svg)
+<!-- <visualization template="layout"> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
+
+<!-- </visualization> -->
 
 In total, this gives 3 slots of 4 bytes each.
 
