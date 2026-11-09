@@ -36,6 +36,9 @@ Nothing else is required from the page.
   scrub slider. Clicking a code line, or Enter/Space on it, jumps to the start of that line.
   With the player focused: ←/→ step, Space plays or pauses, Home/End jump to the ends.
   Next and Replay animate; Back, Reset and the slider show the settled state.
+- **Focus.** Redraws replace only the drawing; code-line controls and buttons are created once,
+  so steps, animations and theme changes keep keyboard focus. A focused button that becomes
+  disabled hands focus to the player, where the arrow keys still step.
 - **Reduced motion.** With `prefers-reduced-motion: reduce`, every step cuts to its end state.
 
 ## Visual language
@@ -86,8 +89,8 @@ span      = [start, end)  — character offsets
   `expr` is the part of the pane that is being evaluated, the rest being muted context.
 - `values` maps every leaf to an integer, `"?"` (declared, value unknown) or `null`
   (storage not yet in use). Pointers hold the address they store, `nullptr` being `0`.
-- `targets` maps a pointer leaf to the variable or leaf it points to; only pointers holding an
-  address have one. `stdout` is everything printed so far. `hold` is the pause after the step,
+- `targets` maps a pointer leaf to the variable or leaf it points to. A pointer with a target
+  holds that target's address; a pointer holding a nonzero value has a target. `stdout` is everything printed so far. `hold` is the pause after the step,
   in seconds at 1×.
 
 `op` describes what turned the previous step into this one. The first step and each new
@@ -109,6 +112,10 @@ a value may only change from `null` to `"?"` (a declaration).
   `destination` covers `name` in the pane.
 - Only a write changes values or targets, and only of the cells its `name` covers (all fields of
   a struct). Only a print changes `stdout`, by its value plus optional whitespace.
+- Values agree with memory. A value is an integer, `nullptr` (stored as `0`) or `"?"`; a struct
+  is `{…}` of its fields' values, in order. A read's value is what `name` held before the step,
+  a write's value what `name` holds after it, field by field, and an `addr` value is the
+  address of `name`. A dereference's `target` is `via`'s target or one of its fields.
 
 The double-pointer fixture shows a full reduction: `**pp = 7` → `**72 = 7` (read) → `*p = 7`
 (deref) → `*64 = 7` (read) → `a = 7` (deref) → write.

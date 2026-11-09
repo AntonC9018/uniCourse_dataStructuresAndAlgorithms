@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'player'))
 import fixtures  # noqa: E402
-from trace_format import FormatError, validate  # noqa: E402
+from trace_format import FormatError, scalar, validate  # noqa: E402
 
 CLANG = os.environ.get('CLANGXX') or shutil.which('clang++')
 GDB = os.environ.get('GDB') or shutil.which('gdb')
@@ -76,6 +76,96 @@ class ValidationTests(unittest.TestCase):
 
     def test_rejects_output_without_print(self):
         self.rejects('only a print', lambda t: t['steps'][-1].update(op=None))
+
+
+class OperationValueTests(unittest.TestCase):
+    """Operation values must agree with the memory snapshots around them."""
+
+    def rejects(self, trace, message, change):
+        broken = copy.deepcopy(trace)
+        change(broken['steps'])
+        with self.assertRaisesRegex(FormatError, message):
+            validate(broken)
+
+    def test_rejects_a_write_that_memory_contradicts(self):
+        # The reported case: `int a = 5;` writes 5, but memory says 999.
+        trace = {'format': 1, 'source': ['int a = 5;'], 'variables': [scalar('a', 64)],
+                 'steps': [{'line': 0, 'pane': 'int a = 5', 'values': {'a': None}, 'targets': {},
+                            'stdout': '', 'hold': 1, 'op': None},
+                           {'line': 0, 'pane': 'int a = 5', 'values': {'a': 999}, 'targets': {},
+                            'stdout': '', 'hold': 1,
+                            'op': {'kind': 'write', 'name': 'a', 'value': '5', 'span': [8, 9],
+                                   'destination': [4, 5]}}]}
+        self.rejects(trace, r'a holds 999 after the write, not .5.', lambda steps: None)
+        trace['steps'][1]['values']['a'] = 5
+        validate(trace)
+
+    def test_rejects_a_struct_copy_that_memory_contradicts_field_by_field(self):
+        trace = fixtures.copy_assignment()
+        write = next(i for i, s in enumerate(trace['steps']) if (s['op'] or {}).get('name') == 'b')
+
+        def change(steps):
+            for step in steps[write:]:
+                step['values']['b.f2'] = 9
+        self.rejects(trace, r'b holds \{5, 9\} after the write, not .\{5, 6\}.', change)
+        self.rejects(trace, r'a holds \{5, 6\} before the read, not .\{5\}.',
+                     lambda steps: replace_text(steps[write - 1:write + 1], '{5, 6}', '{5}'))
+
+    def test_null_pointers_are_stored_as_zero(self):
+        trace = fixtures.shallow_copy()
+        self.assertEqual(trace['steps'][1]['op']['value'], '{nullptr, 1}')
+        self.assertEqual(trace['steps'][1]['values']['s1.pa'], 0)
+        self.rejects(trace, r's1 holds \{\?, 1\} after the write, not .\{nullptr, 1\}.',
+                     lambda steps: steps[1]['values'].update({'s1.pa': '?'}))
+
+    def test_rejects_text_that_is_not_a_value(self):
+        trace = fixtures.write_through()
+        self.rejects(trace, 'is not a value', lambda steps: replace_text(steps[:2], '1', 'one'))
+
+    def test_rejects_a_read_that_memory_contradicts(self):
+        trace = fixtures.write_through()
+        read = 6  # `*b = 2` → `*64 = 2`: b holds 64.
+        self.assertEqual(trace['steps'][read]['op']['kind'], 'read')
+        self.rejects(trace, r'b holds 64 before the read, not .68.',
+                     lambda steps: replace_text(steps[read:read + 1], '64', '68'))
+
+    def test_rejects_a_wrong_address(self):
+        trace = fixtures.write_through()
+        addr = 3  # `int* b = &a` → `int* b = 64`.
+        self.assertEqual(trace['steps'][addr]['op']['kind'], 'addr')
+        self.rejects(trace, r'the address of a is 64, not .68.',
+                     lambda steps: replace_text(steps[addr:addr + 1], '64', '68'))
+
+    def test_rejects_a_dereference_to_somewhere_else(self):
+        trace = fixtures.reassign()
+        deref = next(i for i, s in enumerate(trace['steps']) if (s['op'] or {}).get('kind') == 'deref')
+        self.rejects(trace, 'p does not point to b',
+                     lambda steps: (steps[deref]['op'].update(target='b'),
+                                    steps[deref].update(pane=steps[deref]['pane'].replace('a', 'b', 1))))
+
+    def test_rejects_targets_that_disagree_with_pointer_values(self):
+        trace = fixtures.write_through()
+        self.rejects(trace, r'b holds 68, but a is at 64',
+                     lambda steps: [step['values'].update(b=68) for step in steps[4:]])
+        self.rejects(trace, 'b holds the address 64 but points nowhere',
+                     lambda steps: [step['targets'].clear() for step in steps[4:]])
+        self.rejects(trace, 'only pointers', lambda steps: steps[-1]['targets'].update(a='b'))
+
+
+def replace_text(steps, old, new):
+    """Change a value's text in the panes and operations of `steps`, keeping spans valid.
+
+    Reductions index the previous pane, so only the spans of writes and prints move."""
+    for step in steps:
+        at = step['pane'].index(old)
+        step['pane'] = step['pane'].replace(old, new, 1)
+        op = step['op'] or {}
+        if 'value' in op:
+            op['value'] = op['value'].replace(old, new, 1)
+        for key in ('span', 'destination') if op.get('kind') in ('write', 'print') else ():
+            if key in op and op[key][1] > at:
+                op[key] = [op[key][0], op[key][1] + len(new) - len(old)]
+
 
 
 @unittest.skipUnless(CLANG and GDB, 'Clang and GDB are required for runtime traces')
