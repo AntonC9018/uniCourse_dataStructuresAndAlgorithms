@@ -886,7 +886,7 @@
             `+${offset}: ${label}`);
         }).join('');
         return `<section class="cv-layout-record" data-layout-record="${ri}">`
-          + `<div class="cv-layout-code">${rows}</div><div>`
+          + `<div class="cv-layout-code">${rows}</div><div class="cv-layout-bytes">`
           + `<p>alignof(${esc(record.name)}) = ${record.alignment}</p>`
           + `<div class="cv-layout-memory" style="--cv-slot:${record.alignment}">${bytes}</div>`
           + `<p>${esc(padding)}: ▧ · ${record.size - record.fields.reduce((sum, f) => sum + f.size, 0)} B</p></div></section>`;

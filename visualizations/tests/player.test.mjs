@@ -166,3 +166,47 @@ test('static layout links rows and bytes in both themes and initializes lazily',
   assert.equal(await page.locator('.cv-byte.cv-linked').count(), 12);
   assert.equal(await page.locator('.cv-controls').count(), 0);
 });
+
+// `struct A { int a; int* p; }`: 8-byte rows are the widest the layout view draws.
+const POINTER_LAYOUT = { format: 1, kind: 'layout', records: [{ name: 'A', size: 16, alignment: 8,
+  fields: [
+    { name: 'a', type: 'int', offset: 0, size: 4, kind: 'int' },
+    { name: 'p', type: 'int *', offset: 8, size: 8, kind: 'ptr' },
+  ] }] };
+// A fresh page without the fake clock, which would hold back lazy initialization.
+const showLayout = async (layout, width) => {
+  await page.close();
+  page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await page.setContent(`<!doctype html><html lang="en" data-theme="dark"><meta charset="utf-8">
+    <style>${read('player.css')}</style>
+    <div class="course-visualization" style="width:${width}px">
+    <script type="application/json">${JSON.stringify(layout)}</script></div>
+    <script>${read('player.js')}</script>`);
+  await page.waitForSelector('.cv-layout');
+};
+
+test('static layout fits 8-byte rows in a narrow host without clipping', async () => {
+  for (const [name, width] of [['narrow', 224], ['desktop', 760]]) {
+    await showLayout(POINTER_LAYOUT, width);
+    const clipped = await page.evaluate(() => {
+      const host = document.querySelector('.course-visualization').getBoundingClientRect();
+      const outside = [...document.querySelectorAll('.cv-layout-target, .cv-layout p, .cv-byte > span')]
+        .filter(element => {
+          const box = element.getBoundingClientRect();
+          const parent = element.parentElement.getBoundingClientRect();
+          return box.left < host.left || box.right > host.right
+            || (element.tagName === 'SPAN' && (box.left < parent.left || box.right > parent.right));
+        });
+      const overflowing = [...document.querySelectorAll('.cv-player, .cv-layout-bytes, .cv-layout-row')]
+        .filter(element => element.scrollWidth > element.clientWidth);
+      return [...outside, ...overflowing].map(element => element.outerHTML.slice(0, 80));
+    });
+    assert.deepEqual(clipped, [], `${name}: clipped or overflowing elements`);
+    const [code, memory] = await page.locator('.cv-layout-code, .cv-layout-bytes')
+      .evaluateAll(elements => elements.map(element => element.getBoundingClientRect()));
+    if (name === 'narrow') assert.ok(memory.top >= code.bottom, 'panels stack');
+    else assert.ok(code.width <= 22 * 16 && memory.left >= code.right, 'code panel is capped');
+    await page.locator('.course-visualization').screenshot({ path: `/tmp/issue77-fix-${name}.png` });
+  }
+});
+
