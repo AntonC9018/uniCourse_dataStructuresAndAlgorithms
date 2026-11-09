@@ -120,3 +120,111 @@ test('a generated struct trace plays shallow copies in both themes', async () =>
   }
   assert.deepEqual(errors, []);
 });
+
+test('static layout links rows and bytes in both themes and initializes lazily', async () => {
+  await page.close();
+  page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  const layout = { format: 1, kind: 'layout', records: [{ name: 'A', size: 12, alignment: 4,
+    fields: [
+      { name: 'f1', type: 'uint8_t', offset: 0, size: 1, kind: 'int' },
+      { name: 'f2', type: 'int', offset: 4, size: 4, kind: 'int' },
+      { name: 'f3', type: 'uint8_t', offset: 8, size: 1, kind: 'int' },
+    ] }] };
+  await page.setContent(`<!doctype html><html lang="en" data-theme="dark"><meta charset="utf-8">
+    <style>${read('player.css')}</style><details><summary>Answer</summary>
+    <div class="course-visualization"><script type="application/json">${JSON.stringify(layout)}</script>
+    </div></details><script>${read('player.js')}</script>`);
+  await page.evaluate(() => window.CourseVisualization.scan());
+  assert.equal(await page.locator('.cv-layout').count(), 0);
+  await page.locator('summary').click();
+  await page.waitForSelector('.cv-layout');
+  assert.match(await page.locator('.cv-layout-record').textContent(), /Padding: ▧ · 6 B/);
+  const row = page.locator('.cv-layout-row[data-layout-key="0:1"]');
+  const bytes = page.locator('.cv-byte[data-layout-key="0:1"]');
+  for (const theme of ['dark', 'light']) {
+    await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+    await page.waitForFunction(value => document.querySelector('.cv-player').dataset.cvTheme === value, theme);
+    await page.mouse.move(1000, 800);
+    await page.locator('.cv-layout').screenshot({ path: `/tmp/issue77-${theme}-idle.png` });
+    await row.hover();
+    assert.equal(await page.locator('.cv-byte.cv-linked').count(), 4);
+    await page.locator('.cv-layout').screenshot({ path: `/tmp/issue77-${theme}-hover.png` });
+    await bytes.first().hover();
+    assert.equal(await row.evaluate(e => e.classList.contains('cv-linked')), true);
+    await row.focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await page.locator('.cv-byte.cv-linked').count(), 4);
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Escape');
+    await page.mouse.move(1000, 800);
+    await page.locator('summary').focus();
+  }
+  await row.focus();
+  await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
+  assert.equal(await row.evaluate(e => e === document.activeElement), true);
+  await page.locator('.cv-layout-row[data-layout-key="0:all"]').first().hover();
+  assert.equal(await page.locator('.cv-byte.cv-linked').count(), 12);
+  assert.equal(await page.locator('.cv-controls').count(), 0);
+});
+
+// `struct A { int a; int* p; }`: 8-byte rows are the widest the layout view draws.
+const POINTER_LAYOUT = { format: 1, kind: 'layout', records: [{ name: 'A', size: 16, alignment: 8,
+  fields: [
+    { name: 'a', type: 'int', offset: 0, size: 4, kind: 'int' },
+    { name: 'p', type: 'int *', offset: 8, size: 8, kind: 'ptr' },
+  ] }] };
+// A fresh page without the fake clock, which would hold back lazy initialization.
+const showLayout = async (layout, width) => {
+  await page.close();
+  page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  await page.setContent(`<!doctype html><html lang="en" data-theme="dark"><meta charset="utf-8">
+    <style>${read('player.css')}</style>
+    <div class="course-visualization" style="width:${width}px">
+    <script type="application/json">${JSON.stringify(layout)}</script></div>
+    <script>${read('player.js')}</script>`);
+  await page.waitForSelector('.cv-layout');
+};
+
+test('static layout exposes the locked selection as pressed toggle buttons', async () => {
+  await showLayout(POINTER_LAYOUT, 760);
+  const pressed = () => page.locator('[aria-pressed="true"]').evaluateAll(
+    elements => elements.map(element => element.dataset.layoutKey));
+  const row = page.locator('.cv-layout-row[data-layout-key="0:1"]');
+  assert.equal(await page.locator('.cv-layout-target:not([aria-pressed="false"])').count(), 0);
+  await row.click();
+  // The row and the eight bytes of p share the locked key.
+  assert.deepEqual(await pressed(), Array(9).fill('0:1'));
+  await row.click();
+  assert.deepEqual(await pressed(), []);
+  await page.locator('.cv-byte[data-layout-key="0:0"]').first().click();
+  assert.deepEqual(await pressed(), Array(5).fill('0:0'));
+  await page.keyboard.press('Escape');
+  assert.deepEqual(await pressed(), []);
+  assert.equal(await page.locator('.cv-linked').count(), 0);
+});
+
+test('static layout fits 8-byte rows in a narrow host without clipping', async () => {
+  for (const [name, width] of [['narrow', 224], ['desktop', 760]]) {
+    await showLayout(POINTER_LAYOUT, width);
+    const clipped = await page.evaluate(() => {
+      const host = document.querySelector('.course-visualization').getBoundingClientRect();
+      const outside = [...document.querySelectorAll('.cv-layout-target, .cv-layout p, .cv-byte > span')]
+        .filter(element => {
+          const box = element.getBoundingClientRect();
+          const parent = element.parentElement.getBoundingClientRect();
+          return box.left < host.left || box.right > host.right
+            || (element.tagName === 'SPAN' && (box.left < parent.left || box.right > parent.right));
+        });
+      const overflowing = [...document.querySelectorAll('.cv-player, .cv-layout-bytes, .cv-layout-row')]
+        .filter(element => element.scrollWidth > element.clientWidth);
+      return [...outside, ...overflowing].map(element => element.outerHTML.slice(0, 80));
+    });
+    assert.deepEqual(clipped, [], `${name}: clipped or overflowing elements`);
+    const [code, memory] = await page.locator('.cv-layout-code, .cv-layout-bytes')
+      .evaluateAll(elements => elements.map(element => element.getBoundingClientRect()));
+    if (name === 'narrow') assert.ok(memory.top >= code.bottom, 'panels stack');
+    else assert.ok(code.width <= 22 * 16 && memory.left >= code.right, 'code panel is capped');
+    await page.locator('.course-visualization').screenshot({ path: `/tmp/issue77-fix-${name}.png` });
+  }
+});
+

@@ -220,7 +220,13 @@
     "roots": [
       "en/labs/cpp",
       "ru/labs/cpp"
-    ]
+    ],
+    "labels": {
+      "layout": {
+        "en": "▶ Explore this layout on the course site",
+        "ru": "▶ Расположение полей в памяти на сайте курса"
+      }
+    }
   },
   "site_assets": {
     "scripts": [

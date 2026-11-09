@@ -234,6 +234,17 @@ int* c = &a;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#10-dependence-of-the-address-on-the-value)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Correct answer:</summary>
 
 They will contain the same address.
@@ -366,6 +377,17 @@ std::cout << value << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#15-auto-from-an-address)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `&value` has type `int*`, so `p` has type `int*`.
@@ -401,6 +423,17 @@ auto pp{ &p };
 **pp = 9;
 std::cout << value << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#17-auto-from-the-address-of-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -529,6 +562,17 @@ std::cout << *py << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#22-copying-a-variable-and-a-pointer-with-similar-names)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 `int y{ x }` copies the *value* from `x` — `y` is independent of `x` afterwards,
@@ -643,6 +687,17 @@ other = *pp;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#6-copying-a-pointer-through-a-double-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It compiles.
@@ -676,6 +731,17 @@ int* p{ &value };
 int** pp{ &p };
 **pp = 8;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#8-writing-through-two-dereferences)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>

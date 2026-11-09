@@ -41,7 +41,7 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
                 continue
             if fence.source not in cache:
                 try:
-                    applicable(trace(fence.source, runtime=False))
+                    applicable(trace(fence.source, runtime=False), fence.source)
                     cache[fence.source] = None
                 except Unsupported as exc:
                     cache[fence.source] = str(exc)
@@ -57,9 +57,11 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
             language = next((lang.code for lang in config.languages
                              if path.is_relative_to(repo / lang.root)), 'en')
             summary = SUMMARIES.get(language, SUMMARIES['en'])
+            # Blank lines on both sides keep the block apart from an answer that follows.
+            after = '' if original[fence.end:].startswith(('\n', '\r\n')) else '\n'
             insertions.append((fence.end, '\n<details>\n<summary>' + summary + '</summary>\n\n'
                                '<!-- <visualization> -->\n\n'
-                               '<!-- </visualization> -->\n\n</details>\n'))
+                               '<!-- </visualization> -->\n\n</details>\n' + after))
         if apply and insertions:
             for at, markup in reversed(insertions):
                 original = original[:at] + markup + original[at:]

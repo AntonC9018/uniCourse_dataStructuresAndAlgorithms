@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'player'))
 import fixtures  # noqa: E402
-from trace_format import FormatError, scalar, validate  # noqa: E402
+from trace_format import FORMAT, FormatError, scalar, validate  # noqa: E402
 
 CLANG = os.environ.get('CLANGXX') or shutil.which('clang++')
 GDB = os.environ.get('GDB') or shutil.which('gdb')
@@ -150,6 +150,32 @@ class OperationValueTests(unittest.TestCase):
         self.rejects(trace, 'b holds the address 64 but points nowhere',
                      lambda steps: [step['targets'].clear() for step in steps[4:]])
         self.rejects(trace, 'only pointers', lambda steps: steps[-1]['targets'].update(a='b'))
+
+
+class LayoutValidationTests(unittest.TestCase):
+    """Static layouts must place each field exactly where plain C++ alignment puts it."""
+
+    @staticmethod
+    def layout(size, alignment, *fields):
+        return {'format': FORMAT, 'kind': 'layout', 'records': [{
+            'name': 'A', 'size': size, 'alignment': alignment,
+            'fields': [{'name': name, 'offset': offset, 'size': width, 'kind': 'int',
+                        'type': 'int' if width == 4 else 'uint8_t'}
+                       for name, offset, width in fields]}]}
+
+    def test_accepts_exact_padding(self):
+        validate(self.layout(12, 4, ('a', 0, 1), ('b', 4, 4), ('c', 8, 1)))
+
+    def test_rejects_impossible_padding(self):
+        cases = {
+            'leading': (self.layout(8, 4, ('x', 4, 4)), 'must start at offset 0'),
+            'internal': (self.layout(12, 4, ('a', 0, 1), ('b', 8, 4)), 'must start at offset 4'),
+            'trailing': (self.layout(12, 4, ('x', 0, 4)), 'size must be 4'),
+            'alignment': (self.layout(8, 8, ('a', 0, 4), ('b', 4, 4)), 'alignment must be 4'),
+        }
+        for padding, (trace, message) in cases.items():
+            with self.subTest(padding), self.assertRaisesRegex(FormatError, message):
+                validate(trace)
 
 
 def replace_text(steps, old, new):
