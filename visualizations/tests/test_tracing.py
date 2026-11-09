@@ -168,6 +168,15 @@ class StaticPointerTraceTests(unittest.TestCase):
         self.assertEqual(final(trace, "targets"), {"p": "a", "q": "a"})
         self.assertEqual(final(trace)["r"], 0)
 
+    def test_empty_initialization_reads_as_assignment_whatever_the_spelling(self):
+        for source, pane in [("int a{}; int* p{&a}; int * * pp{};", "int * * pp = {}"),
+                             ("signed int* p{};", "signed int* p = {}")]:
+            with self.subTest(source=source):
+                trace = self.trace(source)
+                shown = [step["pane"] for step in trace["steps"]]
+                self.assertIn(pane, shown)
+                self.assertIn(pane.replace("{}", "0"), shown)
+
     def test_copying_a_null_pointer_reads_zero(self):
         trace = self.trace("int* p{}; int* q = p;")
         self.assertEqual(panes(trace, 1), ["int* q = p", "int* q = 0", "int* q = 0"])

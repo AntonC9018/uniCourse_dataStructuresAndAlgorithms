@@ -30,7 +30,6 @@ FIRST_ADDRESS = 64
 INT_SIZE, POINTER_SIZE = 4, 8
 MAX_STATEMENTS, MAX_VARIABLES = 20, 8
 _QUOTED_OR_COMMENT = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
-_DECLARATION = r'(?:const\s+)?(?:int|auto)(?:\s+const)?(?:\s*\*+\s*|\s+)\w+\s*'
 
 
 # Values -----------------------------------------------------------------------------------
@@ -327,12 +326,12 @@ class Statement:
     output_suffix: str | None = None
 
 
-def _pane_parts(source: str, span: tuple[int, int]) -> tuple[str, str]:
+def _pane_parts(source: str, span: tuple[int, int], empty_initializer: bool) -> tuple[str, str]:
     """The context around an evaluated span, with brace initialization read as assignment."""
     start, end = span
     prefix, suffix = source[:start], source[end:].rstrip().removesuffix(";").rstrip()
     # Empty value-initialization keeps its real `{}` and becomes an assignment of it.
-    if re.fullmatch(r'\s*\{\s*\}\s*', source[start:end]) and re.fullmatch(_DECLARATION, prefix):
+    if empty_initializer:
         prefix = prefix.rstrip() + ' = '
     if prefix.rstrip().endswith('{') and suffix.lstrip().startswith('}'):
         prefix = prefix.rstrip()[:-1].rstrip()
@@ -385,7 +384,7 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
         end += 1
     source, mapping = _compact(program[start:end])
     left = declared = output_suffix = root = name_offset = None
-    whole = pointer = False
+    whole = pointer = empty_initializer = False
     if node["kind"] == "DeclStmt":
         children = node.get("inner", [])
         if len(children) != 1 or children[0].get("kind") != "VarDecl":
@@ -407,6 +406,7 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
         # Nonempty declaration braces are surrounding statement context, not the value.
         if root and root.get("kind") == "InitListExpr" and len(root.get("inner", [])) == 1:
             root = root["inner"][0]
+        empty_initializer = bool(root) and root.get("kind") == "InitListExpr" and not root.get("inner")
     elif node["kind"] == "BinaryOperator" and node.get("opcode") == "=":
         left, root = node["inner"]
         _depth(left)
@@ -431,7 +431,7 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
                          declared=declared, pointer=pointer)
     first, last = (start, _bounds(node)[1]) if whole else _bounds(root)
     span = (mapping[first - start], mapping[last - start])
-    prefix, suffix = _pane_parts(source, span)
+    prefix, suffix = _pane_parts(source, span, empty_initializer)
     text = source[slice(*span)]
 
     def to_pane(offset: int) -> int:
