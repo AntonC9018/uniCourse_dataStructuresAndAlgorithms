@@ -152,8 +152,7 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
               'write': {'name', 'value', 'span', 'destination'}, 'print': {'value', 'span'}}[kind]
     _keys(op, where, fields | {'kind'})
     for key in fields & {'name', 'target', 'via', 'value'}:
-        if not (kind == 'write' and key == 'target'):
-            _check(isinstance(op[key], str) and op[key], f'{where}.{key}', 'expected text')
+        _check(isinstance(op[key], str) and op[key], f'{where}.{key}', 'expected text')
     for key in ('name', 'via'):
         if key in op:
             _check(op[key] in names, f'{where}.{key}', f'unknown variable {op[key]!r}')
