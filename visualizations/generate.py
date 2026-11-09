@@ -15,13 +15,14 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
+# Everything a trace's bytes depend on, besides the toolchain.
+TRACER_SOURCES = tuple(ROOT / name for name in ('generate.py', 'tracing.py', 'model.py'))
 
 
 def revision() -> str:
     """Change whenever a trace could change: tracer sources and the pinned toolchain."""
     digest = hashlib.sha256()
-    for path in (ROOT / 'generate.py', ROOT / 'tracing.py',
-                 ROOT.parent / 'flake.nix', ROOT.parent / 'flake.lock'):
+    for path in (*TRACER_SOURCES, ROOT.parent / 'flake.nix', ROOT.parent / 'flake.lock'):
         digest.update(path.name.encode())
         digest.update(path.read_bytes())
     return digest.hexdigest()
