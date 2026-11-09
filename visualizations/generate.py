@@ -19,7 +19,8 @@ ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
 TRACER_SOURCES = tuple(ROOT / name for name in
-                       ('generate.py', 'tracing.py', 'execution.py', 'toolchain.py', 'trace_format.py'))
+                       ('generate.py', 'tracing.py', 'execution.py', 'records.py',
+                        'toolchain.py', 'trace_format.py'))
 
 # What the player draws legibly inside a lesson column.
 MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 10, 32

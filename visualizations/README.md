@@ -5,7 +5,9 @@ pane on the right, values moving between them. This work belongs to [epic #50]; 
 design is in [#55] and [#56].
 
 - `discover.py` finds lesson examples the tracer supports and tags them.
-- `tracing.py` uses Clang AST types and ranges to emit unified integer and pointer traces.
+- `tracing.py` uses Clang AST types and ranges to emit unified integer, pointer and struct traces.
+- `records.py` validates aggregate definitions and reads field offsets, sizes and alignment
+  from Clang.
 - `execution.py` runs whitelisted statements under GDB and observes every post-statement state.
 - `toolchain.py` selects compiler/debugger executables and bounds tool execution.
 - `trace_format.py` defines and validates the unified format and builds manual traces.
@@ -23,13 +25,21 @@ design is in [#55] and [#56].
 ## Tracing lesson examples
 
 `discover.py` inventories all outside-answer C++ fences under the configured lab roots. Clang
-checks syntax and types; an AST whitelist accepts flat integer and pointer examples.
+checks syntax and types; an AST whitelist accepts flat integer, pointer and aggregate struct
+examples.
 Address-of, dereference chains, pointer reads/copies, shared targets and reassignment through
 pointers are supported, including pointers to pointers. Null pointers are stored and reduced
 to `0`. The pane follows lesson notation: `**pp` → `**72` → `*p` → `*64` → `a`.
 
-Pointer arithmetic/comparison, arrays, references, structures, casts, heap allocation,
-non-int pointees, qualified pointers, control flow, ill-formed snippets and undefined reads or
+Structs support aggregate and designated initialization, uninitialized field storage, whole-object
+copies, `.` and `->`, field addresses and pointer fields. Copies are shallow: pointer fields keep
+their original targets. Fields must be `int`, pointers to `int`, or pointers to another struct in
+the snippet. Every live field is checked under GDB after every statement. The player uses the
+existing struct frames, per-field colours and separate arc endpoints for objects and fields.
+
+Pointer arithmetic/comparison, arrays, references, nested struct values, casts, heap allocation,
+other field types, methods, inheritance, bitfields, default member initializers, empty structs,
+qualified pointers, control flow, ill-formed snippets and undefined reads or
 arithmetic are skipped with explicit reasons. Computed-address dereferences (`*(&a)`) and
 address-of dereferences (`&*p`) are also outside this subset. A plain literal-initialized
 cell gets no visualization; empty initialization, value copies, arithmetic, assignments and
@@ -46,8 +56,8 @@ changed examples are traced again; a tag that cannot be traced fails the build.
 
 Generation uses Clang AST types and operation ranges to build expression reductions. GDB
 verifies every post-statement value, output, storage size and frame location. Pointer targets
-come from GDB values mapped back to live variables; predicted targets must agree with them. Addresses are
-normalized relative to observed stack offsets, aligned near 64, so no ASLR addresses are
+retain their typed object or field identity; GDB verifies their numeric addresses. Addresses
+are normalized relative to observed stack offsets, aligned near 64, so no ASLR addresses are
 published. Cells are ordered by address, so declaration order may differ from the source.
 Unchanged-value writes, such as the failed swap, remain visible writes.
 
@@ -57,8 +67,8 @@ python3 visualizations/generate.py trace --source /tmp/snippet.cpp
 ```
 
 `trace` prints the unified format as deterministic JSON (sorted keys). `revision` hashes the
-tracer, execution, toolchain and format sources and the flake lock; maintenance keys stored traces by it, so a
-toolchain or format change re-traces every example.
+tracer modules (including record layouts) and the flake lock. Maintenance keys stored traces
+by this revision, so a toolchain or format change re-traces every example.
 
 ## Toolchain and tests
 
