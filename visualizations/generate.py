@@ -22,14 +22,9 @@ TRACER_SOURCES = tuple(ROOT / name for name in
                        ('generate.py', 'tracing.py', 'execution.py', 'records.py',
                         'toolchain.py', 'trace_format.py', 'layout.py'))
 
-# What the player draws legibly inside a lesson column.
-# The player grows with the snippet; these keep a whole scene on a laptop screen while
-# stepping. Columns stay tight because wider code shrinks the text at phone width.
-MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 16, 32
-MAX_PANE, MAX_OUTPUT_LINES, MAX_OUTPUT_COLUMNS = 31, 4, 21
-# The player's memory geometry (`player.js`): the row's width, the widest byte, the gap between
-# variables, and the advance of a 26-unit variable name.
-MEMORY_WIDTH, MAX_BYTE, VARIABLE_GAP, NAME_ADVANCE = 600, 28, 10.5, 26 * 0.602
+# The memory row's legible capacity. Code, pane and output have no limit: the player's SVG
+# scales to its content, so longer or wider snippets just draw smaller text.
+MAX_VARIABLES = 5
 DECLARATION = re.compile(r'\s*(?:const\s+)?(?:int|auto)\b')
 
 
@@ -42,8 +37,8 @@ def revision() -> str:
     return digest.hexdigest()
 
 
-def _memory_fits(variables: list[dict]) -> None:
-    """Storage is drawn to scale: only alignment padding between cells, names that fit."""
+def _storage_is_contiguous(variables: list[dict]) -> None:
+    """Storage is drawn to scale: only alignment padding between cells."""
     from tracing import Unsupported
     cells = sorted(variables, key=lambda variable: variable['address'])
     for lower, higher in zip(cells, cells[1:]):
@@ -51,14 +46,6 @@ def _memory_fits(variables: list[dict]) -> None:
         # a cell and is smaller than it.
         if not 0 <= higher['address'] - lower['address'] - lower['size'] < lower['size']:
             raise Unsupported('noncontiguous storage needs a separate memory-layout visualization')
-    extent = cells[-1]['address'] + cells[-1]['size'] - cells[0]['address']
-    byte = min(MAX_BYTE, (MEMORY_WIDTH - VARIABLE_GAP * (len(cells) - 1)) / extent)
-    centre = [(variable['address'] - cells[0]['address'] + variable['size'] / 2) * byte + VARIABLE_GAP * i
-              for i, variable in enumerate(cells)]
-    for i in range(len(cells) - 1):
-        room = centre[i + 1] - centre[i]
-        if (len(cells[i]['name']) + len(cells[i + 1]['name'])) * NAME_ADVANCE / 2 + 8 > room:
-            raise Unsupported(f"the names {cells[i]['name']} and {cells[i + 1]['name']} do not fit under their cells")
 
 
 _LITERAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
@@ -83,14 +70,7 @@ def applicable(trace: dict, snippet: str) -> None:
     variables, steps, source = trace['variables'], trace['steps'], trace['source']
     if len(variables) > MAX_VARIABLES:
         raise Unsupported(f'the memory row holds at most {MAX_VARIABLES} variables')
-    if len(source) > MAX_LINES or max(map(len, source)) > MAX_COLUMNS:
-        raise Unsupported(f'source exceeds the approved layout: {MAX_LINES} lines, {MAX_COLUMNS} columns')
-    _memory_fits(variables)
-    if max(len(step['pane']) for step in steps) > MAX_PANE:
-        raise Unsupported(f'evaluated statement exceeds the approved {MAX_PANE}-column pane')
-    output = steps[-1]['stdout'].splitlines()
-    if len(output) > MAX_OUTPUT_LINES or any(len(line) > MAX_OUTPUT_COLUMNS for line in output):
-        raise Unsupported('output exceeds the approved four-line output area')
+    _storage_is_contiguous(variables)
     ops = [step['op'] for step in steps if step['op']]
     writes = [step for step in steps if step['op'] and step['op']['kind'] == 'write']
     reads = [op for op in ops if op['kind'] in ('read', 'addr', 'deref')]

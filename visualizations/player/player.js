@@ -203,6 +203,17 @@
   const labelCentre = c => [c.x + 3 + labelWidth(c) / 2, c.y - 18];
   const valueCentre = c => [c.x + c.w / 2, c.y + 32];
 
+  // Labels centred under neighbouring boxes share one size, shrunk until the widest pair fits.
+  function labelSize(boxes, label, size) {
+    const sorted = [...boxes].sort((a, b) => a.x - b.x);
+    for (let i = 1; i < sorted.length; i++) {
+      const a = sorted[i - 1], b = sorted[i], room = (b.x + b.w / 2) - (a.x + a.w / 2) - 8;
+      const half = (label(a).length + label(b).length) * CHAR / 2;
+      if (half * size > room) size = room / half;
+    }
+    return size;
+  }
+
   function geometry(m, P, stacked) {
     const g = { stacked, isStruct: c => Boolean(c.fields) };
     const longest = Math.max(...m.source.map(line => line.length));
@@ -271,6 +282,8 @@
     // Colouring of identifiers: variables keep their colour; a field takes its field's colour.
     g.owner = token => g.groups.find(s => s.name === token) || g.leaves.find(l => !l.group && l.name === token);
     g.field = token => g.leaves.find(l => l.group && l.label === token);
+    g.nameSize = labelSize([...g.groups, ...g.leaves.filter(l => !l.group)], c => c.name, 26);
+    g.fieldSize = labelSize(g.leaves.filter(l => l.group), c => c.label, 20);
     return g;
   }
 
@@ -431,7 +444,7 @@
     for (const s of g.groups) {
       const on = g.leaves.some(l => l.group === s.name && live(l)), f = frameOf(s);
       out += dim(c, s.name, rect(f.x, f.y, f.w, f.h, 'none', on ? s.color : P.deadStroke, 6, FRAME.stroke)
-        + text(s.x + s.w / 2, f.y + f.h + 32, s.name, 26, on ? s.color : P.grey, 'middle'));
+        + text(s.x + s.w / 2, f.y + f.h + 32, s.name, g.nameSize, on ? s.color : P.grey, 'middle'));
     }
     if (op && op.kind === 'addr') {
       // Taking an address reads the label above storage, not the value.
@@ -442,8 +455,8 @@
     for (const cell of g.leaves) {
       const on = live(cell), changing = writing.has(cell.name), color = cell.fieldColor || cell.color;
       let markup = text(cell.x + 3, cell.y - 12, cell.address, 16, on ? P.muted : P.grey);
-      markup += cell.group ? text(cell.x + cell.w / 2, cell.y + cell.h + 28, cell.label, 20, on ? color : P.grey, 'middle')
-        : text(cell.x + cell.w / 2, cell.y + cell.h + 34, cell.label, 26, on ? color : P.grey, 'middle');
+      markup += cell.group ? text(cell.x + cell.w / 2, cell.y + cell.h + 28, cell.label, g.fieldSize, on ? color : P.grey, 'middle')
+        : text(cell.x + cell.w / 2, cell.y + cell.h + 34, cell.label, g.nameSize, on ? color : P.grey, 'middle');
       markup += rect(cell.x, cell.y, cell.w, cell.h, on ? P.panel : P.deadFill, 'none', 0);
       markup += rect(cell.x + 1.5, cell.y + 1.5, cell.w - 3, cell.h - 3, 'none', on ? color : P.deadStroke, 0, 3);
       if (on) {
@@ -583,7 +596,6 @@
   }
 
   // Player -----------------------------------------------------------------------------------
-  const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   const players = [];
 
   function themeName() {
@@ -784,14 +796,9 @@
       this.continuous = autoplay;
       this.index = index;
       this.elapsed = 0;
-      if (reducedMotion.matches) {
-        // Cut straight to each state; autoplay still pauses on every step.
-        this.duration = autoplay ? this.m.steps[index].hold + 0.6 : 0;
-        this.render(false);
-      } else {
-        this.duration = stepSeconds(this.m.steps, index);
-        this.render(true);
-      }
+      // Steps always animate, whatever prefers-reduced-motion says: the motion is the lesson.
+      this.duration = stepSeconds(this.m.steps, index);
+      this.render(true);
       if (this.duration > 0) this.resume();
     }
     resume() {

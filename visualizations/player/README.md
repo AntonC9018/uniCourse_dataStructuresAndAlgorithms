@@ -39,7 +39,8 @@ Nothing else is required from the page.
 - **Focus.** Redraws replace only the drawing; code-line controls and buttons are created once,
   so steps, animations and theme changes keep keyboard focus. A focused button that becomes
   disabled hands focus to the player, where the arrow keys still step.
-- **Reduced motion.** With `prefers-reduced-motion: reduce`, every step cuts to its end state.
+- **Motion.** Steps always animate, even with `prefers-reduced-motion: reduce`:
+  the movement is what the player teaches, so the system setting is deliberately ignored.
 
 ## Visual language
 
