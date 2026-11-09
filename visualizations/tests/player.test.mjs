@@ -122,6 +122,8 @@ test('a generated struct trace plays shallow copies in both themes', async () =>
 });
 
 test('static layout links rows and bytes in both themes and initializes lazily', async () => {
+  await page.close();
+  page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
   const layout = { format: 1, kind: 'layout', records: [{ name: 'A', size: 12, alignment: 4,
     fields: [
       { name: 'f1', type: 'uint8_t', offset: 0, size: 1, kind: 'int' },
@@ -132,6 +134,7 @@ test('static layout links rows and bytes in both themes and initializes lazily',
     <style>${read('player.css')}</style><details><summary>Answer</summary>
     <div class="course-visualization"><script type="application/json">${JSON.stringify(layout)}</script>
     </div></details><script>${read('player.js')}</script>`);
+  await page.evaluate(() => window.CourseVisualization.scan());
   assert.equal(await page.locator('.cv-layout').count(), 0);
   await page.locator('summary').click();
   await page.waitForSelector('.cv-layout');
