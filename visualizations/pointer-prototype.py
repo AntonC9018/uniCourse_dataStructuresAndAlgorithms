@@ -218,7 +218,7 @@ function colored(x,y,value,trace,size=30,muteKeywords=true){
 function geometry(trace){
  const lh=56, h=44+trace.source.length*lh, top=Math.max(24,Math.round((720-h)/2));
  const g={code:[40,top,540,h],lh,cy:top+50};
- const layout={A:{memY:262,pane:410,out:548},B:{memY:118,pane:372,out:510},C:{memY:200,pane:372,out:510}}[variant];
+ const layout={A:{memY:290,pane:430,out:566},B:{memY:118,pane:372,out:510},C:{memY:200,pane:372,out:510}}[variant];
  g.memY=layout.memY; g.pane=[640,layout.pane,592,76]; g.out=[664,layout.out];
  g.tx=664; g.ty=layout.pane+38+11;
  g.cells=trace.cells.map(c=>({...c,x:MEMX+(c.address-BASE)*BYTE,y:g.memY,w:c.size*BYTE,h:64}));
@@ -237,13 +237,15 @@ function links(g,values){
  const list=g.cells.filter(c=>c.kind==='ptr'&&values[c.name]!==null)
   .map(c=>({from:c,to:cellAt(g,values[c.name])})).filter(l=>l.to);
  if(variant==='A') {
-  // Arcs leave just right of the pointer's own label and land on the pointee's label,
-  // so adjacent links in a chain meet without crossing. Enclosing arcs rise higher.
-  const range=l=>[Math.min(l.from.x+44,l.to.x+12),Math.max(l.from.x+44,l.to.x+12)];
+  // Arcs leave the pointer cell well right of its own label, rise clear of the address row,
+  // and drop vertically onto the centre of the pointee's label, stopping short of the digits.
+  // Adjacent links in a chain therefore meet without crossing; enclosing arcs rise higher.
+  const ends=l=>[l.from.x+48,l.to.x+labelWidth(l.to)/2];
+  const range=l=>[Math.min(...ends(l)),Math.max(...ends(l))];
   for(const l of list) {
-   const [a,b]=range(l);
+   const [a,b]=range(l), [sx,ex]=ends(l);
    l.level=list.filter(o=>o!==l&&range(o)[0]>=a&&range(o)[1]<=b).length;
-   const sx=l.from.x+44, sy=l.from.y-2, ex=l.to.x+12, ey=l.to.y-34, apex=l.to.y-70-l.level*30;
+   const sy=l.from.y-2, ey=l.to.y-40, apex=l.to.y-128-l.level*40;
    l.d=`M ${sx} ${sy} C ${sx} ${apex}, ${ex} ${apex}, ${ex} ${ey-9}`; l.head=[ex,ey,90];
   }
  } else {
@@ -262,7 +264,9 @@ function linkMarkup(l,{grow=null,fadeOut=null}={}) {
  const head=`<path d="M -11 -6.5 L 0 0 L -11 6.5 Z" fill="${color}" transform="translate(${x} ${y}) rotate(${angle})"/>`;
  return `<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
   +(fadeOut!==null?fade(1,0,0.3,fadeOut):'')
-  +`<path d="${l.d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-opacity="0.85"`
+  // A background halo separates arcs from the labels and from each other where they meet.
+  +`<path d="${l.d}" fill="none" stroke="#101722" stroke-width="9"`+(grow!==null?` data-grow="${grow}"`:'')+'/>'
+  +`<path d="${l.d}" fill="none" stroke="${color}" stroke-width="2.5"`
   +(grow!==null?` data-grow="${grow}"`:'')+'/>'
   +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>';
 }
