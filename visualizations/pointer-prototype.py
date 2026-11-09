@@ -10,7 +10,7 @@ import json
 import re
 from pathlib import Path
 
-COLORS = {'a': '#61d4c4', 'b': '#ffbd69', 'p': '#c39bff', 'pp': '#ff8fb1'}
+COLORS = {'a': '#61d4c4', 'b': '#ffbd69', 'p': '#c39bff', 'pp': '#ff8fb1', 'q': '#a6e06b'}
 
 
 class Trace:
@@ -108,6 +108,19 @@ def reassign():
     t.statement(5).read('p').deref(68, 'p').write('b')
     t.statement(6).print('a')
     t.statement(7).print('b')
+    return t.json()
+
+
+def shared_target():
+    t = Trace('shared-target', 'Two pointers to one variable',
+              ['int a = 5;', 'int* p = &a;', 'int* q = p;', '*q = 6;',
+               'std::cout << *p << std::endl;'],
+              [('a', 64, 4, 'int'), ('p', 72, 8, 'ptr'), ('q', 80, 8, 'ptr')])
+    t.statement(0).write('a')
+    t.statement(1).address('a').write('p')
+    t.statement(2).read('p').write('q')
+    t.statement(3).read('q').deref(64, 'q').write('a')
+    t.statement(4).read('p').deref(64, 'p').print('a')
     return t.json()
 
 
@@ -237,13 +250,23 @@ function links(g,values){
  const list=g.cells.filter(c=>c.kind==='ptr'&&values[c.name]!==null)
   .map(c=>({from:c,to:cellAt(g,values[c.name])})).filter(l=>l.to);
  if(variant==='A') {
-  // Arcs leave the left quarter of the pointer cell and drop onto the centre of the
-  // pointee. A chain's links then occupy disjoint spans and never cross; address labels
-  // stay untouched. Enclosing arcs rise higher.
-  const ends=l=>[l.from.x+l.from.w/4,l.to.x+l.to.w/2];
-  const range=l=>[Math.min(...ends(l)),Math.max(...ends(l))];
+  // Arcs start and end near the centre of their cells. When a cell carries several arc ends
+  // (several pointers to it, or its own pointer plus incoming ones), the ends spread around
+  // the centre without crossing: ends leading left sit left of ends leading right, and on
+  // each side the arc reaching farther sits nearer the centre, so it encloses the shorter one.
+  const centre=c=>c.x+c.w/2, ports=new Map();
+  for(const l of list) for(const [cell,other,key] of [[l.from,l.to,'sx'],[l.to,l.from,'ex']]) {
+   if(!ports.has(cell)) ports.set(cell,[]);
+   ports.get(cell).push({l,key,other:centre(other)});
+  }
+  for(const [cell,ends] of ports) {
+   const side=end=>end.other<centre(cell)?0:1;
+   ends.sort((p,q)=>side(p)-side(q)||q.other-p.other);
+   ends.forEach((end,i)=>end.l[end.key]=centre(cell)+(i-(ends.length-1)/2)*20);
+  }
+  const range=l=>[Math.min(l.sx,l.ex),Math.max(l.sx,l.ex)];
   for(const l of list) {
-   const [a,b]=range(l), [sx,ex]=ends(l);
+   const [a,b]=range(l), {sx,ex}=l;
    l.level=list.filter(o=>o!==l&&range(o)[0]>=a&&range(o)[1]<=b).length;
    const sy=l.from.y-2, ey=l.to.y-3, apex=l.to.y-112-l.level*40;
    l.d=`M ${sx} ${sy} C ${sx} ${apex}, ${ex} ${apex}, ${ex} ${ey-9}`; l.head=[ex,ey,90];
@@ -478,7 +501,7 @@ draw();
 </script>
 </html>'''
 
-TRACES = [write_through(), reassign(), double_pointer()]
+TRACES = [write_through(), reassign(), double_pointer(), shared_target()]
 
 if __name__ == '__main__':
     target = Path(__file__).with_name('pointer-prototype.html')
