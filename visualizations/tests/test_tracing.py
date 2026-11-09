@@ -249,6 +249,8 @@ class StaticPointerTraceTests(unittest.TestCase):
             "int __course_checkpoint{5};",
             "int a,b;",
             "int a{1}; } int outside(){return 0;} int other(){",  # escaped wrapper
+            "int g;\nint main() { std::cout << g; }",  # a global moved into main
+            "int f() { return 1; }\nint main() { int a{ f() }; }",
             "int a{1}; int b{2}; int c{3}; int d{4}; int e{5}; int f{6}; int g{7}; int h{8}; int i{9};",
         ]
         self.assert_rejected_without_running(sources)

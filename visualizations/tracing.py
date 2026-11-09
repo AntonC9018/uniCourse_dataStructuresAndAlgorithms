@@ -82,6 +82,10 @@ def _body(source: str) -> str:
         match = re.fullmatch(r'([\s\S]*?)int\s+main\s*\(\s*(?:void\s*)?\)\s*\{([\s\S]*)\}\s*', source)
         if not match:
             raise Unsupported("only a standalone parameterless main or statement fragment is supported")
+        # Struct definitions may precede main; anything else (a global, a function)
+        # would change meaning once moved into main's body.
+        if re.sub(r'\bstruct\s+\w+\s*\{[^{}]*\}\s*;', '', match.group(1)).strip():
+            raise Unsupported("only struct definitions may precede main")
         source = (match.group(1) + match.group(2)).strip()
     if not source or len(source) > 10_000:
         raise Unsupported("empty or oversized snippet")

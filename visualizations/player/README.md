@@ -14,7 +14,7 @@ Each visualization is one element; the site emits it inside a lesson's `<details
 <div class="course-visualization"><script type="application/json">TRACE_JSON</script></div>
 ```
 
-`TRACE_JSON` is the output of `generate.py trace`, with `<` escaped as `<`.
+`TRACE_JSON` is the output of `generate.py trace`, with every `<` escaped as `\u003c`.
 Nothing else is required from the page.
 
 ## Behaviour
