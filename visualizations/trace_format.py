@@ -149,7 +149,7 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
     kind = op['kind']
     fields = {'read': {'name', 'value', 'span'}, 'addr': {'name', 'value', 'span'},
               'deref': {'target', 'via', 'span'}, 'eval': {'value', 'span'},
-              'write': {'name', 'value', 'span', 'target'}, 'print': {'value', 'span'}}[kind]
+              'write': {'name', 'value', 'span', 'destination'}, 'print': {'value', 'span'}}[kind]
     _keys(op, where, fields | {'kind'})
     for key in fields & {'name', 'target', 'via', 'value'}:
         if not (kind == 'write' and key == 'target'):
@@ -174,8 +174,8 @@ def _operation(op, step: dict, previous: dict, names: set[str], cells: dict, whe
     start, end = _span(op['span'], step['pane'], where + '.span')
     _check(step['pane'][start:end] == op['value'], where + '.span', 'does not cover the value')
     if kind == 'write':
-        start, end = _span(op['target'], step['pane'], where + '.target')
-        _check(step['pane'][start:end] == op['name'], where + '.target', 'does not cover the name')
+        start, end = _span(op['destination'], step['pane'], where + '.destination')
+        _check(step['pane'][start:end] == op['name'], where + '.destination', 'does not cover the name')
     else:
         printed = step['stdout'][len(previous['stdout']):]
         _check(printed.startswith(op['value']) and not printed[len(op['value']):].strip(),
@@ -360,7 +360,7 @@ class Builder:
         self.carry = None
         target = re.search(r'(?<![\w.])' + re.escape(name) + r'(?=\s*=)', self.pane).start()
         self._add({'kind': 'write', 'name': name, 'value': text, 'span': [start, len(self.pane)],
-                   'target': [target, target + len(name)]}, hold)
+                   'destination': [target, target + len(name)]}, hold)
         return self
 
     def print(self, name: str, hold: float = 1.2):
@@ -460,7 +460,7 @@ def from_timeline(timeline) -> dict:
         elif step.write:
             at = [match.start() for match in re.finditer(r'\b' + re.escape(step.write) + r'\b', prefix)]
             op = {'kind': 'write', 'name': step.write, 'value': expression, 'span': expr,
-                  'target': [at[-1], at[-1] + len(step.write)]}
+                  'destination': [at[-1], at[-1] + len(step.write)]}
         elif step.stdout != previous['stdout']:
             op = {'kind': 'print', 'value': expression, 'span': expr}
         elif pane != previous['pane']:

@@ -25,15 +25,15 @@
    "hold": 1.2,
    "line": 1,
    "op": {
+    "destination": [
+     0,
+     1
+    ],
     "kind": "write",
     "name": "a",
     "span": [
      4,
      7
-    ],
-    "target": [
-     0,
-     1
     ],
     "value": "{1}"
    },
@@ -81,15 +81,15 @@
    "hold": 1.6,
    "line": 2,
    "op": {
+    "destination": [
+     2,
+     3
+    ],
     "kind": "write",
     "name": "b",
     "span": [
      6,
      9
-    ],
-    "target": [
-     2,
-     3
     ],
     "value": "{1}"
    },
@@ -117,15 +117,15 @@
    "hold": 1.2,
    "line": 3,
    "op": {
+    "destination": [
+     0,
+     3
+    ],
     "kind": "write",
     "name": "a.f",
     "span": [
      6,
      7
-    ],
-    "target": [
-     0,
-     3
     ],
     "value": "2"
    },

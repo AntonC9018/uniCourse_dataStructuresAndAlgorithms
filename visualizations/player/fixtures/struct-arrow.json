@@ -41,15 +41,15 @@
    "hold": 1.2,
    "line": 2,
    "op": {
+    "destination": [
+     0,
+     4
+    ],
     "kind": "write",
     "name": "a.f1",
     "span": [
      7,
      8
-    ],
-    "target": [
-     0,
-     4
     ],
     "value": "5"
    },
@@ -100,15 +100,15 @@
    "hold": 1.2,
    "line": 3,
    "op": {
+    "destination": [
+     3,
+     5
+    ],
     "kind": "write",
     "name": "pa",
     "span": [
      8,
      10
-    ],
-    "target": [
-     3,
-     5
     ],
     "value": "64"
    },
@@ -188,15 +188,15 @@
    "hold": 1.2,
    "line": 4,
    "op": {
+    "destination": [
+     0,
+     4
+    ],
     "kind": "write",
     "name": "a.f2",
     "span": [
      7,
      8
-    ],
-    "target": [
-     0,
-     4
     ],
     "value": "6"
    },
@@ -276,15 +276,15 @@
    "hold": 1.2,
    "line": 5,
    "op": {
+    "destination": [
+     0,
+     4
+    ],
     "kind": "write",
     "name": "a.f1",
     "span": [
      7,
      8
-    ],
-    "target": [
-     0,
-     4
     ],
     "value": "7"
    },

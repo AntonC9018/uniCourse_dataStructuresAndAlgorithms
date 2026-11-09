@@ -93,7 +93,7 @@ class ConverterTests(unittest.TestCase):
         self.assertEqual([s['pane'] for s in trace['steps'][2:6]],
                          ['int b = a + 6;', 'int b = 5 + 6;', 'int b = 11;', 'int b = 11;'])
         self.assertEqual(trace['steps'][4]['op'], {'kind': 'eval', 'value': '11', 'span': [8, 13]})
-        self.assertEqual(trace['steps'][5]['op']['target'], [4, 5])
+        self.assertEqual(trace['steps'][5]['op']['destination'], [4, 5])
         self.assertEqual(trace['spans'], [[6, 7], [6, 11], [4, 5], [13, 14]])
         self.assertEqual(trace['steps'][-1]['stdout'], '11')
 
