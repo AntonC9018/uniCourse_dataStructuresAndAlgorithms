@@ -254,6 +254,7 @@ int main()
 <!-- </visualization> -->
 
 </details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -424,6 +425,7 @@ int main()
 <!-- </visualization> -->
 
 </details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -464,6 +466,7 @@ int main()
 <!-- </visualization> -->
 
 </details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -506,6 +509,7 @@ int main()
 <!-- </visualization> -->
 
 </details>
+
 <details>
 <summary>Ответ:</summary>
 
