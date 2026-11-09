@@ -386,12 +386,12 @@ function links(g,step){
 function linkMarkup(l,{grow=null,fadeOut=null}={}) {
  const [x,y,angle]=l.head, color=l.from.color;
  const head=`<path d="M -11 -6.5 L 0 0 L -11 6.5 Z" fill="${color}" transform="translate(${x} ${y}) rotate(${angle})"/>`;
- return `<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
+ return dim(l.from.name.split('.')[0],`<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
   +(fadeOut!==null?fade(1,0,0.3,fadeOut):'')
   +`<path d="${l.d}" fill="none" stroke="#101722" stroke-width="9"`+(grow!==null?` data-grow="${grow}"`:'')+'/>'
   +`<path d="${l.d}" fill="none" stroke="${color}" stroke-width="2.5"`
   +(grow!==null?` data-grow="${grow}"`:'')+'/>'
-  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>';
+  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>');
 }
 function arrows(g,step,prev,op){
  const now=links(g,step);
@@ -429,29 +429,32 @@ function memory(trace,g,step,prev,op){
  }
  for(const s of g.groups){
   const on=g.leaves.some(l=>l.group===s.name&&live(l)), f=frameOf(s);
-  out+=rect(f.x,f.y,f.w,f.h,'none',on?s.color:'#47515f',6,FRAME.stroke);
-  out+=text(s.x+s.w/2,f.y+f.h+32,s.name,26,on?s.color:GREY,'middle');
+  out+=dim(s.name,rect(f.x,f.y,f.w,f.h,'none',on?s.color:'#47515f',6,FRAME.stroke)
+   +text(s.x+s.w/2,f.y+f.h+32,s.name,26,on?s.color:GREY,'middle'));
  }
  if(op?.kind==='addr'){
   const c=leavesOf(g,op.name)[0], [lx,ly]=labelCenter(c);
   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at+0.1)}${rect(lx-labelWidth(c)/2-5,ly-13,labelWidth(c)+10,24,'#2c4775',READ,5,2)}</g>`;
  }
  for(const c of g.leaves){
+  let cell='';
   const on=live(c), changing=writing.has(c.name), color=c.fieldColor||c.color;
-  out+=text(c.x+3,c.y-12,c.address,16,on?MUTED:GREY);
-  out+=c.group?text(c.x+c.w/2,c.y+c.h+28,c.label,20,on?color:GREY,'middle')
+  cell+=text(c.x+3,c.y-12,c.address,16,on?MUTED:GREY);
+  cell+=c.group?text(c.x+c.w/2,c.y+c.h+28,c.label,20,on?color:GREY,'middle')
    :text(c.x+c.w/2,c.y+c.h+34,c.label,26,on?color:GREY,'middle');
-  out+=rect(c.x,c.y,c.w,c.h,on?'#192331':'#171d27','none',0);
-  out+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',on?color:'#47515f',0,3);
-  if(!on) continue;
+  cell+=rect(c.x,c.y,c.w,c.h,on?'#192331':'#171d27','none',0);
+  cell+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',on?color:'#47515f',0,3);
+  if(on){
   const [cx,cy]=[c.x+c.w/2,c.y+c.h/2];
   const shown=v=>{const size=String(v).length*18>c.w-12?22:30; return text(0,size/3+1,v,size,v==='?'?GREY:FG,'middle');};
-  out+=`<g transform="translate(${cx} ${cy})"><g>`+(changing?pulse(at-0.2):'');
+  cell+=`<g transform="translate(${cx} ${cy})"><g>`+(changing?pulse(at-0.2):'');
   if(changing && prev.values[c.name]!==step.values[c.name]) {
-   if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${shown(prev.values[c.name])}</g>`;
-   out+=`<g opacity="0">${show(at)}${shown(step.values[c.name])}</g>`;
-  } else out+=shown(changing?step.values[c.name]:values[c.name]);
-  out+='</g></g>';
+   if(prev.values[c.name]!==null) cell+=`<g>${hide(at)}${shown(prev.values[c.name])}</g>`;
+   cell+=`<g opacity="0">${show(at)}${shown(step.values[c.name])}</g>`;
+  } else cell+=shown(changing?step.values[c.name]:values[c.name]);
+  cell+='</g></g>';
+  }
+  out+=dim(c.group||c.name,cell);
  }
  if(op?.kind==='read'||op?.kind==='write')
   out+=`<g>${fade(1,0,0.35,at+0.15)}${outline(box(g,op.name),op.kind==='write'?WRITE:READ)}</g>`;
@@ -571,10 +574,35 @@ function finishPaths(){
   }
  }
 }
+// Variables the current statement involves stay bright; the rest dim to half, so attention
+// stays on the statement. A pointer's target joins once evaluation reaches it.
+const DIM=0.5;
+let focus={now:new Set(),before:new Set(),begin:new Map()};
+function activeVariables(trace,i){
+ const steps=trace.steps, line=steps[i].line, active=new Set();
+ for(const token of trace.source[line].match(/\b[a-zA-Z_]\w*\b/g)||[]) if(variablesOf(trace).includes(token)) active.add(token);
+ for(let j=i;j>=0&&steps[j].line===line;j--) for(const key of ['name','target','via'])
+  if(steps[j].op?.[key]) active.add(steps[j].op[key].split('.')[0]);
+ return active;
+}
+function setFocus(trace,animate){
+ const now=activeVariables(trace,index), before=animate&&index?activeVariables(trace,index-1):now, op=animate?trace.steps[index].op:null;
+ const begin=new Map();
+ // A dereference target lights up as the followed arc arrives; everything else at once.
+ if(op?.kind==='deref') begin.set(op.target.split('.')[0],arrival(op)-0.15);
+ focus={now,before,begin};
+}
+function dim(name,markup){
+ const on=focus.now.has(name), was=focus.before.has(name), to=on?1:DIM;
+ if(on===was) return to===1?markup:`<g opacity="${DIM}">${markup}</g>`;
+ return `<g opacity="${was?1:DIM}"><animate attributeName="opacity" from="${was?1:DIM}" to="${to}" dur="0.35s" begin="${focus.begin.get(name)??0}s" ${ease} fill="freeze"/>${markup}</g>`;
+}
+const variablesOf=trace=>[...trace.groups.map(s=>s.name),...trace.leaves.filter(l=>!l.group).map(l=>l.name)];
 function draw(animate=false){
  clearTimeout(settleTimer);
  const trace=traces[scenario], step=trace.steps[index], prev=index?trace.steps[index-1]:null;
  const g=geometry(trace), op=animate?step.op:null;
+ setFocus(trace,animate);
  const copying=animate&&copies(index), lineChanged=animate&&prev&&prev.line!==step.line;
  let out=code(trace,g,step,op,lineChanged?prev.line:null);
  out+=`<path d="M ${g.code[0]+g.code[2]+5} ${lineY(g,step.line)-10} H ${g.code[0]+g.code[2]+20} V ${g.pane[1]+38} H ${g.pane[0]}" fill="none" stroke="#697d99" stroke-width="2"/>`;

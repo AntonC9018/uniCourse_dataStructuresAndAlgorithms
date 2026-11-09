@@ -291,13 +291,13 @@ function links(g,values){
 function linkMarkup(l,{grow=null,fadeOut=null}={}) {
  const [x,y,angle]=l.head, color=l.from.color;
  const head=`<path d="M -11 -6.5 L 0 0 L -11 6.5 Z" fill="${color}" transform="translate(${x} ${y}) rotate(${angle})"/>`;
- return `<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
+ return dim(l.from.name,`<g data-link="${l.from.name}"${grow!==null?' opacity="1"':''}>`
   +(fadeOut!==null?fade(1,0,0.3,fadeOut):'')
   // A background halo separates arcs from the labels and from each other where they meet.
   +`<path d="${l.d}" fill="none" stroke="#101722" stroke-width="9"`+(grow!==null?` data-grow="${grow}"`:'')+'/>'
   +`<path d="${l.d}" fill="none" stroke="${color}" stroke-width="2.5"`
   +(grow!==null?` data-grow="${grow}"`:'')+'/>'
-  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>';
+  +(grow!==null?`<g opacity="0">${fade(0,1,0.15,grow+0.5)}${head}</g>`:head)+'</g>');
 }
 function arrows(g,step,prev,op){
  if(variant==='C') return '';
@@ -326,28 +326,31 @@ function memory(trace,g,step,prev,op){
   if(cells[i].address>end) out+=`<rect x="${MEMX+(end-BASE)*BYTE+3}" y="${g.memY+3}" width="${(cells[i].address-end)*BYTE-6}" height="58" fill="none" stroke="#2c3442" stroke-dasharray="5 5"/>`;
  }
  for(const c of g.cells){
+  let cell='';
   const writing=op?.kind==='write'&&op.name===c.name, live=values[c.name]!==null||writing;
   const target=op?.kind==='deref'&&op.address===c.address;
   if(op?.kind==='addr'&&op.name===c.name)
-   out+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at+0.1)}${rect(c.x-5,c.y-39,labelWidth(c)+10,26,'#2c4775',READ,5,2)}</g>`;
+   cell+=`<g opacity="0">${fade(0,1,0.15)}${fade(1,0,0.2,at+0.1)}${rect(c.x-5,c.y-39,labelWidth(c)+10,26,'#2c4775',READ,5,2)}</g>`;
   if(target && variant==='C')
-   out+=`<g opacity="0">${fade(0,1,0.15,at)}${rect(c.x-5,c.y-39,labelWidth(c)+10,26,'#3a4658',FG,5,2)}</g>`;
-  out+=text(c.x,c.y-20,c.address,18,live?MUTED:GREY);
-  out+=text(c.x+c.w/2,c.y+c.h+34,c.name,26,live?c.color:GREY,'middle');
-  out+=rect(c.x,c.y,c.w,c.h,live?'#192331':'#171d27','none',0);
-  out+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',live?c.color:'#47515f',0,3);
+   cell+=`<g opacity="0">${fade(0,1,0.15,at)}${rect(c.x-5,c.y-39,labelWidth(c)+10,26,'#3a4658',FG,5,2)}</g>`;
+  cell+=text(c.x,c.y-20,c.address,18,live?MUTED:GREY);
+  cell+=text(c.x+c.w/2,c.y+c.h+34,c.name,26,live?c.color:GREY,'middle');
+  cell+=rect(c.x,c.y,c.w,c.h,live?'#192331':'#171d27','none',0);
+  cell+=rect(c.x+1.5,c.y+1.5,c.w-3,c.h-3,'none',live?c.color:'#47515f',0,3);
   const active=(op?.kind==='read'&&op.name===c.name)||writing;
-  if(active) out+=`<g>${fade(1,0,0.35,at+0.15)}${rect(c.x+4.5,c.y+4.5,c.w-9,c.h-9,'none',writing?WRITE:READ,0,3)}</g>`;
+  if(active) cell+=`<g>${fade(1,0,0.35,at+0.15)}${rect(c.x+4.5,c.y+4.5,c.w-9,c.h-9,'none',writing?WRITE:READ,0,3)}</g>`;
   // Dereference selects a location; it does not read it, so the outline is neutral.
-  if(target) out+=`<g opacity="0">${fade(0,1,0.2,at-0.15)}${rect(c.x+4.5,c.y+4.5,c.w-9,c.h-9,'none',FG,0,3)}</g>`;
-  if(!live) continue;
+  if(target) cell+=`<g opacity="0">${fade(0,1,0.2,at-0.15)}${rect(c.x+4.5,c.y+4.5,c.w-9,c.h-9,'none',FG,0,3)}</g>`;
+  if(live){
   const [cx,cy]=[c.x+c.w/2,c.y+c.h/2];
-  out+=`<g transform="translate(${cx} ${cy})"><g>`+(writing?pulse(at-0.2):active?pulse(0):'');
+  cell+=`<g transform="translate(${cx} ${cy})"><g>`+(writing?pulse(at-0.2):active?pulse(0):'');
   if(writing) {
-   if(prev.values[c.name]!==null) out+=`<g>${hide(at)}${text(0,11,prev.values[c.name],30,FG,'middle')}</g>`;
-   out+=`<g opacity="0">${show(at)}${text(0,11,step.values[c.name],30,FG,'middle')}</g>`;
-  } else out+=text(0,11,values[c.name],30,FG,'middle');
-  out+='</g></g>';
+   if(prev.values[c.name]!==null) cell+=`<g>${hide(at)}${text(0,11,prev.values[c.name],30,FG,'middle')}</g>`;
+   cell+=`<g opacity="0">${show(at)}${text(0,11,step.values[c.name],30,FG,'middle')}</g>`;
+  } else cell+=text(0,11,values[c.name],30,FG,'middle');
+  cell+='</g></g>';
+  }
+  out+=dim(c.name,cell);
  }
  return out;
 }
@@ -468,10 +471,35 @@ function finishPaths(){
   }
  }
 }
+// Variables the current statement involves stay bright; the rest dim to half, so attention
+// stays on the statement. A pointer's target joins once evaluation reaches it.
+const DIM=0.5;
+let focus={now:new Set(),before:new Set(),begin:new Map()};
+function activeVariables(trace,i){
+ const steps=trace.steps, line=steps[i].line, active=new Set();
+ for(const token of trace.source[line].match(/\b[a-zA-Z_]\w*\b/g)||[]) if(variablesOf(trace).includes(token)) active.add(token);
+ for(let j=i;j>=0&&steps[j].line===line;j--) for(const key of ['name','target','via'])
+  if(steps[j].op?.[key]) active.add(steps[j].op[key].split('.')[0]);
+ return active;
+}
+function setFocus(trace,animate){
+ const now=activeVariables(trace,index), before=animate&&index?activeVariables(trace,index-1):now, op=animate?trace.steps[index].op:null;
+ const begin=new Map();
+ // A dereference target lights up as the followed arc arrives; everything else at once.
+ if(op?.kind==='deref') begin.set(op.target.split('.')[0],arrival(op)-0.15);
+ focus={now,before,begin};
+}
+function dim(name,markup){
+ const on=focus.now.has(name), was=focus.before.has(name), to=on?1:DIM;
+ if(on===was) return to===1?markup:`<g opacity="${DIM}">${markup}</g>`;
+ return `<g opacity="${was?1:DIM}"><animate attributeName="opacity" from="${was?1:DIM}" to="${to}" dur="0.35s" begin="${focus.begin.get(name)??0}s" ${ease} fill="freeze"/>${markup}</g>`;
+}
+const variablesOf=trace=>trace.cells.map(c=>c.name);
 function draw(animate=false){
  clearTimeout(settleTimer);
  const trace=traces[scenario], step=trace.steps[index], prev=index?trace.steps[index-1]:null;
  const g=geometry(trace), op=animate?step.op:null;
+ setFocus(trace,animate);
  const copying=animate&&copies(index), lineChanged=animate&&prev&&prev.line!==step.line;
  let out=code(trace,g,step,op,lineChanged?prev.line:null);
  out+=`<path d="M ${g.code[0]+g.code[2]+5} ${lineY(g,step.line)-10} H ${g.code[0]+g.code[2]+40} V ${g.pane[1]+38} H ${g.pane[0]}" fill="none" stroke="#697d99" stroke-width="2"/>`;
