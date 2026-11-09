@@ -870,8 +870,8 @@
       const padding = ru ? 'Выравнивание' : 'Padding';
       this.root.innerHTML = trace.records.map((record, ri) => {
         const key = fi => `${ri}:${fi}`;
-        const button = (fi, label, cls = '') => `<button type="button" class="cv-layout-target ${cls}"`
-          + ` data-layout-key="${key(fi)}">${label}</button>`;
+        const button = (fi, label, cls = '', description = '') => `<button type="button" class="cv-layout-target ${cls}"`
+          + ` data-layout-key="${key(fi)}"${description ? ` aria-label="${esc(description)}" title="${esc(description)}"` : ''}>${label}</button>`;
         const rows = button('all', esc(`struct ${record.name}`), 'cv-layout-row')
           + record.fields.map((f, fi) => button(fi,
             esc(`${f.type} ${f.name};`) + `<small>+${f.offset} · ${f.size} B</small>`,
@@ -881,8 +881,9 @@
           const fi = record.fields.findIndex(f => offset >= f.offset && offset < f.offset + f.size);
           const label = fi < 0 ? padding : record.fields[fi].name;
           return button(fi < 0 ? 'pad' : fi,
-            `<span aria-hidden="true">${offset}</span><small>${esc(label)}</small>`,
-            `cv-byte ${fi < 0 ? 'cv-padding' : `cv-field-${fi % FIELD_COLOURS}`}`);
+            `<span aria-hidden="true">${offset}</span><small>${fi < 0 ? '▧' : esc(label)}</small>`,
+            `cv-byte ${fi < 0 ? 'cv-padding' : `cv-field-${fi % FIELD_COLOURS}`}`,
+            `+${offset}: ${label}`);
         }).join('');
         return `<section class="cv-layout-record" data-layout-record="${ri}">`
           + `<div class="cv-layout-code">${rows}</div><div>`

@@ -261,7 +261,12 @@
 .course-visualization .cv-field-1 { color: var(--cv-field-1); }
 .course-visualization .cv-field-2 { color: var(--cv-field-2); }
 .course-visualization .cv-field-3 { color: var(--cv-field-3); }
-.course-visualization .cv-byte small { font-size: 0.6rem; }
+.course-visualization .cv-byte small {
+  font-size: 0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .course-visualization .cv-padding {
   background: repeating-linear-gradient(135deg, var(--cv-panel) 0 4px, var(--cv-border) 4px 6px);
 }
