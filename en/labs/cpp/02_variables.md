@@ -154,8 +154,6 @@ std::cout << a << std::endl;
 
 <!-- <visualization type="animation"> -->
 
-https://github.com/user-attachments/assets/91b71430-0272-435e-b03a-6d296b43b624
-
 <!-- </visualization> -->
 
 </details>
@@ -173,8 +171,6 @@ std::cout << c << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization type="animation"> -->
-
-https://github.com/user-attachments/assets/c87766e5-78e8-4d2d-bc69-57ed505dae46
 
 <!-- </visualization> -->
 
@@ -214,8 +210,6 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization type="animation"> -->
-
-https://github.com/user-attachments/assets/01babebd-f6d0-4649-aa9c-90adc944f193
 
 <!-- </visualization> -->
 
@@ -323,8 +317,6 @@ std::cout << a << std::endl;
 
 <!-- <visualization type="animation"> -->
 
-https://github.com/user-attachments/assets/a75eec18-6aff-4706-a63c-617d2fa20068
-
 <!-- </visualization> -->
 
 </details>
@@ -353,8 +345,6 @@ std::cout << a << std::endl;
 
 <!-- <visualization type="animation"> -->
 
-https://github.com/user-attachments/assets/8655c66d-2e6e-4d36-98cd-d9a72d83468d
-
 <!-- </visualization> -->
 
 </details>
@@ -380,8 +370,6 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization type="animation"> -->
-
-https://github.com/user-attachments/assets/b42e23ad-8138-42bb-8640-ab976d7ad5b4
 
 <!-- </visualization> -->
 
@@ -483,8 +471,6 @@ auto b{ a + 5 };
 
 <!-- <visualization type="animation"> -->
 
-https://github.com/user-attachments/assets/32768a65-66ed-4364-a652-15d7e7f968a9
-
 <!-- </visualization> -->
 
 </details>
@@ -511,8 +497,6 @@ std::cout << b << std::endl;
 <summary>Execution trace</summary>
 
 <!-- <visualization type="animation"> -->
-
-https://github.com/user-attachments/assets/c2292472-6cf4-4ba1-86be-de79c4b39585
 
 <!-- </visualization> -->
 

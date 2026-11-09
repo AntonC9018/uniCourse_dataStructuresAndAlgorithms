@@ -482,8 +482,6 @@ std::cout << a << std::endl;
 
 <!-- <visualization type="animation"> -->
 
-https://github.com/user-attachments/assets/08e680f6-4e8c-4658-82d0-1501fa9d3116
-
 <!-- </visualization> -->
 
 </details>

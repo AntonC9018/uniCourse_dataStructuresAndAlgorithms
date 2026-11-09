@@ -35,7 +35,7 @@ class PaneInitializationTests(unittest.TestCase):
                 timeline=trace(source, runtime=False)
                 timeline=replace(timeline, steps=tuple(s for s in timeline.steps if s.line==0))
                 output=Path(directory)/'state.svg'
-                render(timeline,output,'static')
+                render(timeline,output)
                 root=ET.parse(output).getroot()
                 pane=root.find(".//{*}g[@data-evaluation='open']")
                 self.assertIsNotNone(pane)

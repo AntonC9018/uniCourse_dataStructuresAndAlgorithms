@@ -21,7 +21,7 @@ def revision() -> str:
     """Version the renderer, without storing a source hash on lesson tags."""
     digest = hashlib.sha256()
     for name in ('generate.py', 'tracing.py', 'model.py', 'layout-prototype.py',
-                 'render-layout-video.cjs', 'package-lock.json'):
+                 'export-layout-svg.cjs', 'package-lock.json'):
         digest.update(name.encode())
         digest.update((ROOT / name).read_bytes())
     return digest.hexdigest()
@@ -63,7 +63,8 @@ def applicable(timeline) -> None:
         raise Unsupported('a lone literal-initialized cell and print need no visualization')
 
 
-def render(timeline, output: Path, media_type: str) -> None:
+def render(timeline, output: Path) -> None:
+    """Export the settled final state as a static SVG; the interactive player replaces video."""
     page = runpy.run_path(str(ROOT / 'layout-prototype.py'))['PAGE']
     payload = asdict(timeline)
     payload['output_label'] = ''  # Generated assets are shared across lesson languages.
@@ -73,10 +74,9 @@ def render(timeline, output: Path, media_type: str) -> None:
     with tempfile.TemporaryDirectory(prefix='course-visualization-') as directory:
         document = Path(directory) / 'timeline.html'
         document.write_text(html)
-        env = dict(os.environ, VISUALIZATION_INPUT=str(document),
-                   VISUALIZATION_OUTPUT=str(output), VISUALIZATION_FORMAT=media_type)
-        subprocess.run(['node', str(ROOT / 'render-layout-video.cjs'), 'expression', 'memory-strip'],
-                       env=env, check=True, timeout=1200)
+        env = dict(os.environ, VISUALIZATION_INPUT=str(document), VISUALIZATION_OUTPUT=str(output))
+        subprocess.run(['node', str(ROOT / 'export-layout-svg.cjs'), 'expression'],
+                       env=env, check=True, timeout=300)
     if not output.is_file() or output.stat().st_size == 0:
         raise RuntimeError('renderer did not produce an asset')
 
@@ -86,7 +86,6 @@ def main() -> int:
     parser.add_argument('operation', choices=('probe', 'trace', 'render', 'revision'))
     parser.add_argument('--source', type=Path)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--type', choices=('animation', 'static'), default='animation')
     parser.add_argument('--template', default=TEMPLATE)
     args = parser.parse_args()
     if args.operation == 'revision':
@@ -116,7 +115,7 @@ def main() -> int:
     else:
         if not args.output:
             parser.error('--output is required for render')
-        render(timeline, args.output, args.type)
+        render(timeline, args.output)
     return 0
 
 

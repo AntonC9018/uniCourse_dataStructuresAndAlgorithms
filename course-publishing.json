@@ -215,15 +215,5 @@
   },
   "maintenance": {
     "heading_numbering": "section"
-  },
-  "visualizations": {
-    "templates": "visualizations",
-    "roots": [
-      "en/labs/cpp",
-      "ru/labs/cpp"
-    ],
-    "manifest": "visualizations/assets.json",
-    "repository": "AntonC9018/uniCourse_dataStructuresAndAlgorithms",
-    "issue": 67
   }
 }
