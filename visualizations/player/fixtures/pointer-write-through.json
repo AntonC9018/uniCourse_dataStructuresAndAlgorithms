@@ -1,0 +1,263 @@
+{
+ "format": 1,
+ "source": [
+  "int a{ 1 };",
+  "int* b{ &a };",
+  "*b = 2;",
+  "std::cout << a;"
+ ],
+ "steps": [
+  {
+   "hold": 1.0,
+   "line": 0,
+   "op": null,
+   "pane": "int a = 1",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": null,
+    "b": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 0,
+   "op": {
+    "kind": "write",
+    "name": "a",
+    "span": [
+     8,
+     9
+    ],
+    "target": [
+     4,
+     5
+    ],
+    "value": "1"
+   },
+   "pane": "int a = 1",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 1,
+    "b": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 1,
+   "op": null,
+   "pane": "int* b = &a",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 1,
+    "b": null
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 1,
+   "op": {
+    "kind": "addr",
+    "name": "a",
+    "span": [
+     9,
+     11
+    ],
+    "value": "64"
+   },
+   "pane": "int* b = 64",
+   "stdout": "",
+   "targets": {},
+   "values": {
+    "a": 1,
+    "b": null
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 1,
+   "op": {
+    "kind": "write",
+    "name": "b",
+    "span": [
+     9,
+     11
+    ],
+    "target": [
+     5,
+     6
+    ],
+    "value": "64"
+   },
+   "pane": "int* b = 64",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 1,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": null,
+   "pane": "*b = 2",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 1,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": {
+    "kind": "read",
+    "name": "b",
+    "span": [
+     1,
+     2
+    ],
+    "value": "64"
+   },
+   "pane": "*64 = 2",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 1,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 2,
+   "op": {
+    "kind": "deref",
+    "span": [
+     0,
+     3
+    ],
+    "target": "a",
+    "via": "b"
+   },
+   "pane": "a = 2",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 1,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.2,
+   "line": 2,
+   "op": {
+    "kind": "write",
+    "name": "a",
+    "span": [
+     4,
+     5
+    ],
+    "target": [
+     0,
+     1
+    ],
+    "value": "2"
+   },
+   "pane": "a = 2",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 2,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": null,
+   "pane": "std::cout << a",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 2,
+    "b": 64
+   }
+  },
+  {
+   "hold": 1.0,
+   "line": 3,
+   "op": {
+    "kind": "read",
+    "name": "a",
+    "span": [
+     13,
+     14
+    ],
+    "value": "2"
+   },
+   "pane": "std::cout << 2",
+   "stdout": "",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 2,
+    "b": 64
+   }
+  },
+  {
+   "hold": 3,
+   "line": 3,
+   "op": {
+    "kind": "print",
+    "span": [
+     13,
+     14
+    ],
+    "value": "2"
+   },
+   "pane": "std::cout << 2",
+   "stdout": "2",
+   "targets": {
+    "b": "a"
+   },
+   "values": {
+    "a": 2,
+    "b": 64
+   }
+  }
+ ],
+ "title": "Write through a pointer",
+ "variables": [
+  {
+   "address": 64,
+   "color": 0,
+   "kind": "int",
+   "name": "a",
+   "size": 4
+  },
+  {
+   "address": 72,
+   "color": 1,
+   "kind": "ptr",
+   "name": "b",
+   "size": 8
+  }
+ ]
+}
