@@ -20,6 +20,8 @@ class Cell:
     size: int
     pointer: bool
     value: int | None
+    object_address: int | None = None
+    object_size: int | None = None
 
 
 @dataclass(frozen=True)
@@ -50,13 +52,19 @@ class Checkpoint(gdb.Breakpoint):
             frame = current.older()
             row = {}
             for name, defined in expected[position]:
-                value = frame.read_var(name)
+                owner, _, member = name.partition('.')
+                value = frame.read_var(owner)
+                object_address, object_size = int(value.address), int(value.type.sizeof)
+                if member:
+                    value = value[member]
                 kind = value.type.strip_typedefs().code
                 if value.address is None or kind not in (gdb.TYPE_CODE_INT, gdb.TYPE_CODE_PTR):
                     raise RuntimeError("unsupported storage for " + name)
                 row[name] = {"address": int(value.address), "size": int(value.type.sizeof),
                              "pointer": kind == gdb.TYPE_CODE_PTR,
                              "value": int(value) if defined else None}
+                if member:
+                    row[name].update(object_address=object_address, object_size=object_size)
             records.append({"position": position, "variables": row})
         except Exception as error:
             failures.append(str(error))

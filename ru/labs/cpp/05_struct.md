@@ -42,6 +42,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#1-инициализация-структуры)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 По умолчанию, можно использовать синтаксис инициализации через фигурные скобки
@@ -68,6 +79,17 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#2-выражение-типа-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -154,6 +176,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#4-операции-с-полями)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Можно считывать из и вписывать в каждое из полей по отдельности.
@@ -197,8 +230,10 @@ int main()
 ### 6. Присваивание структуры
 
 ```cpp
-struct A 
-{ 
+#include <iostream>
+
+struct A
+{
     int f;
 };
 int main()
@@ -210,6 +245,18 @@ int main()
     std::cout << b.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#6-присваивание-структуры)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -242,6 +289,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#7-адреса-полей)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -281,6 +339,17 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-присваивание-переменной-структуры-1)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -347,6 +416,18 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-адрес-структуры-1)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -376,6 +457,18 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#11-адрес-структуры-2)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -407,6 +500,18 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#12-оператор--)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -734,6 +839,12 @@ int main()
 Обе записи эквивалентны.
 
 Результат будет 8, потому что в каждой структуре по 2 `int`, каждый из которых занимает 4 байта.
+<!-- <visualization template="layout"> -->
+
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#22-размер-структуры-1)
+
+<!-- </visualization> -->
+
 </details>
 
 ### 23. Адрес поля из адреса структуры
@@ -754,6 +865,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#23-адрес-поля-из-адреса-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -803,7 +925,11 @@ alignment делает так, что между полями остаются �
 - `uint8_t f3` попадет в третье окошко;
 - Оставшиеся 3 байта 3-го окошка будут пустовать.
 
-![Выравнивание структуры: поля, упакованные в окошки по 4 байта](images/05_struct_alignment.svg)
+<!-- <visualization template="layout"> -->
+
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
+
+<!-- </visualization> -->
 
 В сумме получаем 3 окошка по 4 байта.
 
@@ -850,16 +976,27 @@ struct A
 
 int main()
 {
-    A s1{ nullptr, 1 };
+    A s1 { .pa = nullptr, .a = 1 };
     s1.pa = &s1.a;
 
-    A s2{ s1 };
+    A s2 { s1 };
     *s2.pa = 2;
 
     std::cout << s1.a << std::endl;
     std::cout << s2.a << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#26-копирование-структуры-с-полем-указателем)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -1051,6 +1188,17 @@ copy = **pp;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-копирование-структуры-через-два-указателя)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Компилируется.
@@ -1092,6 +1240,17 @@ A* p{ &value };
 int result{};
 result = p->field;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-целое-число-присваивается-из-поля-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>

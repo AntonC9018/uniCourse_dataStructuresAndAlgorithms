@@ -19,7 +19,8 @@ ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
 TRACER_SOURCES = tuple(ROOT / name for name in
-                       ('generate.py', 'tracing.py', 'execution.py', 'toolchain.py', 'trace_format.py'))
+                       ('generate.py', 'tracing.py', 'execution.py', 'records.py',
+                        'toolchain.py', 'trace_format.py', 'layout.py'))
 
 # What the player draws legibly inside a lesson column.
 MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 10, 32
@@ -58,9 +59,25 @@ def _memory_fits(variables: list[dict]) -> None:
             raise Unsupported(f"the names {cells[i]['name']} and {cells[i + 1]['name']} do not fit under their cells")
 
 
-def applicable(trace: dict) -> None:
+_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+_COMMENT = re.compile(r'//.*')
+
+
+def _spacing_survives(snippet: str) -> bool:
+    """Whether the tracer's whitespace collapsing leaves every line as written.
+
+    Indentation and line breaks are layout; a run of spaces inside a statement
+    is something the example may be asking about, such as `int     *     d`.
+    """
+    return not any(re.search(r'\S[ \t]{2,}\S', _COMMENT.sub('', _LITERAL.sub('""', line)).strip())
+                   for line in snippet.splitlines())
+
+
+def applicable(trace: dict, snippet: str) -> None:
     """Reject traces the player cannot draw legibly, or that need no illustration."""
     from tracing import Unsupported
+    if not _spacing_survives(snippet):
+        raise Unsupported('the trace would collapse spacing inside a statement')
     variables, steps, source = trace['variables'], trace['steps'], trace['source']
     if len(variables) > MAX_VARIABLES:
         raise Unsupported(f'the memory row holds at most {MAX_VARIABLES} variables')
@@ -98,10 +115,15 @@ def main() -> int:
         parser.error('--source is required')
     from tracing import Unsupported, trace
     try:
-        if args.template != TEMPLATE:
+        if args.template not in (TEMPLATE, 'layout'):
             raise Unsupported(f'unknown template {args.template!r}')
-        result = trace(args.source.read_text(), runtime=args.operation != 'probe')
-        applicable(result)
+        if args.template == 'layout':
+            from layout import trace as layout_trace
+            result = layout_trace(args.source.read_text())
+        else:
+            snippet = args.source.read_text()
+            result = trace(snippet, runtime=args.operation != 'probe')
+            applicable(result, snippet)
     except Unsupported as exc:
         if args.operation == 'probe':
             print(json.dumps({'supported': False, 'reason': str(exc)}))
@@ -112,7 +134,7 @@ def main() -> int:
         print(f'error: {exc}', file=sys.stderr)
         return 1
     if args.operation == 'probe':
-        print(json.dumps({'supported': True, 'template': TEMPLATE}))
+        print(json.dumps({'supported': True, 'template': args.template}))
     else:
         print(json.dumps(result, sort_keys=True))
     return 0

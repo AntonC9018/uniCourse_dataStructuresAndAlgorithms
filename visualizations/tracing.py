@@ -1,18 +1,12 @@
-"""Compiler-backed execution traces of flat `int` and pointer examples, in the unified format.
+"""Compiler-backed execution traces of flat int, pointer and aggregate struct examples.
 
-Clang decides syntax and types. A whitelist evaluates only side-effect-free expressions over
-`int` and pointers to `int` (of any depth): variable reads, address-of, dereference through a
-pointer variable, parentheses, braces and integer arithmetic. Each statement becomes the
-reductions the lessons write out, `**pp = 7` → `**72 = 7` → `*p = 7` → `*64 = 7` → `a = 7`.
-
-GDB then runs the program (`execution.py`) and supplies main's frame after every statement:
-the values and the layout come from it, and pointer values are mapped back to the variables
-whose address they hold. A prediction that disagrees with the run rejects the snippet, and no
-statement outside the whitelist is ever executed. Addresses are normalized to start near 64.
+Clang supplies syntax, types and record layouts. A strict AST whitelist predicts each
+statement's effects without executing arbitrary C++. GDB verifies every live scalar and
+struct field after every statement, including unchanged memory. Only verified states become
+unified-format reductions; addresses are normalized deterministically near 64.
 """
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass, field
 import json
 from pathlib import Path
@@ -20,8 +14,10 @@ import re
 import tempfile
 
 from execution import Execution, execute
+from records import layouts, type_name, type_spelling
 from toolchain import Unsupported, run, tool
-from trace_format import FORMAT, UNKNOWN, FormatError, scalar, validate
+from trace_format import (FORMAT, UNKNOWN, FormatError, scalar, struct, field as trace_field,
+                          addresses as storage_addresses, leaves, validate)
 
 __all__ = ["Pointer", "Unsupported", "trace"]
 
@@ -40,7 +36,7 @@ class Pointer:
     target: str | None = None
 
 
-Value = int | Pointer
+Value = int | Pointer | dict[str, "Value | None"]
 
 
 def _integer(value: int) -> int:
@@ -49,12 +45,18 @@ def _integer(value: int) -> int:
     return value
 
 
-def _depth(node: dict) -> int:
-    """How many pointer levels lie over `int`: 0 for `int`, 2 for `int **`."""
-    qualified = node.get("type", {}).get("qualType", "")
+def _depth(node: dict, records=()) -> int:
+    """How many pointer levels lie over an int or a supported struct."""
+    qualified = type_spelling(node)
     match = re.fullmatch(r"(const )?int(?: (\*+))?", qualified)
     if match and not (match.group(1) and match.group(2)):
         return len(match.group(2) or "")
+    record_type = type_name(node)
+    if record_type in records:
+        return 0
+    match = re.fullmatch(r"(\w+) (\*+)", qualified)
+    if match and match[1] in records:
+        return len(match[2])
     if "&" in qualified:
         raise Unsupported("references are not supported")
     if "[" in qualified:
@@ -77,10 +79,10 @@ def _body(source: str) -> str:
     source = re.sub(r'^\s*#\s*include[^\n]*', '', source, flags=re.MULTILINE).strip()
     source = re.sub(r'^using\s+namespace\s+std\s*;\s*', '', source)
     if re.search(r'\bmain\s*\(', source):
-        match = re.fullmatch(r'int\s+main\s*\(\s*(?:void\s*)?\)\s*\{([\s\S]*)\}\s*', source)
+        match = re.fullmatch(r'([\s\S]*?)int\s+main\s*\(\s*(?:void\s*)?\)\s*\{([\s\S]*)\}\s*', source)
         if not match:
             raise Unsupported("only a standalone parameterless main or statement fragment is supported")
-        source = match.group(1).strip()
+        source = (match.group(1) + match.group(2)).strip()
     if not source or len(source) > 10_000:
         raise Unsupported("empty or oversized snippet")
     # Keep offsets byte-equivalent to Clang and avoid unreviewed identifier/string encodings.
@@ -167,14 +169,15 @@ class Reduction:
 class _Evaluator:
     """Evaluates one expression against the state before its statement, recording reductions."""
 
-    def __init__(self, state: dict[str, Value | None], locate: Callable[[dict], tuple[int, int]]):
+    def __init__(self, state, locate, records):
         self.state, self.locate, self.reductions = state, locate, []
+        self.records = records
 
     def _reduce(self, kind: str, node: dict, **details) -> None:
         self.reductions.append(Reduction(kind, self.locate(node), **details))
 
     def _load(self, name: str) -> Value:
-        value = self.state[name]
+        value = _load(self.state, name)
         if value is None:
             raise Unsupported(f"reading uninitialized variable {name}")
         return value
@@ -194,6 +197,17 @@ class _Evaluator:
             return self.lvalue(children[0], outer or node)
         if kind == "DeclRefExpr":
             return self.variable(node)
+        if kind == "MemberExpr" and len(children) == 1:
+            if node.get("isArrow"):
+                pointer, via = self.rvalue(children[0])
+                if via is None:
+                    raise Unsupported("arrow access requires a pointer variable")
+                if pointer.target is None:
+                    raise Unsupported(f"dereferencing the null pointer {via} is undefined")
+                name = pointer.target + "." + node["name"]
+                self._reduce("deref", outer or node, name=via, value=Pointer(name))
+                return name
+            return self.lvalue(children[0]) + "." + node["name"]
         if kind == "UnaryOperator" and node.get("opcode") == "*" and len(children) == 1:
             pointer, via = self.rvalue(children[0])
             if via is None:
@@ -207,17 +221,21 @@ class _Evaluator:
     def rvalue(self, node: dict) -> tuple[Value, str | None]:
         """The value of `node`, and the variable it was read from, if it was read."""
         kind, children = node.get("kind"), node.get("inner", [])
+        if kind == "MaterializeTemporaryExpr":
+            # Hidden stack slots can separate named locals. Probe cannot predict their
+            # allocation, so reject before either mode reaches layout or execution.
+            raise Unsupported("materialized temporaries need a separate memory-layout visualization")
         if kind == "ExprWithCleanups" and len(children) == 1:
             return self.rvalue(children[0])
         if kind == "ImplicitCastExpr" and len(children) == 1:
             cast = node.get("castKind")
             if cast == "LValueToRValue":
-                _depth(node)
+                _depth(node, self.records)
                 name = self.lvalue(children[0])
                 value = self._load(name)
                 self._reduce("read", node, name=name, value=value)
                 return value, name
-            if cast == "NullToPointer" and _depth(node):
+            if cast == "NullToPointer" and _depth(node, self.records):
                 literal = children[0]
                 if literal.get("kind") == "CXXNullPtrLiteralExpr" or (
                         literal.get("kind") == "IntegerLiteral" and literal.get("value") == "0"):
@@ -227,7 +245,35 @@ class _Evaluator:
                 return self.rvalue(children[0])
             _reject_pointer_operator(children[0])
             raise Unsupported(f"implicit {cast} conversions are outside this category")
-        depth = _depth(node)
+        depth = _depth(node, self.records)
+        record = self.records.get(type_name(node)) if not depth else None
+        if record:
+            if kind == "CXXFunctionalCastExpr" and len(children) == 1:
+                value, _ = self.rvalue(children[0])
+                self._reduce("eval", node, value=value)
+                return value, None
+            if kind == "InitListExpr":
+                value = {}
+                for item, child in zip(record.fields, children):
+                    if child.get("kind") == "ImplicitValueInitExpr":
+                        value[item["name"]] = Pointer() if item["kind"] == "ptr" else 0
+                    else:
+                        value[item["name"]], _ = self.rvalue(child)
+                self._reduce("eval", node, value=value)
+                return value, None
+            if kind == "CXXConstructExpr":
+                if not children:
+                    return {item["name"]: None for item in record.fields}, None
+                if len(children) == 1:
+                    return self.rvalue(children[0])
+            if kind in {"DeclRefExpr", "MemberExpr"} or (
+                    kind == "UnaryOperator" and node.get("opcode") == "*"):
+                name = self.lvalue(node)
+                value = self._load(name)
+                if any(item is None for item in value.values()):
+                    raise Unsupported(f"reading uninitialized struct {name}")
+                self._reduce("read", node, name=name, value=value)
+                return value, name
         if kind == "IntegerLiteral":
             return _integer(int(node["value"])), None
         if kind == "InitListExpr" or kind == "CXXFunctionalCastExpr":
@@ -235,9 +281,9 @@ class _Evaluator:
         if kind == "ParenExpr" and len(children) == 1:
             value, _ = self.rvalue(children[0])
         elif kind == "UnaryOperator" and node.get("opcode") == "&" and len(children) == 1:
-            if children[0].get("kind") != "DeclRefExpr":
+            if children[0].get("kind") not in {"DeclRefExpr", "MemberExpr"}:
                 raise Unsupported("only the address of a variable is supported")
-            name = self.variable(children[0])
+            name = self.lvalue(children[0])
             self._reduce("addr", node, name=name)
             return Pointer(name), None
         elif kind == "UnaryOperator" and node.get("opcode") in {"+", "-"} and len(children) == 1 and not depth:
@@ -323,6 +369,7 @@ class Statement:
     destination: tuple[int, int] | None = None
     declared: str | None = None
     pointer: bool = False
+    record: str | None = None
     output_suffix: str | None = None
 
 
@@ -377,22 +424,28 @@ def _output_suffix(operands: list[dict]) -> str:
     return suffix
 
 
-def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Statement:
+def _statement(node: dict, program: str, state: dict[str, Value | None], records) -> Statement:
     """Analyze one statement against the state before it."""
+    while node.get("kind") == "ExprWithCleanups" and len(node.get("inner", [])) == 1:
+        node = node["inner"][0]
     start, end = _bounds(node)
     if end < len(program) and program[end] == ";":
         end += 1
     source, mapping = _compact(program[start:end])
     left = declared = output_suffix = root = name_offset = None
     whole = pointer = empty_initializer = False
+    record = None
     if node["kind"] == "DeclStmt":
         children = node.get("inner", [])
+        if len(children) == 1 and children[0].get("kind") == "CXXRecordDecl":
+            return Statement(source, None, source.removesuffix(";"))
         if len(children) != 1 or children[0].get("kind") != "VarDecl":
             raise Unsupported("one scalar declaration per statement is required")
         variable = children[0]
         if any(child.get("kind", "").endswith("Attr") for child in variable.get("inner", [])):
             raise Unsupported("declaration attributes need a separate memory-layout visualization")
-        pointer = _depth(variable) > 0
+        pointer = _depth(variable, records) > 0
+        record = type_name(variable) if not pointer and type_name(variable) in records else None
         declared = variable["name"]
         if declared.startswith("__course_") or declared in state:
             raise Unsupported("unique variable names are required")
@@ -404,12 +457,20 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
         children = variable.get("inner", [])
         root = children[0] if children else None
         # Nonempty declaration braces are surrounding statement context, not the value.
-        if root and root.get("kind") == "InitListExpr" and len(root.get("inner", [])) == 1:
+        if not record and root and root.get("kind") == "InitListExpr" and len(root.get("inner", [])) == 1:
             root = root["inner"][0]
+        if record and root and root.get('kind') == 'CXXConstructExpr' and not root.get('inner'):
+            return Statement(source, None, source.removesuffix(';'),
+                             value={item['name']: None for item in records[record].fields},
+                             target=declared, declared=declared, record=record)
+        if record and root and root.get('kind') == 'CXXConstructExpr' and len(root.get('inner', [])) == 1:
+            root = root['inner'][0]
         empty_initializer = bool(root) and root.get("kind") == "InitListExpr" and not root.get("inner")
-    elif node["kind"] == "BinaryOperator" and node.get("opcode") == "=":
-        left, root = node["inner"]
-        _depth(left)
+    elif (node["kind"] == "BinaryOperator" and node.get("opcode") == "=") or (
+            node["kind"] == "CXXOperatorCallExpr" and len(node.get("inner", [])) == 3
+            and type_name(node) in records):
+        left, root = node["inner"][-2:]
+        _depth(left, records)
         if left.get("kind") == "ParenExpr" and _strip_parentheses(left).get("kind") == "DeclRefExpr":
             raise Unsupported("a parenthesized variable as assignment target is not supported")
         # A plain variable on the left is context; a dereference is evaluated with the rest.
@@ -442,7 +503,7 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
     def locate(item: dict) -> tuple[int, int]:
         return tuple(map(to_pane, _bounds(item)))
 
-    evaluator = _Evaluator(state, locate)
+    evaluator = _Evaluator(state, locate, records)
     value, _ = evaluator.rvalue(root)
     target, destination = declared, None
     if declared:
@@ -452,20 +513,37 @@ def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Stat
     elif not isinstance(value, int):
         raise Unsupported("only integer output is supported")
     return Statement(source, span, prefix + text + suffix, (len(prefix), len(prefix) + len(text)),
-                     locate(root), value, evaluator.reductions, target, destination, declared, pointer,
+                     locate(root), value, evaluator.reductions, target, destination, declared, pointer, record,
                      output_suffix)
+
+
+def _load(state, name, missing=False):
+    owner, _, member = name.partition('.')
+    value = state.get(owner) if missing else state[owner]
+    return value.get(member) if member and isinstance(value, dict) else value
+
+
+def _flatten(state):
+    return {cell: item for name, value in state.items()
+            for cell, item in ([(name + '.' + field, item) for field, item in value.items()]
+                               if isinstance(value, dict) else [(name, value)])}
 
 
 def _after(statement: Statement, state: dict[str, Value | None]) -> dict[str, Value | None]:
     after = dict(state)
     if statement.target is not None:
-        after[statement.target] = statement.value
+        owner, _, member = statement.target.partition('.')
+        if member:
+            after[owner] = dict(after[owner], **{member: statement.value})
+        else:
+            after[owner] = statement.value
     return after
 
 
-def _analyze(source: str, directory: Path) -> list[Statement]:
+def _analyze(source: str, directory: Path) -> tuple[list[Statement], dict]:
     program = "#include <iostream>\n#include <cstdint>\nusing namespace std;\nint main() {\n" + source + "\n}\n"
     ast = _main_ast(program, directory)
+    records = layouts(ast, directory)
     statements, state = [], {}
     for node in ast.get("inner", []):
         if node.get("kind") == "ReturnStmt":
@@ -474,7 +552,7 @@ def _analyze(source: str, directory: Path) -> list[Statement]:
                     and children[0].get("value") == "0" and node is ast["inner"][-1]):
                 continue
             raise Unsupported("only a final return 0 is supported")
-        statement = _statement(node, program, state)
+        statement = _statement(node, program, state, records)
         statements.append(statement)
         if len(statements) > MAX_STATEMENTS:
             raise Unsupported("too many statements")
@@ -483,7 +561,7 @@ def _analyze(source: str, directory: Path) -> list[Statement]:
             raise Unsupported("too many variables")
     if not state:
         raise Unsupported("a variable timeline requires at least one variable")
-    return statements
+    return statements, records
 
 
 # Memory -----------------------------------------------------------------------------------
@@ -500,49 +578,43 @@ def _normalize(addresses: dict[str, int], sizes: dict[str, int]) -> dict[str, in
     return {name: FIRST_ADDRESS + address - base for name, address in addresses.items()}
 
 
-def _static_layout(names: list[str], pointers: set[str]) -> dict[str, int]:
-    """Where Clang -O0 places main's locals: downwards in declaration order, each aligned to its
-    size, below main's return slot. Used only when the program is not run (probing)."""
-    addresses, top = {}, -8
-    for name in names:
-        size = _size(name in pointers)
-        top = (top - size) // size * size
-        addresses[name] = top
-    return addresses
+def _observed(execution: Execution, predicted: list[dict], pointers: set[str],
+              variables: list[dict] | None = None):
+    """Check every live leaf, including unchanged fields, against GDB after each statement.
 
-
-def _observed(execution: Execution, predicted: list[dict],
-              pointers: set[str]) -> tuple[dict[str, int], list[dict[str, Value | None]]]:
-    """Interpret GDB's raw frames: real addresses, and values with pointers mapped to variables."""
-    addresses = {}
+    A struct and its first field can share an address. Keep the statically typed target and
+    verify its address rather than trying to recover an ambiguous target from that number.
+    """
+    if variables is None:
+        variables = [scalar(name, 0, _size(name in pointers),
+                            'ptr' if name in pointers else 'int') for name in predicted[-1]]
+    cells, addresses = leaves(variables), {}
+    owners = {variable['name']: variable for variable in variables}
     for row in execution.checkpoints:
         for name, cell in row.items():
+            if cell.size != cells[name]['size'] or cell.pointer != (cells[name]['kind'] == 'ptr'):
+                raise Unsupported(f'runtime storage of {name} disagrees with Clang')
             if addresses.setdefault(name, cell.address) != cell.address:
-                raise Unsupported("variable address changed during the trace")
-            if cell.pointer != (name in pointers) or cell.size != _size(cell.pointer):
-                raise Unsupported(f"runtime storage of {name} is not the expected int or pointer")
-    if len(set(addresses.values())) != len(addresses):
-        raise Unsupported("runtime locations are not distinct objects")
-    owners = {address: name for name, address in addresses.items()}
-    states = []
+                raise Unsupported('variable address changed during the trace')
+            owner, _, member = name.partition('.')
+            if member:
+                offset = next(f['offset'] for f in owners[owner]['fields'] if f['name'] == member)
+                base = cell.object_address
+                if (cell.object_size != owners[owner]['size'] or cell.address != base + offset
+                        or addresses.setdefault(owner, base) != base):
+                    raise Unsupported(f'runtime field offset of {name} disagrees with Clang')
     for row, expected in zip(execution.checkpoints, predicted):
-        state = {}
-        for name, cell in row.items():
-            if cell.value is None:
-                state[name] = None
-            elif not cell.pointer:
-                state[name] = cell.value
-            elif cell.value == 0:
-                state[name] = Pointer()
-            elif owners.get(cell.value) in row:
-                state[name] = Pointer(owners[cell.value])
-            else:
-                raise Unsupported(f"runtime value of {name} is not the address of a variable")
-        if state != expected:
-            different = sorted(name for name in state if state[name] != expected.get(name))
-            raise Unsupported("runtime verification failed: " + ", ".join(different) + " disagree")
-        states.append(state)
-    return addresses, states
+        expected = _flatten(expected)
+        if row.keys() != expected.keys():
+            raise Unsupported('runtime verification failed: incomplete frame')
+        for name, value in expected.items():
+            bits = addresses[value.target] if isinstance(value, Pointer) and value.target else (
+                0 if isinstance(value, Pointer) else value)
+            if row[name].value != bits:
+                if isinstance(value, Pointer) and row[name].value and row[name].value not in addresses.values():
+                    raise Unsupported(f'runtime value of {name} is not the address of a variable')
+                raise Unsupported(f'runtime verification failed: {name} disagrees')
+    return addresses, predicted
 
 
 # Rendering --------------------------------------------------------------------------------
@@ -583,13 +655,15 @@ class _Pane:
 class _Renderer:
     """Turns analyzed statements and their (observed) states into unified trace steps."""
 
-    def __init__(self, addresses: dict[str, int]):
+    def __init__(self, addresses: dict[str, int], cells=None):
         self.addresses = addresses
-        self.order = sorted(addresses, key=addresses.get)
+        self.order = sorted(cells or addresses, key=addresses.get)
         self.steps, self.stdout = [], ""
 
     def show(self, value: Value) -> str:
         """A value as the pane writes it: a number, an address, or 0 for a null pointer."""
+        if isinstance(value, dict):
+            return "{" + ", ".join(self.show(item) for item in value.values()) + "}"
         return str(self.stored(value))
 
     def stored(self, value: Value) -> int:
@@ -598,6 +672,7 @@ class _Renderer:
         return value
 
     def add(self, line: int, pane: _Pane, expr, state: dict, op=None, hold: float = 1.0) -> None:
+        state = _flatten(state)
         values = {name: None if name not in state else UNKNOWN if state[name] is None
                   else self.stored(state[name]) for name in self.order}
         targets = {name: value.target for name, value in state.items()
@@ -614,14 +689,14 @@ class _Renderer:
         self.add(line, pane, expr, before if writes else after)
         for reduction in statement.reductions:
             if reduction.kind == "read":
-                text = self.show(before[reduction.name])
+                text = self.show(_load(before, reduction.name))
                 op = {"kind": "read", "name": reduction.name, "value": text}
             elif reduction.kind == "addr":
                 text = str(self.addresses[reduction.name])
                 op = {"kind": "addr", "name": reduction.name, "value": text}
             elif reduction.kind == "deref":
                 # The target is where the pointer's observed value points.
-                text = before[reduction.name].target
+                text = (reduction.value or _load(before, reduction.name)).target
                 op = {"kind": "deref", "target": text, "via": reduction.name}
             else:
                 text = reduction.spelling or self.show(reduction.value)
@@ -641,11 +716,11 @@ class _Renderer:
             self.stdout += text + statement.output_suffix
             self.add(line, pane, expr, after, {"kind": "print", "value": text, "span": span}, 1.2)
             return
-        name, old = statement.target, before.get(statement.target)
+        name, old = statement.target, _load(before, statement.target, missing=True)
         op = {"kind": "write", "name": name, "value": text, "span": span,
               "destination": pane.locate(*statement.destination)}
         # Redirecting a pointer holds longer, so the moved arc registers.
-        redirected = isinstance(old, Pointer) and old.target and old != after[name]
+        redirected = isinstance(old, Pointer) and old.target and old != _load(after, name)
         self.add(line, pane, expr, after, op, 1.6 if redirected else 1.2)
 
 
@@ -658,29 +733,48 @@ def trace(source: str, *, runtime: bool = True) -> dict:
     body = _body(source)
     with tempfile.TemporaryDirectory(prefix="course-expression-") as temporary:
         directory = Path(temporary)
-        statements = _analyze(body, directory)
+        statements, records = _analyze(body, directory)
         predicted, state = [], {}
         for statement in statements:
             state = _after(statement, state)
             predicted.append(state)
-        names = [statement.declared for statement in statements if statement.declared]
-        pointers = {statement.declared for statement in statements if statement.pointer}
+        declarations = [statement for statement in statements if statement.declared]
+        variables, top, field_colors = [], -8, {}
+        for color, declaration in enumerate(declarations):
+            name = declaration.declared
+            record = records.get(declaration.record)
+            size = record.size if record else _size(declaration.pointer)
+            alignment = record.alignment if record else size
+            top = (top - size) // alignment * alignment
+            if record:
+                fields = []
+                for item in record.fields:
+                    field_colors.setdefault(item['name'], len(field_colors))
+                    fields.append(trace_field(**item, color=field_colors[item['name']]))
+                variables.append(struct(name, record.name, top, size, fields, color))
+            else:
+                variables.append(scalar(name, top, size, 'ptr' if declaration.pointer else 'int', color))
         if runtime:
-            scopes = [[(name, value is not None) for name, value in row.items()] for row in predicted]
+            scopes = [[(name, value is not None) for name, value in _flatten(row).items()]
+                      for row in predicted]
             execution = execute([statement.source for statement in statements], scopes, directory)
-            addresses, states = _observed(execution, predicted, pointers)
+            addresses, states = _observed(execution, predicted, set(), variables)
         else:
-            addresses, states = _static_layout(names, pointers), predicted
-    addresses = _normalize(addresses, {name: _size(name in pointers) for name in names})
-    renderer, previous = _Renderer(addresses), {}
+            addresses, states = storage_addresses(variables), predicted
+        # Shift by ABI alignment, never by a struct's total size (which need not be a power of 2).
+        alignment = max([record.alignment for record in records.values()] +
+                        [_size(d.pointer) for d in declarations if not d.record] + [4])
+        addresses = _normalize(addresses, {"ABI": alignment})
+        for variable in variables:
+            variable['address'] = addresses[variable['name']]
+        variables.sort(key=lambda variable: variable['address'])
+    renderer, previous = _Renderer(addresses, leaves(variables)), {}
     for line, (statement, after) in enumerate(zip(statements, states)):
         renderer.statement(line, statement, previous, after)
         previous = after
     if runtime and renderer.stdout != execution.stdout:
         raise Unsupported("runtime output disagrees with the expression trace")
     renderer.steps[-1]["hold"] = 3
-    variables = [scalar(name, addresses[name], _size(name in pointers), "ptr" if name in pointers else "int",
-                        names.index(name)) for name in renderer.order]
     result = {"format": FORMAT, "source": [statement.source for statement in statements],
               "spans": [list(statement.span) if statement.span else None for statement in statements],
               "variables": variables, "steps": renderer.steps}
