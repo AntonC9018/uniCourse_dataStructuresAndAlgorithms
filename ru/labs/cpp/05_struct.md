@@ -230,8 +230,10 @@ int main()
 ### 6. Присваивание структуры
 
 ```cpp
-struct A 
-{ 
+#include <iostream>
+
+struct A
+{
     int f;
 };
 int main()
@@ -839,7 +841,7 @@ int main()
 Результат будет 8, потому что в каждой структуре по 2 `int`, каждый из которых занимает 4 байта.
 <!-- <visualization template="layout"> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#22-размер-структуры-1)
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#22-размер-структуры-1)
 
 <!-- </visualization> -->
 
@@ -925,7 +927,7 @@ alignment делает так, что между полями остаются �
 
 <!-- <visualization template="layout"> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
+[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
 
 <!-- </visualization> -->
 
@@ -974,10 +976,10 @@ struct A
 
 int main()
 {
-    A s1{ nullptr, 1 };
+    A s1 { .pa = nullptr, .a = 1 };
     s1.pa = &s1.a;
 
-    A s2{ s1 };
+    A s2 { s1 };
     *s2.pa = 2;
 
     std::cout << s1.a << std::endl;
