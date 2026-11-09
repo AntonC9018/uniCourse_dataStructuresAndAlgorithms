@@ -67,7 +67,7 @@ red, blue), each at least 3:1 against the stage. Reads use `#2f64d6` on `#d9e5ff
 ## Trace format, version 1
 
 `../trace_format.py` defines the format, validates it (`validate(trace)`), builds traces by hand
-(`Builder`) and converts the tracer's integer timelines (`from_timeline`).
+(`Builder`). The compiler-backed tracer emits this format directly.
 
 ```text
 trace     = {format: 1, source: [line…], variables: [variable…], steps: [step…],
@@ -124,10 +124,24 @@ The double-pointer fixture shows a full reduction: `**pp = 7` → `**72 = 7` (re
 
 `fixtures.py` writes the manual pointer and struct traces from the approved prototypes to
 `fixtures/*.json`; the tests check they are current. `demo.py` writes `demo.html` (git-ignored)
-with real tracer outputs for lesson 2 examples and every fixture, each in a `<details>`, plus
+with real tracer outputs for lesson 2 and pointer lesson examples and every fixture, each in a
+`<details>`, plus
 theme and language switches:
 
 ```sh
 python3 visualizations/player/fixtures.py
 nix develop --command python3 visualizations/player/demo.py
 ```
+
+## Static layout variant
+
+A version 1 trace with `kind: "layout"` has `records` instead of timeline source, variables
+and steps. Each record contains `name`, `size`, `alignment`, and ordered `fields`. Each field
+contains `name`, `type` (display spelling), `kind` (`int` or `ptr`), `offset`, and `size`.
+All sizes and offsets are bytes derived from Clang. Gaps and trailing padding are inferred
+from these ranges. The validator checks record alignment, field sizes, ordering and bounds.
+
+The same global engine lazily creates a static slot grid when the answer opens. Field and
+byte buttons stay in the DOM during theme changes, retaining keyboard focus. Clicking locks
+highlighting; clicking again or Escape clears the lock. Hover and focus link rows to bytes.
+There are no transport controls in this view.

@@ -42,6 +42,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#1-structure-initialization)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 By default, brace initialization syntax can be used for any structure.
@@ -67,6 +78,17 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#2-an-expression-of-a-structure-type)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -152,6 +174,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#4-operations-with-fields)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 You can read from and write to each field individually.
@@ -210,6 +243,18 @@ int main()
     std::cout << b.f << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#6-assigning-a-structure)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Answer:</summary>
 
@@ -240,6 +285,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#7-field-addresses)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -278,6 +334,17 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#8-assigning-a-structure-variable-1)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -344,6 +411,18 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#10-structure-address-1)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Answer:</summary>
 
@@ -374,6 +453,18 @@ int main()
     std::cout << b.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#11-structure-address-2)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Answer:</summary>
 
@@ -405,6 +496,18 @@ int main()
     std::cout << a.f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#12-the---operator)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Answer:</summary>
 
@@ -730,6 +833,12 @@ int main()
 Both forms are equivalent.
 
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
+<!-- <visualization template="layout"> -->
+
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#22-structure-size-1)
+
+<!-- </visualization> -->
+
 </details>
 
 ### 23. Field address from a structure address
@@ -750,6 +859,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#23-field-address-from-a-structure-address)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -799,7 +919,11 @@ it goes into the next one.
 - `uint8_t f3` goes into the third slot;
 - The remaining 3 bytes of the third slot are unused.
 
-![Struct alignment: fields packed into 4-byte slots](../../../ru/labs/cpp/images/05_struct_alignment.svg)
+<!-- <visualization template="layout"> -->
+
+[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
+
+<!-- </visualization> -->
 
 In total, this gives 3 slots of 4 bytes each.
 
@@ -857,6 +981,17 @@ int main()
     std::cout << s2.a << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#26-copying-a-structure-with-a-pointer-field)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -1048,6 +1183,17 @@ copy = **pp;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#8-copying-the-structure-through-two-pointers)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It compiles.
@@ -1089,6 +1235,17 @@ A* p{ &value };
 int result{};
 result = p->field;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#10-an-integer-assigned-from-a-structure-field)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>

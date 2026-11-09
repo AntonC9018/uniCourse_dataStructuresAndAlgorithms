@@ -1,4 +1,4 @@
-"""The unified trace format: validation, the Timeline converter, and the committed fixtures."""
+"""The unified trace format: validation, the committed fixtures and the trace command."""
 import copy
 import json
 import os
@@ -13,16 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'player'))
 import fixtures  # noqa: E402
-from model import EXPRESSION, SWAP  # noqa: E402
-from trace_format import FormatError, from_timeline, reduction_span, scalar, validate  # noqa: E402
-import tracing  # noqa: E402
+from trace_format import FORMAT, FormatError, scalar, validate  # noqa: E402
 
 CLANG = os.environ.get('CLANGXX') or shutil.which('clang++')
 GDB = os.environ.get('GDB') or shutil.which('gdb')
-
-
-def kinds(trace):
-    return [step['op'] and step['op']['kind'] for step in trace['steps']]
 
 
 class FixtureTests(unittest.TestCase):
@@ -158,6 +152,32 @@ class OperationValueTests(unittest.TestCase):
         self.rejects(trace, 'only pointers', lambda steps: steps[-1]['targets'].update(a='b'))
 
 
+class LayoutValidationTests(unittest.TestCase):
+    """Static layouts must place each field exactly where plain C++ alignment puts it."""
+
+    @staticmethod
+    def layout(size, alignment, *fields):
+        return {'format': FORMAT, 'kind': 'layout', 'records': [{
+            'name': 'A', 'size': size, 'alignment': alignment,
+            'fields': [{'name': name, 'offset': offset, 'size': width, 'kind': 'int',
+                        'type': 'int' if width == 4 else 'uint8_t'}
+                       for name, offset, width in fields]}]}
+
+    def test_accepts_exact_padding(self):
+        validate(self.layout(12, 4, ('a', 0, 1), ('b', 4, 4), ('c', 8, 1)))
+
+    def test_rejects_impossible_padding(self):
+        cases = {
+            'leading': (self.layout(8, 4, ('x', 4, 4)), 'must start at offset 0'),
+            'internal': (self.layout(12, 4, ('a', 0, 1), ('b', 8, 4)), 'must start at offset 4'),
+            'trailing': (self.layout(12, 4, ('x', 0, 4)), 'size must be 4'),
+            'alignment': (self.layout(8, 8, ('a', 0, 4), ('b', 4, 4)), 'alignment must be 4'),
+        }
+        for padding, (trace, message) in cases.items():
+            with self.subTest(padding), self.assertRaisesRegex(FormatError, message):
+                validate(trace)
+
+
 def replace_text(steps, old, new):
     """Change a value's text in the panes and operations of `steps`, keeping spans valid.
 
@@ -173,72 +193,34 @@ def replace_text(steps, old, new):
                 op[key] = [op[key][0], op[key][1] + len(new) - len(old)]
 
 
-class ConverterTests(unittest.TestCase):
-    def test_manual_expression_timeline(self):
-        trace = from_timeline(EXPRESSION)
-        self.assertEqual(trace['format'], 1)
-        self.assertEqual(kinds(trace), [None, 'write', None, 'read', 'eval', 'write', None, 'write',
-                                        None, 'read', 'print'])
-        self.assertEqual([s['pane'] for s in trace['steps'][2:6]],
-                         ['int b = a + 6;', 'int b = 5 + 6;', 'int b = 11;', 'int b = 11;'])
-        self.assertEqual(trace['steps'][4]['op'], {'kind': 'eval', 'value': '11', 'span': [8, 13]})
-        self.assertEqual(trace['steps'][5]['op']['destination'], [4, 5])
-        self.assertEqual(trace['spans'], [[6, 7], [6, 11], [4, 5], [13, 14]])
-        self.assertEqual(trace['steps'][-1]['stdout'], '11')
-
-    def test_swap_writes_unchanged_values(self):
-        trace = from_timeline(SWAP)
-        self.assertEqual(kinds(trace).count('write'), 4)
-        self.assertEqual(trace['steps'][-1]['values'], {'a': 2, 'b': 2})
-
-    def test_reduction_spans(self):
-        cases = [('5 + 6', '11', [0, 5]), ('(15) * 12', '15 * 12', [0, 4]),
-                 ('1 * 1 + 1', '1 + 1', [0, 5]), ('1 + 1 * 1', '1 + 1', [4, 9]),
-                 ('-22 - -1', '-21', [0, 8]), ('-(6) * 3', '-6 * 3', [1, 4]),
-                 ('{}', '0', [0, 2]), ('int{}', '0', [0, 5]), ('0x10', '16', [0, 4])]
-        for before, after, span in cases:
-            with self.subTest(before):
-                self.assertEqual(reduction_span(before, after), span)
-
-
-@unittest.skipUnless(CLANG, 'Clang is required for AST integration tests')
-class TracedConversionTests(unittest.TestCase):
-    def convert(self, source):
-        return from_timeline(tracing.trace(source, runtime=False))
-
-    def test_empty_braces_turn_into_zero(self):
-        trace = self.convert('int a{}; a = {}; int b = int{};')
-        self.assertEqual([s['pane'] for s in trace['steps'][:2]], ['int a = {};', 'int a = 0;'])
-        self.assertEqual(trace['steps'][1]['op'], {'kind': 'eval', 'value': '0', 'span': [8, 10]})
-        self.assertEqual(trace['spans'][0], [5, 7])
-
-    def test_declaration_shows_unknown_value(self):
-        trace = self.convert('int a; a = 2 * 3 + 1;')
-        self.assertEqual(trace['steps'][0]['values'], {'a': '?'})
-        self.assertIsNone(trace['spans'][0])
-        self.assertEqual([s['pane'] for s in trace['steps'] if s['line'] == 1],
-                         ['a = 2 * 3 + 1;', 'a = 6 + 1;', 'a = 7;', 'a = 7;'])
-
-    def test_parentheses_and_repeated_reads(self):
-        trace = self.convert('int c{12}; int o{3}; int r = (c + o) * c;')
-        panes = [s['pane'] for s in trace['steps'] if s['line'] == 2]
-        self.assertEqual(panes, ['int r = (c + o) * c;', 'int r = (12 + o) * c;', 'int r = (12 + 3) * c;',
-                                 'int r = (15) * c;', 'int r = 15 * c;', 'int r = 15 * 12;',
-                                 'int r = 180;', 'int r = 180;'])
-
 
 @unittest.skipUnless(CLANG and GDB, 'Clang and GDB are required for runtime traces')
 class GenerateCommandTests(unittest.TestCase):
+    def run_generate(self, operation, source):
+        with tempfile.NamedTemporaryFile('w', suffix='.cpp') as handle:
+            handle.write(source)
+            handle.flush()
+            return subprocess.run([sys.executable, str(ROOT / 'generate.py'), operation, '--source',
+                                   handle.name], capture_output=True, text=True, check=True).stdout
+
     def test_trace_prints_the_unified_format_deterministically(self):
-        with tempfile.NamedTemporaryFile('w', suffix='.cpp') as source:
-            source.write('int a = 5;\nint b = a + 6;\na = 7;\nstd::cout << b << std::endl;\n')
-            source.flush()
-            output = subprocess.run([sys.executable, str(ROOT / 'generate.py'), 'trace', '--source',
-                                     source.name], capture_output=True, text=True, check=True).stdout
+        output = self.run_generate('trace', 'int a = 5;\nint b = a + 6;\na = 7;\nstd::cout << b << std::endl;\n')
         trace = json.loads(output)
         validate(trace)
         self.assertEqual(output.strip(), json.dumps(trace, sort_keys=True))
         self.assertEqual(trace['steps'][-1]['stdout'], '11\n')
+
+    def test_pointer_traces_are_byte_identical(self):
+        source = 'int a = 5;\nint* p = &a;\nint* q = p;\n*q = 6;\nstd::cout << *p << std::endl;\n'
+        first, second = (self.run_generate('trace', source) for _ in range(2))
+        self.assertEqual(first, second)
+        self.assertEqual(json.loads(first)['steps'][-1]['targets'], {'p': 'a', 'q': 'a'})
+
+    def test_probe_names_the_reason(self):
+        supported = json.loads(self.run_generate('probe', 'int a{1};\nint* p{&a};\n*p = 2;\n'))
+        self.assertEqual(supported, {'supported': True, 'template': 'expression-timeline'})
+        rejected = json.loads(self.run_generate('probe', 'int a{1};\nint* p{&a};\nint* q = p + 1;\n'))
+        self.assertEqual(rejected, {'supported': False, 'reason': 'pointer arithmetic and comparison are not supported'})
 
 
 if __name__ == '__main__':

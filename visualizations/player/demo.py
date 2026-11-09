@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Write `demo.html`: the player inside a lesson-like page, for checking the engine locally.
 
-It traces a few examples from `en/labs/cpp/02_variables.md` with the compiler-backed tracer and
-adds the pointer and struct fixtures. Each player sits in a collapsed `<details>`, as on the
+It traces a few examples from `en/labs/cpp/02_variables.md` and `04_pointer.md` with the
+compiler-backed tracer and adds the pointer and struct fixtures. Each player sits in a
+collapsed `<details>`, as on the
 site; the buttons in the header switch `<html data-theme>` and `lang`, as Starlight does.
 Run from the course root, inside the default shell (Clang and GDB):
   nix develop --command python3 visualizations/player/demo.py
@@ -15,7 +16,7 @@ import sys
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from trace_format import from_timeline, validate  # noqa: E402
+from trace_format import validate  # noqa: E402
 from tracing import trace  # noqa: E402
 
 # Lesson 02 examples 4, 5, 10 and 18.
@@ -27,6 +28,23 @@ EXAMPLES = {
     'Empty initialization': 'int a{};\nstd::cout << a << std::endl;\n',
     'Swapping variables':
         'int a { 1 };\nint b { 2 };\na = b;\nb = a;\nstd::cout << a << std::endl;\nstd::cout << b << std::endl;\n',
+}
+# Lesson 04: `auto` deduces a pointer; copying a pointer and a value; a pointer to a pointer;
+# two pointers to one variable.
+POINTER_EXAMPLES = {
+    'auto deduces a pointer type':
+        'int value{ 5 };\nauto p{ &value };\n*p = 8;\nstd::cout << value << std::endl;\n',
+    'Copying a pointer and the value it points to':
+        'int value{ 5 };\nint* p{ &value };\nauto copy{ p };\nauto copiedValue{ *p };\n'
+        '*copy = 8;\nstd::cout << value << std::endl;\nstd::cout << copiedValue << std::endl;\n',
+    'A pointer to a pointer':
+        'int value{ 5 };\nint* p{ &value };\nauto pp{ &p };\n**pp = 9;\nstd::cout << value << std::endl;\n',
+    'Two pointers to one variable':
+        'int x{ 0 };\nint* px{ &x };\nint y{ x };\nint* py{ px };\n*px = 1;\n'
+        'std::cout << x << std::endl;\nstd::cout << y << std::endl;\n'
+        'std::cout << *px << std::endl;\nstd::cout << *py << std::endl;\n',
+    'Null pointer initialization':
+        'int a = 5;\nint* p{};\np = &a;\n*p = 6;\nstd::cout << a << std::endl;\n',
 }
 
 PAGE = '''<!doctype html>
@@ -66,7 +84,7 @@ p {color: var(--muted)}
 <header><strong>Player demo</strong>
  <button id="theme" type="button">Theme</button><button id="lang" type="button">Language</button></header>
 <main>
-<p>Compiler-traced examples from lesson 2, then the manual pointer and struct fixtures.
+<p>Compiler-traced examples from lessons 2 and 4, then the manual pointer and struct fixtures.
 The first trace is already open; the others initialize when opened.</p>
 __SECTIONS__
 </main>
@@ -97,7 +115,7 @@ def section(index: int, title: str, data: dict, opened: bool) -> str:
 
 
 def main() -> None:
-    traces = [(title, from_timeline(trace(source))) for title, source in EXAMPLES.items()]
+    traces = [(title, trace(source)) for title, source in {**EXAMPLES, **POINTER_EXAMPLES}.items()]
     for path in sorted((HERE / 'fixtures').glob('*.json')):
         data = json.loads(path.read_text())
         traces.append((data.get('title', path.stem), data))

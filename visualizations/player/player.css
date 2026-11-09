@@ -219,3 +219,77 @@
   .course-visualization .cv-primary { min-width: 5.4rem; }
   .course-visualization .cv-controls { padding: 0.55rem 0.6rem 0.6rem; }
 }
+
+.course-visualization .cv-layout { padding: 1rem; background: var(--cv-bg); }
+.course-visualization .cv-layout-record {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.5rem;
+  padding: 0.5rem;
+  color: var(--cv-fg);
+  font-family: ui-monospace, monospace;
+}
+/* Both panels shrink and stack when the host is narrow; the code panel stays readable
+ * on desktop instead of stretching across the row. */
+.course-visualization .cv-layout-code { flex: 1 1 13rem; min-width: 0; max-width: 22rem; }
+.course-visualization .cv-layout-bytes { min-width: 0; max-width: 100%; overflow-x: auto; }
+.course-visualization .cv-layout-target {
+  color: var(--cv-fg);
+  background: var(--cv-panel);
+  font: inherit;
+  border: 1px solid var(--cv-border);
+  cursor: pointer;
+  margin: 0;
+}
+.course-visualization .cv-layout-row {
+  display: block;
+  width: 100%;
+  padding: 0.55rem;
+  text-align: left;
+}
+.course-visualization .cv-layout-target small {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--cv-muted);
+}
+.course-visualization .cv-layout-memory {
+  --cv-byte-min: 1.7rem;
+  display: grid;
+  grid-template-columns: repeat(var(--cv-slot), minmax(var(--cv-byte-min), 2.6rem));
+  row-gap: 0.5rem;
+}
+.course-visualization .cv-byte {
+  min-width: 0;
+  padding: 0.4rem 0.1rem;
+  border-color: currentColor;
+}
+.course-visualization .cv-field-0 { color: var(--cv-field-0); }
+.course-visualization .cv-field-1 { color: var(--cv-field-1); }
+.course-visualization .cv-field-2 { color: var(--cv-field-2); }
+.course-visualization .cv-field-3 { color: var(--cv-field-3); }
+.course-visualization .cv-byte small {
+  font-size: 0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.course-visualization .cv-padding {
+  background: repeating-linear-gradient(135deg, var(--cv-panel) 0 4px, var(--cv-border) 4px 6px);
+}
+.course-visualization .cv-layout-active .cv-layout-target:not(.cv-linked) { opacity: 0.4; }
+.course-visualization .cv-layout-target.cv-linked { background-color: var(--cv-highlight); }
+.course-visualization .cv-layout-target:focus-visible {
+  outline: 3px solid var(--cv-read);
+  outline-offset: 2px;
+}
+
+/* Phones: narrower bytes keep an 8-byte row inside the host; .cv-layout-bytes scrolls
+ * horizontally only when even these do not fit. */
+@container (max-width: 22rem) {
+  .course-visualization .cv-layout { padding: 0.5rem; }
+  .course-visualization .cv-layout-record { gap: 1rem; padding: 0.25rem; }
+  .course-visualization .cv-layout-memory { --cv-byte-min: 1.25rem; }
+  .course-visualization .cv-byte { font-size: 0.75rem; }
+}

@@ -2,7 +2,7 @@
 
 A trace lists the source lines, the objects in memory and the visible evaluation states.
 `validate` checks a trace; `Builder` writes traces by hand, the way the lessons explain an
-evaluation; `from_timeline` converts the compiler-backed tracer's integer `Timeline`.
+evaluation. The compiler-backed tracer (`tracing.py`) emits the format directly.
 `player/README.md` documents every field.
 """
 from __future__ import annotations
@@ -279,8 +279,57 @@ def _changes(step: dict, previous: dict, storage: _Storage, where: str) -> None:
            where + '.stdout', 'only a print changes the output')
 
 
+def _layout(trace) -> None:
+    _keys(trace, 'layout', {'format', 'kind', 'records'})
+    _check(trace['format'] == FORMAT, 'layout.format', f'expected {FORMAT}')
+    records = trace['records']
+    _check(isinstance(records, list) and records, 'layout.records', 'expected nonempty list')
+    names = set()
+    for record in records:
+        _keys(record, 'record', {'name', 'size', 'alignment', 'fields'})
+        name = record['name']
+        _check(isinstance(name, str) and bool(IDENTIFIER.fullmatch(name)), 'record', 'invalid name')
+        _check(name not in names, 'record', 'duplicate name')
+        names.add(name)
+        _natural(record['size'], name + '.size', positive=True)
+        _natural(record['alignment'], name + '.alignment', positive=True)
+        align = record['alignment']
+        _check(align in (1, 4, 8), name, 'invalid alignment')
+        fields = record['fields']
+        _check(isinstance(fields, list) and fields, name, 'expected nonempty fields')
+        seen, end = set(), 0
+        for item in fields:
+            _keys(item, name, {'name', 'offset', 'size', 'kind', 'type'})
+            _check(isinstance(item['name'], str) and bool(IDENTIFIER.fullmatch(item['name'])),
+                   name, 'invalid field name')
+            _check(item['name'] not in seen, name, 'duplicate field')
+            seen.add(item['name'])
+            _check(isinstance(item['type'], str) and bool(item['type']), name, 'invalid field type')
+            _check(item['kind'] in SCALAR_KINDS, name, 'invalid field kind')
+            _natural(item['offset'], name + '.offset')
+            _natural(item['size'], name + '.size', positive=True)
+            size = item['size']
+            _check(size in (1, 4, 8) and (item['kind'] != 'ptr' or size == 8), name,
+                   'unsupported field size')
+            # Plain layouts align each scalar to its size and pad only as much as that needs.
+            _check(item['offset'] == _round_up(end, size), name,
+                   f'field {item["name"]} must start at offset {_round_up(end, size)}')
+            end = item['offset'] + size
+        widest = max(item['size'] for item in fields)
+        _check(align == widest, name, f'alignment must be {widest}, the widest field')
+        _check(record['size'] == _round_up(end, align), name,
+               f'size must be {_round_up(end, align)}, the last field end rounded to alignment')
+
+
+def _round_up(value: int, alignment: int) -> int:
+    return -(-value // alignment) * alignment
+
+
 def validate(trace) -> None:
     """Raise `FormatError` unless `trace` is a well-formed, self-consistent version 1 trace."""
+    if isinstance(trace, dict) and trace.get('kind') == 'layout':
+        _layout(trace)
+        return
     _keys(trace, 'trace', {'format', 'source', 'variables', 'steps'}, {'title', 'spans'})
     _check(trace['format'] == FORMAT, 'trace.format', f'expected {FORMAT}')
     source = trace['source']
@@ -457,100 +506,3 @@ class Builder:
             trace['title'] = self.title
         validate(trace)
         return trace
-
-
-# Compiler-backed integer timelines ------------------------------------------------------------
-
-# Reductions the tracer performs once every operand is a literal: a parenthesized literal, a
-# unary sign, one binary operator, empty braces, or a literal spelled differently (`0x10`).
-_REDUCIBLE = re.compile(r"\(\s*-?\d+\s*\)|[-+]\s*-?\d+|-?\d+\s*[-+*/%]\s*-?\d+"
-                        r"|(?:int\s*)?\{\s*\}|\d[\w']*")
-_NUMBER = re.compile(r'-?\d+')
-
-
-def reduction_span(before: str, after: str) -> list[int]:
-    """Locate the subexpression of `before` that evaluated to a number in `after`.
-
-    The tracer reduces in post-order, so the first reduction to finish (the smallest end)
-    is the one taken; of those, the widest, so a sign stays with its number. When nothing
-    matches, the whole expression is replaced.
-    """
-    found = None
-    for end in range(1, len(before) + 1):
-        tail = before[end:]
-        if not after.endswith(tail) or (end < len(before) and (before[end].isalnum() or before[end] == '_')):
-            continue
-        for start in range(end):
-            head = before[:start]
-            if len(head) + len(tail) > len(after) or not after.startswith(head):
-                continue
-            if start and (before[start - 1].isalnum() or before[start - 1] == '_'):
-                continue
-            value = after[start:len(after) - len(tail)]
-            if _NUMBER.fullmatch(value) and _REDUCIBLE.fullmatch(before[start:end]) and value != before[start:end]:
-                found = [start, end]
-                break
-        if found:
-            return found
-    return [0, len(before)]
-
-
-def _statement_parts(source: str, span: tuple[int, int]) -> tuple[str, str]:
-    """The muted context around an evaluated span, as the expression player shows it."""
-    start, end = span
-    prefix, suffix = source[:start], source[end:]
-    # Empty value-initialization keeps its real `{}` and becomes an assignment of it.
-    if re.fullmatch(r'\s*\{\s*\}\s*', source[start:end]) and re.fullmatch(
-            r'(?:const\s+int|int(?:\s+const)?|auto)\s+\w+\s*', prefix):
-        prefix = prefix.rstrip() + ' = '
-    # Brace initialization reads as an assignment of the evaluated value.
-    if prefix.rstrip().endswith('{') and suffix.lstrip().startswith('}'):
-        prefix = prefix.rstrip()[:-1].rstrip()
-        prefix += ' ' if prefix.endswith('=') else ' = '
-        suffix = suffix.lstrip()[1:]
-    return prefix, suffix
-
-
-def from_timeline(timeline) -> dict:
-    """Convert the tracer's integer `Timeline` (see `model.py`) into the unified format."""
-    from tracing import COLORS
-    variables = [scalar(variable.name, variable.address, variable.size, 'int',
-                        COLORS.index(variable.color) if variable.color in COLORS else index)
-                 for index, variable in enumerate(timeline.variables)]
-    names = [variable.name for variable in timeline.variables]
-    spans = [list(span) if span[0] < span[1] else None for span in timeline.expression_spans]
-    steps, previous = [], None
-    for step in timeline.steps:
-        source = timeline.source[step.line]
-        prefix, suffix = _statement_parts(source, timeline.expression_spans[step.line])
-        offset, expression = len(prefix), step.expression
-        pane = prefix + expression + suffix
-        expr = [offset, offset + len(expression)] if expression else None
-        values = {name: UNKNOWN if value is None and name in step.declared else value
-                  for name, value in zip(names, step.values)}
-        op = None
-        if previous is None or previous['line'] != step.line:
-            pass
-        elif step.read and step.transfer is not None:
-            start, end = step.read_span
-            op = {'kind': 'read', 'name': step.read, 'value': str(step.transfer),
-                  'span': [offset + start, offset + end]}
-        elif step.write:
-            at = [match.start() for match in re.finditer(r'\b' + re.escape(step.write) + r'\b', prefix)]
-            op = {'kind': 'write', 'name': step.write, 'value': expression, 'span': expr,
-                  'destination': [at[-1], at[-1] + len(step.write)]}
-        elif step.stdout != previous['stdout']:
-            op = {'kind': 'print', 'value': expression, 'span': expr}
-        elif pane != previous['pane']:
-            before = previous['pane'][previous['expr'][0]:previous['expr'][1]]
-            start, end = reduction_span(before, expression)
-            op = {'kind': 'eval', 'value': expression[start:len(expression) - len(before) + end],
-                  'span': [offset + start, offset + end]}
-        current = {'line': step.line, 'pane': pane, 'expr': expr, 'values': values, 'targets': {},
-                   'stdout': step.stdout, 'hold': step.hold, 'op': op}
-        steps.append(current)
-        previous = current
-    trace = {'format': FORMAT, 'source': list(timeline.source), 'spans': spans,
-             'variables': variables, 'steps': steps}
-    validate(trace)
-    return trace
