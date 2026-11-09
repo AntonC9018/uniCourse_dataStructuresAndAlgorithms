@@ -15,8 +15,14 @@ class Record:
     fields: list[dict]
 
 
+def type_spelling(node: dict) -> str:
+    """Normalize elaborated struct names without discarding pointer or cv qualifiers."""
+    qualified = node.get('type', {}).get('qualType', '')
+    return re.sub(r'^(const )?struct ', r'\1', qualified)
+
+
 def type_name(node: dict) -> str:
-    return node.get('type', {}).get('qualType', '').removeprefix('const ').removeprefix('struct ')
+    return type_spelling(node).removeprefix('const ')
 
 
 def layouts(ast: dict, directory: Path) -> dict[str, Record]:
@@ -40,10 +46,9 @@ def layouts(ast: dict, directory: Path) -> dict[str, Record]:
                 continue
             if child.get('kind') != 'FieldDecl':
                 raise Unsupported(f'struct {name}: methods, attributes and nested types are unsupported')
-            qualified = child.get('type', {}).get('qualType', '')
+            qualified = type_spelling(child)
             allowed = qualified == 'int' or bool(re.fullmatch(r'int \*+', qualified))
-            allowed |= any(qualified in (record + ' *', 'struct ' + record + ' *')
-                           for record in definitions)
+            allowed |= any(qualified == record + ' *' for record in definitions)
             if not allowed:
                 raise Unsupported(f'struct {name}.{child.get("name")}: unsupported field type {qualified}')
             if child.get('isBitfield') or child.get('inner') or not child.get('name'):

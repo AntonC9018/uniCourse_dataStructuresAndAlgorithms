@@ -99,6 +99,31 @@ p->next->x=9; c=*p; (*p).x=7; std::cout << a.x;'''
         self.assertEqual(last['values']['b.x'], 3)
         self.assertEqual(last['targets'], {'a.p': 'a.x', 'b.p': 'a.x'})
 
+    def test_elaborated_local_struct_pointers(self):
+        for spelling in ('S', 'struct S'):
+            with self.subTest(spelling=spelling):
+                source = ('struct S {int x;}; S s{1}; '
+                          f'{spelling} *p=&s; p->x=2; '
+                          f'{spelling} **pp=&p; (*pp)->x=3;')
+                result = tracing.trace(source)
+                self.assertEqual(result, tracing.trace(source, runtime=False))
+                last = result['steps'][-1]
+                self.assertEqual(last['values']['s.x'], 3)
+                self.assertEqual(last['targets'], {'p': 's', 'pp': 'p'})
+
+    def test_elaborated_struct_pointer_fields(self):
+        for spelling in ('S', 'struct S'):
+            with self.subTest(spelling=spelling):
+                source = (f'struct S {{int x; {spelling} *next;}}; '
+                          'S a{1,nullptr}; S b{2,&a}; b.next->x=9; '
+                          'b.next=&b; b.next->x=7;')
+                result = tracing.trace(source)
+                self.assertEqual(result, tracing.trace(source, runtime=False))
+                last = result['steps'][-1]
+                self.assertEqual(last['values']['a.x'], 9)
+                self.assertEqual(last['values']['b.x'], 7)
+                self.assertEqual(last['targets'], {'b.next': 'b'})
+
     def test_multiple_types_and_forward_declarations(self):
         result = tracing.trace('struct B; struct A {B *p;}; struct B {int x;}; '
                                'B b{8}; A a{&b}; std::cout << a.p->x;')

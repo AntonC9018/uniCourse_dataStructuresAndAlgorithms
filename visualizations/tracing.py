@@ -14,7 +14,7 @@ import re
 import tempfile
 
 from execution import Execution, execute
-from records import layouts, type_name
+from records import layouts, type_name, type_spelling
 from toolchain import Unsupported, run, tool
 from trace_format import (FORMAT, UNKNOWN, FormatError, scalar, struct, field as trace_field,
                           addresses as storage_addresses, leaves, validate)
@@ -46,8 +46,8 @@ def _integer(value: int) -> int:
 
 
 def _depth(node: dict, records=()) -> int:
-    """How many pointer levels lie over `int`: 0 for `int`, 2 for `int **`."""
-    qualified = node.get("type", {}).get("qualType", "")
+    """How many pointer levels lie over an int or a supported struct."""
+    qualified = type_spelling(node)
     match = re.fullmatch(r"(const )?int(?: (\*+))?", qualified)
     if match and not (match.group(1) and match.group(2)):
         return len(match.group(2) or "")
