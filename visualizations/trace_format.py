@@ -343,7 +343,7 @@ def validate(trace) -> None:
     if isinstance(trace, dict) and trace.get('kind') == 'layout':
         _layout(trace)
         return
-    _keys(trace, 'trace', {'format', 'source', 'variables', 'steps'}, {'title', 'spans'})
+    _keys(trace, 'trace', {'format', 'source', 'variables', 'steps'}, {'title', 'spans', 'types'})
     _check(trace['format'] == FORMAT, 'trace.format', f'expected {FORMAT}')
     source = trace['source']
     _check(isinstance(source, list) and source and all(isinstance(line, str) for line in source),
@@ -356,6 +356,10 @@ def validate(trace) -> None:
         for index, span in enumerate(trace['spans']):
             if span is not None:
                 _span(span, source[index], f'trace.spans[{index}]')
+    if 'types' in trace:
+        _check(isinstance(trace['types'], dict) and trace['types']
+               and all(isinstance(k, str) and isinstance(v, str) and v for k, v in trace['types'].items()),
+               'trace.types', 'expected struct names mapped to their definitions')
     variables = trace['variables']
     cells = _variables(variables, 'trace.variables')
     storage = _Storage(variables, cells, addresses(variables))

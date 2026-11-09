@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 import re
+import textwrap
 import tempfile
 
 from execution import Execution, execute
@@ -93,6 +94,16 @@ def _body(source: str) -> str:
     if not source.isascii():
         raise Unsupported("non-ASCII source text is not supported")
     return source
+
+
+_DEFINITION = re.compile(r'struct\s+\w+\s*[{;]')
+_DEFINITION_TEXT = re.compile(r'^([ \t]*)(struct\s+(\w+)\s*\{[^{}]*\}\s*;)', re.MULTILINE)
+
+
+def _definitions(body: str) -> dict[str, str]:
+    """Each struct definition as the snippet writes it, without the indentation of main."""
+    return {match.group(3): textwrap.dedent(match.group(1) + match.group(2))
+            for match in _DEFINITION_TEXT.finditer(body)}
 
 
 def _bounds(node: dict) -> tuple[int, int]:
@@ -788,16 +799,26 @@ def trace(source: str, *, runtime: bool = True) -> dict:
         for variable in variables:
             variable['address'] = addresses[variable['name']]
         variables.sort(key=lambda variable: variable['address'])
+    # Struct definitions are compiled and run but are not steps: the player shows them on
+    # hover over the type, as written in the lesson.
+    shown = [(statement, after) for statement, after in zip(statements, states)
+             if not _DEFINITION.match(statement.source)]
+    if not shown:
+        raise Unsupported("a snippet of only struct definitions has nothing to step through")
     renderer, previous = _Renderer(addresses, leaves(variables)), {}
-    for line, (statement, after) in enumerate(zip(statements, states)):
+    for line, (statement, after) in enumerate(shown):
         renderer.statement(line, statement, previous, after)
         previous = after
     if runtime and renderer.stdout != execution.stdout:
         raise Unsupported("runtime output disagrees with the expression trace")
     renderer.steps[-1]["hold"] = 3
-    result = {"format": FORMAT, "source": [statement.source for statement in statements],
-              "spans": [list(statement.span) if statement.span else None for statement in statements],
+    shown = [statement for statement, _ in shown]
+    result = {"format": FORMAT, "source": [statement.source for statement in shown],
+              "spans": [list(statement.span) if statement.span else None for statement in shown],
               "variables": variables, "steps": renderer.steps}
+    types = _definitions(body)
+    if types:
+        result["types"] = types
     try:
         validate(result)
     except FormatError as exc:

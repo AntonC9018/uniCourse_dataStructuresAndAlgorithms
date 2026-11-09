@@ -101,7 +101,23 @@
   outline-offset: 2px;
 }
 
-.course-visualization .cv-view { background: var(--cv-bg); }
+.course-visualization .cv-view { position: relative; background: var(--cv-bg); }
+/* A struct's definition, popped out over its type name or frame. */
+.course-visualization .cv-type {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--cv-gap-stroke);
+  border-radius: 8px;
+  background: var(--cv-panel);
+  color: var(--cv-fg);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+  font: 0.85rem/1.5 'DejaVu Sans Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+.course-visualization .cv-type[hidden] { display: none; }
+.course-visualization .cv-type pre { margin: 0; font: inherit; }
+.course-visualization .cv-type-keyword { color: var(--cv-context); }
 .course-visualization .cv-stage {
   display: block;
   width: 100%;

@@ -1,7 +1,6 @@
 {
   "format": 1,
   "source": [
-    "struct A { int* pa; int a; };",
     "A s1 { .pa = nullptr, .a = 1 };",
     "s1.pa = &s1.a;",
     "A s2 { s1 };",
@@ -10,7 +9,6 @@
     "std::cout << s2.a << std::endl;"
   ],
   "spans": [
-    null,
     [
       5,
       30
@@ -89,20 +87,6 @@
   "steps": [
     {
       "line": 0,
-      "pane": "struct A { int* pa; int a; }",
-      "op": null,
-      "stdout": "",
-      "hold": 1.0,
-      "values": {
-        "s2.pa": null,
-        "s2.a": null,
-        "s1.pa": null,
-        "s1.a": null
-      },
-      "targets": {}
-    },
-    {
-      "line": 1,
       "pane": "A s1 { .pa = nullptr, .a = 1 }",
       "op": null,
       "stdout": "",
@@ -120,7 +104,7 @@
       ]
     },
     {
-      "line": 1,
+      "line": 0,
       "pane": "A s1 { .pa = 0, .a = 1 }",
       "op": {
         "kind": "eval",
@@ -145,7 +129,7 @@
       ]
     },
     {
-      "line": 1,
+      "line": 0,
       "pane": "A s1 {0, 1}",
       "op": {
         "kind": "eval",
@@ -170,7 +154,7 @@
       ]
     },
     {
-      "line": 1,
+      "line": 0,
       "pane": "A s1 {0, 1}",
       "op": {
         "kind": "write",
@@ -200,7 +184,7 @@
       ]
     },
     {
-      "line": 2,
+      "line": 1,
       "pane": "s1.pa = &s1.a",
       "op": null,
       "stdout": "",
@@ -218,7 +202,7 @@
       ]
     },
     {
-      "line": 2,
+      "line": 1,
       "pane": "s1.pa = 88",
       "op": {
         "kind": "addr",
@@ -244,7 +228,7 @@
       ]
     },
     {
-      "line": 2,
+      "line": 1,
       "pane": "s1.pa = 88",
       "op": {
         "kind": "write",
@@ -276,7 +260,7 @@
       ]
     },
     {
-      "line": 3,
+      "line": 2,
       "pane": "A s2 = s1",
       "op": null,
       "stdout": "",
@@ -296,7 +280,7 @@
       ]
     },
     {
-      "line": 3,
+      "line": 2,
       "pane": "A s2 = {88, 1}",
       "op": {
         "kind": "read",
@@ -324,7 +308,7 @@
       ]
     },
     {
-      "line": 3,
+      "line": 2,
       "pane": "A s2 = {88, 1}",
       "op": {
         "kind": "write",
@@ -357,7 +341,7 @@
       ]
     },
     {
-      "line": 4,
+      "line": 3,
       "pane": "*s2.pa = 2",
       "op": null,
       "stdout": "",
@@ -378,7 +362,7 @@
       ]
     },
     {
-      "line": 4,
+      "line": 3,
       "pane": "*88 = 2",
       "op": {
         "kind": "read",
@@ -407,7 +391,7 @@
       ]
     },
     {
-      "line": 4,
+      "line": 3,
       "pane": "s1.a = 2",
       "op": {
         "kind": "deref",
@@ -436,7 +420,7 @@
       ]
     },
     {
-      "line": 4,
+      "line": 3,
       "pane": "s1.a = 2",
       "op": {
         "kind": "write",
@@ -469,7 +453,7 @@
       ]
     },
     {
-      "line": 5,
+      "line": 4,
       "pane": "std::cout << s1.a << std::endl",
       "op": null,
       "stdout": "",
@@ -490,7 +474,7 @@
       ]
     },
     {
-      "line": 5,
+      "line": 4,
       "pane": "std::cout << 2 << std::endl",
       "op": {
         "kind": "read",
@@ -519,7 +503,7 @@
       ]
     },
     {
-      "line": 5,
+      "line": 4,
       "pane": "std::cout << 2 << std::endl",
       "op": {
         "kind": "print",
@@ -547,7 +531,7 @@
       ]
     },
     {
-      "line": 6,
+      "line": 5,
       "pane": "std::cout << s2.a << std::endl",
       "op": null,
       "stdout": "2\n",
@@ -568,7 +552,7 @@
       ]
     },
     {
-      "line": 6,
+      "line": 5,
       "pane": "std::cout << 1 << std::endl",
       "op": {
         "kind": "read",
@@ -597,7 +581,7 @@
       ]
     },
     {
-      "line": 6,
+      "line": 5,
       "pane": "std::cout << 1 << std::endl",
       "op": {
         "kind": "print",
@@ -624,5 +608,8 @@
         14
       ]
     }
-  ]
+  ],
+  "types": {
+    "A": "struct A { int* pa; int a; };"
+  }
 }

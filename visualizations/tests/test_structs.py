@@ -129,6 +129,13 @@ p->next->x=9; c=*p; (*p).x=7; std::cout << a.x;'''
                                'B b{8}; A a{&b}; std::cout << a.p->x;')
         self.assertEqual(result['steps'][-1]['stdout'], '8')
 
+    def test_definitions_are_shown_on_hover_not_stepped(self):
+        source = 'struct S\n{\n    int x;\n};\n\nint main()\n{\n    struct T { int y; };\n    S a{ 1 };\n    T b{ 2 };\n}\n'
+        result = tracing.trace(source, runtime=False)
+        self.assertEqual(result['source'], ['S a{ 1 };', 'T b{ 2 };'])
+        self.assertEqual(result['types'], {'S': 'struct S\n{\n    int x;\n};', 'T': 'struct T { int y; };'})
+        self.assertFalse(any(step['pane'].startswith('struct') for step in result['steps']))
+
     def test_cold_runs_and_probe_layout(self):
         first = tracing.trace(STRUCT_POINTERS)
         self.assertEqual(first, tracing.trace(STRUCT_POINTERS, runtime=False))
@@ -157,7 +164,8 @@ p->next->x=9; c=*p; (*p).x=7; std::cout << a.x;'''
     def test_generated_browser_fixture_is_current(self):
         path = Path(__file__).parent / 'fixtures' / 'struct-generated.json'
         fixture = json.loads(path.read_text())
-        self.assertEqual(tracing.trace('\n'.join(fixture['source'])), fixture)
+        source = '\n'.join([*fixture.get('types', {}).values(), *fixture['source']])
+        self.assertEqual(tracing.trace(source), fixture)
 
     def test_unchanged_field_mismatch_is_fatal(self):
         original = tracing.execute

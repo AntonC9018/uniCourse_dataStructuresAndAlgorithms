@@ -146,7 +146,8 @@
         size: variable.size, color: variable.color, fields: fields.map(field => field.name) });
     }
     const top = variables.map(variable => variable.name);
-    return { trace, steps: trace.steps, source: trace.source, spans: trace.spans || [], leaves, groups, top };
+    return { trace, steps: trace.steps, source: trace.source, spans: trace.spans || [], types: trace.types || {},
+      leaves, groups, top };
   }
 
   // Variables the current statement involves stay bright; the rest dim to half. A pointer's
@@ -202,6 +203,21 @@
   const labelWidth = c => String(c.address).length * 16 * CHAR;
   const labelCentre = c => [c.x + 3 + labelWidth(c) / 2, c.y - 18];
   const valueCentre = c => [c.x + c.w / 2, c.y + 32];
+
+  // Where a struct's definition pops out: its type name in the code, and each of its frames.
+  function typeTargets(m, g) {
+    const names = Object.keys(m.types);
+    if (!names.length) return [];
+    const word = new RegExp(`\\b(${names.join('|')})\\b`, 'g'), targets = [];
+    m.source.forEach((source, i) => {
+      for (const match of source.matchAll(word)) {
+        targets.push({ type: match[1], underline: true, x: g.code.x + 62 + match.index * CODE_CHAR,
+          y: g.lineY(i) - CODE_SIZE * 0.85, w: match[1].length * CODE_CHAR, h: CODE_SIZE * 1.2 });
+      }
+    });
+    for (const s of g.groups) if (m.types[s.type]) targets.push({ type: s.type, ...frameOf(s) });
+    return targets;
+  }
 
   // Labels centred under neighbouring boxes share one size, shrunk until the widest pair fits.
   function labelSize(boxes, label, size) {
@@ -282,6 +298,7 @@
     // Colouring of identifiers: variables keep their colour; a field takes its field's colour.
     g.owner = token => g.groups.find(s => s.name === token) || g.leaves.find(l => !l.group && l.name === token);
     g.field = token => g.leaves.find(l => l.group && l.label === token);
+    g.typeTargets = typeTargets(m, g);
     g.nameSize = labelSize([...g.groups, ...g.leaves.filter(l => !l.group)], c => c.name, 26);
     g.fieldSize = labelSize(g.leaves.filter(l => l.group), c => c.label, 20);
     return g;
@@ -364,6 +381,11 @@
       out += text(x + 22, g.lineY(i), i + 1, 18, P.muted)
         + colored(c, x + 62, g.lineY(i), source, CODE_SIZE, /^\s*struct\b/.test(source));
     });
+    // A faint dotted underline, like an IDE's hint, says the type name can be hovered.
+    for (const t of g.typeTargets) {
+      if (t.underline) out += `<path d="M ${round(t.x + 1)} ${round(t.y + t.h - 1)} h ${round(t.w - 2)}" `
+        + `stroke="${P.muted}" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round" opacity="0.6"/>`;
+    }
     return out;
   }
   function tether(c, oldLine) {
@@ -643,7 +665,8 @@
         // The drawing is redrawn on every step and hidden from assistive technology; the
         // line controls above it are stable elements, so a redraw never discards focus.
         + `<svg class="cv-stage" role="group" aria-label="${esc(S.stage)}" xmlns="http://www.w3.org/2000/svg">`
-        + `<g class="cv-scene" aria-hidden="true"></g><g class="cv-lines">${lineTargets(this.m, S)}</g></svg></div>`
+        + `<g class="cv-scene" aria-hidden="true"></g><g class="cv-lines">${lineTargets(this.m, S)}</g></svg>`
+        + '<div class="cv-type" aria-hidden="true" hidden></div></div>'
         + '<div class="cv-controls"><div class="cv-transport">'
         + button('play', S.play, 'play', ' cv-primary') + button('back', S.back, 'back') + button('next', S.next, 'next')
         + button('replay', S.replay, 'replay', ' cv-icon-only')
@@ -673,6 +696,10 @@
         if (line) this.line(Number(line.dataset.line));
       });
       root.addEventListener('keydown', event => this.key(event));
+      this.typeBox = root.querySelector('.cv-type');
+      this.svg.addEventListener('pointermove', event => this.hoverType(event));
+      this.svg.addEventListener('pointerdown', event => this.hoverType(event));
+      this.svg.addEventListener('pointerleave', () => this.hoverType(null));
       this.stacked = null;
       if (window.ResizeObserver) {
         new ResizeObserver(() => { if (this.arrangement() !== this.stacked) this.refresh(); }).observe(root);
@@ -694,6 +721,36 @@
       } else if (event.key === ' ' && !target.matches('button')) {
         event.preventDefault();
         this.play();
+      }
+    }
+
+    // The definition of the struct under the pointer pops out above it, or below near the top.
+    hoverType(event) {
+      const targets = this.g ? this.g.typeTargets : [];
+      let hit = null;
+      if (event && targets.length) {
+        const matrix = this.svg.getScreenCTM();
+        if (matrix) {
+          const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
+          hit = targets.find(t => point.x >= t.x && point.x <= t.x + t.w && point.y >= t.y && point.y <= t.y + t.h);
+        }
+      }
+      this.svg.style.cursor = hit ? 'help' : '';
+      if (!hit) { this.typeBox.hidden = true; this.shownType = null; return; }
+      if (this.shownType !== hit) {
+        this.shownType = hit;
+        this.typeBox.innerHTML = '<pre>' + this.m.types[hit.type].split(/(\b[A-Za-z_]\w*\b)/).map(token => {
+          const field = this.g.field(token);
+          return field ? `<span style="color:${field.fieldColor}">${esc(token)}</span>`
+            : KEYWORDS.has(token) ? `<span class="cv-type-keyword">${esc(token)}</span>` : esc(token);
+        }).join('') + '</pre>';
+        this.typeBox.hidden = false;
+        const view = this.typeBox.parentElement.getBoundingClientRect(), stage = this.svg.getBoundingClientRect();
+        const scale = stage.width / this.g.width, box = this.typeBox;
+        const left = stage.left - view.left + (hit.x + hit.w / 2) * scale - box.offsetWidth / 2;
+        const top = stage.top - view.top + hit.y * scale - box.offsetHeight - 6;
+        box.style.left = `${Math.max(4, Math.min(view.width - box.offsetWidth - 4, left))}px`;
+        box.style.top = `${top >= 4 ? top : stage.top - view.top + (hit.y + hit.h) * scale + 6}px`;
       }
     }
 
@@ -722,7 +779,7 @@
     render(animate) {
       this.stacked = this.arrangement();
       const steps = this.m.steps, step = steps[this.index], prev = this.index ? steps[this.index - 1] : null;
-      const g = geometry(this.m, this.P, this.stacked);
+      const g = this.g = geometry(this.m, this.P, this.stacked);
       const now = activeVariables(this.m, this.index);
       const before = animate && this.index ? activeVariables(this.m, this.index - 1) : now;
       const begin = new Map();
