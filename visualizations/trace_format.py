@@ -294,7 +294,7 @@ def _layout(trace) -> None:
         _natural(record['size'], name + '.size', positive=True)
         _natural(record['alignment'], name + '.alignment', positive=True)
         align = record['alignment']
-        _check(align in (1, 4, 8) and record['size'] % align == 0, name, 'invalid alignment')
+        _check(align in (1, 4, 8), name, 'invalid alignment')
         fields = record['fields']
         _check(isinstance(fields, list) and fields, name, 'expected nonempty fields')
         seen, end = set(), 0
@@ -311,10 +311,18 @@ def _layout(trace) -> None:
             size = item['size']
             _check(size in (1, 4, 8) and (item['kind'] != 'ptr' or size == 8), name,
                    'unsupported field size')
-            _check(item['offset'] >= end and item['offset'] % size == 0 and size <= align,
-                   name, 'overlapping or misaligned field')
+            # Plain layouts align each scalar to its size and pad only as much as that needs.
+            _check(item['offset'] == _round_up(end, size), name,
+                   f'field {item["name"]} must start at offset {_round_up(end, size)}')
             end = item['offset'] + size
-        _check(end <= record['size'], name, 'fields exceed record size')
+        widest = max(item['size'] for item in fields)
+        _check(align == widest, name, f'alignment must be {widest}, the widest field')
+        _check(record['size'] == _round_up(end, align), name,
+               f'size must be {_round_up(end, align)}, the last field end rounded to alignment')
+
+
+def _round_up(value: int, alignment: int) -> int:
+    return -(-value // alignment) * alignment
 
 
 def validate(trace) -> None:
