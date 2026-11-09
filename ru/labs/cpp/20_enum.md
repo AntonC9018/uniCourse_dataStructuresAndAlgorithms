@@ -157,6 +157,38 @@ slug: ru/cpp/labs/enum
 
 
 <details>
+<summary>Тест-кейсы</summary>
+
+```cpp
+void runTests()
+{
+    assert(decideWire(Portrait::Lenin, BulbColor::Red, true, 100) == std::nullopt);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 1) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 10) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 34) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 35) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 36) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, false, 15) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::White, false, 15) == BombWireColor::Red);
+    assert(decideWire(Portrait::Hitler, BulbColor::Red, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 14) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 15) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 18) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 8) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, false, 20) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 100) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 20) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, true, 4) == BombWireColor::Red);
+}
+```
+
+</details>
+
+
+<details>
 <summary>Модулярная арифметика?</summary>
 
 Идея возвращаться на начало при переходе за конец, 
