@@ -159,38 +159,31 @@ Recommendations:
 <details>
 <summary>Test cases</summary>
 
-The wires, in order, are red, yellow, and green.
-A backward shift moves a wire to the previous one in this order,
-and a forward shift moves it to the next one.
-The switch shift is applied before the dial shift.
-
-Each row is one bomb: give these characteristics to your function
-and check the wire it returns.
-`None` means that nothing needs to be cut,
-even when the switch is on and the dial is divisible by 4.
-
-| Portrait          | Bulb  | Switch | Dial | Wire   |
-| ----------------- | ----- | ------ | ---- | ------ |
-| Lenin             | Red   | on     | 100  | None   |
-| George Washington | Blue  | off    | 1    | Red    |
-| George Washington | Blue  | off    | 10   | Red    |
-| George Washington | Blue  | off    | 11   | Green  |
-| George Washington | Blue  | off    | 12   | Yellow |
-| George Washington | Red   | off    | 34   | Red    |
-| George Washington | Red   | off    | 35   | Green  |
-| George Washington | Red   | off    | 36   | Yellow |
-| Hitler            | Blue  | off    | 15   | Green  |
-| Hitler            | White | off    | 15   | Red    |
-| Hitler            | Red   | off    | 11   | Green  |
-| George Washington | White | on     | 14   | Green  |
-| George Washington | White | on     | 15   | Yellow |
-| George Washington | White | on     | 18   | Red    |
-| George Washington | Blue  | off    | 8    | Green  |
-| George Washington | Blue  | off    | 12   | Yellow |
-| George Washington | White | off    | 20   | Red    |
-| George Washington | Red   | off    | 100  | Green  |
-| George Washington | White | on     | 20   | Green  |
-| Hitler            | Blue  | on     | 4    | Red    |
+```cpp
+void runTests()
+{
+    assert(decideWire(Portrait::Lenin, BulbColor::Red, true, 100) == std::nullopt);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 1) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 10) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 34) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 35) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 36) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, false, 15) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::White, false, 15) == BombWireColor::Red);
+    assert(decideWire(Portrait::Hitler, BulbColor::Red, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 14) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 15) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 18) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 8) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, false, 20) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 100) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 20) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, true, 4) == BombWireColor::Red);
+}
+```
 
 </details>
 

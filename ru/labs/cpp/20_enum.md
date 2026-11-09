@@ -159,38 +159,31 @@ slug: ru/cpp/labs/enum
 <details>
 <summary>Тест-кейсы</summary>
 
-Провода идут в порядке: красный, желтый, зеленый.
-Смещение назад переводит провод на предыдущий в этом порядке,
-смещение вперед — на следующий.
-Сначала применяется смещение от тумблера, затем смещение от циферблата.
-
-Каждая строка — одна бомба: передайте эти характеристики функции
-и проверьте, какой провод она вернет.
-`Ничего` означает, что резать не нужно,
-даже если тумблер включен и циферблат делится на 4.
-
-| Портрет           | Лампочка | Тумблер | Циферблат | Провод  |
-| ----------------- | -------- | ------- | --------- | ------- |
-| Ленин             | Красный  | вкл     | 100       | Ничего  |
-| George Washington | Синий    | выкл    | 1         | Красный |
-| George Washington | Синий    | выкл    | 10        | Красный |
-| George Washington | Синий    | выкл    | 11        | Зеленый |
-| George Washington | Синий    | выкл    | 12        | Желтый  |
-| George Washington | Красный  | выкл    | 34        | Красный |
-| George Washington | Красный  | выкл    | 35        | Зеленый |
-| George Washington | Красный  | выкл    | 36        | Желтый  |
-| Гитлер            | Синий    | выкл    | 15        | Зеленый |
-| Гитлер            | Белый    | выкл    | 15        | Красный |
-| Гитлер            | Красный  | выкл    | 11        | Зеленый |
-| George Washington | Белый    | вкл     | 14        | Зеленый |
-| George Washington | Белый    | вкл     | 15        | Желтый  |
-| George Washington | Белый    | вкл     | 18        | Красный |
-| George Washington | Синий    | выкл    | 8         | Зеленый |
-| George Washington | Синий    | выкл    | 12        | Желтый  |
-| George Washington | Белый    | выкл    | 20        | Красный |
-| George Washington | Красный  | выкл    | 100       | Зеленый |
-| George Washington | Белый    | вкл     | 20        | Зеленый |
-| Гитлер            | Синий    | вкл     | 4         | Красный |
+```cpp
+void runTests()
+{
+    assert(decideWire(Portrait::Lenin, BulbColor::Red, true, 100) == std::nullopt);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 1) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 10) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 34) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 35) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 36) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, false, 15) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::White, false, 15) == BombWireColor::Red);
+    assert(decideWire(Portrait::Hitler, BulbColor::Red, false, 11) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 14) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 15) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 18) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 8) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::Blue, false, 12) == BombWireColor::Yellow);
+    assert(decideWire(Portrait::Washington, BulbColor::White, false, 20) == BombWireColor::Red);
+    assert(decideWire(Portrait::Washington, BulbColor::Red, false, 100) == BombWireColor::Green);
+    assert(decideWire(Portrait::Washington, BulbColor::White, true, 20) == BombWireColor::Green);
+    assert(decideWire(Portrait::Hitler, BulbColor::Blue, true, 4) == BombWireColor::Red);
+}
+```
 
 </details>
 
