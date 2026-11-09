@@ -21,6 +21,14 @@ class FormatError(ValueError):
     """A trace does not follow the unified format."""
 
 
+_WHITESPACE_SPELLINGS = {'std::endl': '\n', 'endl': '\n', "'\\n'": '\n', "'\\t'": '\t', "' '": ' '}
+
+
+def whitespace_output(spelling: str) -> str | None:
+    """What an output operand that is no value prints (`std::endl` a newline), else None."""
+    return _WHITESPACE_SPELLINGS.get(spelling)
+
+
 # Building blocks ------------------------------------------------------------------------------
 
 def scalar(name: str, address: int, size: int = 4, kind: str = 'int', color: int = 0) -> dict:
@@ -251,11 +259,16 @@ def _operation(op, step: dict, previous: dict, storage: _Storage, where: str) ->
 
 
 def _unchanged_pane(op: dict, step: dict, previous: dict, where: str) -> None:
-    """A write or print keeps the pane; its spans cover what it stores or prints."""
+    """A write or print keeps the pane; its spans cover what it stores or prints.
+
+    Whitespace output is no value: its span covers its spelling, such as `std::endl`.
+    """
     kind = op['kind']
     _check(step['pane'] == previous['pane'], where, f'a {kind} does not change the pane')
     start, end = _span(op['span'], step['pane'], where + '.span')
-    _check(step['pane'][start:end] == op['value'], where + '.span', 'does not cover the value')
+    covered = step['pane'][start:end]
+    _check(covered == op['value'] or (kind == 'print' and whitespace_output(covered) == op['value']),
+           where + '.span', 'does not cover the value')
     if kind == 'write':
         start, end = _span(op['destination'], step['pane'], where + '.destination')
         _check(step['pane'][start:end] == op['name'], where + '.destination', 'does not cover the name')
@@ -330,7 +343,7 @@ def validate(trace) -> None:
     if isinstance(trace, dict) and trace.get('kind') == 'layout':
         _layout(trace)
         return
-    _keys(trace, 'trace', {'format', 'source', 'variables', 'steps'}, {'title', 'spans'})
+    _keys(trace, 'trace', {'format', 'source', 'variables', 'steps'}, {'title', 'spans', 'types'})
     _check(trace['format'] == FORMAT, 'trace.format', f'expected {FORMAT}')
     source = trace['source']
     _check(isinstance(source, list) and source and all(isinstance(line, str) for line in source),
@@ -343,6 +356,10 @@ def validate(trace) -> None:
         for index, span in enumerate(trace['spans']):
             if span is not None:
                 _span(span, source[index], f'trace.spans[{index}]')
+    if 'types' in trace:
+        _check(isinstance(trace['types'], dict) and trace['types']
+               and all(isinstance(k, str) and isinstance(v, str) and v for k, v in trace['types'].items()),
+               'trace.types', 'expected struct names mapped to their definitions')
     variables = trace['variables']
     cells = _variables(variables, 'trace.variables')
     storage = _Storage(variables, cells, addresses(variables))

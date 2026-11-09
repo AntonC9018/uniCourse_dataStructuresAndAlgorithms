@@ -43,23 +43,16 @@ class LayoutEligibilityTests(unittest.TestCase):
             with self.subTest(addresses), self.assertRaisesRegex(Unsupported, 'noncontiguous'):
                 applicable(self.changed(**addresses))
 
-    def test_names_must_fit_under_their_cells(self):
+    def test_long_names_sources_and_panes_are_accepted(self):
         trace = copy.deepcopy(self.trace)
         renamed = {'a': 'copiedValue', 'b': 'copiedPointer'}
         for variable in trace['variables']:
             variable['name'] = renamed.get(variable['name'], variable['name'])
-        with self.assertRaisesRegex(Unsupported, 'do not fit'):
-            generate._memory_fits(trace['variables'])
-
-    def test_long_sources_and_wide_panes_are_rejected(self):
+        generate._storage_is_contiguous(trace['variables'])
         trace = copy.deepcopy(self.trace)
-        trace['source'] = trace['source'] * 2
-        with self.assertRaisesRegex(Unsupported, 'source exceeds'):
-            applicable(trace)
-        trace = copy.deepcopy(self.trace)
-        trace['steps'][-1]['pane'] = 'x' * 32
-        with self.assertRaisesRegex(Unsupported, 'pane'):
-            applicable(trace)
+        trace['source'] = trace['source'] * 3
+        trace['steps'][-1]['pane'] = 'x' * 60
+        applicable(trace)
 
 
 class SpacingTests(unittest.TestCase):

@@ -14,7 +14,7 @@ Each visualization is one element; the site emits it inside a lesson's `<details
 <div class="course-visualization"><script type="application/json">TRACE_JSON</script></div>
 ```
 
-`TRACE_JSON` is the output of `generate.py trace`, with `<` escaped as `<`.
+`TRACE_JSON` is the output of `generate.py trace`, with every `<` escaped as `\u003c`.
 Nothing else is required from the page.
 
 ## Behaviour
@@ -39,7 +39,8 @@ Nothing else is required from the page.
 - **Focus.** Redraws replace only the drawing; code-line controls and buttons are created once,
   so steps, animations and theme changes keep keyboard focus. A focused button that becomes
   disabled hands focus to the player, where the arrow keys still step.
-- **Reduced motion.** With `prefers-reduced-motion: reduce`, every step cuts to its end state.
+- **Motion.** Steps always animate, even with `prefers-reduced-motion: reduce`:
+  the movement is what the player teaches, so the system setting is deliberately ignored.
 
 ## Visual language
 
@@ -71,7 +72,8 @@ red, blue), each at least 3:1 against the stage. Reads use `#2f64d6` on `#d9e5ff
 
 ```text
 trace     = {format: 1, source: [line…], variables: [variable…], steps: [step…],
-             title?: text, spans?: [span | null per source line]}
+             title?: text, spans?: [span | null per source line],
+             types?: {struct name: definition text}}
 variable  = {name, address, size, kind: "int" | "ptr", color}
           | {name, address, size, kind: "struct", color, type, fields: [field…]}
 field     = {name, offset, size, kind: "int" | "ptr", color}
@@ -81,6 +83,9 @@ span      = [start, end)  — character offsets
 
 - `source` lists the example's lines; `spans[i]` is the evaluated part of line `i`, used for the
   code highlight (the whole line without `;` when absent). `title` is informational.
+- Struct definitions are not steps, so they are not in `source`. `types` holds each one as the
+  lesson writes it. Hovering (or tapping) its name in the code, under a faint dotted underline,
+  or one of its frames in memory pops the definition out.
 - `variables` are non-overlapping storage, in any order. `size` counts bytes, padding included.
   `color` indexes the palette's variable colours (fields: field colours) and wraps around.
 - A *leaf* is a cell holding a value: a scalar by name, a struct field as `variable.field`.
@@ -109,7 +114,9 @@ a value may only change from `null` to `"?"` (a declaration).
 - For `read`, `addr`, `deref` and `eval`, `span` indexes the previous pane, and the new pane is
   the previous one with that span replaced by `value` (`target` for `deref`).
 - `write` and `print` leave the pane unchanged; their `span` covers `value` in it. A write's
-  `destination` covers `name` in the pane.
+  `destination` covers `name` in the pane. A print of whitespace alone is no value: its `span`
+  covers the spelling that prints it, `std::endl` (or `endl`) or `'\n'` for `"\n"`, `'\t'`
+  for `"\t"` and `' '` for `" "`. The player sends it to the output as a glyph (`↵`).
 - Only a write changes values or targets, and only of the cells its `name` covers (all fields of
   a struct). Only a print changes `stdout`, by its value plus optional whitespace.
 - Values agree with memory. A value is an integer, `nullptr` (stored as `0`) or `"?"`; a struct

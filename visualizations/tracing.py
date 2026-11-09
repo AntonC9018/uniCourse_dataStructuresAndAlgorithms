@@ -11,13 +11,14 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 import re
+import textwrap
 import tempfile
 
 from execution import Execution, execute
 from records import layouts, type_name, type_spelling
 from toolchain import Unsupported, run, tool
 from trace_format import (FORMAT, UNKNOWN, FormatError, scalar, struct, field as trace_field,
-                          addresses as storage_addresses, leaves, validate)
+                          addresses as storage_addresses, leaves, validate, whitespace_output)
 
 __all__ = ["Pointer", "Unsupported", "trace"]
 
@@ -82,6 +83,10 @@ def _body(source: str) -> str:
         match = re.fullmatch(r'([\s\S]*?)int\s+main\s*\(\s*(?:void\s*)?\)\s*\{([\s\S]*)\}\s*', source)
         if not match:
             raise Unsupported("only a standalone parameterless main or statement fragment is supported")
+        # Struct definitions may precede main; anything else (a global, a function)
+        # would change meaning once moved into main's body.
+        if re.sub(r'\bstruct\s+\w+\s*\{[^{}]*\}\s*;', '', match.group(1)).strip():
+            raise Unsupported("only struct definitions may precede main")
         source = (match.group(1) + match.group(2)).strip()
     if not source or len(source) > 10_000:
         raise Unsupported("empty or oversized snippet")
@@ -89,6 +94,16 @@ def _body(source: str) -> str:
     if not source.isascii():
         raise Unsupported("non-ASCII source text is not supported")
     return source
+
+
+_DEFINITION = re.compile(r'struct\s+\w+\s*[{;]')
+_DEFINITION_TEXT = re.compile(r'^([ \t]*)(struct\s+(\w+)\s*\{[^{}]*\}\s*;)', re.MULTILINE)
+
+
+def _definitions(body: str) -> dict[str, str]:
+    """Each struct definition as the snippet writes it, without the indentation of main."""
+    return {match.group(3): textwrap.dedent(match.group(1) + match.group(2))
+            for match in _DEFINITION_TEXT.finditer(body)}
 
 
 def _bounds(node: dict) -> tuple[int, int]:
@@ -357,6 +372,8 @@ class Statement:
     `pane` is the statement in the lessons' notation (`int b{ a };` reads `int b = a`); the
     other spans index it: `expr` is the evaluated part, `result` the expression whose value is
     written or printed, and `destination` the name of the written variable once reduced.
+    Output is `result` followed by `output_suffix`; `printed` is set when `result` is not a
+    value but whitespace output such as `std::endl`, and holds what it prints.
     """
     source: str
     span: tuple[int, int] | None
@@ -371,6 +388,7 @@ class Statement:
     pointer: bool = False
     record: str | None = None
     output_suffix: str | None = None
+    printed: str | None = None
 
 
 def _pane_parts(source: str, span: tuple[int, int], empty_initializer: bool) -> tuple[str, str]:
@@ -402,25 +420,29 @@ def _cout_operands(node: dict) -> list[dict]:
     return _cout_operands(left) + [right]
 
 
-def _is_manipulator(operand: dict) -> bool:
-    """`std::endl` or a whitespace character: output that is not a value."""
-    try:
-        return bool(_output_suffix([operand]))
-    except Unsupported:
-        return False
+def _strip_casts(operand: dict) -> dict:
+    while operand.get("kind") == "ImplicitCastExpr" and operand.get("inner"):
+        operand = operand["inner"][0]
+    return operand
+
+
+def _whitespace(operand: dict) -> str | None:
+    """What `std::endl` or a whitespace character prints, or None for any other operand."""
+    operand = _strip_casts(operand)
+    if operand.get("referencedDecl", {}).get("name") == "endl":
+        return "\n"
+    if operand.get("kind") == "CharacterLiteral" and int(operand["value"]) in {9, 10, 32}:
+        return chr(int(operand["value"]))
+    return None
 
 
 def _output_suffix(operands: list[dict]) -> str:
     suffix = ""
     for operand in operands:
-        while operand.get("kind") == "ImplicitCastExpr" and operand.get("inner"):
-            operand = operand["inner"][0]
-        if operand.get("referencedDecl", {}).get("name") == "endl":
-            suffix += "\n"
-        elif operand.get("kind") == "CharacterLiteral" and int(operand["value"]) in {9, 10, 32}:
-            suffix += chr(int(operand["value"]))
-        else:
+        printed = _whitespace(operand)
+        if printed is None:
             raise Unsupported("one integer output followed only by whitespace or endl is supported")
+        suffix += printed
     return suffix
 
 
@@ -432,7 +454,7 @@ def _statement(node: dict, program: str, state: dict[str, Value | None], records
     if end < len(program) and program[end] == ";":
         end += 1
     source, mapping = _compact(program[start:end])
-    left = declared = output_suffix = root = name_offset = None
+    left = declared = output_suffix = printed = root = name_offset = None
     whole = pointer = empty_initializer = False
     record = None
     if node["kind"] == "DeclStmt":
@@ -480,9 +502,10 @@ def _statement(node: dict, program: str, state: dict[str, Value | None], records
         if not operands:
             raise Unsupported("empty output expression")
         root, output_suffix = operands[0], _output_suffix(operands[1:])
-        if _is_manipulator(root):
-            raise Unsupported("output without an integer value, such as a bare std::endl, is not supported")
-        if _operand_is_pointer(root):
+        printed = _whitespace(root)
+        if _strip_casts(root).get("kind") == "StringLiteral":
+            raise Unsupported("string literal output is not supported")
+        if printed is None and _operand_is_pointer(root):
             raise Unsupported("printing a pointer prints its real, randomized address")
     else:
         raise Unsupported(f"unsupported statement: {node['kind']}")
@@ -503,6 +526,12 @@ def _statement(node: dict, program: str, state: dict[str, Value | None], records
     def locate(item: dict) -> tuple[int, int]:
         return tuple(map(to_pane, _bounds(item)))
 
+    if printed is not None:
+        # Output that is no value (`std::endl`, `'\n'`) prints as it is spelled.
+        if whitespace_output(text) != printed:
+            raise Unsupported("whitespace output is supported as std::endl, '\\n', '\\t' or ' '")
+        return Statement(source, span, prefix + text + suffix, (len(prefix), len(prefix) + len(text)),
+                         locate(root), output_suffix=output_suffix, printed=printed)
     evaluator = _Evaluator(state, locate, records)
     value, _ = evaluator.rvalue(root)
     target, destination = declared, None
@@ -712,6 +741,8 @@ class _Renderer:
                   "span": pane.replace(*statement.result, str(statement.value))}
             self.add(line, pane, expr, before, op)
         span, text = pane.locate(*statement.result), pane.read(*statement.result)
+        if statement.printed is not None:
+            text = statement.printed
         if statement.output_suffix is not None:
             self.stdout += text + statement.output_suffix
             self.add(line, pane, expr, after, {"kind": "print", "value": text, "span": span}, 1.2)
@@ -768,16 +799,26 @@ def trace(source: str, *, runtime: bool = True) -> dict:
         for variable in variables:
             variable['address'] = addresses[variable['name']]
         variables.sort(key=lambda variable: variable['address'])
+    # Struct definitions are compiled and run but are not steps: the player shows them on
+    # hover over the type, as written in the lesson.
+    shown = [(statement, after) for statement, after in zip(statements, states)
+             if not _DEFINITION.match(statement.source)]
+    if not shown:
+        raise Unsupported("a snippet of only struct definitions has nothing to step through")
     renderer, previous = _Renderer(addresses, leaves(variables)), {}
-    for line, (statement, after) in enumerate(zip(statements, states)):
+    for line, (statement, after) in enumerate(shown):
         renderer.statement(line, statement, previous, after)
         previous = after
     if runtime and renderer.stdout != execution.stdout:
         raise Unsupported("runtime output disagrees with the expression trace")
     renderer.steps[-1]["hold"] = 3
-    result = {"format": FORMAT, "source": [statement.source for statement in statements],
-              "spans": [list(statement.span) if statement.span else None for statement in statements],
+    shown = [statement for statement, _ in shown]
+    result = {"format": FORMAT, "source": [statement.source for statement in shown],
+              "spans": [list(statement.span) if statement.span else None for statement in shown],
               "variables": variables, "steps": renderer.steps}
+    types = _definitions(body)
+    if types:
+        result["types"] = types
     try:
         validate(result)
     except FormatError as exc:

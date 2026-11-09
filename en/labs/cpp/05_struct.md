@@ -381,6 +381,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#9-assigning-a-structure-variable-2)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 `b = a` does not know which fields have already been initialized.

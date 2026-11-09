@@ -77,6 +77,26 @@ class ValidationTests(unittest.TestCase):
     def test_rejects_output_without_print(self):
         self.rejects('only a print', lambda t: t['steps'][-1].update(op=None))
 
+    def with_newline(self, spelling, printed='\n'):
+        """The fixture followed by `std::cout << <spelling>;`, which prints `printed`."""
+        trace, pane = copy.deepcopy(self.trace), 'std::cout << ' + spelling
+        last, span = trace['steps'][-1], [13, len(pane)]
+        trace['source'].append(pane + ';')
+        shown = dict(last, line=last['line'] + 1, pane=pane, op=None, expr=span, hold=1)
+        trace['steps'] += [shown, dict(shown, stdout=last['stdout'] + printed,
+                                       op={'kind': 'print', 'value': printed, 'span': span})]
+        return trace
+
+    def test_whitespace_output_prints_as_it_is_spelled(self):
+        for spelling, printed in [('std::endl', '\n'), ("'\\n'", '\n'), ("' '", ' ')]:
+            with self.subTest(spelling):
+                validate(self.with_newline(spelling, printed))
+        for spelling, printed in [('std::endl', ' '), ('std::flush', '\n'), ('"\\n"', '\n')]:
+            with self.subTest(spelling), self.assertRaisesRegex(FormatError, 'does not cover'):
+                validate(self.with_newline(spelling, printed))
+        self.trace = self.with_newline('std::endl')
+        self.rejects('stdout must grow', lambda t: t['steps'][-1].update(stdout=t['steps'][-2]['stdout'] + ' '))
+
 
 class OperationValueTests(unittest.TestCase):
     """Operation values must agree with the memory snapshots around them."""

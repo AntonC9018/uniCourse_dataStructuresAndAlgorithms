@@ -124,6 +124,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#4-копирование-константной-структуры)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Выведутся `1` и `3`.

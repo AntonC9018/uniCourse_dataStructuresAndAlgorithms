@@ -97,6 +97,27 @@ int main() {
         self.assertTrue(all(step["stdout"].startswith("1\n") for step in trace["steps"][first:]))
         self.assertEqual(final(trace, "stdout"), "1\n2\n")
 
+    def test_bare_endl_prints_a_newline(self):
+        trace = self.trace("int a{1}; std::cout << a; std::cout << std::endl;")
+        self.assertEqual(panes(trace, 2), ["std::cout << std::endl"] * 2)
+        self.assertEqual(ops(trace, 2), [{"kind": "print", "value": "\n", "span": [13, 22]}])
+        self.assertEqual(trace["steps"][-1]["expr"], [13, 22])
+        self.assertEqual(trace["spans"][2], [13, 22])
+        self.assertEqual(final(trace, "stdout"), "1\n")
+
+    def test_bare_newline_character_prints_a_newline(self):
+        trace = self.trace("int a{1}; std::cout << '\\n';")
+        self.assertEqual(panes(trace, 1), ["std::cout << '\\n'"] * 2)
+        self.assertEqual(ops(trace, 1), [{"kind": "print", "value": "\n", "span": [13, 17]}])
+        self.assertEqual(final(trace, "stdout"), "\n")
+
+    def test_mixed_value_and_whitespace_output(self):
+        trace = self.trace("int a{1}; std::cout << a << ' '; std::cout << a << std::endl; "
+                           "std::cout << endl << '\\t' << endl;")
+        self.assertEqual(final(trace, "stdout"), "1 1\n\n\t\n")
+        self.assertEqual(ops(trace, 3), [{"kind": "print", "value": "\n", "span": [13, 17]}])
+        self.assertEqual([step["stdout"] for step in trace["steps"] if step["line"] == 3], ["1 1\n", "1 1\n\n\t\n"])
+
     def test_const_and_auto_copy_are_scalar_values(self):
         trace = self.trace("const int a{5}; auto b=a; b=6; std::cout << a;")
         self.assertEqual(final(trace), {"a": 5, "b": 6})
@@ -228,6 +249,8 @@ class StaticPointerTraceTests(unittest.TestCase):
             "int __course_checkpoint{5};",
             "int a,b;",
             "int a{1}; } int outside(){return 0;} int other(){",  # escaped wrapper
+            "int g;\nint main() { std::cout << g; }",  # a global moved into main
+            "int f() { return 1; }\nint main() { int a{ f() }; }",
             "int a{1}; int b{2}; int c{3}; int d{4}; int e{5}; int f{6}; int g{7}; int h{8}; int i{9};",
         ]
         self.assert_rejected_without_running(sources)
@@ -254,7 +277,11 @@ class StaticPointerTraceTests(unittest.TestCase):
             "int a{5}; int* b{&a}; std::cout << b;": "randomized address",
             "int a{5}; int* b{&a}; int* c = b++;": "UnaryOperator",
             "int a{5}; int* p{&a}; *p += 1;": "CompoundAssignOperator",
-            "int a{5}; int* p{&a}; std::cout << *p; std::cout << std::endl;": "bare std::endl",
+            "int a{5}; std::cout << std::endl << a;": "one integer output followed only by whitespace",
+            "int a{5}; int* p{&a}; std::cout << std::endl << p;": "one integer output followed only by whitespace",
+            "int a{5}; std::cout << \"\\n\";": "string literal output",
+            "int a{5}; std::cout << '\\x0a';": "whitespace output is supported as",
+            "int a{5}; std::cout << 'x';": "not char",
             "int a; (a) = 5;": "parenthesized variable",
         }
         for source, reason in cases.items():
@@ -330,6 +357,18 @@ class RuntimeTraceTests(unittest.TestCase):
         ]:
             with self.subTest(source=source):
                 self.assertEqual(final(tracing.trace(source), "stdout"), output)
+
+    def test_whitespace_output_is_verified_against_stdout(self):
+        source = "int a{5}; std::cout << std::endl; std::cout << a; std::cout << '\\n' << ' ' << std::endl;"
+        self.assertEqual(final(tracing.trace(source), "stdout"), "\n5\n \n")
+        with patch.object(tracing, "execute", return_value=Execution([{"a": Cell(0x1000, 4, False, 5)}] * 3, "5\n \n")):
+            with self.assertRaisesRegex(Unsupported, "runtime output disagrees"):
+                tracing.trace(source)
+
+    def test_generated_endl_browser_fixture_is_current(self):
+        path = Path(__file__).parent / "fixtures" / "endl-generated.json"
+        fixture = json.loads(path.read_text())
+        self.assertEqual(tracing.trace("\n".join(fixture["source"])), fixture)
 
     def test_double_pointer_runs_as_predicted(self):
         traced, predicted = tracing.trace(DOUBLE_POINTER), tracing.trace(DOUBLE_POINTER, runtime=False)

@@ -37,6 +37,11 @@ their original targets. Fields must be `int`, pointers to `int`, or pointers to 
 the snippet. Every live field is checked under GDB after every statement. The player uses the
 existing struct frames, per-field colours and separate arc endpoints for objects and fields.
 
+Output prints one integer value followed only by whitespace (`' '`, `'\t'`, `'\n'`) or
+`std::endl`. A statement of whitespace alone, such as `std::cout << std::endl;`, prints it as
+spelled; flushing is not shown. Printing a pointer (a real, randomized address), a string
+literal or another character is rejected.
+
 Pointer arithmetic/comparison, arrays, references, nested struct values, casts, heap allocation,
 other field types, methods, inheritance, bitfields, default member initializers, empty structs,
 qualified pointers, control flow, ill-formed snippets and undefined reads or

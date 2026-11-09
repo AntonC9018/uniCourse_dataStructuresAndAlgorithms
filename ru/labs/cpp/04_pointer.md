@@ -112,6 +112,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#3-оператор-dereference-на-запись)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 В `b` был сохранен адрес переменной `a`.
@@ -189,6 +200,17 @@ int* b{ &a };
 std::cout << (*b) + 7;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#7-печать-сложного-выражения)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Правильный ответ:</summary>
@@ -274,6 +296,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#11-это-та-же-память)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Запись и чтение всегда происходит по тому же адресу.
@@ -291,6 +324,17 @@ int* b = &a;
 std::cout << a;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#12-инициализация-через-указатель)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -319,6 +363,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#13-перезапись-указателя)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 На строчке `p = &b` перезаписывается сам *адрес* из `p` на адрес другой переменной (`b`).
@@ -344,6 +399,17 @@ std::cout << std::endl;
 std::cout << b;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#14-двойной-указатель)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -405,6 +471,17 @@ auto copiedValue{ *p };
 std::cout << value << std::endl;
 std::cout << copiedValue << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#16-auto-из-указателя-и-его-значения)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>

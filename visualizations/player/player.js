@@ -39,6 +39,7 @@
       copy: 'Line {line}: {code}', read: 'Read {name}: {value}',
       addr: 'Take the address of {name}: {value}', deref: 'Follow the address in {via} to {target}',
       eval: 'Evaluate: {value}', write: 'Store {value} in {name}', print: 'Print {value}',
+      blank: { '\n': 'Print a newline', '\t': 'Print a tab', ' ': 'Print a space' },
       error: 'This visualization could not be loaded.',
     },
     ru: {
@@ -48,6 +49,7 @@
       copy: 'Строка {line}: {code}', read: 'Чтение {name}: {value}',
       addr: 'Адрес {name}: {value}', deref: 'Переход по адресу из {via} к {target}',
       eval: 'Вычисление: {value}', write: 'Запись {value} в {name}', print: 'Вывод {value}',
+      blank: { '\n': 'Вывод перевода строки', '\t': 'Вывод табуляции', ' ': 'Вывод пробела' },
       error: 'Не удалось загрузить визуализацию.',
     },
   };
@@ -64,6 +66,8 @@
   const round = value => Math.round(value * 100) / 100;
   const esc = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;',
     '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+  // Printed whitespace (`std::endl`) travels as a visible glyph.
+  const glyphs = value => String(value).replace(/\n/g, '↵').replace(/\t/g, '⇥').replace(/ /g, '␣');
   const format = (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? '');
   // textLength pins every glyph run to the advance the layout assumes, whatever the font.
   function text(x, y, value, size, color, anchor = 'start') {
@@ -142,7 +146,8 @@
         size: variable.size, color: variable.color, fields: fields.map(field => field.name) });
     }
     const top = variables.map(variable => variable.name);
-    return { trace, steps: trace.steps, source: trace.source, spans: trace.spans || [], leaves, groups, top };
+    return { trace, steps: trace.steps, source: trace.source, spans: trace.spans || [], types: trace.types || {},
+      leaves, groups, top };
   }
 
   // Variables the current statement involves stay bright; the rest dim to half. A pointer's
@@ -199,6 +204,32 @@
   const labelCentre = c => [c.x + 3 + labelWidth(c) / 2, c.y - 18];
   const valueCentre = c => [c.x + c.w / 2, c.y + 32];
 
+  // Where a struct's definition pops out: its type name in the code, and each of its frames.
+  function typeTargets(m, g) {
+    const names = Object.keys(m.types);
+    if (!names.length) return [];
+    const word = new RegExp(`\\b(${names.join('|')})\\b`, 'g'), targets = [];
+    m.source.forEach((source, i) => {
+      for (const match of source.matchAll(word)) {
+        targets.push({ type: match[1], underline: true, x: g.code.x + 62 + match.index * CODE_CHAR,
+          y: g.lineY(i) - CODE_SIZE * 0.85, w: match[1].length * CODE_CHAR, h: CODE_SIZE * 1.2 });
+      }
+    });
+    for (const s of g.groups) if (m.types[s.type]) targets.push({ type: s.type, ...frameOf(s) });
+    return targets;
+  }
+
+  // Labels centred under neighbouring boxes share one size, shrunk until the widest pair fits.
+  function labelSize(boxes, label, size) {
+    const sorted = [...boxes].sort((a, b) => a.x - b.x);
+    for (let i = 1; i < sorted.length; i++) {
+      const a = sorted[i - 1], b = sorted[i], room = (b.x + b.w / 2) - (a.x + a.w / 2) - 8;
+      const half = (label(a).length + label(b).length) * CHAR / 2;
+      if (half * size > room) size = room / half;
+    }
+    return size;
+  }
+
   function geometry(m, P, stacked) {
     const g = { stacked, isStruct: c => Boolean(c.fields) };
     const longest = Math.max(...m.source.map(line => line.length));
@@ -211,8 +242,9 @@
     g.byte = Math.min(MAX_BYTE, (MEMORY_WIDTH - GAP * (starts.length - 1)) / (g.end - starts[0]));
     const memoryW = (g.end - starts[0]) * g.byte + GAP * (starts.length - 1);
     const paneChars = Math.max(...m.steps.map(step => step.pane.length));
-    const finalOutput = m.steps[m.steps.length - 1].stdout.replace(/\n$/, '');
-    const outputLines = finalOutput ? finalOutput.split('\n') : [];
+    const finalStdout = m.steps[m.steps.length - 1].stdout;
+    // A lone trailing newline adds no visible line; output of only a newline still shows one.
+    const outputLines = finalStdout ? finalStdout.replace(/\n$/, '').split('\n') : [];
     const outputChars = Math.max(0, ...outputLines.map(line => line.length));
     let columnW = Math.max(360, memoryW + 48, paneChars * EVAL_CHAR + 48,
       (P.outputLabel.length + 1) * 26 * CHAR + outputChars * EVAL_CHAR + 48);
@@ -266,6 +298,9 @@
     // Colouring of identifiers: variables keep their colour; a field takes its field's colour.
     g.owner = token => g.groups.find(s => s.name === token) || g.leaves.find(l => !l.group && l.name === token);
     g.field = token => g.leaves.find(l => l.group && l.label === token);
+    g.typeTargets = typeTargets(m, g);
+    g.nameSize = labelSize([...g.groups, ...g.leaves.filter(l => !l.group)], c => c.name, 26);
+    g.fieldSize = labelSize(g.leaves.filter(l => l.group), c => c.label, 20);
     return g;
   }
 
@@ -346,6 +381,11 @@
       out += text(x + 22, g.lineY(i), i + 1, 18, P.muted)
         + colored(c, x + 62, g.lineY(i), source, CODE_SIZE, /^\s*struct\b/.test(source));
     });
+    // A faint dotted underline, like an IDE's hint, says the type name can be hovered.
+    for (const t of g.typeTargets) {
+      if (t.underline) out += `<path d="M ${round(t.x + 1)} ${round(t.y + t.h - 1)} h ${round(t.w - 2)}" `
+        + `stroke="${P.muted}" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round" opacity="0.6"/>`;
+    }
     return out;
   }
   function tether(c, oldLine) {
@@ -426,7 +466,7 @@
     for (const s of g.groups) {
       const on = g.leaves.some(l => l.group === s.name && live(l)), f = frameOf(s);
       out += dim(c, s.name, rect(f.x, f.y, f.w, f.h, 'none', on ? s.color : P.deadStroke, 6, FRAME.stroke)
-        + text(s.x + s.w / 2, f.y + f.h + 32, s.name, 26, on ? s.color : P.grey, 'middle'));
+        + text(s.x + s.w / 2, f.y + f.h + 32, s.name, g.nameSize, on ? s.color : P.grey, 'middle'));
     }
     if (op && op.kind === 'addr') {
       // Taking an address reads the label above storage, not the value.
@@ -437,8 +477,8 @@
     for (const cell of g.leaves) {
       const on = live(cell), changing = writing.has(cell.name), color = cell.fieldColor || cell.color;
       let markup = text(cell.x + 3, cell.y - 12, cell.address, 16, on ? P.muted : P.grey);
-      markup += cell.group ? text(cell.x + cell.w / 2, cell.y + cell.h + 28, cell.label, 20, on ? color : P.grey, 'middle')
-        : text(cell.x + cell.w / 2, cell.y + cell.h + 34, cell.label, 26, on ? color : P.grey, 'middle');
+      markup += cell.group ? text(cell.x + cell.w / 2, cell.y + cell.h + 28, cell.label, g.fieldSize, on ? color : P.grey, 'middle')
+        : text(cell.x + cell.w / 2, cell.y + cell.h + 34, cell.label, g.nameSize, on ? color : P.grey, 'middle');
       markup += rect(cell.x, cell.y, cell.w, cell.h, on ? P.panel : P.deadFill, 'none', 0);
       markup += rect(cell.x + 1.5, cell.y + 1.5, cell.w - 3, cell.h - 3, 'none', on ? color : P.deadStroke, 0, 3);
       if (on) {
@@ -555,9 +595,9 @@
     shown.split('\n').forEach((line, i) => { out += text(vx, oy + i * 36, line, PANE_SIZE, P.fg); });
     if (printing) {
       const lines = shown.split('\n'), x = vx + lines[lines.length - 1].length * EVAL_CHAR, y = oy + (lines.length - 1) * 36;
-      const sx = g.tx + (op.span[0] + op.value.length / 2) * EVAL_CHAR, w = op.value.length * EVAL_CHAR;
+      const sx = g.tx + (op.span[0] + op.span[1]) / 2 * EVAL_CHAR, w = op.value.length * EVAL_CHAR;
       const p = (...values) => values.map(round).join(' ');
-      out += valueBox(c, op.value, P.muted, `M ${p(sx, g.ty - 11)} C ${p(sx, y - 30)}, ${p(x + w / 2, g.ty + 20)}, ${p(x + w / 2, y - 11)}`, 0.2, 0.7, 0.9);
+      out += valueBox(c, op.value.trim() ? op.value : glyphs(op.value), P.muted, `M ${p(sx, g.ty - 11)} C ${p(sx, y - 30)}, ${p(x + w / 2, g.ty + 20)}, ${p(x + w / 2, y - 11)}`, 0.2, 0.7, 0.9);
       out += `<g opacity="0">${show(0.9)}${text(x, y, op.value, PANE_SIZE, P.fg)}</g>`;
     }
     return out;
@@ -573,11 +613,11 @@
   function describe(c) {
     const { m, S, step } = c, op = step.op;
     if (!op) return format(S.copy, { line: step.line + 1, code: m.source[step.line] });
+    if (op.kind === 'print' && S.blank[op.value]) return S.blank[op.value];
     return format(S[op.kind], op);
   }
 
   // Player -----------------------------------------------------------------------------------
-  const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   const players = [];
 
   function themeName() {
@@ -625,7 +665,8 @@
         // The drawing is redrawn on every step and hidden from assistive technology; the
         // line controls above it are stable elements, so a redraw never discards focus.
         + `<svg class="cv-stage" role="group" aria-label="${esc(S.stage)}" xmlns="http://www.w3.org/2000/svg">`
-        + `<g class="cv-scene" aria-hidden="true"></g><g class="cv-lines">${lineTargets(this.m, S)}</g></svg></div>`
+        + `<g class="cv-scene" aria-hidden="true"></g><g class="cv-lines">${lineTargets(this.m, S)}</g></svg>`
+        + '<div class="cv-type" aria-hidden="true" hidden></div></div>'
         + '<div class="cv-controls"><div class="cv-transport">'
         + button('play', S.play, 'play', ' cv-primary') + button('back', S.back, 'back') + button('next', S.next, 'next')
         + button('replay', S.replay, 'replay', ' cv-icon-only')
@@ -655,6 +696,10 @@
         if (line) this.line(Number(line.dataset.line));
       });
       root.addEventListener('keydown', event => this.key(event));
+      this.typeBox = root.querySelector('.cv-type');
+      this.svg.addEventListener('pointermove', event => this.hoverType(event));
+      this.svg.addEventListener('pointerdown', event => this.hoverType(event));
+      this.svg.addEventListener('pointerleave', () => this.hoverType(null));
       this.stacked = null;
       if (window.ResizeObserver) {
         new ResizeObserver(() => { if (this.arrangement() !== this.stacked) this.refresh(); }).observe(root);
@@ -676,6 +721,36 @@
       } else if (event.key === ' ' && !target.matches('button')) {
         event.preventDefault();
         this.play();
+      }
+    }
+
+    // The definition of the struct under the pointer pops out above it, or below near the top.
+    hoverType(event) {
+      const targets = this.g ? this.g.typeTargets : [];
+      let hit = null;
+      if (event && targets.length) {
+        const matrix = this.svg.getScreenCTM();
+        if (matrix) {
+          const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
+          hit = targets.find(t => point.x >= t.x && point.x <= t.x + t.w && point.y >= t.y && point.y <= t.y + t.h);
+        }
+      }
+      this.svg.style.cursor = hit ? 'help' : '';
+      if (!hit) { this.typeBox.hidden = true; this.shownType = null; return; }
+      if (this.shownType !== hit) {
+        this.shownType = hit;
+        this.typeBox.innerHTML = '<pre>' + this.m.types[hit.type].split(/(\b[A-Za-z_]\w*\b)/).map(token => {
+          const field = this.g.field(token);
+          return field ? `<span style="color:${field.fieldColor}">${esc(token)}</span>`
+            : KEYWORDS.has(token) ? `<span class="cv-type-keyword">${esc(token)}</span>` : esc(token);
+        }).join('') + '</pre>';
+        this.typeBox.hidden = false;
+        const view = this.typeBox.parentElement.getBoundingClientRect(), stage = this.svg.getBoundingClientRect();
+        const scale = stage.width / this.g.width, box = this.typeBox;
+        const left = stage.left - view.left + (hit.x + hit.w / 2) * scale - box.offsetWidth / 2;
+        const top = stage.top - view.top + hit.y * scale - box.offsetHeight - 6;
+        box.style.left = `${Math.max(4, Math.min(view.width - box.offsetWidth - 4, left))}px`;
+        box.style.top = `${top >= 4 ? top : stage.top - view.top + (hit.y + hit.h) * scale + 6}px`;
       }
     }
 
@@ -704,7 +779,7 @@
     render(animate) {
       this.stacked = this.arrangement();
       const steps = this.m.steps, step = steps[this.index], prev = this.index ? steps[this.index - 1] : null;
-      const g = geometry(this.m, this.P, this.stacked);
+      const g = this.g = geometry(this.m, this.P, this.stacked);
       const now = activeVariables(this.m, this.index);
       const before = animate && this.index ? activeVariables(this.m, this.index - 1) : now;
       const begin = new Map();
@@ -778,14 +853,9 @@
       this.continuous = autoplay;
       this.index = index;
       this.elapsed = 0;
-      if (reducedMotion.matches) {
-        // Cut straight to each state; autoplay still pauses on every step.
-        this.duration = autoplay ? this.m.steps[index].hold + 0.6 : 0;
-        this.render(false);
-      } else {
-        this.duration = stepSeconds(this.m.steps, index);
-        this.render(true);
-      }
+      // Steps always animate, whatever prefers-reduced-motion says: the motion is the lesson.
+      this.duration = stepSeconds(this.m.steps, index);
+      this.render(true);
       if (this.duration > 0) this.resume();
     }
     resume() {

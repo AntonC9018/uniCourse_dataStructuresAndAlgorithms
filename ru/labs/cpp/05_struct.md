@@ -386,6 +386,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#9-присваивание-переменной-структуры-2)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 `b = a` не знает от том, какие поля уже инициализированы.
