@@ -482,7 +482,7 @@ std::cout << a << std::endl;
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 

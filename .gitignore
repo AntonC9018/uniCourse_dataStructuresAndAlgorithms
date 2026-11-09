@@ -29,3 +29,6 @@ public/mermaid/
 public/assets/
 assets/
 
+
+# Generated visualization traces (cached by CI, never commit)
+.cache/

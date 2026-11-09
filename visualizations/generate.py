@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
-"""Compiler-backed adapter consumed by course maintenance (local rendering only)."""
+"""Compiler-backed tracer adapter consumed by course maintenance.
+
+`trace` prints one example's trace as JSON; `revision` versions every trace.
+"""
 from __future__ import annotations
 
 import argparse
 from dataclasses import asdict
 import hashlib
 import json
-import os
 from pathlib import Path
-import runpy
 import subprocess
 import sys
-import tempfile
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 
 
 def revision() -> str:
-    """Version the renderer, without storing a source hash on lesson tags."""
+    """Change whenever a trace could change: tracer sources and the pinned toolchain."""
     digest = hashlib.sha256()
-    for name in ('generate.py', 'tracing.py', 'model.py', 'layout-prototype.py',
-                 'export-layout-svg.cjs', 'package-lock.json'):
-        digest.update(name.encode())
-        digest.update((ROOT / name).read_bytes())
+    for path in (ROOT / 'generate.py', ROOT / 'tracing.py',
+                 ROOT.parent / 'flake.nix', ROOT.parent / 'flake.lock'):
+        digest.update(path.name.encode())
+        digest.update(path.read_bytes())
     return digest.hexdigest()
 
 
@@ -63,29 +63,10 @@ def applicable(timeline) -> None:
         raise Unsupported('a lone literal-initialized cell and print need no visualization')
 
 
-def render(timeline, output: Path) -> None:
-    """Export the settled final state as a static SVG; the interactive player replaces video."""
-    page = runpy.run_path(str(ROOT / 'layout-prototype.py'))['PAGE']
-    payload = asdict(timeline)
-    payload['output_label'] = ''  # Generated assets are shared across lesson languages.
-    html = page.replace('__TRACES__', json.dumps([payload]).replace('<', chr(92) + 'u003c'))
-    output = output.resolve()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='course-visualization-') as directory:
-        document = Path(directory) / 'timeline.html'
-        document.write_text(html)
-        env = dict(os.environ, VISUALIZATION_INPUT=str(document), VISUALIZATION_OUTPUT=str(output))
-        subprocess.run(['node', str(ROOT / 'export-layout-svg.cjs'), 'expression'],
-                       env=env, check=True, timeout=300)
-    if not output.is_file() or output.stat().st_size == 0:
-        raise RuntimeError('renderer did not produce an asset')
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=('probe', 'trace', 'render', 'revision'))
+    parser.add_argument('operation', choices=('probe', 'trace', 'revision'))
     parser.add_argument('--source', type=Path)
-    parser.add_argument('--output', type=Path)
     parser.add_argument('--template', default=TEMPLATE)
     args = parser.parse_args()
     if args.operation == 'revision':
@@ -110,12 +91,8 @@ def main() -> int:
         return 1
     if args.operation == 'probe':
         print(json.dumps({'supported': True, 'template': TEMPLATE}))
-    elif args.operation == 'trace':
-        print(json.dumps(asdict(timeline)))
     else:
-        if not args.output:
-            parser.error('--output is required for render')
-        render(timeline, args.output)
+        print(json.dumps({'template': TEMPLATE, 'timeline': asdict(timeline)}, sort_keys=True))
     return 0
 
 

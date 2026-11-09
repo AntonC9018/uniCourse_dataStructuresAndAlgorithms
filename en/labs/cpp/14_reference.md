@@ -480,7 +480,7 @@ std::cout << a << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 

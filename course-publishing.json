@@ -215,5 +215,11 @@
   },
   "maintenance": {
     "heading_numbering": "section"
+  },
+  "visualizations": {
+    "roots": [
+      "en/labs/cpp",
+      "ru/labs/cpp"
+    ]
   }
 }

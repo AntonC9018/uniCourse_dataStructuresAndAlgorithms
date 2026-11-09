@@ -25,10 +25,9 @@ python3 visualizations/discover.py --report /tmp/visualization-inventory.json
 python3 visualizations/discover.py --apply
 ```
 
-Discovery adds minimal tags in collapsed, localized execution-trace blocks. Video rendering, the
-upload manifest and the maintenance step that filled those tags have been removed, and the
-`visualizations` entry is gone from `course-publishing.json`, so maintenance neither fills nor
-checks the tags. How the interactive player reaches a lesson is decided in [#55] and [#56].
+Discovery adds minimal tags in collapsed, localized execution-trace blocks. Course maintenance
+traces every tag in CI inside the pinned toolchain and stores the results by content, so only
+changed examples are traced again ([#55], [#56]); a tag that cannot be traced fails the build.
 
 Generation uses Clang AST types and operation ranges to build expression reductions. GDB verifies
 every post-statement value, output, integer size, and frame location before rendering. Addresses
@@ -43,37 +42,23 @@ than the prototype to accommodate two-digit results alongside `std::endl`.
 Ineligible examples remain unchanged;
 later prototypes can extend coverage without guessing unsupported behavior.
 
-Local dependencies are Clang with C++ standard headers, Python-enabled GDB, Node, Chromium,
-and DejaVu Sans Mono. Playwright is pinned in `package-lock.json`:
+The toolchain is pinned by the course flake. `nix develop .#visualizations` provides Clang with
+C++ standard headers and Python-enabled GDB, which is all tracing needs; CI uses the same shell.
+The default shell (`nix develop`) adds Node and Chromium for the prototypes' screenshots.
+`CLANGXX` and `GDB` select the tools; both shells set them.
 
-```sh
-npm ci --prefix visualizations
-export COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE=/path/to/chromium
-# Optional when tools are outside PATH:
-export CLANGXX=/path/to/clang++
-export GDB=/path/to/gdb
-```
-
-The existing course-management Nix shell supplies Chromium and fonts. Compiler/GDB
-paths can point to existing declarative installations. No global Python or npm install is needed.
-`PLAYWRIGHT_MODULE` can select an existing compatible Playwright package instead of the local one.
-
-For a single source, inspect the derived trace or render it directly:
+For a single source, inspect the derived trace:
 
 ```sh
 python3 visualizations/generate.py probe --source /tmp/snippet.cpp
 python3 visualizations/generate.py trace --source /tmp/snippet.cpp
-python3 visualizations/generate.py render --source /tmp/snippet.cpp --output /tmp/trace.svg
 ```
 
-`render` exports the settled final state of the approved SVG player as a static snapshot through
-`export-layout-svg.cjs`; there is no video output. Multiple printed
-values append to the visible output; only the newly printed value moves. Empty-brace initialization
-retains its real source highlight and transforms into zero. Compiler/GDB tests run locally with
-`python3 -m unittest discover -s visualizations/tests`. CI never installs or runs these tools.
-
-Generated SVGs live in the ignored `visualizations/renders/` directory. Expected final states:
-expression `a = 7`, `b = 11`, stdout `11`; failed swap `a = 2`, `b = 2`.
+`revision` prints a hash of the tracer sources and the flake lock; maintenance keys stored traces by
+it, so a toolchain bump re-traces every example. Multiple printed values append to the visible
+output; only the newly printed value moves. Empty-brace initialization retains its real source
+highlight and transforms into zero. Run the tests with
+`nix develop .#visualizations --command python3 -m unittest discover -s visualizations/tests`.
 
 ## Website controls prototype
 
@@ -178,17 +163,6 @@ opens evaluation beneath the line above a full-width memory band.
 
 All layouts use 112-pixel integer cells. Multi-row memory and long expressions still need a
 separate layout pass.
-
-To export the settled final state of a trace as a static SVG, after generating the HTML:
-
-```sh
-node visualizations/export-layout-svg.cjs expression
-```
-
-It requires Playwright and Chromium. Set `PLAYWRIGHT_MODULE` to an installed Playwright package
-when it is outside Node's module search path, and optionally set
-`COURSE_MANAGEMENT_CHROMIUM_EXECUTABLE` to the Chromium executable from the existing Nix shell.
-The output is `visualizations/renders/layout-expression.svg` (or `swap`).
 
 ## Original visual contract
 

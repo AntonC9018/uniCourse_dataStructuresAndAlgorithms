@@ -152,7 +152,7 @@ std::cout << a << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -170,7 +170,7 @@ std::cout << c << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -209,7 +209,7 @@ std::cout << b << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -315,7 +315,7 @@ std::cout << a << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -343,7 +343,7 @@ std::cout << a << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -369,7 +369,7 @@ std::cout << b << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -469,7 +469,7 @@ auto b{ a + 5 };
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
@@ -496,7 +496,7 @@ std::cout << b << std::endl;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization type="animation"> -->
+<!-- <visualization> -->
 
 <!-- </visualization> -->
 
