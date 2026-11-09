@@ -53,7 +53,7 @@ class LayoutEligibilityTests(unittest.TestCase):
 
     def test_long_sources_and_wide_panes_are_rejected(self):
         trace = copy.deepcopy(self.trace)
-        trace['source'] = trace['source'] * 2
+        trace['source'] = ['int a{ 5 };'] * (generate.MAX_LINES + 1)
         with self.assertRaisesRegex(Unsupported, 'source exceeds'):
             applicable(trace)
         trace = copy.deepcopy(self.trace)

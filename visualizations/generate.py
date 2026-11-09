@@ -23,7 +23,9 @@ TRACER_SOURCES = tuple(ROOT / name for name in
                         'toolchain.py', 'trace_format.py', 'layout.py'))
 
 # What the player draws legibly inside a lesson column.
-MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 10, 32
+# The player grows with the snippet; these keep a whole scene on a laptop screen while
+# stepping. Columns stay tight because wider code shrinks the text at phone width.
+MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 16, 32
 MAX_PANE, MAX_OUTPUT_LINES, MAX_OUTPUT_COLUMNS = 31, 4, 21
 # The player's memory geometry (`player.js`): the row's width, the widest byte, the gap between
 # variables, and the advance of a 26-unit variable name.
