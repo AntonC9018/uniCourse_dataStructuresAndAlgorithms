@@ -889,7 +889,7 @@
           + `<div class="cv-layout-code">${rows}</div><div>`
           + `<p>alignof(${esc(record.name)}) = ${record.alignment}</p>`
           + `<div class="cv-layout-memory" style="--cv-slot:${record.alignment}">${bytes}</div>`
-          + `<p>${esc(padding)}: ▧ · ${record.size} B</p></div></section>`;
+          + `<p>${esc(padding)}: ▧ · ${record.size - record.fields.reduce((sum, f) => sum + f.size, 0)} B</p></div></section>`;
       }).join('');
       host.append(this.root);
       this.locked = null;

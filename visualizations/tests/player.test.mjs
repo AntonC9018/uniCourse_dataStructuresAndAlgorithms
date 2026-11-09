@@ -138,6 +138,7 @@ test('static layout links rows and bytes in both themes and initializes lazily',
   assert.equal(await page.locator('.cv-layout').count(), 0);
   await page.locator('summary').click();
   await page.waitForSelector('.cv-layout');
+  assert.match(await page.locator('.cv-layout-record').textContent(), /Padding: ▧ · 6 B/);
   const row = page.locator('.cv-layout-row[data-layout-key="0:1"]');
   const bytes = page.locator('.cv-byte[data-layout-key="0:1"]');
   for (const theme of ['dark', 'light']) {
