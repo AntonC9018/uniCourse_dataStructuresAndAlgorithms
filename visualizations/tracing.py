@@ -1,45 +1,71 @@
-"""Compiler-backed, bounded integer timelines for the approved expression renderer.
+"""Compiler-backed execution traces of flat `int` and pointer examples, in the unified format.
 
-Clang decides syntax/types. A small whitelist reduces only side-effect-free integer
-expressions; GDB verifies every stored value and the program's output before rendering.
-No unsupported statement is ever executed.
+Clang decides syntax and types. A whitelist evaluates only side-effect-free expressions over
+`int` and pointers to `int` (of any depth): variable reads, address-of, dereference through a
+pointer variable, parentheses, braces and integer arithmetic. Each statement becomes the
+reductions the lessons write out, `**pp = 7` → `**72 = 7` → `*p = 7` → `*64 = 7` → `a = 7`.
+
+GDB then runs the program (`execution.py`) and supplies main's frame after every statement:
+the values and the layout come from it, and pointer values are mapped back to the variables
+whose address they hold. A prediction that disagrees with the run rejects the snippet, and no
+statement outside the whitelist is ever executed. Addresses are normalized to start near 64.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from collections.abc import Callable
+from dataclasses import dataclass, field
 import json
-import os
 from pathlib import Path
 import re
-import shutil
-import subprocess
 import tempfile
 
-from model import Step, Timeline, Variable
+from execution import Execution, execute
+from toolchain import Unsupported, run, tool
+from trace_format import FORMAT, UNKNOWN, FormatError, scalar, validate
 
-
-class Unsupported(ValueError):
-    """The snippet cannot safely be represented by this visualization category."""
-
+__all__ = ["Pointer", "Unsupported", "trace"]
 
 MIN_INT, MAX_INT = -(2**31), 2**31 - 1
-COLORS = ("#61d4c4", "#ffbd69", "#b5a0ff")
+FIRST_ADDRESS = 64
+INT_SIZE, POINTER_SIZE = 4, 8
+MAX_STATEMENTS, MAX_VARIABLES = 20, 8
 _QUOTED_OR_COMMENT = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
+_DECLARATION = r'(?:const\s+)?(?:int|auto)(?:\s+const)?(?:\s*\*+\s*|\s+)\w+\s*'
 
 
-def _run(command: list[str], *, timeout: int = 30) -> subprocess.CompletedProcess:
-    try:
-        return subprocess.run(command, capture_output=True, text=True, timeout=timeout)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise Unsupported(f"tool execution failed: {exc}") from exc
+# Values -----------------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class Pointer:
+    """A pointer value: the variable whose address it holds, or None for a null pointer."""
+    target: str | None = None
 
 
-def _tool(env: str, executable: str) -> str:
-    selected = os.environ.get(env) or shutil.which(executable)
-    if not selected:
-        raise Unsupported(f"{executable} is required (set {env})")
-    return selected
+Value = int | Pointer
 
+
+def _integer(value: int) -> int:
+    if not MIN_INT <= value <= MAX_INT:
+        raise Unsupported("signed integer overflow is outside the timeline category")
+    return value
+
+
+def _depth(node: dict) -> int:
+    """How many pointer levels lie over `int`: 0 for `int`, 2 for `int **`."""
+    qualified = node.get("type", {}).get("qualType", "")
+    match = re.fullmatch(r"(const )?int(?: (\*+))?", qualified)
+    if match and not (match.group(1) and match.group(2)):
+        return len(match.group(2) or "")
+    if "&" in qualified:
+        raise Unsupported("references are not supported")
+    if "[" in qualified:
+        raise Unsupported("arrays are not supported")
+    if "*" in qualified:
+        raise Unsupported(f"only pointers to int are supported, not {qualified}")
+    raise Unsupported(f"only int and pointer values are supported, not {qualified or 'this type'}")
+
+
+# Source text ------------------------------------------------------------------------------
 
 def _body(source: str) -> str:
     def comment(match):
@@ -93,11 +119,12 @@ def _compact(source: str) -> tuple[str, list[int]]:
 def _main_ast(program: str, directory: Path) -> dict:
     path = directory / "source.cpp"
     path.write_text(program)
-    result = _run([_tool("CLANGXX", "clang++"), "-std=c++20", "-fsyntax-only", "-fno-color-diagnostics",
-                   "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter=main", str(path)])
+    result = run([tool("CLANGXX", "clang++"), "-std=c++20", "-fsyntax-only", "-fno-color-diagnostics",
+                  "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter=main", str(path)])
     if result.returncode:
-        diagnostic = next((line for line in result.stderr.splitlines() if "error:" in line), "ill-formed C++")
-        raise Unsupported(diagnostic)
+        diagnostic = next((line for line in result.stderr.splitlines() if "error:" in line), "error: ill-formed C++")
+        # Drop the temporary path, which differs between runs.
+        raise Unsupported(diagnostic[diagnostic.index("error:"):])
     decoder, offset, selected = json.JSONDecoder(), 0, []
     try:
         while offset < len(result.stdout):
@@ -120,108 +147,246 @@ def _main_ast(program: str, directory: Path) -> dict:
     return compound[0]
 
 
-def _integer(value: int) -> int:
-    if not MIN_INT <= value <= MAX_INT:
-        raise Unsupported("signed integer overflow is outside the timeline category")
-    return value
+# Evaluation -------------------------------------------------------------------------------
 
+@dataclass(frozen=True)
+class Reduction:
+    """One rewrite of the pane: the text at `span` becomes a value, an address or a name.
 
-def _unwrap(node: dict) -> dict:
-    while node.get("kind") in {"ImplicitCastExpr", "ExprWithCleanups"}:
-        if node.get("kind") == "ImplicitCastExpr" and node.get("castKind") not in {"LValueToRValue", "NoOp", "FunctionToPointerDecay", "ArrayToPointerDecay"}:
-            raise Unsupported("implicit numeric conversions are outside this category")
-        children = node.get("inner", [])
-        if len(children) != 1:
-            raise Unsupported("unsupported implicit expression")
-        node = children[0]
-    return node
-
-
-@dataclass
-class Statement:
-    source: str
-    expression: str
+    `read` replaces it with the value of `name`, `addr` with the address of `name`, `deref`
+    with the name of the variable `name` (a pointer) points to, and `eval` with `value` (or
+    `spelling`, when the value is not written as a number). `span` indexes the statement's
+    original pane; inner reductions come first.
+    """
+    kind: str
     span: tuple[int, int]
-    node: dict | None
-    target: str | None = None
-    declaration: bool = False
-    output_suffix: str | None = None
+    name: str | None = None
+    value: Value | None = None
+    spelling: str | None = None
 
 
-def _expression(node: dict, initialized: dict[str, int | None], operations: list) -> int:
-    node = _unwrap(node)
-    kind, children = node.get("kind"), node.get("inner", [])
-    if node.get("type", {}).get("qualType") not in {"int", "const int"}:
-        raise Unsupported("only int-valued expressions are supported")
-    if kind == "IntegerLiteral":
-        return _integer(int(node["value"]))
-    if kind == "DeclRefExpr":
-        declaration = node.get("referencedDecl", {})
-        name = declaration.get("name")
-        if declaration.get("kind") != "VarDecl" or name not in initialized:
-            raise Unsupported("expression references an undeclared or nonlocal variable")
-        value = initialized[name]
+class _Evaluator:
+    """Evaluates one expression against the state before its statement, recording reductions."""
+
+    def __init__(self, state: dict[str, Value | None], locate: Callable[[dict], tuple[int, int]]):
+        self.state, self.locate, self.reductions = state, locate, []
+
+    def _reduce(self, kind: str, node: dict, **details) -> None:
+        self.reductions.append(Reduction(kind, self.locate(node), **details))
+
+    def _load(self, name: str) -> Value:
+        value = self.state[name]
         if value is None:
             raise Unsupported(f"reading uninitialized variable {name}")
-        operations.append((node, value, name))
         return value
-    if kind in {"InitListExpr", "CXXFunctionalCastExpr"}:
-        # int{} and {} are atoms; never display an intermediate invalid `int0`.
-        if kind == "CXXFunctionalCastExpr":
+
+    def variable(self, node: dict) -> str:
+        """The local variable a DeclRefExpr names."""
+        declaration = node.get("referencedDecl", {})
+        name = declaration.get("name")
+        if node.get("kind") != "DeclRefExpr" or declaration.get("kind") != "VarDecl" or name not in self.state:
+            raise Unsupported("expression references an undeclared or nonlocal variable")
+        return name
+
+    def lvalue(self, node: dict, outer: dict | None = None) -> str:
+        """The variable `node` designates. Parentheses around a dereference reduce with it."""
+        kind, children = node.get("kind"), node.get("inner", [])
+        if kind == "ParenExpr" and len(children) == 1:
+            return self.lvalue(children[0], outer or node)
+        if kind == "DeclRefExpr":
+            return self.variable(node)
+        if kind == "UnaryOperator" and node.get("opcode") == "*" and len(children) == 1:
+            pointer, via = self.rvalue(children[0])
+            if via is None:
+                raise Unsupported("only dereferencing a pointer variable is supported, not a computed address")
+            if pointer.target is None:
+                raise Unsupported(f"dereferencing the null pointer {via} is undefined")
+            self._reduce("deref", outer or node, name=via)
+            return pointer.target
+        raise Unsupported(f"unsupported assignable expression: {kind}")
+
+    def rvalue(self, node: dict) -> tuple[Value, str | None]:
+        """The value of `node`, and the variable it was read from, if it was read."""
+        kind, children = node.get("kind"), node.get("inner", [])
+        if kind == "ExprWithCleanups" and len(children) == 1:
+            return self.rvalue(children[0])
+        if kind == "ImplicitCastExpr" and len(children) == 1:
+            cast = node.get("castKind")
+            if cast == "LValueToRValue":
+                _depth(node)
+                name = self.lvalue(children[0])
+                value = self._load(name)
+                self._reduce("read", node, name=name, value=value)
+                return value, name
+            if cast == "NullToPointer" and _depth(node):
+                literal = children[0]
+                if literal.get("kind") == "CXXNullPtrLiteralExpr" or (
+                        literal.get("kind") == "IntegerLiteral" and literal.get("value") == "0"):
+                    return Pointer(), None
+            if cast == "NoOp":
+                return self.rvalue(children[0])
+            _reject_pointer_operator(children[0])
+            raise Unsupported(f"implicit {cast} conversions are outside this category")
+        depth = _depth(node)
+        if kind == "IntegerLiteral":
+            return _integer(int(node["value"])), None
+        if kind == "InitListExpr" or kind == "CXXFunctionalCastExpr":
+            return self._braces(node, depth), None
+        if kind == "ParenExpr" and len(children) == 1:
+            value, _ = self.rvalue(children[0])
+        elif kind == "UnaryOperator" and node.get("opcode") == "&" and len(children) == 1:
+            if children[0].get("kind") != "DeclRefExpr":
+                raise Unsupported("only the address of a variable is supported")
+            name = self.variable(children[0])
+            self._reduce("addr", node, name=name)
+            return Pointer(name), None
+        elif kind == "UnaryOperator" and node.get("opcode") in {"+", "-"} and len(children) == 1 and not depth:
+            operand = self._integer_operand(children[0])
+            value = _integer(operand if node["opcode"] == "+" else -operand)
+        elif kind == "BinaryOperator" and node.get("opcode") in {"+", "-", "*", "/", "%"} and len(children) == 2:
+            _reject_pointer_operator(node)
+            value = self._arithmetic(node["opcode"], self._integer_operand(children[0]),
+                                     self._integer_operand(children[1]))
+        else:
+            raise Unsupported(f"unsupported expression: {kind} {node.get('opcode', '')}".rstrip())
+        self._reduce("eval", node, value=value)
+        return value, None
+
+    def _integer_operand(self, node: dict) -> int:
+        value, _ = self.rvalue(node)
+        if not isinstance(value, int):
+            raise Unsupported("pointer arithmetic and comparison are not supported")
+        return value
+
+    def _braces(self, node: dict, depth: int) -> Value:
+        """`{}`, `{x}` and `int{}`; empty braces value-initialize to 0 or a null pointer."""
+        children = node.get("inner", [])
+        if node["kind"] == "CXXFunctionalCastExpr":
             if len(children) != 1 or children[0].get("kind") != "InitListExpr" or children[0].get("inner"):
                 raise Unsupported("only empty int{} functional initialization is supported")
             value = 0
-        elif not children:
-            value = 0
-        elif len(children) == 1:
-            value = _expression(children[0], initialized, operations)
-        else:
+        elif len(children) > 1:
             raise Unsupported("multiple initializer elements are unsupported")
-        operations.append((node, value, None))
+        elif children:
+            value, _ = self.rvalue(children[0])
+        else:
+            value = Pointer() if depth else 0
+        # An empty pointer initializer reads as the null pointer it makes.
+        spelling = "nullptr" if value == Pointer() and not children else None
+        self._reduce("eval", node, value=value, spelling=spelling)
         return value
-    if kind == "ParenExpr" and len(children) == 1:
-        value = _expression(children[0], initialized, operations)
-    elif kind == "UnaryOperator" and node.get("opcode") in {"+", "-"} and len(children) == 1:
-        operand = _expression(children[0], initialized, operations)
-        value = _integer(operand if node["opcode"] == "+" else -operand)
-    elif kind == "BinaryOperator" and node.get("opcode") in {"+", "-", "*", "/", "%"} and len(children) == 2:
-        left = _expression(children[0], initialized, operations)
-        right = _expression(children[1], initialized, operations)
-        operation = node["opcode"]
+
+    @staticmethod
+    def _arithmetic(operation: str, left: int, right: int) -> int:
         if operation in {"/", "%"}:
             if right == 0 or (left == MIN_INT and right == -1):
                 raise Unsupported("undefined integer division")
             quotient = (abs(left) // abs(right)) * (-1 if (left < 0) != (right < 0) else 1)
-            value = quotient if operation == "/" else left - quotient * right
-        else:
-            value = {"+": lambda: left + right, "-": lambda: left - right, "*": lambda: left * right}[operation]()
-        value = _integer(value)
-    else:
-        raise Unsupported(f"unsupported expression: {kind} {node.get('opcode', '')}".rstrip())
-    operations.append((node, value, None))
-    return value
+            return _integer(quotient if operation == "/" else left - quotient * right)
+        return _integer({"+": left + right, "-": left - right, "*": left * right}[operation])
 
 
-def _cout_operands(node: dict, program: str) -> list[dict]:
-    node = _unwrap(node)
+def _strip_parentheses(node: dict) -> dict:
+    while node.get("kind") == "ParenExpr" and len(node.get("inner", [])) == 1:
+        node = node["inner"][0]
+    return node
+
+
+def _operand_is_pointer(node: dict) -> bool:
+    return "*" in node.get("type", {}).get("qualType", "")
+
+
+def _reject_pointer_operator(node: dict) -> None:
+    """Pointer arithmetic and comparison need array or address-order semantics: not drawn."""
+    if node.get("kind") == "BinaryOperator" and (
+            _operand_is_pointer(node) or any(map(_operand_is_pointer, node.get("inner", [])))):
+        raise Unsupported("pointer arithmetic and comparison are not supported")
+
+
+# Statements -------------------------------------------------------------------------------
+
+@dataclass
+class Statement:
+    """One statement of main: its text, what it evaluates, and its effect on memory or output.
+
+    `source` is the statement's text and `span` its evaluated part, for the code highlight.
+    `pane` is the statement in the lessons' notation (`int b{ a };` reads `int b = a`); the
+    other spans index it: `expr` is the evaluated part, `result` the expression whose value is
+    written or printed, and `destination` the name of the written variable once reduced.
+    """
+    source: str
+    span: tuple[int, int] | None
+    pane: str
+    expr: tuple[int, int] | None = None
+    result: tuple[int, int] | None = None
+    value: Value | None = None
+    reductions: list[Reduction] = field(default_factory=list)
+    target: str | None = None
+    destination: tuple[int, int] | None = None
+    declared: str | None = None
+    pointer: bool = False
+    output_suffix: str | None = None
+
+
+def _pane_parts(source: str, span: tuple[int, int]) -> tuple[str, str]:
+    """The context around an evaluated span, with brace initialization read as assignment."""
+    start, end = span
+    prefix, suffix = source[:start], source[end:].rstrip().removesuffix(";").rstrip()
+    # Empty value-initialization keeps its real `{}` and becomes an assignment of it.
+    if re.fullmatch(r'\s*\{\s*\}\s*', source[start:end]) and re.fullmatch(_DECLARATION, prefix):
+        prefix = prefix.rstrip() + ' = '
+    if prefix.rstrip().endswith('{') and suffix.lstrip().startswith('}'):
+        prefix = prefix.rstrip()[:-1].rstrip()
+        prefix += ' ' if prefix.endswith('=') else ' = '
+        suffix = suffix.lstrip()[1:]
+    return prefix, suffix
+
+
+def _cout_operands(node: dict) -> list[dict]:
+    while node.get("kind") in {"ImplicitCastExpr", "ExprWithCleanups"} and len(node.get("inner", [])) == 1:
+        node = node["inner"][0]
     if node.get("kind") == "DeclRefExpr" and node.get("referencedDecl", {}).get("name") == "cout":
         return []
     if node.get("kind") != "CXXOperatorCallExpr" or len(node.get("inner", [])) != 3:
         raise Unsupported("only std::cout insertion calls are supported")
     callee, left, right = node["inner"]
-    callee = _unwrap(callee)
+    while callee.get("kind") == "ImplicitCastExpr" and callee.get("inner"):
+        callee = callee["inner"][0]
     if callee.get("referencedDecl", {}).get("name") != "operator<<":
         raise Unsupported("only stream insertion calls are supported")
-    return _cout_operands(left, program) + [right]
+    return _cout_operands(left) + [right]
 
 
-def _statement(node: dict, program: str, initialized: dict, names: list) -> Statement:
+def _is_manipulator(operand: dict) -> bool:
+    """`std::endl` or a whitespace character: output that is not a value."""
+    try:
+        return bool(_output_suffix([operand]))
+    except Unsupported:
+        return False
+
+
+def _output_suffix(operands: list[dict]) -> str:
+    suffix = ""
+    for operand in operands:
+        while operand.get("kind") == "ImplicitCastExpr" and operand.get("inner"):
+            operand = operand["inner"][0]
+        if operand.get("referencedDecl", {}).get("name") == "endl":
+            suffix += "\n"
+        elif operand.get("kind") == "CharacterLiteral" and int(operand["value"]) in {9, 10, 32}:
+            suffix += chr(int(operand["value"]))
+        else:
+            raise Unsupported("one integer output followed only by whitespace or endl is supported")
+    return suffix
+
+
+def _statement(node: dict, program: str, state: dict[str, Value | None]) -> Statement:
+    """Analyze one statement against the state before it."""
     start, end = _bounds(node)
     if end < len(program) and program[end] == ";":
         end += 1
-    original = program[start:end]
-    source, mapping = _compact(original)
-    target, declaration, output_suffix = None, False, None
+    source, mapping = _compact(program[start:end])
+    left = declared = output_suffix = root = name_offset = None
+    whole = pointer = False
     if node["kind"] == "DeclStmt":
         children = node.get("inner", [])
         if len(children) != 1 or children[0].get("kind") != "VarDecl":
@@ -229,205 +394,300 @@ def _statement(node: dict, program: str, initialized: dict, names: list) -> Stat
         variable = children[0]
         if any(child.get("kind", "").endswith("Attr") for child in variable.get("inner", [])):
             raise Unsupported("declaration attributes need a separate memory-layout visualization")
-        if variable.get("type", {}).get("qualType") not in {"int", "const int"}:
-            raise Unsupported("only scalar int variables fit this category")
-        target, declaration = variable["name"], True
-        if target.startswith("__course_") or target in names or len(names) >= 3:
-            raise Unsupported("unique variable names and at most three variables are supported")
+        pointer = _depth(variable) > 0
+        declared = variable["name"]
+        if declared.startswith("__course_") or declared in state:
+            raise Unsupported("unique variable names are required")
         if variable.get("storageClass") or variable.get("constexpr"):
             raise Unsupported("static and constexpr storage are outside this category")
-        names.append(target)
+        name_offset = variable.get("loc", {}).get("offset")
+        if name_offset is None:
+            raise Unsupported("macro-expanded declarations are not supported")
         children = variable.get("inner", [])
-        expression = children[0] if children else None
-        # Nonempty declaration braces are surrounding statement context, not RHS.
-        if expression and expression.get("kind") == "InitListExpr" and len(expression.get("inner", [])) == 1:
-            expression = expression["inner"][0]
+        root = children[0] if children else None
+        # Nonempty declaration braces are surrounding statement context, not the value.
+        if root and root.get("kind") == "InitListExpr" and len(root.get("inner", [])) == 1:
+            root = root["inner"][0]
     elif node["kind"] == "BinaryOperator" and node.get("opcode") == "=":
-        left, expression = node["inner"]
-        if left.get("kind") != "DeclRefExpr":
-            raise Unsupported("only direct scalar assignments are supported")
-        target = left.get("referencedDecl", {}).get("name")
-        if target not in initialized:
-            raise Unsupported("assignment destination is not a prior local variable")
+        left, root = node["inner"]
+        _depth(left)
+        if left.get("kind") == "ParenExpr" and _strip_parentheses(left).get("kind") == "DeclRefExpr":
+            raise Unsupported("a parenthesized variable as assignment target is not supported")
+        # A plain variable on the left is context; a dereference is evaluated with the rest.
+        whole = left.get("kind") != "DeclRefExpr"
     elif node["kind"] == "CXXOperatorCallExpr":
-        operands = _cout_operands(node, program)
+        operands = _cout_operands(node)
         if not operands:
             raise Unsupported("empty output expression")
-        expression = operands[0]
-        output_suffix = ""
-        for operand in operands[1:]:
-            plain = _unwrap(operand)
-            name = plain.get("referencedDecl", {}).get("name")
-            if name == "endl":
-                output_suffix += "\n"
-            elif plain.get("kind") == "CharacterLiteral" and int(plain["value"]) in {9, 10, 32}:
-                output_suffix += chr(int(plain["value"]))
-            else:
-                raise Unsupported("one integer output followed only by whitespace or endl is supported")
+        root, output_suffix = operands[0], _output_suffix(operands[1:])
+        if _is_manipulator(root):
+            raise Unsupported("output without an integer value, such as a bare std::endl, is not supported")
+        if _operand_is_pointer(root):
+            raise Unsupported("printing a pointer prints its real, randomized address")
     else:
         raise Unsupported(f"unsupported statement: {node['kind']}")
-    if expression is None:
-        span = (len(source) - 1, len(source) - 1)
-        display_expression = ""
-    else:
-        first, last = _bounds(expression)
-        span = (mapping[first - start], mapping[last - start])
-        display_expression = source[slice(*span)]
-    return Statement(source, display_expression, span, expression, target, declaration, output_suffix)
+
+    if root is None:
+        return Statement(source, None, source.removesuffix(";").rstrip(), target=declared,
+                         declared=declared, pointer=pointer)
+    first, last = (start, _bounds(node)[1]) if whole else _bounds(root)
+    span = (mapping[first - start], mapping[last - start])
+    prefix, suffix = _pane_parts(source, span)
+    text = source[slice(*span)]
+
+    def to_pane(offset: int) -> int:
+        position = mapping[offset - start]
+        # The context before the evaluated part keeps its offsets; only its tail is rewritten.
+        return position if position < span[0] else position - span[0] + len(prefix)
+
+    def locate(item: dict) -> tuple[int, int]:
+        return tuple(map(to_pane, _bounds(item)))
+
+    evaluator = _Evaluator(state, locate)
+    value, _ = evaluator.rvalue(root)
+    target, destination = declared, None
+    if declared:
+        destination = (to_pane(name_offset), to_pane(name_offset) + len(declared))
+    elif left is not None:
+        target, destination = evaluator.lvalue(left), locate(left)
+    elif not isinstance(value, int):
+        raise Unsupported("only integer output is supported")
+    return Statement(source, span, prefix + text + suffix, (len(prefix), len(prefix) + len(text)),
+                     locate(root), value, evaluator.reductions, target, destination, declared, pointer,
+                     output_suffix)
 
 
-def _runtime_verify(statements: list[Statement], names: list[str], expected: list[dict], stdout: str,
-                    directory: Path) -> dict[str, int]:
-    """Observe actual frame values/locations at post-statement checkpoints via GDB."""
-    body, declared = [], []
-    for index, statement in enumerate(statements):
-        body.append(statement.source)
-        if statement.declaration:
-            declared.append(statement.target)
-        pointers = ["&" + name for name in declared] + ["nullptr"] * (3 - len(declared))
-        body.append(f"__course_checkpoint({index}, {', '.join(pointers)});")
-    program = """#include <iostream>
-#include <cstdint>
-using namespace std;
-__attribute__((noinline)) void __course_checkpoint(int position, const void* p0,
- const void* p1, const void* p2) {
- asm volatile("" : : "g"(p0), "g"(p1), "g"(p2) : "memory");
-}
-int main() {
-""" + "\n".join(body) + "\n}\n"
-    path, binary = directory / "runtime.cpp", directory / "runtime"
-    path.write_text(program)
-    compilation = _run([_tool("CLANGXX", "clang++"), "-std=c++20", "-g", "-O0",
-                        "-fno-omit-frame-pointer", str(path), "-o", str(binary)])
-    if compilation.returncode:
-        raise Unsupported("whitelisted runtime program did not compile")
-    output, report, script = directory / "stdout.txt", directory / "report.json", directory / "verify.py"
-    script.write_text('''import gdb, json, shlex
-expected = ''' + repr(expected) + '''
-records, failures, exits = [], [], []
-class Checkpoint(gdb.Breakpoint):
-    def stop(self):
-        try:
-            current = gdb.newest_frame()
-            position = int(current.read_var("position"))
-            frame = current.older()
-            row = {}
-            for name, expected_value in expected[position].items():
-                value = frame.read_var(name)
-                address = value.address
-                if address is None or int(value.type.sizeof) != 4:
-                    raise RuntimeError("unsupported storage for " + name)
-                row[name] = {"value": int(value) if expected_value is not None else None,
-                             "address": int(address)}
-                if expected_value is not None and int(value) != expected_value:
-                    raise RuntimeError("runtime value disagrees for " + name)
-            records.append({"position": position, "variables": row})
-        except Exception as error:
-            failures.append(str(error))
-        return False
-Checkpoint("__course_checkpoint", internal=True)
-gdb.events.exited.connect(lambda event: exits.append(getattr(event, "exit_code", None)))
-gdb.execute("set pagination off")
-gdb.execute("set confirm off")
-gdb.execute("run > " + shlex.quote(''' + repr(str(output)) + '''))
-with open(''' + repr(str(report)) + ''', "w") as handle:
-    json.dump({"records": records, "failures": failures, "exits": exits}, handle)
-''')
-    result = _run([_tool("GDB", "gdb"), "--batch", "-nx", "--quiet", "-ex",
-                   "set auto-load safe-path /nonexistent", "-x", str(script), str(binary)])
-    if result.returncode or not report.is_file():
-        raise Unsupported("GDB could not collect the runtime trace")
-    observed = json.loads(report.read_text())
-    records = observed["records"]
-    if observed["failures"] or observed["exits"] != [0] or [row["position"] for row in records] != list(range(len(expected))):
-        reason = "; ".join(observed["failures"]) or "missing checkpoints or abnormal program exit"
-        raise Unsupported("runtime verification failed: " + reason)
-    if output.read_text() != stdout:
-        raise Unsupported("runtime output disagrees with the expression trace")
+def _after(statement: Statement, state: dict[str, Value | None]) -> dict[str, Value | None]:
+    after = dict(state)
+    if statement.target is not None:
+        after[statement.target] = statement.value
+    return after
+
+
+def _analyze(source: str, directory: Path) -> list[Statement]:
+    program = "#include <iostream>\n#include <cstdint>\nusing namespace std;\nint main() {\n" + source + "\n}\n"
+    ast = _main_ast(program, directory)
+    statements, state = [], {}
+    for node in ast.get("inner", []):
+        if node.get("kind") == "ReturnStmt":
+            children = node.get("inner", [])
+            if (len(children) == 1 and children[0].get("kind") == "IntegerLiteral"
+                    and children[0].get("value") == "0" and node is ast["inner"][-1]):
+                continue
+            raise Unsupported("only a final return 0 is supported")
+        statement = _statement(node, program, state)
+        statements.append(statement)
+        if len(statements) > MAX_STATEMENTS:
+            raise Unsupported("too many statements")
+        state = _after(statement, state)
+        if len(state) > MAX_VARIABLES:
+            raise Unsupported("too many variables")
+    if not state:
+        raise Unsupported("a variable timeline requires at least one variable")
+    return statements
+
+
+# Memory -----------------------------------------------------------------------------------
+
+def _size(pointer: bool) -> int:
+    return POINTER_SIZE if pointer else INT_SIZE
+
+
+def _normalize(addresses: dict[str, int], sizes: dict[str, int]) -> dict[str, int]:
+    """Shift real addresses so the lowest sits at 64, keeping every alignment."""
+    alignment = max(sizes.values())
+    lowest = min(addresses.values())
+    base = lowest - lowest % alignment
+    return {name: FIRST_ADDRESS + address - base for name, address in addresses.items()}
+
+
+def _static_layout(names: list[str], pointers: set[str]) -> dict[str, int]:
+    """Where Clang -O0 places main's locals: downwards in declaration order, each aligned to its
+    size, below main's return slot. Used only when the program is not run (probing)."""
+    addresses, top = {}, -8
+    for name in names:
+        size = _size(name in pointers)
+        top = (top - size) // size * size
+        addresses[name] = top
+    return addresses
+
+
+def _observed(execution: Execution, predicted: list[dict],
+              pointers: set[str]) -> tuple[dict[str, int], list[dict[str, Value | None]]]:
+    """Interpret GDB's raw frames: real addresses, and values with pointers mapped to variables."""
     addresses = {}
-    for record in records:
-        for name, item in record["variables"].items():
-            if name in addresses and addresses[name] != item["address"]:
+    for row in execution.checkpoints:
+        for name, cell in row.items():
+            if addresses.setdefault(name, cell.address) != cell.address:
                 raise Unsupported("variable address changed during the trace")
-            addresses[name] = item["address"]
-    if set(addresses) != set(names) or len(set(addresses.values())) != len(names):
-        raise Unsupported("runtime locations are not distinct scalar objects")
-    first = min(addresses.values())
-    return {name: 64 + address - first for name, address in addresses.items()}
+            if cell.pointer != (name in pointers) or cell.size != _size(cell.pointer):
+                raise Unsupported(f"runtime storage of {name} is not the expected int or pointer")
+    if len(set(addresses.values())) != len(addresses):
+        raise Unsupported("runtime locations are not distinct objects")
+    owners = {address: name for name, address in addresses.items()}
+    states = []
+    for row, expected in zip(execution.checkpoints, predicted):
+        state = {}
+        for name, cell in row.items():
+            if cell.value is None:
+                state[name] = None
+            elif not cell.pointer:
+                state[name] = cell.value
+            elif cell.value == 0:
+                state[name] = Pointer()
+            elif owners.get(cell.value) in row:
+                state[name] = Pointer(owners[cell.value])
+            else:
+                raise Unsupported(f"runtime value of {name} is not the address of a variable")
+        if state != expected:
+            different = sorted(name for name in state if state[name] != expected.get(name))
+            raise Unsupported("runtime verification failed: " + ", ".join(different) + " disagree")
+        states.append(state)
+    return addresses, states
 
 
-def trace(source: str, *, runtime: bool = True) -> Timeline:
-    """Derive a timeline automatically, rejecting every unsupported construct."""
+# Rendering --------------------------------------------------------------------------------
+
+class _Pane:
+    """The pane as reductions replace parts of its original text, innermost first."""
+
+    def __init__(self, text: str):
+        self.original, self.edits = text, []  # (start, end, text) in original coordinates
+
+    @property
+    def text(self) -> str:
+        parts, cursor = [], 0
+        for start, end, new in self.edits:
+            parts += [self.original[cursor:start], new]
+            cursor = end
+        return "".join(parts) + self.original[cursor:]
+
+    def locate(self, start: int, end: int) -> list[int]:
+        """Where the original `[start, end)` lies in the current text."""
+        def shift(at):
+            return at + sum(len(new) - (finish - begin) for begin, finish, new in self.edits if finish <= at)
+        return [shift(start), shift(end)]
+
+    def read(self, start: int, end: int) -> str:
+        """The current text of the original `[start, end)`."""
+        first, last = self.locate(start, end)
+        return self.text[first:last]
+
+    def replace(self, start: int, end: int, new: str) -> list[int]:
+        """Replace the original `[start, end)`; returns the span it covered in the old text."""
+        span = self.locate(start, end)
+        self.edits = sorted([edit for edit in self.edits if not (start <= edit[0] and edit[1] <= end)]
+                            + [(start, end, new)])
+        return span
+
+
+class _Renderer:
+    """Turns analyzed statements and their (observed) states into unified trace steps."""
+
+    def __init__(self, addresses: dict[str, int]):
+        self.addresses = addresses
+        self.order = sorted(addresses, key=addresses.get)
+        self.steps, self.stdout = [], ""
+
+    def show(self, value: Value) -> str:
+        """A value as the pane writes it: a number, an address, or 0 for a null pointer."""
+        return str(self.stored(value))
+
+    def stored(self, value: Value) -> int:
+        if isinstance(value, Pointer):
+            return self.addresses[value.target] if value.target else 0
+        return value
+
+    def add(self, line: int, pane: _Pane, expr, state: dict, op=None, hold: float = 1.0) -> None:
+        values = {name: None if name not in state else UNKNOWN if state[name] is None
+                  else self.stored(state[name]) for name in self.order}
+        targets = {name: value.target for name, value in state.items()
+                   if isinstance(value, Pointer) and value.target}
+        step = {"line": line, "pane": pane.text, "op": op, "stdout": self.stdout, "hold": hold,
+                "values": values, "targets": targets}
+        if expr:
+            step["expr"] = pane.locate(*expr)
+        self.steps.append(step)
+
+    def statement(self, line: int, statement: Statement, before: dict, after: dict) -> None:
+        pane, expr = _Pane(statement.pane), statement.expr
+        writes = statement.target is not None and statement.result is not None
+        self.add(line, pane, expr, before if writes else after)
+        for reduction in statement.reductions:
+            if reduction.kind == "read":
+                text = self.show(before[reduction.name])
+                op = {"kind": "read", "name": reduction.name, "value": text}
+            elif reduction.kind == "addr":
+                text = str(self.addresses[reduction.name])
+                op = {"kind": "addr", "name": reduction.name, "value": text}
+            elif reduction.kind == "deref":
+                # The target is where the pointer's observed value points.
+                text = before[reduction.name].target
+                op = {"kind": "deref", "target": text, "via": reduction.name}
+            else:
+                text = reduction.spelling or self.show(reduction.value)
+                op = {"kind": "eval", "value": text}
+            if pane.read(*reduction.span) != text:
+                op["span"] = pane.replace(*reduction.span, text)
+                self.add(line, pane, expr, before, op)
+        if statement.result is None:
+            return
+        # A literal spelled otherwise (`0x10`, `1'000`) settles on its decimal value.
+        if isinstance(statement.value, int) and pane.read(*statement.result) != str(statement.value):
+            op = {"kind": "eval", "value": str(statement.value),
+                  "span": pane.replace(*statement.result, str(statement.value))}
+            self.add(line, pane, expr, before, op)
+        span, text = pane.locate(*statement.result), pane.read(*statement.result)
+        if statement.output_suffix is not None:
+            self.stdout += text + statement.output_suffix
+            self.add(line, pane, expr, after, {"kind": "print", "value": text, "span": span}, 1.2)
+            return
+        name, old = statement.target, before.get(statement.target)
+        op = {"kind": "write", "name": name, "value": text, "span": span,
+              "destination": pane.locate(*statement.destination)}
+        # Redirecting a pointer holds longer, so the moved arc registers.
+        redirected = isinstance(old, Pointer) and old.target and old != after[name]
+        self.add(line, pane, expr, after, op, 1.6 if redirected else 1.2)
+
+
+def trace(source: str, *, runtime: bool = True) -> dict:
+    """Trace a snippet into a validated unified-format trace, rejecting unsupported constructs.
+
+    With `runtime=False` (probing) nothing is executed: values are the predicted ones and the
+    layout is Clang's usual -O0 layout.
+    """
     body = _body(source)
-    program = "#include <iostream>\n#include <cstdint>\nusing namespace std;\nint main() {\n" + body + "\n}\n"
     with tempfile.TemporaryDirectory(prefix="course-expression-") as temporary:
         directory = Path(temporary)
-        ast = _main_ast(program, directory)
-        initialized, names, statements, steps, expected = {}, [], [], [], []
-        stdout = ""
-        for node in ast.get("inner", []):
-            if node.get("kind") == "ReturnStmt":
-                children = node.get("inner", [])
-                if len(children) == 1 and children[0].get("kind") == "IntegerLiteral" and children[0].get("value") == "0" and node is ast["inner"][-1]:
-                    continue
-                raise Unsupported("only a final return 0 is supported")
-            statement = _statement(node, program, initialized, names)
-            line = len(statements)
-            statements.append(statement)
-            if len(statements) > 20:
-                raise Unsupported("too many statements")
-            # Future slots are added below after the whole declaration list is known.
-            def append(expression, **kwargs):
-                steps.append((dict(initialized), Step(line, expression, (), stdout=stdout,
-                                                      declared=tuple(initialized), **kwargs)))
-            if statement.node is None:
-                initialized[statement.target] = None
-                append("")
-                expected.append(dict(initialized))
-                continue
-            operations = []
-            value = _expression(statement.node, initialized, operations)
-            expression = statement.expression
-            append(expression)
-            root_start, _ = _bounds(statement.node)
-            replacements = []
-            for operation, result, read in operations:
-                first, last = _bounds(operation)
-                first, last = first - root_start, last - root_start
-                # Map AST source spans through whitespace normalization and prior replacements.
-                raw_first, raw_last = _bounds(statement.node)
-                _, compact_map = _compact(program[raw_first:raw_last])
-                first, last = compact_map[first], compact_map[last]
-                start = first + sum(len(text) - (end - begin) for begin, end, text in replacements if end <= first)
-                end = last + sum(len(text) - (finish - begin) for begin, finish, text in replacements if finish <= last)
-                replacement = str(result)
-                updated = expression[:start] + replacement + expression[end:]
-                replacements = [(a, b, text) for a, b, text in replacements if not (first <= a and b <= last)]
-                replacements.append((first, last, replacement))
-                replacements.sort()
-                if read:
-                    append(updated, read=read, transfer=result, read_span=(start, end))
-                elif updated != expression:
-                    append(updated)
-                expression = updated
-            if expression != str(value):
-                # A literal's spelling (hex, separators) may differ; show its decimal value.
-                append(str(value))
-                expression = str(value)
-            if statement.target:
-                initialized[statement.target] = value
-                append(expression, write=statement.target, transfer=value)
-            else:
-                stdout += str(value) + statement.output_suffix
-                append(expression)
-            expected.append(dict(initialized))
-        if not names:
-            raise Unsupported("a variable timeline requires at least one int variable")
-        addresses = _runtime_verify(statements, names, expected, stdout, directory) if runtime else {
-            name: 64 + 4 * index for index, name in enumerate(names)}
-        ordered = sorted(names, key=lambda name: addresses[name])
-        variables = tuple(Variable(name, addresses[name], color=COLORS[names.index(name)]) for name in ordered)
-        resolved = [replace(step, values=tuple(values.get(name) for name in ordered)) for values, step in steps]
-        resolved[-1] = replace(resolved[-1], hold=3.5)
-        return Timeline("expression-timeline", "", tuple(item.source for item in statements),
-                        variables, tuple(resolved), expression_spans=tuple(item.span for item in statements))
+        statements = _analyze(body, directory)
+        predicted, state = [], {}
+        for statement in statements:
+            state = _after(statement, state)
+            predicted.append(state)
+        names = [statement.declared for statement in statements if statement.declared]
+        pointers = {statement.declared for statement in statements if statement.pointer}
+        if runtime:
+            scopes = [[(name, value is not None) for name, value in row.items()] for row in predicted]
+            execution = execute([statement.source for statement in statements], scopes, directory)
+            addresses, states = _observed(execution, predicted, pointers)
+        else:
+            addresses, states = _static_layout(names, pointers), predicted
+    addresses = _normalize(addresses, {name: _size(name in pointers) for name in names})
+    renderer, previous = _Renderer(addresses), {}
+    for line, (statement, after) in enumerate(zip(statements, states)):
+        renderer.statement(line, statement, previous, after)
+        previous = after
+    if runtime and renderer.stdout != execution.stdout:
+        raise Unsupported("runtime output disagrees with the expression trace")
+    renderer.steps[-1]["hold"] = 3
+    variables = [scalar(name, addresses[name], _size(name in pointers), "ptr" if name in pointers else "int",
+                        names.index(name)) for name in renderer.order]
+    result = {"format": FORMAT, "source": [statement.source for statement in statements],
+              "spans": [list(statement.span) if statement.span else None for statement in statements],
+              "variables": variables, "steps": renderer.steps}
+    try:
+        validate(result)
+    except FormatError as exc:
+        # A tracer defect must still fail closed, never publish a malformed trace.
+        raise Unsupported(f"the tracer produced an invalid trace: {exc}") from exc
+    return result

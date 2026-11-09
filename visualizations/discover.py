@@ -41,8 +41,7 @@ def discover(repo: Path, *, apply: bool = False) -> dict:
                 continue
             if fence.source not in cache:
                 try:
-                    timeline = trace(fence.source, runtime=False)
-                    applicable(timeline)
+                    applicable(trace(fence.source, runtime=False))
                     cache[fence.source] = None
                 except Unsupported as exc:
                     cache[fence.source] = str(exc)

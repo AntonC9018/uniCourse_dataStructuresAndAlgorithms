@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Compiler-backed tracer adapter consumed by course maintenance.
 
-`trace` prints one example's trace in the unified player format (`trace_format.py`);
+`trace` prints one example's trace in the unified player format (`trace_format.py`), run and
+verified under GDB; `probe` says, without running anything, whether an example is supported;
 `revision` versions every trace.
 """
 from __future__ import annotations
@@ -10,6 +11,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -17,7 +19,15 @@ ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
 TRACER_SOURCES = tuple(ROOT / name for name in
-                       ('generate.py', 'tracing.py', 'model.py', 'trace_format.py'))
+                       ('generate.py', 'tracing.py', 'execution.py', 'toolchain.py', 'trace_format.py'))
+
+# What the player draws legibly inside a lesson column.
+MAX_VARIABLES, MAX_LINES, MAX_COLUMNS = 5, 10, 32
+MAX_PANE, MAX_OUTPUT_LINES, MAX_OUTPUT_COLUMNS = 31, 4, 21
+# The player's memory geometry (`player.js`): the row's width, the widest byte, the gap between
+# variables, and the advance of a 26-unit variable name.
+MEMORY_WIDTH, MAX_BYTE, VARIABLE_GAP, NAME_ADVANCE = 600, 28, 10.5, 26 * 0.602
+DECLARATION = re.compile(r'\s*(?:const\s+)?(?:int|auto)\b')
 
 
 def revision() -> str:
@@ -29,39 +39,49 @@ def revision() -> str:
     return digest.hexdigest()
 
 
-def applicable(timeline) -> None:
+def _memory_fits(variables: list[dict]) -> None:
+    """Storage is drawn to scale: only alignment padding between cells, names that fit."""
     from tracing import Unsupported
-    if not timeline.variables or len(timeline.variables) > 3:
-        raise Unsupported('this layout supports one to three integer variables')
-    if len(timeline.source) > 6 or max(map(len, timeline.source)) > 30:
-        raise Unsupported('source exceeds the approved layout: six lines, 30 columns')
-    positions = sorted(variable.address for variable in timeline.variables)
-    if any(right - left != 4 for left, right in zip(positions, positions[1:])):
-        raise Unsupported('noncontiguous integer storage needs a separate memory-layout visualization')
-    for step in timeline.steps:
-        source = timeline.source[step.line]
-        begin, end = timeline.expression_spans[step.line]
-        prefix, suffix = source[:begin], source[end:]
-        if prefix.rstrip().endswith('{') and suffix.lstrip().startswith('}'):
-            prefix = prefix.rstrip()[:-1].rstrip()
-            prefix += ' ' if prefix.endswith('=') else ' = '
-            suffix = suffix.lstrip()[1:]
-        elif source[begin:end].replace(' ', '') == '{}' and '=' not in prefix:
-            prefix = prefix.rstrip() + ' = '
-        if len(prefix + step.expression + suffix) > 31:
-            raise Unsupported('evaluated statement exceeds the approved 31-column pane')
-        if len(step.stdout.splitlines()) > 4 or any(len(line) > 21 for line in step.stdout.splitlines()):
-            raise Unsupported('output exceeds the approved four-line output area')
-    writes = [step for step in timeline.steps if step.write]
-    reads = [step for step in timeline.steps if step.read and step.transfer is not None]
+    cells = sorted(variables, key=lambda variable: variable['address'])
+    for lower, higher in zip(cells, cells[1:]):
+        # Locals are allocated downwards, each aligned to its size, so padding sits above
+        # a cell and is smaller than it.
+        if not 0 <= higher['address'] - lower['address'] - lower['size'] < lower['size']:
+            raise Unsupported('noncontiguous storage needs a separate memory-layout visualization')
+    extent = cells[-1]['address'] + cells[-1]['size'] - cells[0]['address']
+    byte = min(MAX_BYTE, (MEMORY_WIDTH - VARIABLE_GAP * (len(cells) - 1)) / extent)
+    centre = [(variable['address'] - cells[0]['address'] + variable['size'] / 2) * byte + VARIABLE_GAP * i
+              for i, variable in enumerate(cells)]
+    for i in range(len(cells) - 1):
+        room = centre[i + 1] - centre[i]
+        if (len(cells[i]['name']) + len(cells[i + 1]['name'])) * NAME_ADVANCE / 2 + 8 > room:
+            raise Unsupported(f"the names {cells[i]['name']} and {cells[i + 1]['name']} do not fit under their cells")
+
+
+def applicable(trace: dict) -> None:
+    """Reject traces the player cannot draw legibly, or that need no illustration."""
+    from tracing import Unsupported
+    variables, steps, source = trace['variables'], trace['steps'], trace['source']
+    if len(variables) > MAX_VARIABLES:
+        raise Unsupported(f'the memory row holds at most {MAX_VARIABLES} variables')
+    if len(source) > MAX_LINES or max(map(len, source)) > MAX_COLUMNS:
+        raise Unsupported(f'source exceeds the approved layout: {MAX_LINES} lines, {MAX_COLUMNS} columns')
+    _memory_fits(variables)
+    if max(len(step['pane']) for step in steps) > MAX_PANE:
+        raise Unsupported(f'evaluated statement exceeds the approved {MAX_PANE}-column pane')
+    output = steps[-1]['stdout'].splitlines()
+    if len(output) > MAX_OUTPUT_LINES or any(len(line) > MAX_OUTPUT_COLUMNS for line in output):
+        raise Unsupported('output exceeds the approved four-line output area')
+    ops = [step['op'] for step in steps if step['op']]
+    writes = [step for step in steps if step['op'] and step['op']['kind'] == 'write']
+    reads = [op for op in ops if op['kind'] in ('read', 'addr', 'deref')]
     # A single initialized cell alone needs no illustration. Empty initialization is
     # deliberately kept: its contrast with uninitialized storage is the lesson.
-    empty_init = any('{}' in line.replace(' ', '') for line in timeline.source)
-    assignments = [step for step in writes
-                   if not timeline.source[step.line].lstrip().startswith(('int ', 'auto ', 'const '))]
+    empty_init = any('{}' in line.replace(' ', '') for line in source)
+    assignments = [step for step in writes if not DECLARATION.match(source[step['line']])]
     if not reads and len(writes) <= 1 and not assignments:
         raise Unsupported('a lone memory cell without a copy or state change needs no visualization')
-    if len(timeline.variables) == 1 and len(writes) == 1 and not empty_init and not assignments:
+    if len(variables) == 1 and len(writes) == 1 and not empty_init and not assignments:
         raise Unsupported('a lone literal-initialized cell and print need no visualization')
 
 
@@ -80,8 +100,8 @@ def main() -> int:
     try:
         if args.template != TEMPLATE:
             raise Unsupported(f'unknown template {args.template!r}')
-        timeline = trace(args.source.read_text(), runtime=args.operation != 'probe')
-        applicable(timeline)
+        result = trace(args.source.read_text(), runtime=args.operation != 'probe')
+        applicable(result)
     except Unsupported as exc:
         if args.operation == 'probe':
             print(json.dumps({'supported': False, 'reason': str(exc)}))
@@ -94,8 +114,7 @@ def main() -> int:
     if args.operation == 'probe':
         print(json.dumps({'supported': True, 'template': TEMPLATE}))
     else:
-        from trace_format import from_timeline
-        print(json.dumps(from_timeline(timeline), sort_keys=True))
+        print(json.dumps(result, sort_keys=True))
     return 0
 
 
