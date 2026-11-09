@@ -185,6 +185,24 @@ const showLayout = async (layout, width) => {
   await page.waitForSelector('.cv-layout');
 };
 
+test('static layout exposes the locked selection as pressed toggle buttons', async () => {
+  await showLayout(POINTER_LAYOUT, 760);
+  const pressed = () => page.locator('[aria-pressed="true"]').evaluateAll(
+    elements => elements.map(element => element.dataset.layoutKey));
+  const row = page.locator('.cv-layout-row[data-layout-key="0:1"]');
+  assert.equal(await page.locator('.cv-layout-target:not([aria-pressed="false"])').count(), 0);
+  await row.click();
+  // The row and the eight bytes of p share the locked key.
+  assert.deepEqual(await pressed(), Array(9).fill('0:1'));
+  await row.click();
+  assert.deepEqual(await pressed(), []);
+  await page.locator('.cv-byte[data-layout-key="0:0"]').first().click();
+  assert.deepEqual(await pressed(), Array(5).fill('0:0'));
+  await page.keyboard.press('Escape');
+  assert.deepEqual(await pressed(), []);
+  assert.equal(await page.locator('.cv-linked').count(), 0);
+});
+
 test('static layout fits 8-byte rows in a narrow host without clipping', async () => {
   for (const [name, width] of [['narrow', 224], ['desktop', 760]]) {
     await showLayout(POINTER_LAYOUT, width);

@@ -870,8 +870,9 @@
       const padding = ru ? 'Выравнивание' : 'Padding';
       this.root.innerHTML = trace.records.map((record, ri) => {
         const key = fi => `${ri}:${fi}`;
+        // Every target toggles a locked selection, so each is a toggle button.
         const button = (fi, label, cls = '', description = '') => `<button type="button" class="cv-layout-target ${cls}"`
-          + ` data-layout-key="${key(fi)}"${description ? ` aria-label="${esc(description)}" title="${esc(description)}"` : ''}>${label}</button>`;
+          + ` data-layout-key="${key(fi)}" aria-pressed="false"${description ? ` aria-label="${esc(description)}" title="${esc(description)}"` : ''}>${label}</button>`;
         const rows = button('all', esc(`struct ${record.name}`), 'cv-layout-row')
           + record.fields.map((f, fi) => button(fi,
             esc(`${f.type} ${f.name};`) + `<small>+${f.offset} · ${f.size} B</small>`,
@@ -892,21 +893,27 @@
           + `<p>${esc(padding)}: ▧ · ${record.size - record.fields.reduce((sum, f) => sum + f.size, 0)} B</p></div></section>`;
       }).join('');
       host.append(this.root);
-      this.locked = null;
+      this.lock(null);
       const target = event => event.target.closest('[data-layout-key]');
       this.root.addEventListener('pointerover', event => this.highlight(target(event)?.dataset.layoutKey));
       this.root.addEventListener('pointerleave', () => this.restore());
       this.root.addEventListener('focusin', event => this.highlight(target(event)?.dataset.layoutKey));
       this.root.addEventListener('focusout', () => queueMicrotask(() => this.restore()));
       this.root.addEventListener('click', event => {
-        const key = target(event)?.dataset.layoutKey;
-        this.locked = this.locked === key ? null : key;
+        const key = target(event)?.dataset.layoutKey ?? null;
+        this.lock(this.locked === key ? null : key);
         this.restore();
       });
       this.root.addEventListener('keydown', event => {
-        if (event.key === 'Escape') { this.locked = null; this.highlight(null); }
+        if (event.key === 'Escape') { this.lock(null); this.highlight(null); }
       });
       this.refresh();
+    }
+    lock(key) {
+      this.locked = key;
+      for (const element of this.root.querySelectorAll('[data-layout-key]')) {
+        element.setAttribute('aria-pressed', String(element.dataset.layoutKey === key));
+      }
     }
     restore() {
       this.highlight(this.locked || (this.root.contains(document.activeElement)
