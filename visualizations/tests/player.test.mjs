@@ -89,3 +89,34 @@ test('a button disabled under focus hands focus to the player', async () => {
   await page.keyboard.press('ArrowRight');
   assert.equal(await index(), 1);
 });
+
+// This fixture is emitted by the compiler/GDB tracer from lesson 05, example 26.
+// Its copied pointer still points into s1, while s2.a keeps the old integer value.
+test('a generated struct trace plays shallow copies in both themes', async () => {
+  const generated = JSON.parse(readFileSync(new URL('fixtures/struct-generated.json', import.meta.url), 'utf8'));
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  for (const theme of ['dark', 'light']) {
+    const html = PAGE.replace(trace, JSON.stringify(generated).replace(/</g, '\\u003c'))
+      .replace('data-theme="dark"', `data-theme="${theme}"`);
+    await page.setContent(html);
+    await page.evaluate(() => window.CourseVisualization.scan());
+    await page.waitForSelector('.cv-player');
+    await page.evaluate(() => {
+      const player = document.querySelector('.course-visualization').cvPlayer;
+      for (let step = 0; step < player.m.steps.length; step++) {
+        player.settle(step);
+        if (/NaN|undefined/.test(player.svg.innerHTML)) throw new Error('invalid struct geometry');
+      }
+      player.end();
+    });
+    await finishAnimation();
+    const shown = await page.locator('.cv-stage').textContent();
+    assert.match(shown, /s1/);
+    assert.match(shown, /s2/);
+    assert.equal(generated.steps.at(-1).values['s1.a'], 2);
+    assert.equal(generated.steps.at(-1).values['s2.a'], 1);
+    assert.equal(generated.steps.at(-1).targets['s2.pa'], 's1.a');
+  }
+  assert.deepEqual(errors, []);
+});
