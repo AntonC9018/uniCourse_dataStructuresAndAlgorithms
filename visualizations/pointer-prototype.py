@@ -1,5 +1,6 @@
 """THROWAWAY pointer-category study for #59: three ways to draw pointers, ?variant=A/B/C.
 
+DECIDED: variant A (arcs above memory); B and C are rejected comparisons.
 Question: how should a pointer, the address it stores, and dereference chains look so that
 `**pp = 7` stays legible? Same under-memory (B) language as #57; manual traces, no compiler.
 

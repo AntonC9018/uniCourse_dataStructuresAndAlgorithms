@@ -126,6 +126,45 @@ reach a lesson. Until then the prototype stays on `labs/visualizations`.
 
 [#56]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/56
 
+## Pointer prototype
+
+Question for [#59]: how should pointers, the addresses they store, and dereference chains look,
+so that `**pp = 7` stays legible? **Decided:** arcs above memory (variant A). Lanes below
+memory (B) and address lookup without persistent arrows (C) are rejected comparisons.
+
+```sh
+python3 visualizations/pointer-prototype.py
+```
+
+Open `visualizations/pointer-prototype.html` (`?variant=B` or `?variant=C` for the rejected
+comparisons). It covers writing through a pointer, reassigning a pointer, a pointer to a pointer,
+and two pointers to one variable. The traces are manual; no compiler or GDB is involved yet.
+
+- Memory keeps the under-memory (B) language. Integers occupy 4 bytes and pointers 8, at
+  24 pixels per byte; addresses start at 64. Alignment gaps are drawn as dashed, unlabeled cells.
+- A pointer cell shows its stored address in decimal. Each live pointer keeps an arc, in the
+  pointer's color, from its cell over the address row to its pointee.
+- Arcs start and end near the centers of their cells. When a cell carries several arc ends,
+  the ends spread 20 pixels apart. Ends leading left sit left of ends leading right; on each side,
+  the farther-reaching arc sits nearer the center and rises higher, nesting over the shorter one.
+  Chains (`pp → p → a`) and shared pointees therefore never cross.
+- Each arc has a background halo, keeping it legible where it passes address labels.
+- Evaluation follows the lessons' reduction: `**pp = 7` → `**72 = 7` → `*p = 7` → `*64 = 7`
+  → `a = 7`. Reads are blue, writes yellow. Dereference selects a location with a neutral
+  outline, because it reads nothing; the followed arc brightens from pointer to pointee.
+- `&a` copies the address label above storage, not the cell value. Copying a pointer
+  (`int* q = p;`) is an ordinary read of the stored address.
+- Redirecting a pointer fades its old arc when the new address arrives, then draws the new arc.
+
+Pointing at a cell's center means "this object", not "this byte". Struct fields and array
+elements may need arcs that land on the first byte; the struct study revisits this.
+
+Folding this into the production player needs base-library changes: variable sizes and alignment
+gaps in the memory layout, an address-valued cell kind, an arc layer, lvalue reductions in the
+pane (address-of and dereference steps), and tracing support for pointers in `tracing.py`.
+
+[#59]: https://github.com/AntonC9018/uniCourse_dataStructuresAndAlgorithms/issues/59
+
 ## Chosen layout: under memory (B)
 
 Layout 2, **Under memory**, is the selected direction. Code stays fixed on the left. Compact,
