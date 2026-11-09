@@ -109,7 +109,9 @@ a value may only change from `null` to `"?"` (a declaration).
 - For `read`, `addr`, `deref` and `eval`, `span` indexes the previous pane, and the new pane is
   the previous one with that span replaced by `value` (`target` for `deref`).
 - `write` and `print` leave the pane unchanged; their `span` covers `value` in it. A write's
-  `destination` covers `name` in the pane.
+  `destination` covers `name` in the pane. A print of whitespace alone is no value: its `span`
+  covers the spelling that prints it, `std::endl` (or `endl`) or `'\n'` for `"\n"`, `'\t'`
+  for `"\t"` and `' '` for `" "`. The player sends it to the output as a glyph (`↵`).
 - Only a write changes values or targets, and only of the cells its `name` covers (all fields of
   a struct). Only a print changes `stdout`, by its value plus optional whitespace.
 - Values agree with memory. A value is an integer, `nullptr` (stored as `0`) or `"?"`; a struct

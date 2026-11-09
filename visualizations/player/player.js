@@ -39,6 +39,7 @@
       copy: 'Line {line}: {code}', read: 'Read {name}: {value}',
       addr: 'Take the address of {name}: {value}', deref: 'Follow the address in {via} to {target}',
       eval: 'Evaluate: {value}', write: 'Store {value} in {name}', print: 'Print {value}',
+      blank: { '\n': 'Print a newline', '\t': 'Print a tab', ' ': 'Print a space' },
       error: 'This visualization could not be loaded.',
     },
     ru: {
@@ -48,6 +49,7 @@
       copy: 'Строка {line}: {code}', read: 'Чтение {name}: {value}',
       addr: 'Адрес {name}: {value}', deref: 'Переход по адресу из {via} к {target}',
       eval: 'Вычисление: {value}', write: 'Запись {value} в {name}', print: 'Вывод {value}',
+      blank: { '\n': 'Вывод перевода строки', '\t': 'Вывод табуляции', ' ': 'Вывод пробела' },
       error: 'Не удалось загрузить визуализацию.',
     },
   };
@@ -64,6 +66,8 @@
   const round = value => Math.round(value * 100) / 100;
   const esc = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;',
     '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+  // Printed whitespace (`std::endl`) travels as a visible glyph.
+  const glyphs = value => String(value).replace(/\n/g, '↵').replace(/\t/g, '⇥').replace(/ /g, '␣');
   const format = (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? '');
   // textLength pins every glyph run to the advance the layout assumes, whatever the font.
   function text(x, y, value, size, color, anchor = 'start') {
@@ -211,8 +215,9 @@
     g.byte = Math.min(MAX_BYTE, (MEMORY_WIDTH - GAP * (starts.length - 1)) / (g.end - starts[0]));
     const memoryW = (g.end - starts[0]) * g.byte + GAP * (starts.length - 1);
     const paneChars = Math.max(...m.steps.map(step => step.pane.length));
-    const finalOutput = m.steps[m.steps.length - 1].stdout.replace(/\n$/, '');
-    const outputLines = finalOutput ? finalOutput.split('\n') : [];
+    const finalStdout = m.steps[m.steps.length - 1].stdout;
+    // A lone trailing newline adds no visible line; output of only a newline still shows one.
+    const outputLines = finalStdout ? finalStdout.replace(/\n$/, '').split('\n') : [];
     const outputChars = Math.max(0, ...outputLines.map(line => line.length));
     let columnW = Math.max(360, memoryW + 48, paneChars * EVAL_CHAR + 48,
       (P.outputLabel.length + 1) * 26 * CHAR + outputChars * EVAL_CHAR + 48);
@@ -557,7 +562,7 @@
       const lines = shown.split('\n'), x = vx + lines[lines.length - 1].length * EVAL_CHAR, y = oy + (lines.length - 1) * 36;
       const sx = g.tx + (op.span[0] + op.value.length / 2) * EVAL_CHAR, w = op.value.length * EVAL_CHAR;
       const p = (...values) => values.map(round).join(' ');
-      out += valueBox(c, op.value, P.muted, `M ${p(sx, g.ty - 11)} C ${p(sx, y - 30)}, ${p(x + w / 2, g.ty + 20)}, ${p(x + w / 2, y - 11)}`, 0.2, 0.7, 0.9);
+      out += valueBox(c, op.value.trim() ? op.value : glyphs(op.value), P.muted, `M ${p(sx, g.ty - 11)} C ${p(sx, y - 30)}, ${p(x + w / 2, g.ty + 20)}, ${p(x + w / 2, y - 11)}`, 0.2, 0.7, 0.9);
       out += `<g opacity="0">${show(0.9)}${text(x, y, op.value, PANE_SIZE, P.fg)}</g>`;
     }
     return out;
@@ -573,6 +578,7 @@
   function describe(c) {
     const { m, S, step } = c, op = step.op;
     if (!op) return format(S.copy, { line: step.line + 1, code: m.source[step.line] });
+    if (op.kind === 'print' && S.blank[op.value]) return S.blank[op.value];
     return format(S[op.kind], op);
   }
 

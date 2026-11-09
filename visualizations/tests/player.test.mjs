@@ -121,6 +121,39 @@ test('a generated struct trace plays shallow copies in both themes', async () =>
   assert.deepEqual(errors, []);
 });
 
+// Lesson 04, example 3: a bare `std::cout << std::endl;` prints a newline and no value.
+test('a bare std::endl prints a visible newline glyph in both languages and themes', async () => {
+  const generated = JSON.parse(readFileSync(new URL('fixtures/endl-generated.json', import.meta.url), 'utf8'));
+  const last = generated.steps.length - 1;
+  assert.deepEqual(generated.steps[last].op, { kind: 'print', value: '\n', span: [13, 22] });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  for (const [lang, theme, status] of [['en', 'dark', 'Print a newline'], ['ru', 'light', 'Вывод перевода строки']]) {
+    await page.setContent(PAGE.replace(trace, JSON.stringify(generated).replace(/</g, '\\u003c'))
+      .replace('lang="en" data-theme="dark"', `lang="${lang}" data-theme="${theme}"`));
+    await page.evaluate(() => window.CourseVisualization.scan());
+    await page.waitForSelector('.cv-player');
+    const midPrint = await page.evaluate(index => {
+      const player = document.querySelector('.course-visualization').cvPlayer;
+      for (let step = 0; step <= index; step++) {
+        player.settle(step);
+        if (/NaN|undefined/.test(player.svg.innerHTML)) throw new Error(`invalid geometry at step ${step}`);
+      }
+      player.inspect(index, 0.5);
+      return [...player.svg.querySelectorAll('text')].map(element => element.textContent);
+    }, last);
+    // The newline travels as a glyph from `std::endl` and lands as a line break.
+    assert.ok(midPrint.includes('↵'), 'the travelling newline is visible');
+    assert.equal(await page.locator('.cv-status').textContent(), status);
+    await page.evaluate(() => document.querySelector('.course-visualization').cvPlayer.end());
+    const settled = await page.evaluate(() => [...document.querySelectorAll('.cv-player svg text')]
+      .map(element => element.textContent));
+    assert.ok(!settled.includes('↵'), 'no glyph stays in the output');
+    assert.ok(settled.includes('2'), 'the earlier output stays');
+  }
+  assert.deepEqual(errors, []);
+});
+
 test('static layout links rows and bytes in both themes and initializes lazily', async () => {
   await page.close();
   page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
