@@ -221,5 +221,13 @@
       "en/labs/cpp",
       "ru/labs/cpp"
     ]
+  },
+  "site_assets": {
+    "scripts": [
+      "visualizations/player/player.js"
+    ],
+    "styles": [
+      "visualizations/player/player.css"
+    ]
   }
 }

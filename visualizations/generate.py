@@ -16,7 +16,8 @@ import sys
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = 'expression-timeline'
 # Everything a trace's bytes depend on, besides the toolchain.
-TRACER_SOURCES = tuple(ROOT / name for name in ('generate.py', 'tracing.py', 'model.py', 'trace_format.py'))
+TRACER_SOURCES = tuple(ROOT / name for name in
+                       ('generate.py', 'tracing.py', 'model.py', 'trace_format.py'))
 
 
 def revision() -> str:
