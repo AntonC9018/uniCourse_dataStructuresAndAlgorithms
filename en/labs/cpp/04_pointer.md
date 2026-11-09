@@ -112,6 +112,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#3-dereference-operator-writing)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 The address of the variable `a` was stored in `b`.
@@ -189,6 +200,17 @@ int* b{ &a };
 std::cout << (*b) + 7;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#7-printing-a-complex-expression)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Correct answer:</summary>
@@ -274,6 +296,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#11-it-is-the-same-memory)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 Both reads and writes occur at the same address.
@@ -291,6 +324,17 @@ int* b = &a;
 std::cout << a;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#12-assigning-a-value-through-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -317,6 +361,17 @@ std::cout << std::endl;
 std::cout << b;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#13-reassigning-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
