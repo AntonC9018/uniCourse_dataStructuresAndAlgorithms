@@ -16,8 +16,8 @@ slug: en/cpp/labs/optional
 - A constant for the empty value
 - Returning an optional from a function
 - Arrays of optionals
+- Sentinel values (`-1` for no index, `std::string::npos`)
 - Pointers already hold null (`nullptr`)
-- References cannot be null
 
 ## Examples to aid understanding
 
@@ -334,7 +334,130 @@ A plain `1` becomes an `std::optional<int>` holding `1` automatically.
 It prints `1`, `"empty"`, `3`.
 </details>
 
-### 8. A pointer can already hold null
+### 8. A sentinel value instead of an optional
+```cpp
+#include <array>
+#include <iostream>
+
+const int NO_INDEX = -1;
+
+int findIndex(std::array<int, 4> arr, int target)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (arr[i] == target)
+        {
+            return i;
+        }
+    }
+    return NO_INDEX;
+}
+
+int main()
+{
+    std::array<int, 4> arr{ 5, 8, 2, 8 };
+    int a{ findIndex(arr, 8) };
+    int b{ findIndex(arr, 7) };
+
+    std::cout << a << std::endl;
+
+    if (b == NO_INDEX)
+    {
+        std::cout << "not found" << std::endl;
+    }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+An index can never be negative, so one impossible value, `-1`,
+can be reserved to mean “no index”.
+Such a reserved value is called a *sentinel value*.
+It needs no extra flag: the empty state is stored in the `int` itself.
+
+- `8` is first found at index `1`, so `a` is `1`;
+- `7` is not in the array, so `b` is `NO_INDEX`.
+
+It prints `1` and `"not found"`.
+
+The downside is that nothing forces the caller to check:
+`arr[b]` would compile and read outside the array (UB).
+</details>
+
+### 9. `std::string::npos`
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::string s{ "hello" };
+    size_t a{ s.find('l') };
+    size_t b{ s.find('z') };
+
+    std::cout << a << std::endl;
+
+    if (b == std::string::npos)
+    {
+        std::cout << "not found" << std::endl;
+    }
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The standard library uses sentinel values too.
+`find` returns the index of the first matching character,
+or `std::string::npos` if there is none.
+
+The index type `size_t` is unsigned, so `-1` cannot be used.
+`npos` is the largest `size_t` value instead
+(it is in fact defined as `-1` converted to `size_t`).
+No string can be that long, so this index is impossible too.
+
+It prints `2` and `"not found"`.
+
+`std::optional` has no way to choose a sentinel value:
+`std::optional<size_t>` always stores a separate flag next to the value.
+</details>
+
+### 10. When there is no free value for a sentinel
+```cpp
+#include <iostream>
+
+const int NO_VALUE = -1;
+
+int divide(int a, int b)
+{
+    if (b == 0)
+    {
+        return NO_VALUE;
+    }
+    return a / b;
+}
+
+int main()
+{
+    std::cout << divide(7, 0) << std::endl;
+    std::cout << divide(-7, 7) << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `-1` twice.
+The caller cannot tell the error apart from a real result:
+any `int` can be the result of a division, so no value is left free for the sentinel.
+Here an optional is needed, as in the `divide` examples above.
+
+A sentinel only works when some value of the type is impossible as a real result,
+like a negative index.
+</details>
+
+### 11. A pointer can already hold null
 ```cpp
 #include <iostream>
 
@@ -370,60 +493,6 @@ They need no extra flag like `has_value`.
 - `q` holds `nullptr`, so the check fails and `"empty"` is printed instead.
 
 It prints `5` and `"empty"`.
-</details>
-
-### 9. A reference cannot hold null
-```cpp
-int main()
-{
-    int& x{ nullptr };
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This will not compile: a reference must be bound to a real variable of type `int`,
-and `nullptr` is not one. References have no empty state.
-</details>
-
-### 10. Taking the address of `nullptr`
-```cpp
-int main()
-{
-    int& x{ &nullptr };
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This will not compile either: `&` can only be applied to a variable,
-and `nullptr` is not a variable, so its address cannot be taken.
-</details>
-
-### 11. A reference bound to null is UB
-```cpp
-#include <iostream>
-
-int main()
-{
-    int* a = nullptr;
-    int& x{ *a };
-    std::cout << x << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This compiles, but it is UB: `*a` follows a null address.
-Creating the reference already dereferences null,
-so anything can happen (usually a crash).
-Unlike an optional, there is nothing to check — the error is not represented in any way.
-
-Note that writing `&a` here would not compile at all:
-`&a` is an `int**`, not an `int`.
 </details>
 
 ### 12. `std::optional` for pointers is pointless

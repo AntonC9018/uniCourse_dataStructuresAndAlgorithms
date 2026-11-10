@@ -160,46 +160,7 @@ std::cout << a << std::endl;
 
 </details>
 
-### 5. Literals, variables and operators are expressions
-```cpp
-int a = 5;
-int b = a;
-int c = a + 6;
-std::cout << b << std::endl;
-std::cout << c << std::endl;
-```
-
-<details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#5-literals-variables-and-operators-are-expressions)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
-<summary>Answer</summary>
-
-Literals, variables (when read) and operators applied to expressions are all expressions.
-Each of them evaluates to a single value with its own type:
-
-- `5` is a literal expression: it evaluates to itself, with type `int`;
-- `a` on the lines `int b = a;` and `int c = a + 6;` is a variable expression:
-  it evaluates to the value currently stored in `a` (here, `5`);
-- `a + 6` is an operator expression:
-  the operator `+` takes two expressions (`a` and `6`) and evaluates to a single value (`11`).
-
-So `int b = a;` copies the result of the variable expression `a` into `b`,
-and `int c = a + 6;` copies the result of the operator expression `a + 6` into `c`.
-
-When printing, `b` and `c` are also expressions: reading them produces the stored values `5` and `11`.
-It prints `5` and `11`.
-</details>
-
-### 6. Assigning an expression to a variable
+### 5. Assigning an expression to a variable
 
 What are the expressions in this code fragment?
 
@@ -215,7 +176,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#6-assigning-an-expression-to-a-variable)
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#5-assigning-an-expression-to-a-variable)
 
 <!-- </visualization> -->
 
@@ -254,6 +215,45 @@ Even `b` on `std::cout << b << std::endl;` is an expression,
 because *its value is going to be passed to the printing function*,
 and it has to be *evaluated* to e.g. a number before getting sent to the print function.
 
+</details>
+
+### 6. Literals, variables and operators are expressions
+```cpp
+int a = 5;
+int b = a;
+int c = a + 6;
+std::cout << b << std::endl;
+std::cout << c << std::endl;
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#6-literals-variables-and-operators-are-expressions)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Literals, variables (when read) and operators applied to expressions are all expressions.
+Each of them evaluates to a single value with its own type:
+
+- `5` is a literal expression: it evaluates to itself, with type `int`;
+- `a` on the lines `int b = a;` and `int c = a + 6;` is a variable expression:
+  it evaluates to the value currently stored in `a` (here, `5`);
+- `a + 6` is an operator expression:
+  the operator `+` takes two expressions (`a` and `6`) and evaluates to a single value (`11`).
+
+So `int b = a;` copies the result of the variable expression `a` into `b`,
+and `int c = a + 6;` copies the result of the operator expression `a + 6` into `c`.
+
+When printing, `b` and `c` are also expressions: reading them produces the stored values `5` and `11`.
+It prints `5` and `11`.
 </details>
 
 ### 7. String value
@@ -366,7 +366,7 @@ It prints `0`.
 `a = {}` assigns a value-initialized `int`, which is zero; it does not leave `a` uninitialized.
 </details>
 
-### 12. An int{} expression
+### 12. An `int{}` expression
 
 ```cpp
 int a{ 7 };

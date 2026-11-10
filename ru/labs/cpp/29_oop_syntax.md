@@ -7,7 +7,7 @@ slug: ru/cpp/labs/oop-syntax
 # Базовый ООП
 
 - [Видео](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16) до `NumberWrapper`.
-- [Информация](../../../en/05_programming_fundamentals/linker_examples)
+- [Информация](../../../ru/05_programming_fundamentals/linker_examples)
 
 ## Базовые концепты
 
@@ -101,7 +101,7 @@ slug: ru/cpp/labs/oop-syntax
    <summary>Ответ</summary>
    
    Один конкретный — нельзя. Можно все методы в классе, приписав `static` к определению класса. Некоторым образом это можно обойти, используя вложенный класс. 
-   [См. док](../../../en/05a_programming_fundamentals/05_module.md#private-members-in-the-header-file).
+   [См. док](../../../ru/05a_programming_fundamentals/05_module.md#поля-private).
    </details>
 
 8. Обязателен ли оператор `new` чтобы создать класс (структуру с методами)?

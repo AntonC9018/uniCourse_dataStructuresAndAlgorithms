@@ -6,7 +6,7 @@ slug: ru/cpp/labs/cpp-array
 <!-- course-site-backlink:end -->
 # C++ массивы (`std::array`)
 
-- [Информация](../../../en/06_arrays/doc.md)
+- [Информация](../../../ru/06_arrays/doc.md)
 
 ## Концепты
 
