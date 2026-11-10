@@ -576,6 +576,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#14-overwriting-through-an-address)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `*fp = { 5, 6 }` -> `*(&a) = { 5, 6 }` -> `a = { 5, 6 }`
@@ -656,6 +667,18 @@ int main()
     std::cout << num << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#17-an-address-field)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Answer:</summary>
 
@@ -698,6 +721,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#18-a-nested-structure)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 Other structures can be nested inside a structure.
@@ -735,6 +769,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#19-copying-a-nested-structure)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>

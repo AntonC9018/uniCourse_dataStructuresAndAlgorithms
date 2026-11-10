@@ -45,6 +45,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#1-variable-address)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 `int* b{ &a }` stores the address of the variable `a` in `b`.
@@ -92,6 +103,17 @@ int* b{ &a };
 std::cout << b;
 std::cout << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#2-address-of-an-uninitialized-variable)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -608,6 +630,17 @@ If the `static_cast<void*>` is omitted, the conversion from `void**` to `void*` 
 int* p{};
 std::cout << p << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#21-empty-pointer-initialization)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>

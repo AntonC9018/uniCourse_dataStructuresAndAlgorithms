@@ -479,17 +479,6 @@ auto b{ a + 5 };
 ```
 
 <details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#17-auto-from-another-variable)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Answer</summary>
 
 `auto` looks at the type of the whole initializer expression, not just at whether it is a literal.

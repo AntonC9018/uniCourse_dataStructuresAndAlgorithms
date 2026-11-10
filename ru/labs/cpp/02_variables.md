@@ -483,17 +483,6 @@ auto b{ a + 5 };
 ```
 
 <details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#17-auto-от-другой-переменной)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Ответ</summary>
 
 `auto` учитывает тип всего выражения, а не то, является ли оно литералом.
