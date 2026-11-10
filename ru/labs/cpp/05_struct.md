@@ -580,6 +580,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#14-перезапись-по-адресу)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 `*fp = { 5, 6 }` -> `*(&a) = { 5, 6 }` -> `a = { 5, 6 }`
@@ -660,6 +671,18 @@ int main()
     std::cout << num << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#17-адресное-поле)
+
+<!-- </visualization> -->
+
+</details>
+
 <details>
 <summary>Ответ:</summary>
 
@@ -702,6 +725,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#18-вложенная-структура)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 В структуры можно вкладывать любые другие структуры.
@@ -740,6 +774,17 @@ int main()
     std::cout << a.f << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#19-копирование-вложенной-структуры)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
