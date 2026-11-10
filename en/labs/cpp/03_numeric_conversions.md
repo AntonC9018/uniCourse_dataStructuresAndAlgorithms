@@ -239,7 +239,7 @@ Not only the value but even the sign has changed: `56` is printed.
 because `std::cout` prints an `int8_t` as a character.
 </details>
 
-### 6. Bitwise operation (advanced level)
+### 7. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>
@@ -297,7 +297,7 @@ which is why extending a negative value fills the upper bits with 1s instead.
 
 </details>
 
-### 7. Changing the sign (advanced level)
+### 8. Changing the sign (advanced level)
 ```cpp
 #include <cstdint>
 #include <iostream>

@@ -457,7 +457,7 @@ A sentinel only works when some value of the type is impossible as a real result
 like a negative index.
 </details>
 
-### 8. A pointer can already hold null
+### 11. A pointer can already hold null
 ```cpp
 #include <iostream>
 
