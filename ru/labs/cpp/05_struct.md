@@ -1193,16 +1193,16 @@ struct A
 };
 
 A value{ 5 };
-int* field{ &value.field };
+int* fieldAddress{ &value.field };
 A* p{};
-p = field;
+p = fieldAddress;
 ```
 
 <details>
 <summary>Ответ</summary>
 
 Не компилируется.
-У `field` тип `int*`, а для `p` требуется `A*`.
+У `fieldAddress` тип `int*`, а для `p` требуется `A*`.
 У адреса поля и адреса структуры разные типы.
 </details>
 
@@ -1216,8 +1216,8 @@ struct A
 
 A value{ 5 };
 A* p{ &value };
-int* field{};
-field = p;
+int* fieldAddress{};
+fieldAddress = p;
 ```
 
 <details>
@@ -1225,7 +1225,7 @@ field = p;
 
 Не компилируется.
 У `p` тип `A*`, а не `int*`.
-Используйте `field = &p->field;`, чтобы получить адрес целочисленного поля.
+Используйте `fieldAddress = &p->field;`, чтобы получить адрес целочисленного поля.
 </details>
 
 ### 8. Копирование структуры через два указателя

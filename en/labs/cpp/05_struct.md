@@ -1188,16 +1188,16 @@ struct A
 };
 
 A value{ 5 };
-int* field{ &value.field };
+int* fieldAddress{ &value.field };
 A* p{};
-p = field;
+p = fieldAddress;
 ```
 
 <details>
 <summary>Answer</summary>
 
 It does not compile.
-`field` has type `int*`; `p` requires `A*`.
+`fieldAddress` has type `int*`; `p` requires `A*`.
 The field address and the structure address have different types.
 </details>
 
@@ -1211,8 +1211,8 @@ struct A
 
 A value{ 5 };
 A* p{ &value };
-int* field{};
-field = p;
+int* fieldAddress{};
+fieldAddress = p;
 ```
 
 <details>
@@ -1220,7 +1220,7 @@ field = p;
 
 It does not compile.
 `p` has type `A*`, not `int*`.
-Use `field = &p->field;` to address the integer field.
+Use `fieldAddress = &p->field;` to address the integer field.
 </details>
 
 ### 8. Copying the structure through two pointers
