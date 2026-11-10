@@ -203,6 +203,42 @@ Truncation to `uint8_t` keeps only the last byte (`0000 0000`), so the result is
 - Value 512: `10 0000 0000` is stored, becoming `0000 0000` after truncation.
 </details>
 
+### 6. `static_cast` of a negative number to a smaller type
+```cpp
+#include <cstdint>
+#include <iostream>
+
+int main()
+{
+    int a{ -3 };
+    int8_t b{ static_cast<int8_t>(a) };
+    std::cout << static_cast<int>(b) << std::endl;
+
+    int c{ -200 };
+    int8_t d{ static_cast<int8_t>(c) };
+    std::cout << static_cast<int>(d) << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Truncation works the same way for negative numbers: only the last byte is kept.
+
+`-3` in 32 bits is `1111 1111 1111 1111 1111 1111 1111 1101`.
+The last byte, `1111 1101`, is exactly `-3` in 8 bits,
+so the value fits and is preserved: `-3` is printed.
+This is the reverse of the sign extension from the earlier example.
+
+`-200` in 32 bits is `1111 1111 1111 1111 1111 1111 0011 1000`.
+It does not fit in `int8_t`, which holds values from `-128` to `127`.
+The last byte, `0011 1000`, starts with 0, so it is the positive number `56`.
+Not only the value but even the sign has changed: `56` is printed.
+
+`static_cast<int>` is needed when printing,
+because `std::cout` prints an `int8_t` as a character.
+</details>
+
 ### 6. Bitwise operation (advanced level)
 ```cpp
 #include <cstdint>
