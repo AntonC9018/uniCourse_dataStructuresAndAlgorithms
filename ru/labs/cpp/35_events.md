@@ -6,7 +6,7 @@ slug: ru/cpp/labs/events
 <!-- course-site-backlink:end -->
 # Полиморфизм
 
-- [Моя информация с примерами](../../../en/05a_programming_fundamentals/11_polymorphism.md)
+- [Моя информация с примерами](../../../ru/05a_programming_fundamentals/11_polymorphism.md)
 
 ## Система ивентов (событий)
 
