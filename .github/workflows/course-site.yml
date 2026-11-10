@@ -55,7 +55,8 @@ jobs:
           # Preserve the generated .nojekyll file for Pagefind assets.
           include-hidden-files: true
 
-  # The course's own tracer and player, tested in the toolchain the flake pins.
+  # The tracer and player from the visualizations submodule, tested in the toolchain
+  # the course flake pins.
   visualization-tests:
     runs-on: ubuntu-latest
     steps:

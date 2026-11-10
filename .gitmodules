@@ -1,3 +1,6 @@
 [submodule "course_maintenance"]
 	path = course_maintenance
 	url = git@github.com:AntonC9018/course_maintenance.git
+[submodule "visualizations"]
+	path = visualizations
+	url = https://github.com/AntonC9018/cpp-visualizations
