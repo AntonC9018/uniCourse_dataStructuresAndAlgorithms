@@ -171,6 +171,17 @@ std::cout << r << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#6-observing-a-change-through-a-const-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It prints `5` and `6`.
@@ -190,6 +201,17 @@ a = 7;
 std::cout << r << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#7-copying-a-value-read-through-a-const-reference)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>

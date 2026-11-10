@@ -84,6 +84,17 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#5-reference-from-a-variable)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 Here, `b` is a *reference* to `a`.
@@ -110,6 +121,17 @@ std::cout << c << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#6-reference-from-a-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `int& c = b;` creates another reference to `a`, because `b` already refers to `a`.
@@ -127,6 +149,17 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#7-assigning-a-number-to-a-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 Here, `a` will be overwritten with `6` through the name `b`.
@@ -139,6 +172,17 @@ int& b = a;
 a = 6;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#8-overwriting-a-variable-that-has-a-reference)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -193,6 +237,17 @@ std::cout << c << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#11-assigning-a-variable-to-a-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `c = b` does not rebind the reference; a reference cannot be rebound.
@@ -220,6 +275,17 @@ std::cout << a << std::endl;
 std::cout << b << std::endl;
 std::cout << c << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#12-overwriting-the-referenced-variable-after-assigning-through-the-reference)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -250,6 +316,17 @@ std::cout << *pa << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#13-reference-from-a-dereference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `int& b = *pa;` creates a reference to the object pointed to by `pa`.
@@ -269,6 +346,17 @@ r = 3;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#14-reassigning-a-pointer-after-creating-a-reference-from-it)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -345,6 +433,17 @@ std::cout << a << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#18-overwriting-a-variable-through-an-address-and-a-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 You can also obtain an address from a reference.
@@ -386,6 +485,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#19-references-to-fields)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 References can be created to members of larger objects.
@@ -404,6 +514,17 @@ pa = &b;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#20-reference-to-a-pointer-1)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -431,6 +552,17 @@ rb = 3;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#21-reference-to-a-pointer-2)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -559,6 +691,17 @@ auto& b = a;
 b = 6;
 std::cout << a << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#26-auto-makes-a-reference)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
