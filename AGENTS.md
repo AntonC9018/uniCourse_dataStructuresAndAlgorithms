@@ -36,3 +36,15 @@ that's going to be handled by the maintenance scripts.
 Match the style in the target document, or the other documents 
 (first few documents have most care put into them).
 
+
+## When adding execution traces (visualizations)
+
+Add a trace only where watching memory change is what the example teaches.
+Do not tag an example just because the tracer supports it.
+
+Skip examples that are about something the trace does not show,
+such as type deduction, a compile error, naming, or syntax alone.
+
+`python3 visualizations/discover.py` lists the candidates and writes nothing.
+Read each candidate in the lesson, then tag the chosen ones with
+`--tag PATH:LINE`, in both `en/` and `ru/`.
