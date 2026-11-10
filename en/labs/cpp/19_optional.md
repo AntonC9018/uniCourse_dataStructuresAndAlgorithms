@@ -17,7 +17,6 @@ slug: en/cpp/labs/optional
 - Returning an optional from a function
 - Arrays of optionals
 - Pointers already hold null (`nullptr`)
-- References cannot be null
 
 ## Examples to aid understanding
 
@@ -370,60 +369,6 @@ They need no extra flag like `has_value`.
 - `q` holds `nullptr`, so the check fails and `"empty"` is printed instead.
 
 It prints `5` and `"empty"`.
-</details>
-
-### 9. A reference cannot hold null
-```cpp
-int main()
-{
-    int& x{ nullptr };
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This will not compile: a reference must be bound to a real variable of type `int`,
-and `nullptr` is not one. References have no empty state.
-</details>
-
-### 10. Taking the address of `nullptr`
-```cpp
-int main()
-{
-    int& x{ &nullptr };
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This will not compile either: `&` can only be applied to a variable,
-and `nullptr` is not a variable, so its address cannot be taken.
-</details>
-
-### 11. A reference bound to null is UB
-```cpp
-#include <iostream>
-
-int main()
-{
-    int* a = nullptr;
-    int& x{ *a };
-    std::cout << x << std::endl;
-}
-```
-
-<details>
-<summary>Answer</summary>
-
-This compiles, but it is UB: `*a` follows a null address.
-Creating the reference already dereferences null,
-so anything can happen (usually a crash).
-Unlike an optional, there is nothing to check — the error is not represented in any way.
-
-Note that writing `&a` here would not compile at all:
-`&a` is an `int**`, not an `int`.
 </details>
 
 ### 12. `std::optional` for pointers is pointless
