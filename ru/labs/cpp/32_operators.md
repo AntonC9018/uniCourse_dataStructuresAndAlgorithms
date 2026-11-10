@@ -7,7 +7,7 @@ slug: ru/cpp/labs/operators
 # Перегрузка операторов
 
 - [Видео](https://www.youtube.com/watch?v=UoMKfmyYEiw&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=18)
-- [Информация](../../../en/05a_programming_fundamentals/03_operators.md)
+- [Информация](../../../ru/05a_programming_fundamentals/03_operators.md)
 
 ## Практика
 

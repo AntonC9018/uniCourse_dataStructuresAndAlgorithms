@@ -8,7 +8,7 @@ slug: ru/cpp/labs/raii
 
 - [Видео по ООП, RAII](https://www.youtube.com/watch?v=Lc2VUm09-6s&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=16).
 - [Видео по видам памяти](https://www.youtube.com/watch?v=jAr_jicQv4Y&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=14).
-- [Информация по RAII](../../../en/05a_programming_fundamentals/02_RAII.md)
+- [Информация по RAII](../../../ru/05a_programming_fundamentals/02_RAII.md)
 
 ## Пример
 

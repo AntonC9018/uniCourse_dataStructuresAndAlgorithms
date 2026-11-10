@@ -559,6 +559,74 @@ Both non-const and const objects can be passed to a parameter of type `const Pos
 The local pointer parameter itself can still be reassigned, as in the earlier pointer example.
 </details>
 
+### 21. Returning a non-const pointer to a field
+
+```cpp
+struct Position
+{
+    int x;
+    int y;
+};
+
+int* addressOfX(const Position& a)
+{
+    return &a.x;
+}
+
+int main()
+{
+    Position a{ 1, 2 };
+    int* p = addressOfX(a);
+    *p = 5;
+    std::cout << a.x << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The program will not compile at `return &a.x`.
+Through a const reference, the field `a.x` is also const, so `&a.x` has type `const int*`.
+Converting it to `int*` would discard `const`, just like binding `int&` to a const reference.
+If this were allowed, the caller could change the object through the returned pointer,
+bypassing the restriction of the parameter.
+Returning `const int*` compiles, but then `*p = 5` is forbidden.
+</details>
+
+### 22. Returning a pointer stored in a field
+
+```cpp
+struct Holder
+{
+    int* p;
+};
+
+int* storedPointer(const Holder& h)
+{
+    return h.p;
+}
+
+int main()
+{
+    int value = 1;
+    Holder holder{ &value };
+    int* p = storedPointer(holder);
+    *p = 5;
+    std::cout << value << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+It prints `5`.
+Through the const reference, the field `h.p` is const: `h.p = nullptr` would not compile.
+But the field is the pointer itself, not the integer it points to.
+Its type is `int* const`, so returning it makes a copy of the address of type `int*`,
+and copying a const value is allowed.
+The integer `value` is not part of the structure, so `const` does not protect it.
+</details>
+
 ## Const std::array
 
 ### 1. A const std::array

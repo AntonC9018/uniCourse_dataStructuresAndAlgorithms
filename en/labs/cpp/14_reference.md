@@ -10,6 +10,7 @@ slug: en/cpp/labs/reference
 
 - rvalue, lvalue
 - Reference
+- References cannot be null
 
 ## Comprehension questions
 
@@ -280,7 +281,61 @@ The output will be:
 ```
 </details>
 
-### 15. Overwriting a variable through an address and a reference
+### 15. A reference cannot hold null
+```cpp
+int main()
+{
+    int& x{ nullptr };
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This will not compile: a reference must be bound to a real variable of type `int`,
+and `nullptr` is not one. References have no empty state.
+</details>
+
+### 16. Taking the address of `nullptr`
+```cpp
+int main()
+{
+    int& x{ &nullptr };
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This will not compile either: `&` can only be applied to a variable,
+and `nullptr` is not a variable, so its address cannot be taken.
+</details>
+
+### 17. A reference bound to null is UB
+```cpp
+#include <iostream>
+
+int main()
+{
+    int* a = nullptr;
+    int& x{ *a };
+    std::cout << x << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+This compiles, but it is UB: `*a` follows a null address.
+Creating the reference already dereferences null,
+so anything can happen (usually a crash).
+Unlike a pointer, a reference cannot be compared with `nullptr`: there is nothing to check, and the error is not represented in any way.
+
+Note that writing `&a` here would not compile at all:
+`&a` is an `int**`, not an `int`.
+</details>
+
+### 18. Overwriting a variable through an address and a reference
 ```cpp
 int a = 1;
 int& b = a;
@@ -297,7 +352,7 @@ Here, `*c = 2;` will overwrite `a`.
 </details>
 
 
-### 16. References to fields
+### 19. References to fields
 ```cpp
 #include <iostream>
 
@@ -338,7 +393,7 @@ References can be created to members of larger objects.
 Here, `3` and `4` will be printed everywhere.
 </details>
 
-### 17. Reference to a pointer (1)
+### 20. Reference to a pointer (1)
 ```cpp
 int a = 1;
 int b = 2;
@@ -363,7 +418,7 @@ The reference `rpa` reflects that change, so dereferencing it accesses `b`.
 `a` will be `1`, and `b` will be `3`.
 </details>
 
-### 18. Reference to a pointer (2)
+### 21. Reference to a pointer (2)
 ```cpp
 int a = 1;
 int b = 2;
@@ -386,7 +441,7 @@ any expression that ultimately yields an lvalue.
 `rb = 3` will write `3` into `b`.
 </details>
 
-### 19. Size of a reference
+### 22. Size of a reference
 
 Is it possible to obtain the size of a reference? What is the size of a reference?
 
@@ -415,7 +470,7 @@ Such an address is commonly 8 bytes on modern platforms.
 > Passing its address is a straightforward way to provide that information.
 </details>
 
-### 20. Example of using references (1)
+### 23. Example of using references (1)
 ```cpp
 #include <iostream>
 
@@ -440,7 +495,7 @@ Many compilers implement this by passing the *address* of the `appleAmount` vari
 but that detail is hidden from you.
 </details>
 
-### 21. Example of using references (2)
+### 24. Example of using references (2)
 ```cpp
 #include <iostream>
 
@@ -469,7 +524,7 @@ You can pass references to struct objects to a function.
 Here, the function increases the power.
 </details>
 
-### 22. `auto` makes a copy
+### 25. `auto` makes a copy
 ```cpp
 int a = 5;
 auto b = a;
@@ -482,7 +537,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#22-auto-makes-a-copy)
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#25-auto-makes-a-copy)
 
 <!-- </visualization> -->
 
@@ -497,7 +552,7 @@ std::cout << a << std::endl;
 `b = 6` overwrites only the copy, so `5` will be printed.
 </details>
 
-### 23. `auto&` makes a reference
+### 26. `auto&` makes a reference
 ```cpp
 int a = 5;
 auto& b = a;
