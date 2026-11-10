@@ -10,7 +10,8 @@
         (system: f nixpkgs.legacyPackages.${system});
     in {
       devShells = forEachSystem (pkgs: rec {
-        # What CI enters to trace tagged examples. Its lock is part of every trace key.
+        # What CI enters to trace tagged examples with the `visualizations` submodule.
+        # Its lock is part of every trace key.
         visualizations = pkgs.mkShellNoCC {
           packages = [ pkgs.clang pkgs.gdb pkgs.python3 ];
           CLANGXX = "${pkgs.clang}/bin/clang++";
