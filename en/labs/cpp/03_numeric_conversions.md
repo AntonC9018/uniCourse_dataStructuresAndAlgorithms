@@ -247,7 +247,7 @@ because `std::cout` prints an `int8_t` as a character.
 int main()
 {
     uint8_t a{ 0 };
-    uint8_t b{ ~a };
+    uint8_t b{ static_cast<uint8_t>(~a) };
     int32_t c{ b };
     std::cout << c;
 }
@@ -269,7 +269,10 @@ For example, `1010 0011` -> `0101 1100`.
 <summary>Correct answer</summary>
 
 - 0 is stored in an 8-bit variable.
-- The `~` operator is applied to the 8-bit value 0: `0000 0000` -> `1111 1111` (255).
+- Before `~` is applied, `a` is converted to `int`: operators never work on types
+  narrower than `int`. So `~` inverts 32 bits, not 8: 32 zeros become 32 ones, which is `-1`.
+- `static_cast<uint8_t>` keeps only the last byte: `1111 1111` (255).
+  The cast has to be written: braces do not let an `int` shrink to `uint8_t` on its own.
 - The result is stored in the 8-bit variable `b`.
 - The result is stored unchanged in the 32-bit variable `c` (for printing).
 
