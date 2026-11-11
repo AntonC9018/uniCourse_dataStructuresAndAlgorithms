@@ -45,6 +45,6 @@ Do not tag an example just because the tracer supports it.
 Skip examples that are about something the trace does not show,
 such as type deduction, a compile error, naming, or syntax alone.
 
-`python3 visualizations/discover.py` lists the candidates and writes nothing.
+`node visualizations/discover.mjs` lists the candidates and writes nothing.
 Read each candidate in the lesson, then tag the chosen ones with
 `--tag PATH:LINE`, in both `en/` and `ru/`.
