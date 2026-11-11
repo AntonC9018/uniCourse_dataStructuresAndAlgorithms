@@ -1,0 +1,1430 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "bQnbkV6xgY4",
+  "uploadId": "bQnbkV6xgY4",
+  "transcriptSha256": "590288fc4c263c0301d2ec0242e97c3225d0aad98c1d8951beaaedefa6f369ea",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 199,
+      "endMilliseconds": 9840,
+      "kind": "reason",
+      "text": "Installing the same GCC C++ compiler on every machine gives all students an approximately identical compiling experience, so code that builds for one works for the rest.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 199,
+          "endMilliseconds": 9840
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#installing-gcc-and-verifying-a-c-program"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 15070,
+      "endMilliseconds": 24830,
+      "kind": "explanation",
+      "text": "GCC was originally Linux-only, but MinGW emulates a Linux-like environment on Windows, which is why it is the chosen compiler for Windows students.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 15070,
+          "endMilliseconds": 24830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 31920,
+      "endMilliseconds": 47920,
+      "kind": "edge_case",
+      "text": "The first link offers a 2021-era compiler with only the C++17 standard, so it must be avoided because the course relies on functions from newer standards.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 31920,
+          "endMilliseconds": 47920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 50440,
+      "endMilliseconds": 57790,
+      "kind": "explanation",
+      "text": "The compiler is installed from the prebuilt toolchains offered on the sourceforge downloads page rather than built from source.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 50440,
+          "endMilliseconds": 57790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 60830,
+      "endMilliseconds": 75350,
+      "kind": "explanation",
+      "text": "You can reach the MinGW site directly from the link instead of searching for it, then download the installer matching your architecture.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 60830,
+          "endMilliseconds": 75350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 82280,
+      "endMilliseconds": 86990,
+      "kind": "fact",
+      "text": "The MinGW installer alone only sets up the environment emulation, so the actual compiler has to be installed separately afterwards.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 82280,
+          "endMilliseconds": 86990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 87000,
+      "endMilliseconds": 100990,
+      "kind": "explanation",
+      "text": "Run the downloaded installer and confirm the default settings, since the default install target is on the C drive.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 87000,
+          "endMilliseconds": 100990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choose-and-install-msys2"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 116670,
+      "endMilliseconds": 124790,
+      "kind": "explanation",
+      "text": "Only one of the MinGW console shortcuts is needed: either icon opens the same console, and that console is used just once to install the compiler.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 116670,
+          "endMilliseconds": 124790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#install-the-compiler-package"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 125790,
+      "endMilliseconds": 134949,
+      "kind": "reason",
+      "text": "After the one-time install the compiler becomes a file on the system, so it can be invoked from an ordinary console later.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 125790,
+          "endMilliseconds": 134949
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#install-the-compiler-package"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 160440,
+      "endMilliseconds": 163230,
+      "kind": "explanation",
+      "text": "The compiler is installed with pacman, the package manager used by Arch Linux, because a package manager handles installing software packages for you.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 160440,
+          "endMilliseconds": 163230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#install-the-compiler-package"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 172320,
+      "endMilliseconds": 175910,
+      "kind": "explanation",
+      "text": "The install command is copied from the video description, so learners get the exact text rather than retyping it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 172320,
+          "endMilliseconds": 175910
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#install-the-compiler-package"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 178400,
+      "endMilliseconds": 194120,
+      "kind": "explanation",
+      "text": "Pasting into the MinGW console needs Fn+Esc to turn off the function-lock behaviour before Shift+Insert, then Y and Enter to confirm the prompt.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 178400,
+          "endMilliseconds": 194120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#install-the-compiler-package"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 208760,
+      "endMilliseconds": 214390,
+      "kind": "explanation",
+      "text": "A test program is created in a folder on the desktop so the freshly installed compiler can be verified by compiling it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 208760,
+          "endMilliseconds": 214390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 226400,
+      "endMilliseconds": 231429,
+      "kind": "fact",
+      "text": "Windows Explorer hides file extensions by default, which is why a new file appears without the .cpp suffix.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 226400,
+          "endMilliseconds": 231429
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 235590,
+      "endMilliseconds": 246430,
+      "kind": "explanation",
+      "text": "Turning off hide file extensions in View > Show makes the source file extension visible so you can confirm you saved a C++ file.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 235590,
+          "endMilliseconds": 246430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 247120,
+      "endMilliseconds": 262190,
+      "kind": "reason",
+      "text": "Enabling show hidden files is worth doing because Git will create hidden entries such as .git that are otherwise invisible.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 247120,
+          "endMilliseconds": 262190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 262510,
+      "endMilliseconds": 274190,
+      "kind": "fact",
+      "text": "The source file is renamed with the .cpp extension, with main.cpp being the conventional name for the main file of a project.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 262510,
+          "endMilliseconds": 274190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 277560,
+      "endMilliseconds": 290189,
+      "kind": "explanation",
+      "text": "The file can be opened in any plain-text editor such as Notepad or VS Code, because a C++ source file is just text.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 277560,
+          "endMilliseconds": 290189
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#create-a-visible-c-source-file"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 293150,
+      "endMilliseconds": 300150,
+      "kind": "test_result",
+      "text": "Running g++ after the installation shows that the compiler exists and can be invoked, confirming the setup works.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 293150,
+          "endMilliseconds": 300150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 295360,
+      "endMilliseconds": 305520,
+      "kind": "fact",
+      "text": "В оболочке Git Bash g++ находится в PATH, поэтому компилятор вызывается простым именем.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 295360,
+          "endMilliseconds": 305520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 305520,
+      "endMilliseconds": 318760,
+      "kind": "explanation",
+      "text": "В обычной консоли Windows (cmd) g++ не находится в PATH, поэтому его имя не распознаётся.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 305520,
+          "endMilliseconds": 318760
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 318760,
+      "endMilliseconds": 321000,
+      "kind": "scope_boundary",
+      "text": "Причину, почему cmd не видит компилятор, и способ это исправить автор обещает объяснить позже.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 318760,
+          "endMilliseconds": 321000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 321000,
+      "endMilliseconds": 345680,
+      "kind": "explanation",
+      "text": "При установке MinGW компилятор gcc кладётся в папку /usr/bin оболочки, поэтому там он вызывается без полного пути.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 321000,
+          "endMilliseconds": 345680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 345680,
+      "endMilliseconds": 351800,
+      "kind": "explanation",
+      "text": "g++ добавляет значения по умолчанию для компиляции файлов C++, но сам gcc тоже умеет компилировать C++.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 345680,
+          "endMilliseconds": 351800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 351800,
+      "endMilliseconds": 364070,
+      "kind": "explanation",
+      "text": "Чтобы вызвать компилятор, не находящийся в PATH, нужно указать его полный путь до исполняемого файла на диске.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 351800,
+          "endMilliseconds": 364070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 364070,
+      "endMilliseconds": 372800,
+      "kind": "explanation",
+      "text": "У компилятора можно вывести справку по ключу --help, чтобы посмотреть доступные опции командной строки.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 364070,
+          "endMilliseconds": 372800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 372800,
+      "endMilliseconds": 386599,
+      "kind": "explanation",
+      "text": "Консоль выполняет первую строку как имя программы, а всё последующее передаёт ей как параметры командной строки.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 372800,
+          "endMilliseconds": 386599
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 376440,
+      "endMilliseconds": 386599,
+      "kind": "scope_boundary",
+      "text": "Чтобы программу можно было вызвать по имени без полного пути, её нужно сделать доступной глобально; как это сделать автор объяснит позже.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 376440,
+          "endMilliseconds": 386599
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 386599,
+      "endMilliseconds": 397510,
+      "kind": "fact",
+      "text": "Всё, что указано в командной строке после имени программы, передаётся самой программе как строковые параметры командной строки.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 386599,
+          "endMilliseconds": 397510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#invoke-the-compiler-before-changing-path"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 397510,
+      "endMilliseconds": 405270,
+      "kind": "code_change",
+      "text": "Для проверки компиляции создаётся минимальная программа, которая выводит Hello World.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 397510,
+          "endMilliseconds": 405270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 405270,
+      "endMilliseconds": 414630,
+      "kind": "explanation",
+      "text": "Подключение заголовочного файла <iostream> даёт доступ к функциям вывода на экран, поэтому без него печать невозможна.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 405270,
+          "endMilliseconds": 414630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 414630,
+      "endMilliseconds": 421629,
+      "kind": "fact",
+      "text": "Функция int main является точкой входа программы, и именно с неё начинается выполнение кода.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 414630,
+          "endMilliseconds": 421629
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 421629,
+      "endMilliseconds": 427430,
+      "kind": "fact",
+      "text": "Для вывода текста используется перегруженный оператор сдвига влево на объекте std::cout.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 421629,
+          "endMilliseconds": 427430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 427430,
+      "endMilliseconds": 444269,
+      "kind": "reason",
+      "text": "Такая система выглядит сложной, потому что cout скрывает за собой глобальный объект, пространство имён и перегрузку операторов — без этих абстракций можно обойтись, но для этого нужно знать низкоуровневые детали.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 427430,
+          "endMilliseconds": 444269
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 444269,
+      "endMilliseconds": 458680,
+      "kind": "explanation",
+      "text": "Объект cout представляет собой консоль, в которую можно записывать данные, и именно в неё попадает информация после оператора сдвига.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 444269,
+          "endMilliseconds": 458680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 449759,
+      "endMilliseconds": 458680,
+      "kind": "explanation",
+      "text": "Объект cout представляет собой консоль, в которую мы можем записывать информацию.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 449759,
+          "endMilliseconds": 458680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 458680,
+      "endMilliseconds": 468750,
+      "kind": "fact",
+      "text": "Оператор сдвига влево помещает переданную информацию в объект cout, то есть в консоль.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 458680,
+          "endMilliseconds": 468750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 468750,
+      "endMilliseconds": 474720,
+      "kind": "fact",
+      "text": "Текст в двойных кавычках является строкой, которая именно в таком виде попадает в консоль при выводе.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 468750,
+          "endMilliseconds": 474720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#write-the-first-hello-world-program"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 474720,
+      "endMilliseconds": 482240,
+      "kind": "fact",
+      "text": "Чтобы запустить программу, её нужно сначала скомпилировать, потому что исходный код сам по себе не исполняется.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 474720,
+          "endMilliseconds": 482240
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#turn-source-text-into-an-executable"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 482240,
+      "endMilliseconds": 486240,
+      "kind": "fact",
+      "text": "В результате работы компилятора создаётся исполняемый (executable) файл, который уже можно запускать.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 482240,
+          "endMilliseconds": 486240
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#turn-source-text-into-an-executable"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 486240,
+      "endMilliseconds": 493029,
+      "kind": "explanation",
+      "text": "Скомпилированный исполняемый файл можно запустить двойным щелчком мыши или из командной строки.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 486240,
+          "endMilliseconds": 493029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#turn-source-text-into-an-executable"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 493029,
+      "endMilliseconds": 499100,
+      "kind": "explanation",
+      "text": "Перед компиляцией нужно перейти в консоли в папку, где лежит исходный файл, чтобы обращаться к нему относительным именем.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 493029,
+          "endMilliseconds": 499100
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 499100,
+      "endMilliseconds": 511790,
+      "kind": "explanation",
+      "text": "Компилятор вызывается по его полному пути, которому в консоли передаётся имя исходного файла на вход.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 499100,
+          "endMilliseconds": 511790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 511790,
+      "endMilliseconds": 524579,
+      "kind": "fact",
+      "text": "Полный путь к компилятору можно получить, перетащив его значок в консоль или скопировав через контекстное меню по Shift+правой кнопке мыши.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 511790,
+          "endMilliseconds": 524579
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 524579,
+      "endMilliseconds": 534560,
+      "kind": "fact",
+      "text": "Имя исходного файла указывается относительно текущей папки, в которой открыта консоль.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 524579,
+          "endMilliseconds": 534560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 525279,
+      "endMilliseconds": 534560,
+      "kind": "fact",
+      "text": "Имя исходного файла в команде указывается относительно текущей папки, в которой открыта консоль.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 525279,
+          "endMilliseconds": 534560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 534560,
+      "endMilliseconds": 543470,
+      "kind": "code_change",
+      "text": "В консоли вводится полный путь к компилятору и относительное имя файла a.cpp, после чего команда запускается.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 534560,
+          "endMilliseconds": 543470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 547200,
+      "endMilliseconds": 553670,
+      "kind": "scope_boundary",
+      "text": "Перед повторным компилированием автор просит повторить ту же команду; что именно она делает будет разобрано позже.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 547200,
+          "endMilliseconds": 553670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 553670,
+      "endMilliseconds": 564750,
+      "kind": "fact",
+      "text": "Команда компиляции создаёт на диске исполняемый файл, который можно запустить как обычную программу.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 553670,
+          "endMilliseconds": 564750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 564750,
+      "endMilliseconds": 577670,
+      "kind": "fact",
+      "text": "Первое слово в командной строке всегда трактуется как имя программы, поэтому любую программу можно запустить по её имени.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 564750,
+          "endMilliseconds": 577670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 577670,
+      "endMilliseconds": 585470,
+      "kind": "test_result",
+      "text": "Запуск скомпилированного исполняемого файла выводит в консоль ровно Hello World, что подтверждает успешную компиляцию и запуск программы.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 577670,
+          "endMilliseconds": 585470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 585470,
+      "endMilliseconds": 596630,
+      "kind": "explanation",
+      "text": "Программу можно запустить и из любой другой папки, указав её полный путь так же, как это делалось для компилятора.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 585470,
+          "endMilliseconds": 596630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-and-run-from-the-project-folder"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 596630,
+      "endMilliseconds": 605000,
+      "kind": "code_change",
+      "text": "Чтобы каждый раз не вписывать полный путь к g++, нужно добавить его в PATH консоли и тогда компилировать можно будет простым вводом g++.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 596630,
+          "endMilliseconds": 605000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#try-a-temporary-path-change"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 596840,
+      "endMilliseconds": 612519,
+      "kind": "reason",
+      "text": "Typing the set command to prepend the compiler bin folder to PATH makes g++ available immediately in the currently open console session, which is enough to start compiling right away.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 596840,
+          "endMilliseconds": 612519
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#try-a-temporary-path-change"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 612519,
+      "endMilliseconds": 616640,
+      "kind": "fact",
+      "text": "The PATH change made with set applies only to the lifetime of that console window, so it disappears once the window is closed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 612519,
+          "endMilliseconds": 616640
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#try-a-temporary-path-change"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 619480,
+      "endMilliseconds": 641800,
+      "kind": "explanation",
+      "text": "After closing the console, reopening it and returning to the project folder, g++ is no longer recognized because the session-only PATH entry was discarded with the closed window.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 619480,
+          "endMilliseconds": 641800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#try-a-temporary-path-change"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 645639,
+      "endMilliseconds": 663639,
+      "kind": "fact",
+      "text": "The operating system keeps a PATH environment variable, meaning a list of directory paths that the shell consults when you type a program name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 645639,
+          "endMilliseconds": 663639
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-058",
+      "startMilliseconds": 667560,
+      "endMilliseconds": 682750,
+      "kind": "explanation",
+      "text": "When you enter a program name, the command shell first reads PATH and searches those folders for a program with that name, which is how it locates an executable such as g++.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 667560,
+          "endMilliseconds": 682750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-059",
+      "startMilliseconds": 694000,
+      "endMilliseconds": 706880,
+      "kind": "fact",
+      "text": "Echoing %PATH% in the console prints the list of directories currently stored in PATH, and the many entries shown there were added by the system itself.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 694000,
+          "endMilliseconds": 706880
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-060",
+      "startMilliseconds": 713200,
+      "endMilliseconds": 725320,
+      "kind": "explanation",
+      "text": "The PATH list already contains the folder that holds the compiler, which is why the console finds g++ there; a new folder can be appended by writing its path after a semicolon.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 713200,
+          "endMilliseconds": 725320
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-061",
+      "startMilliseconds": 728079,
+      "endMilliseconds": 737959,
+      "kind": "test_result",
+      "text": "After appending the compiler folder through a semicolon and echoing %PATH% again, the newly added path appears at the end of the variable value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 728079,
+          "endMilliseconds": 737959
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-062",
+      "startMilliseconds": 737959,
+      "endMilliseconds": 757040,
+      "kind": "explanation",
+      "text": "With the folder in PATH the console walks the list in order, checking System32 and the other entries without a match until it reaches the last folder that does contain g++.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 737959,
+          "endMilliseconds": 757040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-063",
+      "startMilliseconds": 761590,
+      "endMilliseconds": 772560,
+      "kind": "explanation",
+      "text": "The shell finally resolves the name g++ to the full path of the matching executable it found in PATH and launches that program directly.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 761590,
+          "endMilliseconds": 772560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-064",
+      "startMilliseconds": 770079,
+      "endMilliseconds": 781519,
+      "kind": "fact",
+      "text": "Referring to g++ by name resolves to that very same program found in the PATH folder, and the shell runs its translation step on your source.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 770079,
+          "endMilliseconds": 781519
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-065",
+      "startMilliseconds": 772560,
+      "endMilliseconds": 777600,
+      "kind": "fact",
+      "text": "So typing g++ in the console simply locates the compiler executable in that PATH folder and hands the translation of the source files to it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 772560,
+          "endMilliseconds": 777600
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understand-how-path-finds-the-compiler"
+      }
+    },
+    {
+      "id": "TP-066",
+      "startMilliseconds": 781519,
+      "endMilliseconds": 795389,
+      "kind": "reason",
+      "text": "To stop retyping the PATH command in every new console, the compiler folder has to be added permanently through the environment variable settings.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 781519,
+          "endMilliseconds": 795389
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-067",
+      "startMilliseconds": 819959,
+      "endMilliseconds": 840399,
+      "kind": "explanation",
+      "text": "The environment variables dialog offers a system-wide edit that needs an administrator password and a per-user edit that applies only to your own account, so choose based on whether you are an administrator on the machine.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 819959,
+          "endMilliseconds": 840399
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-068",
+      "startMilliseconds": 840399,
+      "endMilliseconds": 852680,
+      "kind": "explanation",
+      "text": "Inside the PATH variable you press Edit, then New, and paste the compiler bin folder so the setting persists for future console sessions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 840399,
+          "endMilliseconds": 852680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-069",
+      "startMilliseconds": 852680,
+      "endMilliseconds": 860839,
+      "kind": "edge_case",
+      "text": "The exact bin folder to paste depends on which installer variant you originally used, so the path differs between installations.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 852680,
+          "endMilliseconds": 860839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-070",
+      "startMilliseconds": 869839,
+      "endMilliseconds": 879100,
+      "kind": "fact",
+      "text": "On the present machine the 64-bit installation still placed the compiler under the user directory, illustrating that the bin folder differs per installer choice.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 869839,
+          "endMilliseconds": 879100
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-071",
+      "startMilliseconds": 899189,
+      "endMilliseconds": 907629,
+      "kind": "fact",
+      "text": "Whichever variant you installed, the compiler is guaranteed to be in the bin folder of one of those installation directories.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 899189,
+          "endMilliseconds": 907629
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-072",
+      "startMilliseconds": 907629,
+      "endMilliseconds": 923000,
+      "kind": "fact",
+      "text": "You can discover which folder it is by running which with the compiler name in a console that already finds it, which prints the path relative to the installation directory.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 907629,
+          "endMilliseconds": 923000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-073",
+      "startMilliseconds": 923000,
+      "endMilliseconds": 945990,
+      "kind": "explanation",
+      "text": "That printed path is exactly what you paste into the PATH editing dialog, pressing New, pasting with Ctrl+V and confirming with OK to store it permanently.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 923000,
+          "endMilliseconds": 945990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-074",
+      "startMilliseconds": 933480,
+      "endMilliseconds": 945990,
+      "kind": "explanation",
+      "text": "Adding the compiler directory to PATH is done by creating a new variable named PATH in the environment variables edit dialog and confirming with OK, which makes g++ callable by name.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 933480,
+          "endMilliseconds": 945990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-075",
+      "startMilliseconds": 945990,
+      "endMilliseconds": 966200,
+      "kind": "reason",
+      "text": "A PATH edit does not affect already-running processes, so after setting it you must reload and open a new console to pick up the updated value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 945990,
+          "endMilliseconds": 966200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#save-the-compiler-directory-in-path"
+      }
+    },
+    {
+      "id": "TP-076",
+      "startMilliseconds": 966200,
+      "endMilliseconds": 985870,
+      "kind": "fact",
+      "text": "Inside the folder with the source file you can now compile with g++ a.cpp without a full path, because the new console inherits the PATH change.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 966200,
+          "endMilliseconds": 985870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#verify-compilation-in-a-new-console"
+      }
+    },
+    {
+      "id": "TP-077",
+      "startMilliseconds": 985870,
+      "endMilliseconds": 1002399,
+      "kind": "edge_case",
+      "text": "A program started by double-clicking its executable opens a console, prints its output, and closes immediately, so the output cannot be read.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 985870,
+          "endMilliseconds": 1002399
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#keep-the-output-window-open"
+      }
+    },
+    {
+      "id": "TP-078",
+      "startMilliseconds": 1002399,
+      "endMilliseconds": 1035859,
+      "kind": "code_change",
+      "text": "Adding std::cin.get() at the end of the program makes it wait for input, keeping the console window open long enough to read the output.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1002399,
+          "endMilliseconds": 1035859
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#keep-the-output-window-open"
+      }
+    },
+    {
+      "id": "TP-079",
+      "startMilliseconds": 1035859,
+      "endMilliseconds": 1052039,
+      "kind": "test_result",
+      "text": "After recompiling and launching by double-click, the console now stays open until Enter is pressed, confirming the cin.get change took effect.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1035859,
+          "endMilliseconds": 1052039
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#keep-the-output-window-open"
+      }
+    }
+  ]
+}
