@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="bottleTitle bottleDesc">
+  <title id="bottleTitle">Pouring water from one bottle into another</title>
+  <desc id="bottleDesc">A bottle holding 600 ml out of 1000 ml transfers water into a bottle holding 300 ml out of 800 ml with 500 ml of free space.</desc>
+
+  <defs>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <clipPath id="bottleAClip">
+      <rect x="173" y="143" width="154" height="274" rx="22"/>
+    </clipPath>
+    <clipPath id="bottleBClip">
+      <rect x="673" y="143" width="154" height="274" rx="22"/>
+    </clipPath>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- bottle A: 600 ml / 1000 ml (center X: 250, body: 170 to 330, y: 140 to 420) -->
+  <g>
+    <!-- base shadow -->
+    <ellipse cx="250" cy="432" rx="90" ry="10" fill="#000000" opacity="0.45"/>
+    <!-- capacity amount (centered at X: 250, no literal text) -->
+    <text x="250" y="62" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#94a3b8">1000 ml</text>
+    <!-- rim / open mouth -->
+    <rect x="224" y="94" width="52" height="14" rx="4" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <ellipse cx="250" cy="95" rx="18" ry="4" fill="#0b1220" stroke="#64748b" stroke-width="1.5"/>
+    <!-- neck -->
+    <rect x="232" y="108" width="36" height="34" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <!-- body -->
+    <rect x="170" y="140" width="160" height="280" rx="24" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <!-- water fill: 600/1000 = 60% of 280 = 168px (y: 252 to 420) -->
+    <g clip-path="url(#bottleAClip)">
+      <rect x="170" y="252" width="160" height="168" fill="url(#water)" opacity="0.9"/>
+      <ellipse cx="250" cy="252" rx="76" ry="7" fill="#60a5fa" opacity="0.5"/>
+    </g>
+    <!-- glass highlight -->
+    <rect x="184" y="155" width="10" height="245" rx="5" fill="#ffffff" opacity="0.08"/>
+    <!-- current amount label -->
+    <text x="250" y="348" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="600" fill="#e2e8f0">600 ml</text>
+  </g>
+
+  <!-- transfer arrow with water droplet symbol centered above it -->
+  <g>
+    <!-- water droplet symbol centered at X: 500, above arrow at y: 220 to 260 -->
+    <path d="M 500 220 C 500 220, 514 238, 514 247 A 14 14 0 0 1 486 247 C 486 238, 500 220, 500 220 Z" fill="#60a5fa"/>
+    <path d="M 494 241 A 7 7 0 0 1 501 234" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+    <!-- arrow reaching all the way from bottle A (330) to bottle B (670) -->
+    <line x1="332" y1="280" x2="654" y2="280" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/>
+    <polygon points="652,270 668,280 652,290" fill="#60a5fa"/>
+  </g>
+
+  <!-- bottle B: 300 ml / 800 ml (center X: 750, body: 670 to 830, y: 140 to 420) -->
+  <g>
+    <!-- base shadow -->
+    <ellipse cx="750" cy="432" rx="90" ry="10" fill="#000000" opacity="0.45"/>
+    <!-- capacity amount (centered at X: 750, no literal text) -->
+    <text x="750" y="62" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#94a3b8">800 ml</text>
+    <!-- rim / open mouth -->
+    <rect x="724" y="94" width="52" height="14" rx="4" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+    <ellipse cx="750" cy="95" rx="18" ry="4" fill="#0b1220" stroke="#64748b" stroke-width="1.5"/>
+    <!-- neck -->
+    <rect x="732" y="108" width="36" height="34" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <!-- body -->
+    <rect x="670" y="140" width="160" height="280" rx="24" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <!-- water fill: 300/800 = 37.5% of 280 = 105px (y: 315 to 420) -->
+    <g clip-path="url(#bottleBClip)">
+      <rect x="670" y="315" width="160" height="105" fill="url(#water)" opacity="0.9"/>
+      <ellipse cx="750" cy="315" rx="76" ry="7" fill="#60a5fa" opacity="0.5"/>
+    </g>
+    <!-- glass highlight -->
+    <rect x="684" y="155" width="10" height="245" rx="5" fill="#ffffff" opacity="0.08"/>
+    <!-- current amount label -->
+    <text x="750" y="375" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="600" fill="#e2e8f0">300 ml</text>
+
+    <!-- free space bracket on the right of bottle B (body top: 140 to water surface: 315) -->
+    <path d="M 842 142 C 852 142, 852 150, 852 160 L 852 218 C 852 225, 858 228, 863 228 C 858 228, 852 231, 852 238 L 852 297 C 852 307, 852 313, 842 313" fill="none" stroke="#60a5fa" stroke-width="2"/>
+    <!-- free space amount (no literal text) -->
+    <text x="874" y="234" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#60a5fa">500 ml</text>
+  </g>
+</svg>

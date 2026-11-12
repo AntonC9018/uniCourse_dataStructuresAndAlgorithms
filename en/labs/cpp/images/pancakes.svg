@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="pancakeTitle pancakeDesc">
+  <title id="pancakeTitle">Making pancakes from the ingredients in the fridge</title>
+  <desc id="pancakeDesc">An open fridge holding three eggs with leader lines to each egg labelled X = 3, and kefir labelled Y = 500 ml, pointing to a recipe card for 8 pancakes and a plate of pancakes.</desc>
+
+  <defs>
+    <linearGradient id="fridgeBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3648"/>
+      <stop offset="100%" stop-color="#16202e"/>
+    </linearGradient>
+    <linearGradient id="pancake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0a13a"/>
+      <stop offset="100%" stop-color="#c26a0c"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- fridge (x: 60 to 350, y: 65 to 455) -->
+  <g>
+    <rect x="60" y="65" width="290" height="390" rx="18" fill="url(#fridgeBody)" stroke="#64748b" stroke-width="3"/>
+    <rect x="74" y="79" width="262" height="362" rx="8" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+    <!-- shelves -->
+    <line x1="74" y1="220" x2="336" y2="220" stroke="#475569" stroke-width="4"/>
+    <line x1="74" y1="340" x2="336" y2="340" stroke="#475569" stroke-width="4"/>
+    <!-- fridge feet -->
+    <rect x="85" y="455" width="24" height="10" rx="3" fill="#334155"/>
+    <rect x="301" y="455" width="24" height="10" rx="3" fill="#334155"/>
+
+    <!-- snowflake freezer icon top right -->
+    <g stroke="#64748b" stroke-width="2" stroke-linecap="round">
+      <line x1="312" y1="100" x2="312" y2="124"/>
+      <line x1="302" y1="106" x2="322" y2="118"/>
+      <line x1="322" y1="106" x2="302" y2="118"/>
+      <line x1="308" y1="103" x2="312" y2="107"/>
+      <line x1="316" y1="103" x2="312" y2="107"/>
+      <line x1="308" y1="121" x2="312" y2="117"/>
+      <line x1="316" y1="121" x2="312" y2="117"/>
+    </g>
+
+    <!-- eggs on shelf 1 (cx: 200, 245, 290) -->
+    <g fill="#f8fafc" stroke="#cbd5e1" stroke-width="2">
+      <ellipse cx="200" cy="202" rx="15" ry="18"/>
+      <ellipse cx="245" cy="202" rx="15" ry="18"/>
+      <ellipse cx="290" cy="202" rx="15" ry="18"/>
+    </g>
+
+    <!-- kefir carton on shelf 2 (centered at x: 260) -->
+    <polygon points="235,265 265,242 295,265" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="260" y="238" width="10" height="7" rx="2" fill="#60a5fa"/>
+    <rect x="235" y="265" width="60" height="75" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="235" y="290" width="60" height="22" fill="#3b82f6"/>
+
+    <!-- labels -->
+    <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-weight="600">
+      <text x="96" y="150" font-size="20" fill="#e2e8f0">X = 3</text>
+      <text x="96" y="306" font-size="18" fill="#e2e8f0">Y = 500 ml</text>
+    </g>
+
+    <!-- leader lines: line to EACH egg -->
+    <g stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4">
+      <line x1="154" y1="146" x2="198" y2="184"/>
+      <line x1="154" y1="146" x2="243" y2="184"/>
+      <line x1="154" y1="146" x2="288" y2="184"/>
+      <!-- line to kefir -->
+      <line x1="184" y1="301" x2="228" y2="301"/>
+    </g>
+    <!-- terminal dots at targets -->
+    <circle cx="198" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="243" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="288" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="228" cy="301" r="2.5" fill="#94a3b8"/>
+  </g>
+
+  <!-- arrow 1: fridge to recipe (clearance: fridge ends at 350, recipe starts at 425) -->
+  <g>
+    <line x1="365" y1="260" x2="405" y2="260" stroke="#64748b" stroke-width="3"/>
+    <polygon points="405,253 417,260 405,267" fill="#64748b"/>
+  </g>
+
+  <!-- recipe card (x: 425 to 655, y: 130 to 390) -->
+  <g>
+    <rect x="431" y="136" width="230" height="260" rx="14" fill="#000000" opacity="0.35"/>
+    <rect x="425" y="130" width="230" height="260" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="540" y="195" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="26" font-weight="600" fill="#1e293b">1 egg</text>
+    <text x="540" y="240" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#334155">+ 250 ml kefir</text>
+    <line x1="455" y1="270" x2="625" y2="270" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="540" y="322" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="24" font-weight="700" fill="#b45309">= 8 pancakes</text>
+  </g>
+
+  <!-- arrow 2: recipe to plate (clearance: recipe ends at 655, plate starts at 725) -->
+  <g>
+    <line x1="668" y1="260" x2="704" y2="260" stroke="#64748b" stroke-width="3"/>
+    <polygon points="704,253 716,260 704,267" fill="#64748b"/>
+  </g>
+
+  <!-- plate of pancakes (center X: 830, plate bounds: 725 to 935) -->
+  <g>
+    <ellipse cx="830" cy="402" rx="105" ry="14" fill="#000000" opacity="0.4"/>
+    <ellipse cx="830" cy="380" rx="105" ry="20" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <ellipse cx="830" cy="378" rx="80" ry="13" fill="#f8fafc"/>
+    <g stroke="#b45309" stroke-width="2">
+      <ellipse cx="830" cy="358" rx="64" ry="16" fill="url(#pancake)"/>
+      <ellipse cx="830" cy="344" rx="64" ry="16" fill="url(#pancake)"/>
+      <ellipse cx="830" cy="330" rx="64" ry="16" fill="url(#pancake)"/>
+      <ellipse cx="830" cy="316" rx="64" ry="16" fill="#f0a13a"/>
+    </g>
+    <ellipse cx="830" cy="312" rx="54" ry="11" fill="#fbbf24" opacity="0.5"/>
+    <rect x="818" y="300" width="24" height="11" rx="3" fill="#fde68a" stroke="#eab308" stroke-width="1.5"/>
+    <path d="M830 311 L 830 322" stroke="#fde68a" stroke-width="4" stroke-linecap="round"/>
+    <g fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.35">
+      <path d="M802 290 C 794 278 808 270 800 258"/>
+      <path d="M848 290 C 840 278 854 270 846 258"/>
+    </g>
+  </g>
+</svg>

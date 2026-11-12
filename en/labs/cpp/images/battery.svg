@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="batteryTitle batteryDesc">
+  <title id="batteryTitle">Charging a phone battery</title>
+  <desc id="batteryDesc">A phone at 40 percent charges for 90 minutes and reaches the 100 percent limit.</desc>
+
+  <defs>
+    <linearGradient id="phoneBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3648"/>
+      <stop offset="100%" stop-color="#16202e"/>
+    </linearGradient>
+    <linearGradient id="chargeFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- phone 1: 40% initial state (center X: 250, bounds: 160 to 340, y: 85 to 435) -->
+  <g>
+    <!-- phone outer chassis (180x350) -->
+    <rect x="160" y="85" width="180" height="350" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+    <!-- phone screen (156x326, x: 172 to 328, center X: 250) -->
+    <rect x="172" y="97" width="156" height="326" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+    <!-- camera / island notch (centered at X: 250) -->
+    <rect x="229" y="106" width="42" height="10" rx="5" fill="#1e293b"/>
+
+    <!-- battery indicator: body (199 to 295, w:96) + nub (295 to 301, w:6) = span 199 to 301, exactly centered at X: 250 -->
+    <rect x="199" y="237" width="96" height="46" rx="7" fill="none" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="295" y="252" width="6" height="16" rx="2" fill="#cbd5e1"/>
+    <!-- 40% charge level inside body: inner width = 90, 40% = 36px -->
+    <rect x="202" y="240" width="36" height="40" rx="4" fill="url(#chargeFill)"/>
+    <!-- text centered at X: 250 -->
+    <text x="250" y="332" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#f59e0b">40%</text>
+  </g>
+
+  <!-- charging arrow (gap: 340 to 660, center X: 500, Y: 260) -->
+  <g>
+    <!-- lightning bolt icon -->
+    <polygon points="498,202 507,202 503,217 512,217 493,240 498,224 489,224" fill="#fbbf24"/>
+    <line x1="430" y1="260" x2="560" y2="260" stroke="#64748b" stroke-width="3"/>
+    <polygon points="560,253 572,260 560,267" fill="#64748b"/>
+    <text x="500" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#cbd5e1">+90 min</text>
+  </g>
+
+  <!-- phone 2: 100% capped state (center X: 750, bounds: 660 to 840, y: 85 to 435) -->
+  <g>
+    <!-- phone outer chassis (180x350) -->
+    <rect x="660" y="85" width="180" height="350" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+    <!-- phone screen (156x326, x: 672 to 828, center X: 750) -->
+    <rect x="672" y="97" width="156" height="326" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+    <!-- camera / island notch (centered at X: 750) -->
+    <rect x="729" y="106" width="42" height="10" rx="5" fill="#1e293b"/>
+
+    <!-- 100% cap line (spans 699 to 801, exactly matching the 102px battery span, centered at X: 750) -->
+    <line x1="699" y1="222" x2="801" y2="222" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 4"/>
+    <line x1="699" y1="217" x2="699" y2="227" stroke="#ef4444" stroke-width="2"/>
+    <line x1="801" y1="217" x2="801" y2="227" stroke="#ef4444" stroke-width="2"/>
+    <text x="750" y="213" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#f87171">100% cap</text>
+
+    <!-- battery indicator: body (699 to 795) + nub (795 to 801), centered at X: 750 -->
+    <rect x="699" y="237" width="96" height="46" rx="7" fill="none" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="795" y="252" width="6" height="16" rx="2" fill="#cbd5e1"/>
+    <!-- 100% charge level inside body: full 90px -->
+    <rect x="702" y="240" width="90" height="40" rx="4" fill="#22c55e"/>
+    <!-- text centered at X: 750 -->
+    <text x="750" y="332" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#22c55e">100%</text>
+  </g>
+</svg>
