@@ -178,28 +178,31 @@
   <polygon points="248,238 392,238 392,258 248,288" fill="#ffffff" opacity="0.06"/>
 
   <!-- dial -->
-  <circle cx="320" cy="486" r="62" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+  <circle cx="320" cy="486" r="65" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+  <circle cx="320" cy="486" r="58" fill="none" stroke="#0b1220" stroke-width="2"/>
   <g stroke="#94a3b8" stroke-width="2" stroke-linecap="round">
-    <line x1="268" y1="486" x2="261" y2="486"/>
-    <line x1="269.8" y1="472.5" x2="263" y2="470.7"/>
-    <line x1="275" y1="460" x2="268.9" y2="456.5"/>
-    <line x1="283.2" y1="449.2" x2="278.3" y2="444.3"/>
-    <line x1="294" y1="441" x2="290.5" y2="434.9"/>
-    <line x1="306.5" y1="435.8" x2="304.7" y2="429"/>
-    <line x1="320" y1="434" x2="320" y2="427"/>
-    <line x1="333.5" y1="435.8" x2="335.3" y2="429"/>
-    <line x1="346" y1="441" x2="349.5" y2="434.9"/>
-    <line x1="356.8" y1="449.2" x2="361.7" y2="444.3"/>
-    <line x1="365" y1="460" x2="371.1" y2="456.5"/>
-    <line x1="370.2" y1="472.5" x2="377" y2="470.7"/>
-    <line x1="372" y1="486" x2="379" y2="486"/>
+    <line x1="274.6" y1="473.8" x2="266.9" y2="471.8"/>
+    <line x1="279.3" y1="462.5" x2="272.4" y2="458.5"/>
+    <line x1="286.8" y1="452.8" x2="281.1" y2="447.1"/>
+    <line x1="296.5" y1="445.3" x2="292.5" y2="438.4"/>
+    <line x1="307.8" y1="440.6" x2="305.8" y2="432.9"/>
+    <line x1="320" y1="439" x2="320" y2="431"/>
+    <line x1="332.2" y1="440.6" x2="334.2" y2="432.9"/>
+    <line x1="343.5" y1="445.3" x2="347.5" y2="438.4"/>
+    <line x1="353.2" y1="452.8" x2="358.9" y2="447.1"/>
+    <line x1="360.7" y1="462.5" x2="367.6" y2="458.5"/>
+    <line x1="365.4" y1="473.8" x2="373.1" y2="471.8"/>
   </g>
-  <circle cx="320" cy="486" r="34" fill="url(#knob)" stroke="#0f172a" stroke-width="2"/>
-  <circle cx="320" cy="486" r="27" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.35"/>
+  <circle cx="320" cy="486" r="30" fill="url(#knob)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="320" cy="486" r="24" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.35"/>
   <line x1="320" y1="486" x2="341" y2="469" stroke="#f87171" stroke-width="3" stroke-linecap="round"/>
   <circle cx="320" cy="486" r="5" fill="#cbd5e1"/>
-  <text x="238" y="491" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#cbd5e1">1</text>
-  <text x="402" y="491" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#cbd5e1">100</text>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" text-anchor="middle">
+    <text x="275" y="490" fill="#05070d">1</text>
+    <text x="275" y="491.2" fill="#e8eef5">1</text>
+    <text x="365" y="490" fill="#05070d">100</text>
+    <text x="365" y="491.2" fill="#e8eef5">100</text>
+  </g>
 
   <!-- stencil -->
   <text x="720" y="554" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="bold" letter-spacing="3" fill="#7a6440" opacity="0.75">C4</text>
