@@ -60,45 +60,6 @@ slug: en/cpp/labs/enum
     };
     ```
 
-7.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = '5',
-        b = '7',
-    };
-    ```
-
-8.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = '5',
-        b,
-    };
-    ```
-
-9.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = 'b',
-        b,
-    };
-    ```
-
-9.  Write the answer as an integer.
-
-    ```cpp
-    enum Test
-    {
-        a = 'a' + '1',
-        b,
-    };
-    ```
 
 
 ## Why?
