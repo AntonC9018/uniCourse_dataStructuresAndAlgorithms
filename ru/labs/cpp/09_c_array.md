@@ -434,4 +434,47 @@ int x = arr;
 Чтобы сохранить адрес первого элемента, используйте указатель: `int* p = arr;`.
 </details>
 
+### 19. (продвинутый уровень): Разбиение массива структур
+```cpp
+#include <cstdint>
+
+struct Monitor
+{
+    double diagonalInches;
+};
+
+struct Keyboard
+{
+    uint8_t rows;
+    uint8_t columns;
+};
+
+struct Computer
+{
+    Monitor monitor;
+    Keyboard keyboard;
+};
+```
+<details>
+<summary>Ответ</summary>
+
+`sizeof(Computer)` равно 16, хотя части занимают всего 8 + 2 = 10 байт.
+
+`double` требует выравнивания по 8, и размер структуры тоже должен быть кратен 8,
+иначе следующий элемент массива `Computer` оказался бы на невыровненном адресе.
+Поэтому в конце каждого компьютера остается 6 пустых байт.
+
+Если хранить части в отдельных массивах:
+
+```cpp
+Monitor monitors[1000];
+Keyboard keyboards[1000];
+```
+
+то эти байты не нужны: элементы массива лежат ровно на расстоянии `sizeof(T)`
+друг от друга, а размер типа всегда кратен его выравниванию.
+Тысяча компьютеров займет 8000 + 2000 = 10000 байт вместо 16000.
+Части одного компьютера — это `monitors[i]` и `keyboards[i]`.
+</details>
+
 <!-- Missing: get address of item at index, different type than int -->
