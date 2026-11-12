@@ -396,3 +396,88 @@ int main()
 0
 ```
 </details>
+
+### 6. (продвинутый уровень): Разбиение массива структур
+```cpp
+#include <array>
+#include <cstddef>
+#include <cstdint>
+#include <iostream>
+
+struct Monitor
+{
+    double diagonalInches;
+};
+
+struct Keyboard
+{
+    uint8_t rows;
+    uint8_t columns;
+};
+
+struct Computer
+{
+    Monitor monitor;
+    Keyboard keyboard;
+};
+
+struct Computers
+{
+    std::array<Monitor, 2> monitors;
+    std::array<Keyboard, 2> keyboards;
+};
+
+struct ComputerRef
+{
+    Monitor* monitor;
+    Keyboard* keyboard;
+};
+
+ComputerRef getComputer(Computers* computers, size_t index)
+{
+    return ComputerRef{
+        &computers->monitors[index],
+        &computers->keyboards[index],
+    };
+}
+
+int main()
+{
+    {
+        std::array<Computer, 2> computers{};
+        computers[0].monitor.diagonalInches = 27;
+        computers[0].keyboard.rows = 6;
+        std::cout << sizeof(computers) << std::endl;
+    }
+
+    {
+        Computers computers{};
+        ComputerRef computer = getComputer(&computers, 0);
+        computer.monitor->diagonalInches = 27;
+        computer.keyboard->rows = 6;
+        std::cout << sizeof(computers) << std::endl;
+    }
+}
+```
+<details>
+<summary>Ответ</summary>
+
+Первый блок напечатает `32`, то есть `2 * 16`: каждый `Computer` занимает 16 байт,
+хотя его части занимают всего 8 + 2 = 10.
+
+`double` требует выравнивания по 8, и размер структуры тоже должен быть кратен 8,
+иначе следующий элемент массива оказался бы на невыровненном адресе.
+Поэтому в конце каждого компьютера остается 6 пустых байт.
+
+Второй блок хранит части в отдельных массивах и печатает `24`.
+Сами массивы занимают 16 + 4 = 20 байт, но `Computers` — тоже структура,
+и ее размер должен быть кратен выравниванию `Monitor`, то есть 8,
+поэтому в конце нее остается еще 4 пустых байта. Зато пустые байты между компьютерами
+исчезли, и с ростом числа элементов экономия растет:
+тысяча компьютеров займет 10000 байт вместо 16000.
+
+Оба блока записывают в первый компьютер одни и те же значения.
+`getComputer` возвращает `ComputerRef` с указателями на части по одному и тому же индексу,
+поэтому через `computer.monitor` и `computer.keyboard` можно обращаться к частям
+одного компьютера, как будто они по-прежнему лежат вместе.
+</details>

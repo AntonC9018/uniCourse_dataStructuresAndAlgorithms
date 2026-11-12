@@ -395,3 +395,88 @@ Therefore, subsequent changes to `copy` do not affect `arr[2]`.
 0
 ```
 </details>
+
+### 6. (advanced level): Splitting an array of structures
+```cpp
+#include <array>
+#include <cstddef>
+#include <cstdint>
+#include <iostream>
+
+struct Monitor
+{
+    double diagonalInches;
+};
+
+struct Keyboard
+{
+    uint8_t rows;
+    uint8_t columns;
+};
+
+struct Computer
+{
+    Monitor monitor;
+    Keyboard keyboard;
+};
+
+struct Computers
+{
+    std::array<Monitor, 2> monitors;
+    std::array<Keyboard, 2> keyboards;
+};
+
+struct ComputerRef
+{
+    Monitor* monitor;
+    Keyboard* keyboard;
+};
+
+ComputerRef getComputer(Computers* computers, size_t index)
+{
+    return ComputerRef{
+        &computers->monitors[index],
+        &computers->keyboards[index],
+    };
+}
+
+int main()
+{
+    {
+        std::array<Computer, 2> computers{};
+        computers[0].monitor.diagonalInches = 27;
+        computers[0].keyboard.rows = 6;
+        std::cout << sizeof(computers) << std::endl;
+    }
+
+    {
+        Computers computers{};
+        ComputerRef computer = getComputer(&computers, 0);
+        computer.monitor->diagonalInches = 27;
+        computer.keyboard->rows = 6;
+        std::cout << sizeof(computers) << std::endl;
+    }
+}
+```
+<details>
+<summary>Answer</summary>
+
+The first block prints `32`, which is `2 * 16`: every `Computer` takes 16 bytes,
+although its parts take only 8 + 2 = 10.
+
+A `double` must be aligned to 8, and the size of the structure must be a multiple of 8,
+otherwise the next element of the array would start at a misaligned address.
+So 6 empty bytes stay at the end of every computer.
+
+The second block stores the parts in separate arrays and prints `24`.
+The arrays themselves take 16 + 4 = 20 bytes, but `Computers` is also a structure,
+and its size must be a multiple of the 8-byte alignment of `Monitor`,
+so 4 more empty bytes stay at its end. The padding between computers is gone,
+and the saving grows with the number of elements:
+a thousand computers take 10000 bytes instead of 16000.
+
+Both blocks write the same values into the first computer.
+`getComputer` returns a `ComputerRef` with pointers to the parts at the same index,
+so `computer.monitor` and `computer.keyboard` access the parts of one computer,
+as if they were still stored together.
+</details>
