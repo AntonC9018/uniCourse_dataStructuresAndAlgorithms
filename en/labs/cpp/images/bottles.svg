@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="bottleTitle bottleDesc">
+  <title id="bottleTitle">Pouring water from one bottle into another</title>
+  <desc id="bottleDesc">A bottle with 1000 millilitres of capacity holding 600 millilitres pours into a bottle with 800 millilitres of capacity holding 300 millilitres. Only 500 millilitres fit, limited by the free space in the second bottle.</desc>
+
+  <defs>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <clipPath id="bottleAClip">
+      <rect x="183" y="123" width="154" height="294" rx="24"/>
+    </clipPath>
+    <clipPath id="bottleBClip">
+      <rect x="663" y="123" width="154" height="294" rx="24"/>
+    </clipPath>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="538" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- bottle A -->
+  <ellipse cx="260" cy="428" rx="92" ry="10" fill="#000000" opacity="0.4"/>
+  <text x="260" y="42" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">capacity 1000 ml</text>
+  <rect x="235" y="58" width="50" height="22" rx="6" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <rect x="242" y="80" width="36" height="40" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+  <rect x="180" y="120" width="160" height="300" rx="26" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+  <g clip-path="url(#bottleAClip)">
+    <rect x="183" y="240.6" width="154" height="176.4" fill="url(#water)" opacity="0.9"/>
+    <ellipse cx="260" cy="240.6" rx="76" ry="8" fill="#60a5fa" opacity="0.5"/>
+  </g>
+  <rect x="196" y="140" width="12" height="260" rx="6" fill="#ffffff" opacity="0.08"/>
+  <text x="260" y="322" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#e2e8f0">600 ml</text>
+  <text x="260" y="465" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" fill="#22c55e">after: 100 ml</text>
+
+  <!-- pour arrow -->
+  <line x1="360" y1="262" x2="628" y2="262" stroke="#60a5fa" stroke-width="3"/>
+  <polygon points="628,254 642,262 628,270" fill="#60a5fa"/>
+  <text x="500" y="240" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#cbd5e1">pour</text>
+
+  <!-- bottle B -->
+  <ellipse cx="740" cy="428" rx="92" ry="10" fill="#000000" opacity="0.4"/>
+  <text x="740" y="42" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">capacity 800 ml</text>
+  <rect x="715" y="58" width="50" height="22" rx="6" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <rect x="722" y="80" width="36" height="40" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+  <rect x="660" y="120" width="160" height="300" rx="26" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+  <g clip-path="url(#bottleBClip)">
+    <rect x="663" y="306.75" width="154" height="110.25" fill="url(#water)" opacity="0.9"/>
+    <ellipse cx="740" cy="306.75" rx="76" ry="8" fill="#60a5fa" opacity="0.5"/>
+  </g>
+  <rect x="676" y="140" width="12" height="260" rx="6" fill="#ffffff" opacity="0.08"/>
+  <text x="740" y="372" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#e2e8f0">300 ml</text>
+  <text x="740" y="465" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" fill="#22c55e">after: 800 ml</text>
+
+  <!-- free space -->
+  <path d="M840 123 C 850 123 850 131 850 141 L 850 200 C 850 208 855 214 862 214 C 855 214 850 220 850 228 L 850 290 C 850 300 850 306 840 306" fill="none" stroke="#60a5fa" stroke-width="2"/>
+  <text x="875" y="219" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#60a5fa">free 500 ml</text>
+
+  <!-- result -->
+  <rect x="240" y="474" width="520" height="52" rx="10" fill="#111c2e" stroke="#1e293b" stroke-width="2"/>
+  <text x="500" y="508" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#cbd5e1">poured = min(600, 800 &#8722; 300) = <tspan fill="#22c55e">500</tspan> ml</text>
+</svg>

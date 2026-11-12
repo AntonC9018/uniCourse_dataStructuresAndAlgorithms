@@ -28,6 +28,8 @@ Determine *how many pancakes can be made from the current ingredients*
 using only whole quantities of ingredients (you cannot use half an egg).
 Afterwards, *remove* the used ingredients from the fridge.
 
+![An open fridge with eggs and kefir, a recipe card for one egg and 250 ml of kefir per eight pancakes, and a plate of pancakes](./images/pancakes.svg)
+
 ### 1. Thinking through the algorithm
 
 For example, if there are *3 eggs and 500 ml of kefir*, you can take 1 egg and 250 ml of kefir twice,
@@ -342,6 +344,8 @@ int main()
   Write a function that charges the battery and returns nothing —
   its only result is changing the state of the battery.
 
+  ![A phone charging from 40% to 100% in 90 minutes, with the charge capped at 100%](./images/battery.svg)
+
   <details>
   <summary>
   Possible solution
@@ -377,6 +381,8 @@ int main()
   and an hour cannot contain more than 60 minutes.
   Write a function that returns the same time in normalized form.
   The original time must not change.
+
+  ![A time of 4 hours 138 minutes 250 seconds normalized to 6 hours 22 minutes 10 seconds, with the carries into minutes and hours](./images/time.svg)
 
   <details>
   <summary>
@@ -416,6 +422,8 @@ int main()
   and you cannot pour more out of the first bottle than it contains.
   The function should return how many milliliters were poured,
   and the amount of water in both bottles should be updated.
+
+  ![A bottle holding 600 ml pouring into a bottle holding 300 ml with 800 ml capacity, transferring 500 ml](./images/bottles.svg)
 
   <details>
   <summary>

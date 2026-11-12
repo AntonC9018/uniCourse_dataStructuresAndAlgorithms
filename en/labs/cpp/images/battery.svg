@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="batteryTitle batteryDesc">
+  <title id="batteryTitle">Charging a phone battery</title>
+  <desc id="batteryDesc">A phone at 40 percent charges for 90 minutes at one percent per minute and reaches 100 percent, but the charge cannot go above 100.</desc>
+
+  <defs>
+    <linearGradient id="phoneBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3648"/>
+      <stop offset="100%" stop-color="#16202e"/>
+    </linearGradient>
+    <linearGradient id="chargeFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- before -->
+  <rect x="100" y="80" width="220" height="340" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+  <rect x="116" y="96" width="188" height="308" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+  <rect x="190" y="96" width="40" height="10" rx="5" fill="#1e293b"/>
+  <rect x="160" y="190" width="100" height="80" rx="8" fill="none" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="260" y="215" width="14" height="30" rx="3" fill="#cbd5e1"/>
+  <rect x="164" y="194" width="36.8" height="72" rx="3" fill="url(#chargeFill)"/>
+  <text x="210" y="330" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="32" fill="#f59e0b">40%</text>
+  <text x="210" y="360" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#94a3b8">chargePercent</text>
+  <text x="210" y="394" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" letter-spacing="2" fill="#64748b">BEFORE</text>
+
+  <!-- charging arrow -->
+  <line x1="340" y1="250" x2="480" y2="250" stroke="#64748b" stroke-width="3"/>
+  <polygon points="480,242 494,250 480,258" fill="#64748b"/>
+  <text x="417" y="228" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#cbd5e1">+90 min</text>
+  <text x="417" y="274" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#94a3b8">+1% per minute</text>
+
+  <!-- after -->
+  <rect x="500" y="80" width="220" height="340" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+  <rect x="516" y="96" width="188" height="308" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+  <rect x="590" y="96" width="40" height="10" rx="5" fill="#1e293b"/>
+  <line x1="556" y1="178" x2="664" y2="178" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="556" y1="172" x2="556" y2="184" stroke="#ef4444" stroke-width="2"/>
+  <line x1="664" y1="172" x2="664" y2="184" stroke="#ef4444" stroke-width="2"/>
+  <text x="610" y="164" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#f87171">100% cap</text>
+  <rect x="560" y="190" width="100" height="80" rx="8" fill="none" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="660" y="215" width="14" height="30" rx="3" fill="#cbd5e1"/>
+  <rect x="564" y="194" width="92" height="72" rx="3" fill="#22c55e"/>
+  <text x="610" y="330" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="32" fill="#22c55e">100%</text>
+  <text x="610" y="360" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#94a3b8">chargePercent</text>
+  <text x="610" y="394" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" letter-spacing="2" fill="#64748b">AFTER</text>
+
+  <!-- result -->
+  <rect x="260" y="452" width="480" height="52" rx="10" fill="#111c2e" stroke="#1e293b" stroke-width="2"/>
+  <text x="500" y="486" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#cbd5e1">min(100, 40 + 90) = <tspan fill="#22c55e">100</tspan></text>
+</svg>
