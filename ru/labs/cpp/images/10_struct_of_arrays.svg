@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 248" role="img" aria-labelledby="title2 desc2">
+  <title id="title2">Выравнивание структуры из массивов: Computers</title>
+  <desc id="desc2">Структура Computers хранит два отдельных массива. Мониторы занимают 16 байт, клавиатуры — 4 байта без промежутков, в конце 4 байта tail padding.</desc>
+  <rect x="16" y="12" width="928" height="224" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+
+  <!-- Super-headers -->
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" fill="#24292f">
+    <text x="376" y="38" text-anchor="middle" font-size="16" font-weight="700">массив monitors (16 байт)</text>
+    <text x="688" y="38" text-anchor="middle" font-size="16" font-weight="700">keyboards (4Б) + tail padding (4Б)</text>
+  </g>
+
+  <!-- Divider between monitors array and keyboards array -->
+  <line x1="584" y1="20" x2="584" y2="188" stroke="#d0d7de" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Slot labels -->
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="272" y="68" text-anchor="middle" font-size="14" font-weight="600" fill="#57606a">слот 0 (8 байт)</text>
+    <text x="480" y="68" text-anchor="middle" font-size="14" font-weight="600" fill="#57606a">слот 1 (8 байт)</text>
+    <text x="688" y="68" text-anchor="middle" font-size="14" font-weight="600" fill="#57606a">слот 2 (8 байт)</text>
+  </g>
+
+  <!-- Braces -->
+  <g fill="none" stroke="#57606a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 168 108 C 168 100 174 92 184 92 L 256.0 92 C 264.0 92 268.0 86 272.0 80 C 276.0 86 280.0 92 288.0 92 L 360 92 C 370 92 376 100 376 108"/>
+    <path d="M 376 108 C 376 100 382 92 392 92 L 464.0 92 C 472.0 92 476.0 86 480.0 80 C 484.0 86 488.0 92 496.0 92 L 568 92 C 578 92 584 100 584 108"/>
+    <path d="M 584 108 C 584 100 590 92 600 92 L 672.0 92 C 680.0 92 684.0 86 688.0 80 C 692.0 86 696.0 92 704.0 92 L 776 92 C 786 92 792 100 792 108"/>
+  </g>
+
+  <!-- Byte cells -->
+  <g stroke="#8c959f" stroke-width="1">
+    <rect x="168" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="194" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="220" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="246" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="272" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="298" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="324" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="350" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="376" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="402" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="428" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="454" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="480" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="506" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="532" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="558" y="108" width="26" height="56" fill="#2f81f7"/>
+    <rect x="584" y="108" width="26" height="56" fill="#f2cc60"/>
+    <rect x="610" y="108" width="26" height="56" fill="#f2cc60"/>
+    <rect x="636" y="108" width="26" height="56" fill="#f2cc60"/>
+    <rect x="662" y="108" width="26" height="56" fill="#f2cc60"/>
+    <rect x="688" y="108" width="26" height="56" fill="#ffffff"/>
+    <rect x="714" y="108" width="26" height="56" fill="#ffffff"/>
+    <rect x="740" y="108" width="26" height="56" fill="#ffffff"/>
+    <rect x="766" y="108" width="26" height="56" fill="#ffffff"/>
+  </g>
+
+  <!-- Text inside cells -->
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <!-- monitors[0] -->
+    <text x="272" y="131" font-size="13" font-weight="600" fill="#ffffff">monitors[0].diagonalInches</text>
+    <text x="272" y="148" font-size="11" fill="#ffffff">8 байт</text>
+
+    <!-- monitors[1] -->
+    <text x="480" y="131" font-size="13" font-weight="600" fill="#ffffff">monitors[1].diagonalInches</text>
+    <text x="480" y="148" font-size="11" fill="#ffffff">8 байт</text>
+
+    <!-- keyboards[0] -->
+    <text x="597" y="131" font-size="11" font-weight="600" fill="#24292f">rows</text>
+    <text x="597" y="148" font-size="10" fill="#24292f">k[0]</text>
+    <text x="623" y="131" font-size="11" font-weight="600" fill="#24292f">cols</text>
+    <text x="623" y="148" font-size="10" fill="#24292f">k[0]</text>
+
+    <!-- keyboards[1] -->
+    <text x="649" y="131" font-size="11" font-weight="600" fill="#24292f">rows</text>
+    <text x="649" y="148" font-size="10" fill="#24292f">k[1]</text>
+    <text x="675" y="131" font-size="11" font-weight="600" fill="#24292f">cols</text>
+    <text x="675" y="148" font-size="10" fill="#24292f">k[1]</text>
+
+    <!-- padding -->
+    <text x="740" y="131" font-size="13" font-weight="600" fill="#24292f">padding</text>
+    <text x="740" y="148" font-size="11" fill="#57606a">4 байта</text>
+  </g>
+
+  <!-- Byte range labels -->
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="272" y="180" text-anchor="middle" font-size="12" fill="#57606a">байты 0–7</text>
+    <text x="480" y="180" text-anchor="middle" font-size="12" fill="#57606a">байты 8–15</text>
+    <text x="688" y="180" text-anchor="middle" font-size="12" fill="#57606a">байты 16–23</text>
+  </g>
+
+  <!-- Legend and summary -->
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">
+    <rect x="160" y="204" width="14" height="14" rx="3" fill="#2f81f7" stroke="#8c959f"/>
+    <text x="182" y="216">double (Monitor)</text>
+    <rect x="340" y="204" width="14" height="14" rx="3" fill="#f2cc60" stroke="#8c959f"/>
+    <text x="362" y="216">uint8_t (Keyboard)</text>
+    <rect x="520" y="204" width="14" height="14" rx="3" fill="#ffffff" stroke="#8c959f"/>
+    <text x="542" y="216">padding</text>
+    <text x="720" y="216" font-weight="600" fill="#57606a">Всего: 24 байта (4Б padding)</text>
+  </g>
+</svg>

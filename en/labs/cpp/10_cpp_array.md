@@ -470,12 +470,16 @@ A `double` must be aligned to 8, and the size of the structure must be a multipl
 otherwise the next element of the array would start at a misaligned address.
 So 6 empty bytes stay at the end of every computer.
 
+![Array of structs: two Computer elements with padding](./images/10_array_of_structs.svg)
+
 The second block stores the parts in separate arrays and prints `24`.
 The arrays themselves take 16 + 4 = 20 bytes, but `Computers` is also a structure,
 and its size must be a multiple of the 8-byte alignment of `Monitor`,
 so 4 more empty bytes stay at its end. The padding between computers is gone,
 and the saving grows with the number of elements:
 a thousand computers take 10000 bytes instead of 16000.
+
+![Struct of arrays: monitors and keyboards stored separately](./images/10_struct_of_arrays.svg)
 
 Both blocks write the same values into the first computer.
 `getComputer` returns a `ComputerRef` with pointers to the parts at the same index,
