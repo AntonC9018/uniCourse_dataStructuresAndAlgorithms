@@ -15,41 +15,54 @@
 
   <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
 
-  <!-- phone 1 (initial state: 40%) -->
-  <g transform="translate(40, 0)">
-    <rect x="150" y="80" width="220" height="340" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
-    <rect x="166" y="96" width="188" height="308" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
-    <rect x="240" y="96" width="40" height="10" rx="5" fill="#1e293b"/>
-    <!-- battery icon -->
-    <rect x="200" y="190" width="100" height="80" rx="8" fill="none" stroke="#cbd5e1" stroke-width="4"/>
-    <rect x="300" y="215" width="14" height="30" rx="3" fill="#cbd5e1"/>
-    <rect x="204" y="194" width="36.8" height="72" rx="3" fill="url(#chargeFill)"/>
-    <text x="250" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#f59e0b">40%</text>
+  <!-- phone 1: 40% initial state (center X: 250, bounds: 160 to 340, y: 85 to 435) -->
+  <g>
+    <!-- phone outer chassis -->
+    <rect x="160" y="85" width="180" height="350" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+    <!-- phone screen -->
+    <rect x="172" y="97" width="156" height="326" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+    <!-- camera / island notch -->
+    <rect x="229" y="106" width="42" height="10" rx="5" fill="#1e293b"/>
+
+    <!-- sleek battery indicator (center X: 250, body: 200 to 300, y: 237 to 283) -->
+    <rect x="200" y="237" width="100" height="46" rx="7" fill="none" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="300" y="252" width="6" height="16" rx="2" fill="#cbd5e1"/>
+    <!-- 40% charge level (94 * 0.40 = 37.6) -->
+    <rect x="203" y="240" width="37.6" height="40" rx="4" fill="url(#chargeFill)"/>
+    <!-- text centered at X: 250 -->
+    <text x="250" y="332" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#f59e0b">40%</text>
   </g>
 
-  <!-- charging arrow -->
+  <!-- charging arrow (gap: 340 to 660, center X: 500, Y: 260) -->
   <g>
     <!-- lightning bolt icon -->
-    <polygon points="498,198 506,198 502,212 510,212 494,232 498,218 490,218" fill="#fbbf24"/>
-    <line x1="430" y1="250" x2="570" y2="250" stroke="#64748b" stroke-width="3"/>
-    <polygon points="570,242 584,250 570,258" fill="#64748b"/>
-    <text x="500" y="282" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#cbd5e1">+90 min</text>
+    <polygon points="498,202 507,202 503,217 512,217 493,240 498,224 489,224" fill="#fbbf24"/>
+    <line x1="430" y1="260" x2="560" y2="260" stroke="#64748b" stroke-width="3"/>
+    <polygon points="560,253 572,260 560,267" fill="#64748b"/>
+    <text x="500" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#cbd5e1">+90 min</text>
   </g>
 
-  <!-- phone 2 (capped state: 100%) -->
-  <g transform="translate(380, 0)">
-    <rect x="150" y="80" width="220" height="340" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
-    <rect x="166" y="96" width="188" height="308" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
-    <rect x="240" y="96" width="40" height="10" rx="5" fill="#1e293b"/>
+  <!-- phone 2: 100% capped state (center X: 750, bounds: 660 to 840, y: 85 to 435) -->
+  <g>
+    <!-- phone outer chassis -->
+    <rect x="660" y="85" width="180" height="350" rx="28" fill="url(#phoneBody)" stroke="#64748b" stroke-width="3"/>
+    <!-- phone screen -->
+    <rect x="672" y="97" width="156" height="326" rx="16" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+    <!-- camera / island notch -->
+    <rect x="729" y="106" width="42" height="10" rx="5" fill="#1e293b"/>
+
     <!-- 100% cap line -->
-    <line x1="196" y1="172" x2="304" y2="172" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 4"/>
-    <line x1="196" y1="166" x2="196" y2="178" stroke="#ef4444" stroke-width="2"/>
-    <line x1="304" y1="166" x2="304" y2="178" stroke="#ef4444" stroke-width="2"/>
-    <text x="250" y="158" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#f87171">100% cap</text>
-    <!-- battery icon full -->
-    <rect x="200" y="190" width="100" height="80" rx="8" fill="none" stroke="#cbd5e1" stroke-width="4"/>
-    <rect x="300" y="215" width="14" height="30" rx="3" fill="#cbd5e1"/>
-    <rect x="204" y="194" width="92" height="72" rx="3" fill="#22c55e"/>
-    <text x="250" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#22c55e">100%</text>
+    <line x1="700" y1="222" x2="800" y2="222" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 4"/>
+    <line x1="700" y1="217" x2="700" y2="227" stroke="#ef4444" stroke-width="2"/>
+    <line x1="800" y1="217" x2="800" y2="227" stroke="#ef4444" stroke-width="2"/>
+    <text x="750" y="213" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#f87171">100% cap</text>
+
+    <!-- sleek battery indicator (center X: 750, body: 700 to 800, y: 237 to 283) -->
+    <rect x="700" y="237" width="100" height="46" rx="7" fill="none" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="800" y="252" width="6" height="16" rx="2" fill="#cbd5e1"/>
+    <!-- 100% charge level -->
+    <rect x="703" y="240" width="94" height="40" rx="4" fill="#22c55e"/>
+    <!-- text centered at X: 750 -->
+    <text x="750" y="332" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#22c55e">100%</text>
   </g>
 </svg>
