@@ -403,6 +403,8 @@ Therefore, subsequent changes to `copy` do not affect `arr[2]`.
 #include <cstdint>
 #include <iostream>
 
+const size_t count = 2;
+
 struct Monitor
 {
     double diagonalInches;
@@ -422,8 +424,8 @@ struct Computer
 
 struct Computers
 {
-    std::array<Monitor, 2> monitors;
-    std::array<Keyboard, 2> keyboards;
+    std::array<Monitor, count> monitors;
+    std::array<Keyboard, count> keyboards;
 };
 
 struct ComputerRef
@@ -443,7 +445,7 @@ ComputerRef getComputer(Computers* computers, size_t index)
 int main()
 {
     {
-        std::array<Computer, 2> computers{};
+        std::array<Computer, count> computers{};
         computers[0].monitor.diagonalInches = 27;
         computers[0].keyboard.rows = 6;
         std::cout << sizeof(computers) << std::endl;
