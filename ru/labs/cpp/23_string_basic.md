@@ -86,8 +86,7 @@ int main()
 {
     [[maybe_unused]] int a{ 1 };
 
-    int b{ 2 };
-    (void) b;
+    [[maybe_unused]] int b{ 2 };
 
     int c{ 3 };
 }
@@ -96,22 +95,21 @@ int main()
 <details>
 <summary>Результат компиляции</summary>
 
-Компилятор определяет, что переменные не были нигде использованы, 
-но дает ошибку только для `c`.
+Компилятор видит, что переменные нигде не использованы,
+но предупреждает только о `c`.
 ```
 ❯ g++ -std=c++20 -Wall -Wconversion -Wextra -Wunused -pedantic test.cpp
 test.cpp: In function ‘int main()’:
-test.cpp:7:5: warning: unused variable ‘c’ [-Wunused-variable]
-    7 | int c{ 3 };
-      |     ^
+test.cpp:7:9: warning: unused variable ‘c’ [-Wunused-variable]
+    7 |     int c{ 3 };
+      |         ^
 ```
 </details>
 
 ### 11. Печать адреса массива символов без 0 на конце
 ```cpp
 std::array<char, 2> s{ 'a', 'b' };
-std::array<char, 2> s1{ '1', '\0' };
-(void) s1;
+[[maybe_unused]] std::array<char, 2> s1{ '1', '\0' };
 std::cout << s.data() << std::endl;
 ```
 
