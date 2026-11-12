@@ -382,7 +382,7 @@ int main()
   Write a function that returns the same time in normalized form.
   The original time must not change.
 
-  ![A time of 4 hours 138 minutes 250 seconds normalized to 6 hours 22 minutes 10 seconds, with the carries into minutes and hours](./images/time.svg)
+  ![A time of 4 hours 138 minutes 250 seconds normalized to 6 hours 22 minutes 10 seconds](./images/time.svg)
 
   <details>
   <summary>
@@ -423,7 +423,7 @@ int main()
   The function should return how many milliliters were poured,
   and the amount of water in both bottles should be updated.
 
-  ![A bottle holding 600 ml pouring into a bottle holding 300 ml with 800 ml capacity, transferring 500 ml](./images/bottles.svg)
+  ![A bottle holding 600 ml pouring into a bottle holding 300 ml with 800 ml capacity and 500 ml free space](./images/bottles.svg)
 
   <details>
   <summary>

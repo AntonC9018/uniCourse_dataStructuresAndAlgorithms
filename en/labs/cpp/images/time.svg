@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="timeTitle timeDesc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="timeTitle timeDesc">
   <title id="timeTitle">Normalizing a time value</title>
-  <desc id="timeDesc">A time of 4 hours 138 minutes 250 seconds becomes 6 hours 22 minutes 10 seconds: the extra seconds carry into minutes and the extra minutes carry into hours.</desc>
+  <desc id="timeDesc">A time of 4 hours 138 minutes 250 seconds normalized to 6 hours 22 minutes 10 seconds.</desc>
 
   <defs>
     <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
@@ -9,52 +9,55 @@
     </linearGradient>
   </defs>
 
-  <rect x="1" y="1" width="998" height="538" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
 
-  <!-- clock -->
-  <circle cx="500" cy="64" r="28" fill="#0b1220" stroke="#475569" stroke-width="3"/>
-  <line x1="500" y1="64" x2="500" y2="46" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-  <line x1="500" y1="64" x2="516" y2="72" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="500" cy="64" r="3.5" fill="#cbd5e1"/>
+  <!-- clock icon top center -->
+  <circle cx="500" cy="74" r="30" fill="#0b1220" stroke="#475569" stroke-width="3"/>
+  <line x1="500" y1="74" x2="500" y2="54" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+  <line x1="500" y1="74" x2="518" y2="82" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="500" cy="74" r="4" fill="#cbd5e1"/>
 
-  <!-- before -->
-  <rect x="80" y="110" width="350" height="230" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-  <text x="255" y="145" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" letter-spacing="2" fill="#64748b">BEFORE</text>
+  <!-- unnormalized panel -->
+  <rect x="90" y="140" width="340" height="280" rx="20" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
   <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-    <text x="130" y="210" font-size="36" fill="#e2e8f0">4</text>
-    <text x="160" y="210" font-size="18" fill="#94a3b8">h</text>
-    <text x="130" y="265" font-size="36" fill="#f59e0b">138</text>
-    <text x="208" y="265" font-size="18" fill="#f59e0b">min</text>
-    <text x="130" y="320" font-size="36" fill="#ef4444">250</text>
-    <text x="208" y="320" font-size="18" fill="#ef4444">s</text>
+    <g transform="translate(140, 205)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#e2e8f0">4</text>
+      <text x="40" y="0" font-size="22" fill="#94a3b8">h</text>
+    </g>
+    <g transform="translate(140, 285)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#f59e0b">138</text>
+      <text x="92" y="0" font-size="22" fill="#f59e0b">min</text>
+      <!-- subtle > 60 indicator -->
+      <text x="160" y="-4" font-size="14" font-family="ui-sans-serif, system-ui, sans-serif" fill="#f59e0b" opacity="0.8">(&gt; 60)</text>
+    </g>
+    <g transform="translate(140, 365)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#ef4444">250</text>
+      <text x="92" y="0" font-size="22" fill="#ef4444">s</text>
+      <!-- subtle > 60 indicator -->
+      <text x="140" y="-4" font-size="14" font-family="ui-sans-serif, system-ui, sans-serif" fill="#ef4444" opacity="0.8">(&gt; 60)</text>
+    </g>
   </g>
 
-  <!-- normalize arrow -->
-  <line x1="440" y1="230" x2="548" y2="230" stroke="#64748b" stroke-width="3"/>
-  <polygon points="548,222 562,230 548,238" fill="#64748b"/>
-  <text x="500" y="208" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#cbd5e1">normalize</text>
-
-  <!-- after -->
-  <rect x="570" y="110" width="350" height="230" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-  <text x="745" y="145" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" letter-spacing="2" fill="#64748b">AFTER</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-    <text x="620" y="210" font-size="36" fill="#e2e8f0">6</text>
-    <text x="650" y="210" font-size="18" fill="#94a3b8">h</text>
-    <text x="620" y="265" font-size="36" fill="#22c55e">22</text>
-    <text x="672" y="265" font-size="18" fill="#22c55e">min</text>
-    <text x="620" y="320" font-size="36" fill="#22c55e">10</text>
-    <text x="672" y="320" font-size="18" fill="#22c55e">s</text>
+  <!-- arrow -->
+  <g>
+    <line x1="450" y1="280" x2="550" y2="280" stroke="#64748b" stroke-width="4"/>
+    <polygon points="550,270 566,280 550,290" fill="#64748b"/>
   </g>
 
-  <!-- carry -->
-  <rect x="120" y="356" width="760" height="146" rx="12" fill="#0f1a2b" stroke="#1e293b" stroke-width="2"/>
-  <text x="145" y="386" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" letter-spacing="2" fill="#64748b">CARRY</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">
-    <circle cx="150" cy="418" r="4" fill="#ef4444"/>
-    <text x="168" y="424">250 s = 4 min 10 s</text>
-    <circle cx="150" cy="452" r="4" fill="#f59e0b"/>
-    <text x="168" y="458">138 min + 4 min = 142 min = 2 h 22 min</text>
-    <circle cx="150" cy="486" r="4" fill="#22c55e"/>
-    <text x="168" y="492">4 h + 2 h = 6 h</text>
+  <!-- normalized panel -->
+  <rect x="570" y="140" width="340" height="280" rx="20" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <g transform="translate(620, 205)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#e2e8f0">6</text>
+      <text x="40" y="0" font-size="22" fill="#94a3b8">h</text>
+    </g>
+    <g transform="translate(620, 285)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#22c55e">22</text>
+      <text x="68" y="0" font-size="22" fill="#22c55e">min</text>
+    </g>
+    <g transform="translate(620, 365)">
+      <text x="0" y="0" font-size="44" font-weight="600" fill="#22c55e">10</text>
+      <text x="68" y="0" font-size="22" fill="#22c55e">s</text>
+    </g>
   </g>
 </svg>
