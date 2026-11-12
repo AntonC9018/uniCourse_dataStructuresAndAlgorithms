@@ -81,6 +81,8 @@ The characteristics are as follows:
 - One of 2 switch states (on or off);
 - The value on the dial, from 1 to 100.
 
+![Bomb with a timer, three wires, a portrait, a bulb, a switch and a dial](./images/bomb.svg)
+
 The required wire can be determined using the following rules:
 1. If the portrait is Lenin, the bomb will not explode; nothing needs to be cut;
 2. A value is associated with the bulb color. Blue is 11, white is 15, red is 35.

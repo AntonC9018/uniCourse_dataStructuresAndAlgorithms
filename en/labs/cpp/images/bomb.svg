@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" role="img" aria-labelledby="bombTitle bombDesc">
+  <title id="bombTitle">A bomb with its characteristics</title>
+  <desc id="bombDesc">A round bomb with a timer and three wires: red, yellow and green. On its body are a portrait, a bulb, a switch and a dial from 1 to 100.</desc>
+
+  <defs>
+    <radialGradient id="body" cx="35%" cy="28%" r="80%">
+      <stop offset="0%" stop-color="#526580"/>
+      <stop offset="100%" stop-color="#1a2330"/>
+    </radialGradient>
+    <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="558" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <ellipse cx="400" cy="496" rx="150" ry="16" fill="#000000" opacity="0.45"/>
+
+  <!-- wires -->
+  <path d="M370 116 C 380 60 480 26 600 52" fill="none" stroke="#ef4444" stroke-width="10" stroke-linecap="round"/>
+  <path d="M400 108 C 430 70 520 70 620 92" fill="none" stroke="#f59e0b" stroke-width="10" stroke-linecap="round"/>
+  <path d="M430 116 C 470 122 530 128 600 136" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- neck -->
+  <rect x="360" y="118" width="80" height="54" rx="10" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <ellipse cx="400" cy="118" rx="40" ry="12" fill="#475569" stroke="#64748b" stroke-width="2"/>
+
+  <!-- body -->
+  <circle cx="400" cy="310" r="165" fill="url(#body)" stroke="#64748b" stroke-width="2"/>
+  <ellipse cx="345" cy="240" rx="95" ry="65" fill="#ffffff" opacity="0.05"/>
+
+  <!-- timer -->
+  <rect x="320" y="280" width="160" height="84" rx="10" fill="#05070d" stroke="#475569" stroke-width="2"/>
+  <text x="400" y="339" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="46" fill="#ff5c5c" letter-spacing="3">00:42</text>
+
+  <!-- portrait -->
+  <rect x="300" y="198" width="60" height="72" rx="4" fill="#0f172a" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="330" cy="222" r="11" fill="#94a3b8"/>
+  <path d="M312 254 C 312 240 320 234 330 234 C 340 234 348 240 348 254 Z" fill="#94a3b8"/>
+
+  <!-- bulb -->
+  <circle cx="500" cy="214" r="34" fill="url(#bulbGlow)"/>
+  <circle cx="500" cy="214" r="15" fill="#bfdbfe" stroke="#93c5fd" stroke-width="2"/>
+  <path d="M496 216 L 500 210 L 504 216" fill="none" stroke="#1d4ed8" stroke-width="1.5"/>
+  <rect x="493" y="227" width="14" height="9" rx="2" fill="#94a3b8"/>
+
+  <!-- switch -->
+  <rect x="308" y="372" width="60" height="28" rx="14" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+  <circle cx="322" cy="386" r="9" fill="#e2e8f0"/>
+
+  <!-- dial -->
+  <circle cx="500" cy="396" r="26" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <g stroke="#64748b" stroke-width="2">
+    <line x1="500" y1="370" x2="500" y2="375"/>
+    <line x1="518" y1="378" x2="515" y2="382"/>
+    <line x1="526" y1="396" x2="521" y2="396"/>
+    <line x1="518" y1="414" x2="515" y2="410"/>
+    <line x1="500" y1="422" x2="500" y2="417"/>
+    <line x1="482" y1="414" x2="485" y2="410"/>
+    <line x1="474" y1="396" x2="479" y2="396"/>
+    <line x1="482" y1="378" x2="485" y2="382"/>
+  </g>
+  <line x1="500" y1="396" x2="518" y2="384" stroke="#f87171" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="500" cy="396" r="4" fill="#e2e8f0"/>
+
+  <!-- callouts -->
+  <g stroke="#475569" stroke-width="1.5" stroke-dasharray="5 5">
+    <line x1="222" y1="219" x2="296" y2="226"/>
+    <line x1="518" y1="214" x2="690" y2="210"/>
+    <line x1="486" y1="322" x2="690" y2="316"/>
+    <line x1="222" y1="393" x2="304" y2="386"/>
+    <line x1="530" y1="388" x2="690" y2="392"/>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#cbd5e1">
+    <text x="212" y="224" text-anchor="end">portrait</text>
+    <text x="700" y="216">bulb</text>
+    <text x="700" y="322">timer</text>
+    <text x="212" y="398" text-anchor="end">switch</text>
+    <text x="700" y="398">dial (1&#8211;100)</text>
+    <text x="652" y="98">wires</text>
+  </g>
+</svg>
