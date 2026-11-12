@@ -431,4 +431,56 @@ To copy one element, use an index: `int x = arr[0];`.
 To store the address of the first element, use a pointer: `int* p = arr;`.
 </details>
 
+### 19. (advanced level): Splitting an array of structs
+```cpp
+#include <cstdint>
+#include <iostream>
+
+struct Monitor
+{
+    double diagonalInches;
+};
+
+struct Keyboard
+{
+    uint8_t rows;
+    uint8_t columns;
+};
+
+struct Computer
+{
+    Monitor monitor;
+    Keyboard keyboard;
+};
+
+int main()
+{
+    Computer computers[2]{};
+    std::cout << sizeof(computers) << std::endl;
+}
+```
+<details>
+<summary>Answer</summary>
+
+It prints `32`, which is `2 * 16`: every `Computer` takes 16 bytes,
+although its parts take only 8 + 2 = 10.
+
+A `double` must be aligned to 8, and the size of the structure must be a multiple of 8,
+otherwise the next element of the array would start at a misaligned address.
+So 6 empty bytes stay at the end of every computer.
+
+If the parts are stored in separate arrays:
+
+```cpp
+Monitor monitors[2];
+Keyboard keyboards[2];
+std::cout << sizeof(monitors) + sizeof(keyboards) << std::endl; // 20
+```
+
+those bytes are not needed: array elements sit exactly `sizeof(T)` apart,
+and the size of a type is always a multiple of its alignment.
+Two computers then take 16 + 4 = 20 bytes instead of 32.
+The parts of one computer are `monitors[i]` and `keyboards[i]`.
+</details>
+
 <!-- Missing: get address of item at index, different type than int -->

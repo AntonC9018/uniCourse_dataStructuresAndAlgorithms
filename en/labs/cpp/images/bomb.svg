@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-labelledby="bombTitle bombDesc">
+  <title id="bombTitle">A bomb with its characteristics</title>
+  <desc id="bombDesc">A block of plastic explosive with a circuit board taped on. The board holds a timer, a keypad, an indicator bulb and a lever switch. A framed portrait and a numbered dial sit next to it, and three wires loop over the top.</desc>
+
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dccca4"/>
+      <stop offset="55%" stop-color="#c8b387"/>
+      <stop offset="100%" stop-color="#ab946a"/>
+    </linearGradient>
+    <linearGradient id="lcd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c3dd93"/>
+      <stop offset="100%" stop-color="#8fb45c"/>
+    </linearGradient>
+    <linearGradient id="knob" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6b7a8d"/>
+      <stop offset="100%" stop-color="#2b3542"/>
+    </linearGradient>
+    <radialGradient id="glass" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#f0f9ff"/>
+      <stop offset="55%" stop-color="#93c5fd"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </radialGradient>
+    <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="portraitBg" cx="50%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#243449"/>
+      <stop offset="100%" stop-color="#0b1220"/>
+    </radialGradient>
+    <clipPath id="portraitClip">
+      <rect x="248" y="238" width="144" height="164"/>
+    </clipPath>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="618" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <ellipse cx="500" cy="572" rx="315" ry="13" fill="#000000" opacity="0.45"/>
+
+  <!-- explosive block -->
+  <rect x="200" y="210" width="600" height="350" rx="18" fill="url(#paper)" stroke="#8a7448" stroke-width="3"/>
+  <rect x="206" y="216" width="588" height="338" rx="14" fill="none" stroke="#efe0bd" stroke-width="1.5" opacity="0.45"/>
+  <g fill="none" stroke="#a8946a" stroke-width="2" opacity="0.7">
+    <path d="M208 268 C 270 264 350 270 414 266"/>
+    <path d="M208 360 C 280 356 350 362 414 358"/>
+    <path d="M208 452 C 260 448 350 454 414 450"/>
+    <path d="M208 520 C 280 516 350 522 414 518"/>
+  </g>
+
+  <!-- circuit board -->
+  <rect x="420" y="235" width="350" height="300" rx="8" fill="#24402f" stroke="#14261a" stroke-width="3"/>
+  <rect x="426" y="241" width="338" height="288" rx="5" fill="none" stroke="#2f5440" stroke-width="1.5"/>
+  <g fill="none" stroke="#2f5440" stroke-width="2" opacity="0.9">
+    <path d="M432 330 H 447 V 345"/>
+    <path d="M432 405 H 447"/>
+    <path d="M758 300 H 743 V 318"/>
+    <path d="M758 500 H 742"/>
+    <path d="M640 330 H 655 V 340"/>
+  </g>
+  <g fill="#6b8f7a">
+    <circle cx="436" cy="252" r="3.5"/>
+    <circle cx="754" cy="252" r="3.5"/>
+    <circle cx="436" cy="518" r="3.5"/>
+    <circle cx="754" cy="518" r="3.5"/>
+  </g>
+
+  <!-- wires -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M500 235 C 492 145 560 105 640 112 C 710 118 760 165 768 236" stroke="#7f1d1d" stroke-width="13"/>
+    <path d="M545 235 C 542 170 600 138 668 144 C 728 150 762 185 772 228" stroke="#7a5a12" stroke-width="13"/>
+    <path d="M590 235 C 590 195 640 172 696 176 C 746 180 768 198 776 220" stroke="#14532d" stroke-width="13"/>
+    <path d="M500 235 C 492 145 560 105 640 112 C 710 118 760 165 768 236" stroke="#ef4444" stroke-width="9"/>
+    <path d="M545 235 C 542 170 600 138 668 144 C 728 150 762 185 772 228" stroke="#f5c542" stroke-width="9"/>
+    <path d="M590 235 C 590 195 640 172 696 176 C 746 180 768 198 776 220" stroke="#22c55e" stroke-width="9"/>
+  </g>
+
+  <!-- tape -->
+  <g fill="#c3cbd4" fill-opacity="0.3" stroke="#8d96a1" stroke-opacity="0.45" stroke-width="1">
+    <rect x="410" y="218" width="38" height="330" transform="rotate(-1 429 383)"/>
+    <rect x="744" y="218" width="38" height="330" transform="rotate(1 763 383)"/>
+    <rect x="428" y="230" width="330" height="18"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.16" stroke-width="3">
+    <line x1="416" y1="222" x2="413" y2="542"/>
+    <line x1="750" y1="222" x2="753" y2="542"/>
+  </g>
+
+  <!-- timer -->
+  <rect x="441" y="251" width="228" height="68" rx="6" fill="#16241a" stroke="#0b140d" stroke-width="2"/>
+  <rect x="447" y="257" width="216" height="56" rx="4" fill="url(#lcd)" stroke="#3d5528" stroke-width="1.5"/>
+  <polygon points="447,257 663,257 663,268 447,289" fill="#ffffff" opacity="0.1"/>
+  <text x="555" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="44" letter-spacing="2" fill="#22331a">00:42</text>
+
+  <!-- keypad -->
+  <rect x="455" y="335" width="170" height="190" rx="10" fill="#2a2f36" stroke="#454c57" stroke-width="2"/>
+  <g fill="#3b424c" stroke="#545d69" stroke-width="1.5">
+    <rect x="462" y="348" width="44" height="34" rx="6"/>
+    <rect x="518" y="348" width="44" height="34" rx="6"/>
+    <rect x="574" y="348" width="44" height="34" rx="6"/>
+    <rect x="462" y="391" width="44" height="34" rx="6"/>
+    <rect x="518" y="391" width="44" height="34" rx="6"/>
+    <rect x="574" y="391" width="44" height="34" rx="6"/>
+    <rect x="462" y="434" width="44" height="34" rx="6"/>
+    <rect x="518" y="434" width="44" height="34" rx="6"/>
+    <rect x="574" y="434" width="44" height="34" rx="6"/>
+    <rect x="462" y="477" width="44" height="34" rx="6"/>
+    <rect x="518" y="477" width="44" height="34" rx="6"/>
+    <rect x="574" y="477" width="44" height="34" rx="6"/>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" text-anchor="middle" fill="#e2e8f0">
+    <text x="484" y="372">1</text>
+    <text x="540" y="372">2</text>
+    <text x="596" y="372">3</text>
+    <text x="484" y="415">4</text>
+    <text x="540" y="415">5</text>
+    <text x="596" y="415">6</text>
+    <text x="484" y="458">7</text>
+    <text x="540" y="458">8</text>
+    <text x="596" y="458">9</text>
+    <text x="484" y="501">*</text>
+    <text x="540" y="501">0</text>
+    <text x="596" y="501">#</text>
+  </g>
+
+  <!-- indicator bulb -->
+  <circle cx="700" cy="350" r="46" fill="url(#bulbGlow)"/>
+  <circle cx="700" cy="350" r="30" fill="#3f4a59" stroke="#94a3b8" stroke-width="2.5"/>
+  <circle cx="700" cy="350" r="23" fill="#1b2430" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="700" cy="350" r="16" fill="url(#glass)" stroke="#bfdbfe" stroke-width="1"/>
+  <ellipse cx="694" cy="344" rx="5" ry="4" fill="#ffffff" opacity="0.8"/>
+  <circle cx="700" cy="324" r="2.5" fill="#94a3b8"/>
+  <circle cx="700" cy="376" r="2.5" fill="#94a3b8"/>
+
+  <!-- lever switch -->
+  <line x1="690" y1="455" x2="665" y2="402" stroke="#475569" stroke-width="11" stroke-linecap="round"/>
+  <line x1="690" y1="455" x2="665" y2="402" stroke="#cbd5e1" stroke-width="7" stroke-linecap="round"/>
+  <rect x="650" y="438" width="80" height="34" rx="8" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <circle cx="658" cy="455" r="3" fill="#94a3b8"/>
+  <circle cx="722" cy="455" r="3" fill="#94a3b8"/>
+  <circle cx="690" cy="455" r="10" fill="#64748b" stroke="#94a3b8" stroke-width="1.5"/>
+  <circle cx="665" cy="402" r="8" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="662" cy="399" r="2" fill="#ffffff" opacity="0.5"/>
+
+  <!-- portrait -->
+  <rect x="240" y="230" width="160" height="180" rx="6" fill="#8a6a3a" stroke="#5c4623" stroke-width="2"/>
+  <rect x="248" y="238" width="144" height="164" fill="url(#portraitBg)" stroke="#3b2f1a" stroke-width="2"/>
+  <g clip-path="url(#portraitClip)">
+    <path d="M266 402 L 276 362 C 284 344 300 336 320 336 C 340 336 356 344 364 362 L 374 402 Z" fill="#2b3444" stroke="#1e2635" stroke-width="2"/>
+    <rect x="306" y="320" width="28" height="28" fill="#d9b38c"/>
+    <ellipse cx="320" cy="288" rx="44" ry="44" fill="#e6ebf1"/>
+    <g fill="#e6ebf1" stroke="#ccd6e0" stroke-width="1.5">
+      <circle cx="280" cy="286" r="10.5"/>
+      <circle cx="277" cy="302" r="10.5"/>
+      <circle cx="280" cy="318" r="10.5"/>
+      <circle cx="360" cy="286" r="10.5"/>
+      <circle cx="363" cy="302" r="10.5"/>
+      <circle cx="360" cy="318" r="10.5"/>
+    </g>
+    <ellipse cx="320" cy="302" rx="24" ry="35" fill="#e8c9a8"/>
+    <ellipse cx="320" cy="269" rx="27" ry="10" fill="#e6ebf1"/>
+    <circle cx="295" cy="290" r="8" fill="#e6ebf1"/>
+    <circle cx="345" cy="290" r="8" fill="#e6ebf1"/>
+    <circle cx="306" cy="314" r="6" fill="#d9a98a" opacity="0.35"/>
+    <circle cx="334" cy="314" r="6" fill="#d9a98a" opacity="0.35"/>
+    <ellipse cx="309" cy="299" rx="2.6" ry="3.2" fill="#2b2118"/>
+    <ellipse cx="331" cy="299" rx="2.6" ry="3.2" fill="#2b2118"/>
+    <path d="M303 291 Q 309 289 315 290" fill="none" stroke="#8a7a66" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M325 290 Q 331 289 337 291" fill="none" stroke="#8a7a66" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M318 301 C 316 307 315 311 315 313 C 318 317 323 317 325 313 C 324 309 323 305 322 301 Z" fill="#ddb28b" stroke="#c99a76" stroke-width="1"/>
+    <path d="M316 313 Q 320 316 324 313" fill="none" stroke="#b08060" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M311 324 Q 320 328 329 324" fill="none" stroke="#a06a5a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M308 340 L 320 368 L 332 340 L 327 334 L 313 334 Z" fill="#eef3f8" stroke="#b8c4d2" stroke-width="1"/>
+    <path d="M320 340 L 320 366" fill="none" stroke="#c9d3de" stroke-width="1"/>
+    <path d="M294 350 L 312 370" fill="none" stroke="#1e2635" stroke-width="3"/>
+    <path d="M346 350 L 328 370" fill="none" stroke="#1e2635" stroke-width="3"/>
+  </g>
+  <polygon points="248,238 392,238 392,258 248,288" fill="#ffffff" opacity="0.06"/>
+
+  <!-- dial -->
+  <circle cx="320" cy="486" r="65" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+  <circle cx="320" cy="486" r="58" fill="none" stroke="#0b1220" stroke-width="2"/>
+  <g stroke="#94a3b8" stroke-width="2" stroke-linecap="round">
+    <line x1="274.6" y1="473.8" x2="266.9" y2="471.8"/>
+    <line x1="279.3" y1="462.5" x2="272.4" y2="458.5"/>
+    <line x1="286.8" y1="452.8" x2="281.1" y2="447.1"/>
+    <line x1="296.5" y1="445.3" x2="292.5" y2="438.4"/>
+    <line x1="307.8" y1="440.6" x2="305.8" y2="432.9"/>
+    <line x1="320" y1="439" x2="320" y2="431"/>
+    <line x1="332.2" y1="440.6" x2="334.2" y2="432.9"/>
+    <line x1="343.5" y1="445.3" x2="347.5" y2="438.4"/>
+    <line x1="353.2" y1="452.8" x2="358.9" y2="447.1"/>
+    <line x1="360.7" y1="462.5" x2="367.6" y2="458.5"/>
+    <line x1="365.4" y1="473.8" x2="373.1" y2="471.8"/>
+  </g>
+  <circle cx="320" cy="486" r="30" fill="url(#knob)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="320" cy="486" r="24" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.35"/>
+  <line x1="320" y1="486" x2="341" y2="469" stroke="#f87171" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="320" cy="486" r="5" fill="#cbd5e1"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" text-anchor="middle">
+    <text x="275" y="490" fill="#05070d">1</text>
+    <text x="275" y="491.2" fill="#e8eef5">1</text>
+    <text x="365" y="490" fill="#05070d">100</text>
+    <text x="365" y="491.2" fill="#e8eef5">100</text>
+  </g>
+
+  <!-- stencil -->
+  <text x="720" y="554" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="bold" letter-spacing="3" fill="#7a6440" opacity="0.75">C4</text>
+
+  <!-- callouts -->
+  <g stroke="#475569" stroke-width="1.5" stroke-dasharray="5 5">
+    <line x1="150" y1="320" x2="240" y2="320"/>
+    <line x1="150" y1="486" x2="258" y2="486"/>
+    <line x1="860" y1="285" x2="665" y2="285"/>
+    <line x1="860" y1="350" x2="728" y2="350"/>
+    <line x1="860" y1="455" x2="730" y2="455"/>
+    <line x1="720" y1="103" x2="650" y2="112"/>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#cbd5e1">
+    <text x="140" y="325" text-anchor="end">portrait</text>
+    <text x="140" y="491" text-anchor="end">dial (1&#8211;100)</text>
+    <text x="870" y="290">timer</text>
+    <text x="870" y="355">bulb</text>
+    <text x="870" y="460">switch</text>
+    <text x="730" y="95">wires</text>
+  </g>
+</svg>

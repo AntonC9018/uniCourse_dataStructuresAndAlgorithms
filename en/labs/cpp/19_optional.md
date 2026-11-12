@@ -457,7 +457,7 @@ A sentinel only works when some value of the type is impossible as a real result
 like a negative index.
 </details>
 
-### 11. A pointer can already hold null
+### 11. Pointers have their own empty state
 ```cpp
 #include <iostream>
 
@@ -486,8 +486,7 @@ int main()
 <details>
 <summary>Answer</summary>
 
-Pointers already have a built-in empty state — `nullptr`.
-They need no extra flag like `has_value`.
+A pointer's empty state is `nullptr`, and it needs no extra flag like `has_value`.
 
 - `p` points at `a`, so the check passes and `5` is printed;
 - `q` holds `nullptr`, so the check fails and `"empty"` is printed instead.

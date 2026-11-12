@@ -86,8 +86,7 @@ int main()
 {
     [[maybe_unused]] int a{ 1 };
 
-    int b{ 2 };
-    (void) b;
+    [[maybe_unused]] int b{ 2 };
 
     int c{ 3 };
 }
@@ -96,23 +95,21 @@ int main()
 <details>
 <summary>Compilation result</summary>
 
-Although `a` and `c` are unused, the attribute suppresses the warning for `a`,
-and the cast to `void` counts as a use of `b`.
+Although `a`, `b` and `c` are all unused, the attribute suppresses the warning for `a` and `b`.
 Therefore, the compiler issues a warning only for `c`.
 ```
 ❯ g++ -std=c++20 -Wall -Wconversion -Wextra -Wunused -pedantic test.cpp
 test.cpp: In function ‘int main()’:
-test.cpp:7:5: warning: unused variable ‘c’ [-Wunused-variable]
-    7 | int c{ 3 };
-      |     ^
+test.cpp:7:9: warning: unused variable ‘c’ [-Wunused-variable]
+    7 |     int c{ 3 };
+      |         ^
 ```
 </details>
 
 ### 11. Printing a character array without a trailing 0
 ```cpp
 std::array<char, 2> s{ 'a', 'b' };
-std::array<char, 2> s1{ '1', '\0' };
-(void) s1;
+[[maybe_unused]] std::array<char, 2> s1{ '1', '\0' };
 std::cout << s.data() << std::endl;
 ```
 

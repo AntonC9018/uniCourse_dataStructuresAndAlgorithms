@@ -60,45 +60,6 @@ slug: en/cpp/labs/enum
     };
     ```
 
-7.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = '5',
-        b = '7',
-    };
-    ```
-
-8.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = '5',
-        b,
-    };
-    ```
-
-9.  Write the answer as an integer and as a character.
-
-    ```cpp
-    enum Test
-    {
-        a = 'b',
-        b,
-    };
-    ```
-
-9.  Write the answer as an integer.
-
-    ```cpp
-    enum Test
-    {
-        a = 'a' + '1',
-        b,
-    };
-    ```
 
 
 ## Why?
@@ -119,6 +80,8 @@ The characteristics are as follows:
 - One of the bulb colors: blue, white, red;
 - One of 2 switch states (on or off);
 - The value on the dial, from 1 to 100.
+
+![A block of plastic explosive with a timer, a keypad, three wires, a portrait, a bulb, a switch and a dial](./images/bomb.svg)
 
 The required wire can be determined using the following rules:
 1. If the portrait is Lenin, the bomb will not explode; nothing needs to be cut;
