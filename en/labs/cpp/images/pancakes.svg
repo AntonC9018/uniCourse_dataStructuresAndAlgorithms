@@ -37,38 +37,38 @@
       <line x1="316" y1="121" x2="312" y2="117"/>
     </g>
 
-    <!-- eggs on shelf 1 (centers: 240, 280, 320) -->
+    <!-- eggs on shelf 1 (cx: 200, 245, 290) -->
     <g fill="#f8fafc" stroke="#cbd5e1" stroke-width="2">
-      <ellipse cx="240" cy="202" rx="14" ry="18"/>
-      <ellipse cx="280" cy="202" rx="14" ry="18"/>
-      <ellipse cx="320" cy="202" rx="14" ry="18"/>
+      <ellipse cx="200" cy="202" rx="15" ry="18"/>
+      <ellipse cx="245" cy="202" rx="15" ry="18"/>
+      <ellipse cx="290" cy="202" rx="15" ry="18"/>
     </g>
 
-    <!-- kefir carton on shelf 2 (centered at x: 280) -->
-    <polygon points="255,265 285,242 315,265" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
-    <rect x="280" y="238" width="10" height="7" rx="2" fill="#60a5fa"/>
-    <rect x="255" y="265" width="60" height="75" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
-    <rect x="255" y="290" width="60" height="22" fill="#3b82f6"/>
+    <!-- kefir carton on shelf 2 (centered at x: 260) -->
+    <polygon points="235,265 265,242 295,265" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="260" y="238" width="10" height="7" rx="2" fill="#60a5fa"/>
+    <rect x="235" y="265" width="60" height="75" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="235" y="290" width="60" height="22" fill="#3b82f6"/>
 
     <!-- labels -->
     <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-weight="600">
-      <text x="96" y="170" font-size="20" fill="#e2e8f0">X = 3</text>
+      <text x="96" y="150" font-size="20" fill="#e2e8f0">X = 3</text>
       <text x="96" y="306" font-size="18" fill="#e2e8f0">Y = 500 ml</text>
     </g>
 
     <!-- leader lines: line to EACH egg -->
     <g stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4">
-      <line x1="156" y1="165" x2="238" y2="185"/>
-      <line x1="156" y1="165" x2="278" y2="185"/>
-      <line x1="156" y1="165" x2="318" y2="185"/>
+      <line x1="154" y1="146" x2="198" y2="184"/>
+      <line x1="154" y1="146" x2="243" y2="184"/>
+      <line x1="154" y1="146" x2="288" y2="184"/>
       <!-- line to kefir -->
-      <line x1="184" y1="301" x2="248" y2="301"/>
+      <line x1="184" y1="301" x2="228" y2="301"/>
     </g>
     <!-- terminal dots at targets -->
-    <circle cx="238" cy="185" r="2.5" fill="#94a3b8"/>
-    <circle cx="278" cy="185" r="2.5" fill="#94a3b8"/>
-    <circle cx="318" cy="185" r="2.5" fill="#94a3b8"/>
-    <circle cx="248" cy="301" r="2.5" fill="#94a3b8"/>
+    <circle cx="198" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="243" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="288" cy="184" r="2.5" fill="#94a3b8"/>
+    <circle cx="228" cy="301" r="2.5" fill="#94a3b8"/>
   </g>
 
   <!-- arrow 1: fridge to recipe (clearance: fridge ends at 350, recipe starts at 425) -->
