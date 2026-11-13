@@ -33,6 +33,12 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Fetch pinned Clang WASM frontend for playground
+        run: |
+          curl -fsSL -o visualizations/player/clang-trace-frontend.wasm \
+            https://github.com/AntonC9018/cpp-visualizations/releases/download/wasm-v1/clang-trace-frontend.wasm
+          echo "da13dbb4afec7e62b917a3013f09dcdef9d0385d79520358e209b919cba79ffb  visualizations/player/clang-trace-frontend.wasm" | sha256sum -c -
+
       # Setup, cache keys, PR readiness, and validation belong to the
       # pinned shared tooling. Course policy lives in course-publishing.json.
       - name: Course document validation and site build
