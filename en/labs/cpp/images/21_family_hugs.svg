@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsTitle hugsDesc">
+  <title id="hugsTitle">Five family members tracking hugs with bit sets</title>
+  <desc id="hugsDesc">Five family members in a row, each with a colour. Under every person sits a row of five boxes, one per member, in that member's colour. Filled boxes mark the members this person has already hugged, and nobody's own box is filled.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- alice -->
+  <g>
+    <rect x="40" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 90 258 Q 104 218 124 218 Q 144 218 158 258 Z" fill="#3b82f6"/>
+    <circle cx="124" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <text x="124" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">alice</text>
+    <rect x="55" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="59" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
+    <rect x="86" y="324" width="22" height="22" rx="6" fill="#f59e0b"/>
+    <rect x="113" y="324" width="22" height="22" rx="6" fill="#22c55e"/>
+    <rect x="140" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
+    <rect x="167" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
+  </g>
+
+  <!-- bob -->
+  <g>
+    <rect x="228" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 278 258 Q 292 218 312 218 Q 332 218 346 258 Z" fill="#f59e0b"/>
+    <circle cx="312" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <text x="312" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">bob</text>
+    <rect x="243" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="247" y="324" width="22" height="22" rx="6" fill="#3b82f6"/>
+    <rect x="274" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
+    <rect x="301" y="324" width="22" height="22" rx="6" fill="#22c55e"/>
+    <rect x="328" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
+    <rect x="355" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
+  </g>
+
+  <!-- cid -->
+  <g>
+    <rect x="416" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 466 258 Q 480 218 500 218 Q 520 218 534 258 Z" fill="#22c55e"/>
+    <circle cx="500" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <text x="500" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">cid</text>
+    <rect x="431" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="435" y="324" width="22" height="22" rx="6" fill="#3b82f6"/>
+    <rect x="462" y="324" width="22" height="22" rx="6" fill="#f59e0b"/>
+    <rect x="489" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
+    <rect x="516" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
+    <rect x="543" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
+  </g>
+
+  <!-- dana -->
+  <g>
+    <rect x="604" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 654 258 Q 668 218 688 218 Q 708 218 722 258 Z" fill="#a78bfa"/>
+    <circle cx="688" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <text x="688" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">dana</text>
+    <rect x="619" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="623" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
+    <rect x="650" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
+    <rect x="677" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
+    <rect x="704" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
+    <rect x="731" y="324" width="22" height="22" rx="6" fill="#22d3ee"/>
+  </g>
+
+  <!-- eve -->
+  <g>
+    <rect x="792" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 842 258 Q 856 218 876 218 Q 896 218 910 258 Z" fill="#22d3ee"/>
+    <circle cx="876" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <text x="876" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">eve</text>
+    <rect x="807" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="811" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
+    <rect x="838" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
+    <rect x="865" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
+    <rect x="892" y="324" width="22" height="22" rx="6" fill="#a78bfa"/>
+    <rect x="919" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
+  </g>
+</svg>

@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="truckTitle truckDesc">
+  <title id="truckTitle">Generating a truck trip's events</title>
+  <desc id="truckDesc">A truck with three drivers. Each driver card shows a maximum driving time and a rest rate. An arrow leads from the truck down to a timeline of alternating drive segments in the drivers' colours and grey idle segments, ending in an unknown continuation.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- truck -->
+  <g>
+    <rect x="70" y="108" width="130" height="76" rx="6" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <rect x="200" y="128" width="64" height="56" rx="6" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="212" y="138" width="26" height="20" rx="3" fill="#93c5fd"/>
+    <rect x="70" y="176" width="194" height="8" fill="#1e293b"/>
+    <circle cx="120" cy="192" r="17" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <circle cx="120" cy="192" r="6" fill="#475569"/>
+    <circle cx="232" cy="192" r="17" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <circle cx="232" cy="192" r="6" fill="#475569"/>
+
+    <line x1="40" y1="214" x2="300" y2="214" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- driver cards -->
+  <g>
+    <rect x="520" y="70" width="130" height="130" rx="14" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="544" cy="96" r="8" fill="#3b82f6"/>
+    <text x="562" y="102" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#e2e8f0">driver 1</text>
+    <g>
+      <circle cx="556" cy="132" r="9" fill="none" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="556" cy="132" r="3" fill="#94a3b8"/>
+      <line x1="556" y1="132" x2="556" y2="123" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="556" y1="132" x2="548" y2="137" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="556" y1="132" x2="564" y2="137" stroke="#94a3b8" stroke-width="2"/>
+    </g>
+    <rect x="570" y="126" width="70" height="10" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="572" y="128" width="56" height="6" rx="3" fill="#3b82f6"/>
+    <path d="M 560.14 164 A 9 9 0 1 0 560.14 180 A 8 8 0 0 1 560.14 164 Z" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
+    <text x="580" y="178" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" fill="#94a3b8">rest / hour</text>
+  </g>
+
+  <g>
+    <rect x="660" y="70" width="130" height="130" rx="14" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="684" cy="96" r="8" fill="#f59e0b"/>
+    <text x="702" y="102" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#e2e8f0">driver 2</text>
+    <g>
+      <circle cx="696" cy="132" r="9" fill="none" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="696" cy="132" r="3" fill="#94a3b8"/>
+      <line x1="696" y1="132" x2="696" y2="123" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="696" y1="132" x2="688" y2="137" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="696" y1="132" x2="704" y2="137" stroke="#94a3b8" stroke-width="2"/>
+    </g>
+    <rect x="710" y="126" width="70" height="10" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="712" y="128" width="42" height="6" rx="3" fill="#f59e0b"/>
+    <path d="M 700.14 164 A 9 9 0 1 0 700.14 180 A 8 8 0 0 1 700.14 164 Z" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
+    <text x="720" y="178" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" fill="#94a3b8">rest / hour</text>
+  </g>
+
+  <g>
+    <rect x="800" y="70" width="130" height="130" rx="14" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="824" cy="96" r="8" fill="#22c55e"/>
+    <text x="842" y="102" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#e2e8f0">driver 3</text>
+    <g>
+      <circle cx="836" cy="132" r="9" fill="none" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="836" cy="132" r="3" fill="#94a3b8"/>
+      <line x1="836" y1="132" x2="836" y2="123" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="836" y1="132" x2="828" y2="137" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="836" y1="132" x2="844" y2="137" stroke="#94a3b8" stroke-width="2"/>
+    </g>
+    <rect x="850" y="126" width="70" height="10" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="852" y="128" width="28" height="6" rx="3" fill="#22c55e"/>
+    <path d="M 840.14 164 A 9 9 0 1 0 840.14 180 A 8 8 0 0 1 840.14 164 Z" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
+    <text x="860" y="178" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" fill="#94a3b8">rest / hour</text>
+  </g>
+
+  <!-- the trip produces the events -->
+  <g>
+    <path d="M 300 214 H 330 V 286" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 7" opacity="0.8"/>
+    <polygon points="321,284 330,298 339,284" fill="#f59e0b" opacity="0.8"/>
+  </g>
+
+  <!-- timeline -->
+  <g>
+    <text x="80" y="286" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">events</text>
+
+    <rect x="80" y="300" width="780" height="100" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+
+    <g>
+      <rect x="86" y="306" width="116" height="88" rx="8" fill="#3b82f6"/>
+      <rect x="206" y="306" width="96" height="88" rx="8" fill="#f59e0b"/>
+      <rect x="306" y="306" width="76" height="88" rx="8" fill="#22c55e"/>
+      <rect x="386" y="306" width="58" height="88" rx="8" fill="#475569"/>
+      <rect x="448" y="306" width="112" height="88" rx="8" fill="#3b82f6"/>
+      <rect x="564" y="306" width="76" height="88" rx="8" fill="#f59e0b"/>
+      <rect x="644" y="306" width="42" height="88" rx="8" fill="#475569"/>
+      <rect x="690" y="306" width="104" height="88" rx="8" fill="#22c55e"/>
+      <rect x="798" y="306" width="56" height="88" rx="8" fill="#3b82f6"/>
+    </g>
+
+    <!-- unknown continuation -->
+    <circle cx="900" cy="350" r="28" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="900" y="360" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#94a3b8">?</text>
+
+    <!-- legend -->
+    <g>
+      <rect x="389" y="430" width="20" height="14" rx="4" fill="#3b82f6"/>
+      <text x="419" y="442" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">drive</text>
+      <rect x="495" y="430" width="20" height="14" rx="4" fill="#475569"/>
+      <text x="525" y="442" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">idle</text>
+    </g>
+  </g>
+</svg>

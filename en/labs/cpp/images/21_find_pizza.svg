@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="findTitle findDesc">
+  <title id="findTitle">Finding the pizza through a span</title>
+  <desc id="findDesc">A fridge with three shelves is viewed through a span. A magnifying glass searches the shelves and finds the pizza, which moves to the empty bottom shelf of a freezer.</desc>
+
+  <defs>
+    <linearGradient id="fridgeBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3648"/>
+      <stop offset="100%" stop-color="#16202e"/>
+    </linearGradient>
+    <linearGradient id="freezerBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f2338"/>
+    </linearGradient>
+    <linearGradient id="pizza" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- fridge -->
+  <g>
+    <rect x="80" y="100" width="370" height="320" rx="16" fill="url(#fridgeBody)" stroke="#64748b" stroke-width="3"/>
+    <rect x="96" y="116" width="338" height="288" rx="8" fill="#0b1220" stroke="#0f172a" stroke-width="2"/>
+
+    <line x1="96" y1="212" x2="434" y2="212" stroke="#475569" stroke-width="4"/>
+    <line x1="96" y1="308" x2="434" y2="308" stroke="#475569" stroke-width="4"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#64748b">
+      <text x="112" y="140">0</text>
+      <text x="112" y="236">1</text>
+      <text x="112" y="332">2</text>
+    </g>
+
+    <!-- apple on shelf 0 -->
+    <g>
+      <circle cx="255" cy="186" r="22" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+      <path d="M 255 164 C 255 154 262 150 270 150" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="248" cy="180" rx="6" ry="8" fill="#ffffff" opacity="0.18"/>
+    </g>
+
+    <!-- pizza on shelf 1 -->
+    <g>
+      <path d="M 255 240 L 308 298 H 202 Z" fill="url(#pizza)" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M 255 240 L 308 298 H 202 Z" fill="none" stroke="#fde68a" stroke-width="6" stroke-linejoin="round" opacity="0.35"/>
+      <g fill="#b91c1c">
+        <circle cx="250" cy="272" r="6"/>
+        <circle cx="270" cy="286" r="5"/>
+        <circle cx="232" cy="288" r="5"/>
+      </g>
+    </g>
+
+    <!-- milk on shelf 2 -->
+    <g>
+      <path d="M 232 332 H 278 V 404 H 232 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <polygon points="232,332 255,314 278,332" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="232" y="362" width="46" height="20" fill="#3b82f6"/>
+      <text x="255" y="377" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" font-weight="600" fill="#ffffff">milk</text>
+    </g>
+
+    <!-- span view -->
+    <rect x="96" y="116" width="338" height="288" rx="8" fill="#3b82f6" opacity="0.05"/>
+    <rect x="96" y="116" width="338" height="288" rx="8" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="7 6"/>
+    <text x="422" y="140" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="600" fill="#60a5fa">span</text>
+  </g>
+
+  <!-- magnifying glass over the pizza -->
+  <g>
+    <circle cx="255" cy="270" r="34" fill="#60a5fa" opacity="0.08" stroke="#60a5fa" stroke-width="4"/>
+    <path d="M 235 252 A 26 26 0 0 1 245 245" fill="none" stroke="#bfdbfe" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <line x1="279" y1="294" x2="314" y2="329" stroke="#60a5fa" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- move arrow -->
+  <g>
+    <path d="M 314 272 C 470 272 540 340 664 340" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="664,330 680,340 664,350" fill="#60a5fa"/>
+  </g>
+
+  <!-- freezer -->
+  <g>
+    <rect x="680" y="100" width="240" height="320" rx="16" fill="url(#freezerBody)" stroke="#64748b" stroke-width="3"/>
+    <rect x="696" y="116" width="208" height="288" rx="8" fill="#081420" stroke="#0f172a" stroke-width="2"/>
+
+    <line x1="696" y1="260" x2="904" y2="260" stroke="#475569" stroke-width="4"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#64748b">
+      <text x="712" y="140">0</text>
+      <text x="712" y="284">1</text>
+    </g>
+
+    <!-- snowflake -->
+    <g stroke="#60a5fa" stroke-width="2" stroke-linecap="round" opacity="0.55">
+      <line x1="884" y1="130" x2="884" y2="154"/>
+      <line x1="874" y1="136" x2="894" y2="148"/>
+      <line x1="894" y1="136" x2="874" y2="148"/>
+    </g>
+
+    <!-- ice cream on shelf 0 -->
+    <g>
+      <rect x="735" y="180" width="100" height="70" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="735" y="180" width="100" height="16" rx="8" fill="#f472b6"/>
+      <text x="785" y="226" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#0f172a">ice cream</text>
+    </g>
+
+    <!-- empty target shelf -->
+    <rect x="720" y="300" width="160" height="80" rx="8" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7 6"/>
+  </g>
+</svg>

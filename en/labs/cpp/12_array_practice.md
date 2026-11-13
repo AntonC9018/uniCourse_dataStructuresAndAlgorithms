@@ -25,6 +25,8 @@ Rebuild it as 731 using those sticks.
 How many sticks remain unused?
 Write a function that counts the sticks needed for any three supplied digits.
 
+![The number 208 made of matchsticks next to the number 731, with a question mark for the unused sticks](./images/12_matchsticks.svg)
+
 <details>
 <summary>Possible solution</summary>
 
@@ -74,6 +76,8 @@ There are three optimization levels: no optimization, basic optimization, and fu
 The ratio of machine instructions per source line depends on the compiler and optimization level.
 In this simplified model, MSVC uses 2.5, 1.5, and 1.25; GCC uses 3, 1.75, and 1.
 Compile 101 source lines with each compiler at full optimization, keeping only whole instructions.
+
+![A 101-line source file compiled by MSVC and GCC at full optimization, each producing an unknown number of machine instructions](./images/12_compilers.svg)
 
 <details>
 <summary>Possible solution</summary>
@@ -137,6 +141,8 @@ A fridge has three slots, each holding one milk bottle.
 The bottles contain 100 ml, 300 ml, and 200 ml.
 Pour 120 ml from the second bottle into an empty cup.
 Report the milk left in that bottle, the cup's contents, and the milk in the first bottle.
+
+![A fridge with three slots holding 100, 300 and 200 millilitres of milk, pouring 120 millilitres from the second bottle into an empty cup](./images/12_fridge_slots.svg)
 
 <details>
 <summary>Possible solution</summary>
@@ -309,6 +315,8 @@ Store a coin and a measurement in a fixed byte buffer, recording the used byte c
 Reserve space using the item's size and alignment,
 and return an address that the caller converts with `reinterpret_cast`.
 Assume the buffer has enough room for both items and any alignment padding.
+
+![A coin and a measurement above a 64-byte buffer, with a position cursor at the start and an unknown used byte count](./images/12_raw_bytes.svg)
 
 <details>
 <summary>Possible solution</summary>

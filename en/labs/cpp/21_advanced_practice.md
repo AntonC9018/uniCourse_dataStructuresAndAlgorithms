@@ -46,6 +46,8 @@ slug: en/cpp/labs/advanced-practice
   Put the Atlas at shelf 2 and remove the book from shelf 0.
   Count how many shelves are empty.
 
+  ![A five-slot bookshelf with a book leaving slot 0, the Atlas moving into slot 2, and slots 1 and 4 empty](./images/21_bookshelf.svg)
+
   <details>
   <summary>
   Possible solution
@@ -151,6 +153,8 @@ slug: en/cpp/labs/advanced-practice
   Move the pizza from fridge shelf 1 to freezer shelf 0.
   The old place becomes empty.
 
+  ![A fridge with an apple, a pizza and milk, and a freezer with an empty shelf and ice cream; the pizza moves to the empty freezer shelf](./images/21_fridge_freezer.svg)
+
   <details>
   <summary>
   Possible solution
@@ -227,6 +231,8 @@ slug: en/cpp/labs/advanced-practice
 - **Heat soup.** A microwave holds one meal or is empty.
   Each meal has a name and warmth: cold or hot.
   Put the cold soup in, heat it to hot, then take it out.
+
+  ![A bowl of cold soup going into a microwave and coming out hot](./images/21_microwave.svg)
 
   <details>
   <summary>
@@ -319,6 +325,8 @@ slug: en/cpp/labs/advanced-practice
   Give the hero 1 red potion.
   Red adds 20 health, blue adds 10 shield, spoiled does nothing.
 
+  ![A hero with health and shield, and red, blue and spoiled potions; one red potion adds 20 health, blue adds 10 shield, spoiled does nothing](./images/21_potions.svg)
+
   <details>
   <summary>
   Possible solution
@@ -384,6 +392,8 @@ slug: en/cpp/labs/advanced-practice
   Each piece has a label and is dirty, soaked, or clean.
   Take out every clean shirt from basket 0, then soak every dirty shirt in basket 0.
   Count how many were taken and how many were soaked.
+
+  ![Two laundry baskets; basket 0 has stained shirts being soaked, basket 1 has one clean shirt and two empty places](./images/21_laundry.svg)
 
   <details>
   <summary>
@@ -511,6 +521,8 @@ slug: en/cpp/labs/advanced-practice
   Find the pizza and move it to freezer shelf 1. Return if it was found.
   Look at the shelves through a span.
 
+  ![A fridge with an apple, a pizza and milk seen through a span, and a freezer with ice cream and an empty shelf; the pizza moves to the freezer](./images/21_find_pizza.svg)
+
   <details>
   <summary>
   Possible solution
@@ -630,6 +642,8 @@ slug: en/cpp/labs/advanced-practice
   Each tick every busy worker cuts 1 minute.
   When a client is fully cut, the worker becomes free.
   Simulate with a `while` loop until all clients are done.
+
+  ![A queue of four chairs with alice and bob, two workers, and a one-minute clock tick](./images/21_barbershop.svg)
 
   <details>
   <summary>
@@ -887,6 +901,8 @@ slug: en/cpp/labs/advanced-practice
   The truck idles only while every driver is resting at once,
   until the first of them finishes resting.
 
+  ![A truck with three drivers, each with a maximum driving time and a rest rate, and a timeline of drive and idle events that continues into the unknown](./images/21_truck_trip.svg)
+
   <details>
   <summary>
   Possible solution
@@ -1060,6 +1076,8 @@ slug: en/cpp/labs/advanced-practice
 - **Family hugs with a bit set.** Same 5 people,
   but using a bit set of members they've hugged.
   Hug everyone once.
+
+  ![Five family members, each with five coloured boxes for the members they have hugged, and nobody's own box filled](./images/21_family_hugs.svg)
 
   <details>
   <summary>

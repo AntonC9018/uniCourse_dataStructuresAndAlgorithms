@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="soupTitle soupDesc">
+  <title id="soupTitle">Heating cold soup in a microwave</title>
+  <desc id="soupDesc">A bowl of cold soup with a snowflake goes into a microwave, is heated, and comes out as hot soup with steam rising from it.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="soup" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- cold soup -->
+  <g>
+    <g stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round">
+      <line x1="190" y1="226" x2="190" y2="262"/>
+      <line x1="175" y1="234" x2="205" y2="254"/>
+      <line x1="205" y1="234" x2="175" y2="254"/>
+      <line x1="182" y1="229" x2="190" y2="238"/>
+      <line x1="198" y1="229" x2="190" y2="238"/>
+      <line x1="182" y1="259" x2="190" y2="250"/>
+      <line x1="198" y1="259" x2="190" y2="250"/>
+    </g>
+
+    <path d="M 116 302 H 264 L 246 354 Q 190 370 134 354 Z" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <ellipse cx="190" cy="302" rx="74" ry="13" fill="url(#soup)" stroke="#b45309" stroke-width="2"/>
+    <text x="190" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">soup</text>
+  </g>
+
+  <!-- arrow into the microwave -->
+  <g>
+    <line x1="278" y1="320" x2="336" y2="320" stroke="#64748b" stroke-width="3"/>
+    <polygon points="336,311 350,320 336,329" fill="#64748b"/>
+  </g>
+
+  <!-- microwave -->
+  <g>
+    <rect x="350" y="140" width="300" height="260" rx="18" fill="url(#panel)" stroke="#64748b" stroke-width="3"/>
+
+    <!-- door window -->
+    <rect x="370" y="160" width="170" height="220" rx="10" fill="#081420" stroke="#475569" stroke-width="2"/>
+    <rect x="382" y="172" width="146" height="196" rx="6" fill="#0b1220" stroke="#1e293b" stroke-width="1.5"/>
+
+    <!-- bowl inside -->
+    <g>
+      <path d="M 410 300 H 500 L 488 342 Q 455 354 422 342 Z" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+      <ellipse cx="455" cy="300" rx="45" ry="9" fill="url(#soup)" stroke="#b45309" stroke-width="1.5"/>
+    </g>
+
+    <!-- heat waves -->
+    <g stroke="#f59e0b" stroke-width="3" stroke-linecap="round" fill="none">
+      <path d="M 414 270 C 406 258 422 250 414 238"/>
+      <path d="M 444 270 C 436 258 452 250 444 238"/>
+      <path d="M 474 270 C 466 258 482 250 474 238"/>
+      <path d="M 504 270 C 496 258 512 250 504 238"/>
+    </g>
+
+    <!-- door handle -->
+    <rect x="536" y="238" width="8" height="64" rx="4" fill="#64748b"/>
+
+    <!-- control panel -->
+    <rect x="556" y="160" width="76" height="220" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="568" y="176" width="52" height="30" rx="4" fill="#081420" stroke="#475569" stroke-width="1.5"/>
+    <text x="594" y="197" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b">--:--</text>
+    <g fill="#334155">
+      <circle cx="580" cy="232" r="7"/>
+      <circle cx="608" cy="232" r="7"/>
+      <circle cx="580" cy="258" r="7"/>
+      <circle cx="608" cy="258" r="7"/>
+      <circle cx="580" cy="284" r="7"/>
+      <circle cx="608" cy="284" r="7"/>
+    </g>
+  </g>
+
+  <!-- arrow out of the microwave -->
+  <g>
+    <line x1="664" y1="320" x2="722" y2="320" stroke="#64748b" stroke-width="3"/>
+    <polygon points="722,311 736,320 722,329" fill="#64748b"/>
+  </g>
+
+  <!-- hot soup -->
+  <g>
+    <g fill="none" stroke="#f87171" stroke-width="3" stroke-linecap="round" opacity="0.85">
+      <path d="M 776 286 C 766 270 786 260 776 244"/>
+      <path d="M 810 286 C 800 270 820 260 810 244"/>
+      <path d="M 844 286 C 834 270 854 260 844 244"/>
+    </g>
+
+    <path d="M 736 302 H 884 L 866 354 Q 810 370 754 354 Z" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
+    <ellipse cx="810" cy="302" rx="74" ry="13" fill="url(#soup)" stroke="#b45309" stroke-width="2"/>
+    <text x="810" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">soup</text>
+  </g>
+</svg>

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="matchTitle matchDesc">
+  <title id="matchTitle">Rebuilding a matchstick display</title>
+  <desc id="matchDesc">The number 208 laid out from matchsticks on the left, an arrow, and the number 731 laid out from matchsticks on the right, with a question mark for the unused sticks.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- source display: 208 -->
+  <g>
+    <rect x="60" y="110" width="340" height="300" rx="20" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+
+    <!-- digit 2 at x=80, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="92" y1="180" x2="148" y2="180"/>
+      <line x1="160" y1="192" x2="160" y2="250"/>
+      <line x1="92" y1="260" x2="148" y2="260"/>
+      <line x1="80" y1="270" x2="80" y2="328"/>
+      <line x1="92" y1="340" x2="148" y2="340"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="98" cy="180" r="4.5"/>
+      <circle cx="160" cy="198" r="4.5"/>
+      <circle cx="98" cy="260" r="4.5"/>
+      <circle cx="80" cy="276" r="4.5"/>
+      <circle cx="98" cy="340" r="4.5"/>
+    </g>
+
+    <!-- digit 0 at x=190, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="202" y1="180" x2="258" y2="180"/>
+      <line x1="270" y1="192" x2="270" y2="250"/>
+      <line x1="270" y1="270" x2="270" y2="328"/>
+      <line x1="202" y1="340" x2="258" y2="340"/>
+      <line x1="190" y1="270" x2="190" y2="328"/>
+      <line x1="190" y1="192" x2="190" y2="250"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="208" cy="180" r="4.5"/>
+      <circle cx="270" cy="198" r="4.5"/>
+      <circle cx="270" cy="276" r="4.5"/>
+      <circle cx="208" cy="340" r="4.5"/>
+      <circle cx="190" cy="276" r="4.5"/>
+      <circle cx="190" cy="198" r="4.5"/>
+    </g>
+
+    <!-- digit 8 at x=300, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="312" y1="180" x2="368" y2="180"/>
+      <line x1="380" y1="192" x2="380" y2="250"/>
+      <line x1="380" y1="270" x2="380" y2="328"/>
+      <line x1="312" y1="340" x2="368" y2="340"/>
+      <line x1="300" y1="270" x2="300" y2="328"/>
+      <line x1="300" y1="192" x2="300" y2="250"/>
+      <line x1="312" y1="260" x2="368" y2="260"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="318" cy="180" r="4.5"/>
+      <circle cx="380" cy="198" r="4.5"/>
+      <circle cx="380" cy="276" r="4.5"/>
+      <circle cx="318" cy="340" r="4.5"/>
+      <circle cx="300" cy="276" r="4.5"/>
+      <circle cx="300" cy="198" r="4.5"/>
+      <circle cx="318" cy="260" r="4.5"/>
+    </g>
+  </g>
+
+  <!-- arrow -->
+  <g>
+    <line x1="420" y1="260" x2="568" y2="260" stroke="#64748b" stroke-width="4"/>
+    <polygon points="568,251 582,260 568,269" fill="#64748b"/>
+  </g>
+
+  <!-- unused sticks question -->
+  <g>
+    <circle cx="500" cy="440" r="30" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="500" y="452" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="600" fill="#94a3b8">?</text>
+  </g>
+
+  <!-- target display: 731 -->
+  <g>
+    <rect x="600" y="110" width="340" height="300" rx="20" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+
+    <!-- digit 7 at x=620, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="632" y1="180" x2="688" y2="180"/>
+      <line x1="700" y1="192" x2="700" y2="250"/>
+      <line x1="700" y1="270" x2="700" y2="328"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="638" cy="180" r="4.5"/>
+      <circle cx="700" cy="198" r="4.5"/>
+      <circle cx="700" cy="276" r="4.5"/>
+    </g>
+
+    <!-- digit 3 at x=730, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="742" y1="180" x2="798" y2="180"/>
+      <line x1="810" y1="192" x2="810" y2="250"/>
+      <line x1="810" y1="270" x2="810" y2="328"/>
+      <line x1="742" y1="340" x2="798" y2="340"/>
+      <line x1="742" y1="260" x2="798" y2="260"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="748" cy="180" r="4.5"/>
+      <circle cx="810" cy="198" r="4.5"/>
+      <circle cx="810" cy="276" r="4.5"/>
+      <circle cx="748" cy="340" r="4.5"/>
+      <circle cx="748" cy="260" r="4.5"/>
+    </g>
+
+    <!-- digit 1 at x=840, y=180 -->
+    <g stroke="#f0a13a" stroke-width="10" stroke-linecap="round">
+      <line x1="920" y1="192" x2="920" y2="250"/>
+      <line x1="920" y1="270" x2="920" y2="328"/>
+    </g>
+    <g fill="#ef4444">
+      <circle cx="920" cy="198" r="4.5"/>
+      <circle cx="920" cy="276" r="4.5"/>
+    </g>
+  </g>
+</svg>
