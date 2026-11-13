@@ -210,6 +210,13 @@
         "paths": [
           "/assets/{repository}/en/04_compiler_and_ide/cpp_extension.png"
         ]
+      },
+      {
+        "label": "Execution Playground",
+        "paths": [
+          "/playground/"
+        ],
+        "contains": "playground-root"
       }
     ]
   },
@@ -228,12 +235,20 @@
       }
     }
   },
+  "playground": {
+    "source": "visualizations/player",
+    "route": "playground",
+    "sidebar_group": "cpp",
+    "label": "Execution Playground"
+  },
   "site_assets": {
     "scripts": [
-      "visualizations/player/player.js"
+      "visualizations/player/player.js",
+      "visualizations/player/playground-site.js"
     ],
     "styles": [
-      "visualizations/player/player.css"
+      "visualizations/player/player.css",
+      "visualizations/player/playground-site.css"
     ]
   }
 }
