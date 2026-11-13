@@ -79,8 +79,7 @@
       </g>
     </g>
     <path d="M 710 192 C 694 178 686 168 694 158 C 700 151 708 153 710 160 C 712 153 720 151 726 158 C 734 168 726 178 710 192 Z" fill="#ef4444"/>
-    <text x="760" y="160" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#e2e8f0">red</text>
-    <text x="760" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fca5a5">+20 health</text>
+    <text x="760" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fca5a5">+20 health</text>
     <circle cx="908" cy="146" r="15" fill="#ef4444"/>
     <text x="908" y="152" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#ffffff">1</text>
   </g>
@@ -98,8 +97,7 @@
       </g>
     </g>
     <path d="M 710 295 L 732 305 V 325 C 732 340 722 350 710 356 C 698 350 688 340 688 325 V 305 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
-    <text x="760" y="290" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#e2e8f0">blue</text>
-    <text x="760" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#93c5fd">+10 shield</text>
+    <text x="760" y="308" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#93c5fd">+10 shield</text>
   </g>
 
   <!-- spoiled potion -->
@@ -126,8 +124,7 @@
       <rect x="697" y="428" width="2" height="6"/>
       <rect x="702" y="428" width="2" height="6"/>
     </g>
-    <text x="760" y="420" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="600" fill="#e2e8f0">spoiled</text>
-    <text x="760" y="444" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#a3e635">no effect</text>
+    <text x="760" y="438" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#a3e635">no effect</text>
   </g>
 
   <!-- effect arrows -->

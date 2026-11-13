@@ -14,7 +14,7 @@
 
   <!-- basket 0 -->
   <g>
-    <text x="285" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">basket 0</text>
+    <text x="285" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">0</text>
     <path d="M 100 248 H 470 L 450 400 H 120 Z" fill="url(#panel)" stroke="#64748b" stroke-width="3"/>
     <rect x="96" y="232" width="378" height="18" rx="9" fill="#334155" stroke="#64748b" stroke-width="2"/>
 
@@ -44,7 +44,7 @@
 
   <!-- basket 1 -->
   <g>
-    <text x="715" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">basket 1</text>
+    <text x="715" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">1</text>
     <path d="M 530 248 H 900 L 880 400 H 550 Z" fill="url(#panel)" stroke="#64748b" stroke-width="3"/>
     <rect x="526" y="232" width="378" height="18" rx="9" fill="#334155" stroke="#64748b" stroke-width="2"/>
 

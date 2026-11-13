@@ -901,7 +901,7 @@ slug: en/cpp/labs/advanced-practice
   The truck idles only while every driver is resting at once,
   until the first of them finishes resting.
 
-  ![A truck with three drivers, each with a maximum driving time and a rest rate, and a timeline of drive and idle events that continues into the unknown](./images/21_truck_trip.svg)
+  ![A truck with three drivers, each with a maximum driving time and a rest rate, and a timeline of numbered driving segments in the drivers' colours alternating with grey sleep segments that continue into the unknown](./images/21_truck_trip.svg)
 
   <details>
   <summary>
@@ -1077,7 +1077,7 @@ slug: en/cpp/labs/advanced-practice
   but using a bit set of members they've hugged.
   Hug everyone once.
 
-  ![Five family members, each with five coloured boxes for the members they have hugged, and nobody's own box filled](./images/21_family_hugs.svg)
+  ![Alice and bob hugging as a pair, cid, dana and eve hugging as a trio, and a strip of five coloured boxes under each person for the members they have hugged; nobody's own box is filled](./images/21_family_hugs.svg)
 
   <details>
   <summary>

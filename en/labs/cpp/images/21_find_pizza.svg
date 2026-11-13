@@ -56,7 +56,6 @@
       <path d="M 232 332 H 278 V 404 H 232 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
       <polygon points="232,332 255,314 278,332" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
       <rect x="232" y="362" width="46" height="20" fill="#3b82f6"/>
-      <text x="255" y="377" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" font-weight="600" fill="#ffffff">milk</text>
     </g>
 
     <!-- span view -->
@@ -101,7 +100,6 @@
     <g>
       <rect x="735" y="180" width="100" height="70" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
       <rect x="735" y="180" width="100" height="16" rx="8" fill="#f472b6"/>
-      <text x="785" y="226" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#0f172a">ice cream</text>
     </g>
 
     <!-- empty target shelf -->

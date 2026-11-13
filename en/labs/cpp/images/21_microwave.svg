@@ -29,7 +29,6 @@
 
     <path d="M 116 302 H 264 L 246 354 Q 190 370 134 354 Z" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
     <ellipse cx="190" cy="302" rx="74" ry="13" fill="url(#soup)" stroke="#b45309" stroke-width="2"/>
-    <text x="190" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">soup</text>
   </g>
 
   <!-- arrow into the microwave -->
@@ -93,6 +92,5 @@
 
     <path d="M 736 302 H 884 L 866 354 Q 810 370 754 354 Z" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
     <ellipse cx="810" cy="302" rx="74" ry="13" fill="url(#soup)" stroke="#b45309" stroke-width="2"/>
-    <text x="810" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">soup</text>
   </g>
 </svg>

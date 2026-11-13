@@ -1,83 +1,105 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsTitle hugsDesc">
-  <title id="hugsTitle">Five family members tracking hugs with bit sets</title>
-  <desc id="hugsDesc">Five family members in a row, each with a colour. Under every person sits a row of five boxes, one per member, in that member's colour. Filled boxes mark the members this person has already hugged, and nobody's own box is filled.</desc>
-
-  <defs>
-    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#132033"/>
-      <stop offset="100%" stop-color="#0d1726"/>
-    </linearGradient>
-  </defs>
+  <title id="hugsTitle">Five family members hugging, with bit sets tracking the hugs</title>
+  <desc id="hugsDesc">Alice and bob hug as a pair, and cid, dana and eve hug as a trio. Below each person, a strip of five coloured cells shows whom that person has hugged: alice has hugged bob, bob has hugged alice, and cid, dana and eve have each hugged the other two in their trio. Nobody's own cell is filled.</desc>
 
   <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <!-- scale the figures up to fill the frame -->
+  <g transform="translate(500 260) scale(1.25) translate(-500 -260)">
 
-  <!-- alice -->
-  <g>
-    <rect x="40" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-    <path d="M 90 258 Q 104 218 124 218 Q 144 218 158 258 Z" fill="#3b82f6"/>
-    <circle cx="124" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
-    <text x="124" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">alice</text>
-    <rect x="55" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-    <rect x="59" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
-    <rect x="86" y="324" width="22" height="22" rx="6" fill="#f59e0b"/>
-    <rect x="113" y="324" width="22" height="22" rx="6" fill="#22c55e"/>
-    <rect x="140" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
-    <rect x="167" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
-  </g>
+    <!-- torsos -->
+    <g stroke-width="2">
+      <path d="M 622 300 V 272 Q 622 228 644 214 H 672 Q 694 228 694 272 V 300 Z" fill="#a78bfa" stroke="#7c3aed"/>
+      <path d="M 552 300 V 272 Q 552 228 574 214 H 602 Q 624 228 624 272 V 300 Z" fill="#22c55e" stroke="#15803d"/>
+      <path d="M 692 300 V 272 Q 692 228 714 214 H 742 Q 764 228 764 272 V 300 Z" fill="#22d3ee" stroke="#0e7490"/>
+      <path d="M 309 300 V 272 Q 309 228 331 214 H 359 Q 381 228 381 272 V 300 Z" fill="#f59e0b" stroke="#b45309"/>
+      <path d="M 237 300 V 272 Q 237 228 259 214 H 287 Q 309 228 309 272 V 300 Z" fill="#3b82f6" stroke="#1d4ed8"/>
+    </g>
 
-  <!-- bob -->
-  <g>
-    <rect x="228" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-    <path d="M 278 258 Q 292 218 312 218 Q 332 218 346 258 Z" fill="#f59e0b"/>
-    <circle cx="312" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
-    <text x="312" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">bob</text>
-    <rect x="243" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-    <rect x="247" y="324" width="22" height="22" rx="6" fill="#3b82f6"/>
-    <rect x="274" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
-    <rect x="301" y="324" width="22" height="22" rx="6" fill="#22c55e"/>
-    <rect x="328" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
-    <rect x="355" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
-  </g>
+    <!-- wrapping arms -->
+    <g fill="none" stroke-linecap="round">
+      <!-- dana hugs cid and eve around the waist -->
+      <path d="M 630 250 C 608 260 586 270 570 278" stroke="#7c3aed" stroke-width="13"/>
+      <path d="M 630 250 C 608 260 586 270 570 278" stroke="#a78bfa" stroke-width="10"/>
+      <path d="M 686 250 C 708 260 730 270 746 278" stroke="#7c3aed" stroke-width="13"/>
+      <path d="M 686 250 C 708 260 730 270 746 278" stroke="#a78bfa" stroke-width="10"/>
+      <!-- alice and bob hug each other around the waist -->
+      <path d="M 303 250 C 324 258 342 268 352 276" stroke="#1d4ed8" stroke-width="13"/>
+      <path d="M 303 250 C 324 258 342 268 352 276" stroke="#3b82f6" stroke-width="10"/>
+      <path d="M 317 278 C 296 284 276 290 262 292" stroke="#b45309" stroke-width="13"/>
+      <path d="M 317 278 C 296 284 276 290 262 292" stroke="#f59e0b" stroke-width="10"/>
+    </g>
 
-  <!-- cid -->
-  <g>
-    <rect x="416" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-    <path d="M 466 258 Q 480 218 500 218 Q 520 218 534 258 Z" fill="#22c55e"/>
-    <circle cx="500" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
-    <text x="500" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">cid</text>
-    <rect x="431" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-    <rect x="435" y="324" width="22" height="22" rx="6" fill="#3b82f6"/>
-    <rect x="462" y="324" width="22" height="22" rx="6" fill="#f59e0b"/>
-    <rect x="489" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
-    <rect x="516" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
-    <rect x="543" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
-  </g>
+    <!-- hands -->
+    <g fill="#f8d7b3" stroke="#b45309" stroke-width="1.5">
+      <circle cx="570" cy="280" r="8.5"/>
+      <circle cx="746" cy="280" r="8.5"/>
+      <circle cx="354" cy="278" r="8.5"/>
+      <circle cx="260" cy="294" r="8.5"/>
+    </g>
 
-  <!-- dana -->
-  <g>
-    <rect x="604" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-    <path d="M 654 258 Q 668 218 688 218 Q 708 218 722 258 Z" fill="#a78bfa"/>
-    <circle cx="688" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
-    <text x="688" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">dana</text>
-    <rect x="619" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-    <rect x="623" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
-    <rect x="650" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
-    <rect x="677" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
-    <rect x="704" y="324" width="22" height="22" rx="6" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.55"/>
-    <rect x="731" y="324" width="22" height="22" rx="6" fill="#22d3ee"/>
-  </g>
+    <!-- heads -->
+    <g fill="#f8d7b3" stroke="#b45309" stroke-width="2">
+      <circle cx="281" cy="186" r="28"/>
+      <circle cx="337" cy="186" r="28"/>
+      <circle cx="596" cy="186" r="28"/>
+      <circle cx="658" cy="186" r="28"/>
+      <circle cx="720" cy="186" r="28"/>
+    </g>
 
-  <!-- eve -->
-  <g>
-    <rect x="792" y="120" width="168" height="266" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
-    <path d="M 842 258 Q 856 218 876 218 Q 896 218 910 258 Z" fill="#22d3ee"/>
-    <circle cx="876" cy="190" r="26" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
-    <text x="876" y="296" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">eve</text>
-    <rect x="807" y="320" width="138" height="30" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-    <rect x="811" y="324" width="22" height="22" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
-    <rect x="838" y="324" width="22" height="22" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.55"/>
-    <rect x="865" y="324" width="22" height="22" rx="6" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.55"/>
-    <rect x="892" y="324" width="22" height="22" rx="6" fill="#a78bfa"/>
-    <rect x="919" y="324" width="22" height="22" rx="6" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.55"/>
+    <!-- leaders from each person to their bit strip -->
+    <g stroke-width="2" opacity="0.75">
+      <line x1="273" y1="300" x2="238" y2="322" stroke="#3b82f6"/>
+      <line x1="345" y1="300" x2="358" y2="322" stroke="#f59e0b"/>
+      <line x1="588" y1="300" x2="523" y2="322" stroke="#22c55e"/>
+      <line x1="658" y1="300" x2="643" y2="322" stroke="#a78bfa"/>
+      <line x1="728" y1="300" x2="763" y2="322" stroke="#22d3ee"/>
+    </g>
+
+    <!-- bit strips -->
+    <g stroke-width="1.5">
+      <!-- alice -->
+      <rect x="183" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="206" y="322" width="18" height="18" rx="4" fill="#f59e0b" stroke="#f59e0b"/>
+      <rect x="229" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="252" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="275" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+
+      <!-- bob -->
+      <rect x="303" y="322" width="18" height="18" rx="4" fill="#3b82f6" stroke="#3b82f6"/>
+      <rect x="326" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="349" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="372" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="395" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+
+      <!-- cid -->
+      <rect x="468" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="491" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="514" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="537" y="322" width="18" height="18" rx="4" fill="#a78bfa" stroke="#a78bfa"/>
+      <rect x="560" y="322" width="18" height="18" rx="4" fill="#22d3ee" stroke="#22d3ee"/>
+
+      <!-- dana -->
+      <rect x="588" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="611" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="634" y="322" width="18" height="18" rx="4" fill="#22c55e" stroke="#22c55e"/>
+      <rect x="657" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="680" y="322" width="18" height="18" rx="4" fill="#22d3ee" stroke="#22d3ee"/>
+
+      <!-- eve -->
+      <rect x="708" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="731" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="754" y="322" width="18" height="18" rx="4" fill="#22c55e" stroke="#22c55e"/>
+      <rect x="777" y="322" width="18" height="18" rx="4" fill="#a78bfa" stroke="#a78bfa"/>
+      <rect x="800" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+    </g>
+
+    <!-- names -->
+    <g text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">
+      <text x="238" y="364">alice</text>
+      <text x="358" y="364">bob</text>
+      <text x="523" y="364">cid</text>
+      <text x="643" y="364">dana</text>
+      <text x="763" y="364">eve</text>
+    </g>
   </g>
 </svg>
