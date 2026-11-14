@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="shopTitle shopDesc">
+  <title id="shopTitle">Selling a product from one shop display and reading its stock on the other</title>
+  <desc id="shopDesc">Two displays each show three products with prices and stock. Bread appears on both displays. One loaf is sold from the second display, its price goes to the cash register, and the remaining stock read from the first display is unknown.</desc>
+
+  <defs>
+    <linearGradient id="shopPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="coinGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- display A -->
+  <rect x="60" y="80" width="880" height="170" rx="16" fill="url(#shopPanel)" stroke="#334155" stroke-width="2"/>
+  <line x1="80" y1="232" x2="920" y2="232" stroke="#475569" stroke-width="2"/>
+
+  <!-- apple -->
+  <g>
+    <rect x="100" y="100" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <circle cx="160" cy="166" r="25" fill="#b91c1c"/>
+    <ellipse cx="170" cy="138" rx="9" ry="5" transform="rotate(-30 170 138)" fill="#22c55e"/>
+    <line x1="160" y1="142" x2="162" y2="132" stroke="#92400e" stroke-width="3" stroke-linecap="round"/>
+    <rect x="210" y="118" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="265" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">$2</text>
+    <rect x="210" y="162" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="265" y="184" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">10</text>
+  </g>
+
+  <!-- bread, shared, reported stock unknown -->
+  <g>
+    <rect x="380" y="100" width="240" height="120" rx="12" fill="#78350f" opacity="0.3"/>
+    <rect x="380" y="100" width="240" height="120" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <path d="M 410 185 V 160 Q 410 138 440 138 Q 470 138 470 160 V 185 Z" fill="#d97706" stroke="#92400e" stroke-width="2"/>
+    <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+      <line x1="425" y1="150" x2="435" y2="172"/>
+      <line x1="445" y1="148" x2="455" y2="170"/>
+    </g>
+    <rect x="490" y="118" width="110" height="32" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="545" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">$3</text>
+    <circle cx="545" cy="178" r="20" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="545" y="187" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- milk -->
+  <g>
+    <rect x="660" y="100" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <polygon points="700,188 700,150 720,132 740,150 740,188" fill="#e2e8f0"/>
+    <polygon points="700,150 720,132 740,150 720,148" fill="#94a3b8"/>
+    <rect x="706" y="160" width="28" height="18" rx="2" fill="#3b82f6"/>
+    <rect x="770" y="118" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="825" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">$4</text>
+    <rect x="770" y="162" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="825" y="184" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">8</text>
+  </g>
+
+  <!-- display B -->
+  <rect x="60" y="280" width="880" height="170" rx="16" fill="url(#shopPanel)" stroke="#334155" stroke-width="2"/>
+  <line x1="80" y1="432" x2="920" y2="432" stroke="#475569" stroke-width="2"/>
+
+  <!-- bread, shared, one sold -->
+  <g>
+    <rect x="100" y="300" width="240" height="120" rx="12" fill="#172554"/>
+    <rect x="100" y="300" width="240" height="120" rx="12" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <path d="M 130 385 V 360 Q 130 338 160 338 Q 190 338 190 360 V 385 Z" fill="#d97706" stroke="#92400e" stroke-width="2"/>
+    <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+      <line x1="145" y1="350" x2="155" y2="372"/>
+      <line x1="165" y1="348" x2="175" y2="370"/>
+    </g>
+    <circle cx="189" cy="316" r="16" fill="#b91c1c" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="189" y="323" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#fecaca">−1</text>
+    <rect x="210" y="318" width="110" height="32" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="265" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#60a5fa">$3</text>
+    <rect x="210" y="362" width="110" height="32" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="265" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#60a5fa">6</text>
+  </g>
+
+  <!-- cheese -->
+  <g>
+    <rect x="380" y="300" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <polygon points="410,385 470,385 470,348" fill="#fbbf24" stroke="#b45309" stroke-width="2"/>
+    <circle cx="452" cy="372" r="4" fill="#b45309"/>
+    <circle cx="460" cy="380" r="3" fill="#b45309"/>
+    <circle cx="440" cy="378" r="3" fill="#b45309"/>
+    <rect x="490" y="318" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="545" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">$5</text>
+    <rect x="490" y="362" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="545" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">4</text>
+  </g>
+
+  <!-- eggs -->
+  <g>
+    <rect x="660" y="300" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="695" y="368" width="50" height="18" rx="4" fill="#64748b"/>
+    <ellipse cx="710" cy="360" rx="9" ry="13" fill="#f8fafc"/>
+    <ellipse cx="730" cy="360" rx="9" ry="13" fill="#e2e8f0"/>
+    <rect x="770" y="318" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="825" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">$4</text>
+    <rect x="770" y="362" width="110" height="32" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="825" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">12</text>
+  </g>
+
+  <!-- sale to the cash register -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <line x1="335" y1="424" x2="686" y2="481"/>
+  </g>
+  <polygon points="700,483 685.1,487.7 687.3,473.9" fill="#60a5fa"/>
+  <circle cx="520" cy="455" r="18" fill="url(#coinGold)" stroke="#b45309" stroke-width="2"/>
+  <text x="520" y="461" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="700" fill="#451a03">$3</text>
+
+  <!-- cash register -->
+  <g>
+    <rect x="700" y="455" width="240" height="55" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+    <rect x="714" y="465" width="92" height="30" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="760" y="487" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="600" fill="#4ade80">+$3</text>
+    <rect x="820" y="468" width="105" height="26" rx="4" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+    <line x1="836" y1="481" x2="908" y2="481" stroke="#94a3b8" stroke-width="2"/>
+  </g>
+</svg>

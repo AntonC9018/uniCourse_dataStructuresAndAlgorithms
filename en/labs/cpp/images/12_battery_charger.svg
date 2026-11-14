@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="chargerTitle chargerDesc">
+  <title id="chargerTitle">Charging a battery and exchanging two charger slots</title>
+  <desc id="chargerDesc">A charger has three slots holding batteries at forty, seventy and twenty out of one hundred. Thirty units are added to the battery in the first slot, the first and third slots are exchanged, and the charge of the moved battery is unknown.</desc>
+
+  <defs>
+    <linearGradient id="dockPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="cell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- dock -->
+  <rect x="100" y="240" width="800" height="200" rx="16" fill="url(#dockPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- slot 0 -->
+  <g>
+    <rect x="130" y="250" width="210" height="180" rx="12" fill="#78350f" opacity="0.25"/>
+    <rect x="130" y="250" width="210" height="180" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="198" y="272" width="24" height="13" rx="3" fill="#475569"/>
+    <rect x="195" y="285" width="80" height="115" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <rect x="201" y="358" width="68" height="36" rx="5" fill="url(#cell)"/>
+    <text x="235" y="425" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">40 / 100</text>
+    <rect x="138" y="290" width="52" height="40" rx="9" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="164" y="316" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#fbbf24">+30</text>
+  </g>
+
+  <!-- slot 1 -->
+  <g>
+    <rect x="390" y="250" width="210" height="180" rx="12" fill="url(#dockPanel)" stroke="#334155" stroke-width="2"/>
+    <rect x="458" y="272" width="24" height="13" rx="3" fill="#475569"/>
+    <rect x="455" y="285" width="80" height="115" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <rect x="461" y="327" width="68" height="67" rx="5" fill="url(#cell)"/>
+    <text x="495" y="425" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">70 / 100</text>
+  </g>
+
+  <!-- slot 2 -->
+  <g>
+    <rect x="650" y="250" width="210" height="180" rx="12" fill="url(#dockPanel)" stroke="#334155" stroke-width="2"/>
+    <rect x="718" y="272" width="24" height="13" rx="3" fill="#475569"/>
+    <rect x="715" y="285" width="80" height="115" rx="8" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+    <rect x="721" y="373" width="68" height="21" rx="5" fill="url(#cell)"/>
+    <text x="755" y="425" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">20 / 100</text>
+    <circle cx="822" cy="272" r="21" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="822" y="281" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- swap arrows -->
+  <g fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <path d="M 235 235 C 235 130 755 130 755 235"/>
+    <path d="M 755 235 C 755 175 235 175 235 235"/>
+  </g>
+  <polygon points="755,238 747,224 763,224" fill="#60a5fa"/>
+  <polygon points="235,238 227,224 243,224" fill="#60a5fa"/>
+</svg>

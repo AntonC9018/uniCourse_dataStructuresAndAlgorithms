@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="mixTitle mixDesc">
+  <title id="mixTitle">Mixing two short recordings into a new one</title>
+  <desc id="mixDesc">Two recordings of three samples each feed a mixer that takes a quarter of the first and three quarters of the second. The mixed recording has three unknown sample values, and the originals stay unchanged.</desc>
+
+  <defs>
+    <linearGradient id="mixPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- recording A -->
+  <g>
+    <rect x="90" y="60" width="340" height="170" rx="14" fill="url(#mixPanel)" stroke="#334155" stroke-width="2"/>
+    <line x1="120" y1="145" x2="400" y2="145" stroke="#475569" stroke-width="2"/>
+    <g fill="#3b82f6">
+      <rect x="150" y="110" width="22" height="35" rx="4"/>
+      <rect x="230" y="145" width="22" height="18" rx="4"/>
+      <rect x="310" y="90" width="22" height="55" rx="4"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#94a3b8" text-anchor="middle">
+      <text x="161" y="205">0.5</text>
+      <text x="241" y="205">−0.25</text>
+      <text x="321" y="205">0.75</text>
+    </g>
+  </g>
+
+  <!-- recording B -->
+  <g>
+    <rect x="570" y="60" width="340" height="170" rx="14" fill="url(#mixPanel)" stroke="#334155" stroke-width="2"/>
+    <line x1="600" y1="145" x2="880" y2="145" stroke="#475569" stroke-width="2"/>
+    <g fill="#22c55e">
+      <rect x="630" y="145" width="22" height="35" rx="4"/>
+      <rect x="710" y="110" width="22" height="35" rx="4"/>
+      <rect x="790" y="145" width="22" height="35" rx="4"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#94a3b8" text-anchor="middle">
+      <text x="641" y="205">−0.5</text>
+      <text x="721" y="205">0.25</text>
+      <text x="801" y="205">0.5</text>
+    </g>
+  </g>
+
+  <!-- mixer -->
+  <g>
+    <path d="M 420 270 H 580 L 540 340 H 460 Z" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+    <text x="500" y="306" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">mix</text>
+    <g stroke="#3b82f6" stroke-width="3" stroke-linecap="round">
+      <line x1="260" y1="232" x2="450" y2="268"/>
+    </g>
+    <g stroke="#22c55e" stroke-width="3" stroke-linecap="round">
+      <line x1="740" y1="232" x2="550" y2="268"/>
+    </g>
+    <rect x="340" y="234" width="64" height="30" rx="8" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="372" y="255" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#93c5fd">25%</text>
+    <rect x="596" y="234" width="64" height="30" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="2"/>
+    <text x="628" y="255" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#86efac">75%</text>
+  </g>
+
+  <!-- mixed recording, unknown -->
+  <g>
+    <rect x="320" y="382" width="360" height="110" rx="14" fill="url(#mixPanel)" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="8 6"/>
+    <g fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 4">
+      <rect x="360" y="402" width="60" height="60" rx="8"/>
+      <rect x="470" y="402" width="60" height="60" rx="8"/>
+      <rect x="580" y="402" width="60" height="60" rx="8"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="600" fill="#60a5fa" text-anchor="middle">
+      <text x="390" y="441">?</text>
+      <text x="500" y="441">?</text>
+      <text x="610" y="441">?</text>
+    </g>
+  </g>
+
+  <!-- mixer to mixed recording -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <line x1="500" y1="344" x2="500" y2="368"/>
+  </g>
+  <polygon points="492,368 500,380 508,368" fill="#60a5fa"/>
+</svg>

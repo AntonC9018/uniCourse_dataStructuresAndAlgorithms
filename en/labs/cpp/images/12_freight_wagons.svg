@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="wagonsTitle wagonsDesc">
+  <title id="wagonsTitle">Connecting two freight wagons with a pointer and adding cargo</title>
+  <desc id="wagonsDesc">Two freight wagons stand on a rail, the first carrying twelve tons and the second eight tons. A pointer connects the first wagon to the second, five tons of cargo are added to the second, and its new weight is unknown.</desc>
+
+  <defs>
+    <linearGradient id="wagonPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="crate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- rail -->
+  <line x1="60" y1="388" x2="940" y2="388" stroke="#64748b" stroke-width="5"/>
+  <g stroke="#475569" stroke-width="3">
+    <line x1="80" y1="380" x2="80" y2="396"/><line x1="140" y1="380" x2="140" y2="396"/>
+    <line x1="200" y1="380" x2="200" y2="396"/><line x1="260" y1="380" x2="260" y2="396"/>
+    <line x1="320" y1="380" x2="320" y2="396"/><line x1="380" y1="380" x2="380" y2="396"/>
+    <line x1="440" y1="380" x2="440" y2="396"/><line x1="500" y1="380" x2="500" y2="396"/>
+    <line x1="560" y1="380" x2="560" y2="396"/><line x1="620" y1="380" x2="620" y2="396"/>
+    <line x1="680" y1="380" x2="680" y2="396"/><line x1="740" y1="380" x2="740" y2="396"/>
+    <line x1="800" y1="380" x2="800" y2="396"/><line x1="860" y1="380" x2="860" y2="396"/>
+    <line x1="920" y1="380" x2="920" y2="396"/>
+  </g>
+
+  <!-- wagon A -->
+  <g>
+    <rect x="100" y="220" width="320" height="140" rx="12" fill="url(#wagonPanel)" stroke="#64748b" stroke-width="3"/>
+    <line x1="112" y1="240" x2="408" y2="240" stroke="#475569" stroke-width="2"/>
+    <rect x="200" y="280" width="120" height="44" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="260" y="310" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#e2e8f0">12 t</text>
+    <circle cx="170" cy="368" r="20" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+    <circle cx="170" cy="368" r="6" fill="#64748b"/>
+    <circle cx="350" cy="368" r="20" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+    <circle cx="350" cy="368" r="6" fill="#64748b"/>
+  </g>
+
+  <!-- wagon B -->
+  <g>
+    <rect x="580" y="220" width="320" height="140" rx="12" fill="url(#wagonPanel)" stroke="#64748b" stroke-width="3"/>
+    <line x1="592" y1="240" x2="888" y2="240" stroke="#475569" stroke-width="2"/>
+    <rect x="680" y="280" width="120" height="44" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="740" y="310" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#e2e8f0">8 t</text>
+    <circle cx="650" cy="368" r="20" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+    <circle cx="650" cy="368" r="6" fill="#64748b"/>
+    <circle cx="830" cy="368" r="20" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+    <circle cx="830" cy="368" r="6" fill="#64748b"/>
+  </g>
+
+  <!-- pointer -->
+  <g>
+    <line x1="424" y1="300" x2="474" y2="300" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <line x1="506" y1="300" x2="566" y2="300" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="566,291 582,300 566,309" fill="#60a5fa"/>
+    <rect x="474" y="286" width="32" height="28" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <g fill="none" stroke="#93c5fd" stroke-width="2.5">
+      <ellipse cx="484" cy="300" rx="5" ry="8"/>
+      <ellipse cx="496" cy="300" rx="5" ry="8"/>
+    </g>
+  </g>
+
+  <!-- cargo crate -->
+  <g>
+    <rect x="680" y="108" width="120" height="76" rx="6" fill="url(#crate)" stroke="#f59e0b" stroke-width="2.5"/>
+    <g stroke="#fbbf24" stroke-width="2">
+      <line x1="692" y1="116" x2="788" y2="176"/>
+      <line x1="788" y1="116" x2="692" y2="176"/>
+    </g>
+    <text x="740" y="154" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#fef3c7">+5 t</text>
+    <line x1="740" y1="190" x2="740" y2="214" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="731,214 740,228 749,214" fill="#f59e0b"/>
+  </g>
+
+  <!-- new weight -->
+  <g>
+    <circle cx="740" cy="455" r="26" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="740" y="465" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#60a5fa">?</text>
+    <text x="776" y="464" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#60a5fa">t</text>
+  </g>
+</svg>

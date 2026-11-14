@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="scoreTitle scoreDesc">
+  <title id="scoreTitle">Cumulative scores after each round of a game</title>
+  <desc id="scoreDesc">Five round markers show the recorded total score after each round. Round three is selected to find the points earned in it, and round four's total is being corrected. Both earned amounts are unknown.</desc>
+
+  <defs>
+    <linearGradient id="scorePanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- timeline base -->
+  <line x1="120" y1="260" x2="880" y2="260" stroke="#475569" stroke-width="3"/>
+
+  <!-- highlighted round segments -->
+  <line x1="300" y1="260" x2="480" y2="260" stroke="#f59e0b" stroke-width="6"/>
+  <line x1="480" y1="260" x2="660" y2="260" stroke="#3b82f6" stroke-width="6"/>
+
+  <!-- nodes and totals -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" text-anchor="middle">
+    <g>
+      <circle cx="120" cy="260" r="12" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+      <text x="120" y="214" font-size="24" fill="#e2e8f0">120</text>
+      <text x="120" y="310" font-size="18" fill="#64748b">1</text>
+    </g>
+    <g>
+      <circle cx="300" cy="260" r="12" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+      <text x="300" y="214" font-size="24" fill="#e2e8f0">300</text>
+      <text x="300" y="310" font-size="18" fill="#64748b">2</text>
+    </g>
+    <g>
+      <circle cx="480" cy="260" r="12" fill="#0f172a" stroke="#f59e0b" stroke-width="3"/>
+      <text x="480" y="214" font-size="24" fill="#fbbf24">450</text>
+      <text x="480" y="310" font-size="18" fill="#f59e0b">3</text>
+    </g>
+    <g>
+      <circle cx="660" cy="260" r="12" fill="#0f172a" stroke="#3b82f6" stroke-width="3"/>
+      <text x="660" y="214" font-size="24" fill="#60a5fa">700</text>
+      <text x="660" y="310" font-size="18" fill="#3b82f6">4</text>
+    </g>
+    <g>
+      <circle cx="840" cy="260" r="12" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+      <text x="840" y="214" font-size="24" fill="#e2e8f0">900</text>
+      <text x="840" y="310" font-size="18" fill="#64748b">5</text>
+    </g>
+  </g>
+
+  <!-- earned in round 3 -->
+  <g>
+    <path d="M 306 286 V 326 H 474 V 286" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="390" cy="370" r="26" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="390" y="380" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#fbbf24">?</text>
+  </g>
+
+  <!-- earned in round 4 -->
+  <g>
+    <path d="M 486 286 V 326 H 654 V 286" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <circle cx="570" cy="370" r="26" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="570" y="380" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- correction marker on round 4 total -->
+  <g>
+    <line x1="660" y1="184" x2="660" y2="196" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="643" y="150" width="34" height="34" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <g transform="translate(660 167) rotate(-45)">
+      <rect x="-4" y="-12" width="8" height="18" rx="2" fill="#60a5fa"/>
+      <polygon points="-4,6 4,6 0,13" fill="#fbbf24"/>
+      <rect x="-4" y="-12" width="8" height="4" rx="2" fill="#1d4ed8"/>
+    </g>
+  </g>
+</svg>

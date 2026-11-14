@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hotbarTitle hotbarDesc">
+  <title id="hotbarTitle">Two hotbar slots referring to the same pickaxe in a backpack</title>
+  <desc id="hotbarDesc">A backpack holds a pickaxe with durability one hundred, an axe with sixty and a shovel with forty. Hotbar slots zero and one both refer to the pickaxe, and slot two refers to the axe. Using the pickaxe through slot zero reduces its durability by ten, and the new durability is unknown.</desc>
+
+  <defs>
+    <linearGradient id="bagPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- backpack -->
+  <rect x="60" y="80" width="380" height="390" rx="16" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- pickaxe card, shared -->
+  <g>
+    <rect x="80" y="110" width="340" height="100" rx="12" fill="#78350f" opacity="0.25"/>
+    <rect x="80" y="110" width="340" height="100" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <line x1="110" y1="196" x2="150" y2="128" stroke="#b45309" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 118 150 Q 148 110 182 130" fill="none" stroke="#94a3b8" stroke-width="9" stroke-linecap="round"/>
+    <polygon points="118,150 106,155 115,141" fill="#94a3b8"/>
+    <rect x="190" y="152" width="130" height="14" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="190" y="152" width="130" height="14" rx="7" fill="#f59e0b"/>
+    <text x="332" y="167" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">100</text>
+    <text x="362" y="167" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">→</text>
+    <text x="386" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="600" fill="#fbbf24">?</text>
+  </g>
+
+  <!-- axe card -->
+  <g>
+    <rect x="80" y="230" width="340" height="100" rx="12" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+    <line x1="112" y1="316" x2="152" y2="252" stroke="#b45309" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 150 240 L 178 250 Q 188 268 178 288 L 150 276 Z" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+    <rect x="190" y="272" width="140" height="14" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="190" y="272" width="84" height="14" rx="7" fill="#60a5fa"/>
+    <text x="352" y="287" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">60</text>
+  </g>
+
+  <!-- shovel card -->
+  <g>
+    <rect x="80" y="350" width="340" height="100" rx="12" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+    <line x1="112" y1="436" x2="152" y2="372" stroke="#b45309" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 150 360 L 174 378 L 158 408 L 142 378 Z" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+    <rect x="190" y="392" width="140" height="14" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="190" y="392" width="56" height="14" rx="7" fill="#4ade80"/>
+    <text x="352" y="407" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">40</text>
+  </g>
+
+  <!-- hotbar -->
+  <rect x="560" y="80" width="380" height="390" rx="16" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- slot 0, in use -->
+  <g>
+    <rect x="580" y="110" width="340" height="100" rx="12" fill="#78350f" opacity="0.25"/>
+    <rect x="580" y="110" width="340" height="100" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="600" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">0</text>
+    <line x1="635" y1="190" x2="660" y2="145" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 640 158 Q 660 130 682 146" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="640,158 632,162 638,150" fill="#94a3b8"/>
+    <rect x="800" y="140" width="100" height="40" rx="9" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="850" y="167" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">−10</text>
+  </g>
+
+  <!-- slot 1, same pickaxe -->
+  <g>
+    <rect x="580" y="230" width="340" height="100" rx="12" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="600" y="260" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">1</text>
+    <line x1="635" y1="310" x2="660" y2="265" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 640 278 Q 660 250 682 266" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="640,278 632,282 638,270" fill="#94a3b8"/>
+  </g>
+
+  <!-- slot 2, axe -->
+  <g>
+    <rect x="580" y="350" width="340" height="100" rx="12" fill="url(#bagPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="600" y="380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">2</text>
+    <line x1="638" y1="430" x2="662" y2="385" stroke="#b45309" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 660 378 L 682 386 Q 690 400 682 414 L 660 406 Z" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+  </g>
+
+  <!-- references from slots to tools -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <line x1="580" y1="160" x2="436" y2="160"/>
+    <line x1="580" y1="280" x2="436" y2="190"/>
+    <line x1="580" y1="400" x2="436" y2="280"/>
+  </g>
+  <g fill="#60a5fa">
+    <polygon points="436,151 420,160 436,169"/>
+    <polygon points="443,181 426,187 440,198"/>
+    <polygon points="443,271 426,277 440,288"/>
+  </g>
+</svg>
