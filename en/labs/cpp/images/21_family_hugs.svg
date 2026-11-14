@@ -1,58 +1,68 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsTitle hugsDesc">
   <title id="hugsTitle">Five family members hugging, with bit sets tracking the hugs</title>
-  <desc id="hugsDesc">Alice and bob hug as a pair, and cid, dana and eve hug as a trio. Below each person, a strip of five coloured cells shows whom that person has hugged: alice has hugged bob, bob has hugged alice, and cid, dana and eve have each hugged the other two in their trio. Nobody's own cell is filled.</desc>
+  <desc id="hugsDesc">Seen from behind, alice and bob hug as a pair, and cid, dana and eve hug as a trio. Below each person, a strip of five coloured cells shows whom that person has hugged: alice has hugged bob, bob has hugged alice, and cid, dana and eve have each hugged the other two in their trio. Nobody's own cell is filled.</desc>
 
   <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
   <!-- scale the figures up to fill the frame -->
   <g transform="translate(500 260) scale(1.25) translate(-500 -260)">
 
-    <!-- torsos -->
+    <!-- torsos, seen from behind -->
     <g stroke-width="2">
-      <path d="M 622 300 V 272 Q 622 228 644 214 H 672 Q 694 228 694 272 V 300 Z" fill="#a78bfa" stroke="#7c3aed"/>
-      <path d="M 552 300 V 272 Q 552 228 574 214 H 602 Q 624 228 624 272 V 300 Z" fill="#22c55e" stroke="#15803d"/>
-      <path d="M 692 300 V 272 Q 692 228 714 214 H 742 Q 764 228 764 272 V 300 Z" fill="#22d3ee" stroke="#0e7490"/>
-      <path d="M 309 300 V 272 Q 309 228 331 214 H 359 Q 381 228 381 272 V 300 Z" fill="#f59e0b" stroke="#b45309"/>
-      <path d="M 237 300 V 272 Q 237 228 259 214 H 287 Q 309 228 309 272 V 300 Z" fill="#3b82f6" stroke="#1d4ed8"/>
+      <path d="M 546 300 V 236 Q 546 214 566 208 L 576 205 Q 586 202 596 205 L 606 208 Q 618 212 618 228 V 300 Z" fill="#22c55e" stroke="#15803d"/>
+      <path d="M 618 300 V 236 Q 618 214 638 208 L 648 205 Q 658 202 668 205 L 678 208 Q 698 214 698 236 V 300 Z" fill="#a78bfa" stroke="#7c3aed"/>
+      <path d="M 698 300 V 228 Q 698 212 710 208 L 720 205 Q 730 202 740 205 L 750 208 Q 770 214 770 236 V 300 Z" fill="#22d3ee" stroke="#0e7490"/>
+      <path d="M 310 300 V 228 Q 310 212 322 208 L 332 205 Q 342 202 352 205 L 362 208 Q 382 214 382 236 V 300 Z" fill="#f59e0b" stroke="#b45309"/>
+      <path d="M 238 300 V 236 Q 238 214 258 208 L 268 205 Q 278 202 288 205 L 298 208 Q 310 212 310 228 V 300 Z" fill="#3b82f6" stroke="#1d4ed8"/>
     </g>
 
-    <!-- wrapping arms -->
-    <g fill="none" stroke-linecap="round">
-      <!-- dana hugs cid and eve around the waist -->
-      <path d="M 630 250 C 608 260 586 270 570 278" stroke="#7c3aed" stroke-width="13"/>
-      <path d="M 630 250 C 608 260 586 270 570 278" stroke="#a78bfa" stroke-width="10"/>
-      <path d="M 686 250 C 708 260 730 270 746 278" stroke="#7c3aed" stroke-width="13"/>
-      <path d="M 686 250 C 708 260 730 270 746 278" stroke="#a78bfa" stroke-width="10"/>
-      <!-- alice and bob hug each other around the waist -->
-      <path d="M 303 250 C 324 258 342 268 352 276" stroke="#1d4ed8" stroke-width="13"/>
-      <path d="M 303 250 C 324 258 342 268 352 276" stroke="#3b82f6" stroke-width="10"/>
-      <path d="M 317 278 C 296 284 276 290 262 292" stroke="#b45309" stroke-width="13"/>
-      <path d="M 317 278 C 296 284 276 290 262 292" stroke="#f59e0b" stroke-width="10"/>
+    <!-- arms: one over the partner's shoulder, one around the waist -->
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- cid's arm over dana's shoulder -->
+      <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#15803d" stroke-width="14"/>
+      <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#22c55e" stroke-width="10"/>
+      <!-- dana's arm around cid's waist -->
+      <path d="M 624 282 L 576 282 C 562 282 554 276 548 268" stroke="#7c3aed" stroke-width="14"/>
+      <path d="M 624 282 L 576 282 C 562 282 554 276 548 268" stroke="#a78bfa" stroke-width="10"/>
+      <!-- dana's arm over eve's shoulder -->
+      <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#7c3aed" stroke-width="14"/>
+      <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#a78bfa" stroke-width="10"/>
+      <!-- eve's arm around dana's waist -->
+      <path d="M 704 282 L 656 282 C 642 282 634 276 628 268" stroke="#0e7490" stroke-width="14"/>
+      <path d="M 704 282 L 656 282 C 642 282 634 276 628 268" stroke="#22d3ee" stroke-width="10"/>
+      <!-- alice's arm over bob's shoulder -->
+      <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#1d4ed8" stroke-width="14"/>
+      <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#3b82f6" stroke-width="10"/>
+      <!-- bob's arm around alice's waist -->
+      <path d="M 316 282 L 268 282 C 254 282 246 276 240 268" stroke="#b45309" stroke-width="14"/>
+      <path d="M 316 282 L 268 282 C 254 282 246 276 240 268" stroke="#f59e0b" stroke-width="10"/>
     </g>
 
     <!-- hands -->
     <g fill="#f8d7b3" stroke="#b45309" stroke-width="1.5">
-      <circle cx="570" cy="280" r="8.5"/>
-      <circle cx="746" cy="280" r="8.5"/>
-      <circle cx="354" cy="278" r="8.5"/>
-      <circle cx="260" cy="294" r="8.5"/>
+      <circle cx="692" cy="246" r="7"/>
+      <circle cx="546" cy="266" r="7"/>
+      <circle cx="770" cy="246" r="7"/>
+      <circle cx="626" cy="266" r="7"/>
+      <circle cx="384" cy="246" r="7"/>
+      <circle cx="238" cy="266" r="7"/>
     </g>
 
     <!-- heads -->
     <g fill="#f8d7b3" stroke="#b45309" stroke-width="2">
-      <circle cx="281" cy="186" r="28"/>
-      <circle cx="337" cy="186" r="28"/>
-      <circle cx="596" cy="186" r="28"/>
-      <circle cx="658" cy="186" r="28"/>
-      <circle cx="720" cy="186" r="28"/>
+      <circle cx="276" cy="174" r="27"/>
+      <circle cx="344" cy="174" r="27"/>
+      <circle cx="584" cy="174" r="27"/>
+      <circle cx="658" cy="174" r="27"/>
+      <circle cx="732" cy="174" r="27"/>
     </g>
 
     <!-- leaders from each person to their bit strip -->
     <g stroke-width="2" opacity="0.75">
-      <line x1="273" y1="300" x2="238" y2="322" stroke="#3b82f6"/>
-      <line x1="345" y1="300" x2="358" y2="322" stroke="#f59e0b"/>
-      <line x1="588" y1="300" x2="523" y2="322" stroke="#22c55e"/>
+      <line x1="274" y1="300" x2="238" y2="322" stroke="#3b82f6"/>
+      <line x1="346" y1="300" x2="358" y2="322" stroke="#f59e0b"/>
+      <line x1="582" y1="300" x2="523" y2="322" stroke="#22c55e"/>
       <line x1="658" y1="300" x2="643" y2="322" stroke="#a78bfa"/>
-      <line x1="728" y1="300" x2="763" y2="322" stroke="#22d3ee"/>
+      <line x1="734" y1="300" x2="763" y2="322" stroke="#22d3ee"/>
     </g>
 
     <!-- bit strips -->

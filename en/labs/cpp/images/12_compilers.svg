@@ -52,7 +52,6 @@
     <circle cx="548" cy="146" r="5" fill="#334155" stroke="#64748b" stroke-width="2"/>
     <circle cx="548" cy="176" r="5" fill="#334155" stroke="#64748b" stroke-width="2"/>
     <circle cx="548" cy="206" r="8" fill="#f59e0b"/>
-    <text x="564" y="211" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#f59e0b">full</text>
   </g>
 
   <!-- GCC compiler -->
@@ -65,7 +64,6 @@
     <circle cx="548" cy="336" r="5" fill="#334155" stroke="#64748b" stroke-width="2"/>
     <circle cx="548" cy="366" r="5" fill="#334155" stroke="#64748b" stroke-width="2"/>
     <circle cx="548" cy="396" r="8" fill="#f59e0b"/>
-    <text x="564" y="401" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#f59e0b">full</text>
   </g>
 
   <!-- compiler to output arrows -->
@@ -108,8 +106,6 @@
 
     <rect x="888" y="128" width="34" height="34" rx="8" fill="#0b1220" stroke="#475569" stroke-width="2"/>
     <text x="905" y="154" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#94a3b8">?</text>
-
-    <text x="680" y="194" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">machine code</text>
   </g>
 
   <!-- GCC output -->
@@ -142,7 +138,5 @@
 
     <rect x="888" y="328" width="34" height="34" rx="8" fill="#0b1220" stroke="#475569" stroke-width="2"/>
     <text x="905" y="354" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#94a3b8">?</text>
-
-    <text x="680" y="394" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">machine code</text>
   </g>
 </svg>

@@ -325,7 +325,7 @@ slug: en/cpp/labs/advanced-practice
   Give the hero 1 red potion.
   Red adds 20 health, blue adds 10 shield, spoiled does nothing.
 
-  ![A hero with health and shield, and red, blue and spoiled potions; one red potion adds 20 health, blue adds 10 shield, spoiled does nothing](./images/21_potions.svg)
+  ![A hero with health and shield, and red, blue and spoiled potions marked with a heart, a shield and a skull; one red potion is chosen](./images/21_potions.svg)
 
   <details>
   <summary>
@@ -1077,7 +1077,7 @@ slug: en/cpp/labs/advanced-practice
   but using a bit set of members they've hugged.
   Hug everyone once.
 
-  ![Alice and bob hugging as a pair, cid, dana and eve hugging as a trio, and a strip of five coloured boxes under each person for the members they have hugged; nobody's own box is filled](./images/21_family_hugs.svg)
+  ![Seen from behind, alice and bob hugging as a pair, cid, dana and eve hugging as a trio, and a strip of five coloured boxes under each person for the members they have hugged; nobody's own box is filled](./images/21_family_hugs.svg)
 
   <details>
   <summary>

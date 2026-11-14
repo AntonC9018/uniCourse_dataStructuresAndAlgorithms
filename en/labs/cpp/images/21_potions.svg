@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="potionTitle potionDesc">
   <title id="potionTitle">Drinking a red potion</title>
-  <desc id="potionDesc">A hero with health and shield bars. A red potion adds 20 health, a blue potion adds 10 shield, and a spoiled potion has no effect. One red potion is chosen.</desc>
+  <desc id="potionDesc">A hero with health and shield bars. A red potion is marked with a heart, a blue potion with a shield, and a spoiled potion with a skull. One red potion is chosen.</desc>
 
   <defs>
     <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
@@ -78,8 +78,7 @@
         <ellipse cx="644" cy="180" rx="30" ry="6" fill="#fca5a5" opacity="0.5"/>
       </g>
     </g>
-    <path d="M 710 192 C 694 178 686 168 694 158 C 700 151 708 153 710 160 C 712 153 720 151 726 158 C 734 168 726 178 710 192 Z" fill="#ef4444"/>
-    <text x="760" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fca5a5">+20 health</text>
+    <path d="M 807 191 C 791 177 783 167 791 157 C 797 150 805 152 807 159 C 809 152 817 150 823 157 C 831 167 823 177 807 191 Z" fill="#ef4444"/>
     <circle cx="908" cy="146" r="15" fill="#ef4444"/>
     <text x="908" y="152" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#ffffff">1</text>
   </g>
@@ -96,8 +95,7 @@
         <ellipse cx="644" cy="310" rx="30" ry="6" fill="#93c5fd" opacity="0.5"/>
       </g>
     </g>
-    <path d="M 710 295 L 732 305 V 325 C 732 340 722 350 710 356 C 698 350 688 340 688 325 V 305 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
-    <text x="760" y="308" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#93c5fd">+10 shield</text>
+    <path d="M 807 269 L 829 279 V 299 C 829 314 819 324 807 330 C 795 324 785 314 785 299 V 279 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
   </g>
 
   <!-- spoiled potion -->
@@ -115,16 +113,15 @@
       <circle cx="652" cy="464" r="3" fill="#365314"/>
     </g>
     <g fill="#a3e635">
-      <circle cx="700" cy="418" r="14"/>
-      <rect x="692" y="426" width="16" height="12" rx="3"/>
+      <circle cx="807" cy="427" r="14"/>
+      <rect x="799" y="435" width="16" height="12" rx="3"/>
     </g>
     <g fill="#0f172a">
-      <circle cx="695" cy="416" r="3"/>
-      <circle cx="705" cy="416" r="3"/>
-      <rect x="697" y="428" width="2" height="6"/>
-      <rect x="702" y="428" width="2" height="6"/>
+      <circle cx="802" cy="425" r="3"/>
+      <circle cx="812" cy="425" r="3"/>
+      <rect x="804" y="437" width="2" height="6"/>
+      <rect x="809" y="437" width="2" height="6"/>
     </g>
-    <text x="760" y="438" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#a3e635">no effect</text>
   </g>
 
   <!-- effect arrows -->

@@ -24,11 +24,11 @@
       <line x1="92" y1="340" x2="148" y2="340"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="98" cy="180" r="4.5"/>
-      <circle cx="160" cy="198" r="4.5"/>
-      <circle cx="98" cy="260" r="4.5"/>
-      <circle cx="80" cy="276" r="4.5"/>
-      <circle cx="98" cy="340" r="4.5"/>
+      <circle cx="92" cy="180" r="6.5"/>
+      <circle cx="160" cy="192" r="6.5"/>
+      <circle cx="92" cy="260" r="6.5"/>
+      <circle cx="80" cy="270" r="6.5"/>
+      <circle cx="92" cy="340" r="6.5"/>
     </g>
 
     <!-- digit 0 at x=190, y=180 -->
@@ -41,12 +41,12 @@
       <line x1="190" y1="192" x2="190" y2="250"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="208" cy="180" r="4.5"/>
-      <circle cx="270" cy="198" r="4.5"/>
-      <circle cx="270" cy="276" r="4.5"/>
-      <circle cx="208" cy="340" r="4.5"/>
-      <circle cx="190" cy="276" r="4.5"/>
-      <circle cx="190" cy="198" r="4.5"/>
+      <circle cx="202" cy="180" r="6.5"/>
+      <circle cx="270" cy="192" r="6.5"/>
+      <circle cx="270" cy="270" r="6.5"/>
+      <circle cx="202" cy="340" r="6.5"/>
+      <circle cx="190" cy="270" r="6.5"/>
+      <circle cx="190" cy="192" r="6.5"/>
     </g>
 
     <!-- digit 8 at x=300, y=180 -->
@@ -60,13 +60,13 @@
       <line x1="312" y1="260" x2="368" y2="260"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="318" cy="180" r="4.5"/>
-      <circle cx="380" cy="198" r="4.5"/>
-      <circle cx="380" cy="276" r="4.5"/>
-      <circle cx="318" cy="340" r="4.5"/>
-      <circle cx="300" cy="276" r="4.5"/>
-      <circle cx="300" cy="198" r="4.5"/>
-      <circle cx="318" cy="260" r="4.5"/>
+      <circle cx="312" cy="180" r="6.5"/>
+      <circle cx="380" cy="192" r="6.5"/>
+      <circle cx="380" cy="270" r="6.5"/>
+      <circle cx="312" cy="340" r="6.5"/>
+      <circle cx="300" cy="270" r="6.5"/>
+      <circle cx="300" cy="192" r="6.5"/>
+      <circle cx="312" cy="260" r="6.5"/>
     </g>
   </g>
 
@@ -93,9 +93,9 @@
       <line x1="700" y1="270" x2="700" y2="328"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="638" cy="180" r="4.5"/>
-      <circle cx="700" cy="198" r="4.5"/>
-      <circle cx="700" cy="276" r="4.5"/>
+      <circle cx="632" cy="180" r="6.5"/>
+      <circle cx="700" cy="192" r="6.5"/>
+      <circle cx="700" cy="270" r="6.5"/>
     </g>
 
     <!-- digit 3 at x=730, y=180 -->
@@ -107,11 +107,11 @@
       <line x1="742" y1="260" x2="798" y2="260"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="748" cy="180" r="4.5"/>
-      <circle cx="810" cy="198" r="4.5"/>
-      <circle cx="810" cy="276" r="4.5"/>
-      <circle cx="748" cy="340" r="4.5"/>
-      <circle cx="748" cy="260" r="4.5"/>
+      <circle cx="742" cy="180" r="6.5"/>
+      <circle cx="810" cy="192" r="6.5"/>
+      <circle cx="810" cy="270" r="6.5"/>
+      <circle cx="742" cy="340" r="6.5"/>
+      <circle cx="742" cy="260" r="6.5"/>
     </g>
 
     <!-- digit 1 at x=840, y=180 -->
@@ -120,8 +120,8 @@
       <line x1="920" y1="270" x2="920" y2="328"/>
     </g>
     <g fill="#ef4444">
-      <circle cx="920" cy="198" r="4.5"/>
-      <circle cx="920" cy="276" r="4.5"/>
+      <circle cx="920" cy="192" r="6.5"/>
+      <circle cx="920" cy="270" r="6.5"/>
     </g>
   </g>
 </svg>

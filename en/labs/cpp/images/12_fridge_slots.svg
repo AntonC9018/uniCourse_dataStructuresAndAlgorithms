@@ -79,6 +79,5 @@
     <path d="M 730 300 H 850 L 834 432 H 746 Z" fill="#0f172a" stroke="#64748b" stroke-width="3"/>
     <ellipse cx="790" cy="300" rx="60" ry="10" fill="#0b1220" stroke="#64748b" stroke-width="3"/>
     <path d="M 850 322 C 890 322 890 384 850 384" fill="none" stroke="#64748b" stroke-width="3"/>
-    <text x="790" y="462" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">empty cup</text>
   </g>
 </svg>
