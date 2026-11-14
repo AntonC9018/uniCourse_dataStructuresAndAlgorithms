@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="podiumTitle podiumDesc">
+  <title id="podiumTitle">Swapping podium places and awarding a prize to a racer</title>
+  <desc id="podiumDesc">A roster lists Ava with one hundred twenty dollars, Ben with eighty and Cara with fifty. The podium holds Ava first, Ben second and Cara third. The first two places are being swapped, and a thirty dollar prize is awarded to the third place. Cara's new balance in the roster is unknown.</desc>
+
+  <defs>
+    <linearGradient id="rosterPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- roster -->
+  <rect x="60" y="80" width="400" height="400" rx="16" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- Ava -->
+  <g>
+    <rect x="80" y="100" width="360" height="100" rx="12" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="130" cy="150" r="24" fill="#f59e0b"/>
+    <text x="130" y="158" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="700" fill="#0f172a">A</text>
+    <text x="172" y="158" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" fill="#e2e8f0">Ava</text>
+    <text x="420" y="158" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#fbbf24">$120</text>
+  </g>
+
+  <!-- Ben -->
+  <g>
+    <rect x="80" y="220" width="360" height="100" rx="12" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="130" cy="270" r="24" fill="#3b82f6"/>
+    <text x="130" y="278" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="700" fill="#0f172a">B</text>
+    <text x="172" y="278" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" fill="#e2e8f0">Ben</text>
+    <text x="420" y="278" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#60a5fa">$80</text>
+  </g>
+
+  <!-- Cara, reported balance unknown -->
+  <g>
+    <rect x="80" y="340" width="360" height="100" rx="12" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="130" cy="390" r="24" fill="#22c55e"/>
+    <text x="130" y="398" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" font-weight="700" fill="#0f172a">C</text>
+    <text x="172" y="398" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" fill="#e2e8f0">Cara</text>
+    <text x="372" y="398" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#4ade80">$50</text>
+    <circle cx="414" cy="390" r="18" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="414" y="398" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- podium -->
+  <rect x="520" y="80" width="440" height="400" rx="16" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
+  <line x1="540" y1="460" x2="940" y2="460" stroke="#475569" stroke-width="3"/>
+
+  <!-- second place -->
+  <g>
+    <rect x="550" y="300" width="120" height="160" rx="8" fill="#172554" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="610" y="342" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#60a5fa">2</text>
+    <text x="610" y="380" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ben</text>
+  </g>
+
+  <!-- first place -->
+  <g>
+    <rect x="690" y="220" width="120" height="240" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="750" y="266" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#fbbf24">1</text>
+    <text x="750" y="304" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ava</text>
+  </g>
+
+  <!-- third place -->
+  <g>
+    <rect x="830" y="360" width="120" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="890" y="398" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#4ade80">3</text>
+    <text x="890" y="432" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Cara</text>
+  </g>
+
+  <!-- swap arrows -->
+  <g fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <path d="M 690 250 C 660 222 625 252 610 292"/>
+    <path d="M 640 296 C 656 270 676 256 690 265"/>
+  </g>
+  <polygon points="610,292 621.5,281.4 608.3,276.4" fill="#60a5fa"/>
+  <polygon points="690,265 674.4,263.3 682.0,251.5" fill="#60a5fa"/>
+
+  <!-- prize -->
+  <g>
+    <circle cx="890" cy="300" r="30" fill="url(#gold)" stroke="#b45309" stroke-width="2.5"/>
+    <text x="890" y="309" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#451a03">$30</text>
+    <line x1="890" y1="334" x2="890" y2="352" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="881,352 890,366 899,352" fill="#f59e0b"/>
+  </g>
+</svg>

@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="albumsTitle albumsDesc">
+  <title id="albumsTitle">Rotating a shared photo through one album and reading its size in the other</title>
+  <desc id="albumsDesc">A library holds three photos with sizes. One photo appears in both albums. It is rotated through the first album by swapping its width and height, and the new size read through the second album is unknown.</desc>
+
+  <defs>
+    <linearGradient id="albumPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- library -->
+  <rect x="60" y="80" width="880" height="160" rx="16" fill="url(#albumPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- library photo 0 -->
+  <g>
+    <rect x="100" y="100" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="115" y="130" width="90" height="60" rx="4" fill="#1e3a8a"/>
+    <circle cx="188" cy="144" r="7" fill="#fbbf24"/>
+    <polygon points="115,190 145,158 170,190" fill="#334155"/>
+    <polygon points="150,190 180,166 205,190" fill="#475569"/>
+    <text x="220" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#cbd5e1">90 × 60</text>
+  </g>
+
+  <!-- shared library photo -->
+  <g>
+    <rect x="380" y="100" width="240" height="120" rx="12" fill="#78350f" opacity="0.3"/>
+    <rect x="380" y="100" width="240" height="120" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="395" y="130" width="90" height="60" rx="4" fill="#14532d"/>
+    <circle cx="468" cy="144" r="7" fill="#fbbf24"/>
+    <polygon points="395,190 425,158 450,190" fill="#166534"/>
+    <polygon points="430,190 460,166 485,190" fill="#22c55e"/>
+    <text x="500" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#fbbf24">120 × 80</text>
+  </g>
+
+  <!-- library photo 2 -->
+  <g>
+    <rect x="660" y="100" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="675" y="120" width="80" height="80" rx="4" fill="#4c1d95"/>
+    <circle cx="738" cy="138" r="7" fill="#fbbf24"/>
+    <polygon points="675,200 705,168 730,200" fill="#5b21b6"/>
+    <polygon points="710,200 740,176 755,200" fill="#7c3aed"/>
+    <text x="770" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#cbd5e1">100 × 100</text>
+  </g>
+
+  <!-- shared photo links -->
+  <g stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5" fill="none">
+    <line x1="500" y1="240" x2="500" y2="275"/>
+    <line x1="130" y1="275" x2="840" y2="275"/>
+    <line x1="130" y1="275" x2="130" y2="340"/>
+    <line x1="840" y1="275" x2="840" y2="340"/>
+  </g>
+  <g transform="translate(500 275)">
+    <rect x="-18" y="-12" width="36" height="24" rx="7" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <g fill="none" stroke="#93c5fd" stroke-width="2.2">
+      <ellipse cx="-5" cy="0" rx="5" ry="7"/>
+      <ellipse cx="5" cy="0" rx="5" ry="7"/>
+    </g>
+  </g>
+
+  <!-- album A -->
+  <rect x="60" y="290" width="410" height="200" rx="16" fill="url(#albumPanel)" stroke="#334155" stroke-width="2"/>
+  <text x="80" y="322" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">album A</text>
+
+  <!-- shared thumbnail, rotate action -->
+  <g>
+    <rect x="80" y="340" width="100" height="100" rx="8" fill="#78350f" opacity="0.3"/>
+    <rect x="80" y="340" width="100" height="100" rx="8" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="85" y="360" width="90" height="60" rx="4" fill="#14532d"/>
+    <circle cx="158" cy="374" r="7" fill="#fbbf24"/>
+    <polygon points="85,420 115,388 140,420" fill="#166534"/>
+    <polygon points="120,420 150,396 175,420" fill="#22c55e"/>
+    <g transform="translate(166 352)">
+      <path d="M -9 -9 A 13 13 0 1 1 9 -9" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+      <polygon points="9,-9 4,-19 15,-18" fill="#fbbf24"/>
+    </g>
+    <rect x="85" y="446" width="90" height="24" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="130" y="463" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">w ↔ h</text>
+  </g>
+
+  <!-- album A other photos -->
+  <g>
+    <rect x="200" y="340" width="100" height="100" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="205" y="360" width="90" height="60" rx="4" fill="#1e3a8a"/>
+    <circle cx="278" cy="374" r="7" fill="#fbbf24"/>
+    <polygon points="205,420 235,388 260,420" fill="#334155"/>
+    <polygon points="240,420 270,396 295,420" fill="#475569"/>
+  </g>
+  <g>
+    <rect x="320" y="340" width="100" height="100" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="325" y="350" width="90" height="80" rx="4" fill="#4c1d95"/>
+    <circle cx="398" cy="368" r="7" fill="#fbbf24"/>
+    <polygon points="325,430 355,398 380,430" fill="#5b21b6"/>
+    <polygon points="360,430 390,406 415,430" fill="#7c3aed"/>
+  </g>
+
+  <!-- album B -->
+  <rect x="530" y="290" width="410" height="200" rx="16" fill="url(#albumPanel)" stroke="#334155" stroke-width="2"/>
+  <text x="550" y="322" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">album B</text>
+
+  <!-- album B other photos -->
+  <g>
+    <rect x="550" y="340" width="100" height="100" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="555" y="360" width="90" height="60" rx="4" fill="#1e3a8a"/>
+    <circle cx="628" cy="374" r="7" fill="#fbbf24"/>
+    <polygon points="555,420 585,388 610,420" fill="#334155"/>
+    <polygon points="590,420 620,396 645,420" fill="#475569"/>
+  </g>
+  <g>
+    <rect x="670" y="340" width="100" height="100" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="675" y="350" width="90" height="80" rx="4" fill="#4c1d95"/>
+    <circle cx="748" cy="368" r="7" fill="#fbbf24"/>
+    <polygon points="675,430 705,398 730,430" fill="#5b21b6"/>
+    <polygon points="710,430 740,406 765,430" fill="#7c3aed"/>
+  </g>
+
+  <!-- shared thumbnail, new size unknown -->
+  <g>
+    <rect x="790" y="340" width="100" height="100" rx="8" fill="#172554"/>
+    <rect x="790" y="340" width="100" height="100" rx="8" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="795" y="360" width="90" height="60" rx="4" fill="#14532d"/>
+    <circle cx="868" cy="374" r="7" fill="#fbbf24"/>
+    <polygon points="795,420 825,388 850,420" fill="#166534"/>
+    <polygon points="830,420 860,396 885,420" fill="#22c55e"/>
+    <rect x="795" y="446" width="90" height="24" rx="7" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="840" y="464" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#60a5fa">? × ?</text>
+  </g>
+</svg>

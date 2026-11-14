@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="potionTitle potionDesc">
+  <title id="potionTitle">Drinking a red potion</title>
+  <desc id="potionDesc">A hero with health and shield bars. A red potion is marked with a heart, a blue potion with a shield, and a spoiled potion with a skull. One red potion is chosen.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="redPotion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="bluePotion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="badPotion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a3e635"/>
+      <stop offset="100%" stop-color="#4d7c0f"/>
+    </linearGradient>
+    <clipPath id="flaskClipRed">
+      <circle cx="644" cy="190" r="30"/>
+    </clipPath>
+    <clipPath id="flaskClipBlue">
+      <circle cx="644" cy="320" r="30"/>
+    </clipPath>
+    <clipPath id="flaskClipBad">
+      <circle cx="644" cy="450" r="30"/>
+    </clipPath>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- hero card -->
+  <g>
+    <rect x="80" y="100" width="420" height="320" rx="20" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+
+    <!-- hero -->
+    <g>
+      <path d="M 150 390 V 332 Q 150 292 190 282 H 250 Q 290 292 290 332 V 390 Z" fill="#334155" stroke="#64748b" stroke-width="2"/>
+      <circle cx="220" cy="230" r="38" fill="#f8d7b3" stroke="#b45309" stroke-width="2"/>
+      <path d="M 182 230 A 38 38 0 0 1 258 230 L 258 242 H 182 Z" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+      <rect x="216" y="230" width="8" height="30" fill="#94a3b8" stroke="#64748b" stroke-width="1.5"/>
+      <circle cx="208" cy="242" r="3" fill="#0f172a"/>
+      <circle cx="232" cy="242" r="3" fill="#0f172a"/>
+      <path d="M 206 262 Q 220 270 234 262" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- health bar -->
+    <g>
+      <text x="330" y="240" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">health</text>
+      <rect x="330" y="250" width="140" height="24" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <rect x="332" y="252" width="82" height="20" rx="4" fill="#dc2626"/>
+      <rect x="414" y="252" width="28" height="20" rx="4" fill="#f87171" opacity="0.45" stroke="#fca5a5" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="428" y="266" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="600" fill="#fecaca">+20</text>
+    </g>
+
+    <!-- shield bar -->
+    <g>
+      <text x="330" y="310" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="600" fill="#94a3b8">shield</text>
+      <rect x="330" y="320" width="140" height="24" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <rect x="332" y="322" width="40" height="20" rx="4" fill="#2563eb"/>
+      <rect x="372" y="322" width="14" height="20" rx="4" fill="#60a5fa" opacity="0.45" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="379" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" font-weight="600" fill="#dbeafe">+10</text>
+    </g>
+  </g>
+
+  <!-- red potion -->
+  <g>
+    <rect x="600" y="120" width="340" height="100" rx="16" fill="url(#panel)" stroke="#ef4444" stroke-width="2.5"/>
+    <g>
+      <rect x="632" y="130" width="24" height="10" rx="2" fill="#b45309"/>
+      <rect x="636" y="140" width="16" height="22" fill="#64748b"/>
+      <circle cx="644" cy="190" r="30" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+      <g clip-path="url(#flaskClipRed)">
+        <rect x="612" y="180" width="64" height="42" fill="url(#redPotion)"/>
+        <ellipse cx="644" cy="180" rx="30" ry="6" fill="#fca5a5" opacity="0.5"/>
+      </g>
+    </g>
+    <path d="M 807 191 C 791 177 783 167 791 157 C 797 150 805 152 807 159 C 809 152 817 150 823 157 C 831 167 823 177 807 191 Z" fill="#ef4444"/>
+    <circle cx="908" cy="146" r="15" fill="#ef4444"/>
+    <text x="908" y="152" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#ffffff">1</text>
+  </g>
+
+  <!-- blue potion -->
+  <g opacity="0.8">
+    <rect x="600" y="250" width="340" height="100" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <g>
+      <rect x="632" y="260" width="24" height="10" rx="2" fill="#b45309"/>
+      <rect x="636" y="270" width="16" height="22" fill="#64748b"/>
+      <circle cx="644" cy="320" r="30" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+      <g clip-path="url(#flaskClipBlue)">
+        <rect x="612" y="310" width="64" height="42" fill="url(#bluePotion)"/>
+        <ellipse cx="644" cy="310" rx="30" ry="6" fill="#93c5fd" opacity="0.5"/>
+      </g>
+    </g>
+    <path d="M 807 269 L 829 279 V 299 C 829 314 819 324 807 330 C 795 324 785 314 785 299 V 279 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+  </g>
+
+  <!-- spoiled potion -->
+  <g opacity="0.8">
+    <rect x="600" y="380" width="340" height="100" rx="16" fill="url(#panel)" stroke="#334155" stroke-width="2"/>
+    <g>
+      <rect x="632" y="390" width="24" height="10" rx="2" fill="#b45309"/>
+      <rect x="636" y="400" width="16" height="22" fill="#64748b"/>
+      <circle cx="644" cy="450" r="30" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+      <g clip-path="url(#flaskClipBad)">
+        <rect x="612" y="440" width="64" height="42" fill="url(#badPotion)"/>
+        <ellipse cx="644" cy="440" rx="30" ry="6" fill="#d9f99d" opacity="0.5"/>
+      </g>
+      <circle cx="632" cy="456" r="4" fill="#365314"/>
+      <circle cx="652" cy="464" r="3" fill="#365314"/>
+    </g>
+    <g fill="#a3e635">
+      <circle cx="807" cy="427" r="14"/>
+      <rect x="799" y="435" width="16" height="12" rx="3"/>
+    </g>
+    <g fill="#0f172a">
+      <circle cx="802" cy="425" r="3"/>
+      <circle cx="812" cy="425" r="3"/>
+      <rect x="804" y="437" width="2" height="6"/>
+      <rect x="809" y="437" width="2" height="6"/>
+    </g>
+  </g>
+
+  <!-- effect arrows -->
+  <g>
+    <path d="M 596 170 C 550 170 520 230 480 256" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="480,246 468,260 484,266" fill="#ef4444"/>
+
+    <path d="M 596 300 C 550 300 520 320 480 328" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+    <polygon points="480,319 468,330 482,338" fill="#3b82f6" opacity="0.7"/>
+
+    <path d="M 596 430 H 534" fill="none" stroke="#a3e635" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 5" opacity="0.8"/>
+    <polygon points="534,421 520,430 534,439" fill="#a3e635" opacity="0.8"/>
+  </g>
+
+  <!-- no effect mark -->
+  <g>
+    <circle cx="502" cy="430" r="18" fill="none" stroke="#a3e635" stroke-width="2" stroke-dasharray="5 4"/>
+    <line x1="492" y1="420" x2="512" y2="440" stroke="#a3e635" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="512" y1="420" x2="492" y2="440" stroke="#a3e635" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

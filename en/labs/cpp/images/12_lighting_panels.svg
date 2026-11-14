@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="lampsTitle lampsDesc">
+  <title id="lampsTitle">One installed lamp shared by two lighting control panels</title>
+  <desc id="lampsDesc">Two control panels each list three lamps with brightness sliders. The green desk lamp appears on both panels. Its brightness is raised through the first panel, and the value read through the second panel is unknown.</desc>
+
+  <defs>
+    <linearGradient id="lampPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+
+    <g id="lampCeiling">
+      <line x1="0" y1="-34" x2="0" y2="-18" stroke="#64748b" stroke-width="3"/>
+      <path d="M -26 -18 Q 0 -36 26 -18 L 18 4 H -18 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+      <circle cx="0" cy="12" r="8" fill="#bfdbfe"/>
+    </g>
+
+    <g id="lampDesk">
+      <ellipse cx="0" cy="42" rx="18" ry="5" fill="#166534"/>
+      <line x1="0" y1="40" x2="0" y2="4" stroke="#22c55e" stroke-width="4"/>
+      <polygon points="-22,4 22,4 13,22 -13,22" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+      <circle cx="0" cy="27" r="5" fill="#dcfce7"/>
+    </g>
+
+    <g id="lampBulb">
+      <circle cx="0" cy="-6" r="18" fill="#a855f7" stroke="#7e22ce" stroke-width="2"/>
+      <rect x="-7" y="10" width="14" height="10" fill="#7e22ce"/>
+      <rect x="-9" y="20" width="18" height="7" rx="2" fill="#64748b"/>
+      <path d="M -6 -8 Q 0 -16 6 -8" fill="none" stroke="#f3e8ff" stroke-width="2"/>
+    </g>
+
+    <g id="lampFloor">
+      <ellipse cx="0" cy="44" rx="16" ry="4" fill="#92400e"/>
+      <line x1="0" y1="42" x2="0" y2="-10" stroke="#f59e0b" stroke-width="4"/>
+      <polygon points="-20,-10 20,-10 12,8 -12,8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+      <circle cx="0" cy="13" r="5" fill="#fef3c7"/>
+    </g>
+
+    <g id="lampLantern">
+      <path d="M -12 -24 Q 0 -38 12 -24" fill="none" stroke="#0e7490" stroke-width="3"/>
+      <rect x="-16" y="-24" width="32" height="46" rx="6" fill="#06b6d4" opacity="0.85" stroke="#0e7490" stroke-width="2"/>
+      <rect x="-10" y="-15" width="20" height="28" rx="4" fill="#a5f3fc"/>
+      <rect x="-18" y="22" width="36" height="6" rx="3" fill="#0e7490"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- panel A -->
+  <rect x="60" y="100" width="390" height="340" rx="16" fill="url(#lampPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- row 0: ceiling lamp -->
+  <g>
+    <use href="#lampCeiling" transform="translate(120 160)"/>
+    <rect x="180" y="155" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="180" y="155" width="60" height="10" rx="5" fill="#60a5fa"/>
+    <circle cx="240" cy="160" r="9" fill="#93c5fd"/>
+    <text x="430" y="167" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">30%</text>
+  </g>
+
+  <!-- row 1: shared desk lamp, being raised -->
+  <g>
+    <rect x="72" y="230" width="366" height="90" rx="12" fill="#78350f" opacity="0.25"/>
+    <rect x="72" y="230" width="366" height="90" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <use href="#lampDesk" transform="translate(120 275)"/>
+    <rect x="180" y="270" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="180" y="270" width="80" height="10" rx="5" fill="#f59e0b"/>
+    <circle cx="260" cy="275" r="9" fill="#fbbf24"/>
+    <line x1="260" y1="258" x2="300" y2="258" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="300,251 314,258 300,265" fill="#f59e0b"/>
+    <rect x="320" y="244" width="34" height="26" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="337" y="263" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">+</text>
+    <text x="430" y="282" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">40%</text>
+  </g>
+
+  <!-- row 2: purple bulb -->
+  <g>
+    <use href="#lampBulb" transform="translate(120 385)"/>
+    <rect x="180" y="380" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="180" y="380" width="140" height="10" rx="5" fill="#c084fc"/>
+    <circle cx="320" cy="385" r="9" fill="#d8b4fe"/>
+    <text x="430" y="392" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">70%</text>
+  </g>
+
+  <!-- panel B -->
+  <rect x="550" y="100" width="390" height="340" rx="16" fill="url(#lampPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- row 0: floor lamp -->
+  <g>
+    <use href="#lampFloor" transform="translate(610 160)"/>
+    <rect x="670" y="155" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="670" y="155" width="110" height="10" rx="5" fill="#fbbf24"/>
+    <circle cx="780" cy="160" r="9" fill="#fde68a"/>
+    <text x="920" y="167" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">55%</text>
+  </g>
+
+  <!-- row 1: lantern -->
+  <g>
+    <use href="#lampLantern" transform="translate(610 275)"/>
+    <rect x="670" y="270" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="670" y="270" width="50" height="10" rx="5" fill="#22d3ee"/>
+    <circle cx="720" cy="275" r="9" fill="#a5f3fc"/>
+    <text x="920" y="282" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">25%</text>
+  </g>
+
+  <!-- row 2: shared desk lamp, read value unknown -->
+  <g>
+    <rect x="562" y="340" width="366" height="90" rx="12" fill="#172554"/>
+    <rect x="562" y="340" width="366" height="90" rx="12" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <use href="#lampDesk" transform="translate(610 385)"/>
+    <rect x="670" y="380" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <circle cx="892" cy="385" r="18" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="892" y="393" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- shared lamp link -->
+  <g>
+    <line x1="450" y1="275" x2="550" y2="385" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <g transform="translate(500 330) rotate(48)">
+      <rect x="-18" y="-11" width="36" height="22" rx="7" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+      <g fill="none" stroke="#93c5fd" stroke-width="2.2">
+        <ellipse cx="-5" cy="0" rx="5" ry="7"/>
+        <ellipse cx="5" cy="0" rx="5" ry="7"/>
+      </g>
+    </g>
+  </g>
+</svg>

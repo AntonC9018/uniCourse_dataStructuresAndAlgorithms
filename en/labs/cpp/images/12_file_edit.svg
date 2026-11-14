@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="fileEditTitle fileEditDesc">
+  <title id="fileEditTitle">Editing lines of a file and swapping two lines</title>
+  <desc id="fileEditDesc">A file of five lines, each with a character count. The third line is selected and extra characters are sliding into it. The first and fifth lines are marked for swapping.</desc>
+
+  <defs>
+    <linearGradient id="filePanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- file -->
+  <rect x="100" y="70" width="800" height="380" rx="16" fill="url(#filePanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- line 1, marked for swap -->
+  <g>
+    <rect x="140" y="112" width="470" height="34" rx="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="152" y="120" width="180" height="18" rx="4" fill="#334155"/>
+    <text x="690" y="136" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">12</text>
+  </g>
+
+  <!-- line 2 -->
+  <g>
+    <rect x="152" y="178" width="120" height="18" rx="4" fill="#334155"/>
+    <text x="690" y="194" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">8</text>
+  </g>
+
+  <!-- line 3, selected for insertion -->
+  <g>
+    <rect x="140" y="236" width="470" height="34" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="152" y="244" width="225" height="18" rx="4" fill="#334155"/>
+    <rect x="381" y="244" width="90" height="18" rx="4" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <line x1="471" y1="240" x2="471" y2="266" stroke="#f59e0b" stroke-width="2"/>
+    <text x="690" y="258" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">15</text>
+  </g>
+
+  <!-- characters sliding into line 3 -->
+  <g>
+    <rect x="452" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="484" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="516" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="496" y1="206" x2="496" y2="228" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="488,228 496,242 504,228" fill="#f59e0b"/>
+  </g>
+
+  <!-- line 4 -->
+  <g>
+    <rect x="152" y="302" width="90" height="18" rx="4" fill="#334155"/>
+    <text x="690" y="318" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">6</text>
+  </g>
+
+  <!-- line 5, marked for swap -->
+  <g>
+    <rect x="140" y="360" width="470" height="34" rx="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="152" y="368" width="135" height="18" rx="4" fill="#334155"/>
+    <text x="690" y="384" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">9</text>
+  </g>
+
+  <!-- swap arrows between lines 1 and 5 -->
+  <g stroke="#3b82f6" stroke-width="3" stroke-linecap="round">
+    <line x1="750" y1="140" x2="750" y2="364"/>
+    <line x1="790" y1="364" x2="790" y2="140"/>
+  </g>
+  <g fill="#3b82f6">
+    <polygon points="741,362 750,378 759,362"/>
+    <polygon points="781,142 790,126 799,142"/>
+  </g>
+</svg>

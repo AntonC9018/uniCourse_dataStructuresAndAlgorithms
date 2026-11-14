@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsTitle hugsDesc">
+  <title id="hugsTitle">Five family members hugging, with bit sets tracking the hugs</title>
+  <desc id="hugsDesc">Seen from behind, alice and bob hug as a pair, and cid, dana and eve hug as a trio. Below each person, a strip of five coloured cells shows whom that person has hugged: alice has hugged bob, bob has hugged alice, and cid, dana and eve have each hugged the other two in their trio. Nobody's own cell is filled.</desc>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <!-- scale the figures up to fill the frame -->
+  <g transform="translate(500 260) scale(1.25) translate(-500 -260)">
+
+    <!-- torsos, seen from behind -->
+    <g stroke-width="2">
+      <path d="M 546 300 V 236 Q 546 214 566 208 L 576 205 Q 586 202 596 205 L 606 208 Q 618 212 618 228 V 300 Z" fill="#22c55e" stroke="#15803d"/>
+      <path d="M 618 300 V 236 Q 618 214 638 208 L 648 205 Q 658 202 668 205 L 678 208 Q 698 214 698 236 V 300 Z" fill="#a78bfa" stroke="#7c3aed"/>
+      <path d="M 698 300 V 228 Q 698 212 710 208 L 720 205 Q 730 202 740 205 L 750 208 Q 770 214 770 236 V 300 Z" fill="#22d3ee" stroke="#0e7490"/>
+      <path d="M 310 300 V 228 Q 310 212 322 208 L 332 205 Q 342 202 352 205 L 362 208 Q 382 214 382 236 V 300 Z" fill="#f59e0b" stroke="#b45309"/>
+      <path d="M 238 300 V 236 Q 238 214 258 208 L 268 205 Q 278 202 288 205 L 298 208 Q 310 212 310 228 V 300 Z" fill="#3b82f6" stroke="#1d4ed8"/>
+    </g>
+
+    <!-- arms: both start at the shoulder, one over the partner's shoulder, one around the waist -->
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- under-arms first, so they emerge from beneath the over-arms -->
+      <!-- dana's arm around cid's waist -->
+      <path d="M 626 230 C 622 246 618 258 608 264 C 592 272 566 272 550 266" stroke="#7c3aed" stroke-width="14"/>
+      <path d="M 626 230 C 622 246 618 258 608 264 C 592 272 566 272 550 266" stroke="#a78bfa" stroke-width="10"/>
+      <!-- eve's arm around dana's waist -->
+      <path d="M 706 230 C 702 246 698 258 688 264 C 672 272 646 272 630 266" stroke="#0e7490" stroke-width="14"/>
+      <path d="M 706 230 C 702 246 698 258 688 264 C 672 272 646 272 630 266" stroke="#22d3ee" stroke-width="10"/>
+      <!-- bob's arm around alice's waist -->
+      <path d="M 318 230 C 314 246 310 258 300 264 C 284 272 260 272 242 266" stroke="#b45309" stroke-width="14"/>
+      <path d="M 318 230 C 314 246 310 258 300 264 C 284 272 260 272 242 266" stroke="#f59e0b" stroke-width="10"/>
+      <!-- cid's arm over dana's shoulder -->
+      <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#15803d" stroke-width="14"/>
+      <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#22c55e" stroke-width="10"/>
+      <!-- dana's arm over eve's shoulder -->
+      <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#7c3aed" stroke-width="14"/>
+      <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#a78bfa" stroke-width="10"/>
+      <!-- alice's arm over bob's shoulder -->
+      <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#1d4ed8" stroke-width="14"/>
+      <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#3b82f6" stroke-width="10"/>
+    </g>
+
+    <!-- hands -->
+    <g fill="#f8d7b3" stroke="#b45309" stroke-width="1.5">
+      <circle cx="692" cy="246" r="7"/>
+      <circle cx="546" cy="266" r="7"/>
+      <circle cx="770" cy="246" r="7"/>
+      <circle cx="626" cy="266" r="7"/>
+      <circle cx="384" cy="246" r="7"/>
+      <circle cx="238" cy="266" r="7"/>
+    </g>
+
+    <!-- heads -->
+    <g fill="#f8d7b3" stroke="#b45309" stroke-width="2">
+      <circle cx="276" cy="174" r="27"/>
+      <circle cx="344" cy="174" r="27"/>
+      <circle cx="584" cy="174" r="27"/>
+      <circle cx="658" cy="174" r="27"/>
+      <circle cx="732" cy="174" r="27"/>
+    </g>
+
+    <!-- leaders from each person to their bit strip -->
+    <g stroke-width="2" opacity="0.75">
+      <line x1="274" y1="300" x2="238" y2="322" stroke="#3b82f6"/>
+      <line x1="346" y1="300" x2="358" y2="322" stroke="#f59e0b"/>
+      <line x1="582" y1="300" x2="523" y2="322" stroke="#22c55e"/>
+      <line x1="658" y1="300" x2="643" y2="322" stroke="#a78bfa"/>
+      <line x1="734" y1="300" x2="763" y2="322" stroke="#22d3ee"/>
+    </g>
+
+    <!-- bit strips -->
+    <g stroke-width="1.5">
+      <!-- alice -->
+      <rect x="183" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="206" y="322" width="18" height="18" rx="4" fill="#f59e0b" stroke="#f59e0b"/>
+      <rect x="229" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="252" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="275" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+
+      <!-- bob -->
+      <rect x="303" y="322" width="18" height="18" rx="4" fill="#3b82f6" stroke="#3b82f6"/>
+      <rect x="326" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="349" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="372" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="395" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+
+      <!-- cid -->
+      <rect x="468" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="491" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="514" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22c55e" opacity="0.55"/>
+      <rect x="537" y="322" width="18" height="18" rx="4" fill="#a78bfa" stroke="#a78bfa"/>
+      <rect x="560" y="322" width="18" height="18" rx="4" fill="#22d3ee" stroke="#22d3ee"/>
+
+      <!-- dana -->
+      <rect x="588" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="611" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="634" y="322" width="18" height="18" rx="4" fill="#22c55e" stroke="#22c55e"/>
+      <rect x="657" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#a78bfa" opacity="0.55"/>
+      <rect x="680" y="322" width="18" height="18" rx="4" fill="#22d3ee" stroke="#22d3ee"/>
+
+      <!-- eve -->
+      <rect x="708" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#3b82f6" opacity="0.55"/>
+      <rect x="731" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#f59e0b" opacity="0.55"/>
+      <rect x="754" y="322" width="18" height="18" rx="4" fill="#22c55e" stroke="#22c55e"/>
+      <rect x="777" y="322" width="18" height="18" rx="4" fill="#a78bfa" stroke="#a78bfa"/>
+      <rect x="800" y="322" width="18" height="18" rx="4" fill="#0f172a" stroke="#22d3ee" opacity="0.55"/>
+    </g>
+
+    <!-- names -->
+    <g text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#e2e8f0">
+      <text x="238" y="364">alice</text>
+      <text x="358" y="364">bob</text>
+      <text x="523" y="364">cid</text>
+      <text x="643" y="364">dana</text>
+      <text x="763" y="364">eve</text>
+    </g>
+  </g>
+</svg>

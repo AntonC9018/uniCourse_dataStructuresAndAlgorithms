@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="robotTitle robotDesc">
+  <title id="robotTitle">A robot moving between delivery destinations on a map</title>
+  <desc id="robotDesc">A robot starts at position (0, 3) on a grid with four numbered destinations. It travels to destination one and then destination three, and the change in x, the change in y and the final position are unknown.</desc>
+
+  <defs>
+    <linearGradient id="mapPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- grid -->
+  <rect x="80" y="110" width="600" height="320" rx="10" fill="url(#mapPanel)" stroke="#334155" stroke-width="2"/>
+  <g stroke="#1e293b" stroke-width="1.5">
+    <line x1="180" y1="110" x2="180" y2="430"/>
+    <line x1="280" y1="110" x2="280" y2="430"/>
+    <line x1="380" y1="110" x2="380" y2="430"/>
+    <line x1="480" y1="110" x2="480" y2="430"/>
+    <line x1="580" y1="110" x2="580" y2="430"/>
+    <line x1="80" y1="190" x2="680" y2="190"/>
+    <line x1="80" y1="270" x2="680" y2="270"/>
+    <line x1="80" y1="350" x2="680" y2="350"/>
+  </g>
+
+  <!-- axis indices -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b" text-anchor="middle">
+    <text x="130" y="100">0</text>
+    <text x="230" y="100">1</text>
+    <text x="330" y="100">2</text>
+    <text x="430" y="100">3</text>
+    <text x="530" y="100">4</text>
+    <text x="630" y="100">5</text>
+    <text x="66" y="155">0</text>
+    <text x="66" y="235">1</text>
+    <text x="66" y="315">2</text>
+    <text x="66" y="395">3</text>
+  </g>
+
+  <!-- route -->
+  <g fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 6">
+    <path d="M 150 380 Q 300 290 414 234" stroke="#f59e0b"/>
+    <path d="M 420.5 240.3 Q 420 320 339.5 369.7" stroke="#22d3ee"/>
+  </g>
+  <polygon points="414,234 403.1,248.3 396.1,233.9" fill="#f59e0b"/>
+  <polygon points="339.5,369.7 348.9,354.5 357.3,368.1" fill="#22d3ee"/>
+
+  <!-- start robot -->
+  <g>
+    <rect x="112" y="368" width="36" height="30" rx="6" fill="#3b82f6"/>
+    <rect x="118" y="374" width="24" height="12" rx="3" fill="#0f172a"/>
+    <circle cx="124" cy="380" r="3" fill="#60a5fa"/>
+    <circle cx="136" cy="380" r="3" fill="#60a5fa"/>
+    <line x1="130" y1="368" x2="130" y2="358" stroke="#3b82f6" stroke-width="2.5"/>
+    <circle cx="130" cy="355" r="4" fill="#60a5fa"/>
+  </g>
+
+  <!-- destinations -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" text-anchor="middle">
+    <circle cx="230" cy="145" r="18" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <text x="230" y="151" fill="#cbd5e1">0</text>
+    <circle cx="430" cy="225" r="18" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="430" y="231" fill="#fbbf24">1</text>
+    <circle cx="630" cy="305" r="18" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <text x="630" y="311" fill="#cbd5e1">2</text>
+    <circle cx="330" cy="385" r="18" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="330" y="391" fill="#fbbf24">3</text>
+  </g>
+
+  <!-- movement questions -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+    <rect x="720" y="110" width="230" height="115" rx="14" fill="url(#mapPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="740" y="140" font-size="17" font-weight="600" fill="#f59e0b">move 1</text>
+    <rect x="730" y="160" width="98" height="42" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="779" y="187" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#fbbf24">Δx ?</text>
+    <rect x="842" y="160" width="98" height="42" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="891" y="187" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#fbbf24">Δy ?</text>
+
+    <rect x="720" y="245" width="230" height="115" rx="14" fill="url(#mapPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="740" y="275" font-size="17" font-weight="600" fill="#22d3ee">move 2</text>
+    <rect x="730" y="295" width="98" height="42" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+    <text x="779" y="322" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#67e8f9">Δx ?</text>
+    <rect x="842" y="295" width="98" height="42" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+    <text x="891" y="322" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#67e8f9">Δy ?</text>
+
+    <rect x="720" y="380" width="230" height="80" rx="14" fill="url(#mapPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="740" y="428" font-size="17" font-weight="600" fill="#94a3b8">final position</text>
+    <circle cx="900" cy="420" r="20" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="900" y="429" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+</svg>

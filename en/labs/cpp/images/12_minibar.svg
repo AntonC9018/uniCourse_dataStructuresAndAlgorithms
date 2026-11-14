@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="minibarTitle minibarDesc">
+  <title id="minibarTitle">Taking drinks and snacks from a hotel minibar</title>
+  <desc id="minibarDesc">A minibar has four slots with cola, chips, water and chocolate, each with a stock count. A price table lists the same products. Cola and water are selected, and the room bill is unknown.</desc>
+
+  <defs>
+    <linearGradient id="barPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- minibar -->
+  <rect x="60" y="90" width="480" height="250" rx="16" fill="url(#barPanel)" stroke="#334155" stroke-width="2"/>
+  <g stroke="#475569" stroke-width="2">
+    <line x1="180" y1="90" x2="180" y2="340"/>
+    <line x1="300" y1="90" x2="300" y2="340"/>
+    <line x1="420" y1="90" x2="420" y2="340"/>
+  </g>
+
+  <!-- slot 0: cola, selected -->
+  <g>
+    <rect x="68" y="98" width="104" height="234" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="68" y="98" width="104" height="234" rx="10" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="96" y="150" width="48" height="80" rx="8" fill="#b91c1c" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="96" y="160" width="48" height="10" fill="#fca5a5"/>
+    <rect x="104" y="132" width="32" height="20" rx="4" fill="#94a3b8"/>
+    <rect x="98" y="270" width="44" height="30" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="120" y="291" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">4</text>
+  </g>
+
+  <!-- slot 1: chips -->
+  <g>
+    <path d="M 208 168 L 272 158 L 280 250 L 216 260 Z" fill="#eab308" stroke="#a16207" stroke-width="2"/>
+    <path d="M 216 178 L 268 170" stroke="#a16207" stroke-width="2"/>
+    <rect x="218" y="270" width="44" height="30" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="240" y="291" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#cbd5e1">2</text>
+  </g>
+
+  <!-- slot 2: water, selected -->
+  <g>
+    <rect x="308" y="98" width="104" height="234" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="308" y="98" width="104" height="234" rx="10" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="342" y="140" width="36" height="14" rx="4" fill="#38bdf8"/>
+    <path d="M 338 154 H 382 L 386 232 H 334 Z" fill="#0ea5e9" opacity="0.75" stroke="#0369a1" stroke-width="2"/>
+    <rect x="334" y="196" width="52" height="8" fill="#bae6fd"/>
+    <rect x="338" y="270" width="44" height="30" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="360" y="291" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">5</text>
+  </g>
+
+  <!-- slot 3: chocolate -->
+  <g>
+    <rect x="448" y="168" width="54" height="92" rx="4" fill="#7c2d12" stroke="#431407" stroke-width="2"/>
+    <g fill="#9a3412">
+      <rect x="454" y="174" width="18" height="18" rx="2"/>
+      <rect x="478" y="174" width="18" height="18" rx="2"/>
+      <rect x="454" y="196" width="18" height="18" rx="2"/>
+      <rect x="478" y="196" width="18" height="18" rx="2"/>
+      <rect x="454" y="218" width="18" height="18" rx="2"/>
+      <rect x="478" y="218" width="18" height="18" rx="2"/>
+    </g>
+    <rect x="458" y="270" width="44" height="30" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="480" y="291" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#cbd5e1">1</text>
+  </g>
+
+  <!-- price table -->
+  <rect x="620" y="90" width="320" height="250" rx="16" fill="url(#barPanel)" stroke="#334155" stroke-width="2"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" text-anchor="end">
+    <rect x="632" y="106" width="296" height="46" rx="8" fill="#78350f" opacity="0.3"/>
+    <text x="912" y="136" fill="#fbbf24">$2.00</text>
+    <text x="912" y="190" fill="#cbd5e1">$3.00</text>
+    <rect x="632" y="206" width="296" height="46" rx="8" fill="#78350f" opacity="0.3"/>
+    <text x="912" y="236" fill="#fbbf24">$1.50</text>
+    <text x="912" y="290" fill="#cbd5e1">$2.50</text>
+  </g>
+  <g>
+    <rect x="648" y="114" width="20" height="30" rx="4" fill="#b91c1c"/>
+    <path d="M 654 172 L 676 166 L 680 196 L 658 202 Z" fill="#eab308"/>
+    <rect x="654" y="214" width="16" height="30" rx="4" fill="#0ea5e9"/>
+    <rect x="652" y="262" width="24" height="30" rx="3" fill="#7c2d12"/>
+  </g>
+
+  <!-- take arrows and quantities -->
+  <g>
+    <line x1="120" y1="340" x2="120" y2="362" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="112,362 120,376 128,362" fill="#f59e0b"/>
+    <rect x="90" y="384" width="60" height="32" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="120" y="407" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">×1</text>
+  </g>
+  <g>
+    <line x1="360" y1="340" x2="360" y2="362" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="352,362 360,376 368,362" fill="#f59e0b"/>
+    <rect x="330" y="384" width="60" height="32" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="360" y="407" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">×2</text>
+  </g>
+
+  <!-- bill -->
+  <g>
+    <rect x="620" y="380" width="320" height="100" rx="12" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="660" y="440" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#94a3b8">bill</text>
+    <circle cx="872" cy="430" r="24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="872" y="439" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+  <g stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round">
+    <line x1="200" y1="440" x2="596" y2="440"/>
+  </g>
+  <polygon points="596,431 612,440 596,449" fill="#60a5fa"/>
+</svg>

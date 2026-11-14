@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="busFaresTitle busFaresDesc">
+  <title id="busFaresTitle">Buying bus tickets from a fare table</title>
+  <desc id="busFaresDesc">A fare table lists prices for adults, students and children. The student fare is selected and two tickets are being bought with a ten dollar note; the change is unknown.</desc>
+
+  <defs>
+    <linearGradient id="farePanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="note" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- fare table -->
+  <rect x="60" y="90" width="340" height="340" rx="16" fill="url(#farePanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- adult row -->
+  <g>
+    <circle cx="130" cy="158" r="13" fill="#94a3b8"/>
+    <path d="M 110 214 V 186 Q 110 176 120 176 H 140 Q 150 176 150 186 V 214 Z" fill="#94a3b8"/>
+    <text x="370" y="200" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#e2e8f0">$4.00</text>
+  </g>
+
+  <!-- student row, selected -->
+  <g>
+    <rect x="78" y="232" width="304" height="84" rx="10" fill="#78350f" opacity="0.35"/>
+    <rect x="78" y="232" width="304" height="84" rx="10" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="130" cy="256" r="13" fill="#e2e8f0"/>
+    <path d="M 110 312 V 284 Q 110 274 120 274 H 140 Q 150 274 150 284 V 312 Z" fill="#e2e8f0"/>
+    <rect x="152" y="276" width="14" height="22" rx="3" fill="#f59e0b"/>
+    <text x="370" y="286" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#fbbf24">$2.50</text>
+  </g>
+
+  <!-- child row -->
+  <g>
+    <circle cx="130" cy="352" r="10" fill="#64748b"/>
+    <path d="M 114 398 V 378 Q 114 370 122 370 H 138 Q 146 370 146 378 V 398 Z" fill="#64748b"/>
+    <text x="370" y="378" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#cbd5e1">$1.50</text>
+  </g>
+
+  <!-- arrow from selected fare to tickets -->
+  <g stroke="#f59e0b" stroke-width="3" stroke-linecap="round">
+    <line x1="420" y1="270" x2="466" y2="270"/>
+  </g>
+  <polygon points="466,261 482,270 466,279" fill="#f59e0b"/>
+
+  <!-- ticket stack -->
+  <g>
+    <rect x="510" y="300" width="130" height="58" rx="10" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <rect x="500" y="290" width="130" height="58" rx="10" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <g>
+      <rect x="490" y="280" width="130" height="58" rx="10" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="520" y1="280" x2="520" y2="338" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <line x1="560" y1="280" x2="560" y2="338" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <circle cx="610" cy="309" r="7" fill="#f59e0b"/>
+    </g>
+    <g>
+      <rect x="538" y="228" width="52" height="34" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+      <text x="564" y="252" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">×2</text>
+    </g>
+  </g>
+
+  <!-- payment note -->
+  <g>
+    <rect x="700" y="108" width="230" height="92" rx="10" fill="url(#note)" stroke="#22c55e" stroke-width="2.5"/>
+    <rect x="712" y="120" width="206" height="68" rx="6" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="815" y="165" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#dcfce7">$10.00</text>
+  </g>
+
+  <!-- arrow from tickets to payment -->
+  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+    <line x1="626" y1="286" x2="706" y2="220"/>
+  </g>
+  <polygon points="720,208 709.7,226.9 699.5,214.6" fill="#94a3b8"/>
+
+  <!-- change tray -->
+  <g>
+    <rect x="700" y="310" width="230" height="100" rx="12" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <circle cx="815" cy="360" r="28" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="815" y="371" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- arrow from payment to change -->
+  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+    <line x1="815" y1="208" x2="815" y2="298"/>
+  </g>
+  <polygon points="806,298 815,314 824,298" fill="#94a3b8"/>
+</svg>
