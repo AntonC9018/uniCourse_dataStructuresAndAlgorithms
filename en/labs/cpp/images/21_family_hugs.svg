@@ -15,26 +15,27 @@
       <path d="M 238 300 V 236 Q 238 214 258 208 L 268 205 Q 278 202 288 205 L 298 208 Q 310 212 310 228 V 300 Z" fill="#3b82f6" stroke="#1d4ed8"/>
     </g>
 
-    <!-- arms: one over the partner's shoulder, one around the waist -->
+    <!-- arms: both start at the shoulder, one over the partner's shoulder, one around the waist -->
     <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- under-arms first, so they emerge from beneath the over-arms -->
+      <!-- dana's arm around cid's waist -->
+      <path d="M 626 230 C 622 246 618 258 608 264 C 592 272 566 272 550 266" stroke="#7c3aed" stroke-width="14"/>
+      <path d="M 626 230 C 622 246 618 258 608 264 C 592 272 566 272 550 266" stroke="#a78bfa" stroke-width="10"/>
+      <!-- eve's arm around dana's waist -->
+      <path d="M 706 230 C 702 246 698 258 688 264 C 672 272 646 272 630 266" stroke="#0e7490" stroke-width="14"/>
+      <path d="M 706 230 C 702 246 698 258 688 264 C 672 272 646 272 630 266" stroke="#22d3ee" stroke-width="10"/>
+      <!-- bob's arm around alice's waist -->
+      <path d="M 318 230 C 314 246 310 258 300 264 C 284 272 260 272 242 266" stroke="#b45309" stroke-width="14"/>
+      <path d="M 318 230 C 314 246 310 258 300 264 C 284 272 260 272 242 266" stroke="#f59e0b" stroke-width="10"/>
       <!-- cid's arm over dana's shoulder -->
       <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#15803d" stroke-width="14"/>
       <path d="M 612 222 L 660 222 C 674 222 684 230 690 244" stroke="#22c55e" stroke-width="10"/>
-      <!-- dana's arm around cid's waist -->
-      <path d="M 624 282 L 576 282 C 562 282 554 276 548 268" stroke="#7c3aed" stroke-width="14"/>
-      <path d="M 624 282 L 576 282 C 562 282 554 276 548 268" stroke="#a78bfa" stroke-width="10"/>
       <!-- dana's arm over eve's shoulder -->
       <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#7c3aed" stroke-width="14"/>
       <path d="M 692 222 L 740 222 C 754 222 764 230 768 244" stroke="#a78bfa" stroke-width="10"/>
-      <!-- eve's arm around dana's waist -->
-      <path d="M 704 282 L 656 282 C 642 282 634 276 628 268" stroke="#0e7490" stroke-width="14"/>
-      <path d="M 704 282 L 656 282 C 642 282 634 276 628 268" stroke="#22d3ee" stroke-width="10"/>
       <!-- alice's arm over bob's shoulder -->
       <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#1d4ed8" stroke-width="14"/>
       <path d="M 304 222 L 352 222 C 366 222 376 230 382 244" stroke="#3b82f6" stroke-width="10"/>
-      <!-- bob's arm around alice's waist -->
-      <path d="M 316 282 L 268 282 C 254 282 246 276 240 268" stroke="#b45309" stroke-width="14"/>
-      <path d="M 316 282 L 268 282 C 254 282 246 276 240 268" stroke="#f59e0b" stroke-width="10"/>
     </g>
 
     <!-- hands -->
