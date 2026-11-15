@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="theaterTitle theaterDesc">
+  <title id="theaterTitle">Placing a ticket in a theater seat and moving it</title>
+  <desc id="theaterDesc">A theater has three rows of four seats, with ticket numbers in occupied seats and zeros in empty ones. A new ticket is placed in one empty seat and then moved to another empty seat, leaving the first seat empty.</desc>
+
+  <defs>
+    <linearGradient id="seatPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- seats -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" text-anchor="middle">
+    <!-- row 0 -->
+    <g>
+      <rect x="140" y="120" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="215" y="170" fill="#cbd5e1">12</text>
+      <rect x="306" y="120" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="381" y="170" fill="#cbd5e1">7</text>
+      <rect x="472" y="120" width="150" height="80" rx="12" fill="#78350f" opacity="0.3"/>
+      <rect x="472" y="120" width="150" height="80" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <text x="547" y="170" fill="#fbbf24">0</text>
+      <rect x="638" y="120" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="713" y="170" fill="#cbd5e1">3</text>
+    </g>
+    <!-- row 1 -->
+    <g>
+      <rect x="140" y="240" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="215" y="290" fill="#cbd5e1">9</text>
+      <rect x="306" y="240" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="381" y="290" fill="#cbd5e1">5</text>
+      <rect x="472" y="240" width="150" height="80" rx="12" fill="#172554"/>
+      <rect x="472" y="240" width="150" height="80" rx="12" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <text x="547" y="290" fill="#60a5fa">0</text>
+      <rect x="638" y="240" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="713" y="290" fill="#cbd5e1">4</text>
+    </g>
+    <!-- row 2 -->
+    <g>
+      <rect x="140" y="360" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="215" y="410" fill="#cbd5e1">8</text>
+      <rect x="306" y="360" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="381" y="410" fill="#cbd5e1">1</text>
+      <rect x="472" y="360" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="547" y="410" fill="#cbd5e1">6</text>
+      <rect x="638" y="360" width="150" height="80" rx="12" fill="url(#seatPanel)" stroke="#475569" stroke-width="2"/>
+      <text x="713" y="410" fill="#cbd5e1">2</text>
+    </g>
+  </g>
+
+  <!-- incoming ticket -->
+  <g>
+    <rect x="505" y="30" width="84" height="40" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="547" y="58" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#fbbf24">42</text>
+    <line x1="547" y1="74" x2="547" y2="108" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="539,108 547,120 555,108" fill="#f59e0b"/>
+  </g>
+
+  <!-- move arrow to the other empty seat -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <line x1="547" y1="206" x2="547" y2="228"/>
+  </g>
+  <polygon points="539,228 547,240 555,228" fill="#60a5fa"/>
+
+  <!-- row and column indices -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b" text-anchor="middle">
+    <text x="108" y="166">0</text>
+    <text x="108" y="286">1</text>
+    <text x="108" y="406">2</text>
+    <text x="215" y="470">0</text>
+    <text x="381" y="470">1</text>
+    <text x="547" y="470">2</text>
+    <text x="713" y="470">3</text>
+  </g>
+</svg>

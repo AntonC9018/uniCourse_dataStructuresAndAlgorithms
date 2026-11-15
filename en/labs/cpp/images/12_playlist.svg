@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="playlistTitle playlistDesc">
+  <title id="playlistTitle">Seeking within a track and switching to another track</title>
+  <desc id="playlistDesc">A playlist of five tracks with durations. The third track is playing with a seek position inside it, and the remaining time is unknown. The fifth track is selected to start from the beginning.</desc>
+
+  <defs>
+    <linearGradient id="listPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- playlist -->
+  <rect x="60" y="70" width="500" height="380" rx="16" fill="url(#listPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- track 1 -->
+  <g>
+    <rect x="80" y="92" width="460" height="56" rx="10" fill="#0f172a"/>
+    <polygon points="100,110 100,130 116,120" fill="#64748b"/>
+    <rect x="132" y="112" width="210" height="16" rx="4" fill="#334155"/>
+    <text x="520" y="127" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#94a3b8">42 s</text>
+  </g>
+
+  <!-- track 2 -->
+  <g>
+    <rect x="80" y="162" width="460" height="56" rx="10" fill="#0f172a"/>
+    <polygon points="100,180 100,200 116,190" fill="#64748b"/>
+    <rect x="132" y="182" width="170" height="16" rx="4" fill="#334155"/>
+    <text x="520" y="197" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#94a3b8">65 s</text>
+  </g>
+
+  <!-- track 3, playing -->
+  <g>
+    <rect x="80" y="232" width="460" height="56" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="80" y="232" width="460" height="56" rx="10" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <polygon points="100,250 100,270 116,260" fill="#fbbf24"/>
+    <rect x="132" y="252" width="195" height="16" rx="4" fill="#78350f"/>
+    <text x="520" y="267" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#fbbf24">80 s</text>
+  </g>
+
+  <!-- track 4 -->
+  <g>
+    <rect x="80" y="302" width="460" height="56" rx="10" fill="#0f172a"/>
+    <polygon points="100,320 100,340 116,330" fill="#64748b"/>
+    <rect x="132" y="322" width="230" height="16" rx="4" fill="#334155"/>
+    <text x="520" y="337" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#94a3b8">80 s</text>
+  </g>
+
+  <!-- track 5, selected -->
+  <g>
+    <rect x="80" y="372" width="460" height="56" rx="10" fill="#172554"/>
+    <rect x="80" y="372" width="460" height="56" rx="10" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <polygon points="100,390 100,410 116,400" fill="#60a5fa"/>
+    <rect x="132" y="392" width="155" height="16" rx="4" fill="#1e3a8a"/>
+    <text x="520" y="407" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#60a5fa">36 s</text>
+  </g>
+
+  <!-- player card -->
+  <rect x="600" y="70" width="340" height="380" rx="16" fill="url(#listPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- now playing -->
+  <g>
+    <text x="632" y="110" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">now playing</text>
+    <text x="908" y="110" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#fbbf24">80 s</text>
+    <rect x="632" y="128" width="276" height="68" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <polygon points="652,148 652,176 674,162" fill="#fbbf24"/>
+    <rect x="688" y="154" width="160" height="16" rx="4" fill="#78350f"/>
+
+    <rect x="632" y="218" width="276" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="632" y="218" width="104" height="10" rx="5" fill="#f59e0b"/>
+    <line x1="736" y1="212" x2="736" y2="234" stroke="#fbbf24" stroke-width="2"/>
+    <line x1="787" y1="212" x2="787" y2="234" stroke="#60a5fa" stroke-width="2"/>
+    <text x="632" y="254" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">30 s</text>
+    <text x="787" y="254" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">seek to 45 s</text>
+
+    <rect x="832" y="268" width="76" height="38" rx="19" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="870" y="294" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#60a5fa">? s</text>
+  </g>
+
+  <!-- next track -->
+  <g>
+    <text x="632" y="330" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">next</text>
+    <rect x="632" y="346" width="276" height="68" rx="10" fill="#172554" stroke="#3b82f6" stroke-width="2"/>
+    <polygon points="652,366 652,394 674,380" fill="#60a5fa"/>
+    <rect x="688" y="372" width="130" height="16" rx="4" fill="#1e3a8a"/>
+    <text x="892" y="400" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#60a5fa">0 s</text>
+  </g>
+</svg>

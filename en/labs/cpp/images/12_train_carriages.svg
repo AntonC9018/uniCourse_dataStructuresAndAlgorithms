@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="carriagesTitle carriagesDesc">
+  <title id="carriagesTitle">Transferring passengers between train carriages</title>
+  <desc id="carriagesDesc">Three train carriages with ten seats each. The first carriage has six passengers and the second has four. Passengers move from the first carriage to the second, and the free seats in both are unknown.</desc>
+
+  <defs>
+    <linearGradient id="carriageBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- carriage 0, source: 6 passengers, 4 free seats -->
+  <g>
+    <rect x="60" y="120" width="250" height="220" rx="18" fill="url(#carriageBody)" stroke="#f59e0b" stroke-width="3"/>
+    <g fill="#fbbf24">
+      <circle cx="106" cy="176" r="9"/><circle cx="146" cy="176" r="9"/><circle cx="186" cy="176" r="9"/><circle cx="226" cy="176" r="9"/><circle cx="266" cy="176" r="9"/>
+      <circle cx="106" cy="216" r="9"/>
+    </g>
+    <g fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4 4">
+      <rect x="134" y="204" width="24" height="24" rx="6"/>
+      <rect x="174" y="204" width="24" height="24" rx="6"/>
+      <rect x="214" y="204" width="24" height="24" rx="6"/>
+      <rect x="254" y="204" width="24" height="24" rx="6"/>
+    </g>
+    <g fill="#f59e0b">
+      <circle cx="96" cy="340" r="12"/><circle cx="274" cy="340" r="12"/>
+    </g>
+    <g fill="#0f172a">
+      <circle cx="96" cy="340" r="5"/><circle cx="274" cy="340" r="5"/>
+    </g>
+  </g>
+
+  <!-- carriage 1, target: 4 passengers, 6 free seats -->
+  <g>
+    <rect x="375" y="120" width="250" height="220" rx="18" fill="url(#carriageBody)" stroke="#3b82f6" stroke-width="3"/>
+    <g fill="#60a5fa">
+      <circle cx="421" cy="176" r="9"/><circle cx="461" cy="176" r="9"/><circle cx="501" cy="176" r="9"/><circle cx="541" cy="176" r="9"/>
+    </g>
+    <g fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4 4">
+      <rect x="569" y="164" width="24" height="24" rx="6"/>
+      <rect x="409" y="204" width="24" height="24" rx="6"/>
+      <rect x="449" y="204" width="24" height="24" rx="6"/>
+      <rect x="489" y="204" width="24" height="24" rx="6"/>
+      <rect x="529" y="204" width="24" height="24" rx="6"/>
+      <rect x="569" y="204" width="24" height="24" rx="6"/>
+    </g>
+    <g fill="#3b82f6">
+      <circle cx="411" cy="340" r="12"/><circle cx="589" cy="340" r="12"/>
+    </g>
+    <g fill="#0f172a">
+      <circle cx="411" cy="340" r="5"/><circle cx="589" cy="340" r="5"/>
+    </g>
+  </g>
+
+  <!-- carriage 2: 8 passengers, 2 free seats -->
+  <g>
+    <rect x="690" y="120" width="250" height="220" rx="18" fill="url(#carriageBody)" stroke="#475569" stroke-width="2"/>
+    <g fill="#94a3b8">
+      <circle cx="736" cy="176" r="9"/><circle cx="776" cy="176" r="9"/><circle cx="816" cy="176" r="9"/><circle cx="856" cy="176" r="9"/><circle cx="896" cy="176" r="9"/>
+      <circle cx="736" cy="216" r="9"/><circle cx="776" cy="216" r="9"/><circle cx="816" cy="216" r="9"/>
+    </g>
+    <g fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4 4">
+      <rect x="844" y="204" width="24" height="24" rx="6"/>
+      <rect x="884" y="204" width="24" height="24" rx="6"/>
+    </g>
+    <g fill="#475569">
+      <circle cx="726" cy="340" r="12"/><circle cx="904" cy="340" r="12"/>
+    </g>
+    <g fill="#0f172a">
+      <circle cx="726" cy="340" r="5"/><circle cx="904" cy="340" r="5"/>
+    </g>
+  </g>
+
+  <!-- transfer arrow -->
+  <g fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round">
+    <path d="M 310 96 C 350 62 420 62 452 88"/>
+  </g>
+  <polygon points="470,104 448,100 456,82" fill="#f59e0b"/>
+  <g stroke="#475569" stroke-width="6" stroke-linecap="round">
+    <line x1="310" y1="250" x2="375" y2="250"/>
+    <line x1="625" y1="250" x2="690" y2="250"/>
+  </g>
+
+  <!-- free seat questions -->
+  <g>
+    <circle cx="185" cy="440" r="26" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="185" y="450" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#60a5fa">?</text>
+    <circle cx="500" cy="440" r="26" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="500" y="450" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+</svg>

@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="minibarTitle minibarDesc">
+  <title id="minibarTitle">Taking drinks and snacks from a hotel minibar</title>
+  <desc id="minibarDesc">A minibar has four slots with cola, chips, water and chocolate, each with a stock count. A price table lists the same products by name. Cola and water are selected, and the room bill is unknown.</desc>
+
+  <defs>
+    <linearGradient id="barPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="colaBody" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="45%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    <linearGradient id="waterBody" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="45%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- minibar -->
+  <rect x="60" y="90" width="480" height="250" rx="16" fill="url(#barPanel)" stroke="#334155" stroke-width="2"/>
+  <g stroke="#475569" stroke-width="2">
+    <line x1="180" y1="90" x2="180" y2="340"/>
+    <line x1="300" y1="90" x2="300" y2="340"/>
+    <line x1="420" y1="90" x2="420" y2="340"/>
+  </g>
+
+  <!-- slot 0: cola, selected -->
+  <g>
+    <rect x="68" y="98" width="104" height="234" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="68" y="98" width="104" height="234" rx="10" fill="none" stroke="#f59e0b" stroke-width="2"/>
+
+    <!-- bottle -->
+    <rect x="112" y="116" width="16" height="12" rx="2" fill="#991b1b"/>
+    <rect x="114" y="126" width="12" height="14" fill="#b91c1c"/>
+    <path d="M 114 140 Q 114 150 104 158 V 254 Q 104 262 112 262 H 128 Q 136 262 136 254 V 158 Q 126 150 126 140 Z" fill="url(#colaBody)" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="104" y="184" width="32" height="46" fill="#f8fafc"/>
+    <rect x="104" y="184" width="32" height="8" fill="#dc2626"/>
+    <text x="120" y="219" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="700" fill="#b91c1c">cola</text>
+
+    <rect x="98" y="282" width="44" height="30" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="120" y="303" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">4</text>
+  </g>
+
+  <!-- slot 1: chips -->
+  <g>
+    <!-- bag -->
+    <path d="M 210 134 Q 210 124 220 122 H 252 Q 262 124 262 134 V 248 Q 262 258 252 260 H 220 Q 210 258 210 248 Z" fill="#facc15" stroke="#a16207" stroke-width="2"/>
+    <path d="M 212 128 L 220 122 L 228 128 L 236 122 L 244 128 L 252 122 L 260 128" fill="none" stroke="#a16207" stroke-width="2"/>
+    <path d="M 212 254 L 220 260 L 228 254 L 236 260 L 244 254 L 252 260 L 260 254" fill="none" stroke="#a16207" stroke-width="2"/>
+    <rect x="210" y="170" width="52" height="44" fill="#dc2626"/>
+    <text x="236" y="199" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="700" fill="#fef2f2">chips</text>
+    <circle cx="236" cy="152" r="10" fill="#fef2f2" opacity="0.6"/>
+
+    <rect x="214" y="282" width="44" height="30" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="236" y="303" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#cbd5e1">2</text>
+  </g>
+
+  <!-- slot 2: water, selected -->
+  <g>
+    <rect x="308" y="98" width="104" height="234" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="308" y="98" width="104" height="234" rx="10" fill="none" stroke="#f59e0b" stroke-width="2"/>
+
+    <!-- bottle -->
+    <rect x="350" y="116" width="20" height="12" rx="2" fill="#0284c7"/>
+    <rect x="352" y="126" width="16" height="12" fill="#38bdf8"/>
+    <path d="M 352 138 Q 352 148 342 156 V 254 Q 342 262 350 262 H 370 Q 378 262 378 254 V 156 Q 368 148 368 138 Z" fill="url(#waterBody)" stroke="#0ea5e9" stroke-width="2"/>
+    <path d="M 344 170 V 252 Q 344 260 350 260 H 370 Q 376 260 376 252 V 170 Z" fill="#38bdf8" opacity="0.45"/>
+    <rect x="342" y="190" width="36" height="40" fill="#f0f9ff"/>
+    <text x="360" y="215" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#0369a1">water</text>
+
+    <rect x="338" y="282" width="44" height="30" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="360" y="303" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">5</text>
+  </g>
+
+  <!-- slot 3: chocolate -->
+  <g>
+    <!-- bar -->
+    <rect x="446" y="130" width="68" height="132" rx="5" fill="#7c2d12" stroke="#431407" stroke-width="2"/>
+    <g fill="#9a3412">
+      <rect x="452" y="136" width="17" height="22" rx="2"/>
+      <rect x="471" y="136" width="17" height="22" rx="2"/>
+      <rect x="490" y="136" width="17" height="22" rx="2"/>
+      <rect x="452" y="161" width="17" height="22" rx="2"/>
+      <rect x="471" y="161" width="17" height="22" rx="2"/>
+      <rect x="490" y="161" width="17" height="22" rx="2"/>
+      <rect x="452" y="186" width="17" height="22" rx="2"/>
+      <rect x="471" y="186" width="17" height="22" rx="2"/>
+      <rect x="490" y="186" width="17" height="22" rx="2"/>
+    </g>
+    <!-- wrapper -->
+    <rect x="444" y="216" width="72" height="48" rx="4" fill="#b91c1c" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="444" y="226" width="72" height="6" fill="#fbbf24"/>
+    <text x="480" y="253" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="700" fill="#fef2f2">choc</text>
+
+    <rect x="458" y="282" width="44" height="30" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="480" y="303" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#cbd5e1">1</text>
+  </g>
+
+  <!-- price table -->
+  <rect x="620" y="90" width="320" height="250" rx="16" fill="url(#barPanel)" stroke="#334155" stroke-width="2"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20">
+    <!-- cola -->
+    <rect x="632" y="104" width="296" height="54" rx="8" fill="#78350f" opacity="0.3"/>
+    <rect x="632" y="104" width="296" height="54" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <text x="648" y="139" fill="#fbbf24">Cola</text>
+    <text x="912" y="139" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#fbbf24">$2.00</text>
+    <!-- chips -->
+    <text x="648" y="193" fill="#cbd5e1">Chips</text>
+    <text x="912" y="193" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#cbd5e1">$3.00</text>
+    <!-- water -->
+    <rect x="632" y="212" width="296" height="54" rx="8" fill="#78350f" opacity="0.3"/>
+    <rect x="632" y="212" width="296" height="54" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <text x="648" y="247" fill="#fbbf24">Water</text>
+    <text x="912" y="247" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#fbbf24">$1.50</text>
+    <!-- chocolate -->
+    <text x="648" y="301" fill="#cbd5e1">Chocolate</text>
+    <text x="912" y="301" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#cbd5e1">$2.50</text>
+  </g>
+
+  <!-- take arrows and quantities -->
+  <g>
+    <line x1="120" y1="340" x2="120" y2="362" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="112,362 120,376 128,362" fill="#f59e0b"/>
+    <rect x="90" y="384" width="60" height="32" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="120" y="407" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">×1</text>
+  </g>
+  <g>
+    <line x1="360" y1="340" x2="360" y2="362" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="352,362 360,376 368,362" fill="#f59e0b"/>
+    <rect x="330" y="384" width="60" height="32" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="360" y="407" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">×2</text>
+  </g>
+
+  <!-- bill -->
+  <g>
+    <rect x="620" y="380" width="320" height="100" rx="12" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+
+    <!-- receipt -->
+    <path d="M 652 402 H 712 V 450 L 706 456 L 700 450 L 694 456 L 688 450 L 682 456 L 676 450 L 670 456 L 664 450 L 658 456 L 652 450 Z" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+    <g stroke="#64748b" stroke-width="3" stroke-linecap="round">
+      <line x1="662" y1="414" x2="702" y2="414"/>
+      <line x1="662" y1="426" x2="702" y2="426"/>
+      <line x1="662" y1="438" x2="688" y2="438"/>
+    </g>
+
+    <circle cx="856" cy="430" r="26" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="856" y="440" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- arrow from the taken items to the bill -->
+  <g stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round">
+    <line x1="430" y1="430" x2="596" y2="430"/>
+  </g>
+  <polygon points="596,421 612,430 596,439" fill="#60a5fa"/>
+</svg>

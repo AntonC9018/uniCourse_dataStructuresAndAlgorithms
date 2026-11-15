@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="laundryTitle laundryDesc">
+  <title id="laundryTitle">Taking clean shirts out and soaking dirty shirts</title>
+  <desc id="laundryDesc">A laundry with two baskets. Basket 0 holds two dirty shirts and one clean shirt. The clean shirt is lifted out, and water is poured on the dirty shirts. Basket 1 holds a soaked shirt.</desc>
+
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <path id="shirt" d="M 30 0 H 42 C 44 8 56 8 58 0 H 70 L 100 24 L 86 42 L 72 32 V 100 H 28 V 32 L 14 42 L 0 24 Z"/>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- basket 0 -->
+  <g>
+    <text x="285" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">0</text>
+    <path d="M 100 248 H 470 L 450 400 H 120 Z" fill="url(#panel)" stroke="#64748b" stroke-width="3"/>
+    <rect x="96" y="232" width="378" height="18" rx="9" fill="#334155" stroke="#64748b" stroke-width="2"/>
+
+    <!-- dirty shirt 0 -->
+    <use href="#shirt" transform="translate(120,285)" fill="#92400e" stroke="#78350f" stroke-width="2"/>
+    <g fill="#451a03">
+      <ellipse cx="152" cy="330" rx="9" ry="6"/>
+      <ellipse cx="184" cy="352" rx="7" ry="5"/>
+      <ellipse cx="160" cy="372" rx="8" ry="5"/>
+    </g>
+
+    <!-- dirty shirt 1 -->
+    <use href="#shirt" transform="translate(235,285)" fill="#92400e" stroke="#78350f" stroke-width="2"/>
+    <g fill="#451a03">
+      <ellipse cx="267" cy="330" rx="8" ry="6"/>
+      <ellipse cx="296" cy="354" rx="9" ry="5"/>
+      <ellipse cx="272" cy="374" rx="7" ry="5"/>
+    </g>
+
+    <!-- clean shirt 2 -->
+    <use href="#shirt" transform="translate(350,285)" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <g stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round">
+      <line x1="410" y1="312" x2="410" y2="326"/>
+      <line x1="403" y1="319" x2="417" y2="319"/>
+    </g>
+  </g>
+
+  <!-- basket 1 -->
+  <g>
+    <text x="715" y="150" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">1</text>
+    <path d="M 530 248 H 900 L 880 400 H 550 Z" fill="url(#panel)" stroke="#64748b" stroke-width="3"/>
+    <rect x="526" y="232" width="378" height="18" rx="9" fill="#334155" stroke="#64748b" stroke-width="2"/>
+
+    <!-- soaked shirt -->
+    <use href="#shirt" transform="translate(550,285)" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2"/>
+    <g fill="#1e40af" opacity="0.75">
+      <ellipse cx="585" cy="335" rx="10" ry="7"/>
+      <ellipse cx="615" cy="362" rx="8" ry="6"/>
+    </g>
+    <path d="M 600 300 C 600 300, 608 310, 608 315 A 8 8 0 0 1 592 315 C 592 310, 600 300, 600 300 Z" fill="#bfdbfe"/>
+
+    <!-- empty slots -->
+    <rect x="668" y="290" width="86" height="88" rx="6" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+    <rect x="782" y="290" width="86" height="88" rx="6" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+  </g>
+
+  <!-- clean shirt lifted out -->
+  <g>
+    <line x1="400" y1="278" x2="400" y2="218" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="392,218 400,204 408,218" fill="#60a5fa"/>
+
+    <!-- hanger -->
+    <g fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+      <path d="M 400 190 C 400 178 412 178 412 186"/>
+      <path d="M 400 190 L 372 210 H 428 Z"/>
+    </g>
+
+    <circle cx="462" cy="196" r="17" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="462" y="204" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- soak dirty shirts -->
+  <g>
+    <g fill="#60a5fa">
+      <path d="M 170 186 C 170 186, 180 199, 180 205 A 10 10 0 0 1 160 205 C 160 199, 170 186, 170 186 Z"/>
+      <path d="M 285 186 C 285 186, 295 199, 295 205 A 10 10 0 0 1 275 205 C 275 199, 285 186, 285 186 Z"/>
+    </g>
+    <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+      <line x1="170" y1="218" x2="170" y2="260"/>
+      <line x1="285" y1="218" x2="285" y2="260"/>
+    </g>
+    <g fill="#60a5fa">
+      <polygon points="162,260 170,274 178,260"/>
+      <polygon points="277,260 285,274 293,260"/>
+    </g>
+
+    <circle cx="228" cy="196" r="17" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="228" y="204" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+</svg>

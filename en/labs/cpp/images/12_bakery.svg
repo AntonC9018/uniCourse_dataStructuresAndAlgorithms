@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="bakeryTitle bakeryDesc">
+  <title id="bakeryTitle">Preparing batches from a recipe at a bakery</title>
+  <desc id="bakeryDesc">Three recipe cards each list flour and sugar per batch. The middle recipe is selected for three batches. Flour and sugar come from the store into the oven, and the finished batch counter is unknown.</desc>
+
+  <defs>
+    <linearGradient id="bakeryPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <linearGradient id="ovenBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- recipe cards (centered: 100..340, 380..620, 660..900) -->
+  <g>
+    <!-- recipe 1 -->
+    <rect x="100" y="55" width="240" height="130" rx="14" fill="url(#bakeryPanel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 125 81 H 135 L 138 89 H 122 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="118" y="89" width="24" height="20" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <text x="154" y="103" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#e2e8f0">flour</text>
+    <text x="322" y="103" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">200 g</text>
+    <path d="M 125 137 H 135 L 138 145 H 122 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="118" y="145" width="24" height="20" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+    <g fill="#64748b">
+      <rect x="122" y="149" width="5" height="5" rx="1"/>
+      <rect x="129" y="149" width="5" height="5" rx="1"/>
+      <rect x="125" y="156" width="5" height="5" rx="1"/>
+    </g>
+    <text x="154" y="159" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#e2e8f0">sugar</text>
+    <text x="322" y="159" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">50 g</text>
+
+    <!-- recipe 2, selected -->
+    <rect x="380" y="55" width="240" height="130" rx="14" fill="#78350f" opacity="0.3"/>
+    <rect x="380" y="55" width="240" height="130" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <path d="M 405 81 H 415 L 418 89 H 402 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="398" y="89" width="24" height="20" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <text x="434" y="103" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#fbbf24">flour</text>
+    <text x="602" y="103" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">150 g</text>
+    <path d="M 405 137 H 415 L 418 145 H 402 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="398" y="145" width="24" height="20" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+    <g fill="#64748b">
+      <rect x="402" y="149" width="5" height="5" rx="1"/>
+      <rect x="409" y="149" width="5" height="5" rx="1"/>
+      <rect x="405" y="156" width="5" height="5" rx="1"/>
+    </g>
+    <text x="434" y="159" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#fbbf24">sugar</text>
+    <text x="602" y="159" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">80 g</text>
+
+    <!-- recipe 3 -->
+    <rect x="660" y="55" width="240" height="130" rx="14" fill="url(#bakeryPanel)" stroke="#334155" stroke-width="2"/>
+    <path d="M 685 81 H 695 L 698 89 H 682 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="678" y="89" width="24" height="20" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <text x="714" y="103" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#e2e8f0">flour</text>
+    <text x="882" y="103" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">300 g</text>
+    <path d="M 685 137 H 695 L 698 145 H 682 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="678" y="145" width="24" height="20" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+    <g fill="#64748b">
+      <rect x="682" y="149" width="5" height="5" rx="1"/>
+      <rect x="689" y="149" width="5" height="5" rx="1"/>
+      <rect x="685" y="156" width="5" height="5" rx="1"/>
+    </g>
+    <text x="714" y="159" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#e2e8f0">sugar</text>
+    <text x="882" y="159" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#cbd5e1">40 g</text>
+  </g>
+
+  <!-- selected recipe arrow with batch count -->
+  <g stroke="#f59e0b" stroke-width="3" stroke-linecap="round">
+    <line x1="500" y1="193" x2="500" y2="252"/>
+  </g>
+  <polygon points="491,252 500,268 509,252" fill="#f59e0b"/>
+  <g>
+    <rect x="466" y="206" width="68" height="32" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
+    <text x="500" y="229" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">×3</text>
+  </g>
+
+  <!-- ingredient store -->
+  <g>
+    <!-- flour sack -->
+    <g>
+      <path d="M 98 300 H 134 L 144 322 H 88 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="80" y="322" width="72" height="104" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <text x="116" y="382" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#334155">2000 g</text>
+      <text x="116" y="456" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">flour</text>
+    </g>
+    <!-- sugar sack -->
+    <g>
+      <path d="M 194 300 H 230 L 240 322 H 184 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="176" y="322" width="72" height="104" rx="10" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+      <g fill="#64748b">
+        <rect x="197" y="336" width="8" height="8" rx="1"/>
+        <rect x="208" y="336" width="8" height="8" rx="1"/>
+        <rect x="219" y="336" width="8" height="8" rx="1"/>
+        <rect x="202" y="347" width="8" height="8" rx="1"/>
+        <rect x="213" y="347" width="8" height="8" rx="1"/>
+        <rect x="208" y="358" width="8" height="8" rx="1"/>
+      </g>
+      <text x="212" y="390" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#334155">800 g</text>
+      <text x="212" y="456" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">sugar</text>
+    </g>
+  </g>
+
+  <!-- arrow from store to oven -->
+  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+    <line x1="264" y1="366" x2="384" y2="366"/>
+  </g>
+  <polygon points="384,357 400,366 384,375" fill="#94a3b8"/>
+
+  <!-- oven (centered at x=500) -->
+  <g>
+    <rect x="400" y="280" width="200" height="160" rx="14" fill="url(#ovenBody)" stroke="#64748b" stroke-width="3"/>
+    <rect x="418" y="300" width="164" height="86" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <g fill="#f59e0b">
+      <rect x="436" y="352" width="36" height="20" rx="6"/>
+      <rect x="482" y="352" width="36" height="20" rx="6"/>
+      <rect x="528" y="352" width="36" height="20" rx="6"/>
+    </g>
+    <circle cx="500" cy="412" r="12" fill="#0f172a" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="500" y1="412" x2="500" y2="404" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- arrow from oven to finished counter -->
+  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round">
+    <line x1="608" y1="366" x2="704" y2="366"/>
+  </g>
+  <polygon points="704,357 720,366 704,375" fill="#94a3b8"/>
+
+  <!-- finished batch counter -->
+  <g>
+    <rect x="720" y="300" width="200" height="120" rx="14" fill="url(#bakeryPanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="820" cy="360" r="30" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="820" y="371" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="600" fill="#60a5fa">?</text>
+  </g>
+</svg>

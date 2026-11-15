@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="shopTitle shopDesc">
+  <title id="shopTitle">Selling a product from one shop display and reading its stock on the other</title>
+  <desc id="shopDesc">Two displays each show three products with prices and stock. Bread appears on both displays. One loaf is sold from the second display, its price goes to the shop's cash, and the remaining stock read from the first display is unknown.</desc>
+
+  <defs>
+    <linearGradient id="shopPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- display A -->
+  <rect x="60" y="45" width="880" height="185" rx="16" fill="url(#shopPanel)" stroke="#334155" stroke-width="2"/>
+  <text x="80" y="75" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">display A</text>
+
+  <g>
+    <rect x="80" y="90" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <circle cx="126" cy="156" r="20" fill="#b91c1c"/>
+      <path d="M 126 138 Q 130 128 138 126" stroke="#92400e" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="136" cy="134" rx="8" ry="4" transform="rotate(-30 136 134)" fill="#22c55e"/>
+    <text x="180" y="134" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#e2e8f0">apple</text>
+    <text x="180" y="164" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="232" y="165" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$2</text>
+    <text x="180" y="191" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="232" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">10</text>
+  </g>
+
+  <g>
+    <rect x="380" y="90" width="240" height="120" rx="12" fill="#78350f" opacity="0.3"/>
+    <rect x="380" y="90" width="240" height="120" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <path d="M 404 172 V 154 Q 404 134 428 134 Q 452 134 452 154 V 172 Z" fill="#d97706" stroke="#92400e" stroke-width="2"/>
+      <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+        <line x1="418" y1="146" x2="424" y2="164"/>
+        <line x1="434" y1="144" x2="440" y2="162"/>
+      </g>
+    <text x="480" y="134" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#fbbf24">bread</text>
+    <text x="480" y="164" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="532" y="165" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$3</text>
+    <text x="480" y="191" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="532" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fbbf24">?</text>
+  </g>
+
+  <g>
+    <rect x="680" y="90" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <polygon points="712,172 712,142 724,130 736,142 736,172" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <polygon points="712,142 724,130 736,142 724,140" fill="#94a3b8"/>
+      <rect x="718" y="150" width="12" height="12" rx="2" fill="#3b82f6"/>
+    <text x="780" y="134" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#e2e8f0">milk</text>
+    <text x="780" y="164" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="832" y="165" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$4</text>
+    <text x="780" y="191" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="832" y="192" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">8</text>
+  </g>
+
+  <!-- display B -->
+  <rect x="60" y="275" width="880" height="185" rx="16" fill="url(#shopPanel)" stroke="#334155" stroke-width="2"/>
+  <text x="80" y="305" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">display B</text>
+  <rect x="740" y="282" width="180" height="34" rx="17" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+  <text x="830" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="600" fill="#4ade80">shop cash +$3</text>
+
+  <g>
+    <rect x="80" y="320" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <polygon points="106,402 150,402 150,370" fill="#fbbf24" stroke="#b45309" stroke-width="2"/>
+      <circle cx="138" cy="390" r="3.5" fill="#b45309"/>
+      <circle cx="144" cy="397" r="3" fill="#b45309"/>
+      <circle cx="130" cy="396" r="3" fill="#b45309"/>
+    <text x="180" y="364" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#e2e8f0">cheese</text>
+    <text x="180" y="394" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="232" y="395" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$5</text>
+    <text x="180" y="421" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="232" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">4</text>
+  </g>
+
+  <g>
+    <rect x="380" y="320" width="240" height="120" rx="12" fill="#172554"/>
+    <rect x="380" y="320" width="240" height="120" rx="12" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <path d="M 404 402 V 384 Q 404 364 428 364 Q 452 364 452 384 V 402 Z" fill="#d97706" stroke="#92400e" stroke-width="2"/>
+      <g stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+        <line x1="418" y1="376" x2="424" y2="394"/>
+        <line x1="434" y1="374" x2="440" y2="392"/>
+      </g>
+    <text x="480" y="364" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#93c5fd">bread</text>
+    <text x="480" y="394" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="532" y="395" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$3</text>
+    <text x="480" y="421" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="532" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#93c5fd">6</text>
+    <circle cx="602" cy="338" r="15" fill="#b91c1c" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="602" y="344" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#fecaca">−1</text>
+  </g>
+
+  <g>
+    <rect x="680" y="320" width="240" height="120" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <rect x="708" y="394" width="42" height="10" rx="3" fill="#64748b"/>
+      <ellipse cx="722" cy="384" rx="8" ry="12" fill="#f8fafc"/>
+      <ellipse cx="738" cy="384" rx="8" ry="12" fill="#e2e8f0"/>
+    <text x="780" y="364" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#e2e8f0">eggs</text>
+    <text x="780" y="394" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">price</text>
+    <text x="832" y="395" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">$4</text>
+    <text x="780" y="421" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#64748b">stock</text>
+    <text x="832" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">12</text>
+  </g>
+
+  <!-- shared bread link -->
+  <g stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5" fill="none">
+    <line x1="500" y1="210" x2="500" y2="320"/>
+  </g>
+  <g transform="translate(500 252)">
+    <rect x="-18" y="-12" width="36" height="24" rx="7" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <g fill="none" stroke="#93c5fd" stroke-width="2.2">
+      <ellipse cx="-5" cy="0" rx="5" ry="7"/>
+      <ellipse cx="5" cy="0" rx="5" ry="7"/>
+    </g>
+  </g>
+</svg>

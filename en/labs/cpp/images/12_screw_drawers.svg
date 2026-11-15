@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="drawersTitle drawersDesc">
+  <title id="drawersTitle">Moving screws from one cabinet drawer to an empty drawer</title>
+  <desc id="drawersDesc">A cabinet with four drawers. The third drawer holds six screws and is selected, the fourth drawer is empty, and an arrow shows all screws moving from the third drawer into the fourth.</desc>
+
+  <defs>
+    <linearGradient id="cabinet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b4b63"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="drawerFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+
+    <g id="screwGray">
+      <rect x="0" y="-13" width="12" height="26" rx="3" fill="#cbd5e1"/>
+      <rect x="10" y="-6" width="6" height="12" fill="#cbd5e1"/>
+      <polygon points="15,-6 54,-4 54,4 15,6" fill="#94a3b8"/>
+      <g stroke="#475569" stroke-width="1.8" stroke-linecap="round">
+        <line x1="19" y1="5" x2="25" y2="-5"/>
+        <line x1="25" y1="4.8" x2="31" y2="-4.8"/>
+        <line x1="31" y1="4.6" x2="37" y2="-4.6"/>
+        <line x1="37" y1="4.4" x2="43" y2="-4.4"/>
+        <line x1="43" y1="4.2" x2="48" y2="-4.2"/>
+        <line x1="48" y1="4" x2="52" y2="-3.6"/>
+      </g>
+      <polygon points="54,-4 62,0 54,4" fill="#94a3b8"/>
+    </g>
+
+    <g id="screwAmber">
+      <rect x="0" y="-13" width="12" height="26" rx="3" fill="#fbbf24"/>
+      <rect x="10" y="-6" width="6" height="12" fill="#fbbf24"/>
+      <polygon points="15,-6 54,-4 54,4 15,6" fill="#f59e0b"/>
+      <g stroke="#b45309" stroke-width="1.8" stroke-linecap="round">
+        <line x1="19" y1="5" x2="25" y2="-5"/>
+        <line x1="25" y1="4.8" x2="31" y2="-4.8"/>
+        <line x1="31" y1="4.6" x2="37" y2="-4.6"/>
+        <line x1="37" y1="4.4" x2="43" y2="-4.4"/>
+        <line x1="43" y1="4.2" x2="48" y2="-4.2"/>
+        <line x1="48" y1="4" x2="52" y2="-3.6"/>
+      </g>
+      <polygon points="54,-4 62,0 54,4" fill="#f59e0b"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- cabinet -->
+  <rect x="50" y="180" width="900" height="250" rx="12" fill="url(#cabinet)" stroke="#64748b" stroke-width="3"/>
+
+  <!-- drawer 0 -->
+  <g>
+    <rect x="66" y="196" width="205" height="218" rx="8" fill="url(#drawerFront)" stroke="#475569" stroke-width="2"/>
+    <rect x="138" y="210" width="60" height="10" rx="5" fill="#64748b"/>
+    <use href="#screwGray" transform="translate(84 268)"/>
+    <use href="#screwGray" transform="translate(158 268)"/>
+    <use href="#screwGray" transform="translate(84 330)"/>
+    <use href="#screwGray" transform="translate(158 330)"/>
+  </g>
+
+  <!-- drawer 1 -->
+  <g>
+    <rect x="287" y="196" width="205" height="218" rx="8" fill="url(#drawerFront)" stroke="#475569" stroke-width="2"/>
+    <rect x="359" y="210" width="60" height="10" rx="5" fill="#64748b"/>
+    <use href="#screwGray" transform="translate(305 300)"/>
+    <use href="#screwGray" transform="translate(379 300)"/>
+  </g>
+
+  <!-- drawer 2, selected source -->
+  <g>
+    <rect x="508" y="196" width="205" height="218" rx="8" fill="#78350f" opacity="0.25"/>
+    <rect x="508" y="196" width="205" height="218" rx="8" fill="none" stroke="#f59e0b" stroke-width="3"/>
+    <rect x="580" y="210" width="60" height="10" rx="5" fill="#f59e0b"/>
+    <use href="#screwAmber" transform="translate(522 258)"/>
+    <use href="#screwAmber" transform="translate(596 258)"/>
+    <use href="#screwAmber" transform="translate(522 320)"/>
+    <use href="#screwAmber" transform="translate(596 320)"/>
+    <use href="#screwAmber" transform="translate(522 382)"/>
+    <use href="#screwAmber" transform="translate(596 382)"/>
+  </g>
+
+  <!-- drawer 3, empty target -->
+  <g>
+    <rect x="729" y="196" width="205" height="218" rx="8" fill="url(#drawerFront)" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="8 6"/>
+    <rect x="801" y="210" width="60" height="10" rx="5" fill="#3b82f6"/>
+  </g>
+
+  <!-- move arrow -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <path d="M 610 150 C 660 90 800 90 831 158" fill="none"/>
+  </g>
+  <polygon points="831,180 821,160 841,160" fill="#60a5fa"/>
+
+  <!-- drawer numbers -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#64748b" text-anchor="middle">
+    <text x="168" y="470">0</text>
+    <text x="389" y="470">1</text>
+    <text x="610" y="470">2</text>
+    <text x="831" y="470">3</text>
+  </g>
+</svg>
