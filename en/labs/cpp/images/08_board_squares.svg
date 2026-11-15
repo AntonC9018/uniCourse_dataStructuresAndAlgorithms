@@ -62,16 +62,16 @@
     <rect x="137" y="92" width="41" height="41" rx="6" fill="#78350f" opacity="0.65" stroke="#f59e0b" stroke-width="2.5"/>
     <rect x="47" y="227" width="41" height="41" rx="6" fill="#172554" opacity="0.75" stroke="#60a5fa" stroke-width="2.5"/>
 
-    <!-- Key cell numbers -->
-    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b" text-anchor="middle">
-      <text x="22" y="28">0</text>
-      <text x="67" y="28">1</text>
-      <text x="112" y="28">2</text>
-      <text x="337" y="28">7</text>
-      <text x="22" y="73">8</text>
-      <text x="157" y="118" font-size="15" font-weight="700" fill="#fbbf24">19</text>
-      <text x="67" y="253" font-size="15" font-weight="700" fill="#60a5fa">41</text>
-      <text x="337" y="343">63</text>
+    <!-- All 64 cell numbers (0..63) -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">
+      <text x="22.5" y="27.5">0</text><text x="67.5" y="27.5">1</text><text x="112.5" y="27.5">2</text><text x="157.5" y="27.5">3</text><text x="202.5" y="27.5">4</text><text x="247.5" y="27.5">5</text><text x="292.5" y="27.5">6</text><text x="337.5" y="27.5">7</text>
+      <text x="22.5" y="72.5">8</text><text x="67.5" y="72.5">9</text><text x="112.5" y="72.5">10</text><text x="157.5" y="72.5">11</text><text x="202.5" y="72.5">12</text><text x="247.5" y="72.5">13</text><text x="292.5" y="72.5">14</text><text x="337.5" y="72.5">15</text>
+      <text x="22.5" y="117.5">16</text><text x="67.5" y="117.5">17</text><text x="112.5" y="117.5">18</text><text x="157.5" y="118.5" font-size="15" font-weight="700" fill="#fbbf24">19</text><text x="202.5" y="117.5">20</text><text x="247.5" y="117.5">21</text><text x="292.5" y="117.5">22</text><text x="337.5" y="117.5">23</text>
+      <text x="22.5" y="162.5">24</text><text x="67.5" y="162.5">25</text><text x="112.5" y="162.5">26</text><text x="157.5" y="162.5">27</text><text x="202.5" y="162.5">28</text><text x="247.5" y="162.5">29</text><text x="292.5" y="162.5">30</text><text x="337.5" y="162.5">31</text>
+      <text x="22.5" y="207.5">32</text><text x="67.5" y="207.5">33</text><text x="112.5" y="207.5">34</text><text x="157.5" y="207.5">35</text><text x="202.5" y="207.5">36</text><text x="247.5" y="207.5">37</text><text x="292.5" y="207.5">38</text><text x="337.5" y="207.5">39</text>
+      <text x="22.5" y="252.5">40</text><text x="67.5" y="253.5" font-size="15" font-weight="700" fill="#60a5fa">41</text><text x="112.5" y="252.5">42</text><text x="157.5" y="252.5">43</text><text x="202.5" y="252.5">44</text><text x="247.5" y="252.5">45</text><text x="292.5" y="252.5">46</text><text x="337.5" y="252.5">47</text>
+      <text x="22.5" y="297.5">48</text><text x="67.5" y="297.5">49</text><text x="112.5" y="297.5">50</text><text x="157.5" y="297.5">51</text><text x="202.5" y="297.5">52</text><text x="247.5" y="297.5">53</text><text x="292.5" y="297.5">54</text><text x="337.5" y="297.5">55</text>
+      <text x="22.5" y="342.5">56</text><text x="67.5" y="342.5">57</text><text x="112.5" y="342.5">58</text><text x="157.5" y="342.5">59</text><text x="202.5" y="342.5">60</text><text x="247.5" y="342.5">61</text><text x="292.5" y="342.5">62</text><text x="337.5" y="342.5">63</text>
     </g>
   </g>
 

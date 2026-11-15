@@ -526,7 +526,7 @@ int main()
   Recall the value-swapping example from the variables lab:
   you cannot do it without a temporary variable.
 
-  ![Variables a and b initially holding 5 and 9 swapping values along curved arrows so a becomes 9 and b becomes 5](./images/08_swap_values.svg)
+  ![Variables a holding 5 and b holding 9 with curved swap arrows above and below showing their values being exchanged](./images/08_swap_values.svg)
 
 - **Sharing candies.**
   `N` candies are shared equally among `M` children, and the remainder goes to the youngest child.
