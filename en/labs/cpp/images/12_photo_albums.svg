@@ -72,9 +72,10 @@
     <circle cx="158" cy="374" r="7" fill="#fbbf24"/>
     <polygon points="85,420 115,388 140,420" fill="#166534"/>
     <polygon points="120,420 150,396 175,420" fill="#22c55e"/>
-    <g transform="translate(166 352)">
-      <path d="M -9 -9 A 13 13 0 1 1 9 -9" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
-      <polygon points="9,-9 4,-19 15,-18" fill="#fbbf24"/>
+    <g transform="translate(168 352)">
+      <circle r="16" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <path d="M -8 0 A 8 8 0 1 1 0 -8" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+      <polygon points="8,-8 0,-11.5 0,-4.5" fill="#fbbf24"/>
     </g>
     <rect x="85" y="446" width="90" height="24" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
     <text x="130" y="463" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">w ↔ h</text>

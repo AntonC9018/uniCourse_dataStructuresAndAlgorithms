@@ -197,7 +197,7 @@ The other bottles remain unchanged.
 A file contains five lines, each with a character count.
 Add characters to one selected line and swap two selected lines.
 
-![A file of five lines with character counts, the third line selected to receive three characters, and the first and fifth lines marked for swapping](./images/12_file_edit.svg)
+![A file of five lines with their character counts, the third line, user equals admin, selected to receive eight characters, and the first and fifth lines marked for swapping](./images/12_file_edit.svg)
 
 ### 5. Bus fares
 
@@ -240,7 +240,7 @@ Correct the recorded total for a supplied round and recalculate that round's ear
 A hotel room has a minibar with four product slots, and the hotel has a price table.
 Take specified quantities from two selected slots and update both their stock and the room's bill.
 
-![A minibar with four product slots and stock counts beside a price table, cola and water selected with quantities, and an unknown bill](./images/12_minibar.svg)
+![A minibar with four product slots and stock counts beside a price table, cola and water selected with quantities, and an unknown total](./images/12_minibar.svg)
 
 ### 11. Playlist playback
 
@@ -257,7 +257,7 @@ Two short recordings each contain three sound samples, with values between -1 an
 Mix them into a new recording using 25% of the first recording and 75% of the second at each sample position.
 Keep the original recordings unchanged.
 
-![Two recordings of three samples feeding a mixer that takes twenty-five percent of the first and seventy-five percent of the second, with three unknown samples in the mixed recording](./images/12_mix_recordings.svg)
+![Two recordings of three samples, the first scaled to twenty-five percent and the second to seventy-five percent, with the scaled pieces laid end to end for each sample and the sums marked as minus 0.2, 0.4 and 0.5](./images/12_mix_recordings.svg)
 
 ### 13. Theater seating
 
@@ -345,7 +345,7 @@ Let one product appear on both displays.
 Sell one unit selected by a supplied display position, decreasing its stock and adding its price to the shop's cash.
 Report that product's remaining stock through the other display.
 
-![Two shop displays with three products each, bread appearing on both, one loaf sold from the second display, its price added to the cash register, and the remaining stock unknown on the first display](./images/12_shop_displays.svg)
+![Two shop displays with three products each, bread appearing on both, one loaf sold from the second display, its price added to the shop's cash, and the remaining stock unknown on the first display](./images/12_shop_displays.svg)
 
 ### 23. Raw-byte storage (advanced)
 

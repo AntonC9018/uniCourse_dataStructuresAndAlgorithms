@@ -72,13 +72,15 @@
     <text x="890" y="432" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Cara</text>
   </g>
 
-  <!-- swap arrows -->
-  <g fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
-    <path d="M 690 250 C 660 222 625 252 610 292"/>
-    <path d="M 640 296 C 656 270 676 256 690 265"/>
+  <!-- swap sign -->
+  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <line x1="552" y1="250" x2="670" y2="250"/>
+    <line x1="686" y1="286" x2="568" y2="286"/>
   </g>
-  <polygon points="610,292 621.5,281.4 608.3,276.4" fill="#60a5fa"/>
-  <polygon points="690,265 674.4,263.3 682.0,251.5" fill="#60a5fa"/>
+  <g fill="#60a5fa">
+    <polygon points="670,242 686,250 670,258"/>
+    <polygon points="568,278 552,286 568,294"/>
+  </g>
 
   <!-- prize -->
   <g>

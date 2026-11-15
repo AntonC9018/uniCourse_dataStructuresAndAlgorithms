@@ -67,11 +67,15 @@
   <!-- cargo crate -->
   <g>
     <rect x="680" y="108" width="120" height="76" rx="6" fill="url(#crate)" stroke="#f59e0b" stroke-width="2.5"/>
-    <g stroke="#fbbf24" stroke-width="2">
-      <line x1="692" y1="116" x2="788" y2="176"/>
-      <line x1="788" y1="116" x2="692" y2="176"/>
+    <g stroke="#92400e" stroke-width="2">
+      <line x1="684" y1="128" x2="796" y2="128"/>
+      <line x1="684" y1="170" x2="796" y2="170"/>
     </g>
-    <text x="740" y="154" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#fef3c7">+5 t</text>
+    <g stroke="#b45309" stroke-width="2">
+      <line x1="698" y1="112" x2="698" y2="180"/>
+      <line x1="782" y1="112" x2="782" y2="180"/>
+    </g>
+    <text x="740" y="158" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#fef3c7">+5 t</text>
     <line x1="740" y1="190" x2="740" y2="214" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
     <polygon points="731,214 740,228 749,214" fill="#f59e0b"/>
   </g>

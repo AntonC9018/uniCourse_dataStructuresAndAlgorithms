@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="fileEditTitle fileEditDesc">
-  <title id="fileEditTitle">Editing lines of a file and swapping two lines</title>
-  <desc id="fileEditDesc">A file of five lines, each with a character count. The third line is selected and extra characters are sliding into it. The first and fifth lines are marked for swapping.</desc>
+  <title id="fileEditTitle">Adding characters to a line of a file and swapping two lines</title>
+  <desc id="fileEditDesc">A file of five lines with their character counts. The third line, user equals admin, is selected and eight characters are about to be added to it. The first and fifth lines are marked for swapping.</desc>
 
   <defs>
     <linearGradient id="filePanel" x1="0" y1="0" x2="0" y2="1">
@@ -12,59 +12,66 @@
   <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
 
   <!-- file -->
-  <rect x="100" y="70" width="800" height="380" rx="16" fill="url(#filePanel)" stroke="#334155" stroke-width="2"/>
+  <rect x="70" y="60" width="860" height="390" rx="16" fill="url(#filePanel)" stroke="#334155" stroke-width="2"/>
 
-  <!-- line 1, marked for swap -->
-  <g>
-    <rect x="140" y="112" width="470" height="34" rx="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
-    <rect x="152" y="120" width="180" height="18" rx="4" fill="#334155"/>
-    <text x="690" y="136" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">12</text>
+  <!-- column labels -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b">
+    <text x="150" y="100" text-anchor="end">line</text>
+    <text x="178" y="100">text</text>
+    <text x="812" y="100" text-anchor="end">chars</text>
   </g>
 
-  <!-- line 2 -->
+  <!-- line 0, marked for swap -->
   <g>
-    <rect x="152" y="178" width="120" height="18" rx="4" fill="#334155"/>
-    <text x="690" y="194" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">8</text>
+    <rect x="90" y="116" width="820" height="56" rx="10" fill="#172554" opacity="0.7"/>
+    <rect x="90" y="116" width="820" height="56" rx="10" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="150" y="151" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">0</text>
+    <text x="178" y="151" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">host = localhost</text>
+    <text x="812" y="151" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">16</text>
   </g>
 
-  <!-- line 3, selected for insertion -->
+  <!-- line 1 -->
   <g>
-    <rect x="140" y="236" width="470" height="34" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
-    <rect x="152" y="244" width="225" height="18" rx="4" fill="#334155"/>
-    <rect x="381" y="244" width="90" height="18" rx="4" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4"/>
-    <line x1="471" y1="240" x2="471" y2="266" stroke="#f59e0b" stroke-width="2"/>
-    <text x="690" y="258" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">15</text>
+    <text x="150" y="215" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">1</text>
+    <text x="178" y="215" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">port = 8080</text>
+    <text x="812" y="215" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">11</text>
   </g>
 
-  <!-- characters sliding into line 3 -->
+  <!-- line 2, selected for insertion -->
   <g>
-    <rect x="452" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
-    <rect x="484" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
-    <rect x="516" y="176" width="24" height="24" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="2"/>
-    <line x1="496" y1="206" x2="496" y2="228" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
-    <polygon points="488,228 496,242 504,228" fill="#f59e0b"/>
+    <rect x="90" y="244" width="820" height="56" rx="10" fill="#78350f" opacity="0.3"/>
+    <rect x="90" y="244" width="820" height="56" rx="10" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="150" y="279" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">2</text>
+    <text x="178" y="279" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">user = admin</text>
+    <line x1="326" y1="256" x2="326" y2="292" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="334" y="260" width="120" height="36" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="340" y="286" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#fbbf24">istrator</text>
+    <text x="812" y="279" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">12</text>
   </g>
 
-  <!-- line 4 -->
+  <!-- line 3 -->
   <g>
-    <rect x="152" y="302" width="90" height="18" rx="4" fill="#334155"/>
-    <text x="690" y="318" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">6</text>
+    <text x="150" y="343" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">3</text>
+    <text x="178" y="343" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">pass = 1234</text>
+    <text x="812" y="343" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">11</text>
   </g>
 
-  <!-- line 5, marked for swap -->
+  <!-- line 4, marked for swap -->
   <g>
-    <rect x="140" y="360" width="470" height="34" rx="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
-    <rect x="152" y="368" width="135" height="18" rx="4" fill="#334155"/>
-    <text x="690" y="384" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">9</text>
+    <rect x="90" y="372" width="820" height="56" rx="10" fill="#172554" opacity="0.7"/>
+    <rect x="90" y="372" width="820" height="56" rx="10" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="150" y="407" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">4</text>
+    <text x="178" y="407" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">debug = false</text>
+    <text x="812" y="407" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">13</text>
   </g>
 
-  <!-- swap arrows between lines 1 and 5 -->
+  <!-- swap sign between lines 0 and 4 -->
   <g stroke="#3b82f6" stroke-width="3" stroke-linecap="round">
-    <line x1="750" y1="140" x2="750" y2="364"/>
-    <line x1="790" y1="364" x2="790" y2="140"/>
+    <line x1="858" y1="140" x2="858" y2="404"/>
+    <line x1="886" y1="404" x2="886" y2="140"/>
   </g>
   <g fill="#3b82f6">
-    <polygon points="741,362 750,378 759,362"/>
-    <polygon points="781,142 790,126 799,142"/>
+    <polygon points="849,392 858,410 867,392"/>
+    <polygon points="877,152 886,134 895,152"/>
   </g>
 </svg>

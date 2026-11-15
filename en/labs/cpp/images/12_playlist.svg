@@ -44,8 +44,7 @@
     <text x="128" y="300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">30 s</text>
 
     <line x1="312" y1="264" x2="312" y2="286" stroke="#60a5fa" stroke-width="2"/>
-    <polygon points="306,260 312,250 318,260" fill="#60a5fa"/>
-    <text x="312" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">45 s</text>
+    <text x="312" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">seek to 45 s</text>
   </g>
 
   <!-- track 4 -->
@@ -80,10 +79,9 @@
     <rect x="652" y="222" width="256" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
     <rect x="652" y="222" width="96" height="10" rx="5" fill="#f59e0b"/>
     <line x1="748" y1="216" x2="748" y2="238" stroke="#fbbf24" stroke-width="2"/>
-    <line x1="812" y1="216" x2="812" y2="238" stroke="#60a5fa" stroke-width="2"/>
-    <polygon points="806,212 812,202 818,212" fill="#60a5fa"/>
+    <line x1="796" y1="216" x2="796" y2="238" stroke="#60a5fa" stroke-width="2"/>
     <text x="652" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">30 s</text>
-    <text x="812" y="258" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">45 s</text>
+    <text x="796" y="258" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">seek to 45 s</text>
 
     <rect x="818" y="268" width="72" height="40" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
     <text x="854" y="296" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#60a5fa">? s</text>

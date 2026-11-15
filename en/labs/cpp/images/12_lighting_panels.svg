@@ -61,7 +61,7 @@
   <g>
     <rect x="72" y="230" width="366" height="90" rx="12" fill="#78350f" opacity="0.25"/>
     <rect x="72" y="230" width="366" height="90" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
-    <use href="#lampDesk" transform="translate(120 275)"/>
+    <use href="#lampDesk" transform="translate(120 250)"/>
     <rect x="180" y="270" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
     <rect x="180" y="270" width="80" height="10" rx="5" fill="#f59e0b"/>
     <circle cx="260" cy="275" r="9" fill="#fbbf24"/>
@@ -106,7 +106,7 @@
   <g>
     <rect x="562" y="340" width="366" height="90" rx="12" fill="#172554"/>
     <rect x="562" y="340" width="366" height="90" rx="12" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
-    <use href="#lampDesk" transform="translate(610 385)"/>
+    <use href="#lampDesk" transform="translate(610 360)"/>
     <rect x="670" y="380" width="200" height="10" rx="5" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
     <circle cx="892" cy="385" r="18" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
     <text x="892" y="393" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
