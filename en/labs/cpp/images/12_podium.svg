@@ -49,44 +49,44 @@
 
   <!-- podium -->
   <rect x="520" y="80" width="440" height="400" rx="16" fill="url(#rosterPanel)" stroke="#334155" stroke-width="2"/>
-  <line x1="540" y1="460" x2="940" y2="460" stroke="#475569" stroke-width="3"/>
+  <line x1="540" y1="436" x2="940" y2="436" stroke="#475569" stroke-width="3"/>
 
   <!-- second place -->
   <g>
-    <rect x="550" y="300" width="120" height="160" rx="8" fill="#172554" stroke="#3b82f6" stroke-width="2.5"/>
-    <text x="610" y="342" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#60a5fa">2</text>
-    <text x="610" y="380" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ben</text>
+    <rect x="550" y="276" width="120" height="160" rx="8" fill="#172554" stroke="#3b82f6" stroke-width="2.5"/>
+    <text x="610" y="318" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#60a5fa">2</text>
+    <text x="610" y="356" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ben</text>
   </g>
 
   <!-- first place -->
   <g>
-    <rect x="690" y="220" width="120" height="240" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
-    <text x="750" y="266" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#fbbf24">1</text>
-    <text x="750" y="304" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ava</text>
+    <rect x="690" y="196" width="120" height="240" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="750" y="242" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" font-weight="700" fill="#fbbf24">1</text>
+    <text x="750" y="280" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Ava</text>
   </g>
 
   <!-- third place -->
   <g>
-    <rect x="830" y="360" width="120" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="2.5"/>
-    <text x="890" y="398" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#4ade80">3</text>
-    <text x="890" y="432" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Cara</text>
+    <rect x="830" y="336" width="120" height="100" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="890" y="374" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#4ade80">3</text>
+    <text x="890" y="408" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="20" fill="#e2e8f0">Cara</text>
   </g>
 
-  <!-- swap sign -->
-  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
-    <line x1="552" y1="250" x2="670" y2="250"/>
-    <line x1="686" y1="286" x2="568" y2="286"/>
+  <!-- swap cycle: over the top from 2nd to 1st, back under the bottom from 1st to 2nd -->
+  <g fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <path d="M 610 260 Q 675 108 740.3 172.4"/>
+    <path d="M 750 448 Q 680 488 621.8 454.7"/>
   </g>
   <g fill="#60a5fa">
-    <polygon points="670,242 686,250 670,258"/>
-    <polygon points="568,278 552,286 568,294"/>
+    <polygon points="750.0,182.0 732.6,176.8 744.6,164.7"/>
+    <polygon points="610.0,448.0 628.1,448.6 619.7,463.3"/>
   </g>
 
   <!-- prize -->
   <g>
-    <circle cx="890" cy="300" r="30" fill="url(#gold)" stroke="#b45309" stroke-width="2.5"/>
-    <text x="890" y="309" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#451a03">$30</text>
-    <line x1="890" y1="334" x2="890" y2="352" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-    <polygon points="881,352 890,366 899,352" fill="#f59e0b"/>
+    <circle cx="890" cy="272" r="30" fill="url(#gold)" stroke="#b45309" stroke-width="2.5"/>
+    <text x="890" y="281" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#451a03">$30</text>
+    <line x1="890" y1="306" x2="890" y2="322" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="881,320 890,334 899,320" fill="#f59e0b"/>
   </g>
 </svg>
