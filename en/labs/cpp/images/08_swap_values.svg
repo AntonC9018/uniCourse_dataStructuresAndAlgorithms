@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="swapTitle swapDesc">
+  <title id="swapTitle">Swapping the values of two variables using a temporary variable</title>
+  <desc id="swapDesc">Variables a with value 5 and b with value 9 swap values using a temporary variable temp, with curved swap arrows above and below and unknown resulting values.</desc>
+
+  <defs>
+    <linearGradient id="swapPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Top curved swap arrow: a -> b -->
+  <path d="M 230 124 Q 500 32 760 118" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="770,121.3 754.7,122.9 758.7,110.5" fill="#60a5fa"/>
+
+  <!-- Bottom curved swap arrow: b -> a -->
+  <path d="M 770 264 Q 500 338 240 268" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="230,265.3 245.2,262.7 241.8,275.3" fill="#f59e0b"/>
+
+  <!-- Variable a -->
+  <g>
+    <rect x="130" y="130" width="200" height="126" rx="18" fill="url(#swapPanel)" stroke="#60a5fa" stroke-width="2.5"/>
+    <text x="230" y="164" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#60a5fa">a</text>
+    <text x="192" y="216" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#e2e8f0">5</text>
+    <text x="230" y="214" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">→</text>
+    <rect x="248" y="186" width="54" height="40" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="275" y="213" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- Variable b -->
+  <g>
+    <rect x="670" y="130" width="200" height="126" rx="18" fill="url(#swapPanel)" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="770" y="164" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">b</text>
+    <text x="732" y="216" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#e2e8f0">9</text>
+    <text x="770" y="214" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">→</text>
+    <rect x="788" y="186" width="54" height="40" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="815" y="213" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- Temp helper slot at bottom -->
+  <g>
+    <rect x="380" y="346" width="240" height="106" rx="18" fill="#0f172a" stroke="#475569" stroke-width="2" stroke-dasharray="7 5"/>
+    <text x="500" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#94a3b8">temp</text>
+    <text x="500" y="424" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">temp = a; a = b; b = temp</text>
+  </g>
+</svg>

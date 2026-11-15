@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="carTuneBasicTitle carTuneBasicDesc">
+  <title id="carTuneBasicTitle">Tuning a car engine and updating power and price</title>
+  <desc id="carTuneBasicDesc">A car with 150 horsepower and price 18000 receives a tune-up of +20 horsepower, increasing the price by 1000 per added horsepower to produce unknown updated values.</desc>
+
+  <defs>
+    <linearGradient id="ctbPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="carBody">
+      <path d="M -56 10 L -46 -12 Q -42 -20 -30 -20 H 22 Q 34 -20 40 -10 L 50 10 H 62 Q 70 10 70 18 V 32 Q 70 38 62 38 H -62 Q -70 38 -70 32 V 18 Q -70 10 -62 10 Z" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M -38 8 L -30 -11 H -2 V 8 Z" fill="#0f172a" opacity="0.55"/>
+      <path d="M 6 8 V -11 H 26 L 36 8 Z" fill="#0f172a" opacity="0.55"/>
+      <circle cx="-38" cy="38" r="14" fill="#0f172a" stroke="#94a3b8" stroke-width="3.5"/>
+      <circle cx="38" cy="38" r="14" fill="#0f172a" stroke="#94a3b8" stroke-width="3.5"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Before car -->
+  <g>
+    <rect x="70" y="96" width="300" height="328" rx="18" fill="url(#ctbPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#carBody" transform="translate(220 170)" fill="#3b82f6" stroke="#60a5fa"/>
+
+    <text x="114" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">power</text>
+    <text x="326" y="274" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#e2e8f0">150 hp</text>
+
+    <line x1="114" y1="306" x2="326" y2="306" stroke="#1e293b" stroke-width="2"/>
+
+    <text x="114" y="346" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">price</text>
+    <text x="326" y="346" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#e2e8f0">18000</text>
+  </g>
+
+  <!-- Tuning transform -->
+  <g>
+    <line x1="386" y1="260" x2="594" y2="260" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="592,251 608,260 592,269" fill="#f59e0b"/>
+
+    <rect x="410" y="176" width="166" height="66" rx="14" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="493" y="204" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#fbbf24">+20 hp</text>
+    <text x="493" y="228" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#fde68a">+1000 / hp</text>
+  </g>
+
+  <!-- After car -->
+  <g>
+    <rect x="624" y="96" width="306" height="328" rx="18" fill="#78350f" opacity="0.24"/>
+    <rect x="624" y="96" width="306" height="328" rx="18" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <use href="#carBody" transform="translate(777 170)" fill="#f59e0b" stroke="#fbbf24"/>
+
+    <text x="668" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#fbbf24">power</text>
+    <rect x="774" y="246" width="114" height="40" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="831" y="273" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" font-weight="700" fill="#60a5fa">? hp</text>
+
+    <line x1="668" y1="306" x2="888" y2="306" stroke="#334155" stroke-width="2"/>
+
+    <text x="668" y="348" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#fbbf24">price</text>
+    <rect x="774" y="320" width="114" height="40" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="831" y="347" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

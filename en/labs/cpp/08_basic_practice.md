@@ -463,13 +463,19 @@ int main()
   If it is already at the requested value, nothing changes.
   Also write a function that toggles it to the opposite value.
 
+  ![A mechanical lever switch currently at position 0 alongside set(0), set(1), and toggle() operations](./images/08_lever.svg)
+
 - **Maximum of three numbers.** The built-in `std::max` takes only two numbers.
   Write a function that returns the largest of three numbers.
+
+  ![Three numbers 14, 42, and 27 passing through a two-stage std::max comparison into an unknown maximum](./images/08_max_of_three.svg)
 
 - **Calorie content of a dish.**
   A dish contains specified amounts of protein, fat, and carbohydrates in grams.
   Its calorie content is 4 kcal per gram of protein, 9 kcal per gram of fat, 4 kcal per gram of carbohydrates.
   Compute the calorie content of the dish.
+
+  ![A dish split into 20 g protein at 4 kcal/g, 10 g fat at 9 kcal/g, and 35 g carbs at 4 kcal/g yielding an unknown total kcal](./images/08_calories.svg)
 
 - **Average temperature.**
   A sensor took two readings over the course of a day.
@@ -477,19 +483,27 @@ int main()
   Be careful: if you divide one `int` by another,
   the fractional part will be lost before the result is stored.
 
+  ![Two sensor readings 18 and 21 averaged by 2, contrasting integer division that drops the fraction against a floating-point result](./images/08_avg_temperature.svg)
+
 - **Packing boxes.**
   A warehouse holds `X` identical items, and one box fits `Y` items.
   Compute the number of full boxes and the number of leftover items.
+
+  ![Seventeen warehouse items packed into 5-item boxes producing unknown counts of full boxes and leftover items](./images/08_packing_boxes.svg)
 
 - **Hero damage.**
   A game hero has current and maximum health.
   Taking damage reduces current health, but current health cannot drop below zero.
   Write a function that applies damage to the hero.
 
+  ![A hero with 35 out of 100 health taking 50 damage against a zero health floor](./images/08_hero_damage.svg)
+
 - **Hero level-up.**
   For the same hero, when the hero levels up, the maximum health increases by 10,
   and the current health is restored to the new maximum.
   Write a level-up function.
+
+  ![A hero at 35 out of 100 health leveling up by +10 max health and restoring current health to the new maximum](./images/08_hero_levelup.svg)
 
 - **Piggy bank.**
   A piggy bank holds `X` dollars and `Y` cents (1 dollar = 100 cents),
@@ -497,53 +511,75 @@ int main()
   The piggy bank must never contain more than 99 cents — any excess is carried over to dollars.
   Write a function that tops up the piggy bank.
 
+  ![A piggy bank with 3 major coins and 75 minor coins receiving 1 major and 40 minor coins with a 100-to-1 carry-over rule](./images/08_piggy_bank.svg)
+
 - **Car tuning.**
   A car has a price and an engine with a given power output (horsepower).
   After tuning, the engine power increases by a given number of horsepower,
   and the price of the car increases by 1000 dollars for each additional horsepower.
   Write a function that tunes the car.
 
+  ![A car with 150 hp and price 18000 tuned by +20 hp at +1000 per hp with unknown updated power and price](./images/08_car_tuning.svg)
+
 - **Swapping values.**
   Write a function that swaps the values of two variables defined in `main`.
   Recall the value-swapping example from the variables lab:
   you cannot do it without a temporary variable.
 
+  ![Variables a = 5 and b = 9 swapping values using curved arrows and a temp helper variable](./images/08_swap_values.svg)
+
 - **Sharing candies.**
   `N` candies are shared equally among `M` children, and the remainder goes to the youngest child.
   Compute how many candies each child gets, and how many the youngest gets in total (equal share plus remainder).
+
+  ![Fourteen candies distributed among four children with the equal share and remainder going to the youngest child](./images/08_sharing_candies.svg)
 
 - **Clamping to a range.**
   A parameter has an allowed range of values — from `low` to `high`.
   Write a function that clamps any value to the allowed range.
   The range itself must not change.
 
+  ![A number line with a fixed allowed interval from low 10 to high 50 clamping 4 right to 10, keeping 28 inside, and clamping 75 left to 50](./images/08_clamp_range.svg)
+
 - **Printing a student record.**
   A student has a student ID, a year of study, and a GPA (average grade).
   Write a function that prints all student data to the screen.
   The function does not modify the student data.
+
+  ![A read-only student card with ID 1042, year 2, and GPA 4.65 printed to stdout without changing the struct](./images/08_student_record.svg)
 
 - **Three numbers in ascending order.**
   Three numbers are given. Write a function that returns them in ascending order.
   Hint: the smallest and the largest are found using nested `std::min` and `std::max`,
   and the middle one is computed as the sum of all three minus the smallest and the largest.
 
+  ![Three unsorted numbers 27, 9, and 18 ordered through min, sum minus min minus max, and max into three ascending slots](./images/08_sort_three.svg)
+
 - **Board squares.**
   The squares of an 8×8 board are numbered from 0 to 63, left to right, top to bottom.
   Write functions that convert a square number into its row and column
   and vice versa — convert a row and column back into the square number.
 
+  ![An 8 by 8 board numbered 0 to 63 highlighting square 19 at row 2 column 3, showing conversions in both directions](./images/08_board_squares.svg)
+
 - **Duration in seconds.**
   Write a function that converts a duration given in hours, minutes, and seconds
   into the total number of seconds.
+
+  ![A duration of 2 hours, 15 minutes, and 30 seconds multiplied by 3600, 60, and 1 and summed into an unknown total seconds](./images/08_duration_seconds.svg)
 
 - **Painting a room.**
   A room has length, width, and height.
   Compute the area of all four walls of the room (the floor and the ceiling do not need painting)
   and the cost of painting at a given price per square meter.
 
+  ![A 3D room box with length L, width W, and height H highlighting the four painted walls while skipping ceiling and floor](./images/08_painting_room.svg)
+
 - **Discounted subscription.**
   A subscription plan is defined by a price per month and a discount percentage.
   Compute the cost of a subscription for a given number of months with this plan.
+
+  ![A subscription plan of 20 per month with a 25% discount over 6 months yielding an unknown total cost](./images/08_subscription.svg)
 
 - **Trip cost.**
   The trip distance, the fuel consumption of a car per 100 km, the price of a liter of fuel,
@@ -551,17 +587,25 @@ int main()
 The car makes a round trip — it drives there and back.
   Compute the total cost of the trip.
 
+  ![A round trip of distance d there and back combined with fuel per 100 km and hotel nights into an unknown total trip cost](./images/08_trip_cost.svg)
+
 - **Elevator trips.**
   An elevator fits `K` people, and `N` people are waiting on a building floor to board the elevator.
   Compute how many trips the elevator will make
   if the last trip may be partially full.
 
+  ![Ten waiting people next to an elevator cabin with capacity 4 leading to an unknown number of trips](./images/08_elevator_trips.svg)
+
 - **Distance between points.**
   Two points in the plane with integer coordinates are given.
   Compute the distance between them: the square root of the sum of the squares of the differences in their coordinates.
+
+  ![Points A(1, 2) and B(5, 5) on a coordinate grid forming a right triangle with legs dx and dy and unknown hypotenuse distance](./images/08_distance_points.svg)
 
 - **Vector length.**
   A two-dimensional vector has coordinates `x` and `y`.
   Model it with a struct and write a function returning its length: the square root of `x * x + y * y`.
   You can use `std::sqrt` from `<cmath>`.
   Try the vector `(3, 4)` and the zero vector.
+
+  ![A 2D coordinate grid showing vector v = (3, 4) from the origin with components x = 3 and y = 4 and unknown length](./images/08_vector_length.svg)

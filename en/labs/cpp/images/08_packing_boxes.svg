@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="packTitle packDesc">
+  <title id="packTitle">Packing identical items into fixed-capacity boxes and counting leftovers</title>
+  <desc id="packDesc">A warehouse pile of 17 items is packed into boxes that hold 5 items each, producing an unknown number of full boxes and an unknown count of leftover items.</desc>
+
+  <defs>
+    <linearGradient id="packPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <rect id="itemDot" x="-11" y="-11" width="22" height="22" rx="5" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left panel: X = 17 items in warehouse -->
+  <g>
+    <rect x="70" y="76" width="300" height="368" rx="18" fill="url(#packPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="220" y="118" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">X = 17 items</text>
+
+    <!-- 17 items arranged in 3 rows of 5 + 2 -->
+    <g transform="translate(132 180)">
+      <use href="#itemDot" x="0" y="0"/>
+      <use href="#itemDot" x="44" y="0"/>
+      <use href="#itemDot" x="88" y="0"/>
+      <use href="#itemDot" x="132" y="0"/>
+      <use href="#itemDot" x="176" y="0"/>
+
+      <use href="#itemDot" x="0" y="44"/>
+      <use href="#itemDot" x="44" y="44"/>
+      <use href="#itemDot" x="88" y="44"/>
+      <use href="#itemDot" x="132" y="44"/>
+      <use href="#itemDot" x="176" y="44"/>
+
+      <use href="#itemDot" x="0" y="88"/>
+      <use href="#itemDot" x="44" y="88"/>
+      <use href="#itemDot" x="88" y="88"/>
+      <use href="#itemDot" x="132" y="88"/>
+      <use href="#itemDot" x="176" y="88"/>
+
+      <use href="#itemDot" x="0" y="132"/>
+      <use href="#itemDot" x="44" y="132"/>
+    </g>
+
+    <!-- Box capacity note -->
+    <rect x="114" y="368" width="212" height="48" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="220" y="398" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="600" fill="#60a5fa">1 box = 5 items</text>
+  </g>
+
+  <!-- Middle arrows -->
+  <g>
+    <path d="M 370 200 H 460 V 170 H 504" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="502,162 516,170 502,178" fill="#60a5fa"/>
+
+    <path d="M 370 320 H 460 V 350 H 504" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="502,342 516,350 502,358" fill="#f59e0b"/>
+  </g>
+
+  <!-- Right panels: full boxes & leftover items -->
+  <g>
+    <!-- Full boxes -->
+    <rect x="522" y="76" width="408" height="172" rx="18" fill="url(#packPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="556" y="114" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#cbd5e1">full boxes</text>
+    <!-- Packed box icon -->
+    <rect x="556" y="138" width="196" height="68" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <use href="#itemDot" x="586" y="172"/>
+    <use href="#itemDot" x="620" y="172"/>
+    <use href="#itemDot" x="654" y="172"/>
+    <use href="#itemDot" x="688" y="172"/>
+    <use href="#itemDot" x="722" y="172"/>
+
+    <circle cx="844" cy="172" r="34" fill="#0f172a" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="844" y="182" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#60a5fa">?</text>
+
+    <!-- Leftover items -->
+    <rect x="522" y="272" width="408" height="172" rx="18" fill="url(#packPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="556" y="310" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#cbd5e1">leftover</text>
+    <!-- Loose items -->
+    <rect x="556" y="334" width="196" height="68" rx="12" fill="#0f172a" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+    <use href="#itemDot" x="598" y="368"/>
+    <use href="#itemDot" x="634" y="368"/>
+    <text x="698" y="375" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">&lt; 5</text>
+
+    <circle cx="844" cy="368" r="34" fill="#0f172a" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="844" y="378" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

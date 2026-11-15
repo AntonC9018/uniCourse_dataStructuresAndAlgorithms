@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="classroomTitle classroomDesc">
+  <title id="classroomTitle">Counting empty desks and seating a newcomer in a classroom</title>
+  <desc id="classroomDesc">A classroom has two rows of three desks. Four desks hold pupils and two are empty. The empty desk count is unknown, and a newcomer moves to the first empty desk.</desc>
+
+  <defs>
+    <linearGradient id="roomPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="pupil">
+      <circle cx="0" cy="-16" r="14" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+      <path d="M -20 14 Q 0 -6 20 14 Z" fill="#3b82f6" stroke="#60a5fa" stroke-width="1.5"/>
+    </g>
+    <g id="desk">
+      <rect x="-54" y="-8" width="108" height="44" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+      <line x1="-42" y1="36" x2="-42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+      <line x1="42" y1="36" x2="42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- newcomer on the left -->
+  <g>
+    <rect x="60" y="100" width="170" height="160" rx="16" fill="#78350f" opacity="0.28"/>
+    <rect x="60" y="100" width="170" height="160" rx="16" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="145" cy="152" r="18" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <path d="M 118 192 Q 145 166 172 192 Z" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="145" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#fbbf24">newcomer</text>
+  </g>
+
+  <!-- empty desk count -->
+  <g>
+    <rect x="60" y="310" width="170" height="120" rx="16" fill="url(#roomPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="145" y="346" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">empty desks</text>
+    <circle cx="145" cy="388" r="24" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="145" y="396" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+
+  <!-- classroom 2x3 desks -->
+  <rect x="270" y="56" width="670" height="408" rx="18" fill="url(#roomPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- row 0 -->
+  <text x="300" y="114" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">row 0</text>
+  <g>
+    <g transform="translate(380 162)">
+      <use href="#pupil" transform="translate(0 -18)"/>
+      <use href="#desk"/>
+    </g>
+    <!-- first empty desk -->
+    <g transform="translate(600 162)">
+      <rect x="-54" y="-8" width="108" height="44" rx="8" fill="#172554" opacity="0.5" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
+      <line x1="-42" y1="36" x2="-42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+      <line x1="42" y1="36" x2="42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(820 162)">
+      <use href="#pupil" transform="translate(0 -18)"/>
+      <use href="#desk"/>
+    </g>
+  </g>
+
+  <!-- row 1 -->
+  <text x="300" y="294" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#94a3b8">row 1</text>
+  <g>
+    <g transform="translate(380 364)">
+      <use href="#pupil" transform="translate(0 -18)"/>
+      <use href="#desk"/>
+    </g>
+    <g transform="translate(600 364)">
+      <use href="#pupil" transform="translate(0 -18)"/>
+      <use href="#desk"/>
+    </g>
+    <!-- second empty desk -->
+    <g transform="translate(820 364)">
+      <rect x="-54" y="-8" width="108" height="44" rx="8" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7 5"/>
+      <line x1="-42" y1="36" x2="-42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+      <line x1="42" y1="36" x2="42" y2="52" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- arrow from newcomer to first empty desk (top-down path around row 0) -->
+  <path d="M 230 140 H 294 V 78 H 600 V 136" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="591,134 600,150 609,134" fill="#f59e0b"/>
+</svg>

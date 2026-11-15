@@ -494,28 +494,44 @@ slug: en/cpp/labs/advanced-practice
 - **Tune car.** A garage holds 4 cars. Each car has a model, power, and price.
   Tune car 2: add 10 power, add 1000 to the price for each added power.
 
+  ![Four garage cars where car 2 (Supra) is tuned by +10 hp at +$1000 per hp with unknown new power and price](./images/21_tune_car.svg)
+
 - **Wash cars.** A car wash holds 3 cars. Each car is clean or dirty.
   Wash every dirty car. Count how many were washed.
+
+  ![Three car-wash bays with two dirty cars under water spray, one clean car, and an unknown count of washed cars](./images/21_wash_cars.svg)
 
 - **Parking lot.** A parking lot has 2 floors with 4 spots each.
   Each spot holds a car or is empty.
   Put the new car on the first empty spot. Walk the spots with pointer arithmetic.
 
+  ![A two-floor parking lot with spots indexed by pointer offsets p through p+5, and a new car moving into the first empty spot at p+5](./images/21_parking_lot.svg)
+
 - **Car engine.** A garage holds 4 cars. Each car has its own engine. The engine has wear from 0 to 100.
   Check the engine through car 1 and repair the engine of car 1 to wear 0.
+
+  ![Four garage cars showing engine wear bars, with car 1's engine inspected and repaired to wear 0](./images/21_car_engine.svg)
 
 - **Cup rail.** A rail holds 4 cups. Some hooks are empty.
   Put a new cup on the first empty hook and take the cup from hook 1.
   The cup moves with ownership: copy it over, then clear the old spot.
 
+  ![A four-hook rail where the cup on hook 1 is removed and a new cup is hung on the first empty hook 2](./images/21_cup_rail.svg)
+
 - **Hero party.** A squad holds 3 heroes. Each hero has health and shield.
   Heal hero 1 by 20. Count how many heroes still need healing.
+
+  ![Three heroes with health and shield bars, hero 1 healed by +20 health, and an unknown count of heroes still needing healing](./images/21_hero_party.svg)
 
 - **Active buff.** A player holds a pointer to the active buff. No buff means an empty pointer.
   Give the player 1 shield buff before the fight and take it away after.
 
+  ![Player activeBuff pointer pointing to a +1 shield buff before the fight and reset to nullptr afterwards](./images/21_active_buff.svg)
+
 - **Classroom.** A room has 2 rows with 3 desks each. Each desk holds a pupil or is empty.
   Count empty desks. Seat the newcomer at the first empty desk.
+
+  ![A classroom with two rows of three desks, four occupied and two empty, with a newcomer routed to the first empty desk and an unknown empty desk count](./images/21_classroom.svg)
 
 - **Find pizza.** A fridge holds 3 foods with names.
   Find the pizza and move it to freezer shelf 1. Return if it was found.
@@ -618,21 +634,33 @@ slug: en/cpp/labs/advanced-practice
 - **Soak dishes.** A kitchen has 2 racks with 3 plates each. Each plate is dirty or soaked.
   Soak every dirty plate in rack 0.
 
+  ![Two dish racks with three plates each; dirty plates in rack 0 are soaked with water drops](./images/21_soak_dishes.svg)
+
 - **Library rooms.** A library has 2 rooms with 3 slots each. Each slot holds a book or is empty.
   Put the Atlas in the first empty slot of room 1.
+
+  ![Two library rooms with three slots each, where the Atlas is placed in the first empty slot 1 of room 1](./images/21_library_rooms.svg)
 
 - **Traffic light.** A crossing has 3 lights. Each light is red, yellow, or green.
   Step light 2 to the next color with switch.
 
+  ![Three traffic lights where light 2 (yellow) steps to the next state along a red-green-yellow cycle with an unknown result](./images/21_traffic_light.svg)
+
 - **Medicine cabinet.** A cabinet holds 4 boxes. Each box is fresh or expired.
   Return if box 1 can be used. Throw box 1 away if expired.
+
+  ![A medicine cabinet with four fresh or expired boxes; expired box 1 is checked for usability and thrown into a bin](./images/21_medicine_cabinet.svg)
 
 - **Canteen.** A canteen holds 3 soups and 3 breads.
   Serve soup 1 with bread 1. The serving takes both out.
 
+  ![Canteen rows of three soups and three breads, with soup 1 and bread 1 moved onto a served tray](./images/21_canteen.svg)
+
 - **Hot chain.** A kitchen has a fridge, a freezer, and a microwave.
   Put the pizza from fridge shelf 0 into the microwave, heat it,
   then move it to freezer shelf 1. Each step returns if it worked.
+
+  ![A fridge, microwave, and freezer chain where pizza moves from fridge shelf 0 to the microwave to heat and then to freezer shelf 1, each step returning a result](./images/21_hot_chain.svg)
 
 - **Barbershop.** A shop has room for 4 waiting clients and 2 workers.
   Each client has a label and hair left to cut, in minutes.
@@ -879,6 +907,8 @@ slug: en/cpp/labs/advanced-practice
   When a client is fully cut, every drone on that client becomes free.
   Simulate until all clients are done.
 
+  ![Three automatic barbershop drones where drones 0 and 1 both point to bob and drone 2 points to alice, each cutting 1 minute per tick](./images/21_barbershop_drones.svg)
+
 - **Amusement park.** A park has 3 attractions.
   Each visitor ranks all 3 attractions by preference,
   doesn't visit the same one back-to-back,
@@ -888,6 +918,8 @@ slug: en/cpp/labs/advanced-practice
   and visitors without a ride take the first free attraction from their preferences.
   If none is free, they wait until one becomes available.
   Simulate until everyone has used up their quota.
+
+  ![Three visitors with ranked attraction preferences and visit quotas choosing among coaster, carousel, and ferris wheel without repeating the same ride back-to-back](./images/21_amusement_park.svg)
 
 - **Truck trip.** A truck has to drive for a given number of hours.
   The list has 3 drivers.
@@ -1067,11 +1099,15 @@ slug: en/cpp/labs/advanced-practice
   Each person stores pointers to the people they already hugged.
   Hug everyone.
 
+  ![Five family member cards storing pointer slots to people they have already hugged, with arcs linking hugged pairs and remaining empty slots](./images/21_family_hugs_pointers.svg)
+
 - **Family hugs with indices.** Same 5 people,
   but each person stores indices of the hugged members (`std::array<int, 4>`)
   instead of pointers —
   now the hugs only make sense together with the family array they index into.
   Hug everyone once.
+
+  ![A five-element family array indexed 0 to 4 above five member cards that each store a 4-element index array referencing who they have hugged](./images/21_family_hugs_indices.svg)
 
 - **Family hugs with a bit set.** Same 5 people,
   but using a bit set of members they've hugged.

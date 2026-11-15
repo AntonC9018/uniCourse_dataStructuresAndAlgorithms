@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="boardTitle boardDesc">
+  <title id="boardTitle">Converting between 8x8 board square indices and row/column coordinates</title>
+  <desc id="boardDesc">An 8 by 8 grid numbered 0 through 63 left to right and top to bottom, with square 19 highlighted at row 2 column 3, alongside bidirectional conversion between square number and row/column.</desc>
+
+  <defs>
+    <linearGradient id="brdPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left: 8x8 numbered board (360x360, cell=45) -->
+  <g transform="translate(115 92)">
+    <!-- Column headers 0..7 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b" text-anchor="middle">
+      <text x="22" y="-12">0</text>
+      <text x="67" y="-12">1</text>
+      <text x="112" y="-12">2</text>
+      <text x="157" y="-12" fill="#fbbf24" font-weight="700">3</text>
+      <text x="202" y="-12">4</text>
+      <text x="247" y="-12">5</text>
+      <text x="292" y="-12">6</text>
+      <text x="337" y="-12">7</text>
+    </g>
+    <!-- Row headers 0..7 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b" text-anchor="end">
+      <text x="-14" y="28">0</text>
+      <text x="-14" y="73">1</text>
+      <text x="-14" y="118" fill="#fbbf24" font-weight="700">2</text>
+      <text x="-14" y="163">3</text>
+      <text x="-14" y="208">4</text>
+      <text x="-14" y="253">5</text>
+      <text x="-14" y="298">6</text>
+      <text x="-14" y="343">7</text>
+    </g>
+
+    <!-- Board frame -->
+    <rect x="0" y="0" width="360" height="360" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2.5"/>
+
+    <!-- Grid lines -->
+    <g stroke="#1e293b" stroke-width="1.5">
+      <line x1="45" y1="0" x2="45" y2="360"/><line x1="90" y1="0" x2="90" y2="360"/>
+      <line x1="135" y1="0" x2="135" y2="360"/><line x1="180" y1="0" x2="180" y2="360"/>
+      <line x1="225" y1="0" x2="225" y2="360"/><line x1="270" y1="0" x2="270" y2="360"/>
+      <line x1="315" y1="0" x2="315" y2="360"/>
+
+      <line x1="0" y1="45" x2="360" y2="45"/><line x1="0" y1="90" x2="360" y2="90"/>
+      <line x1="0" y1="135" x2="360" y2="135"/><line x1="0" y1="180" x2="360" y2="180"/>
+      <line x1="0" y1="225" x2="360" y2="225"/><line x1="0" y1="270" x2="360" y2="270"/>
+      <line x1="0" y1="315" x2="360" y2="315"/>
+    </g>
+
+    <!-- Subtle row/col guides to (row=2, col=3) -> x=135..180, y=90..135 -->
+    <rect x="0" y="90" width="360" height="45" fill="#f59e0b" opacity="0.1"/>
+    <rect x="135" y="0" width="45" height="360" fill="#f59e0b" opacity="0.1"/>
+    <rect x="137" y="92" width="41" height="41" rx="6" fill="#78350f" opacity="0.6" stroke="#f59e0b" stroke-width="2.5"/>
+
+    <!-- Key cell numbers -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b" text-anchor="middle">
+      <text x="22" y="28">0</text>
+      <text x="67" y="28">1</text>
+      <text x="112" y="28">2</text>
+      <text x="337" y="28">7</text>
+      <text x="22" y="73">8</text>
+      <text x="157" y="118" font-size="15" font-weight="700" fill="#fbbf24">19</text>
+      <text x="337" y="343">63</text>
+    </g>
+  </g>
+
+  <!-- Right: Bidirectional conversion panels -->
+  <g>
+    <!-- Top: index -> (row, col) -->
+    <rect x="540" y="96" width="390" height="148" rx="18" fill="url(#brdPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="572" y="132" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" fill="#94a3b8">square → (row, col)</text>
+
+    <rect x="572" y="156" width="90" height="54" rx="12" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="617" y="191" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#fbbf24">19</text>
+
+    <line x1="678" y1="183" x2="726" y2="183" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="724,175 738,183 724,191" fill="#60a5fa"/>
+
+    <rect x="750" y="156" width="148" height="54" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="824" y="191" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#60a5fa">(?, ?)</text>
+
+    <!-- Bottom: (row, col) -> index -->
+    <rect x="540" y="276" width="390" height="148" rx="18" fill="url(#brdPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="572" y="312" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" fill="#94a3b8">(row, col) → square</text>
+
+    <rect x="572" y="336" width="136" height="54" rx="12" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="640" y="371" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">(2, 3)</text>
+
+    <line x1="724" y1="363" x2="772" y2="363" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="770,355 784,363 770,371" fill="#60a5fa"/>
+
+    <rect x="796" y="336" width="102" height="54" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="847" y="371" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

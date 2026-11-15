@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsPtrTitle hugsPtrDesc">
+  <title id="hugsPtrTitle">Five family members hugging every other member, stored as pointers</title>
+  <desc id="hugsPtrDesc">Five family members ann, bob, cid, dan and eva in cards, with pointer arrows connecting who each person has hugged so far and unknown empty slots waiting to be filled.</desc>
+
+  <defs>
+    <linearGradient id="hpPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- 5 person cards across middle -->
+  <!-- ann (x=130) -->
+  <g>
+    <rect x="60" y="130" width="140" height="240" rx="14" fill="url(#hpPanel)" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="130" cy="176" r="22" fill="#f59e0b"/>
+    <text x="130" y="184" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#0f172a">ann</text>
+    <rect x="78" y="214" width="104" height="28" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.8"/>
+    <text x="130" y="233" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#60a5fa">→ bob</text>
+    <rect x="78" y="250" width="104" height="28" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="130" y="269" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#4ade80">→ cid</text>
+    <rect x="78" y="286" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="130" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="78" y="322" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="130" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+  </g>
+
+  <!-- bob (x=315) -->
+  <g>
+    <rect x="245" y="130" width="140" height="240" rx="14" fill="url(#hpPanel)" stroke="#60a5fa" stroke-width="2.5"/>
+    <circle cx="315" cy="176" r="22" fill="#3b82f6"/>
+    <text x="315" y="184" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#0f172a">bob</text>
+    <rect x="263" y="214" width="104" height="28" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="315" y="233" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">→ ann</text>
+    <rect x="263" y="250" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="315" y="269" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="263" y="286" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="315" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="263" y="322" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="315" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+  </g>
+
+  <!-- cid (x=500) -->
+  <g>
+    <rect x="430" y="130" width="140" height="240" rx="14" fill="url(#hpPanel)" stroke="#22c55e" stroke-width="2.5"/>
+    <circle cx="500" cy="176" r="22" fill="#22c55e"/>
+    <text x="500" y="184" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#0f172a">cid</text>
+    <rect x="448" y="214" width="104" height="28" rx="6" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="500" y="233" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">→ ann</text>
+    <rect x="448" y="250" width="104" height="28" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1.8"/>
+    <text x="500" y="269" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#a78bfa">→ dan</text>
+    <rect x="448" y="286" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="500" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="448" y="322" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="500" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+  </g>
+
+  <!-- dan (x=685) -->
+  <g>
+    <rect x="615" y="130" width="140" height="240" rx="14" fill="url(#hpPanel)" stroke="#a78bfa" stroke-width="2.5"/>
+    <circle cx="685" cy="176" r="22" fill="#a78bfa"/>
+    <text x="685" y="184" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#0f172a">dan</text>
+    <rect x="633" y="214" width="104" height="28" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="685" y="233" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#4ade80">→ cid</text>
+    <rect x="633" y="250" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="685" y="269" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="633" y="286" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="685" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="633" y="322" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="685" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+  </g>
+
+  <!-- eva (x=870) -->
+  <g>
+    <rect x="800" y="130" width="140" height="240" rx="14" fill="url(#hpPanel)" stroke="#f472b6" stroke-width="2.5"/>
+    <circle cx="870" cy="176" r="22" fill="#f472b6"/>
+    <text x="870" y="184" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#0f172a">eva</text>
+    <rect x="818" y="214" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="870" y="233" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="818" y="250" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="870" y="269" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="818" y="286" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="870" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+    <rect x="818" y="322" width="104" height="28" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="870" y="341" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#64748b">nullptr</text>
+  </g>
+
+  <!-- pointer arcs above and below showing mutual hugs -->
+  <g fill="none" stroke-width="2.5" stroke-linecap="round">
+    <!-- ann <-> bob -->
+    <path d="M 130 124 Q 222 68 308 118" stroke="#60a5fa"/>
+    <!-- ann <-> cid -->
+    <path d="M 130 376 Q 315 456 492 384" stroke="#4ade80"/>
+    <!-- cid <-> dan -->
+    <path d="M 500 124 Q 592 68 678 118" stroke="#a78bfa"/>
+  </g>
+  <polygon points="315,122 300.8,120.7 306.8,110.3" fill="#60a5fa"/>
+  <polygon points="500,380.7 490.3,391.2 485.7,380.0" fill="#4ade80"/>
+  <polygon points="685,122 670.8,120.7 676.8,110.3" fill="#a78bfa"/>
+
+  <!-- remaining hugs pending -->
+  <g transform="translate(870 436)">
+    <rect x="-66" y="-22" width="132" height="44" rx="22" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="0" y="7" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="600" fill="#60a5fa">4 × 5 ?</text>
+  </g>
+</svg>

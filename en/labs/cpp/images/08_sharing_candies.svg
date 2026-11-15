@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="candyTitle candyDesc">
+  <title id="candyTitle">Sharing N candies equally among M children with remainder to the youngest</title>
+  <desc id="candyDesc">Fourteen candies are shared equally among four children, with any leftover remainder given to the youngest child, leaving both per-child and youngest totals unknown.</desc>
+
+  <defs>
+    <linearGradient id="cndPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="candy">
+      <polygon points="-14,-5 -6,0 -14,5" fill="#f59e0b"/>
+      <polygon points="14,-5 6,0 14,5" fill="#f59e0b"/>
+      <rect x="-7" y="-5" width="14" height="10" rx="5" fill="#fbbf24"/>
+    </g>
+    <g id="kidIcon">
+      <circle cx="0" cy="-14" r="13" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+      <path d="M -18 14 Q 0 -4 18 14 Z" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left pile: N = 14 candies -->
+  <g>
+    <rect x="70" y="96" width="280" height="328" rx="18" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="210" y="138" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">N = 14</text>
+
+    <!-- 14 candies in grid -->
+    <g transform="translate(122 192)">
+      <use href="#candy" x="0" y="0"/>
+      <use href="#candy" x="44" y="0"/>
+      <use href="#candy" x="88" y="0"/>
+      <use href="#candy" x="132" y="0"/>
+      <use href="#candy" x="176" y="0"/>
+
+      <use href="#candy" x="0" y="46"/>
+      <use href="#candy" x="44" y="46"/>
+      <use href="#candy" x="88" y="46"/>
+      <use href="#candy" x="132" y="46"/>
+      <use href="#candy" x="176" y="46"/>
+
+      <use href="#candy" x="0" y="92"/>
+      <use href="#candy" x="44" y="92"/>
+      <use href="#candy" x="88" y="92"/>
+      <use href="#candy" x="132" y="92"/>
+    </g>
+
+    <text x="210" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">M = 4 children</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="366" y1="260" x2="436" y2="260" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="434,252 448,260 434,268" fill="#94a3b8"/>
+  </g>
+
+  <!-- Right: 4 children rows -->
+  <g>
+    <rect x="462" y="74" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(514 116)" fill="#3b82f6" stroke="#60a5fa"/>
+    <text x="564" y="122" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#cbd5e1">child 0</text>
+    <rect x="756" y="96" width="144" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="828" y="123" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#60a5fa">?</text>
+
+    <rect x="462" y="170" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(514 212)" fill="#3b82f6" stroke="#60a5fa"/>
+    <text x="564" y="218" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#cbd5e1">child 1</text>
+    <rect x="756" y="192" width="144" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="828" y="219" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#60a5fa">?</text>
+
+    <rect x="462" y="266" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(514 308)" fill="#3b82f6" stroke="#60a5fa"/>
+    <text x="564" y="314" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#cbd5e1">child 2</text>
+    <rect x="756" y="288" width="144" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="828" y="315" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#60a5fa">?</text>
+
+    <!-- Youngest child gets equal share + remainder -->
+    <rect x="462" y="362" width="468" height="90" rx="14" fill="#78350f" opacity="0.28"/>
+    <rect x="462" y="362" width="468" height="90" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <use href="#kidIcon" transform="translate(514 406)" fill="#f59e0b" stroke="#fbbf24"/>
+    <text x="564" y="400" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#fbbf24">youngest</text>
+    <text x="564" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fde68a">share + remainder</text>
+    <rect x="756" y="386" width="144" height="42" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="828" y="414" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#60a5fa">? + ?</text>
+  </g>
+</svg>

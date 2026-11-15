@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="canteenTitle canteenDesc">
+  <title id="canteenTitle">Serving soup 1 and bread 1 together from a canteen</title>
+  <desc id="canteenDesc">A canteen holds three soups and three breads. Soup 1 and bread 1 are removed from their slots and placed onto a serving tray.</desc>
+
+  <defs>
+    <linearGradient id="canteenPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="soupBowl">
+      <path d="M -30 0 H 30 C 30 24 18 34 0 34 C -18 34 -30 24 -30 0 Z" fill="#f59e0b" stroke="#fbbf24" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="30" ry="7" fill="#ea580c" stroke="#fbbf24" stroke-width="2"/>
+      <path d="M -10 -12 Q -14 -20 -8 -26" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 8 -12 Q 4 -20 10 -26" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+    </g>
+    <g id="breadLoaf">
+      <path d="M -30 10 C -30 -14 30 -14 30 10 L 28 24 H -28 Z" fill="#d97706" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="-14" y1="-2" x2="-6" y2="8" stroke="#fef3c7" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+      <line x1="0" y1="-4" x2="8" y2="6" stroke="#fef3c7" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+      <line x1="14" y1="-2" x2="20" y2="7" stroke="#fef3c7" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- canteen storage -->
+  <rect x="60" y="64" width="490" height="392" rx="18" fill="url(#canteenPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- soups row -->
+  <text x="90" y="102" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">soups</text>
+  <g>
+    <rect x="90" y="120" width="130" height="118" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#soupBowl" transform="translate(155 174)"/>
+    <text x="110" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">0</text>
+
+    <!-- soup 1, taken -->
+    <rect x="240" y="120" width="130" height="118" rx="12" fill="#78350f" opacity="0.22"/>
+    <rect x="240" y="120" width="130" height="118" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <text x="260" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#fbbf24">1</text>
+
+    <rect x="390" y="120" width="130" height="118" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#soupBowl" transform="translate(455 174)"/>
+    <text x="410" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">2</text>
+  </g>
+
+  <!-- breads row -->
+  <text x="90" y="294" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">breads</text>
+  <g>
+    <rect x="90" y="312" width="130" height="118" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#breadLoaf" transform="translate(155 368)"/>
+    <text x="110" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">0</text>
+
+    <!-- bread 1, taken -->
+    <rect x="240" y="312" width="130" height="118" rx="12" fill="#78350f" opacity="0.22"/>
+    <rect x="240" y="312" width="130" height="118" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <text x="260" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#fbbf24">1</text>
+
+    <rect x="390" y="312" width="130" height="118" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#breadLoaf" transform="translate(455 368)"/>
+    <text x="410" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">2</text>
+  </g>
+
+  <!-- arrows from soup 1 and bread 1 to serving tray -->
+  <path d="M 305 120 V 88 H 760 V 134" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="751,132 760,148 769,132" fill="#f59e0b"/>
+
+  <path d="M 305 430 V 464 H 760 V 396" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="751,398 760,382 769,398" fill="#f59e0b"/>
+
+  <!-- serving tray -->
+  <g>
+    <rect x="620" y="156" width="280" height="218" rx="22" fill="#1e293b" stroke="#64748b" stroke-width="3"/>
+    <rect x="640" y="176" width="240" height="178" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#soupBowl" transform="translate(712 268)"/>
+    <use href="#breadLoaf" transform="translate(808 264)"/>
+    <text x="760" y="328" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#cbd5e1">served tray</text>
+  </g>
+</svg>

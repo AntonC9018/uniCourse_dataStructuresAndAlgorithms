@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="washTitle washDesc">
+  <title id="washTitle">Washing every dirty car in a three-car wash</title>
+  <desc id="washDesc">A car wash holds three cars: the first and third are dirty and receive soap spray, while the second is already clean. The number of washed cars is unknown.</desc>
+
+  <defs>
+    <linearGradient id="washPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="carBody">
+      <path d="M 18 42 L 32 18 Q 38 12 46 12 H 98 Q 106 12 112 18 L 128 42 H 142 Q 150 42 150 50 V 66 H 6 V 50 Q 6 42 14 42 Z" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M 38 19 H 72 V 40 H 26 Z" fill="#0b1220" opacity="0.65"/>
+      <path d="M 78 19 H 106 L 120 40 H 78 Z" fill="#0b1220" opacity="0.65"/>
+      <circle cx="38" cy="68" r="13" fill="#0f172a" stroke="#94a3b8" stroke-width="3.5"/>
+      <circle cx="118" cy="68" r="13" fill="#0f172a" stroke="#94a3b8" stroke-width="3.5"/>
+    </g>
+    <g id="nozzle">
+      <rect x="-24" y="-8" width="48" height="14" rx="5" fill="#475569" stroke="#94a3b8" stroke-width="2"/>
+      <g stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 5">
+        <line x1="-14" y1="12" x2="-22" y2="52"/>
+        <line x1="0" y1="12" x2="0" y2="54"/>
+        <line x1="14" y1="12" x2="22" y2="52"/>
+      </g>
+    </g>
+    <g id="sparkle" fill="#4ade80">
+      <polygon points="0,-10 2.5,-2.5 10,0 2.5,2.5 0,10 -2.5,2.5 -10,0 -2.5,-2.5"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- car wash bay -->
+  <rect x="60" y="60" width="880" height="330" rx="18" fill="url(#washPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- bay 0: dirty -> wash -->
+  <g>
+    <rect x="90" y="90" width="240" height="270" rx="14" fill="#78350f" opacity="0.22"/>
+    <rect x="90" y="90" width="240" height="270" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="110" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">0</text>
+    <use href="#nozzle" transform="translate(210 122)"/>
+    <use href="#carBody" transform="translate(132 192)" fill="#64748b" stroke="#94a3b8"/>
+    <!-- mud spots -->
+    <g fill="#92400e" opacity="0.9">
+      <circle cx="164" cy="242" r="5"/>
+      <circle cx="195" cy="250" r="6"/>
+      <circle cx="238" cy="244" r="5"/>
+      <circle cx="256" cy="252" r="4"/>
+    </g>
+    <!-- soap bubbles -->
+    <g fill="#bfdbfe" opacity="0.85">
+      <circle cx="182" cy="196" r="7"/>
+      <circle cx="196" cy="188" r="9"/>
+      <circle cx="222" cy="192" r="6"/>
+    </g>
+    <rect x="160" y="302" width="100" height="32" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="210" y="324" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#fbbf24">dirty</text>
+  </g>
+
+  <!-- bay 1: clean (skip) -->
+  <g>
+    <rect x="380" y="90" width="240" height="270" rx="14" fill="#052e16" opacity="0.45"/>
+    <rect x="380" y="90" width="240" height="270" rx="14" fill="none" stroke="#22c55e" stroke-width="2"/>
+    <text x="400" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">1</text>
+    <use href="#carBody" transform="translate(422 192)" fill="#3b82f6" stroke="#60a5fa"/>
+    <use href="#sparkle" transform="translate(436 184) scale(0.9)"/>
+    <use href="#sparkle" transform="translate(556 178) scale(1.1)"/>
+    <use href="#sparkle" transform="translate(572 214) scale(0.75)"/>
+    <rect x="450" y="302" width="100" height="32" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="500" y="324" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#4ade80">clean</text>
+  </g>
+
+  <!-- bay 2: dirty -> wash -->
+  <g>
+    <rect x="670" y="90" width="240" height="270" rx="14" fill="#78350f" opacity="0.22"/>
+    <rect x="670" y="90" width="240" height="270" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="690" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">2</text>
+    <use href="#nozzle" transform="translate(790 122)"/>
+    <use href="#carBody" transform="translate(712 192)" fill="#64748b" stroke="#94a3b8"/>
+    <!-- mud spots -->
+    <g fill="#92400e" opacity="0.9">
+      <circle cx="752" cy="246" r="6"/>
+      <circle cx="786" cy="242" r="5"/>
+      <circle cx="818" cy="251" r="5"/>
+      <circle cx="842" cy="242" r="4"/>
+    </g>
+    <!-- soap bubbles -->
+    <g fill="#bfdbfe" opacity="0.85">
+      <circle cx="774" cy="192" r="8"/>
+      <circle cx="804" cy="188" r="6"/>
+      <circle cx="822" cy="196" r="7"/>
+    </g>
+    <rect x="740" y="302" width="100" height="32" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="790" y="324" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#fbbf24">dirty</text>
+  </g>
+
+  <!-- unknown washed count -->
+  <g>
+    <rect x="370" y="416" width="260" height="68" rx="14" fill="url(#washPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="456" y="457" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" fill="#94a3b8">washed</text>
+    <circle cx="572" cy="450" r="22" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="572" y="458" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>
