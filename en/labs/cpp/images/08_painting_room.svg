@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="paintTitle paintDesc">
   <title id="paintTitle">Computing wall area and painting cost for four walls of a room</title>
-  <desc id="paintDesc">A 3D room box showing length L, width W, and height H with the four vertical walls highlighted for painting and floor and ceiling skipped, producing unknown wall area and cost.</desc>
+  <desc id="paintDesc">A 3D room measuring 5 m by 4 m by 3 m with its four walls highlighted while ceiling and floor are skipped, at 10 per square meter, yielding 54 square meters of wall area and a paint cost of 540.</desc>
 
   <defs>
     <linearGradient id="pntPanel" x1="0" y1="0" x2="0" y2="1">
@@ -13,51 +13,51 @@
 
   <!-- Left: 3D room box showing 4 walls painted -->
   <g>
-    <rect x="70" y="76" width="440" height="368" rx="20" fill="url(#pntPanel)" stroke="#334155" stroke-width="2"/>
-
-    <!-- Isometric room: back top-left (175,130), back top-right (405,130), back bottom-left (175,320), back bottom-right (405,320) -->
-    <!-- Front offsets (-45, +55) -> front top-left (130,185), front top-right (360,185), front bottom-left (130,375), front bottom-right (360,375) -->
-    <!-- Back wall -->
-    <polygon points="175,130 405,130 405,320 175,320" fill="#f59e0b" opacity="0.22" stroke="#fbbf24" stroke-width="2"/>
-    <!-- Left wall -->
-    <polygon points="130,185 175,130 175,320 130,375" fill="#f59e0b" opacity="0.34" stroke="#fbbf24" stroke-width="2"/>
-    <!-- Right wall -->
-    <polygon points="360,185 405,130 405,320 360,375" fill="#f59e0b" opacity="0.34" stroke="#fbbf24" stroke-width="2"/>
-    <!-- Front outline (translucent wall) -->
-    <polygon points="130,185 360,185 360,375 130,375" fill="#f59e0b" opacity="0.1" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4"/>
-
-    <!-- Dimension labels L, W, H -->
-    <text x="245" y="404" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">L</text>
-    <text x="404" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">W</text>
-    <text x="106" y="286" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#fbbf24">H</text>
+    <rect x="70" y="64" width="440" height="392" rx="20" fill="url(#pntPanel)" stroke="#334155" stroke-width="2"/>
 
     <!-- Skip note for floor & ceiling -->
-    <text x="290" y="108" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#64748b">ceiling &amp; floor: skip</text>
+    <text x="290" y="100" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#64748b">ceiling &amp; floor: skip</text>
+
+    <!-- Back wall -->
+    <polygon points="175,130 405,130 405,310 175,310" fill="#f59e0b" opacity="0.22" stroke="#fbbf24" stroke-width="2"/>
+    <!-- Left wall -->
+    <polygon points="130,180 175,130 175,310 130,360" fill="#f59e0b" opacity="0.34" stroke="#fbbf24" stroke-width="2"/>
+    <!-- Right wall -->
+    <polygon points="360,180 405,130 405,310 360,360" fill="#f59e0b" opacity="0.34" stroke="#fbbf24" stroke-width="2"/>
+    <!-- Front wall (translucent) -->
+    <polygon points="130,180 360,180 360,360 130,360" fill="#f59e0b" opacity="0.1" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4"/>
+
+    <!-- Example dimensions -->
+    <text x="245" y="388" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">5 m</text>
+    <text x="414" y="352" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">4 m</text>
+    <text x="102" y="276" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#fbbf24">3 m</text>
+
+    <!-- Price badge -->
+    <rect x="200" y="404" width="180" height="34" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="290" y="426" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#60a5fa">10 / m²</text>
   </g>
 
   <!-- Arrows -->
   <g>
-    <line x1="510" y1="184" x2="572" y2="184" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-    <polygon points="570,176 584,184 570,192" fill="#f59e0b"/>
+    <line x1="510" y1="176" x2="572" y2="176" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="570,168 584,176 570,184" fill="#f59e0b"/>
 
-    <line x1="510" y1="336" x2="572" y2="336" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
-    <polygon points="570,328 584,336 570,344" fill="#60a5fa"/>
+    <line x1="510" y1="344" x2="572" y2="344" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="570,336 584,344 570,352" fill="#22c55e"/>
   </g>
 
-  <!-- Right: Wall area & Painting cost -->
+  <!-- Right: Wall area & Painting cost examples (no formula spoiler) -->
   <g>
     <!-- 4 walls area -->
     <rect x="592" y="96" width="338" height="156" rx="18" fill="url(#pntPanel)" stroke="#f59e0b" stroke-width="2"/>
-    <text x="626" y="136" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#fbbf24">4 walls area</text>
-    <text x="626" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">2·(L + W)·H</text>
-    <rect x="782" y="148" width="118" height="58" rx="14" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
-    <text x="841" y="185" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">? m²</text>
+    <text x="630" y="180" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#fbbf24">4 walls area</text>
+    <rect x="782" y="145" width="118" height="58" rx="14" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="841" y="182" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#fbbf24">54 m²</text>
 
     <!-- Cost -->
-    <rect x="592" y="276" width="338" height="156" rx="18" fill="url(#pntPanel)" stroke="#60a5fa" stroke-width="2"/>
-    <text x="626" y="316" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#cbd5e1">paint cost</text>
-    <text x="626" y="348" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">area × price/m²</text>
-    <rect x="782" y="328" width="118" height="58" rx="14" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
-    <text x="841" y="365" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#60a5fa">?</text>
+    <rect x="592" y="276" width="338" height="156" rx="18" fill="url(#pntPanel)" stroke="#22c55e" stroke-width="2"/>
+    <text x="630" y="360" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#cbd5e1">paint cost</text>
+    <rect x="782" y="325" width="118" height="58" rx="14" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+    <text x="841" y="362" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#4ade80">540</text>
   </g>
 </svg>

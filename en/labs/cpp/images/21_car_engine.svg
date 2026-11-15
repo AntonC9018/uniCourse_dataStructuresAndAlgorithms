@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="engineTitle engineDesc">
   <title id="engineTitle">Checking and repairing car 1's engine in a garage</title>
-  <desc id="engineDesc">A garage holds four cars, each with its own engine and a wear value from zero to one hundred. Car 1 has engine wear sixty-eight, which is checked and repaired to zero.</desc>
+  <desc id="engineDesc">A garage holds four cars, each with its own engine and a wear value from zero to one hundred. Car 1 has engine wear sixty-eight, which is inspected with a magnifying glass and repaired with a wrench to zero.</desc>
 
   <defs>
     <linearGradient id="engPanel" x1="0" y1="0" x2="0" y2="1">
@@ -46,22 +46,25 @@
     <use href="#carBody" transform="translate(332 116)" fill="#f59e0b" stroke="#fbbf24"/>
     <line x1="389" y1="186" x2="389" y2="206" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="4 3"/>
     <rect x="308" y="216" width="162" height="206" rx="10" fill="#132033" stroke="#f59e0b" stroke-width="2"/>
-    <use href="#engineIcon" transform="translate(361 236)"/>
-    <!-- magnifying glass badge -->
-    <g transform="translate(442 246)">
-      <circle cx="0" cy="0" r="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2.2"/>
-      <line x1="7" y1="7" x2="14" y2="14" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <use href="#engineIcon" transform="translate(345 236)"/>
+    <!-- clear magnifying glass ("check engine") -->
+    <g transform="translate(432 248)">
+      <circle cx="0" cy="0" r="13" fill="#60a5fa" fill-opacity="0.18" stroke="#60a5fa" stroke-width="2.8"/>
+      <path d="M -7 -5 A 8 8 0 0 1 2 -8" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9.5" y1="9.5" x2="18" y2="18" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+      <line x1="9.5" y1="9.5" x2="12" y2="12" stroke="#60a5fa" stroke-width="3.5" stroke-linecap="round"/>
     </g>
     <rect x="326" y="294" width="126" height="12" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
     <rect x="326" y="294" width="86" height="12" rx="6" fill="#f59e0b"/>
     <text x="389" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fbbf24">wear 68</text>
-    <!-- repair wrench & target 0 -->
-    <g transform="translate(336 364)">
-      <path d="M 10 6 A 8 8 0 1 0 16 14 L 26 24 L 22 28 L 12 18 A 8 8 0 0 0 10 6 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+    <!-- open-jaw spanner wrench & target 0 -->
+    <g transform="translate(348 386) rotate(-45) scale(1.2)">
+      <path d="M -2 -3 C -4 -8 -10 -9 -14 -5 L -8 -2.2 L -8 2.2 L -14 5 C -10 9 -4 8 -2 3 L 15 3 C 18 3 18 -3 15 -3 Z" fill="#cbd5e1"/>
+      <circle cx="13.5" cy="0" r="1.4" fill="#0f172a"/>
     </g>
-    <text x="380" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">→</text>
-    <rect x="406" y="366" width="44" height="36" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
-    <text x="428" y="391" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#4ade80">0</text>
+    <text x="382" y="391" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">→</text>
+    <rect x="408" y="366" width="44" height="36" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+    <text x="430" y="391" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#4ade80">0</text>
   </g>
 
   <!-- car 2 -->

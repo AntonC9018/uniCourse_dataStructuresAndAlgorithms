@@ -7,9 +7,9 @@
       <stop offset="0%" stop-color="#132033"/>
       <stop offset="100%" stop-color="#0d1726"/>
     </linearGradient>
-    <g id="thermometer">
-      <rect x="-12" y="-56" width="24" height="84" rx="12" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
-      <circle cx="0" cy="40" r="20" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+    <!-- Continuous outer glass silhouette (stem width 24 + bulb r=20 at y=40, seamless junction at y=24) -->
+    <g id="thermometerGlass">
+      <path d="M -12 24 V -44 A 12 12 0 0 1 12 -44 V 24 A 20 20 0 1 1 -12 24 Z" fill="#0f172a" stroke="#64748b" stroke-width="2.5" stroke-linejoin="round"/>
       <circle cx="0" cy="40" r="13" fill="#f59e0b"/>
     </g>
   </defs>
@@ -21,8 +21,8 @@
     <!-- Reading 1 -->
     <rect x="70" y="84" width="240" height="156" rx="16" fill="url(#tempPanel)" stroke="#334155" stroke-width="2"/>
     <g transform="translate(132 166)">
-      <use href="#thermometer"/>
-      <rect x="-6" y="-12" width="12" height="50" rx="6" fill="#f59e0b"/>
+      <use href="#thermometerGlass"/>
+      <rect x="-6" y="-12" width="12" height="52" rx="6" fill="#f59e0b"/>
     </g>
     <text x="232" y="142" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">reading 1</text>
     <text x="232" y="182" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#e2e8f0">18°</text>
@@ -30,8 +30,8 @@
     <!-- Reading 2 -->
     <rect x="70" y="280" width="240" height="156" rx="16" fill="url(#tempPanel)" stroke="#334155" stroke-width="2"/>
     <g transform="translate(132 362)">
-      <use href="#thermometer"/>
-      <rect x="-6" y="-28" width="12" height="66" rx="6" fill="#f59e0b"/>
+      <use href="#thermometerGlass"/>
+      <rect x="-6" y="-28" width="12" height="68" rx="6" fill="#f59e0b"/>
     </g>
     <text x="232" y="338" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">reading 2</text>
     <text x="232" y="378" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#e2e8f0">21°</text>

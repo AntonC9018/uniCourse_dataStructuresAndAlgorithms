@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="elevTitle elevDesc">
   <title id="elevTitle">Counting elevator trips needed for N people with capacity K</title>
-  <desc id="elevDesc">Ten people waiting on a floor next to an elevator cabin that fits four people at a time, leaving an unknown total number of trips when the last trip may be partially full.</desc>
+  <desc id="elevDesc">Ten people waiting on a floor next to an elevator cabin that fits four people at a time require 3 trips when the last trip may be partially full.</desc>
 
   <defs>
     <linearGradient id="elvPanel" x1="0" y1="0" x2="0" y2="1">
@@ -15,10 +15,10 @@
 
   <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
 
-  <!-- Left: N = 10 waiting people on floor -->
+  <!-- Left: 10 waiting people on floor -->
   <g>
     <rect x="70" y="96" width="320" height="328" rx="18" fill="url(#elvPanel)" stroke="#334155" stroke-width="2"/>
-    <text x="230" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">N = 10 waiting</text>
+    <text x="230" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">10 waiting</text>
 
     <!-- 10 people in 2 rows of 5 -->
     <g transform="translate(134 218)">
@@ -51,7 +51,7 @@
 
     <!-- Elevator cabin -->
     <rect x="466" y="120" width="218" height="280" rx="18" fill="url(#elvPanel)" stroke="#f59e0b" stroke-width="2.5"/>
-    <text x="575" y="160" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">max K = 4</text>
+    <text x="575" y="160" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">max 4</text>
 
     <!-- 4 slots in cabin -->
     <rect x="498" y="190" width="154" height="140" rx="12" fill="#0f172a" stroke="#475569" stroke-width="2"/>
@@ -63,13 +63,13 @@
     <text x="575" y="368" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#94a3b8">last may be partial</text>
   </g>
 
-  <!-- Right: Trips count ? -->
+  <!-- Right: Trips count 3 -->
   <g>
-    <line x1="696" y1="260" x2="736" y2="260" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
-    <polygon points="734,252 748,260 734,268" fill="#60a5fa"/>
+    <line x1="696" y1="260" x2="736" y2="260" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="734,252 748,260 734,268" fill="#22c55e"/>
 
-    <rect x="756" y="176" width="174" height="168" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
-    <text x="843" y="258" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="40" font-weight="700" fill="#60a5fa">?</text>
+    <rect x="756" y="176" width="174" height="168" rx="20" fill="url(#elvPanel)" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="843" y="258" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="48" font-weight="700" fill="#4ade80">3</text>
     <text x="843" y="308" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">trips</text>
   </g>
 </svg>
