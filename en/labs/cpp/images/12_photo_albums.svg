@@ -74,8 +74,8 @@
     <polygon points="120,420 150,396 175,420" fill="#22c55e"/>
     <g transform="translate(168 352)">
       <circle r="16" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
-      <path d="M -8 0 A 8 8 0 1 1 0 -8" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
-      <polygon points="8,-8 0,-11.5 0,-4.5" fill="#fbbf24"/>
+      <path d="M 7 0 A 7 7 0 1 1 0 -7" fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round"/>
+      <polygon points="-0.5,-10.5 6,-7 -0.5,-3.5" fill="#fbbf24"/>
     </g>
     <rect x="85" y="446" width="90" height="24" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
     <text x="130" y="463" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">w ↔ h</text>

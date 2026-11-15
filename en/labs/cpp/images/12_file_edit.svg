@@ -43,9 +43,9 @@
     <rect x="90" y="244" width="820" height="56" rx="10" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
     <text x="150" y="279" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">2</text>
     <text x="178" y="279" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e2e8f0">user = admin</text>
-    <line x1="326" y1="256" x2="326" y2="292" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
-    <rect x="334" y="260" width="120" height="36" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 5"/>
-    <text x="340" y="286" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#fbbf24">istrator</text>
+    <line x1="330" y1="255" x2="330" y2="289" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="338" y="254" width="116" height="36" rx="7" fill="#0f172a" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="396" y="279" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#fbbf24">istrator</text>
     <text x="812" y="279" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">12</text>
   </g>
 

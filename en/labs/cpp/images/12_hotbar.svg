@@ -9,26 +9,33 @@
     </linearGradient>
 
     <g id="handle">
-      <line x1="12" y1="90" x2="64" y2="30" stroke="#7c2d12" stroke-width="11" stroke-linecap="round"/>
-      <line x1="12" y1="90" x2="64" y2="30" stroke="#b45309" stroke-width="7.5" stroke-linecap="round"/>
+      <line x1="14" y1="86" x2="68" y2="32" stroke="#78350f" stroke-width="11" stroke-linecap="round"/>
+      <line x1="14" y1="86" x2="68" y2="32" stroke="#c26318" stroke-width="7.5" stroke-linecap="round"/>
+      <line x1="17" y1="83" x2="64" y2="36" stroke="#e08938" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
     </g>
 
     <g id="pickaxe">
       <use href="#handle"/>
-      <path d="M 18 48 C 26 20 44 8 62 10 C 72 11 78 18 82 26 L 94 60 L 85 64 L 72 32 C 64 26 52 26 42 30 C 32 34 24 42 18 48 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M 26 44 C 34 24 48 16 62 18" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <path d="M 22 22 Q 49 11 74 26 Q 89 51 78 78 Q 75 51 66 38 L 62 34 Q 49 25 22 22 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M 28 22 Q 50 15 73 27 Q 85 50 78 72" fill="none" stroke="#f8fafc" stroke-width="1.8" stroke-linecap="round" opacity="0.65"/>
+      <rect x="61" y="28" width="12" height="10" rx="2" transform="rotate(-45 67 33)" fill="#94a3b8" stroke="#64748b" stroke-width="1.5"/>
     </g>
 
     <g id="axe">
       <use href="#handle"/>
-      <path d="M 58 40 L 70 16 L 94 10 Q 101 29 96 48 L 74 50 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M 88 14 L 90 44" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.55"/>
+      <path d="M 56 26 L 67 17 Q 81 21 92 31 Q 95 52 70 68 Q 66 51 59 41 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M 89 33 Q 91 51 71 64" fill="none" stroke="#f8fafc" stroke-width="2.4" stroke-linecap="round" opacity="0.75"/>
+      <rect x="57" y="28" width="11" height="11" rx="2" transform="rotate(-45 62.5 33.5)" fill="#94a3b8" stroke="#64748b" stroke-width="1.5"/>
     </g>
 
     <g id="shovel">
-      <use href="#handle"/>
-      <path d="M 60.3 26.7 L 69.9 0.6 L 92.4 20.4 L 67.8 33.3 Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M 62 28.5 L 68 33" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.55"/>
+      <line x1="14" y1="86" x2="58" y2="42" stroke="#78350f" stroke-width="11" stroke-linecap="round"/>
+      <line x1="14" y1="86" x2="58" y2="42" stroke="#c26318" stroke-width="7.5" stroke-linecap="round"/>
+      <line x1="17" y1="83" x2="54" y2="46" stroke="#e08938" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+      <path d="M 48 34 L 62 16 Q 74 10 89 11 Q 90 26 84 38 L 66 52 Q 59 43 48 34 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M 65 18 Q 75 13 86 14 Q 87 25 82 35" fill="none" stroke="#f8fafc" stroke-width="1.8" stroke-linecap="round" opacity="0.65"/>
+      <line x1="56" y1="44" x2="77" y2="23" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="53" y="38" width="10" height="10" rx="2" transform="rotate(-45 58 43)" fill="#94a3b8" stroke="#64748b" stroke-width="1.5"/>
     </g>
   </defs>
 
