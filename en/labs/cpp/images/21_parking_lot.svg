@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="parkingTitle parkingDesc">
+  <title id="parkingTitle">Parking a new car on the first empty spot using pointer arithmetic</title>
+  <desc id="parkingDesc">A parking lot has two floors of four spots each. A pointer walks the spots in order until it reaches the first empty spot on floor 1, spot 1, where a new car parks.</desc>
+
+  <defs>
+    <linearGradient id="lotPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="miniCar">
+      <path d="M 10 24 L 18 10 Q 21 7 26 7 H 58 Q 63 7 66 10 L 74 24 H 82 Q 86 24 86 28 V 38 H 4 V 28 Q 4 24 8 24 Z" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="22" cy="40" r="7" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+      <circle cx="68" cy="40" r="7" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- new car waiting on top -->
+  <g>
+    <rect x="60" y="56" width="160" height="104" rx="14" fill="#78350f" opacity="0.28"/>
+    <rect x="60" y="56" width="160" height="104" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <use href="#miniCar" transform="translate(95 84)" fill="#f59e0b" stroke="#fbbf24"/>
+  </g>
+
+  <!-- parking lot 2 floors x 4 spots -->
+  <rect x="260" y="56" width="680" height="408" rx="18" fill="url(#lotPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- floor 0 -->
+  <text x="290" y="96" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">floor 0</text>
+  <g>
+    <rect x="290" y="112" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(315 144)" fill="#475569" stroke="#64748b"/>
+
+    <rect x="450" y="112" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(475 144)" fill="#3b82f6" stroke="#60a5fa"/>
+
+    <rect x="610" y="112" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(635 144)" fill="#22c55e" stroke="#4ade80"/>
+
+    <rect x="770" y="112" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(795 144)" fill="#7c3aed" stroke="#a78bfa"/>
+  </g>
+
+  <!-- floor 1 -->
+  <text x="290" y="294" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">floor 1</text>
+  <g>
+    <rect x="290" y="310" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(315 342)" fill="#475569" stroke="#64748b"/>
+
+    <!-- first empty spot -->
+    <rect x="450" y="310" width="140" height="110" rx="10" fill="#172554" opacity="0.55"/>
+    <rect x="450" y="310" width="140" height="110" rx="10" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="7 5"/>
+
+    <rect x="610" y="310" width="140" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <use href="#miniCar" transform="translate(635 342)" fill="#3b82f6" stroke="#60a5fa"/>
+
+    <rect x="770" y="310" width="140" height="110" rx="10" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7 5"/>
+  </g>
+
+  <!-- pointer arithmetic walk: floor 0 spots -> floor 1 spot 0 -> floor 1 spot 1 -->
+  <g fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="6 5">
+    <path d="M 360 236 H 840"/>
+    <path d="M 840 236 V 264 H 360 V 296"/>
+    <path d="M 360 434 H 520 V 426"/>
+  </g>
+  <g fill="#60a5fa" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="600">
+    <rect x="334" y="222" width="52" height="24" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="360" y="239" text-anchor="middle">p</text>
+    <rect x="494" y="222" width="52" height="24" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="520" y="239" text-anchor="middle">p+1</text>
+    <rect x="654" y="222" width="52" height="24" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="680" y="239" text-anchor="middle">p+2</text>
+    <rect x="814" y="222" width="52" height="24" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="840" y="239" text-anchor="middle">p+3</text>
+    <rect x="334" y="422" width="52" height="24" rx="6" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="360" y="439" text-anchor="middle">p+4</text>
+    <rect x="494" y="422" width="52" height="24" rx="6" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="520" y="439" text-anchor="middle">p+5</text>
+  </g>
+
+  <!-- arrow moving new car into first empty spot -->
+  <path d="M 140 160 V 365 H 434" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="434,356 450,365 434,374" fill="#f59e0b"/>
+</svg>

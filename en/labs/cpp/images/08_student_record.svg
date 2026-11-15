@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="studTitle studDesc">
+  <title id="studTitle">Printing a student record without modifying it</title>
+  <desc id="studDesc">A read-only student card with ID 1042, year 2, and GPA 4.65 passed into a print function that outputs the fields to a console screen without altering the card.</desc>
+
+  <defs>
+    <linearGradient id="stPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left: Student struct card (read-only) -->
+  <g>
+    <rect x="70" y="96" width="330" height="328" rx="18" fill="url(#stPanel)" stroke="#60a5fa" stroke-width="2"/>
+    <circle cx="144" cy="164" r="28" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <circle cx="144" cy="156" r="10" fill="#f8d7b3"/>
+    <path d="M 127 181 Q 144 166 161 181 Z" fill="#60a5fa"/>
+
+    <text x="192" y="158" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#e2e8f0">Student</text>
+    <rect x="192" y="170" width="110" height="26" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="247" y="188" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" font-weight="600" fill="#4ade80">read-only</text>
+
+    <line x1="106" y1="218" x2="364" y2="218" stroke="#1e293b" stroke-width="2"/>
+
+    <text x="110" y="262" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">id</text>
+    <text x="360" y="262" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">1042</text>
+
+    <text x="110" y="314" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">year</text>
+    <text x="360" y="314" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#e2e8f0">2</text>
+
+    <text x="110" y="366" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">gpa</text>
+    <text x="360" y="366" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">4.65</text>
+  </g>
+
+  <!-- Arrow with print label -->
+  <g>
+    <line x1="418" y1="260" x2="534" y2="260" stroke="#60a5fa" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="532,251 548,260 532,269" fill="#60a5fa"/>
+    <rect x="426" y="210" width="104" height="34" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="478" y="232" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="600" fill="#60a5fa">print</text>
+  </g>
+
+  <!-- Right: Console / screen output -->
+  <g>
+    <rect x="564" y="106" width="366" height="308" rx="18" fill="#0f172a" stroke="#475569" stroke-width="2.5"/>
+    <!-- Terminal title bar -->
+    <rect x="564" y="106" width="366" height="44" rx="18" fill="#1e293b"/>
+    <rect x="564" y="132" width="366" height="18" fill="#1e293b"/>
+    <circle cx="596" cy="128" r="6" fill="#ef4444"/>
+    <circle cx="618" cy="128" r="6" fill="#f59e0b"/>
+    <circle cx="640" cy="128" r="6" fill="#22c55e"/>
+    <text x="747" y="133" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94a3b8">stdout</text>
+
+    <!-- Terminal output lines -->
+    <text x="602" y="206" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#4ade80">&gt; id:   1042</text>
+    <text x="602" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#4ade80">&gt; year: 2</text>
+    <text x="602" y="310" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#4ade80">&gt; gpa:  4.65</text>
+    <rect x="602" y="346" width="12" height="24" rx="2" fill="#60a5fa" opacity="0.8"/>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="dishesTitle dishesDesc">
+  <title id="dishesTitle">Soaking every dirty plate in rack 0</title>
+  <desc id="dishesDesc">A kitchen has two wire dish racks holding three plates each in slotted dividers. Rack 0 is selected: its dirty plates receive water drops to soak, while its already soaked plate and all plates in rack 1 stay untouched.</desc>
+
+  <defs>
+    <linearGradient id="rackPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <!-- Slanted plate sitting in a dish rack slot -->
+    <g id="plate">
+      <ellipse cx="0" cy="0" rx="22" ry="44" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2.5"/>
+      <ellipse cx="0" cy="0" rx="13" ry="28" fill="none" stroke="#cbd5e1" stroke-width="1.8"/>
+    </g>
+    <g id="drop">
+      <path d="M 0 0 C 0 0 9 12 9 17 A 9 9 0 0 1 -9 17 C -9 12 0 0 0 0 Z" fill="#60a5fa"/>
+    </g>
+    <g id="stain">
+      <circle cx="-4" cy="-10" r="5" fill="#92400e"/>
+      <circle cx="4" cy="9" r="6" fill="#78350f"/>
+      <circle cx="-3" cy="18" r="3.5" fill="#92400e"/>
+    </g>
+    <!-- Wire dish rack frame with 3 slotted compartments -->
+    <g id="dishRackWire">
+      <!-- Back wire rail -->
+      <path d="M -290 -20 H 290" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+      <path d="M -290 22 H 290" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+      <!-- Bottom tray floor & side legs -->
+      <rect x="-300" y="28" width="600" height="22" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+      <!-- Wire rack dividers between and around the 3 plates -->
+      <g stroke="#64748b" stroke-width="3" stroke-linecap="round" fill="none">
+        <path d="M -265 28 V -28 Q -265 -36 -255 -36 H -240 V 28"/>
+        <path d="M -110 28 V -26 Q -105 -34 -95 -26 V 28"/>
+        <path d="M 95 28 V -26 Q 100 -34 110 -26 V 28"/>
+        <path d="M 240 28 V -36 H 255 Q 265 -36 265 -28 V 28"/>
+      </g>
+      <!-- Front rack rail bars across bottom -->
+      <line x1="-295" y1="36" x2="295" y2="36" stroke="#475569" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- rack 0, selected -->
+  <g>
+    <rect x="80" y="48" width="840" height="202" rx="16" fill="#78350f" opacity="0.22"/>
+    <rect x="80" y="48" width="840" height="202" rx="16" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="110" y="84" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#fbbf24">rack 0</text>
+
+    <!-- Rack wireframe at bottom of rack 0 -->
+    <use href="#dishRackWire" transform="translate(530 184)"/>
+
+    <!-- plate 0: dirty -> soak -->
+    <g transform="translate(345 166)">
+      <use href="#plate"/>
+      <use href="#stain"/>
+      <use href="#drop" transform="translate(0 -92)"/>
+      <line x1="0" y1="-64" x2="0" y2="-48" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="-6,-50 0,-39 6,-50" fill="#60a5fa"/>
+    </g>
+
+    <!-- plate 1: already soaked -->
+    <g transform="translate(530 166)">
+      <use href="#plate"/>
+      <ellipse cx="0" cy="0" rx="14" ry="29" fill="#60a5fa" opacity="0.28"/>
+      <use href="#drop" transform="translate(-4 -14) scale(0.7)"/>
+      <use href="#drop" transform="translate(6 2) scale(0.6)"/>
+    </g>
+
+    <!-- plate 2: dirty -> soak -->
+    <g transform="translate(715 166)">
+      <use href="#plate"/>
+      <use href="#stain" transform="scale(-1 1)"/>
+      <use href="#drop" transform="translate(0 -92)"/>
+      <line x1="0" y1="-64" x2="0" y2="-48" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="-6,-50 0,-39 6,-50" fill="#60a5fa"/>
+    </g>
+
+    <!-- Front wire rail overlay over lower rim of plates -->
+    <line x1="230" y1="212" x2="830" y2="212" stroke="#f59e0b" stroke-width="2.5" opacity="0.7"/>
+  </g>
+
+  <!-- rack 1, untouched -->
+  <g>
+    <rect x="80" y="270" width="840" height="202" rx="16" fill="url(#rackPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="110" y="306" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#94a3b8">rack 1</text>
+
+    <!-- Rack wireframe at bottom of rack 1 -->
+    <use href="#dishRackWire" transform="translate(530 406)"/>
+
+    <!-- plate 0: soaked -->
+    <g transform="translate(345 388)">
+      <use href="#plate"/>
+      <ellipse cx="0" cy="0" rx="14" ry="29" fill="#60a5fa" opacity="0.28"/>
+      <use href="#drop" transform="translate(0 -12) scale(0.7)"/>
+    </g>
+
+    <!-- plate 1: dirty -->
+    <g transform="translate(530 388)">
+      <use href="#plate"/>
+      <use href="#stain"/>
+    </g>
+
+    <!-- plate 2: dirty -->
+    <g transform="translate(715 388)">
+      <use href="#plate"/>
+      <use href="#stain" transform="scale(-1 1)"/>
+    </g>
+
+    <!-- Front wire rail overlay -->
+    <line x1="230" y1="434" x2="830" y2="434" stroke="#64748b" stroke-width="2.5" opacity="0.8"/>
+  </g>
+</svg>

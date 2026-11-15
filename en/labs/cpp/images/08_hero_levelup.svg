@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="lvlTitle lvlDesc">
+  <title id="lvlTitle">Hero level-up increasing max health and restoring current health</title>
+  <desc id="lvlDesc">A hero with 35 out of 100 health levels up, adding 10 to maximum health and restoring current health to the new unknown maximum.</desc>
+
+  <defs>
+    <linearGradient id="lvlPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Before card -->
+  <g>
+    <rect x="70" y="96" width="310" height="328" rx="18" fill="url(#lvlPanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="225" cy="166" r="34" fill="#0f172a" stroke="#64748b" stroke-width="2.5"/>
+    <path d="M 225 182 C 209 170 207 156 216 151 C 221 148 225 153 225 156 C 225 153 229 148 234 151 C 243 156 241 170 225 182 Z" fill="#ef4444"/>
+    <text x="225" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#cbd5e1">before</text>
+
+    <rect x="108" y="266" width="234" height="22" rx="11" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <rect x="110" y="268" width="82" height="18" rx="9" fill="#ef4444"/>
+    <text x="225" y="324" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="600" fill="#e2e8f0">35 / 100</text>
+    <text x="225" y="354" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">current / max</text>
+  </g>
+
+  <!-- Level-up arrow -->
+  <g>
+    <line x1="396" y1="260" x2="584" y2="260" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="582,251 598,260 582,269" fill="#f59e0b"/>
+    <rect x="422" y="192" width="140" height="52" rx="14" fill="#78350f" opacity="0.45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="492" y="216" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="700" fill="#fbbf24">★ level up</text>
+    <text x="492" y="235" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fde68a">+10 max HP</text>
+  </g>
+
+  <!-- After card -->
+  <g>
+    <rect x="614" y="96" width="316" height="328" rx="18" fill="#052e16" opacity="0.32"/>
+    <rect x="614" y="96" width="316" height="328" rx="18" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+    <circle cx="772" cy="166" r="34" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5"/>
+    <path d="M 772 182 C 756 170 754 156 763 151 C 768 148 772 153 772 156 C 772 153 776 148 781 151 C 790 156 788 170 772 182 Z" fill="#22c55e"/>
+    <text x="772" y="232" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="600" fill="#4ade80">full heal</text>
+
+    <!-- Extended bar (+10 bonus segment) -->
+    <rect x="646" y="266" width="222" height="22" rx="11" fill="#22c55e" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="868" y="266" width="32" height="22" rx="8" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="884" y="254" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#fbbf24">+10</text>
+
+    <!-- Unknown new current / max -->
+    <rect x="702" y="324" width="140" height="48" rx="14" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="772" y="355" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">? / ?</text>
+    <text x="772" y="398" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#4ade80">current = max</text>
+  </g>
+</svg>

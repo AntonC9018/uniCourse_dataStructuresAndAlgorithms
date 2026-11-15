@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="swapTitle swapDesc">
+  <title id="swapTitle">Swapping the values of two variables</title>
+  <desc id="swapDesc">Variables a holding 5 and b holding 9 with curved swap arrows above and below showing their values being exchanged.</desc>
+
+  <defs>
+    <linearGradient id="swapPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Top curved swap arrow: a -> b -->
+  <path d="M 230 164 Q 500 62 760 158" fill="none" stroke="#60a5fa" stroke-width="3.5" stroke-linecap="round"/>
+  <polygon points="771.3,162.1 753.7,163.7 758.8,149.6" fill="#60a5fa"/>
+
+  <!-- Bottom curved swap arrow: b -> a -->
+  <path d="M 770 356 Q 500 458 240 362" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+  <polygon points="228.7,357.9 246.3,356.3 241.2,370.4" fill="#f59e0b"/>
+
+  <!-- Variable a -->
+  <g>
+    <rect x="130" y="176" width="200" height="168" rx="20" fill="url(#swapPanel)" stroke="#60a5fa" stroke-width="2.5"/>
+    <text x="230" y="224" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#60a5fa">a</text>
+    <text x="230" y="296" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="48" font-weight="700" fill="#e2e8f0">5</text>
+  </g>
+
+  <!-- Variable b -->
+  <g>
+    <rect x="670" y="176" width="200" height="168" rx="20" fill="url(#swapPanel)" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="770" y="224" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="700" fill="#fbbf24">b</text>
+    <text x="770" y="296" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="48" font-weight="700" fill="#e2e8f0">9</text>
+  </g>
+</svg>

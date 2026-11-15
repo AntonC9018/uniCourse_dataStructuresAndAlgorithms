@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="distTitle distDesc">
+  <title id="distTitle">Distance between two points on a coordinate plane</title>
+  <desc id="distDesc">Two points A at (1, 2) and B at (5, 5) on a coordinate grid with a distance of 5 between them.</desc>
+
+  <defs>
+    <linearGradient id="dstPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left coordinate grid (origin at 150, 400; x step 60, y step 50) -->
+  <g>
+    <rect x="70" y="56" width="520" height="408" rx="20" fill="url(#dstPanel)" stroke="#334155" stroke-width="2"/>
+
+    <!-- Grid lines -->
+    <g stroke="#1e293b" stroke-width="1.5">
+      <line x1="210" y1="86" x2="210" y2="400"/>
+      <line x1="270" y1="86" x2="270" y2="400"/>
+      <line x1="330" y1="86" x2="330" y2="400"/>
+      <line x1="390" y1="86" x2="390" y2="400"/>
+      <line x1="450" y1="86" x2="450" y2="400"/>
+      <line x1="510" y1="86" x2="510" y2="400"/>
+
+      <line x1="150" y1="350" x2="540" y2="350"/>
+      <line x1="150" y1="300" x2="540" y2="300"/>
+      <line x1="150" y1="250" x2="540" y2="250"/>
+      <line x1="150" y1="200" x2="540" y2="200"/>
+      <line x1="150" y1="150" x2="540" y2="150"/>
+      <line x1="150" y1="100" x2="540" y2="100"/>
+    </g>
+
+    <!-- Axes -->
+    <line x1="150" y1="400" x2="554" y2="400" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="150" y1="400" x2="150" y2="78" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="552,394 564,400 552,406" fill="#64748b"/>
+    <polygon points="144,80 150,68 156,80" fill="#64748b"/>
+    <text x="564" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">x</text>
+    <text x="128" y="84" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#94a3b8">y</text>
+
+    <!-- Line segment distance between A(1,2) and B(5,5) -->
+    <line x1="210" y1="300" x2="450" y2="150" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Points A and B -->
+    <circle cx="210" cy="300" r="8" fill="#60a5fa" stroke="#0b1220" stroke-width="2"/>
+    <text x="214" y="330" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#e2e8f0">A(1, 2)</text>
+
+    <circle cx="450" cy="150" r="8" fill="#fbbf24" stroke="#0b1220" stroke-width="2"/>
+    <text x="450" y="132" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#fbbf24">B(5, 5)</text>
+  </g>
+
+  <!-- Right: Concrete distance example (no formula spoiler) -->
+  <g>
+    <rect x="626" y="110" width="304" height="300" rx="20" fill="url(#dstPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="778" y="168" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#cbd5e1">A(1, 2) ↔ B(5, 5)</text>
+
+    <rect x="706" y="216" width="144" height="96" rx="18" fill="#052e16" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="778" y="278" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="44" font-weight="700" fill="#4ade80">5</text>
+    <text x="778" y="362" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">distance</text>
+  </g>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hotChainTitle hotChainDesc">
+  <title id="hotChainTitle">Moving pizza from fridge shelf 0 to microwave, heating it, and moving it to freezer shelf 1</title>
+  <desc id="hotChainDesc">Cold pizza starts on fridge shelf 0, moves into the microwave to be heated hot, and moves to empty freezer shelf 1. Each step reports whether it succeeded.</desc>
+
+  <defs>
+    <linearGradient id="hcPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <g id="pizzaCold">
+      <polygon points="0,-16 44,2 -10,18" fill="#fbbf24" stroke="#60a5fa" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="8" cy="2" r="4" fill="#ef4444"/>
+      <circle cx="22" cy="3" r="3.5" fill="#ef4444"/>
+    </g>
+    <g id="pizzaHot">
+      <polygon points="0,-16 44,2 -10,18" fill="#fbbf24" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="8" cy="2" r="4" fill="#ef4444"/>
+      <circle cx="22" cy="3" r="3.5" fill="#ef4444"/>
+      <path d="M 4 -24 Q 0 -32 6 -38" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M 18 -24 Q 14 -32 20 -38" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- 1. Fridge -->
+  <g>
+    <rect x="50" y="96" width="210" height="328" rx="18" fill="url(#hcPanel)" stroke="#64748b" stroke-width="3"/>
+    <rect x="66" y="114" width="178" height="292" rx="10" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+    <line x1="66" y1="210" x2="244" y2="210" stroke="#475569" stroke-width="3"/>
+    <line x1="66" y1="306" x2="244" y2="306" stroke="#475569" stroke-width="3"/>
+    <!-- shelf 0: pizza -->
+    <text x="80" y="138" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">0</text>
+    <use href="#pizzaCold" transform="translate(136 168)"/>
+    <!-- shelf 1: apple -->
+    <text x="80" y="234" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b">1</text>
+    <circle cx="155" cy="272" r="18" fill="#ef4444"/>
+    <line x1="155" y1="254" x2="159" y2="244" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+    <!-- shelf 2: milk -->
+    <text x="80" y="330" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b">2</text>
+    <rect x="142" y="346" width="26" height="40" rx="4" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="155" y="456" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">fridge</text>
+  </g>
+
+  <!-- step 1 arrow -->
+  <g>
+    <line x1="268" y1="250" x2="346" y2="250" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="346,241 362,250 346,259" fill="#60a5fa"/>
+    <rect x="282" y="198" width="66" height="32" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="5 4"/>
+    <text x="315" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#60a5fa">1: ?</text>
+  </g>
+
+  <!-- 2. Microwave -->
+  <g>
+    <rect x="370" y="150" width="260" height="200" rx="18" fill="url(#hcPanel)" stroke="#f59e0b" stroke-width="3"/>
+    <rect x="392" y="176" width="166" height="128" rx="10" fill="#0b1220" stroke="#475569" stroke-width="2"/>
+    <use href="#pizzaHot" transform="translate(460 256)"/>
+    <rect x="572" y="180" width="38" height="118" rx="6" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+    <circle cx="591" cy="216" r="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="579" y="246" width="24" height="10" rx="3" fill="#f59e0b"/>
+    <rect x="579" y="266" width="24" height="10" rx="3" fill="#334155"/>
+    <text x="500" y="456" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#fbbf24">microwave</text>
+    <!-- step 2 heat badge -->
+    <rect x="466" y="102" width="68" height="32" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 4"/>
+    <text x="500" y="124" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#fbbf24">2: ?</text>
+  </g>
+
+  <!-- step 3 arrow -->
+  <g>
+    <line x1="638" y1="250" x2="716" y2="250" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="716,241 732,250 716,259" fill="#60a5fa"/>
+    <rect x="652" y="198" width="66" height="32" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="1.8" stroke-dasharray="5 4"/>
+    <text x="685" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#60a5fa">3: ?</text>
+  </g>
+
+  <!-- 3. Freezer -->
+  <g>
+    <rect x="740" y="130" width="210" height="260" rx="18" fill="url(#hcPanel)" stroke="#60a5fa" stroke-width="3"/>
+    <rect x="756" y="148" width="178" height="224" rx="10" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+    <line x1="756" y1="260" x2="934" y2="260" stroke="#475569" stroke-width="3"/>
+    <!-- shelf 0: ice cream -->
+    <text x="770" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#64748b">0</text>
+    <polygon points="834,210 856,210 845,244" fill="#d97706"/>
+    <circle cx="845" cy="204" r="14" fill="#bfdbfe"/>
+    <!-- shelf 1: empty target -->
+    <text x="770" y="286" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="700" fill="#60a5fa">1</text>
+    <rect x="796" y="288" width="104" height="58" rx="8" fill="#172554" opacity="0.45" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="845" y="456" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">freezer</text>
+  </g>
+</svg>

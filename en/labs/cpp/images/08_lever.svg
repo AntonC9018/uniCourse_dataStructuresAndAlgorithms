@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="leverTitle leverDesc">
+  <title id="leverTitle">Two-position lever with set and toggle operations</title>
+  <desc id="leverDesc">Side view of a mechanical lever mounted on a flat base, tilting left to position 0 or right to position 1, alongside operations set(0), set(1), and toggle().</desc>
+
+  <defs>
+    <linearGradient id="leverPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left panel: Side-view mechanical lever on flat base -->
+  <g>
+    <rect x="70" y="76" width="380" height="368" rx="20" fill="url(#leverPanel)" stroke="#334155" stroke-width="2"/>
+
+    <!-- Position 0 (top-left, current) -->
+    <g>
+      <circle cx="156" cy="148" r="24" fill="#78350f" opacity="0.55" stroke="#f59e0b" stroke-width="2.5"/>
+      <text x="156" y="156" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#fbbf24">0</text>
+      <text x="156" y="114" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="600" fill="#fbbf24">current</text>
+    </g>
+
+    <!-- Position 1 (top-right, dashed target) -->
+    <g>
+      <circle cx="364" cy="148" r="24" fill="#0f172a" stroke="#475569" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="364" y="156" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#94a3b8">1</text>
+      <text x="364" y="114" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#64748b">pos 1</text>
+    </g>
+
+    <!-- Subtle swing arc above pivot (260, 344) -->
+    <path d="M 192 224 A 136 136 0 0 1 328 224" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="5 5"/>
+
+    <!-- Ghost arm tilted right to 1 -->
+    <line x1="260" y1="344" x2="342" y2="210" stroke="#475569" stroke-width="8" stroke-linecap="round" stroke-dasharray="8 8"/>
+    <circle cx="342" cy="210" r="14" fill="#1e293b" stroke="#475569" stroke-width="2" stroke-dasharray="5 4"/>
+
+    <!-- Active arm tilted left to 0 -->
+    <line x1="260" y1="344" x2="178" y2="210" stroke="#94a3b8" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="178" cy="210" r="18" fill="#f59e0b" stroke="#fbbf24" stroke-width="2.5"/>
+
+    <!-- Flat-bottomed side-view lever base & domed housing -->
+    <path d="M 194 358 A 66 56 0 0 1 326 358 Z" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+    <circle cx="260" cy="344" r="11" fill="#334155" stroke="#94a3b8" stroke-width="2.5"/>
+    <!-- Flat base plate resting on surface -->
+    <rect x="136" y="358" width="248" height="22" rx="5" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <line x1="112" y1="380" x2="408" y2="380" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Right panel: 3 operations -->
+  <g>
+    <!-- set(0) -> stays 0 -->
+    <rect x="500" y="76" width="430" height="104" rx="16" fill="url(#leverPanel)" stroke="#334155" stroke-width="2"/>
+    <rect x="524" y="104" width="112" height="48" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <text x="580" y="135" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="600" fill="#cbd5e1">set(0)</text>
+    <text x="668" y="134" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">0 → 0</text>
+    <rect x="760" y="108" width="146" height="40" rx="20" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <text x="833" y="133" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">unchanged</text>
+
+    <!-- set(1) -> moves to 1 -->
+    <rect x="500" y="208" width="430" height="104" rx="16" fill="url(#leverPanel)" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="524" y="236" width="112" height="48" rx="10" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="580" y="267" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="600" fill="#60a5fa">set(1)</text>
+    <text x="668" y="266" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#e2e8f0">0 → 1</text>
+    <rect x="760" y="240" width="146" height="40" rx="20" fill="#172554" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="833" y="265" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">pos = 1</text>
+
+    <!-- toggle() -> flips 0 <-> 1 -->
+    <rect x="500" y="340" width="430" height="104" rx="16" fill="#78350f" opacity="0.22"/>
+    <rect x="500" y="340" width="430" height="104" rx="16" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <rect x="524" y="368" width="112" height="48" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="580" y="399" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="600" fill="#fbbf24">toggle()</text>
+    <text x="668" y="398" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">0 ↔ 1</text>
+    <circle cx="833" cy="392" r="24" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="833" y="400" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="dronesTitle dronesDesc">
+  <title id="dronesTitle">Automatic barbershop drones cutting the same client together</title>
+  <desc id="dronesDesc">A barbershop has clients alice and bob and three automatic drones. Drones 0 and 1 both point to bob, each cutting one minute per tick, while drone 2 points to alice. A clock ticks one minute.</desc>
+
+  <defs>
+    <linearGradient id="dronePanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="droneUnit">
+      <!-- rotors -->
+      <line x1="-42" y1="-14" x2="-16" y2="-14" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+      <line x1="16" y1="-14" x2="42" y2="-14" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+      <line x1="-29" y1="-14" x2="-24" y2="-4" stroke="#64748b" stroke-width="3"/>
+      <line x1="29" y1="-14" x2="24" y2="-4" stroke="#64748b" stroke-width="3"/>
+      <!-- body -->
+      <rect x="-26" y="-6" width="52" height="22" rx="10" fill="#334155" stroke="#64748b" stroke-width="2"/>
+      <circle cx="0" cy="5" r="5" fill="#60a5fa"/>
+      <!-- scissors below -->
+      <g stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round">
+        <line x1="-8" y1="18" x2="8" y2="34"/>
+        <line x1="8" y1="18" x2="-8" y2="34"/>
+      </g>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- clock tick -->
+  <g>
+    <circle cx="500" cy="64" r="28" fill="url(#dronePanel)" stroke="#64748b" stroke-width="3"/>
+    <line x1="500" y1="64" x2="500" y2="48" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/>
+    <line x1="500" y1="64" x2="515" y2="71" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="500" cy="64" r="3.5" fill="#e2e8f0"/>
+    <path d="M 531 42 A 38 38 0 0 1 535 79" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="530,87 540,78 529,74" fill="#f59e0b"/>
+    <text x="550" y="70" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" font-weight="600" fill="#f59e0b">1 min</text>
+  </g>
+
+  <!-- clients on left -->
+  <g>
+    <!-- alice -->
+    <rect x="80" y="210" width="110" height="164" rx="12" fill="url(#dronePanel)" stroke="#334155" stroke-width="2"/>
+    <circle cx="135" cy="252" r="18" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <path d="M 111 290 Q 135 268 159 290" fill="#334155" stroke="#64748b" stroke-width="1.5"/>
+    <text x="135" y="314" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">alice</text>
+    <rect x="108" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <rect x="125" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <rect x="142" y="330" width="14" height="8" rx="2" fill="#334155"/>
+    <text x="135" y="360" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94a3b8">2 min</text>
+
+    <!-- bob (served by 2 drones) -->
+    <rect x="230" y="210" width="110" height="164" rx="12" fill="#78350f" opacity="0.24"/>
+    <rect x="230" y="210" width="110" height="164" rx="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="285" cy="252" r="18" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+    <path d="M 261 290 Q 285 268 309 290" fill="#334155" stroke="#64748b" stroke-width="1.5"/>
+    <text x="285" y="314" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#fbbf24">bob</text>
+    <rect x="249" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <rect x="266" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <rect x="283" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <rect x="300" y="330" width="14" height="8" rx="2" fill="#f59e0b"/>
+    <text x="285" y="360" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#fbbf24">4 min</text>
+  </g>
+
+  <!-- chairs under clients -->
+  <g stroke="#475569" stroke-width="4">
+    <rect x="80" y="384" width="110" height="14" rx="4" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <line x1="92" y1="398" x2="92" y2="432"/>
+    <line x1="178" y1="398" x2="178" y2="432"/>
+    <rect x="230" y="384" width="110" height="14" rx="4" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <line x1="242" y1="398" x2="242" y2="432"/>
+    <line x1="328" y1="398" x2="328" y2="432"/>
+  </g>
+
+  <!-- 3 drones on right -->
+  <g>
+    <rect x="590" y="130" width="330" height="96" rx="14" fill="url(#dronePanel)" stroke="#f59e0b" stroke-width="2"/>
+    <use href="#droneUnit" transform="translate(658 176)"/>
+    <text x="720" y="174" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">drone 0</text>
+    <text x="720" y="198" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#fbbf24">−1 min / tick</text>
+
+    <rect x="590" y="246" width="330" height="96" rx="14" fill="url(#dronePanel)" stroke="#f59e0b" stroke-width="2"/>
+    <use href="#droneUnit" transform="translate(658 292)"/>
+    <text x="720" y="290" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">drone 1</text>
+    <text x="720" y="314" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#fbbf24">−1 min / tick</text>
+
+    <rect x="590" y="362" width="330" height="96" rx="14" fill="url(#dronePanel)" stroke="#60a5fa" stroke-width="2"/>
+    <use href="#droneUnit" transform="translate(658 408)"/>
+    <text x="720" y="406" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#e2e8f0">drone 2</text>
+    <text x="720" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#60a5fa">−1 min / tick</text>
+  </g>
+
+  <!-- pointer arrows: drone 0 & 1 -> bob, drone 2 -> alice -->
+  <g fill="none" stroke-width="2.5" stroke-dasharray="7 5">
+    <path d="M 590 178 H 272 V 196" stroke="#f59e0b"/>
+    <path d="M 590 294 H 356" stroke="#f59e0b"/>
+    <path d="M 590 410 H 460 V 140 H 135 V 196" stroke="#60a5fa"/>
+  </g>
+  <polygon points="264,194 272,208 280,194" fill="#f59e0b"/>
+  <polygon points="356,286 342,294 356,302" fill="#f59e0b"/>
+  <polygon points="127,194 135,208 143,194" fill="#60a5fa"/>
+</svg>

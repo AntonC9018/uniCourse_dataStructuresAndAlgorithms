@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="tripTitle tripDesc">
+  <title id="tripTitle">Calculating total round-trip cost including fuel and hotel nights</title>
+  <desc id="tripDesc">A round trip between A and B of 150 km each way with fuel consumption 8 L per 100 km at 2 per liter and 3 hotel nights at 50 per night yields a total trip cost of 198.</desc>
+
+  <defs>
+    <linearGradient id="trpPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Top panel: Round-trip distance (there and back, no x2 formula) -->
+  <g>
+    <rect x="70" y="64" width="560" height="176" rx="18" fill="url(#trpPanel)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="104" y="102" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#fbbf24">round trip</text>
+
+    <!-- Start and Destination pins -->
+    <circle cx="144" cy="170" r="22" fill="#0f172a" stroke="#60a5fa" stroke-width="2.5"/>
+    <text x="144" y="177" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#60a5fa">A</text>
+
+    <circle cx="556" cy="170" r="22" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="556" y="177" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#fbbf24">B</text>
+
+    <!-- Forward arrow (there) -->
+    <line x1="178" y1="154" x2="510" y2="154" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="508,147 522,154 508,161" fill="#fbbf24"/>
+    <text x="350" y="138" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#fde68a">150 km</text>
+
+    <!-- Return arrow (back) -->
+    <line x1="522" y1="186" x2="190" y2="186" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="192,179 178,186 192,193" fill="#60a5fa"/>
+    <text x="350" y="212" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="600" fill="#93c5fd">150 km</text>
+  </g>
+
+  <!-- Bottom-left: Fuel inputs (no formula) -->
+  <g>
+    <rect x="70" y="264" width="268" height="192" rx="18" fill="url(#trpPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="100" y="302" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#cbd5e1">fuel</text>
+    <!-- Gas pump icon -->
+    <rect x="274" y="284" width="28" height="36" rx="4" fill="#1e293b" stroke="#60a5fa" stroke-width="2"/>
+    <rect x="279" y="290" width="18" height="12" rx="2" fill="#60a5fa" opacity="0.5"/>
+
+    <text x="100" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="600" fill="#e2e8f0">8 L / 100 km</text>
+    <text x="100" y="408" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="600" fill="#60a5fa">2 / L</text>
+  </g>
+
+  <!-- Bottom-middle: Hotel inputs (no formula) -->
+  <g>
+    <rect x="362" y="264" width="268" height="192" rx="18" fill="url(#trpPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="392" y="302" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="600" fill="#cbd5e1">hotel</text>
+    <!-- Bed icon -->
+    <g transform="translate(570 300)" stroke="#4ade80" stroke-width="2" fill="none">
+      <line x1="-18" y1="8" x2="18" y2="8"/>
+      <line x1="-18" y1="-4" x2="-18" y2="14"/>
+      <line x1="18" y1="2" x2="18" y2="14"/>
+      <rect x="-13" y="-2" width="10" height="7" rx="2" fill="#4ade80" opacity="0.4"/>
+    </g>
+
+    <text x="392" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="600" fill="#e2e8f0">3 nights</text>
+    <text x="392" y="408" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="600" fill="#4ade80">50 / night</text>
+  </g>
+
+  <!-- Right: Total cost example -->
+  <g>
+    <path d="M 630 152 H 676 V 260" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 630 360 H 676 V 260" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+    <line x1="676" y1="260" x2="710" y2="260" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="708,252 722,260 708,268" fill="#94a3b8"/>
+
+    <rect x="730" y="170" width="200" height="180" rx="20" fill="url(#trpPanel)" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="830" y="258" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="44" font-weight="700" fill="#4ade80">198</text>
+    <text x="830" y="308" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#94a3b8">total cost</text>
+  </g>
+</svg>

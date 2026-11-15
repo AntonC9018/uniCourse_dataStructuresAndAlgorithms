@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="engineTitle engineDesc">
+  <title id="engineTitle">Checking and repairing car 1's engine in a garage</title>
+  <desc id="engineDesc">A garage holds four cars, each with its own engine and a wear value from zero to one hundred. Car 1 has engine wear sixty-eight, which is inspected with a magnifying glass and repaired with a wrench to zero.</desc>
+
+  <defs>
+    <linearGradient id="engPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="carBody">
+      <path d="M 14 34 L 24 14 Q 28 10 34 10 H 72 Q 78 10 82 14 L 94 34 H 104 Q 110 34 110 40 V 52 H 4 V 40 Q 4 34 10 34 Z" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="28" cy="54" r="10" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+      <circle cx="86" cy="54" r="10" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+    </g>
+    <g id="engineIcon">
+      <rect x="6" y="10" width="44" height="28" rx="5" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="16" y="4" width="24" height="6" rx="2" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/>
+      <rect x="0" y="18" width="6" height="12" rx="2" fill="#64748b"/>
+      <rect x="50" y="18" width="6" height="12" rx="2" fill="#64748b"/>
+      <circle cx="28" cy="24" r="7" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- garage -->
+  <rect x="44" y="48" width="912" height="424" rx="18" fill="url(#engPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- car 0 -->
+  <g>
+    <rect x="66" y="74" width="202" height="372" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="84" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">0</text>
+    <use href="#carBody" transform="translate(110 116)" fill="#475569" stroke="#64748b"/>
+    <rect x="86" y="216" width="162" height="140" rx="10" fill="#132033" stroke="#334155" stroke-width="2"/>
+    <use href="#engineIcon" transform="translate(139 236)"/>
+    <rect x="104" y="294" width="126" height="12" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="104" y="294" width="19" height="12" rx="6" fill="#22c55e"/>
+    <text x="167" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">wear 15</text>
+  </g>
+
+  <!-- car 1, checked and repaired -->
+  <g>
+    <rect x="288" y="74" width="202" height="372" rx="14" fill="#78350f" opacity="0.28"/>
+    <rect x="288" y="74" width="202" height="372" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="306" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#fbbf24">1</text>
+    <use href="#carBody" transform="translate(332 116)" fill="#f59e0b" stroke="#fbbf24"/>
+    <line x1="389" y1="186" x2="389" y2="206" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="4 3"/>
+    <rect x="308" y="216" width="162" height="206" rx="10" fill="#132033" stroke="#f59e0b" stroke-width="2"/>
+    <use href="#engineIcon" transform="translate(345 236)"/>
+    <!-- clear magnifying glass ("check engine") -->
+    <g transform="translate(432 248)">
+      <circle cx="0" cy="0" r="13" fill="#60a5fa" fill-opacity="0.18" stroke="#60a5fa" stroke-width="2.8"/>
+      <path d="M -7 -5 A 8 8 0 0 1 2 -8" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9.5" y1="9.5" x2="18" y2="18" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+      <line x1="9.5" y1="9.5" x2="12" y2="12" stroke="#60a5fa" stroke-width="3.5" stroke-linecap="round"/>
+    </g>
+    <rect x="326" y="294" width="126" height="12" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="326" y="294" width="86" height="12" rx="6" fill="#f59e0b"/>
+    <text x="389" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fbbf24">wear 68</text>
+    <!-- open-jaw spanner wrench & target 0 -->
+    <g transform="translate(348 386) rotate(-45) scale(1.2)">
+      <path d="M -2 -3 C -4 -8 -10 -9 -14 -5 L -8 -2.2 L -8 2.2 L -14 5 C -10 9 -4 8 -2 3 L 15 3 C 18 3 18 -3 15 -3 Z" fill="#cbd5e1"/>
+      <circle cx="13.5" cy="0" r="1.4" fill="#0f172a"/>
+    </g>
+    <text x="382" y="391" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">→</text>
+    <rect x="408" y="366" width="44" height="36" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+    <text x="430" y="391" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#4ade80">0</text>
+  </g>
+
+  <!-- car 2 -->
+  <g>
+    <rect x="510" y="74" width="202" height="372" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="528" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">2</text>
+    <use href="#carBody" transform="translate(554 116)" fill="#3b82f6" stroke="#60a5fa"/>
+    <rect x="530" y="216" width="162" height="140" rx="10" fill="#132033" stroke="#334155" stroke-width="2"/>
+    <use href="#engineIcon" transform="translate(583 236)"/>
+    <rect x="548" y="294" width="126" height="12" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="548" y="294" width="112" height="12" rx="6" fill="#ef4444"/>
+    <text x="611" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">wear 89</text>
+  </g>
+
+  <!-- car 3 -->
+  <g>
+    <rect x="732" y="74" width="202" height="372" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="750" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">3</text>
+    <use href="#carBody" transform="translate(776 116)" fill="#22c55e" stroke="#4ade80"/>
+    <rect x="752" y="216" width="162" height="140" rx="10" fill="#132033" stroke="#334155" stroke-width="2"/>
+    <use href="#engineIcon" transform="translate(805 236)"/>
+    <rect x="770" y="294" width="126" height="12" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+    <rect x="770" y="294" width="50" height="12" rx="6" fill="#60a5fa"/>
+    <text x="833" y="336" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">wear 40</text>
+  </g>
+</svg>

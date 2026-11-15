@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="avgTempTitle avgTempDesc">
+  <title id="avgTempTitle">Computing fractional average temperature from two integer sensor readings</title>
+  <desc id="avgTempDesc">Two sensor readings of 18 degrees and 21 degrees are averaged by dividing by 2, contrasting integer division which drops the fraction against floating-point division which keeps the fractional part.</desc>
+
+  <defs>
+    <linearGradient id="tempPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <!-- Continuous outer glass silhouette (stem width 24 + bulb r=20 at y=40, seamless junction at y=24) -->
+    <g id="thermometerGlass">
+      <path d="M -12 24 V -44 A 12 12 0 0 1 12 -44 V 24 A 20 20 0 1 1 -12 24 Z" fill="#0f172a" stroke="#64748b" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="0" cy="40" r="13" fill="#f59e0b"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Two sensor readings on the left -->
+  <g>
+    <!-- Reading 1 -->
+    <rect x="70" y="84" width="240" height="156" rx="16" fill="url(#tempPanel)" stroke="#334155" stroke-width="2"/>
+    <g transform="translate(132 166)">
+      <use href="#thermometerGlass"/>
+      <rect x="-6" y="-12" width="12" height="52" rx="6" fill="#f59e0b"/>
+    </g>
+    <text x="232" y="142" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">reading 1</text>
+    <text x="232" y="182" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#e2e8f0">18°</text>
+
+    <!-- Reading 2 -->
+    <rect x="70" y="280" width="240" height="156" rx="16" fill="url(#tempPanel)" stroke="#334155" stroke-width="2"/>
+    <g transform="translate(132 362)">
+      <use href="#thermometerGlass"/>
+      <rect x="-6" y="-28" width="12" height="68" rx="6" fill="#f59e0b"/>
+    </g>
+    <text x="232" y="338" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14" fill="#94a3b8">reading 2</text>
+    <text x="232" y="378" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="#e2e8f0">21°</text>
+  </g>
+
+  <!-- Center formula pill (18 + 21) / 2 -->
+  <g>
+    <path d="M 310 162 H 360 V 260" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 310 358 H 360 V 260" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+    <line x1="360" y1="260" x2="394" y2="260" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="392,252 406,260 392,268" fill="#94a3b8"/>
+
+    <rect x="412" y="206" width="186" height="108" rx="18" fill="url(#tempPanel)" stroke="#60a5fa" stroke-width="2"/>
+    <text x="505" y="254" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#e2e8f0">(18 + 21)</text>
+    <line x1="444" y1="268" x2="566" y2="268" stroke="#60a5fa" stroke-width="2.5"/>
+    <text x="505" y="296" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="600" fill="#60a5fa">2</text>
+  </g>
+
+  <!-- Right branches: int / int pitfall vs double result -->
+  <g>
+    <!-- Top: int / int drops fraction -->
+    <path d="M 598 238 H 640 V 156 H 666" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 4" stroke-linecap="round"/>
+    <polygon points="664,149 676,156 664,163" fill="#ef4444"/>
+    <rect x="682" y="96" width="248" height="120" rx="16" fill="#450a0a" opacity="0.35"/>
+    <rect x="682" y="96" width="248" height="120" rx="16" fill="none" stroke="#ef4444" stroke-width="2"/>
+    <text x="806" y="136" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="600" fill="#f87171">int / int</text>
+    <text x="806" y="176" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" fill="#fca5a5">fraction lost ✕</text>
+
+    <!-- Bottom: double keeps fraction -->
+    <path d="M 598 282 H 640 V 364 H 666" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="664,357 676,364 664,371" fill="#22c55e"/>
+    <rect x="682" y="304" width="248" height="120" rx="16" fill="#052e16" opacity="0.45"/>
+    <rect x="682" y="304" width="248" height="120" rx="16" fill="none" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="806" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="600" fill="#4ade80">double</text>
+    <rect x="742" y="356" width="128" height="44" rx="10" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="806" y="386" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?.?°</text>
+  </g>
+</svg>

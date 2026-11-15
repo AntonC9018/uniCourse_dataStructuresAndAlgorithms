@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="trafficTitle trafficDesc">
+  <title id="trafficTitle">Stepping traffic light 2 to the next color</title>
+  <desc id="trafficDesc">A crossing has three traffic lights. Light 0 is green, light 1 is red and light 2 is yellow and selected to step to the next color in the red, yellow, green cycle, with the next color unknown.</desc>
+
+  <defs>
+    <linearGradient id="lightHousing" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="tlPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- light 0: green -->
+  <g>
+    <rect x="110" y="76" width="120" height="310" rx="24" fill="url(#lightHousing)" stroke="#475569" stroke-width="3"/>
+    <rect x="158" y="386" width="24" height="72" fill="#334155"/>
+    <circle cx="170" cy="136" r="34" fill="#450a0a" stroke="#334155" stroke-width="2"/>
+    <circle cx="170" cy="231" r="34" fill="#451a03" stroke="#334155" stroke-width="2"/>
+    <circle cx="170" cy="326" r="34" fill="#22c55e" stroke="#4ade80" stroke-width="3"/>
+    <text x="170" y="486" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">0</text>
+  </g>
+
+  <!-- light 1: red -->
+  <g>
+    <rect x="290" y="76" width="120" height="310" rx="24" fill="url(#lightHousing)" stroke="#475569" stroke-width="3"/>
+    <rect x="338" y="386" width="24" height="72" fill="#334155"/>
+    <circle cx="350" cy="136" r="34" fill="#ef4444" stroke="#f87171" stroke-width="3"/>
+    <circle cx="350" cy="231" r="34" fill="#451a03" stroke="#334155" stroke-width="2"/>
+    <circle cx="350" cy="326" r="34" fill="#052e16" stroke="#334155" stroke-width="2"/>
+    <text x="350" y="486" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">1</text>
+  </g>
+
+  <!-- light 2: yellow, selected -->
+  <g>
+    <rect x="470" y="76" width="120" height="310" rx="24" fill="url(#lightHousing)" stroke="#f59e0b" stroke-width="3.5"/>
+    <rect x="518" y="386" width="24" height="72" fill="#334155"/>
+    <circle cx="530" cy="136" r="34" fill="#450a0a" stroke="#334155" stroke-width="2"/>
+    <circle cx="530" cy="231" r="34" fill="#fbbf24" stroke="#fde68a" stroke-width="3"/>
+    <circle cx="530" cy="326" r="34" fill="#052e16" stroke="#334155" stroke-width="2"/>
+    <text x="530" y="486" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" fill="#fbbf24">2</text>
+  </g>
+
+  <!-- step cycle card -->
+  <g>
+    <rect x="650" y="96" width="280" height="328" rx="18" fill="url(#tlPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="790" y="138" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="600" fill="#94a3b8">switch (light 2)</text>
+
+    <!-- cycle: red -> yellow -> green -> red -->
+    <circle cx="790" cy="200" r="24" fill="#ef4444" stroke="#f87171" stroke-width="2"/>
+    <circle cx="852" cy="300" r="24" fill="#22c55e" stroke="#4ade80" stroke-width="2"/>
+    <circle cx="728" cy="300" r="24" fill="#fbbf24" stroke="#fde68a" stroke-width="3"/>
+
+    <!-- cycle arrows -->
+    <path d="M 818 214 Q 846 236 850 264" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="842,262 851,274 857,260" fill="#94a3b8"/>
+
+    <path d="M 822 314 Q 790 330 764 316" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="768,309 754,311 761,324" fill="#94a3b8"/>
+
+    <path d="M 730 270 Q 736 234 756 216" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="750,210 765,208 761,222" fill="#f59e0b"/>
+
+    <!-- next unknown -->
+    <rect x="740" y="362" width="100" height="40" rx="20" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="790" y="389" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

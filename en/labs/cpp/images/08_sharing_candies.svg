@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="candyTitle candyDesc">
+  <title id="candyTitle">Sharing N candies equally among M children with remainder to the youngest</title>
+  <desc id="candyDesc">Fourteen candies distributed among four children in an example solution: three children each receive 3 candies, and the youngest child receives 5 candies (3 from the equal share plus the 2 leftover candies).</desc>
+
+  <defs>
+    <linearGradient id="cndPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="candy">
+      <polygon points="-14,-5 -6,0 -14,5" fill="#f59e0b"/>
+      <polygon points="14,-5 6,0 14,5" fill="#f59e0b"/>
+      <rect x="-7" y="-5" width="14" height="10" rx="5" fill="#fbbf24"/>
+    </g>
+    <g id="candyExtra">
+      <polygon points="-14,-5 -6,0 -14,5" fill="#22c55e"/>
+      <polygon points="14,-5 6,0 14,5" fill="#22c55e"/>
+      <rect x="-7" y="-5" width="14" height="10" rx="5" fill="#4ade80"/>
+    </g>
+    <g id="kidIcon">
+      <circle cx="0" cy="-14" r="13" fill="#f8d7b3" stroke="#b45309" stroke-width="1.5"/>
+      <path d="M -18 14 Q 0 -4 18 14 Z" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left pile: 14 candies -->
+  <g>
+    <rect x="70" y="96" width="280" height="328" rx="18" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <text x="210" y="138" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#fbbf24">14 candies</text>
+
+    <!-- 14 candies in grid -->
+    <g transform="translate(122 192)">
+      <use href="#candy" x="0" y="0"/>
+      <use href="#candy" x="44" y="0"/>
+      <use href="#candy" x="88" y="0"/>
+      <use href="#candy" x="132" y="0"/>
+      <use href="#candy" x="176" y="0"/>
+
+      <use href="#candy" x="0" y="46"/>
+      <use href="#candy" x="44" y="46"/>
+      <use href="#candy" x="88" y="46"/>
+      <use href="#candy" x="132" y="46"/>
+      <use href="#candy" x="176" y="46"/>
+
+      <use href="#candy" x="0" y="92"/>
+      <use href="#candy" x="44" y="92"/>
+      <use href="#candy" x="88" y="92"/>
+      <use href="#candy" x="132" y="92"/>
+    </g>
+
+    <text x="210" y="384" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#94a3b8">4 children</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="366" y1="260" x2="436" y2="260" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="434,252 448,260 434,268" fill="#94a3b8"/>
+  </g>
+
+  <!-- Right: 4 children rows with concrete solution example -->
+  <g>
+    <!-- Child 0: 3 -->
+    <rect x="462" y="74" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(510 116)" fill="#3b82f6" stroke="#60a5fa"/>
+    <use href="#candy" x="580" y="116"/>
+    <use href="#candy" x="622" y="116"/>
+    <use href="#candy" x="664" y="116"/>
+    <rect x="836" y="96" width="66" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="869" y="123" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#60a5fa">3</text>
+
+    <!-- Child 1: 3 -->
+    <rect x="462" y="170" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(510 212)" fill="#3b82f6" stroke="#60a5fa"/>
+    <use href="#candy" x="580" y="212"/>
+    <use href="#candy" x="622" y="212"/>
+    <use href="#candy" x="664" y="212"/>
+    <rect x="836" y="192" width="66" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="869" y="219" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#60a5fa">3</text>
+
+    <!-- Child 2: 3 -->
+    <rect x="462" y="266" width="468" height="84" rx="14" fill="url(#cndPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#kidIcon" transform="translate(510 308)" fill="#3b82f6" stroke="#60a5fa"/>
+    <use href="#candy" x="580" y="308"/>
+    <use href="#candy" x="622" y="308"/>
+    <use href="#candy" x="664" y="308"/>
+    <rect x="836" y="288" width="66" height="40" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="869" y="315" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#60a5fa">3</text>
+
+    <!-- Youngest child: 3 equal + 2 remainder = 5 -->
+    <rect x="462" y="362" width="468" height="90" rx="14" fill="#78350f" opacity="0.28"/>
+    <rect x="462" y="362" width="468" height="90" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <use href="#kidIcon" transform="translate(510 407)" fill="#f59e0b" stroke="#fbbf24"/>
+    <text x="510" y="440" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="600" fill="#fbbf24">youngest</text>
+    <use href="#candy" x="580" y="407"/>
+    <use href="#candy" x="622" y="407"/>
+    <use href="#candy" x="664" y="407"/>
+    <use href="#candyExtra" x="718" y="407"/>
+    <use href="#candyExtra" x="760" y="407"/>
+    <rect x="836" y="387" width="66" height="40" rx="12" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+    <text x="869" y="414" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" fill="#4ade80">5</text>
+  </g>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="cupRailTitle cupRailDesc">
+  <title id="cupRailTitle">Hanging a new cup on the first empty hook and taking a cup from hook 1</title>
+  <desc id="cupRailDesc">A rail with four hooks holds a cup on hook 0 and hook 1, while hooks 2 and 3 are empty. A new cup moves onto hook 2, and the cup on hook 1 is taken off, clearing hook 1.</desc>
+
+  <defs>
+    <linearGradient id="railPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="hook">
+      <path d="M 0 0 V 26 A 10 10 0 0 1 -10 36" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g id="cupShape">
+      <path d="M -26 0 H 26 L 20 56 Q 19 64 10 64 H -10 Q -19 64 -20 56 Z" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M 24 14 H 34 A 12 14 0 0 1 34 42 H 22" fill="none" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- new cup entering -->
+  <g transform="translate(590 76)">
+    <use href="#cupShape" fill="#f59e0b" stroke="#fbbf24"/>
+  </g>
+  <line x1="590" y1="150" x2="590" y2="210" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+  <polygon points="581,208 590,224 599,208" fill="#f59e0b"/>
+
+  <!-- rail bar -->
+  <rect x="100" y="186" width="800" height="22" rx="11" fill="#334155" stroke="#64748b" stroke-width="2.5"/>
+
+  <!-- hook 0: occupied -->
+  <g>
+    <use href="#hook" transform="translate(210 208)"/>
+    <use href="#cupShape" transform="translate(210 246)" fill="#22c55e" stroke="#4ade80"/>
+    <text x="184" y="170" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#94a3b8">0</text>
+  </g>
+
+  <!-- hook 1: cup taken out -->
+  <g>
+    <use href="#hook" transform="translate(400 208)"/>
+    <g transform="translate(400 246)" opacity="0.45">
+      <path d="M -26 0 H 26 L 20 56 Q 19 64 10 64 H -10 Q -19 64 -20 56 Z" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="6 5"/>
+    </g>
+    <line x1="400" y1="322" x2="400" y2="378" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="391,376 400,392 409,376" fill="#ef4444"/>
+    <g transform="translate(400 404)">
+      <use href="#cupShape" fill="#3b82f6" stroke="#60a5fa"/>
+    </g>
+    <text x="374" y="170" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#f87171">1</text>
+  </g>
+
+  <!-- hook 2: first empty hook -->
+  <g>
+    <use href="#hook" transform="translate(590 208)"/>
+    <g transform="translate(590 246)">
+      <path d="M -26 0 H 26 L 20 56 Q 19 64 10 64 H -10 Q -19 64 -20 56 Z" fill="#78350f" opacity="0.3" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6 5"/>
+    </g>
+    <text x="564" y="170" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#fbbf24">2</text>
+  </g>
+
+  <!-- hook 3: empty -->
+  <g>
+    <use href="#hook" transform="translate(780 208)"/>
+    <g transform="translate(780 246)">
+      <path d="M -26 0 H 26 L 20 56 Q 19 64 10 64 H -10 Q -19 64 -20 56 Z" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+    </g>
+    <text x="754" y="170" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#64748b">3</text>
+  </g>
+</svg>

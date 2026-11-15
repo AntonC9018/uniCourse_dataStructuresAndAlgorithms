@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="sort3Title sort3Desc">
+  <title id="sort3Title">Sorting three numbers in ascending order example</title>
+  <desc id="sort3Desc">Three unsorted numbers 27, 9, and 18 ordered into ascending sequence 9 ≤ 18 ≤ 27.</desc>
+
+  <defs>
+    <linearGradient id="s3Panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Left: Unsorted input trio -->
+  <g>
+    <rect x="120" y="96" width="260" height="328" rx="20" fill="url(#s3Panel)" stroke="#334155" stroke-width="2"/>
+    <text x="250" y="138" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#94a3b8">unsorted</text>
+
+    <rect x="170" y="164" width="160" height="62" rx="12" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="250" y="204" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#fbbf24">27</text>
+
+    <rect x="170" y="246" width="160" height="62" rx="12" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+    <text x="250" y="286" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#4ade80">9</text>
+
+    <rect x="170" y="328" width="160" height="62" rx="12" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="250" y="368" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#60a5fa">18</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="406" y1="260" x2="574" y2="260" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="572,251 588,260 572,269" fill="#94a3b8"/>
+  </g>
+
+  <!-- Right: Sorted ascending trio -->
+  <g>
+    <rect x="614" y="96" width="266" height="328" rx="20" fill="url(#s3Panel)" stroke="#334155" stroke-width="2"/>
+    <text x="747" y="138" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" font-weight="600" fill="#cbd5e1">ascending</text>
+
+    <rect x="667" y="160" width="160" height="56" rx="12" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+    <text x="747" y="197" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#4ade80">9</text>
+
+    <text x="747" y="239" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#64748b">≤</text>
+
+    <rect x="667" y="250" width="160" height="56" rx="12" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="747" y="287" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#60a5fa">18</text>
+
+    <text x="747" y="329" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#64748b">≤</text>
+
+    <rect x="667" y="340" width="160" height="56" rx="12" fill="#78350f" opacity="0.55" stroke="#f59e0b" stroke-width="2"/>
+    <text x="747" y="377" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#fbbf24">27</text>
+  </g>
+</svg>

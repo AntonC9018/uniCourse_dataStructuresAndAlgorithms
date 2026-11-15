@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="heroPartyTitle heroPartyDesc">
+  <title id="heroPartyTitle">Healing hero 1 in a three-hero squad and counting who still needs healing</title>
+  <desc id="heroPartyDesc">Three heroes with red health bars and blue shield bars. Hero 0 is at 100 full health, hero 1 is healed by twenty health, and hero 2 is at 30 health. The number of heroes who still need healing is unknown.</desc>
+
+  <defs>
+    <linearGradient id="partyPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+    <g id="heartIcon">
+      <path d="M 0 5 C -4 -2 -14 -2 -14 6 C -14 13 0 20 0 20 C 0 20 14 13 14 6 C 14 -2 4 -2 0 5 Z" fill="#ef4444"/>
+    </g>
+    <g id="shieldIcon">
+      <path d="M 0 -2 L 11 2 V 10 C 11 17 0 21 0 21 C 0 21 -11 17 -11 10 V 2 Z" fill="#60a5fa"/>
+    </g>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- squad panel -->
+  <rect x="60" y="60" width="880" height="320" rx="18" fill="url(#partyPanel)" stroke="#334155" stroke-width="2"/>
+
+  <!-- hero 0: full 100 -->
+  <g>
+    <rect x="86" y="88" width="256" height="264" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="106" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">0</text>
+    <circle cx="214" cy="144" r="24" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+    <text x="214" y="152" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#e2e8f0">H0</text>
+
+    <use href="#heartIcon" transform="translate(114 210)"/>
+    <rect x="142" y="212" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="142" y="212" width="128" height="14" rx="7" fill="#ef4444"/>
+    <text x="326" y="225" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">100</text>
+
+    <use href="#shieldIcon" transform="translate(114 256)"/>
+    <rect x="142" y="258" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="142" y="258" width="52" height="14" rx="7" fill="#60a5fa"/>
+    <text x="326" y="271" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">20</text>
+  </g>
+
+  <!-- hero 1: healed +20 -->
+  <g>
+    <rect x="372" y="88" width="256" height="264" rx="14" fill="#78350f" opacity="0.28"/>
+    <rect x="372" y="88" width="256" height="264" rx="14" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="392" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" fill="#fbbf24">1</text>
+    <circle cx="500" cy="144" r="24" fill="#1e293b" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="500" y="152" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#fbbf24">H1</text>
+
+    <use href="#heartIcon" transform="translate(400 210)"/>
+    <rect x="428" y="212" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="428" y="212" width="64" height="14" rx="7" fill="#ef4444"/>
+    <rect x="492" y="212" width="26" height="14" rx="4" fill="#4ade80" opacity="0.9"/>
+    <text x="612" y="225" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fbbf24">50</text>
+
+    <rect x="454" y="294" width="92" height="34" rx="9" fill="#0f172a" stroke="#4ade80" stroke-width="2"/>
+    <text x="500" y="317" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="#4ade80">+20 ♥</text>
+
+    <use href="#shieldIcon" transform="translate(400 256)"/>
+    <rect x="428" y="258" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="428" y="258" width="26" height="14" rx="7" fill="#60a5fa"/>
+    <text x="612" y="271" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">10</text>
+  </g>
+
+  <!-- hero 2: needs healing -->
+  <g>
+    <rect x="658" y="88" width="256" height="264" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <text x="678" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#64748b">2</text>
+    <circle cx="786" cy="144" r="24" fill="#1e293b" stroke="#64748b" stroke-width="2.5"/>
+    <text x="786" y="152" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="18" font-weight="700" fill="#e2e8f0">H2</text>
+
+    <use href="#heartIcon" transform="translate(686 210)"/>
+    <rect x="714" y="212" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect x="714" y="212" width="38" height="14" rx="7" fill="#ef4444"/>
+    <text x="898" y="225" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">30</text>
+
+    <use href="#shieldIcon" transform="translate(686 256)"/>
+    <rect x="714" y="258" width="128" height="14" rx="7" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="898" y="271" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#cbd5e1">0</text>
+  </g>
+
+  <!-- unknown count of heroes still needing healing -->
+  <g>
+    <rect x="330" y="408" width="340" height="72" rx="14" fill="url(#partyPanel)" stroke="#334155" stroke-width="2"/>
+    <use href="#heartIcon" transform="translate(370 434)"/>
+    <text x="478" y="451" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" fill="#94a3b8">need healing</text>
+    <circle cx="622" cy="444" r="22" fill="#0f172a" stroke="#60a5fa" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="622" y="452" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#60a5fa">?</text>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="hugsIdxTitle hugsIdxDesc">
+  <title id="hugsIdxTitle">Five family members hugging every other member, stored as indices</title>
+  <desc id="hugsIdxDesc">A family array of five indexed members from 0 to 4. Each member holds a four-element array of integer indices referring back to the hugged members in the family array.</desc>
+
+  <defs>
+    <linearGradient id="hiPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132033"/>
+      <stop offset="100%" stop-color="#0d1726"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="518" rx="24" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- family array at top -->
+  <rect x="60" y="54" width="880" height="104" rx="16" fill="url(#hiPanel)" stroke="#334155" stroke-width="2"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-weight="700">
+    <rect x="86" y="74" width="146" height="64" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="106" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#fbbf24">0</text>
+    <text x="170" y="112" text-anchor="middle" font-size="19" fill="#e2e8f0">ann</text>
+
+    <rect x="256" y="74" width="146" height="64" rx="10" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="276" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#60a5fa">1</text>
+    <text x="340" y="112" text-anchor="middle" font-size="19" fill="#e2e8f0">bob</text>
+
+    <rect x="426" y="74" width="146" height="64" rx="10" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+    <text x="446" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#4ade80">2</text>
+    <text x="510" y="112" text-anchor="middle" font-size="19" fill="#e2e8f0">cid</text>
+
+    <rect x="596" y="74" width="146" height="64" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="2"/>
+    <text x="616" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#a78bfa">3</text>
+    <text x="680" y="112" text-anchor="middle" font-size="19" fill="#e2e8f0">dan</text>
+
+    <rect x="766" y="74" width="146" height="64" rx="10" fill="#0f172a" stroke="#f472b6" stroke-width="2"/>
+    <text x="786" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#f472b6">4</text>
+    <text x="850" y="112" text-anchor="middle" font-size="19" fill="#e2e8f0">eva</text>
+  </g>
+
+  <!-- index reference line from ann[0]=1 to family[1] -->
+  <path d="M 118 242 V 190 H 329 V 148" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="321,150 329,136 337,150" fill="#60a5fa"/>
+
+  <!-- index reference line from cid[0]=0 to family[0] -->
+  <path d="M 458 242 V 206 H 159 V 148" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <polygon points="151,150 159,136 167,150" fill="#fbbf24"/>
+
+  <!-- per-member index arrays -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" font-weight="700" text-anchor="middle">
+    <!-- ann -->
+    <rect x="86" y="242" width="146" height="220" rx="12" fill="url(#hiPanel)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="159" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#fbbf24">ann</text>
+    <rect x="104" y="290" width="50" height="36" rx="7" fill="#172554" stroke="#60a5fa" stroke-width="1.8"/>
+    <text x="129" y="314" fill="#60a5fa">1</text>
+    <rect x="164" y="290" width="50" height="36" rx="7" fill="#052e16" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="189" y="314" fill="#4ade80">2</text>
+    <rect x="104" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="129" y="360" fill="#64748b">?</text>
+    <rect x="164" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="189" y="360" fill="#64748b">?</text>
+    <text x="159" y="420" font-size="13" font-weight="400" fill="#94a3b8">array&lt;int, 4&gt;</text>
+
+    <!-- bob -->
+    <rect x="256" y="242" width="146" height="220" rx="12" fill="url(#hiPanel)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="329" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#60a5fa">bob</text>
+    <rect x="274" y="290" width="50" height="36" rx="7" fill="#78350f" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="299" y="314" fill="#fbbf24">0</text>
+    <rect x="334" y="290" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="359" y="314" fill="#64748b">?</text>
+    <rect x="274" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="299" y="360" fill="#64748b">?</text>
+    <rect x="334" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="359" y="360" fill="#64748b">?</text>
+    <text x="329" y="420" font-size="13" font-weight="400" fill="#94a3b8">array&lt;int, 4&gt;</text>
+
+    <!-- cid -->
+    <rect x="426" y="242" width="146" height="220" rx="12" fill="url(#hiPanel)" stroke="#22c55e" stroke-width="2"/>
+    <text x="499" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#4ade80">cid</text>
+    <rect x="444" y="290" width="50" height="36" rx="7" fill="#78350f" stroke="#f59e0b" stroke-width="1.8"/>
+    <text x="469" y="314" fill="#fbbf24">0</text>
+    <rect x="504" y="290" width="50" height="36" rx="7" fill="#2e1065" stroke="#a78bfa" stroke-width="1.8"/>
+    <text x="529" y="314" fill="#a78bfa">3</text>
+    <rect x="444" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="469" y="360" fill="#64748b">?</text>
+    <rect x="504" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="529" y="360" fill="#64748b">?</text>
+    <text x="499" y="420" font-size="13" font-weight="400" fill="#94a3b8">array&lt;int, 4&gt;</text>
+
+    <!-- dan -->
+    <rect x="596" y="242" width="146" height="220" rx="12" fill="url(#hiPanel)" stroke="#a78bfa" stroke-width="2"/>
+    <text x="669" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#a78bfa">dan</text>
+    <rect x="614" y="290" width="50" height="36" rx="7" fill="#052e16" stroke="#22c55e" stroke-width="1.8"/>
+    <text x="639" y="314" fill="#4ade80">2</text>
+    <rect x="674" y="290" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="699" y="314" fill="#64748b">?</text>
+    <rect x="614" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="639" y="360" fill="#64748b">?</text>
+    <rect x="674" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="699" y="360" fill="#64748b">?</text>
+    <text x="669" y="420" font-size="13" font-weight="400" fill="#94a3b8">array&lt;int, 4&gt;</text>
+
+    <!-- eva -->
+    <rect x="766" y="242" width="146" height="220" rx="12" fill="url(#hiPanel)" stroke="#f472b6" stroke-width="2"/>
+    <text x="839" y="274" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="16" fill="#f472b6">eva</text>
+    <rect x="784" y="290" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="809" y="314" fill="#64748b">?</text>
+    <rect x="844" y="290" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="869" y="314" fill="#64748b">?</text>
+    <rect x="784" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="809" y="360" fill="#64748b">?</text>
+    <rect x="844" y="336" width="50" height="36" rx="7" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="869" y="360" fill="#64748b">?</text>
+    <text x="839" y="420" font-size="13" font-weight="400" fill="#94a3b8">array&lt;int, 4&gt;</text>
+  </g>
+</svg>
