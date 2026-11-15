@@ -51,13 +51,13 @@
     <text x="822" y="281" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" font-weight="600" fill="#60a5fa">?</text>
   </g>
 
-  <!-- swap sign -->
-  <g stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
-    <line x1="235" y1="140" x2="739" y2="140"/>
-    <line x1="755" y1="185" x2="251" y2="185"/>
+  <!-- swap cycle: over the top to slot 2, back under the bottom to slot 0 -->
+  <g fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round">
+    <path d="M 250 222 Q 495 142 740 222"/>
+    <path d="M 740 466 Q 495 506 250 466"/>
   </g>
   <g fill="#60a5fa">
-    <polygon points="739,132 755,140 739,148"/>
-    <polygon points="251,177 235,185 251,193"/>
+    <polygon points="755.2,227.0 735.5,229.5 740.7,213.3"/>
+    <polygon points="234.2,463.4 253.3,457.9 250.6,474.7"/>
   </g>
 </svg>
