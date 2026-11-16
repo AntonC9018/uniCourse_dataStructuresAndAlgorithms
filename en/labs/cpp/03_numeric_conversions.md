@@ -96,6 +96,17 @@ int b{ static_cast<int>(a) };
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#3-static_cast-to-a-larger-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 An implicit conversion equivalent to `static_cast<int>` occurs here, even though it is not written explicitly.
@@ -110,6 +121,17 @@ which performs the conversion from `uint8_t` to `int` automatically.
 int8_t a{ -3 };
 int b{ static_cast<int>(a) };
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#4-static_cast-of-a-negative-number-to-a-larger-type)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -137,6 +159,17 @@ int main()
     std::cout << c << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#5-static_cast)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>What does <code>static_cast&lt;uint8_t&gt;</code> do?</summary>
@@ -221,6 +254,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#6-static_cast-of-a-negative-number-to-a-smaller-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 Truncation works the same way for negative numbers: only the last byte is kept.
@@ -252,6 +296,17 @@ int main()
     std::cout << c;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#7-bitwise-operation-advanced-level)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>
@@ -313,6 +368,17 @@ int main()
     std::cout << c;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#8-changing-the-sign-advanced-level)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 

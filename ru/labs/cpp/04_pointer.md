@@ -250,6 +250,17 @@ int* b{ &a };
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#8-указатель-на-больший-тип-данных)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Правильный ответ:</summary>
 
 Ошибка компиляции (см. видео про указатели)
@@ -260,6 +271,17 @@ int* b{ &a };
 int a = 5;
 uint8_t* b = &a;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#9-указатель-на-меньший-тип-данных)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Правильный ответ:</summary>
@@ -713,6 +735,17 @@ p = value;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#1-целое-число-присваивается-указателю)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -728,6 +761,17 @@ int* p{ &value };
 int** pp{};
 pp = p;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#2-указатель-присваивается-двойному-указателю)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -747,6 +791,17 @@ result = p;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#3-указатель-присваивается-целому-числу)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -764,6 +819,17 @@ other = &p;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#4-адрес-указателя-присваивается-указателю)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -778,6 +844,17 @@ int value{ 5 };
 int** pp{};
 pp = &value;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#5-адрес-целого-числа-присваивается-двойному-указателю)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -800,7 +877,7 @@ other = *pp;
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#6-копирование-указателя-через-двойной-указатель)
 
@@ -827,6 +904,17 @@ result = *pp;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#7-одно-разыменование-вместо-двух)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -846,7 +934,7 @@ int** pp{ &p };
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#8-запись-через-два-разыменования)
 
@@ -873,6 +961,17 @@ p = &count;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#9-адрес-size_t-присваивается-указателю-на-int8_t)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -889,6 +988,17 @@ int8_t value{ 3 };
 size_t* p{};
 p = &value;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#10-адрес-int8_t-присваивается-указателю-на-size_t)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -909,6 +1019,17 @@ count = value;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#11-значение-int8_t-присваивается-size_t)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Компилируется.
@@ -925,6 +1046,17 @@ size_t count{ 3 };
 size_t* p{};
 p = count;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#12-значение-size_t-присваивается-указателю)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -946,6 +1078,17 @@ pp = &p;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#13-двойной-указатель-с-другим-типом-данных)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -961,6 +1104,17 @@ size_t count{ 3 };
 size_t** pp{};
 pp = &count;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#14-адрес-size_t-с-неверным-числом-уровней-указателя)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -980,6 +1134,17 @@ int8_t* p{ &small };
 size_t count{};
 count = *p;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#15-присваивание-size_t-значения-int8_t-прочитанного-через-указатель)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>

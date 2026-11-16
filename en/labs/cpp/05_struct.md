@@ -1086,6 +1086,17 @@ copy = p;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#1-a-structure-pointer-assigned-to-a-structure)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -1105,6 +1116,17 @@ A value{ 5 };
 A copy{};
 copy = &value;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#2-a-structure-address-assigned-to-a-structure)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -1128,6 +1150,17 @@ p = value;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#3-a-structure-assigned-to-its-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -1147,6 +1180,17 @@ A value{ 5 };
 A** pp{};
 pp = value;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#4-a-structure-assigned-to-a-double-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -1172,6 +1216,17 @@ copy = pp;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#5-a-double-pointer-assigned-to-a-structure)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -1194,6 +1249,17 @@ p = fieldAddress;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#6-an-integer-pointer-assigned-to-a-structure-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -1214,6 +1280,17 @@ A* p{ &value };
 int* fieldAddress{};
 fieldAddress = p;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#7-a-structure-pointer-assigned-to-an-integer-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -1241,7 +1318,7 @@ copy = **pp;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#8-copying-the-structure-through-two-pointers)
 
@@ -1271,6 +1348,17 @@ A* p{ &value };
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#9-assigning-an-integer-through-a-structure-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -1295,7 +1383,7 @@ result = p->field;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#10-an-integer-assigned-from-a-structure-field)
 
