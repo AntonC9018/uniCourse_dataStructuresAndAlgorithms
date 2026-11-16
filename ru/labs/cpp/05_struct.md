@@ -1091,6 +1091,17 @@ copy = p;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#1-указатель-на-структуру-присваивается-структуре)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -1110,6 +1121,17 @@ A value{ 5 };
 A copy{};
 copy = &value;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#2-адрес-структуры-присваивается-структуре)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -1133,6 +1155,17 @@ p = value;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#3-структура-присваивается-указателю-на-неё)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -1152,6 +1185,17 @@ A value{ 5 };
 A** pp{};
 pp = value;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#4-структура-присваивается-двойному-указателю)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -1177,6 +1221,17 @@ copy = pp;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#5-двойной-указатель-присваивается-структуре)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -1199,6 +1254,17 @@ p = fieldAddress;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#6-указатель-на-int-присваивается-указателю-на-структуру)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -1219,6 +1285,17 @@ A* p{ &value };
 int* fieldAddress{};
 fieldAddress = p;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#7-указатель-на-структуру-присваивается-указателю-на-int)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -1246,7 +1323,7 @@ copy = **pp;
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-копирование-структуры-через-два-указателя)
 
@@ -1276,6 +1353,17 @@ A* p{ &value };
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#9-присваивание-целого-числа-через-указатель-на-структуру)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Не компилируется.
@@ -1300,7 +1388,7 @@ result = p->field;
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-целое-число-присваивается-из-поля-структуры)
 

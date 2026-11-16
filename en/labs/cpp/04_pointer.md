@@ -250,6 +250,17 @@ int* b{ &a };
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#8-pointer-to-a-larger-data-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Correct answer:</summary>
 
 Compilation error (see the video about pointers)
@@ -260,6 +271,17 @@ Compilation error (see the video about pointers)
 int a = 5;
 uint8_t* b = &a;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#9-pointer-to-a-smaller-data-type)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Correct answer:</summary>
@@ -712,6 +734,17 @@ p = value;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#1-an-integer-assigned-to-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -727,6 +760,17 @@ int* p{ &value };
 int** pp{};
 pp = p;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#2-a-pointer-assigned-to-a-double-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -746,6 +790,17 @@ result = p;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#3-a-pointer-assigned-to-an-integer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -763,6 +818,17 @@ other = &p;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#4-a-pointer-address-assigned-to-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -777,6 +843,17 @@ int value{ 5 };
 int** pp{};
 pp = &value;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#5-an-integer-address-assigned-to-a-double-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -799,7 +876,7 @@ other = *pp;
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#6-copying-a-pointer-through-a-double-pointer)
 
@@ -826,6 +903,17 @@ result = *pp;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#7-one-dereference-instead-of-two)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -845,7 +933,7 @@ int** pp{ &p };
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization> -->
+<!-- <visualization types> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#8-writing-through-two-dereferences)
 
@@ -872,6 +960,17 @@ p = &count;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#9-a-size_t-address-assigned-to-an-int8_t-pointer)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -888,6 +987,17 @@ int8_t value{ 3 };
 size_t* p{};
 p = &value;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#10-an-int8_t-address-assigned-to-a-size_t-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -908,6 +1018,17 @@ count = value;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#11-an-int8_t-value-assigned-to-a-size_t)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It compiles.
@@ -924,6 +1045,17 @@ size_t count{ 3 };
 size_t* p{};
 p = count;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#12-a-size_t-value-assigned-to-a-pointer)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -945,6 +1077,17 @@ pp = &p;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#13-a-double-pointer-with-a-different-pointed-to-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It does not compile.
@@ -960,6 +1103,17 @@ size_t count{ 3 };
 size_t** pp{};
 pp = &count;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#14-a-size_t-address-with-the-wrong-pointer-depth)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -979,6 +1133,17 @@ int8_t* p{ &small };
 size_t count{};
 count = *p;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#15-assigning-an-int8_t-read-through-a-pointer-to-a-size_t)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
