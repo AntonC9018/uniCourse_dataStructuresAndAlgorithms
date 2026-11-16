@@ -8,37 +8,36 @@ slug: en/cpp/labs/preprocessor
 
 - [Video about compilation phases][video].
 
-The preprocessor runs before the compiler checks C++ types and expressions.
-It expands macros, chooses which conditional sections to keep, and includes other files.
-This lab covers macros first, then includes. Here, including means `#include`, not C++ modules.
+Before the compiler ever looks at types and expressions, the preprocessor goes over the source text.
+It expands macros, decides which conditional sections to keep, and pastes in other files.
+This lab covers macros first, then includes. By "include" we mean `#include`, not C++ modules.
 
-Use GCC's C++ driver, `g++`, for these examples. Save each program as `main.cpp`.
-Each numbered example is independent unless it explicitly reuses files from another example.
-Run commands from the directory containing those files.
+Use `g++`, GCC's C++ driver, for these examples, and save each program as `main.cpp`.
+Every numbered example stands on its own unless it says it reuses files from another one.
+Run the commands from the directory that contains those files.
 
 ```sh
 g++ -std=c++20 -E main.cpp
 ```
 
-`-E` stops after preprocessing and writes the result to standard output.
-Actually run it and inspect the output before opening the answer.
-Lines beginning with `#` in that output record source locations; they are not your original
-directives.
-Add `-P` to hide those markers when comparing short examples:
+`-E` stops right after preprocessing and prints the result.
+Really do run it and look at the output before you open the answer.
+The lines starting with `#` in that output only record where the code came from.
+They are not your original directives. Add `-P` to hide them in short examples:
 
 ```sh
 g++ -std=c++20 -E -P main.cpp
 ```
 
-To compile and run a valid example instead:
+To compile and run a valid example:
 
 ```sh
 g++ -std=c++20 main.cpp -o app
 ./app
 ```
 
-Unless a task asks otherwise, predict the preprocessed code, whether it compiles,
-and what it prints. A successful `-E` command alone does not mean the C++ code is valid.
+Unless a task asks something else, predict the preprocessed code, whether it compiles,
+and what it prints. Keep in mind that `-E` succeeding says nothing about whether the C++ is valid.
 
 ## 1. Macros
 
@@ -55,7 +54,7 @@ int main()
 <details>
 <summary>Answer</summary>
 
-The comments disappear. They are replaced with whitespace, so surrounding tokens do not join.
+The comments disappear. Each one becomes whitespace, so the tokens around it don't stick together.
 The compiler sees an initialization equivalent to `int a = 2 + 3;`.
 The program compiles and prints nothing.
 </details>
@@ -78,8 +77,8 @@ int main()
 
 `NUMBER` is replaced with `5`, so the initialization becomes `auto a = 5;`.
 `a` has type `int`, and the program prints `5`.
-The `#define` line itself does not remain as a C++ declaration.
-`#include <iostream>` produces a lot of output; find `main` near the end.
+The `#define` line itself is gone; it does not turn into a C++ declaration.
+`#include <iostream>` produces a lot of output, so look for `main` near the very end.
 </details>
 
 ### 3. A typed constant
@@ -103,10 +102,11 @@ int main()
 
 It prints `2` and `2.5`.
 `NUMBER` becomes the integer literal `5`, so `a` is an `int`.
-`number` remains a name in the preprocessed code; its declared type makes `b` a `double`.
-Integer division discards the fractional part; floating-point division preserves it here.
-A macro has replacement tokens rather than its own C++ type.
-A `constexpr` variable is a typed C++ object whose initializer is a constant expression.
+`number` stays a name in the preprocessed code, and its declared type makes `b` a `double`.
+Integer division drops the fractional part, while floating-point division keeps it.
+A macro is just replacement tokens and has no C++ type of its own.
+A `constexpr` variable, on the other hand, is a real C++ object with a type,
+whose initializer is a constant expression.
 </details>
 
 ### 4. A macro that declares a variable
@@ -126,7 +126,7 @@ int main()
 <summary>Answer</summary>
 
 `MAKE_A;` becomes `int a = 5;` inside `main`.
-There is no function call. The compiler receives an ordinary variable definition.
+Nothing is called here. The compiler simply gets an ordinary variable definition.
 This compiles and prints nothing.
 </details>
 
@@ -146,7 +146,7 @@ int main()
 <summary>Answer</summary>
 
 Preprocessing succeeds, but compilation fails: `int a = 5;` appears twice in the same scope.
-The second line defines `a` again. Separate nested blocks would allow separate variables.
+The second line defines `a` again. Putting each use in its own nested block would avoid that.
 </details>
 
 ### 6. A function called twice
@@ -168,8 +168,8 @@ int main()
 <summary>Answer</summary>
 
 This compiles. Each call has its own local `a`, whose lifetime ends when the call returns.
-The preprocessor leaves the function and its calls alone.
-Trying to use `a` in `main` would fail: that name belongs to the function's scope.
+The preprocessor doesn't touch the function or its calls.
+Trying to use `a` in `main` would fail, since that name lives in the function's scope.
 </details>
 
 ### 7. Changing the variable afterwards
@@ -189,8 +189,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `8`. Expansion declares an ordinary, mutable local variable in `main`.
-The fact that its definition came from a macro does not make `a` a constant.
+It prints `8`. The expansion declares an ordinary local variable in `main` that can be changed.
+Coming from a macro does not make `a` a constant.
 </details>
 
 ### 8. A macro as an initializer
@@ -215,7 +215,7 @@ int main()
 <summary>Answer</summary>
 
 It prints `2 3`. The initialization becomes `Point p = Point{ 2, 3 };`.
-Replacement tokens can form a whole expression, including a struct initialization.
+The replacement can be any sequence of tokens, including a whole struct initialization.
 </details>
 
 ### 9. Parentheses in replacement text
@@ -234,7 +234,7 @@ int main()
 <summary>Answer</summary>
 
 It prints `5`. `NUMBER` expands to `(5)`.
-These parentheses are part of the replacement text; they do not make the macro callable.
+The parentheses are just part of the replacement text. They don't make the macro callable.
 </details>
 
 ### 10. A macro has no block scope
@@ -255,9 +255,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `5`. The preprocessor does not use C++ block scope for macros.
-The definition applies to subsequent source tokens until `#undef` or the end of this translation
-unit.
+It prints `5`. The preprocessor knows nothing about C++ blocks.
+A macro applies to everything after its definition,
+until `#undef` or the end of the translation unit.
 The local variable `a` belongs to the inner block, but the macro `NUMBER` does not.
 </details>
 
@@ -276,16 +276,16 @@ int main()
 <details>
 <summary>Answer</summary>
 
-This is an invalid redefinition: the new replacement differs from the old one.
-GCC normally warns and continues using `8`; do not rely on that acceptance.
-An effectively identical redefinition is allowed. To deliberately replace a definition, write:
+This redefinition is invalid, because the new replacement differs from the old one.
+GCC usually just warns and goes on with `8`, but don't rely on that.
+Repeating an identical definition is allowed. To replace a definition on purpose, write:
 
 ```cpp
 #undef NUMBER
 #define NUMBER 8
 ```
 
-`#undef` removes the macro definition; it does not change variables already initialized.
+`#undef` removes the macro. Variables that were already initialized with it stay the same.
 See [GCC's redefinition rules][redefinition].
 </details>
 
@@ -305,9 +305,9 @@ int main()
 <summary>Answer</summary>
 
 It prints `5`. `NUMBER()` is a function-like macro with no parameters.
-The opening parenthesis must immediately follow its name in the definition.
-At the use site, parentheses are needed to trigger expansion.
-Replacing `NUMBER()` in `main` with `NUMBER` would leave that name unexpanded and fail compilation.
+In the definition, the opening parenthesis must come right after the name, with no space.
+At the use site, the parentheses are what triggers the expansion.
+Writing plain `NUMBER` in `main` would leave the name unexpanded, and compilation would fail.
 </details>
 
 ### 13. The same declaration through a function-like macro
@@ -327,8 +327,8 @@ int main()
 <summary>Answer</summary>
 
 It prints `5`. `MAKE_A();` expands to `int a = 5;`.
-Function-like syntax does not give a macro a function's local scope.
-Using it twice in this block would still redefine `a`.
+Looking like a function call does not give the macro a function's local scope.
+Using it twice in this block would still define `a` twice.
 </details>
 
 ### 14. Replacing a keyword: a dangerous experiment
@@ -345,11 +345,11 @@ int main()
 <details>
 <summary>Answer</summary>
 
-On GCC, `-E -P` shows `bool a = false;`: even this spelling can be replaced.
-However, C++ forbids defining a macro whose name is a keyword such as `true`.
-This is an intentionally invalid experiment, not a supported technique.
-It can silently alter code that follows it, including included headers.
-Never do this in real code; remove the definition before continuing the lab.
+With GCC, `-E -P` shows `bool a = false;`, so even a keyword gets replaced.
+However, C++ forbids defining a macro named after a keyword such as `true`.
+This is a deliberately invalid experiment, not a technique to use.
+It silently changes all the code that follows, including included headers.
+Never do this in real code, and remove the definition before moving on.
 </details>
 
 ### 15. Arithmetic without parentheses
@@ -367,9 +367,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-The expression becomes `std::cout << 2 + 3 << std::endl;`, and prints `5`.
-Arguments are substituted into the replacement text.
-The parentheses around the argument list do not remain around the resulting expression.
+The line becomes `std::cout << 2 + 3 << std::endl;` and prints `5`.
+The arguments are pasted into the replacement text as they are.
+The parentheses around the argument list do not end up around the result.
 </details>
 
 ### 16. More arithmetic, still the expected result
@@ -388,7 +388,7 @@ int main()
 <summary>Answer</summary>
 
 It expands to `2 * 3 + 4 * 5`, so it prints `26`.
-Multiplication binds more tightly than addition. The missing parentheses happen not to hurt here.
+Multiplication binds tighter than addition, so the missing parentheses happen not to matter here.
 </details>
 
 ### 17. Now the missing parentheses matter
@@ -411,7 +411,7 @@ int main()
 It prints `10` and `19`.
 The first expression becomes `2 * 3 + 4`, not `2 * (3 + 4)`.
 The second becomes `2 + 3 * 4 + 5`, not `(2 + 3) * (4 + 5)`.
-Both the whole replacement and its individual arguments need protection.
+Both the whole replacement and each argument need their own parentheses.
 </details>
 
 ### 18. Parentheses around everything
@@ -433,7 +433,7 @@ int main()
 
 It prints `14` and `45`.
 The expressions expand to `2 * ((3) + (4))` and `((2 + 3) * (4 + 5))`.
-The inner parentheses protect the arguments; the outer ones protect the result.
+The inner parentheses protect the arguments, and the outer ones protect the result.
 </details>
 
 ### 19. Ordinary functions instead
@@ -461,9 +461,9 @@ int main()
 <summary>Answer</summary>
 
 It also prints `14` and `45`.
-Function arguments are expressions evaluated to initialize parameters.
-The body operates on those parameters, not on tokens pasted into the caller's expression.
-Use a function when you want function behavior.
+A function's arguments are evaluated first, and their values initialize the parameters.
+The body works with those parameters, not with tokens pasted into the caller's expression.
+When you want something to behave like a function, write a function.
 </details>
 
 ### 20. Discarding a section
@@ -482,8 +482,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `5`. `#if false` discards the section before the compiler checks C++ syntax.
-The invalid statement is absent from the preprocessed output.
+It prints `5`. `#if false` throws the section away before the compiler gets to check its syntax.
+The invalid statement simply isn't in the preprocessed output.
 In C++, `#if` recognizes `false` and `true`; `#if 0` and `#if 1` also work.
 </details>
 
@@ -504,8 +504,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `yes`. The preprocessor evaluates this integer constant expression
-and keeps only the first branch. No runtime `if` remains.
+It prints `yes`. The preprocessor computes the condition itself and keeps only the first branch.
+No `if` is left to run when the program starts.
 </details>
 
 ### 22. A condition based on a macro
@@ -528,7 +528,7 @@ int main()
 <summary>Answer</summary>
 
 It prints `details`. `LEVEL` expands to `2` before the condition is evaluated.
-Changing the definition to `1` selects the other branch when preprocessing again.
+Change the definition to `1` and preprocess again, and the other branch is kept instead.
 </details>
 
 ### 23. A C++ variable is not a macro
@@ -550,9 +550,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `brief`. Even `constexpr` does not make a C++ variable visible to the preprocessor.
-In this `#if`, the remaining identifier `level` is treated as `0`, giving `0 >= 2`.
-Use a normal C++ `if` to test a C++ variable. GCC's `-Wundef` helps catch such mistakes.
+It prints `brief`. The preprocessor can't see C++ variables, not even `constexpr` ones.
+Inside `#if`, any leftover identifier such as `level` counts as `0`, so the test is `0 >= 2`.
+Use a normal C++ `if` to test a C++ variable. GCC's `-Wundef` warns about mistakes like this.
 </details>
 
 ### 24. Checking whether a macro exists
@@ -574,8 +574,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `defined`. `#ifdef FEATURE` checks whether the macro exists, not its value.
-It is equivalent to `#if defined(FEATURE)`. By contrast, `#if FEATURE` would test `0`.
+It prints `defined`. `#ifdef FEATURE` only checks that the macro exists, not what its value is.
+It means the same as `#if defined(FEATURE)`. In contrast, `#if FEATURE` would test the `0`.
 </details>
 
 ### 25. Checking whether a macro is absent
@@ -595,17 +595,17 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `10`: `LIMIT` was absent, so the definition is kept.
+It prints `10`. `LIMIT` wasn't defined yet, so the definition inside is kept.
 `#ifndef LIMIT` means `#if !defined(LIMIT)`.
-If `LIMIT` had already been defined as `20`, this section would leave it alone and print `20`.
+Had `LIMIT` already been defined as `20`, this section would leave it alone and print `20`.
 </details>
 
 ## 2. Includes
 
-`#include` asks the preprocessor to process another file at that position.
-Its contents become part of the same translation unit: the source file after preprocessing.
-The included file can itself contain includes, macros, and conditional sections.
-For each example, create the files shown; do not carry unrelated files over from earlier examples.
+`#include` tells the preprocessor to process another file right at that spot.
+That file's contents become part of the same translation unit, which is the source file after
+preprocessing. The included file can have its own includes, macros, and conditional sections.
+For each example, create exactly the files shown, and don't keep unrelated files from earlier ones.
 
 ### 26. An empty file
 
@@ -628,8 +628,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-The header contributes no C++ declarations or statements. Its comment disappears too.
-Without `-P`, location markers still show that another file was visited.
+The header adds no declarations or statements, and its comment disappears as well.
+Without `-P`, the location markers still show that the preprocessor visited another file.
 The program compiles and prints nothing.
 </details>
 
@@ -658,9 +658,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-Compilation fails because `number` has not been declared in `main.cpp`.
-The preprocessor does not search nearby files for missing declarations.
-Merely saving `number.h` beside `main.cpp` does not make it part of the program.
+Compilation fails, because `number` was never declared in `main.cpp`.
+Nobody goes looking through nearby files for missing declarations.
+Just saving `number.h` next to `main.cpp` does not make it part of the program.
 </details>
 
 ### 28. Including the function before use
@@ -689,9 +689,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `7`. The preprocessed file contains the definition of `number` before `main`.
-For this small one-source-file program, putting the definition in the header works.
-How to share declarations and definitions across several source files belongs to the linker lab.
+It prints `7`. In the preprocessed file, the definition of `number` comes before `main`.
+For a small program with a single source file, keeping the definition in the header works fine.
+Sharing code between several source files is a topic for the linker lab.
 </details>
 
 ### 29. Including the function after use
@@ -721,8 +721,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-Compilation fails: the definition appears after the call, with no earlier declaration.
-Including a file does not move its contents to the top. Move the include before `main`.
+Compilation fails: the definition shows up after the call, and nothing declares it earlier.
+An include doesn't hoist the file's contents to the top. Move the include above `main`.
 </details>
 
 ### 30. A standard C++ header
@@ -739,9 +739,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `7`. `<iostream>` supplies declarations needed to use the stream library.
-Inspect `-E` output: this one include brings in many other headers on a typical implementation.
-The resulting size does not mean all that text becomes executable instructions.
+It prints `7`. `<iostream>` provides the declarations you need to use streams.
+Look at the `-E` output: this single include usually pulls in many other headers.
+That doesn't mean all of that text turns into machine instructions in your program.
 </details>
 
 ### 31. A C library facility, with its C++ header
@@ -759,7 +759,7 @@ int main()
 <summary>Answer</summary>
 
 It prints `7`. `<cstdio>` is the C++ header for C-style input and output,
-with `printf` available in namespace `std`.
+and it puts `printf` in the `std` namespace.
 </details>
 
 ### 32. The corresponding C header
@@ -776,9 +776,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `7`. The compatibility header `<stdio.h>` provides `printf` in the global namespace.
-The corresponding C++ spelling is `<cstdio>` with `std::printf`.
-Do not rely on either header also providing the name in the other namespace.
+It prints `7`. The compatibility header `<stdio.h>` puts `printf` in the global namespace.
+The C++ way to write this is `<cstdio>` with `std::printf`.
+Don't count on either header also making the name available in the other namespace.
 </details>
 
 ### 33. Using the function without its header
@@ -793,14 +793,15 @@ int main()
 <details>
 <summary>Answer</summary>
 
-Standard C++ requires a declaration before this call. GCC rejects it because `printf`
-is undeclared. Add `<cstdio>` and use `std::printf`, or include `<stdio.h>`.
-A library being installed does not make its declarations automatically visible.
+C++ requires a declaration before this call, so GCC rejects it: `printf` is undeclared.
+Include `<cstdio>` and use `std::printf`, or include `<stdio.h>`.
+Having a library installed does not make its declarations visible on their own.
 </details>
 
-For these search exercises, assume a normal GCC installation with no extra include-path
-environment variables or flags. The paths named below are ordinary project directories,
-not directories that GCC already treats as system include directories.
+For the following search exercises, assume a normal GCC installation,
+with no extra include-path environment variables or flags.
+The directories named below are ordinary project folders, not ones GCC treats as system
+include directories.
 
 ### 34. A local file with angle brackets
 
@@ -824,10 +825,10 @@ int main()
 <details>
 <summary>Answer</summary>
 
-With `g++ -std=c++20 -E main.cpp`, header lookup fails: `settings.h` is not found.
-Angle brackets do not first search the directory of the including file.
-They can still find project headers if you add that directory to the search path, for example `-I
-.`.
+With `g++ -std=c++20 -E main.cpp`, the lookup fails: `settings.h` is not found.
+Angle brackets don't start by searching the directory of the file doing the include.
+They can still find project headers once you add that directory to the search path,
+for example with `-I .`.
 See [GCC's search-path rules][search].
 </details>
 
@@ -845,10 +846,10 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `7`, provided no earlier search directory contains a different file named `iostream`.
-For quotes, GCC first searches the directory containing the including file, then quote-only
-paths, then the paths used for angle brackets. Standard headers can therefore be found too.
-Prefer angle brackets for standard headers so an accidental nearby file does not take priority.
+It prints `7`, as long as no earlier search directory has some other file named `iostream`.
+With quotes, GCC first searches the directory of the including file, then the quote-only
+paths, and then the paths used for angle brackets. That's why standard headers are found too.
+Still, use angle brackets for standard headers, so a stray nearby file can't take their place.
 </details>
 
 ### 36. Adding one include directory
@@ -876,9 +877,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `11`. `-I config` adds `config` to the header search path.
-The preprocessor looks for `config/settings.h`, not for a file named just `config`.
-`number` remains a C++ variable name in the output; its definition comes from that header.
+It prints `11`. `-I config` adds the `config` directory to the header search path,
+so the preprocessor finds `config/settings.h`.
+`number` stays a C++ variable name in the output, and its definition comes from that header.
 </details>
 
 ### 37. Quotes: nearby file or include directory?
@@ -912,9 +913,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `7`: the directory containing `main.cpp` is searched before `-I config`.
-Changing this include to `<settings.h>` selects the `config` copy and prints `11`.
-The nearby copy is not an automatic candidate for the angle-bracket form.
+It prints `7`, because the directory of `main.cpp` is searched before `-I config`.
+Change the include to `<settings.h>`, and the `config` copy wins, printing `11`.
+The angle-bracket form doesn't look at the nearby copy at all.
 </details>
 
 ### 38. Two include directories
@@ -948,9 +949,9 @@ int main()
 <details>
 <summary>Answer</summary>
 
-With `-I first -I second`, it prints `11`. Reverse the flags and it prints `22`.
-GCC searches these `-I` directories from left to right and stops at the first match.
-It does not combine both headers just because their names match.
+With `-I first -I second`, it prints `11`. Swap the flags and it prints `22`.
+GCC searches the `-I` directories from left to right and stops at the first match.
+It doesn't merge the two headers just because they have the same name.
 </details>
 
 ### 39. The file is absent from all search paths
@@ -977,8 +978,8 @@ int main()
 <summary>Answer</summary>
 
 Preprocessing fails with a diagnostic such as `missing.h: No such file or directory`.
-`-I` adds places to search; it cannot supply a file that does not exist in any of them.
-Correct the include name or provide the missing header in a searched directory.
+`-I` only adds places to look. It can't conjure a file that isn't in any of them.
+Fix the include name, or put the missing header into one of the searched directories.
 </details>
 
 ### 40. Removing the standard C++ include paths
@@ -997,10 +998,10 @@ int main()
 <details>
 <summary>Answer</summary>
 
-On a conventional GCC installation, preprocessing fails because `iostream` cannot be found.
-`-nostdinc++` removes the default C++ header directories, while retaining other system paths.
-Some packaged compiler wrappers add their own explicit paths; inspect `-v` if yours still finds it.
-This option is different from `-nostdinc`, which removes all default system include directories.
+On a typical GCC installation, preprocessing fails because `iostream` can't be found.
+`-nostdinc++` removes the default C++ header directories but keeps the other system paths.
+Some packaged compiler wrappers add their own paths; check `-v` if yours still finds the header.
+Don't confuse it with `-nostdinc`, which removes all the default system include directories.
 </details>
 
 ### 41. Restoring the directories manually
@@ -1010,15 +1011,15 @@ Reuse the previous `main.cpp`. How can `-I` make preprocessing succeed again?
 <details>
 <summary>Answer</summary>
 
-First record the paths printed between `#include <...> search starts here:` and
-`End of search list.` by a normal preprocessing run:
+First, run the preprocessor normally with `-v` and note the paths printed between
+`#include <...> search starts here:` and `End of search list.`:
 
 ```sh
 g++ -std=c++20 -E -v main.cpp -o normal.ii
 ```
 
-On a typical Linux installation, the removed C++ paths resemble these three directories.
-Replace them with the actual paths from your own output:
+On a typical Linux installation, the removed C++ paths look like the three directories below.
+Replace them with the real paths from your own output:
 
 ```sh
 g++ -std=c++20 -nostdinc++ \
@@ -1028,11 +1029,11 @@ g++ -std=c++20 -nostdinc++ \
     -E main.cpp -o restored.ii
 ```
 
-Now preprocessing succeeds if the needed directories have all been restored.
-Adding only the directory containing `iostream` may not suffice:
-that header itself includes implementation headers such as `bits/c++config.h`,
-which can live in a target-specific directory.
-The exact layout depends on the installation; do not copy another machine's version number.
+Once all the needed directories are back, preprocessing succeeds again.
+Adding only the directory with `iostream` may not be enough:
+that header includes internal headers such as `bits/c++config.h`,
+which can live in a separate, target-specific directory.
+The exact layout depends on the installation, so don't copy version numbers from another machine.
 See [GCC's directory options][directories].
 </details>
 
@@ -1051,11 +1052,11 @@ Which stage fails? Does `gcc` really omit C++ include paths for a `.cpp` file?
 <details>
 <summary>Answer</summary>
 
-The first two commands normally succeed on a conventional GCC installation.
-The `.cpp` extension tells `gcc` to use C++, including its usual C++ header search paths.
-The last command normally fails during **linking**, with unresolved C++ library symbols.
-`gcc` does not automatically link the C++ standard library; `g++` does.
-Use `g++` for the complete C++ build. See [GCC's explanation of its C++ driver][driver].
+On a typical GCC installation, the first two commands succeed.
+The `.cpp` extension tells `gcc` to treat the file as C++, with the usual C++ header paths.
+The last command fails during **linking**, complaining about undefined C++ library symbols.
+`gcc` does not link the C++ standard library automatically, while `g++` does.
+So use `g++` for the whole C++ build. See [GCC's explanation of its C++ driver][driver].
 
 To see a language-selection failure instead, try:
 
@@ -1063,9 +1064,9 @@ To see a language-selection failure instead, try:
 gcc -x c -E main.cpp
 ```
 
-Here `-x c` explicitly selects C, whose default search paths normally do not include
-C++ headers such as `iostream`. That is different from plain `gcc main.cpp`.
-Compiler wrappers may customize search paths; use `-v` to inspect yours.
+Here `-x c` forces the language to C, and C's default search paths normally don't contain
+C++ headers such as `iostream`. Plain `gcc main.cpp` doesn't do this.
+Compiler wrappers may change the search paths; use `-v` to see yours.
 </details>
 
 [video]: https://www.youtube.com/watch?v=CEl6YS4XhQQ&list=PL4sUOB8DjVlWUcSaCu0xPcK7rYeRwGpl7&index=12
