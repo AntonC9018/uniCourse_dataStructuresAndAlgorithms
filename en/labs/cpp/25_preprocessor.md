@@ -59,6 +59,28 @@ The compiler sees an initialization equivalent to `int a = 2 + 3;`.
 The program compiles and prints nothing.
 </details>
 
+### 2. An unused macro
+
+What does `-E -P` produce? Does defining the macro add anything to `main`?
+
+```cpp
+#define NUMBER 5
+
+int main()
+{
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+The preprocessed code contains only the empty `main` function.
+`#define` tells the preprocessor what to substitute if it encounters `NUMBER` later.
+Here `NUMBER` is never used, so there is nothing to substitute.
+The definition does not create a variable or execute anything.
+The program compiles and prints nothing.
+</details>
+
 ### 2. A constant macro
 
 ```cpp
