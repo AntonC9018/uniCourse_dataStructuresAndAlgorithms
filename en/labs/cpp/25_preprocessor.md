@@ -747,6 +747,150 @@ Compilation fails: the definition shows up after the call, and nothing declares 
 An include doesn't hoist the file's contents to the top. Move the include above `main`.
 </details>
 
+### 29. Choosing which functions a header provides
+
+Which function definitions remain in the `-E` output? Does the program compile?
+
+`first.h`:
+
+```cpp
+#ifdef ENABLE_FIRST
+int firstNumber()
+{
+    return 7;
+}
+#endif
+```
+
+`second.h`:
+
+```cpp
+#ifdef ENABLE_SECOND
+int secondNumber()
+{
+    return 11;
+}
+#endif
+```
+
+`main.cpp`:
+
+```cpp
+#include <iostream>
+#define ENABLE_FIRST
+#include "first.h"
+#include "second.h"
+
+int main()
+{
+    std::cout << firstNumber() << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Only `firstNumber` remains, and the program prints `7`.
+When the preprocessor enters `first.h`, `ENABLE_FIRST` is already defined,
+so it keeps the function inside that `#ifdef`.
+`ENABLE_SECOND` is not defined, so it discards the function in `second.h`.
+Calling `secondNumber` from `main` would fail to compile: no declaration of it remains.
+
+The definition of `ENABLE_FIRST` has no replacement text, but that doesn't matter to `#ifdef`.
+It only checks whether the macro exists.
+A macro defined before an include can therefore change what that header contributes.
+</details>
+
+### 29. Defining the macro after the include
+
+Keep the same two headers, but replace `main.cpp` with this version.
+Which function definitions remain now?
+
+`main.cpp`:
+
+```cpp
+#include <iostream>
+#include "first.h"
+#define ENABLE_FIRST
+#include "second.h"
+
+int main()
+{
+    std::cout << firstNumber() << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Neither function definition remains, and compilation fails at the call to `firstNumber`.
+When `first.h` is processed, `ENABLE_FIRST` is not defined yet, so its function is discarded.
+Defining the macro afterwards does not make the preprocessor go back and reconsider that header.
+`ENABLE_SECOND` is still absent, so the second header's function is discarded too.
+
+The order matters: put a header's configuration defines before the include that uses them.
+</details>
+
+### 29. A macro defined in an earlier header
+
+Replace the files with the versions below. There are no defines in `main.cpp` this time.
+Does the macro from `first.h` affect `second.h`?
+
+`first.h`:
+
+```cpp
+#define ENABLE_SECOND
+
+int firstNumber()
+{
+    return 7;
+}
+```
+
+`second.h`:
+
+```cpp
+#ifdef ENABLE_SECOND
+int secondNumber()
+{
+    return 11;
+}
+#endif
+```
+
+`main.cpp`:
+
+```cpp
+#include <iostream>
+#include "first.h"
+#include "second.h"
+
+int main()
+{
+    std::cout << firstNumber() << std::endl;
+    std::cout << secondNumber() << std::endl;
+}
+```
+
+<details>
+<summary>Answer</summary>
+
+Both functions remain, and the program prints `7` and `11`.
+The preprocessor encounters `#define ENABLE_SECOND` while processing `first.h`.
+Finishing that header does not remove the macro: it stays defined when `second.h` is processed.
+It also stays defined in the rest of `main.cpp`, unless something removes it with `#undef`.
+
+Swap the two includes, and `secondNumber` disappears, so its call fails to compile.
+The preprocessor reaches its `#ifdef` before the definition in `first.h`.
+Includes do not give macros their own scope; they are processed in order as part of one source file.
+This does not automatically share macros with other source files compiled separately.
+
+Libraries use configuration macros to let you control which optional functions or implementation
+parts their headers provide. This is useful when it is an option the library documents:
+define the macro before including the header that checks it.
+An unrelated header can affect later includes too, so avoid generic macro names that might collide.
+</details>
+
 ### 30. A standard C++ header
 
 ```cpp
