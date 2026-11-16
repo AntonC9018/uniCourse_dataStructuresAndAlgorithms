@@ -81,16 +81,14 @@ The definition does not create a variable or execute anything.
 The program compiles and prints nothing.
 </details>
 
-### 2. A constant macro
+### 3. A constant macro
 
 ```cpp
-#include <iostream>
 #define NUMBER 5
 
 int main()
 {
     auto a = NUMBER;
-    std::cout << a << std::endl;
 }
 ```
 
@@ -98,12 +96,11 @@ int main()
 <summary>Answer</summary>
 
 `NUMBER` is replaced with `5`, so the initialization becomes `auto a = 5;`.
-`a` has type `int`, and the program prints `5`.
+`a` has type `int` and is initialized to `5`. The program prints nothing.
 The `#define` line itself is gone; it does not turn into a C++ declaration.
-`#include <iostream>` produces a lot of output, so look for `main` near the very end.
 </details>
 
-### 3. A typed constant
+### 4. A typed constant
 
 ```cpp
 #include <iostream>
@@ -131,7 +128,7 @@ A `constexpr` variable, on the other hand, is a real C++ object with a type,
 whose initializer is a constant expression.
 </details>
 
-### 4. A macro that declares a variable
+### 5. A macro that declares a variable
 
 What exactly does `-E -P` produce?
 
@@ -152,7 +149,7 @@ Nothing is called here. The compiler simply gets an ordinary variable definition
 This compiles and prints nothing.
 </details>
 
-### 5. Using the same macro twice
+### 6. Using the same macro twice
 
 ```cpp
 #define MAKE_A int a = 5
@@ -171,7 +168,7 @@ Preprocessing succeeds, but compilation fails: `int a = 5;` appears twice in the
 The second line defines `a` again. Putting each use in its own nested block would avoid that.
 </details>
 
-### 6. A function called twice
+### 7. A function called twice
 
 ```cpp
 void makeA()
@@ -194,31 +191,29 @@ The preprocessor doesn't touch the function or its calls.
 Trying to use `a` in `main` would fail, since that name lives in the function's scope.
 </details>
 
-### 7. Changing the variable afterwards
+### 8. Changing the variable afterwards
 
 ```cpp
-#include <iostream>
 #define MAKE_A int a = 5
 
 int main()
 {
     MAKE_A;
     a = 8;
-    std::cout << a << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `8`. The expansion declares an ordinary local variable in `main` that can be changed.
+`a` ends up holding `8`.
+The expansion declares an ordinary local variable in `main` that can be changed.
 Coming from a macro does not make `a` a constant.
 </details>
 
-### 8. A macro as an initializer
+### 9. A macro as an initializer
 
 ```cpp
-#include <iostream>
 struct Point
 {
     int x;
@@ -229,61 +224,57 @@ struct Point
 int main()
 {
     Point p = START;
-    std::cout << p.x << ' ' << p.y << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `2 3`. The initialization becomes `Point p = Point{ 2, 3 };`.
+`p.x` is `2` and `p.y` is `3`. The initialization becomes `Point p = Point{ 2, 3 };`.
 The replacement can be any sequence of tokens, including a whole struct initialization.
 </details>
 
-### 9. Parentheses in replacement text
+### 10. Parentheses in replacement text
 
 ```cpp
-#include <iostream>
 #define NUMBER (5)
 
 int main()
 {
-    std::cout << NUMBER << std::endl;
+    [[maybe_unused]] int b = NUMBER;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `5`. `NUMBER` expands to `(5)`.
+`b` is initialized to `5`. `NUMBER` expands to `(5)`.
 The parentheses are just part of the replacement text. They don't make the macro callable.
 </details>
 
-### 10. A macro has no block scope
+### 11. A macro has no block scope
 
 ```cpp
-#include <iostream>
-
 int main()
 {
     {
 #define NUMBER 5
         int a = NUMBER;
     }
-    std::cout << NUMBER << std::endl;
+    [[maybe_unused]] int b = NUMBER;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `5`. The preprocessor knows nothing about C++ blocks.
+`b` is initialized to `5`. The preprocessor knows nothing about C++ blocks.
 A macro applies to everything after its definition,
 until `#undef` or the end of the translation unit.
 The local variable `a` belongs to the inner block, but the macro `NUMBER` does not.
 </details>
 
-### 11. Redefinition
+### 12. Redefinition
 
 ```cpp
 #define NUMBER 5
@@ -311,49 +302,46 @@ Repeating an identical definition is allowed. To replace a definition on purpose
 See [GCC's redefinition rules][redefinition].
 </details>
 
-### 12. A macro with an empty parameter list
+### 13. A macro with an empty parameter list
 
 ```cpp
-#include <iostream>
 #define NUMBER() 5
 
 int main()
 {
-    std::cout << NUMBER() << std::endl;
+    [[maybe_unused]] int a = NUMBER();
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `5`. `NUMBER()` is a function-like macro with no parameters.
+`a` is initialized to `5`. `NUMBER()` is a function-like macro with no parameters.
 In the definition, the opening parenthesis must come right after the name, with no space.
 At the use site, the parentheses are what triggers the expansion.
 Writing plain `NUMBER` in `main` would leave the name unexpanded, and compilation would fail.
 </details>
 
-### 13. The same declaration through a function-like macro
+### 14. The same declaration through a function-like macro
 
 ```cpp
-#include <iostream>
 #define MAKE_A() int a = 5
 
 int main()
 {
     MAKE_A();
-    std::cout << a << std::endl;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `5`. `MAKE_A();` expands to `int a = 5;`.
+`a` is initialized to `5`. `MAKE_A();` expands to `int a = 5;`.
 Looking like a function call does not give the macro a function's local scope.
 Using it twice in this block would still define `a` twice.
 </details>
 
-### 14. Replacing a keyword: a dangerous experiment
+### 15. Replacing a keyword: a dangerous experiment
 
 ```cpp
 #define true false
@@ -374,15 +362,15 @@ It silently changes all the code that follows, including included headers.
 Never do this in real code, and remove the definition before moving on.
 </details>
 
-### 15. Arithmetic without parentheses
+### 16. A macro with two arguments
 
 ```cpp
 #include <iostream>
-#define ADD(a, b) a + b
+#define COMBINE(a, b) a + b
 
 int main()
 {
-    std::cout << ADD(2, 3) << std::endl;
+    std::cout << COMBINE(2, 3) << std::endl;
 }
 ```
 
@@ -394,15 +382,15 @@ The arguments are pasted into the replacement text as they are.
 The parentheses around the argument list do not end up around the result.
 </details>
 
-### 16. More arithmetic, still the expected result
+### 17. Expressions as arguments
 
 ```cpp
 #include <iostream>
-#define ADD(a, b) a + b
+#define COMBINE(a, b) a + b
 
 int main()
 {
-    std::cout << ADD(2 * 3, 4 * 5) << std::endl;
+    std::cout << COMBINE(2 * 3, 4 * 5) << std::endl;
 }
 ```
 
@@ -413,17 +401,17 @@ It expands to `2 * 3 + 4 * 5`, so it prints `26`.
 Multiplication binds tighter than addition, so the missing parentheses happen not to matter here.
 </details>
 
-### 17. Now the missing parentheses matter
+### 18. Using the result in another expression
 
 ```cpp
 #include <iostream>
-#define ADD(a, b) a + b
-#define MULTIPLY(a, b) a * b
+#define COMBINE(a, b) a + b
+#define TRANSFORM(a, b) a * b
 
 int main()
 {
-    std::cout << 2 * ADD(3, 4) << std::endl;
-    std::cout << MULTIPLY(2 + 3, 4 + 5) << std::endl;
+    std::cout << 2 * COMBINE(3, 4) << std::endl;
+    std::cout << TRANSFORM(2 + 3, 4 + 5) << std::endl;
 }
 ```
 
@@ -436,17 +424,17 @@ The second becomes `2 + 3 * 4 + 5`, not `(2 + 3) * (4 + 5)`.
 Both the whole replacement and each argument need their own parentheses.
 </details>
 
-### 18. Parentheses around everything
+### 19. Grouping expressions
 
 ```cpp
 #include <iostream>
-#define ADD(a, b) ((a) + (b))
-#define MULTIPLY(a, b) ((a) * (b))
+#define COMBINE(a, b) ((a) + (b))
+#define TRANSFORM(a, b) ((a) * (b))
 
 int main()
 {
-    std::cout << 2 * ADD(3, 4) << std::endl;
-    std::cout << MULTIPLY(2 + 3, 4 + 5) << std::endl;
+    std::cout << 2 * COMBINE(3, 4) << std::endl;
+    std::cout << TRANSFORM(2 + 3, 4 + 5) << std::endl;
 }
 ```
 
@@ -458,24 +446,24 @@ The expressions expand to `2 * ((3) + (4))` and `((2 + 3) * (4 + 5))`.
 The inner parentheses protect the arguments, and the outer ones protect the result.
 </details>
 
-### 19. Ordinary functions instead
+### 20. Ordinary functions instead
 
 ```cpp
 #include <iostream>
-int add(int a, int b)
+int combine(int a, int b)
 {
     return a + b;
 }
 
-int multiply(int a, int b)
+int transform(int a, int b)
 {
     return a * b;
 }
 
 int main()
 {
-    std::cout << 2 * add(3, 4) << std::endl;
-    std::cout << multiply(2 + 3, 4 + 5) << std::endl;
+    std::cout << 2 * combine(3, 4) << std::endl;
+    std::cout << transform(2 + 3, 4 + 5) << std::endl;
 }
 ```
 
@@ -488,28 +476,28 @@ The body works with those parameters, not with tokens pasted into the caller's e
 When you want something to behave like a function, write a function.
 </details>
 
-### 20. Discarding a section
+### 21. Discarding a section
 
 ```cpp
-#include <iostream>
 int main()
 {
 #if false
     this is not valid C++;
 #endif
-    std::cout << 5 << std::endl;
+    int a = 5;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `5`. `#if false` throws the section away before the compiler gets to check its syntax.
+This compiles, and `a` is initialized to `5`.
+`#if false` throws the section away before the compiler gets to check its syntax.
 The invalid statement simply isn't in the preprocessed output.
 In C++, `#if` recognizes `false` and `true`; `#if 0` and `#if 1` also work.
 </details>
 
-### 21. A preprocessor condition
+### 22. A preprocessor condition
 
 ```cpp
 #include <iostream>
@@ -530,7 +518,7 @@ It prints `yes`. The preprocessor computes the condition itself and keeps only t
 No `if` is left to run when the program starts.
 </details>
 
-### 22. A condition based on a macro
+### 23. A condition based on a macro
 
 ```cpp
 #include <iostream>
@@ -553,7 +541,7 @@ It prints `details`. `LEVEL` expands to `2` before the condition is evaluated.
 Change the definition to `1` and preprocess again, and the other branch is kept instead.
 </details>
 
-### 23. A C++ variable is not a macro
+### 24. A condition based on a constant variable
 
 ```cpp
 #include <iostream>
@@ -577,7 +565,7 @@ Inside `#if`, any leftover identifier such as `level` counts as `0`, so the test
 Use a normal C++ `if` to test a C++ variable. GCC's `-Wundef` warns about mistakes like this.
 </details>
 
-### 24. Checking whether a macro exists
+### 25. Checking whether a macro exists
 
 ```cpp
 #include <iostream>
@@ -600,7 +588,7 @@ It prints `defined`. `#ifdef FEATURE` only checks that the macro exists, not wha
 It means the same as `#if defined(FEATURE)`. In contrast, `#if FEATURE` would test the `0`.
 </details>
 
-### 25. Checking whether a macro is absent
+### 26. Checking whether a macro is absent
 
 ```cpp
 #include <iostream>
@@ -629,7 +617,7 @@ That file's contents become part of the same translation unit, which is the sour
 preprocessing. The included file can have its own includes, macros, and conditional sections.
 For each example, create exactly the files shown, and don't keep unrelated files from earlier ones.
 
-### 26. An empty file
+### 1. An empty file
 
 `empty.h`:
 
@@ -655,7 +643,7 @@ Without `-P`, the location markers still show that the preprocessor visited anot
 The program compiles and prints nothing.
 </details>
 
-### 27. A function in another file, without an include
+### 2. A function in another file, without an include
 
 `number.h`:
 
@@ -669,11 +657,9 @@ int number()
 `main.cpp`:
 
 ```cpp
-#include <iostream>
-
 int main()
 {
-    std::cout << number() << std::endl;
+    [[maybe_unused]] int a = number();
 }
 ```
 
@@ -685,7 +671,7 @@ Nobody goes looking through nearby files for missing declarations.
 Just saving `number.h` next to `main.cpp` does not make it part of the program.
 </details>
 
-### 28. Including the function before use
+### 3. Including the function before use
 
 `number.h`:
 
@@ -699,24 +685,24 @@ int number()
 `main.cpp`:
 
 ```cpp
-#include <iostream>
 #include "number.h"
 
 int main()
 {
-    std::cout << number() << std::endl;
+    [[maybe_unused]] int a = number();
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `7`. In the preprocessed file, the definition of `number` comes before `main`.
+This compiles, and `a` is initialized to `7`.
+In the preprocessed file, the definition of `number` comes before `main`.
 For a small program with a single source file, keeping the definition in the header works fine.
 Sharing code between several source files is a topic for the linker lab.
 </details>
 
-### 29. Including the function after use
+### 4. Including the function after use
 
 `number.h`:
 
@@ -730,11 +716,9 @@ int number()
 `main.cpp`:
 
 ```cpp
-#include <iostream>
-
 int main()
 {
-    std::cout << number() << std::endl;
+    [[maybe_unused]] int a = number();
 }
 
 #include "number.h"
@@ -747,7 +731,7 @@ Compilation fails: the definition shows up after the call, and nothing declares 
 An include doesn't hoist the file's contents to the top. Move the include above `main`.
 </details>
 
-### 29. Choosing which functions a header provides
+### 5. Choosing which functions a header provides
 
 Which function definitions remain in the `-E` output? Does the program compile?
 
@@ -776,21 +760,20 @@ int secondNumber()
 `main.cpp`:
 
 ```cpp
-#include <iostream>
 #define ENABLE_FIRST
 #include "first.h"
 #include "second.h"
 
 int main()
 {
-    std::cout << firstNumber() << std::endl;
+    [[maybe_unused]] int a = firstNumber();
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-Only `firstNumber` remains, and the program prints `7`.
+Only `firstNumber` remains. The program compiles, and `a` is initialized to `7`.
 When the preprocessor enters `first.h`, `ENABLE_FIRST` is already defined,
 so it keeps the function inside that `#ifdef`.
 `ENABLE_SECOND` is not defined, so it discards the function in `second.h`.
@@ -801,7 +784,7 @@ It only checks whether the macro exists.
 A macro defined before an include can therefore change what that header contributes.
 </details>
 
-### 29. Defining the macro after the include
+### 6. Defining the macro after the include
 
 Keep the same two headers, but replace `main.cpp` with this version.
 Which function definitions remain now?
@@ -809,14 +792,13 @@ Which function definitions remain now?
 `main.cpp`:
 
 ```cpp
-#include <iostream>
 #include "first.h"
 #define ENABLE_FIRST
 #include "second.h"
 
 int main()
 {
-    std::cout << firstNumber() << std::endl;
+    [[maybe_unused]] int a = firstNumber();
 }
 ```
 
@@ -831,7 +813,7 @@ Defining the macro afterwards does not make the preprocessor go back and reconsi
 The order matters: put a header's configuration defines before the include that uses them.
 </details>
 
-### 29. A macro defined in an earlier header
+### 7. A macro defined in an earlier header
 
 Replace the files with the versions below. There are no defines in `main.cpp` this time.
 Does the macro from `first.h` affect `second.h`?
@@ -861,21 +843,20 @@ int secondNumber()
 `main.cpp`:
 
 ```cpp
-#include <iostream>
 #include "first.h"
 #include "second.h"
 
 int main()
 {
-    std::cout << firstNumber() << std::endl;
-    std::cout << secondNumber() << std::endl;
+    [[maybe_unused]] int a = firstNumber();
+    [[maybe_unused]] int b = secondNumber();
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-Both functions remain, and the program prints `7` and `11`.
+Both functions remain. The program compiles, with `a` initialized to `7` and `b` to `11`.
 The preprocessor encounters `#define ENABLE_SECOND` while processing `first.h`.
 Finishing that header does not remove the macro: it stays defined when `second.h` is processed.
 It also stays defined in the rest of `main.cpp`, unless something removes it with `#undef`.
@@ -891,7 +872,7 @@ define the macro before including the header that checks it.
 An unrelated header can affect later includes too, so avoid generic macro names that might collide.
 </details>
 
-### 30. A standard C++ header
+### 8. A standard C++ header
 
 ```cpp
 #include <iostream>
@@ -910,7 +891,7 @@ Look at the `-E` output: this single include usually pulls in many other headers
 That doesn't mean all of that text turns into machine instructions in your program.
 </details>
 
-### 31. A C library facility, with its C++ header
+### 9. A C library facility, with its C++ header
 
 ```cpp
 #include <cstdio>
@@ -928,7 +909,7 @@ It prints `7`. `<cstdio>` is the C++ header for C-style input and output,
 and it puts `printf` in the `std` namespace.
 </details>
 
-### 32. The corresponding C header
+### 10. The corresponding C header
 
 ```cpp
 #include <stdio.h>
@@ -947,7 +928,7 @@ The C++ way to write this is `<cstdio>` with `std::printf`.
 Don't count on either header also making the name available in the other namespace.
 </details>
 
-### 33. Using the function without its header
+### 11. Using the function without its header
 
 ```cpp
 int main()
@@ -969,7 +950,7 @@ with no extra include-path environment variables or flags.
 The directories named below are ordinary project folders, not ones GCC treats as system
 include directories.
 
-### 34. A local file with angle brackets
+### 12. A local file with angle brackets
 
 `settings.h`:
 
@@ -998,7 +979,7 @@ for example with `-I .`.
 See [GCC's search-path rules][search].
 </details>
 
-### 35. A standard header with quotes
+### 13. A standard header with quotes
 
 ```cpp
 #include "iostream"
@@ -1018,9 +999,9 @@ paths, and then the paths used for angle brackets. That's why standard headers a
 Still, use angle brackets for standard headers, so a stray nearby file can't take their place.
 </details>
 
-### 36. Adding one include directory
+### 14. Adding one include directory
 
-Compile with `g++ -std=c++20 -I config main.cpp -o app`. What value is printed?
+Compile with `g++ -std=c++20 -I config main.cpp -o app`. What value initializes `a`?
 
 `config/settings.h`:
 
@@ -1032,23 +1013,22 @@ constexpr int number = 11;
 
 ```cpp
 #include <settings.h>
-#include <iostream>
 
 int main()
 {
-    std::cout << number << std::endl;
+    [[maybe_unused]] int a = number;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `11`. `-I config` adds the `config` directory to the header search path,
+`a` is initialized to `11`. `-I config` adds the `config` directory to the header search path,
 so the preprocessor finds `config/settings.h`.
 `number` stays a C++ variable name in the output, and its definition comes from that header.
 </details>
 
-### 37. Quotes: nearby file or include directory?
+### 15. Quotes: nearby file or include directory?
 
 Compile with `g++ -std=c++20 -I config main.cpp -o app`. Which header wins?
 
@@ -1068,23 +1048,22 @@ constexpr int number = 11;
 
 ```cpp
 #include "settings.h"
-#include <iostream>
 
 int main()
 {
-    std::cout << number << std::endl;
+    [[maybe_unused]] int a = number;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `7`, because the directory of `main.cpp` is searched before `-I config`.
-Change the include to `<settings.h>`, and the `config` copy wins, printing `11`.
+`a` is initialized to `7`, because the directory of `main.cpp` is searched before `-I config`.
+Change the include to `<settings.h>`, and the `config` copy wins: `a` is initialized to `11`.
 The angle-bracket form doesn't look at the nearby copy at all.
 </details>
 
-### 38. Two include directories
+### 16. Two include directories
 
 Compare `g++ -std=c++20 -I first -I second main.cpp -o app` with the reversed order.
 
@@ -1104,23 +1083,22 @@ constexpr int number = 22;
 
 ```cpp
 #include <settings.h>
-#include <iostream>
 
 int main()
 {
-    std::cout << number << std::endl;
+    [[maybe_unused]] int a = number;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-With `-I first -I second`, it prints `11`. Swap the flags and it prints `22`.
+With `-I first -I second`, `a` is initialized to `11`. Swap the flags and it is initialized to `22`.
 GCC searches the `-I` directories from left to right and stops at the first match.
 It doesn't merge the two headers just because they have the same name.
 </details>
 
-### 39. The file is absent from all search paths
+### 17. The file is absent from all search paths
 
 Run `g++ -std=c++20 -I config -E main.cpp`. Does `-E` succeed?
 
@@ -1148,7 +1126,7 @@ Preprocessing fails with a diagnostic such as `missing.h: No such file or direct
 Fix the include name, or put the missing header into one of the searched directories.
 </details>
 
-### 40. Removing the standard C++ include paths
+### 18. Removing the standard C++ include paths
 
 Run `g++ -std=c++20 -nostdinc++ -E main.cpp`. Where does it fail?
 
@@ -1170,7 +1148,7 @@ Some packaged compiler wrappers add their own paths; check `-v` if yours still f
 Don't confuse it with `-nostdinc`, which removes all the default system include directories.
 </details>
 
-### 41. Restoring the directories manually
+### 19. Restoring the directories manually
 
 Reuse the previous `main.cpp`. How can `-I` make preprocessing succeed again?
 
@@ -1203,7 +1181,7 @@ The exact layout depends on the installation, so don't copy version numbers from
 See [GCC's directory options][directories].
 </details>
 
-### 42. Using gcc instead of g++
+### 20. Using gcc instead of g++
 
 Reuse the program containing `<iostream>`. Compare:
 
