@@ -500,13 +500,12 @@ In C++, `#if` recognizes `false` and `true`; `#if 0` and `#if 1` also work.
 ### 22. A preprocessor condition
 
 ```cpp
-#include <iostream>
 int main()
 {
 #if 2 + 3 == 5
-    std::cout << "yes" << std::endl;
+    int a = 5;
 #else
-    std::cout << "no" << std::endl;
+    int a = 8;
 #endif
 }
 ```
@@ -514,22 +513,22 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `yes`. The preprocessor computes the condition itself and keeps only the first branch.
+The preprocessor keeps `int a = 5;` and discards `int a = 8;`.
+It computes the condition itself and keeps only the first branch.
 No `if` is left to run when the program starts.
 </details>
 
 ### 23. A condition based on a macro
 
 ```cpp
-#include <iostream>
 #define LEVEL 2
 
 int main()
 {
 #if LEVEL >= 2
-    std::cout << "details" << std::endl;
+    int a = 5;
 #else
-    std::cout << "brief" << std::endl;
+    int a = 8;
 #endif
 }
 ```
@@ -537,22 +536,22 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `details`. `LEVEL` expands to `2` before the condition is evaluated.
+The preprocessed code contains `int a = 5;`.
+`LEVEL` expands to `2` before the condition is evaluated.
 Change the definition to `1` and preprocess again, and the other branch is kept instead.
 </details>
 
 ### 24. A condition based on a constant variable
 
 ```cpp
-#include <iostream>
 constexpr int level = 2;
 
 int main()
 {
 #if level >= 2
-    std::cout << "details" << std::endl;
+    int a = 5;
 #else
-    std::cout << "brief" << std::endl;
+    int a = 8;
 #endif
 }
 ```
@@ -560,7 +559,8 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `brief`. The preprocessor can't see C++ variables, not even `constexpr` ones.
+The preprocessed code contains `int a = 8;`, even though `level` is `2`.
+The preprocessor can't see C++ variables, not even `constexpr` ones.
 Inside `#if`, any leftover identifier such as `level` counts as `0`, so the test is `0 >= 2`.
 Use a normal C++ `if` to test a C++ variable. GCC's `-Wundef` warns about mistakes like this.
 </details>
@@ -568,15 +568,14 @@ Use a normal C++ `if` to test a C++ variable. GCC's `-Wundef` warns about mistak
 ### 25. Checking whether a macro exists
 
 ```cpp
-#include <iostream>
 #define FEATURE 0
 
 int main()
 {
 #ifdef FEATURE
-    std::cout << "defined" << std::endl;
+    int a = 5;
 #else
-    std::cout << "missing" << std::endl;
+    int a = 8;
 #endif
 }
 ```
@@ -584,30 +583,32 @@ int main()
 <details>
 <summary>Answer</summary>
 
-It prints `defined`. `#ifdef FEATURE` only checks that the macro exists, not what its value is.
+The preprocessed code contains `int a = 5;`.
+`#ifdef FEATURE` only checks that the macro exists, not what its value is.
 It means the same as `#if defined(FEATURE)`. In contrast, `#if FEATURE` would test the `0`.
 </details>
 
 ### 26. Checking whether a macro is absent
 
 ```cpp
-#include <iostream>
 #ifndef LIMIT
 #define LIMIT 10
 #endif
 
 int main()
 {
-    std::cout << LIMIT << std::endl;
+    int a = LIMIT;
 }
 ```
 
 <details>
 <summary>Answer</summary>
 
-It prints `10`. `LIMIT` wasn't defined yet, so the definition inside is kept.
+The initialization becomes `int a = 10;`.
+`LIMIT` wasn't defined yet, so the definition inside is kept.
 `#ifndef LIMIT` means `#if !defined(LIMIT)`.
-Had `LIMIT` already been defined as `20`, this section would leave it alone and print `20`.
+Had `LIMIT` already been defined as `20`, this section would leave it alone,
+and the initialization would become `int a = 20;`.
 </details>
 
 ## 2. Includes
