@@ -48,3 +48,7 @@ such as type deduction, a compile error, naming, or syntax alone.
 `nix develop .#visualizations --command node visualizations/discover.mjs` lists the candidates and writes nothing.
 Read each candidate in the lesson, then tag the chosen ones with
 `--tag PATH:LINE`, in both `en/` and `ru/`.
+
+Add `--types` to both commands when the example teaches types:
+a conversion, a narrowing or widening cast, or a line that fails because the types don't match.
+Typed tags read `<!-- <visualization types> -->`; keep untyped ones where types are not the point.
