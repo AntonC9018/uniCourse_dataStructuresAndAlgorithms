@@ -17,6 +17,8 @@ slug: en/cpp/labs/advanced-practice
 - Naming things with `std::string_view`;
 - Changing objects through pointers and references, reading them through `const` references and `std::span`;
 - Writing small functions that return `bool` or a count, using `if` with guard clauses and `switch` on `enum`;
+- Function preconditions (`assert`), explained here;
+- Modeling the result of an operation and planning a mutation as values;
 - Looping over objects, counting empty places, finding the first empty place.
 
 ## Tools you'll need
@@ -40,6 +42,165 @@ slug: en/cpp/labs/advanced-practice
   slot.reset();
   ```
 
+## Preconditions and results
+
+A **precondition** is something that must already be true when a function is called.
+For example, a function that updates an array element needs the index of an existing element.
+Passing an out-of-range index is a mistake in the calling code.
+Use `assert` to catch that mistake.
+
+An **ordinary result** can be a failure even when the calling code is correct.
+A booking can fail because all tickets have been sold, but that's just a normal behavior of the program.
+Return that result so the caller can respond to it.
+
+### Example: Saving a player's score
+
+A game stores three players' scores at indices 0, 1, and 2.
+`record_score` updates an existing player's score:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <cstddef>
+
+void record_score(std::array<int, 3>& scores, std::size_t playerIndex, int score)
+{
+    assert(playerIndex < scores.size());
+    scores[playerIndex] = score;
+}
+```
+
+<details>
+<summary>What happens if the game calls <code>record_score(scores, 3, 10)</code>?</summary>
+
+There is no player at index 3, so `assert` fails.
+The calling code confused player number 3 with index 2.
+Returning `false` instead would let the game ignore the failed update and continue
+with the old score. The mistake might only become visible when it announces the wrong winner.
+The index needs fixing in the calling code; a failed score update is not a normal game outcome.
+
+</details>
+
+> Assertions are a debugging tool: with `NDEBUG` defined, they are compiled out.
+> The calling code must still pass valid arguments.
+> An assertion never replaces validation of user input.
+
+### Example: Booking a cinema ticket
+
+A cinema can sell out. `book_ticket` reports whether it reserved a ticket:
+
+```cpp
+#include <cassert>
+
+bool book_ticket(int& ticketsLeft)
+{
+    assert(ticketsLeft >= 0);
+    if (ticketsLeft == 0)
+    {
+        return false;
+    }
+    ticketsLeft--;
+    return true;
+}
+```
+
+A negative number of remaining tickets would be a bug, which `assert` checks for here.
+Zero tickets left is still valid - that just means the cinema has sold out.
+
+<details>
+<summary>There is one ticket left. What happens when two customers book in turn?</summary>
+
+The first call changes `ticketsLeft` from 1 to 0 and returns `true`.
+The second leaves it at 0 and returns `false`.
+The caller can display "sold out" or offer another screening.
+Replacing the `if` with `assert(ticketsLeft > 0)` would stop a working program
+just because the last ticket had been sold.
+
+</details>
+
+Other checks that should **not** be assertions:
+
+- A login form receives the wrong password.
+  `assert(enteredPassword == savedPassword)` would stop the program on a normal failed login.
+  The program should report that the password did not match and let the user try again.
+- A search for student `"Mira"` finds nobody.
+  `assert(found != nullptr)` would treat an ordinary absence as a programming error.
+  Return `nullptr` and let the caller display "student not found".
+- An age field receives `-5` from a user.
+  `assert(age >= 0)` would stop the program instead of handling invalid input.
+  Report the invalid age and ask for another value before using it.
+
+### Example: `take_out` and `try_take_out`
+
+The same action can have two functions with different expectations:
+
+- `try_operation` is the soft version: it allows an ordinary failure and returns a result to check.
+- `operation` is the hard version: the action must be possible. A missing prerequisite is a bug,
+  caught with `assert`.
+
+A microwave holds one meal or is empty.
+Use `take_out` when the calling code already knows there is a meal inside.
+It returns the meal and empties the microwave; calling it on an empty microwave is a bug.
+Use `try_take_out` when an empty microwave is expected and should be handled normally.
+It returns `std::optional<Meal>`: a meal on success, or `std::nullopt` if there is nothing to take.
+
+```cpp
+#include <cassert>
+#include <optional>
+#include <string_view>
+
+struct Meal
+{
+    std::string_view name;
+};
+
+struct Microwave
+{
+    std::optional<Meal> meal;
+};
+
+Meal take_out(Microwave& microwave)
+{
+    assert(microwave.meal.has_value());
+    Meal meal{ *microwave.meal };
+    microwave.meal.reset();
+    return meal;
+}
+
+std::optional<Meal> try_take_out(Microwave& microwave)
+{
+    if (!microwave.meal.has_value())
+    {
+        return std::nullopt;
+    }
+    return take_out(microwave);
+}
+```
+
+`try_take_out` checks for an empty microwave before calling `take_out`.
+Both functions remove a meal when one is present; only the empty case is different.
+
+```cpp
+Microwave microwave{ .meal = Meal{ .name = "soup" } };
+Meal soup{ take_out(microwave) };
+std::optional<Meal> second{ try_take_out(microwave) };
+```
+
+<details>
+<summary>What do the calls return? What if the second call used <code>take_out</code>?</summary>
+
+`take_out` returns the soup and leaves the microwave empty.
+`try_take_out` then returns `std::nullopt`, leaving it empty.
+The caller can check `second.has_value()` and decide to cook something else.
+A second `take_out` would fail its assertion: the calling code tried to remove a meal
+without ensuring that one was present.
+
+</details>
+
+Choose the function whose expectations match the calling code.
+Do not call `take_out` just to check whether there is a meal inside;
+that is what `try_take_out` is for.
+
 ## Practice tasks
 
 - **Bookshelf.** A shelf holds 5 books. Each book has a title.
@@ -55,7 +216,7 @@ slug: en/cpp/labs/advanced-practice
 
   A shelf slot either holds a book or is empty, so the slot type is
   `std::optional<Book>` — an empty shelf is `std::nullopt`.
-  The structs themselves are just grouping, as in the previous lab:
+  The structs group each book's title and the shelf's slots:
 
   ```cpp
   #include <array>
@@ -74,22 +235,21 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Say slots 0 and 3 hold books and the rest are empty.
-  Putting the Atlas at slot 2 has to pass two checks:
-  2 is inside the array, slot 2 has no value —
-  only then store the book and report success.
-  The shelf itself is not checked: the function expects it to never be null.
-  At slot 0 the last check fails, so refuse with `false` and touch nothing:
+  Putting the Atlas at slot 2 checks two things.
+  The caller must choose an index inside the array.
+  `assert` catches an index such as 5: there is no such slot on this shelf.
+  Slot 2 must have no value — that is ordinary data,
+  so an occupied slot is reported with `false`.
+  The shelf pointer must point at a shelf; `assert` also catches a missing shelf.
+  At slot 0 the slot is occupied, so the book is refused and nothing changes:
 
   ```cpp
   #include <cassert>
 
   bool shelve_book(Bookshelf* shelf, size_t index, Book book)
   {
-      assert(shelf != nullptr); // shelve_book expects shelf to never be null
-      if (index >= shelf->slots.size())
-      {
-          return false;
-      }
+      assert(shelf != nullptr);            // shelve_book expects shelf to never be null
+      assert(index < shelf->slots.size()); // and index to be inside the shelf
       if (shelf->slots[index].has_value())
       {
           return false;
@@ -100,18 +260,16 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   A reference cannot be null, so taking the shelf by `&` instead of by `*`
-  enforces that it is never null. The rest of the examples use references for this reason.
+  enforces that it is never null.
 
-  Taking a book is mirrored: slot 0 has a book, so clear it with `reset()`
-  and return `true`; an empty slot refuses:
+  Taking a book also requires an existing slot, so `assert` checks the index;
+  slot 0 has a book, so clear it with `reset()` and return `true`;
+  an empty slot is ordinary data, so it refuses:
 
   ```cpp
   bool take_book(Bookshelf& shelf, size_t index)
   {
-      if (index >= shelf.slots.size())
-      {
-          return false;
-      }
+      assert(index < shelf.slots.size());
       if (!shelf.slots[index].has_value())
       {
           return false;
@@ -165,6 +323,7 @@ slug: en/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <string_view>
 
@@ -185,26 +344,21 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Say fridge shelf 1 holds the pizza and freezer shelf 0 is empty.
-  Moving it goes down the checks:
-  both indices are inside,
-  the source has food, the target is free.
+  The caller must choose existing shelves in both containers.
+  The two assertions catch an index that points outside either array.
+  The source holding food and the target being free are ordinary data,
+  so those checks return `false`.
   Then two steps: copy the food into freezer shelf 0,
   clear fridge shelf 1 with `reset()`.
   From then on the pizza lives in exactly one place —
   that is the whole ownership idea.
-  Any failed check returns `false` and nothing is touched:
+  A failed data check returns `false` and nothing is touched:
 
   ```cpp
   bool move_food(Fridge& from, size_t fromIndex, Freezer& to, size_t toIndex)
   {
-      if (fromIndex >= from.shelves.size())
-      {
-          return false;
-      }
-      if (toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(fromIndex < from.shelves.size());
+      assert(toIndex < to.shelves.size());
       if (!from.shelves[fromIndex].has_value())
       {
           return false;
@@ -336,6 +490,8 @@ slug: en/cpp/labs/advanced-practice
   Hero and potion are plain grouping:
 
   ```cpp
+  #include <cassert>
+
   enum class PotionKind
   {
       Red,
@@ -355,12 +511,13 @@ slug: en/cpp/labs/advanced-practice
   };
   ```
 
-  Walk through a red potion on a hero with 50 health and 0 shield:
-  the `switch` sees `Red`, adds 20 health,
-  and returns `true` — the hero is now at 70.
+  A red potion raises the hero's health from 50 to 70:
+  the `Red` branch adds 20 and returns `true`.
   A blue potion would take the next branch and add 10 shield instead.
   A spoiled potion takes the last branch and returns `false`
-  without touching the hero:
+  without touching the hero.
+  Every `PotionKind` is handled, so falling out of the `switch`
+  means the value is corrupt — the assert catches it:
 
   ```cpp
   bool drink_potion(Hero& hero, Potion potion)
@@ -376,7 +533,8 @@ slug: en/cpp/labs/advanced-practice
           case PotionKind::Spoiled:
               return false;
       }
-      return false;
+      assert(false); // every PotionKind is handled above
+      return false;  // unreachable
   }
   ```
 
@@ -551,6 +709,7 @@ slug: en/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <span>
   #include <string_view>
@@ -579,24 +738,28 @@ slug: en/cpp/labs/advanced-practice
 
   Say fridge shelf 1 holds the pizza and freezer shelf 1 is free.
   The caller packs `"pizza"` and `1` into a `FoodMove`.
+  The function does not need the whole fridge, only a view of its shelves,
+  so it accepts a `std::span` of them. The same function can move food
+  out of any contiguous shelf array, not just this fridge.
+  The target index must name an existing freezer shelf; `assert` checks that.
+  An occupied target shelf is an ordinary result, reported with `false`.
   The `span` borrows each shelf slot in turn: slot 0 has no pizza, so skip it;
   slot 1 has the pizza, so copy it into the freezer and clear the old slot,
   then report success with `true`.
   If no slot holds a food with that name, report `false` and touch nothing:
 
   ```cpp
-  bool move_food(Fridge& fridge, Freezer& to, FoodMove move)
+  bool move_food(
+      std::span<std::optional<Food>> shelves,
+      Freezer& to,
+      FoodMove move)
   {
-      if (move.toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(move.toIndex < to.shelves.size());
       if (to.shelves[move.toIndex].has_value())
       {
           return false;
       }
-      std::span<std::optional<Food>> shelf{ fridge.shelves };
-      for (auto& slot : shelf)
+      for (auto& slot : shelves)
       {
           if (!slot.has_value())
           {
@@ -624,7 +787,7 @@ slug: en/cpp/labs/advanced-practice
       .name = "pizza",
   };
   Freezer freezer{};
-  bool moved{ move_food(fridge, freezer, FoodMove{
+  bool moved{ move_food(fridge.shelves, freezer, FoodMove{
       .name = "pizza",
       .toIndex = 1,
   }) };
@@ -794,7 +957,10 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
 
-  Whether the client is done is its own function too:
+  `cut_one_minute` needs a non-null pointer and a positive number of minutes left.
+  Its assertions catch a missing duration or an attempt to cut after the haircut is finished.
+  `tick_worker` allows zero minutes: that client is already done.
+  A negative duration is a bug, caught before it can leave the worker busy forever:
 
   ```cpp
   void cut_one_minute(MinutesLeft* minutes)
@@ -823,6 +989,7 @@ slug: en/cpp/labs/advanced-practice
       {
           return TickResult::Unassigned;
       }
+      assert(client->hairCompletion.value >= 0); // a negative haircut would never finish
       if (client->hairCompletion.value > 0)
       {
           cut_one_minute(&client->hairCompletion);
@@ -981,10 +1148,15 @@ slug: en/cpp/labs/advanced-practice
   The generator loops while driving is left.
   First it looks for a driver whose rest has run out.
   Such a driver takes one leg — up to their limit, or the rest of the trip —
-  and then owes rest for what they drove.
+  while everyone else's rest shrinks by the same hours.
+  Then the driver owes rest for what they drove.
   If nobody is ready, the truck idles until the first driver's rest runs out,
   which is the shortest outstanding rest; that much time is subtracted from every driver.
-  Each step writes exactly one event:
+  Each step writes exactly one event.
+  The assertions require at least one driver, a nonnegative trip duration and rest ratio,
+  a positive driving limit, and room for each event.
+  A zero driving limit would prevent the trip from progressing.
+  If nobody is ready, the shortest remaining rest must be positive:
 
   ```cpp
   // Writes the trip's events into events, returns how many were written.
@@ -993,6 +1165,13 @@ slug: en/cpp/labs/advanced-practice
       double tripHours,
       std::span<Event> events)
   {
+      assert(!drivers.empty()); // the truck always has at least one driver
+      assert(tripHours >= 0.0); // a trip cannot take negative time
+      for (const Driver& driver : drivers)
+      {
+          assert(driver.maxDriveHours > 0.0); // a driver who cannot drive stalls the trip
+          assert(driver.restPerDriveHour >= 0.0);
+      }
       size_t count{ 0 };
       while (tripHours > 0.0)
       {
@@ -1015,6 +1194,20 @@ slug: en/cpp/labs/advanced-practice
                   hours = tripHours;
               }
               tripHours -= hours;
+
+              // Everyone else rests while this driver is on the road.
+              for (Driver& other : drivers)
+              {
+                  if (&other == &driver || other.restLeft <= 0.0)
+                  {
+                      continue;
+                  }
+                  other.restLeft -= hours;
+                  if (other.restLeft < 0.0)
+                  {
+                      other.restLeft = 0.0;
+                  }
+              }
               driver.restLeft = driver.restPerDriveHour * hours;
 
               assert(count < events.size());
@@ -1032,6 +1225,7 @@ slug: en/cpp/labs/advanced-practice
                   idleHours = driver.restLeft;
               }
           }
+          assert(idleHours > 0.0); // otherwise some driver would be ready
           for (Driver& driver : drivers)
           {
               driver.restLeft -= idleHours;
@@ -1058,6 +1252,9 @@ slug: en/cpp/labs/advanced-practice
           case EventKind::Idle:
               std::cout << "truck idle for " << event.hours << " h" << std::endl;
               break;
+          default:
+              assert(false); // every EventKind is handled above
+              break;
       }
   }
   ```
@@ -1081,16 +1278,16 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
 
-  alice drives her 4-hour limit and owes 2 hours of rest, bob drives 3 and owes 3,
-  cid drives 2 and owes 4; then every driver rests, so the truck idles
-  for the shortest rest, 2 hours. alice drives the remaining 3 hours:
+  alice drives her 4-hour limit and now owes 2 hours of rest.
+  bob drives his 3-hour limit, which covers alice's 2 hours,
+  so she is ready again. alice drives 4 more hours while bob rests,
+  and bob drives the last hour. Nobody ever waits for the whole crew:
 
   ```text
   alice drove 4 h
   bob drove 3 h
-  cid drove 2 h
-  truck idle for 2 h
-  alice drove 3 h
+  alice drove 4 h
+  bob drove 1 h
   ```
   </details>
 
@@ -1122,7 +1319,9 @@ slug: en/cpp/labs/advanced-practice
 
   Bit `i` means "hugged member `i`".
   Your own bit is never set, so a fully hugged person has 4 bits out of 5.
-  Same ten pairs as before — only the storage changes:
+  `hug` needs two different members with indices from 0 to 4;
+  its assertions catch a nonexistent member or an attempt to hug oneself.
+  Hugging the same pair again is allowed: it returns `false` and changes nothing.
 
   ```cpp
   #include <array>
@@ -1164,7 +1363,8 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
 
-  Usage from `main`:
+  The final `assert` checks that the loop has covered every pair.
+
   ```cpp
   int main()
   {
@@ -1186,3 +1386,286 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
   </details>
+
+## Modeling operation results
+
+A `bool` says only whether the operation worked.
+Often the caller needs to know *what* happened:
+which snack was bought, how much change is left, why the machine refused.
+Model the result as its own type and let the print react to it.
+
+A vending machine has slots with a snack and a price:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <optional>
+#include <string_view>
+
+enum class Snack
+{
+    Chips,
+    Chocolate,
+    Water,
+};
+
+std::string_view snack_name(Snack snack)
+{
+    switch (snack)
+    {
+        case Snack::Chips:
+            return "chips";
+        case Snack::Chocolate:
+            return "chocolate";
+        case Snack::Water:
+            return "water";
+    }
+    assert(false); // every Snack is handled above
+    return {};
+}
+
+struct VendingSlot
+{
+    std::optional<Snack> snack;
+    int price;
+};
+
+struct VendingMachine
+{
+    std::array<VendingSlot, 3> slots;
+};
+```
+
+Buying reports one of several outcomes.
+The slot index and the coin count come from the customer,
+so the function reports bad selections and payments as results.
+A bad price is a mistake in the machine setup, so it is checked with `assert`:
+a slot must have a positive price.
+The success payload is its own struct,
+so the result cannot carry half of a purchase:
+
+```cpp
+enum class PurchaseStatus
+{
+    Bought,
+    InvalidSelection,
+    InvalidPayment,
+    EmptySlot,
+    NotEnoughCoins,
+};
+
+struct BoughtSnack
+{
+    Snack snack;
+    int change;
+};
+
+struct Purchase
+{
+    PurchaseStatus status;
+    std::optional<BoughtSnack> bought{ std::nullopt }; // set exactly when status is Bought
+};
+
+Purchase buy_snack(VendingMachine& machine, size_t slotIndex, int coins)
+{
+    if (slotIndex >= machine.slots.size())
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidSelection };
+    }
+    if (coins < 0)
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidPayment };
+    }
+
+    VendingSlot& slot{ machine.slots[slotIndex] };
+    assert(slot.price > 0); // every slot must have a positive price
+    if (!slot.snack.has_value())
+    {
+        return Purchase{ .status = PurchaseStatus::EmptySlot };
+    }
+    if (coins < slot.price)
+    {
+        return Purchase{ .status = PurchaseStatus::NotEnoughCoins };
+    }
+
+    Purchase purchase{
+        .status = PurchaseStatus::Bought,
+        .bought = BoughtSnack{ .snack = *slot.snack, .change = coins - slot.price },
+    };
+    slot.snack.reset(); // the machine changes only after the purchase succeeds
+    return purchase;
+}
+```
+
+Printing switches on the purchase status.
+A successful purchase must carry its snack and change; a failed one must not.
+The first assertion catches a result assembled incorrectly.
+The `default` assertion catches an unknown status instead of silently printing nothing:
+
+```cpp
+void print_purchase(const Purchase& purchase)
+{
+    // The payload is present exactly when the purchase succeeded.
+    assert(purchase.bought.has_value() == (purchase.status == PurchaseStatus::Bought));
+    switch (purchase.status)
+    {
+        case PurchaseStatus::Bought:
+            std::cout << "bought " << snack_name(purchase.bought->snack)
+                      << ", change " << purchase.bought->change << std::endl;
+            break;
+        case PurchaseStatus::InvalidSelection:
+            std::cout << "no such slot" << std::endl;
+            break;
+        case PurchaseStatus::InvalidPayment:
+            std::cout << "the payment is invalid" << std::endl;
+            break;
+        case PurchaseStatus::EmptySlot:
+            std::cout << "the slot is empty" << std::endl;
+            break;
+        case PurchaseStatus::NotEnoughCoins:
+            std::cout << "not enough coins" << std::endl;
+            break;
+        default:
+            assert(false); // every PurchaseStatus is handled above
+            break;
+    }
+}
+```
+
+Usage from `main`:
+
+```cpp
+VendingMachine machine{
+    .slots = {
+        VendingSlot{ .snack = Snack::Chips, .price = 3 },
+        VendingSlot{ .snack = std::nullopt, .price = 2 },
+        VendingSlot{ .snack = Snack::Water, .price = 2 },
+    },
+};
+
+print_purchase(buy_snack(machine, 9, 5)); // no such slot
+print_purchase(buy_snack(machine, 0, 5)); // bought chips, change 2
+print_purchase(buy_snack(machine, 0, 5)); // the slot is empty
+print_purchase(buy_snack(machine, 2, 1)); // not enough coins
+```
+
+The second call is the only one that changes the machine.
+The other three leave every slot exactly as it was.
+
+## Planning a mutation as a value
+
+Another way to separate responsibilities is to make the change itself a value.
+One function reads the current state and computes the change;
+another prints what is about to happen;
+a third applies the change.
+The state is touched in one place, and the plan can be inspected before it is applied.
+
+A garage repaints cars. The plan records which car, the new paint,
+the estimated hours, and the price; computing it does not change anything.
+Planning requires an existing car and recognized current and new paint values.
+Applying checks the index and new paint again, because it can receive a separately built plan.
+These assertions prevent an invalid paint from being stored even if the plan is never printed:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <span>
+#include <string_view>
+
+enum class Paint
+{
+    Red,
+    Blue,
+    Green,
+};
+
+std::string_view paint_name(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+            return "red";
+        case Paint::Blue:
+            return "blue";
+        case Paint::Green:
+            return "green";
+    }
+    assert(false); // every Paint is handled above
+    return {};
+}
+
+bool is_known_paint(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+        case Paint::Blue:
+        case Paint::Green:
+            return true;
+    }
+    return false;
+}
+
+struct Car
+{
+    std::string_view model;
+    Paint paint;
+};
+
+struct Repaint
+{
+    size_t carIndex;
+    Paint newPaint;
+    int hours;
+    int price;
+};
+
+Repaint plan_repaint(std::span<const Car> cars, size_t carIndex, Paint newPaint)
+{
+    assert(carIndex < cars.size());   // the plan must point at an existing car
+    assert(is_known_paint(newPaint)); // the plan must name a real paint
+    const Car& car{ cars[carIndex] };
+    assert(is_known_paint(car.paint)); // the car's current paint must be real
+    int hours{ car.paint == newPaint ? 1 : 3 };
+    return Repaint{
+        .carIndex = carIndex,
+        .newPaint = newPaint,
+        .hours = hours,
+        .price = hours * 1000,
+    };
+}
+
+void print_repaint(const Repaint& repaint)
+{
+    std::cout << "car " << repaint.carIndex << " will be repainted "
+              << paint_name(repaint.newPaint) << " in " << repaint.hours
+              << " h for " << repaint.price << std::endl;
+}
+
+void apply_repaint(std::span<Car> cars, const Repaint& repaint)
+{
+    assert(repaint.carIndex < cars.size()); // the plan must point at an existing car
+    assert(is_known_paint(repaint.newPaint)); // the plan must name a real paint
+    cars[repaint.carIndex].paint = repaint.newPaint;
+}
+```
+
+Usage from `main`: the plan is printed before it is applied,
+so the output shows exactly what is about to happen:
+
+```cpp
+std::array<Car, 3> cars{
+    Car{ .model = "Supra", .paint = Paint::Red },
+    Car{ .model = "Civic", .paint = Paint::Green },
+    Car{ .model = "Miata", .paint = Paint::Red },
+};
+
+Repaint repaint{ plan_repaint(cars, 0, Paint::Blue) };
+print_repaint(repaint);
+apply_repaint(cars, repaint);
+```
+
+The functions accept a `span`, so they work the same on a vector or a plain array.
+The plan stores only an index, which identifies the car in that same collection.
