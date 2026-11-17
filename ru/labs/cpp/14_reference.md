@@ -731,6 +731,17 @@ std::cout << arr[0] << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#1-ссылка-на-массив)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Здесь иллюстрируется создание ссылки на объект типа С++ массива.
@@ -743,6 +754,17 @@ std::array<int, 2> arr{ 1, 2 };
 int& a = arr[0];
 a = 3;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#2-ссылка-на-элемент-массива)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>

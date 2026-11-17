@@ -33,6 +33,17 @@ std::cout << arr[1] << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#1-получение-адреса-первого-элемента)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 `arr.data()` возвращает указатель на первый элемент, как и `&arr[0]`.
@@ -63,6 +74,17 @@ arr = other;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#3-инициализация-c-массивов-1)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Тут каждый элемент копириуется из `other` в `arr`.
@@ -73,6 +95,17 @@ arr = other;
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2> other{ arr };
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#4-инициализация-c-массивов-2)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -88,6 +121,17 @@ std::array<int, 2>* p{ &arr };
 std::cout << arr[0] << std::endl;
 std::cout << arr[1] << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#5-адрес-массива)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -110,6 +154,17 @@ std::cout << arr[1] << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#6-dereference-адреса-массива)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 `p` указывает на переменную типа `std::array<int, 2>`, а выражение `*p` даёт значение
@@ -127,6 +182,17 @@ std::array<int, 2>* p{ &arr };
 std::cout << arr[0] << std::endl;
 std::cout << arr[1] << std::endl;
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#7-индексирование-элементов-из-адреса)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -149,6 +215,17 @@ arr[0][0] = 7;
 arr[2][1] = 8;
 arr[1] = { 9, 10 };
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#8-матрицы-двумерные-массивы)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ</summary>
@@ -220,6 +297,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#1-поле-массива-из-адресов)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Строчка `A a { .f = { &var1, &var2 } };` инициализирует `a`,
@@ -286,6 +374,17 @@ int main()
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#3-инициализация-поля-массива)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ:</summary>
 
 Выведется `1`, `2`.
@@ -314,6 +413,17 @@ int main()
     std::cout << a.arr[1] << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#4-копирование-структуры-с-полем-массивом)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>
@@ -362,6 +472,17 @@ int main()
     std::cout << arr[2].f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#5-массив-структур)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Ответ:</summary>

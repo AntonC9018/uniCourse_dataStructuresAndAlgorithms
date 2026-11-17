@@ -33,6 +33,17 @@ std::cout << arr[1] << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#1-obtaining-the-address-of-the-first-element)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `arr.data()` returns a pointer to the first element, like `&arr[0]`.
@@ -63,6 +74,17 @@ arr = other;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#3-initializing-c-arrays-1)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 Here, each element is copied from `other` into `arr`.
@@ -73,6 +95,17 @@ Here, each element is copied from `other` into `arr`.
 std::array<int, 2> arr{ 1, 2 };
 std::array<int, 2> other{ arr };
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#4-initializing-c-arrays-2)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -88,6 +121,17 @@ std::array<int, 2>* p{ &arr };
 std::cout << arr[0] << std::endl;
 std::cout << arr[1] << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#5-address-of-an-array)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -110,6 +154,17 @@ std::cout << arr[1] << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#6-dereferencing-an-array-address)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `p` points to a variable of type `std::array<int, 2>`, and the expression `*p` gives a value
@@ -127,6 +182,17 @@ std::array<int, 2>* p{ &arr };
 std::cout << arr[0] << std::endl;
 std::cout << arr[1] << std::endl;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#7-indexing-elements-through-an-address)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -149,6 +215,17 @@ arr[0][0] = 7;
 arr[2][1] = 8;
 arr[1] = { 9, 10 };
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#8-matrices-two-dimensional-arrays)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>
@@ -220,6 +297,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#1-an-array-field-of-addresses)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 The line `A a { .f = { &var1, &var2 } };` initializes `a`,
@@ -286,6 +374,17 @@ int main()
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#3-initializing-an-array-field)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer:</summary>
 
 It prints `1`, `2`.
@@ -314,6 +413,17 @@ int main()
     std::cout << a.arr[1] << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#4-copying-a-structure-with-an-array-field)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
@@ -361,6 +471,17 @@ int main()
     std::cout << arr[2].f2 << std::endl;
 }
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#5-an-array-of-structures)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer:</summary>
