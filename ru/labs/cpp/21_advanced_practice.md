@@ -47,10 +47,14 @@ slug: ru/cpp/labs/advanced-practice
 Операция может не удаться по двум совершенно разным причинам.
 
 **Нарушенное предусловие** означает, что вызывающий код нарушил контракт:
-индекс за пределами массива, `nullptr` там, где его быть не может,
+индекс за пределами массива, когда контракт требует допустимый индекс,
+`nullptr` там, где его быть не может,
 значение `enum`, которое не обрабатывает ни одна ветка.
 В программе ошибка, поэтому осмысленного значения для возврата нет.
 `assert` останавливает программу ровно там, где произошла ошибка.
+`assert` — инструмент отладки: если определён `NDEBUG`, проверки не компилируются.
+Обязательства вызывающего кода никуда не исчезают,
+и `assert` никогда не заменяет проверку пользовательского ввода.
 
 **Обычный результат** означает, что данные говорят «нет»:
 слот уже занят, очередь полна, пиццы нет в холодильнике.
@@ -59,14 +63,21 @@ slug: ru/cpp/labs/advanced-practice
 
 Не превращайте нарушенное предусловие в возвращённый `false`.
 Вызывающий код, который проигнорирует результат, продолжит работать
-с некорректным состоянием, и ошибка уедет дальше от своего источника.
+с некорректным состоянием, и ошибка проявится дальше от своего источника.
 Не проверяйте через `assert` и обычные данные: занятая полка — не ошибка.
+
+При проектировании функции решают, к какой категории относится проверка.
+Функции книжной полки ниже требуют допустимого индекса,
+поэтому неверный индекс — нарушенный контракт.
+Торговый автомат ниже принимает любой выбор покупателя,
+поэтому неверный выбор — обычные данные, о которых он сообщает.
 
 | Ситуация | Вид | Реакция |
 | --- | --- | --- |
-| индекс за пределами массива | нарушенное предусловие | `assert` |
+| индекс вне массива, когда контракт требует допустимый индекс | нарушенное предусловие | `assert` |
 | `nullptr` там, где он недопустим | нарушенное предусловие | `assert` |
 | значение `enum` без подходящей ветки | нарушенное предусловие | `assert` |
+| неверный выбор, который функция обязана проверить | обычный результат | вернуть его |
 | слот уже занят | обычный результат | вернуть его |
 | очередь полна | обычный результат | вернуть его |
 | элемент не найден | обычный результат | вернуть его |
@@ -854,6 +865,7 @@ slug: ru/cpp/labs/advanced-practice
       {
           return TickResult::Unassigned;
       }
+      assert(client->hairCompletion.value >= 0); // длительность стрижки не может быть отрицательной
       if (client->hairCompletion.value > 0)
       {
           cut_one_minute(&client->hairCompletion);
@@ -1013,7 +1025,8 @@ slug: ru/cpp/labs/advanced-practice
   Генератор работает, пока не закончится рейс.
   Сначала он ищет водителя, у которого отдых уже закончился.
   Такой водитель проезжает один отрезок пути — до своего лимита или до конца рейса —
-  а затем должен отдохнуть столько, сколько ему положено за часы езды.
+  а отдых всех остальных за эти часы сокращается.
+  Затем водитель должен отдохнуть столько, сколько ему положено за часы езды.
   Если никто не готов, грузовик простаивает, пока не закончится самый короткий
   оставшийся отдых; это время вычитается из остатка отдыха у всех водителей.
   Каждый шаг записывает ровно одно событие:
@@ -1054,6 +1067,20 @@ slug: ru/cpp/labs/advanced-practice
                   hours = tripHours;
               }
               tripHours -= hours;
+
+              // Пока один водитель едет, остальные отдыхают.
+              for (Driver& other : drivers)
+              {
+                  if (&other == &driver || other.restLeft <= 0.0)
+                  {
+                      continue;
+                  }
+                  other.restLeft -= hours;
+                  if (other.restLeft < 0.0)
+                  {
+                      other.restLeft = 0.0;
+                  }
+              }
               driver.restLeft = driver.restPerDriveHour * hours;
 
               assert(count < events.size());
@@ -1098,6 +1125,9 @@ slug: ru/cpp/labs/advanced-practice
           case EventKind::Idle:
               std::cout << "truck idle for " << event.hours << " h" << std::endl;
               break;
+          default:
+              assert(false); // все значения EventKind обработаны выше
+              break;
       }
   }
   ```
@@ -1121,19 +1151,16 @@ slug: ru/cpp/labs/advanced-practice
   }
   ```
 
-  Первой едет alice: она проезжает свои 4 часа, и ей положено
-  2 часа отдыха.
-  Затем едет bob: 3 часа езды и 3 часа отдыха, потом cid: 2 часа езды и 4 часа отдыха.
-  Теперь отдыхают все, поэтому грузовик простаивает 2 часа — столько длится самый
-  короткий отдых.
-  Оставшиеся 3 часа проезжает alice:
+  alice проезжает свои 4 часа, затем ей положено 2 часа отдыха.
+  bob едет 3 часа — за это время alice успевает отдохнуть и снова готова ехать.
+  alice проезжает ещё 4 часа, пока bob отдыхает, а последний час едет bob.
+  Грузовику не приходится простаивать:
 
   ```text
   alice drove 4 h
   bob drove 3 h
-  cid drove 2 h
-  truck idle for 2 h
-  alice drove 3 h
+  alice drove 4 h
+  bob drove 1 h
   ```
   </details>
 
@@ -1346,10 +1373,11 @@ Purchase buy_snack(VendingMachine& machine, size_t slotIndex, int coins)
 ```cpp
 void print_purchase(const Purchase& purchase)
 {
+    // Данные о покупке есть тогда и только тогда, когда она успешна.
+    assert(purchase.bought.has_value() == (purchase.status == PurchaseStatus::Bought));
     switch (purchase.status)
     {
         case PurchaseStatus::Bought:
-            assert(purchase.bought.has_value()); // у Bought всегда есть снек
             std::cout << "bought " << snack_name(purchase.bought->snack)
                       << ", change " << purchase.bought->change << std::endl;
             break;
@@ -1364,6 +1392,9 @@ void print_purchase(const Purchase& purchase)
             break;
         case PurchaseStatus::NotEnoughCoins:
             std::cout << "not enough coins" << std::endl;
+            break;
+        default:
+            assert(false); // все значения PurchaseStatus обработаны выше
             break;
     }
 }
@@ -1387,7 +1418,7 @@ print_purchase(buy_snack(machine, 2, 1)); // not enough coins
 ```
 
 Второй вызов — единственный, который меняет автомат.
-Остальные два оставляют все слоты точно такими, какими они были.
+Остальные три оставляют все слоты точно такими, какими они были.
 
 ## Планирование мутации как значения
 
@@ -1429,6 +1460,18 @@ std::string_view paint_name(Paint paint)
     return {};
 }
 
+bool is_known_paint(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+        case Paint::Blue:
+        case Paint::Green:
+            return true;
+    }
+    return false;
+}
+
 struct Car
 {
     std::string_view model;
@@ -1445,8 +1488,10 @@ struct Repaint
 
 Repaint plan_repaint(std::span<const Car> cars, size_t carIndex, Paint newPaint)
 {
-    assert(carIndex < cars.size()); // план должен указывать на существующую машину
+    assert(carIndex < cars.size());   // план должен указывать на существующую машину
+    assert(is_known_paint(newPaint)); // новый цвет должен быть допустимым значением Paint
     const Car& car{ cars[carIndex] };
+    assert(is_known_paint(car.paint)); // текущий цвет должен быть допустимым значением Paint
     int hours{ car.paint == newPaint ? 1 : 3 };
     return Repaint{
         .carIndex = carIndex,
@@ -1466,6 +1511,7 @@ void print_repaint(const Repaint& repaint)
 void apply_repaint(std::span<Car> cars, const Repaint& repaint)
 {
     assert(repaint.carIndex < cars.size()); // план должен указывать на существующую машину
+    assert(is_known_paint(repaint.newPaint)); // новый цвет должен быть допустимым значением Paint
     cars[repaint.carIndex].paint = repaint.newPaint;
 }
 ```
@@ -1485,6 +1531,6 @@ print_repaint(repaint);
 apply_repaint(cars, repaint);
 ```
 
-План не зависит от того, как хранится массив машин:
-он заимствует `span`, поэтому те же функции работают
+Функции принимают `span`, поэтому одинаково работают
 с `std::vector` или обычным массивом.
+План хранит только индекс, который указывает на машину в этой же коллекции.

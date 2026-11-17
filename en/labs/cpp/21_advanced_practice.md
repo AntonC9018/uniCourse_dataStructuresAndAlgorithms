@@ -47,10 +47,14 @@ slug: en/cpp/labs/advanced-practice
 An operation can fail in two very different ways.
 
 A **broken precondition** means the caller broke the contract:
-an index outside the array, a null pointer that must never be null,
+an index outside the array that the function requires to be valid,
+a null pointer that must never be null,
 an `enum` value that no branch handles.
 The program has a bug, so there is no sensible value to return.
 `assert` stops the program exactly where the mistake happened.
+Assertions are a debugging tool: with `NDEBUG` defined, they are compiled out.
+The caller's obligations do not disappear,
+and an assertion never replaces validation of user input.
 
 An **ordinary result** means the data says no:
 the slot is already taken, the queue is full, the pizza is not in the fridge.
@@ -62,11 +66,17 @@ The caller that ignores the result keeps running with an invalid state,
 and the bug travels further from its cause.
 Do not assert on ordinary data either: a full shelf is not a bug.
 
+Which category a check falls into is a design decision.
+The shelf functions below require a valid index, so a bad index is a broken contract.
+The vending machine below accepts whatever the customer selects,
+so a bad selection is ordinary data that it reports.
+
 | Situation | Kind | Reaction |
 | --- | --- | --- |
-| index outside the array | broken precondition | `assert` |
+| index outside the array that the contract requires | broken precondition | `assert` |
 | null pointer that must be valid | broken precondition | `assert` |
 | `enum` value with no matching branch | broken precondition | `assert` |
+| invalid selection that the function must validate | ordinary result | return it |
 | slot already occupied | ordinary result | return it |
 | queue full | ordinary result | return it |
 | item not found | ordinary result | return it |
@@ -858,6 +868,7 @@ Every solution below follows this rule.
       {
           return TickResult::Unassigned;
       }
+      assert(client->hairCompletion.value >= 0); // a negative haircut would never finish
       if (client->hairCompletion.value > 0)
       {
           cut_one_minute(&client->hairCompletion);
@@ -1016,7 +1027,8 @@ Every solution below follows this rule.
   The generator loops while driving is left.
   First it looks for a driver whose rest has run out.
   Such a driver takes one leg — up to their limit, or the rest of the trip —
-  and then owes rest for what they drove.
+  while everyone else's rest shrinks by the same hours.
+  Then the driver owes rest for what they drove.
   If nobody is ready, the truck idles until the first driver's rest runs out,
   which is the shortest outstanding rest; that much time is subtracted from every driver.
   Each step writes exactly one event:
@@ -1057,6 +1069,20 @@ Every solution below follows this rule.
                   hours = tripHours;
               }
               tripHours -= hours;
+
+              // Everyone else rests while this driver is on the road.
+              for (Driver& other : drivers)
+              {
+                  if (&other == &driver || other.restLeft <= 0.0)
+                  {
+                      continue;
+                  }
+                  other.restLeft -= hours;
+                  if (other.restLeft < 0.0)
+                  {
+                      other.restLeft = 0.0;
+                  }
+              }
               driver.restLeft = driver.restPerDriveHour * hours;
 
               assert(count < events.size());
@@ -1101,6 +1127,9 @@ Every solution below follows this rule.
           case EventKind::Idle:
               std::cout << "truck idle for " << event.hours << " h" << std::endl;
               break;
+          default:
+              assert(false); // every EventKind is handled above
+              break;
       }
   }
   ```
@@ -1124,16 +1153,16 @@ Every solution below follows this rule.
   }
   ```
 
-  alice drives her 4-hour limit and owes 2 hours of rest, bob drives 3 and owes 3,
-  cid drives 2 and owes 4; then every driver rests, so the truck idles
-  for the shortest rest, 2 hours. alice drives the remaining 3 hours:
+  alice drives her 4-hour limit and now owes 2 hours of rest.
+  bob drives his 3-hour limit, which covers alice's 2 hours,
+  so she is ready again. alice drives 4 more hours while bob rests,
+  and bob drives the last hour. Nobody ever waits for the whole crew:
 
   ```text
   alice drove 4 h
   bob drove 3 h
-  cid drove 2 h
-  truck idle for 2 h
-  alice drove 3 h
+  alice drove 4 h
+  bob drove 1 h
   ```
   </details>
 
@@ -1347,10 +1376,11 @@ Printing switches on the status and reacts to what the purchase actually did:
 ```cpp
 void print_purchase(const Purchase& purchase)
 {
+    // The payload is present exactly when the purchase succeeded.
+    assert(purchase.bought.has_value() == (purchase.status == PurchaseStatus::Bought));
     switch (purchase.status)
     {
         case PurchaseStatus::Bought:
-            assert(purchase.bought.has_value()); // Bought always carries the snack
             std::cout << "bought " << snack_name(purchase.bought->snack)
                       << ", change " << purchase.bought->change << std::endl;
             break;
@@ -1365,6 +1395,9 @@ void print_purchase(const Purchase& purchase)
             break;
         case PurchaseStatus::NotEnoughCoins:
             std::cout << "not enough coins" << std::endl;
+            break;
+        default:
+            assert(false); // every PurchaseStatus is handled above
             break;
     }
 }
@@ -1388,7 +1421,7 @@ print_purchase(buy_snack(machine, 2, 1)); // not enough coins
 ```
 
 The second call is the only one that changes the machine.
-The other two leave every slot exactly as it was.
+The other three leave every slot exactly as it was.
 
 ## Planning a mutation as a value
 
@@ -1430,6 +1463,18 @@ std::string_view paint_name(Paint paint)
     return {};
 }
 
+bool is_known_paint(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+        case Paint::Blue:
+        case Paint::Green:
+            return true;
+    }
+    return false;
+}
+
 struct Car
 {
     std::string_view model;
@@ -1446,8 +1491,10 @@ struct Repaint
 
 Repaint plan_repaint(std::span<const Car> cars, size_t carIndex, Paint newPaint)
 {
-    assert(carIndex < cars.size()); // the plan must point at an existing car
+    assert(carIndex < cars.size());   // the plan must point at an existing car
+    assert(is_known_paint(newPaint)); // the plan must name a real paint
     const Car& car{ cars[carIndex] };
+    assert(is_known_paint(car.paint)); // the car's current paint must be real
     int hours{ car.paint == newPaint ? 1 : 3 };
     return Repaint{
         .carIndex = carIndex,
@@ -1467,6 +1514,7 @@ void print_repaint(const Repaint& repaint)
 void apply_repaint(std::span<Car> cars, const Repaint& repaint)
 {
     assert(repaint.carIndex < cars.size()); // the plan must point at an existing car
+    assert(is_known_paint(repaint.newPaint)); // the plan must name a real paint
     cars[repaint.carIndex].paint = repaint.newPaint;
 }
 ```
@@ -1486,5 +1534,5 @@ print_repaint(repaint);
 apply_repaint(cars, repaint);
 ```
 
-The plan does not depend on how the car array is stored:
-it borrows a `span`, so the same functions work on a vector or a plain array.
+The functions accept a `span`, so they work the same on a vector or a plain array.
+The plan stores only an index, which identifies the car in that same collection.
