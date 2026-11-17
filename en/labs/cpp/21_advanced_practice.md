@@ -17,6 +17,8 @@ slug: en/cpp/labs/advanced-practice
 - Naming things with `std::string_view`;
 - Changing objects through pointers and references, reading them through `const` references and `std::span`;
 - Writing small functions that return `bool` or a count, using `if` with guard clauses and `switch` on `enum`;
+- Telling preconditions apart from ordinary results: assert the former, return the latter;
+- Modeling the result of an operation and planning a mutation as values;
 - Looping over objects, counting empty places, finding the first empty place.
 
 ## Tools you'll need
@@ -39,6 +41,37 @@ slug: en/cpp/labs/advanced-practice
   bool taken{ slot.has_value() };
   slot.reset();
   ```
+
+## Preconditions and results
+
+An operation can fail in two very different ways.
+
+A **broken precondition** means the caller broke the contract:
+an index outside the array, a null pointer that must never be null,
+an `enum` value that no branch handles.
+The program has a bug, so there is no sensible value to return.
+`assert` stops the program exactly where the mistake happened.
+
+An **ordinary result** means the data says no:
+the slot is already taken, the queue is full, the pizza is not in the fridge.
+Nothing is wrong with the program, so the function reports what happened
+and the caller decides what to do.
+
+Do not turn a broken precondition into a returned `false`.
+The caller that ignores the result keeps running with an invalid state,
+and the bug travels further from its cause.
+Do not assert on ordinary data either: a full shelf is not a bug.
+
+| Situation | Kind | Reaction |
+| --- | --- | --- |
+| index outside the array | broken precondition | `assert` |
+| null pointer that must be valid | broken precondition | `assert` |
+| `enum` value with no matching branch | broken precondition | `assert` |
+| slot already occupied | ordinary result | return it |
+| queue full | ordinary result | return it |
+| item not found | ordinary result | return it |
+
+Every solution below follows this rule.
 
 ## Practice tasks
 
@@ -74,22 +107,21 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Say slots 0 and 3 hold books and the rest are empty.
-  Putting the Atlas at slot 2 has to pass two checks:
-  2 is inside the array, slot 2 has no value —
-  only then store the book and report success.
-  The shelf itself is not checked: the function expects it to never be null.
-  At slot 0 the last check fails, so refuse with `false` and touch nothing:
+  Putting the Atlas at slot 2 checks two things.
+  The index must be inside the array — that is a contract with the caller,
+  so a broken contract is caught with `assert` instead of being reported as a result.
+  Slot 2 must have no value — that is ordinary data,
+  so an occupied slot is reported with `false`.
+  The shelf must never be null — that is another contract, so it is asserted too.
+  At slot 0 the slot is occupied, so the book is refused and nothing changes:
 
   ```cpp
   #include <cassert>
 
   bool shelve_book(Bookshelf* shelf, size_t index, Book book)
   {
-      assert(shelf != nullptr); // shelve_book expects shelf to never be null
-      if (index >= shelf->slots.size())
-      {
-          return false;
-      }
+      assert(shelf != nullptr);            // shelve_book expects shelf to never be null
+      assert(index < shelf->slots.size()); // and index to be inside the shelf
       if (shelf->slots[index].has_value())
       {
           return false;
@@ -102,16 +134,14 @@ slug: en/cpp/labs/advanced-practice
   A reference cannot be null, so taking the shelf by `&` instead of by `*`
   enforces that it is never null. The rest of the examples use references for this reason.
 
-  Taking a book is mirrored: slot 0 has a book, so clear it with `reset()`
-  and return `true`; an empty slot refuses:
+  Taking a book is mirrored: the index is a contract again,
+  slot 0 has a book, so clear it with `reset()` and return `true`;
+  an empty slot is ordinary data, so it refuses:
 
   ```cpp
   bool take_book(Bookshelf& shelf, size_t index)
   {
-      if (index >= shelf.slots.size())
-      {
-          return false;
-      }
+      assert(index < shelf.slots.size());
       if (!shelf.slots[index].has_value())
       {
           return false;
@@ -165,6 +195,7 @@ slug: en/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <string_view>
 
@@ -185,26 +216,20 @@ slug: en/cpp/labs/advanced-practice
   ```
 
   Say fridge shelf 1 holds the pizza and freezer shelf 0 is empty.
-  Moving it goes down the checks:
-  both indices are inside,
-  the source has food, the target is free.
+  Both indices are contracts with the caller, so they are asserted.
+  The source holding food and the target being free are ordinary data,
+  so those checks return `false`.
   Then two steps: copy the food into freezer shelf 0,
   clear fridge shelf 1 with `reset()`.
   From then on the pizza lives in exactly one place —
   that is the whole ownership idea.
-  Any failed check returns `false` and nothing is touched:
+  A failed data check returns `false` and nothing is touched:
 
   ```cpp
   bool move_food(Fridge& from, size_t fromIndex, Freezer& to, size_t toIndex)
   {
-      if (fromIndex >= from.shelves.size())
-      {
-          return false;
-      }
-      if (toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(fromIndex < from.shelves.size());
+      assert(toIndex < to.shelves.size());
       if (!from.shelves[fromIndex].has_value())
       {
           return false;
@@ -336,6 +361,8 @@ slug: en/cpp/labs/advanced-practice
   Hero and potion are plain grouping:
 
   ```cpp
+  #include <cassert>
+
   enum class PotionKind
   {
       Red,
@@ -360,7 +387,9 @@ slug: en/cpp/labs/advanced-practice
   and returns `true` — the hero is now at 70.
   A blue potion would take the next branch and add 10 shield instead.
   A spoiled potion takes the last branch and returns `false`
-  without touching the hero:
+  without touching the hero.
+  Every `PotionKind` is handled, so falling out of the `switch`
+  means the value is corrupt — the assert catches it:
 
   ```cpp
   bool drink_potion(Hero& hero, Potion potion)
@@ -376,7 +405,8 @@ slug: en/cpp/labs/advanced-practice
           case PotionKind::Spoiled:
               return false;
       }
-      return false;
+      assert(false); // every PotionKind is handled above
+      return false;  // unreachable
   }
   ```
 
@@ -551,6 +581,7 @@ slug: en/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <span>
   #include <string_view>
@@ -579,24 +610,28 @@ slug: en/cpp/labs/advanced-practice
 
   Say fridge shelf 1 holds the pizza and freezer shelf 1 is free.
   The caller packs `"pizza"` and `1` into a `FoodMove`.
+  The function does not need the whole fridge, only a view of its shelves,
+  so it accepts a `std::span` of them. The same function can move food
+  out of any contiguous shelf array, not just this fridge.
+  The target index is a contract, so it is asserted;
+  whether the target shelf is free is ordinary data, so it is reported with `false`.
   The `span` borrows each shelf slot in turn: slot 0 has no pizza, so skip it;
   slot 1 has the pizza, so copy it into the freezer and clear the old slot,
   then report success with `true`.
   If no slot holds a food with that name, report `false` and touch nothing:
 
   ```cpp
-  bool move_food(Fridge& fridge, Freezer& to, FoodMove move)
+  bool move_food(
+      std::span<std::optional<Food>> shelves,
+      Freezer& to,
+      FoodMove move)
   {
-      if (move.toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(move.toIndex < to.shelves.size());
       if (to.shelves[move.toIndex].has_value())
       {
           return false;
       }
-      std::span<std::optional<Food>> shelf{ fridge.shelves };
-      for (auto& slot : shelf)
+      for (auto& slot : shelves)
       {
           if (!slot.has_value())
           {
@@ -624,7 +659,7 @@ slug: en/cpp/labs/advanced-practice
       .name = "pizza",
   };
   Freezer freezer{};
-  bool moved{ move_food(fridge, freezer, FoodMove{
+  bool moved{ move_food(fridge.shelves, freezer, FoodMove{
       .name = "pizza",
       .toIndex = 1,
   }) };
@@ -993,6 +1028,13 @@ slug: en/cpp/labs/advanced-practice
       double tripHours,
       std::span<Event> events)
   {
+      assert(!drivers.empty()); // the truck always has at least one driver
+      assert(tripHours >= 0.0); // a trip cannot take negative time
+      for (const Driver& driver : drivers)
+      {
+          assert(driver.maxDriveHours > 0.0); // a driver who cannot drive stalls the trip
+          assert(driver.restPerDriveHour >= 0.0);
+      }
       size_t count{ 0 };
       while (tripHours > 0.0)
       {
@@ -1032,6 +1074,7 @@ slug: en/cpp/labs/advanced-practice
                   idleHours = driver.restLeft;
               }
           }
+          assert(idleHours > 0.0); // otherwise some driver would be ready
           for (Driver& driver : drivers)
           {
               driver.restLeft -= idleHours;
@@ -1186,3 +1229,262 @@ slug: en/cpp/labs/advanced-practice
   }
   ```
   </details>
+
+## Modeling operation results
+
+A `bool` says only whether the operation worked.
+Often the caller needs to know *what* happened:
+which snack was bought, how much change is left, why the machine refused.
+Model the result as its own type and let the print react to it.
+
+A vending machine has slots with a snack and a price:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <optional>
+#include <string_view>
+
+enum class Snack
+{
+    Chips,
+    Chocolate,
+    Water,
+};
+
+std::string_view snack_name(Snack snack)
+{
+    switch (snack)
+    {
+        case Snack::Chips:
+            return "chips";
+        case Snack::Chocolate:
+            return "chocolate";
+        case Snack::Water:
+            return "water";
+    }
+    assert(false); // every Snack is handled above
+    return {};
+}
+
+struct VendingSlot
+{
+    std::optional<Snack> snack;
+    int price;
+};
+
+struct VendingMachine
+{
+    std::array<VendingSlot, 3> slots;
+};
+```
+
+Buying reports one of several outcomes.
+The slot index and the coin count come from the customer,
+so a bad value is an ordinary result, not a broken precondition:
+the contract accepts any input and reports what happened.
+The only assertion concerns the machine's own state:
+a slot must have a positive price.
+The success payload is its own struct,
+so the result cannot carry half of a purchase:
+
+```cpp
+enum class PurchaseStatus
+{
+    Bought,
+    InvalidSelection,
+    InvalidPayment,
+    EmptySlot,
+    NotEnoughCoins,
+};
+
+struct BoughtSnack
+{
+    Snack snack;
+    int change;
+};
+
+struct Purchase
+{
+    PurchaseStatus status;
+    std::optional<BoughtSnack> bought{ std::nullopt }; // set exactly when status is Bought
+};
+
+Purchase buy_snack(VendingMachine& machine, size_t slotIndex, int coins)
+{
+    if (slotIndex >= machine.slots.size())
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidSelection };
+    }
+    if (coins < 0)
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidPayment };
+    }
+
+    VendingSlot& slot{ machine.slots[slotIndex] };
+    assert(slot.price > 0); // every slot must have a positive price
+    if (!slot.snack.has_value())
+    {
+        return Purchase{ .status = PurchaseStatus::EmptySlot };
+    }
+    if (coins < slot.price)
+    {
+        return Purchase{ .status = PurchaseStatus::NotEnoughCoins };
+    }
+
+    Purchase purchase{
+        .status = PurchaseStatus::Bought,
+        .bought = BoughtSnack{ .snack = *slot.snack, .change = coins - slot.price },
+    };
+    slot.snack.reset(); // the machine changes only after the purchase succeeds
+    return purchase;
+}
+```
+
+Printing switches on the status and reacts to what the purchase actually did:
+
+```cpp
+void print_purchase(const Purchase& purchase)
+{
+    switch (purchase.status)
+    {
+        case PurchaseStatus::Bought:
+            assert(purchase.bought.has_value()); // Bought always carries the snack
+            std::cout << "bought " << snack_name(purchase.bought->snack)
+                      << ", change " << purchase.bought->change << std::endl;
+            break;
+        case PurchaseStatus::InvalidSelection:
+            std::cout << "no such slot" << std::endl;
+            break;
+        case PurchaseStatus::InvalidPayment:
+            std::cout << "the payment is invalid" << std::endl;
+            break;
+        case PurchaseStatus::EmptySlot:
+            std::cout << "the slot is empty" << std::endl;
+            break;
+        case PurchaseStatus::NotEnoughCoins:
+            std::cout << "not enough coins" << std::endl;
+            break;
+    }
+}
+```
+
+Usage from `main`:
+
+```cpp
+VendingMachine machine{
+    .slots = {
+        VendingSlot{ .snack = Snack::Chips, .price = 3 },
+        VendingSlot{ .snack = std::nullopt, .price = 2 },
+        VendingSlot{ .snack = Snack::Water, .price = 2 },
+    },
+};
+
+print_purchase(buy_snack(machine, 9, 5)); // no such slot
+print_purchase(buy_snack(machine, 0, 5)); // bought chips, change 2
+print_purchase(buy_snack(machine, 0, 5)); // the slot is empty
+print_purchase(buy_snack(machine, 2, 1)); // not enough coins
+```
+
+The second call is the only one that changes the machine.
+The other two leave every slot exactly as it was.
+
+## Planning a mutation as a value
+
+Another way to separate responsibilities is to make the change itself a value.
+One function reads the current state and computes the change;
+another prints what is about to happen;
+a third applies the change.
+The state is touched in one place, and the plan can be inspected before it is applied.
+
+A garage repaints cars. The plan records which car, the new paint,
+the estimated hours, and the price; computing it does not change anything:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <span>
+#include <string_view>
+
+enum class Paint
+{
+    Red,
+    Blue,
+    Green,
+};
+
+std::string_view paint_name(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+            return "red";
+        case Paint::Blue:
+            return "blue";
+        case Paint::Green:
+            return "green";
+    }
+    assert(false); // every Paint is handled above
+    return {};
+}
+
+struct Car
+{
+    std::string_view model;
+    Paint paint;
+};
+
+struct Repaint
+{
+    size_t carIndex;
+    Paint newPaint;
+    int hours;
+    int price;
+};
+
+Repaint plan_repaint(std::span<const Car> cars, size_t carIndex, Paint newPaint)
+{
+    assert(carIndex < cars.size()); // the plan must point at an existing car
+    const Car& car{ cars[carIndex] };
+    int hours{ car.paint == newPaint ? 1 : 3 };
+    return Repaint{
+        .carIndex = carIndex,
+        .newPaint = newPaint,
+        .hours = hours,
+        .price = hours * 1000,
+    };
+}
+
+void print_repaint(const Repaint& repaint)
+{
+    std::cout << "car " << repaint.carIndex << " will be repainted "
+              << paint_name(repaint.newPaint) << " in " << repaint.hours
+              << " h for " << repaint.price << std::endl;
+}
+
+void apply_repaint(std::span<Car> cars, const Repaint& repaint)
+{
+    assert(repaint.carIndex < cars.size()); // the plan must point at an existing car
+    cars[repaint.carIndex].paint = repaint.newPaint;
+}
+```
+
+Usage from `main`: the plan is printed before it is applied,
+so the output shows exactly what is about to happen:
+
+```cpp
+std::array<Car, 3> cars{
+    Car{ .model = "Supra", .paint = Paint::Red },
+    Car{ .model = "Civic", .paint = Paint::Green },
+    Car{ .model = "Miata", .paint = Paint::Red },
+};
+
+Repaint repaint{ plan_repaint(cars, 0, Paint::Blue) };
+print_repaint(repaint);
+apply_repaint(cars, repaint);
+```
+
+The plan does not depend on how the car array is stored:
+it borrows a `span`, so the same functions work on a vector or a plain array.

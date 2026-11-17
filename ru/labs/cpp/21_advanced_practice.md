@@ -17,6 +17,8 @@ slug: ru/cpp/labs/advanced-practice
 - Задание названий через `std::string_view`;
 - Изменение объектов через указатели и ссылки, а чтение — через `const`-ссылки и `std::span`;
 - Написание маленьких функций, возвращающих `bool` или количество, с использованием `if` с ранними возвратами (guard clauses) и `switch` по `enum`;
+- Различение предусловий и обычных результатов: первые проверяются `assert`, вторые возвращаются;
+- Моделирование результата операции и планирование мутации как значений;
 - Перебор объектов в цикле, подсчет пустых мест, поиск первого пустого места.
 
 ## Инструменты, которые понадобятся
@@ -39,6 +41,37 @@ slug: ru/cpp/labs/advanced-practice
   bool taken{ slot.has_value() };
   slot.reset();
   ```
+
+## Предусловия и результаты
+
+Операция может не удаться по двум совершенно разным причинам.
+
+**Нарушенное предусловие** означает, что вызывающий код нарушил контракт:
+индекс за пределами массива, `nullptr` там, где его быть не может,
+значение `enum`, которое не обрабатывает ни одна ветка.
+В программе ошибка, поэтому осмысленного значения для возврата нет.
+`assert` останавливает программу ровно там, где произошла ошибка.
+
+**Обычный результат** означает, что данные говорят «нет»:
+слот уже занят, очередь полна, пиццы нет в холодильнике.
+С программой всё в порядке, поэтому функция сообщает, что произошло,
+а вызывающий код решает, что делать дальше.
+
+Не превращайте нарушенное предусловие в возвращённый `false`.
+Вызывающий код, который проигнорирует результат, продолжит работать
+с некорректным состоянием, и ошибка уедет дальше от своего источника.
+Не проверяйте через `assert` и обычные данные: занятая полка — не ошибка.
+
+| Ситуация | Вид | Реакция |
+| --- | --- | --- |
+| индекс за пределами массива | нарушенное предусловие | `assert` |
+| `nullptr` там, где он недопустим | нарушенное предусловие | `assert` |
+| значение `enum` без подходящей ветки | нарушенное предусловие | `assert` |
+| слот уже занят | обычный результат | вернуть его |
+| очередь полна | обычный результат | вернуть его |
+| элемент не найден | обычный результат | вернуть его |
+
+Все решения ниже следуют этому правилу.
 
 ## Задачи для практики
 
@@ -74,22 +107,22 @@ slug: ru/cpp/labs/advanced-practice
   ```
 
   Допустим, слоты 0 и 3 хранят книги, а остальные пусты.
-  Чтобы положить «Атлас» в слот 2, нужны две проверки:
-  индекс 2 в пределах массива, в слоте 2 нет значения —
-  только тогда сохраняем книгу и возвращаем успех (`true`).
-  Сам указатель не проверяется: функция ожидает, что он никогда не `nullptr`.
-  В слоте 0 последняя проверка не проходит, поэтому возвращаем `false`, ничего не меняя:
+  Чтобы положить «Атлас» в слот 2, нужны две проверки.
+  Индекс должен быть в пределах массива — это контракт с вызывающим кодом,
+  поэтому нарушение контракта ловит `assert`, а не возвращаемое значение.
+  В слоте 2 не должно быть значения — это обычные данные,
+  поэтому занятый слот сообщается через `false`.
+  Указатель на полку никогда не должен быть `nullptr` — это ещё один контракт,
+  поэтому его тоже проверяет `assert`.
+  В слоте 0 слот занят, поэтому книгу не кладём и ничего не меняем:
 
   ```cpp
   #include <cassert>
 
   bool shelve_book(Bookshelf* shelf, size_t index, Book book)
   {
-      assert(shelf != nullptr); // shelve_book ожидает, что shelf никогда не nullptr
-      if (index >= shelf->slots.size())
-      {
-          return false;
-      }
+      assert(shelf != nullptr);            // shelve_book ожидает, что shelf никогда не nullptr
+      assert(index < shelf->slots.size()); // и что index внутри полки
       if (shelf->slots[index].has_value())
       {
           return false;
@@ -102,16 +135,14 @@ slug: ru/cpp/labs/advanced-practice
   Ссылка не может быть `nullptr`, поэтому передача полки по `&` вместо `*`
   гарантирует, что она никогда не `nullptr`. Остальные примеры используют ссылки по этой причине.
 
-  Взятие книги — зеркальный случай: в слоте 0 есть книга, поэтому очищаем его через `reset()`
-  и возвращаем `true`; для пустого слота возвращаем `false`:
+  Взятие книги — зеркальный случай: индекс снова контракт,
+  в слоте 0 есть книга, поэтому очищаем его через `reset()` и возвращаем `true`;
+  пустой слот — это обычные данные, поэтому возвращаем `false`:
 
   ```cpp
   bool take_book(Bookshelf& shelf, size_t index)
   {
-      if (index >= shelf.slots.size())
-      {
-          return false;
-      }
+      assert(index < shelf.slots.size());
       if (!shelf.slots[index].has_value())
       {
           return false;
@@ -164,6 +195,7 @@ slug: ru/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <string_view>
 
@@ -184,25 +216,19 @@ slug: ru/cpp/labs/advanced-practice
   ```
 
   Допустим, на полке 1 холодильника лежит пицца, а полка 0 морозилки пуста.
-  При перемещении проходим проверки по порядку:
-  оба индекса в допустимых пределах,
-  в источнике есть продукт, цель свободна.
+  Оба индекса — это контракт с вызывающим кодом, поэтому их проверяет `assert`.
+  Есть ли продукт в источнике и свободна ли цель — это обычные данные,
+  поэтому эти проверки возвращают `false`.
   Затем два шага: копируем продукт на полку 0 морозилки,
   очищаем полку 1 холодильника через `reset()`.
   С этого момента пицца живет ровно в одном месте — в этом и состоит идея владения.
-  Если хоть одна проверка не прошла, возвращаем `false` и ничего не трогаем:
+  Неудачная проверка данных возвращает `false` и ничего не трогает:
 
   ```cpp
   bool move_food(Fridge& from, size_t fromIndex, Freezer& to, size_t toIndex)
   {
-      if (fromIndex >= from.shelves.size())
-      {
-          return false;
-      }
-      if (toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(fromIndex < from.shelves.size());
+      assert(toIndex < to.shelves.size());
       if (!from.shelves[fromIndex].has_value())
       {
           return false;
@@ -334,6 +360,8 @@ slug: ru/cpp/labs/advanced-practice
   Герой и зелье — обычные структуры, нужные лишь для группировки данных:
 
   ```cpp
+  #include <cassert>
+
   enum class PotionKind
   {
       Red,
@@ -358,7 +386,9 @@ slug: ru/cpp/labs/advanced-practice
   и возвращает `true` — теперь у героя 70 здоровья.
   Синее зелье идет в следующую ветку и добавляет 10 щита.
   Испорченное зелье идет в последнюю ветку и возвращает `false`,
-  не меняя героя:
+  не меняя героя.
+  Все значения `PotionKind` обработаны, поэтому выход из `switch`
+  означает испорченное значение — его ловит `assert`:
 
   ```cpp
   bool drink_potion(Hero& hero, Potion potion)
@@ -374,7 +404,8 @@ slug: ru/cpp/labs/advanced-practice
           case PotionKind::Spoiled:
               return false;
       }
-      return false;
+      assert(false); // все значения PotionKind обработаны выше
+      return false;  // недостижимо
   }
   ```
 
@@ -547,6 +578,7 @@ slug: ru/cpp/labs/advanced-practice
 
   ```cpp
   #include <array>
+  #include <cassert>
   #include <optional>
   #include <span>
   #include <string_view>
@@ -575,24 +607,28 @@ slug: ru/cpp/labs/advanced-practice
 
   Допустим, на полке 1 холодильника лежит пицца, а полка 1 морозилки пуста.
   Вызывающий код упаковывает `"pizza"` и `1` в `FoodMove`.
+  Функции не нужен весь холодильник — только вид на его полки,
+  поэтому она принимает `std::span` из них. Та же функция может переносить еду
+  из любого непрерывного массива полок, не только из этого холодильника.
+  Целевой индекс — это контракт, поэтому его проверяет `assert`;
+  свободна ли целевая полка — это обычные данные, поэтому проверка возвращает `false`.
   Цикл по `span` перебирает слоты полки по очереди: в слоте 0 пиццы нет, поэтому пропускаем его;
   в слоте 1 есть пицца, поэтому копируем ее в морозилку и очищаем старый слот,
   затем сигнализируем об успехе, возвращая `true`.
   Если ни в одном слоте нет продукта с таким именем, возвращаем `false` и ничего не меняем:
 
   ```cpp
-  bool move_food(Fridge& fridge, Freezer& to, FoodMove move)
+  bool move_food(
+      std::span<std::optional<Food>> shelves,
+      Freezer& to,
+      FoodMove move)
   {
-      if (move.toIndex >= to.shelves.size())
-      {
-          return false;
-      }
+      assert(move.toIndex < to.shelves.size());
       if (to.shelves[move.toIndex].has_value())
       {
           return false;
       }
-      std::span<std::optional<Food>> shelf{ fridge.shelves };
-      for (auto& slot : shelf)
+      for (auto& slot : shelves)
       {
           if (!slot.has_value())
           {
@@ -620,7 +656,7 @@ slug: ru/cpp/labs/advanced-practice
       .name = "pizza",
   };
   Freezer freezer{};
-  bool moved{ move_food(fridge, freezer, FoodMove{
+  bool moved{ move_food(fridge.shelves, freezer, FoodMove{
       .name = "pizza",
       .toIndex = 1,
   }) };
@@ -989,6 +1025,13 @@ slug: ru/cpp/labs/advanced-practice
       double tripHours,
       std::span<Event> events)
   {
+      assert(!drivers.empty()); // у грузовика всегда есть хотя бы один водитель
+      assert(tripHours >= 0.0); // рейс не может длиться отрицательное время
+      for (const Driver& driver : drivers)
+      {
+          assert(driver.maxDriveHours > 0.0); // водитель без запаса хода остановит рейс
+          assert(driver.restPerDriveHour >= 0.0);
+      }
       size_t count{ 0 };
       while (tripHours > 0.0)
       {
@@ -1028,6 +1071,7 @@ slug: ru/cpp/labs/advanced-practice
                   idleHours = driver.restLeft;
               }
           }
+          assert(idleHours > 0.0); // иначе кто-то из водителей был бы готов
           for (Driver& driver : drivers)
           {
               driver.restLeft -= idleHours;
@@ -1184,3 +1228,263 @@ slug: ru/cpp/labs/advanced-practice
   }
   ```
   </details>
+
+## Моделирование результатов операций
+
+`bool` говорит только, получилось ли выполнить операцию.
+Часто вызывающему коду нужно знать, *что* произошло:
+какой снек куплен, сколько осталось сдачи, почему автомат отказал.
+Оформите результат отдельным типом, а печать пусть реагирует на него.
+
+В автомате со снеками есть слоты со снеком и ценой:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <optional>
+#include <string_view>
+
+enum class Snack
+{
+    Chips,
+    Chocolate,
+    Water,
+};
+
+std::string_view snack_name(Snack snack)
+{
+    switch (snack)
+    {
+        case Snack::Chips:
+            return "chips";
+        case Snack::Chocolate:
+            return "chocolate";
+        case Snack::Water:
+            return "water";
+    }
+    assert(false); // все значения Snack обработаны выше
+    return {};
+}
+
+struct VendingSlot
+{
+    std::optional<Snack> snack;
+    int price;
+};
+
+struct VendingMachine
+{
+    std::array<VendingSlot, 3> slots;
+};
+```
+
+Покупка сообщает один из нескольких исходов.
+Индекс слота и число монет приходят от покупателя,
+поэтому неверное значение — это обычный результат, а не нарушенное предусловие:
+контракт принимает любой ввод и сообщает, что произошло.
+Единственное утверждение касается состояния самого автомата:
+у слота должна быть положительная цена.
+Успешный результат — отдельная структура,
+поэтому результат не может содержать половину покупки:
+
+```cpp
+enum class PurchaseStatus
+{
+    Bought,
+    InvalidSelection,
+    InvalidPayment,
+    EmptySlot,
+    NotEnoughCoins,
+};
+
+struct BoughtSnack
+{
+    Snack snack;
+    int change;
+};
+
+struct Purchase
+{
+    PurchaseStatus status;
+    std::optional<BoughtSnack> bought{ std::nullopt }; // есть ровно при status == Bought
+};
+
+Purchase buy_snack(VendingMachine& machine, size_t slotIndex, int coins)
+{
+    if (slotIndex >= machine.slots.size())
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidSelection };
+    }
+    if (coins < 0)
+    {
+        return Purchase{ .status = PurchaseStatus::InvalidPayment };
+    }
+
+    VendingSlot& slot{ machine.slots[slotIndex] };
+    assert(slot.price > 0); // у каждого слота должна быть положительная цена
+    if (!slot.snack.has_value())
+    {
+        return Purchase{ .status = PurchaseStatus::EmptySlot };
+    }
+    if (coins < slot.price)
+    {
+        return Purchase{ .status = PurchaseStatus::NotEnoughCoins };
+    }
+
+    Purchase purchase{
+        .status = PurchaseStatus::Bought,
+        .bought = BoughtSnack{ .snack = *slot.snack, .change = coins - slot.price },
+    };
+    slot.snack.reset(); // автомат меняется только после успешной покупки
+    return purchase;
+}
+```
+
+Печать выбирает ветку по статусу и реагирует на то, что покупка действительно сделала:
+
+```cpp
+void print_purchase(const Purchase& purchase)
+{
+    switch (purchase.status)
+    {
+        case PurchaseStatus::Bought:
+            assert(purchase.bought.has_value()); // у Bought всегда есть снек
+            std::cout << "bought " << snack_name(purchase.bought->snack)
+                      << ", change " << purchase.bought->change << std::endl;
+            break;
+        case PurchaseStatus::InvalidSelection:
+            std::cout << "no such slot" << std::endl;
+            break;
+        case PurchaseStatus::InvalidPayment:
+            std::cout << "the payment is invalid" << std::endl;
+            break;
+        case PurchaseStatus::EmptySlot:
+            std::cout << "the slot is empty" << std::endl;
+            break;
+        case PurchaseStatus::NotEnoughCoins:
+            std::cout << "not enough coins" << std::endl;
+            break;
+    }
+}
+```
+
+Использование из `main`:
+
+```cpp
+VendingMachine machine{
+    .slots = {
+        VendingSlot{ .snack = Snack::Chips, .price = 3 },
+        VendingSlot{ .snack = std::nullopt, .price = 2 },
+        VendingSlot{ .snack = Snack::Water, .price = 2 },
+    },
+};
+
+print_purchase(buy_snack(machine, 9, 5)); // no such slot
+print_purchase(buy_snack(machine, 0, 5)); // bought chips, change 2
+print_purchase(buy_snack(machine, 0, 5)); // the slot is empty
+print_purchase(buy_snack(machine, 2, 1)); // not enough coins
+```
+
+Второй вызов — единственный, который меняет автомат.
+Остальные два оставляют все слоты точно такими, какими они были.
+
+## Планирование мутации как значения
+
+Ещё один способ разделить обязанности — сделать изменение самостоятельным значением.
+Одна функция читает текущее состояние и вычисляет изменение;
+другая печатает, что сейчас произойдёт;
+третья применяет изменение.
+Состояние меняется в одном месте, а план можно рассмотреть до применения.
+
+В гараже перекрашивают машины. План хранит, какую машину красят, новый цвет,
+оценку времени и цену; его вычисление ничего не меняет:
+
+```cpp
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <span>
+#include <string_view>
+
+enum class Paint
+{
+    Red,
+    Blue,
+    Green,
+};
+
+std::string_view paint_name(Paint paint)
+{
+    switch (paint)
+    {
+        case Paint::Red:
+            return "red";
+        case Paint::Blue:
+            return "blue";
+        case Paint::Green:
+            return "green";
+    }
+    assert(false); // все значения Paint обработаны выше
+    return {};
+}
+
+struct Car
+{
+    std::string_view model;
+    Paint paint;
+};
+
+struct Repaint
+{
+    size_t carIndex;
+    Paint newPaint;
+    int hours;
+    int price;
+};
+
+Repaint plan_repaint(std::span<const Car> cars, size_t carIndex, Paint newPaint)
+{
+    assert(carIndex < cars.size()); // план должен указывать на существующую машину
+    const Car& car{ cars[carIndex] };
+    int hours{ car.paint == newPaint ? 1 : 3 };
+    return Repaint{
+        .carIndex = carIndex,
+        .newPaint = newPaint,
+        .hours = hours,
+        .price = hours * 1000,
+    };
+}
+
+void print_repaint(const Repaint& repaint)
+{
+    std::cout << "car " << repaint.carIndex << " will be repainted "
+              << paint_name(repaint.newPaint) << " in " << repaint.hours
+              << " h for " << repaint.price << std::endl;
+}
+
+void apply_repaint(std::span<Car> cars, const Repaint& repaint)
+{
+    assert(repaint.carIndex < cars.size()); // план должен указывать на существующую машину
+    cars[repaint.carIndex].paint = repaint.newPaint;
+}
+```
+
+Использование из `main`: план печатается до применения,
+поэтому вывод показывает, что именно сейчас произойдёт:
+
+```cpp
+std::array<Car, 3> cars{
+    Car{ .model = "Supra", .paint = Paint::Red },
+    Car{ .model = "Civic", .paint = Paint::Green },
+    Car{ .model = "Miata", .paint = Paint::Red },
+};
+
+Repaint repaint{ plan_repaint(cars, 0, Paint::Blue) };
+print_repaint(repaint);
+apply_repaint(cars, repaint);
+```
+
+План не зависит от того, как хранится массив машин:
+он заимствует `span`, поэтому те же функции работают
+с `std::vector` или обычным массивом.
