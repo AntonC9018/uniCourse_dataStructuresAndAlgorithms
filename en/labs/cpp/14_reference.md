@@ -729,6 +729,17 @@ std::cout << arr[0] << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#1-reference-to-an-array)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 This illustrates creating a reference to an object of C++ array type.
@@ -741,6 +752,17 @@ std::array<int, 2> arr{ 1, 2 };
 int& a = arr[0];
 a = 3;
 ```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#2-reference-to-an-array-element)
+
+<!-- </visualization> -->
+
+</details>
 
 <details>
 <summary>Answer</summary>

@@ -678,6 +678,17 @@ std::cout << other[0] << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#2-копирование-константного-c-массива)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Выведутся `1` и `3`.
