@@ -119,24 +119,24 @@ Standard function syntax:
 return_type name(parameter_type_1 parameter_name_1, parameter_type_2 parameter_name_2)
 ```
 
-The function can be named, for example, `приготовить_панкейки`. 
+The function can be named, for example, `cook_pancakes`.
 
 **return type -> type of the return value -> type of the "number of pancakes" -> `int`**
 
 One parameter will be the **fridge** (as explained above).
-The fridge type will be `Холодильник` (more on it later).
-Let us call the parameter `считать_ингредиенты_холодильник`.
+The fridge type will be `Fridge` (more on it later).
+Let us call the parameter `countIngredientsFridge`.
 
 The second parameter will also represent a **fridge**—the one from which we will remove the ingredients.
-The fridge type will be `Холодильник*`.
+The fridge type will be `Fridge*`.
 A pointer is used because we will change its data within the function.
-Let us call the parameter `вытащить_ингредиенты_холодильник`.
+Let us call the parameter `removeIngredientsFridge`.
 
 The initial version of the interface:
 ```cpp
-int приготовить_панкейки(
-    Холодильник считать_ингредиенты_холодильник,
-    Холодильник* вытащить_ингредиенты_холодильник)
+int cook_pancakes(
+    Fridge countIngredientsFridge,
+    Fridge* removeIngredientsFridge)
 ```
 
 However, it is logical to expect that *we will remove ingredients from the same fridge
@@ -144,12 +144,6 @@ that we use to determine the number of portions*.
 Moreover, passing a different fridge would probably be a logical error.
 Because **data can be read through a pointer as well as written**,
 we can pass just 1 pointer parameter:
-
-```cpp
-int приготовить_панкейки(Холодильник* холодильник)
-```
-
-We will also change the names to follow English naming conventions:
 
 ```cpp
 int cook_pancakes(Fridge* fridge)
