@@ -130,6 +130,77 @@ Other checks that should **not** be assertions:
   `assert(age >= 0)` would stop the program instead of handling invalid input.
   Report the invalid age and ask for another value before using it.
 
+### Example: `take_out` and `try_take_out`
+
+The same action can have two functions with different expectations:
+
+- `try_operation` is the soft version: it allows an ordinary failure and returns a result to check.
+- `operation` is the hard version: the action must be possible. A missing prerequisite is a bug,
+  caught with `assert`.
+
+A microwave holds one meal or is empty.
+Use `take_out` when the calling code already knows there is a meal inside.
+It returns the meal and empties the microwave; calling it on an empty microwave is a bug.
+Use `try_take_out` when an empty microwave is expected and should be handled normally.
+It returns `std::optional<Meal>`: a meal on success, or `std::nullopt` if there is nothing to take.
+
+```cpp
+#include <cassert>
+#include <optional>
+#include <string_view>
+
+struct Meal
+{
+    std::string_view name;
+};
+
+struct Microwave
+{
+    std::optional<Meal> meal;
+};
+
+Meal take_out(Microwave& microwave)
+{
+    assert(microwave.meal.has_value());
+    Meal meal{ *microwave.meal };
+    microwave.meal.reset();
+    return meal;
+}
+
+std::optional<Meal> try_take_out(Microwave& microwave)
+{
+    if (!microwave.meal.has_value())
+    {
+        return std::nullopt;
+    }
+    return take_out(microwave);
+}
+```
+
+`try_take_out` checks for an empty microwave before calling `take_out`.
+Both functions remove a meal when one is present; only the empty case is different.
+
+```cpp
+Microwave microwave{ .meal = Meal{ .name = "soup" } };
+Meal soup{ take_out(microwave) };
+std::optional<Meal> second{ try_take_out(microwave) };
+```
+
+<details>
+<summary>What do the calls return? What if the second call used <code>take_out</code>?</summary>
+
+`take_out` returns the soup and leaves the microwave empty.
+`try_take_out` then returns `std::nullopt`, leaving it empty.
+The caller can check `second.has_value()` and decide to cook something else.
+A second `take_out` would fail its assertion: the calling code tried to remove a meal
+without ensuring that one was present.
+
+</details>
+
+Choose the function whose expectations match the calling code.
+Do not call `take_out` just to check whether there is a meal inside;
+that is what `try_take_out` is for.
+
 ## Practice tasks
 
 - **Bookshelf.** A shelf holds 5 books. Each book has a title.
