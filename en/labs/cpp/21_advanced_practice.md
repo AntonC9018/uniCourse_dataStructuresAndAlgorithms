@@ -44,44 +44,95 @@ slug: en/cpp/labs/advanced-practice
 
 ## Preconditions and results
 
-An operation can fail in two very different ways.
+A **precondition** is something that must already be true when a function is called.
+For example, a function that updates an array element needs the index of an existing element.
+Passing an out-of-range index is a mistake in the calling code.
+Use `assert` to catch that mistake.
 
-A **broken precondition** means the caller broke the contract:
-an index outside the array that the function requires to be valid,
-a null pointer that must never be null,
-an `enum` value that no branch handles.
-The program has a bug, so there is no sensible value to return.
-`assert` stops the program exactly where the mistake happened.
-Assertions are a debugging tool: with `NDEBUG` defined, they are compiled out.
-The caller's obligations do not disappear,
-and an assertion never replaces validation of user input.
+An **ordinary result** can be a failure even when the calling code is correct.
+A booking can fail because all tickets have been sold; the program still works correctly.
+Return that result so the caller can respond to it.
 
-An **ordinary result** means the data says no:
-the slot is already taken, the queue is full, the pizza is not in the fridge.
-Nothing is wrong with the program, so the function reports what happened
-and the caller decides what to do.
+### Saving a player's score
 
-Do not turn a broken precondition into a returned `false`.
-The caller that ignores the result keeps running with an invalid state,
-and the bug travels further from its cause.
-Do not assert on ordinary data either: a full shelf is not a bug.
+A game stores three players' scores at indices 0, 1, and 2.
+`record_score` updates an existing player's score:
 
-Which category a check falls into is a design decision.
-The shelf functions below require a valid index, so a bad index is a broken contract.
-The vending machine below accepts whatever the customer selects,
-so a bad selection is ordinary data that it reports.
+```cpp
+#include <array>
+#include <cassert>
+#include <cstddef>
 
-| Situation | Kind | Reaction |
-| --- | --- | --- |
-| index outside the array that the contract requires | broken precondition | `assert` |
-| null pointer that must be valid | broken precondition | `assert` |
-| `enum` value with no matching branch | broken precondition | `assert` |
-| invalid selection that the function must validate | ordinary result | return it |
-| slot already occupied | ordinary result | return it |
-| queue full | ordinary result | return it |
-| item not found | ordinary result | return it |
+void record_score(std::array<int, 3>& scores, std::size_t playerIndex, int score)
+{
+    assert(playerIndex < scores.size());
+    scores[playerIndex] = score;
+}
+```
 
-Every solution below follows this rule.
+What happens if the game calls `record_score(scores, 3, 10)`?
+
+<details>
+<summary>Answer</summary>
+
+There is no player at index 3, so `assert` fails.
+The calling code confused player number 3 with index 2.
+Returning `false` instead would let the game ignore the failed update and continue
+with the old score. The mistake might only become visible when it announces the wrong winner.
+The index needs fixing in the calling code; a failed score update is not a normal game outcome.
+
+</details>
+
+> Assertions are a debugging tool: with `NDEBUG` defined, they are compiled out.
+> The calling code must still pass valid arguments.
+> An assertion never replaces validation of user input.
+
+### Booking a cinema ticket
+
+A cinema can sell out. `book_ticket` reports whether it reserved a ticket:
+
+```cpp
+#include <cassert>
+
+bool book_ticket(int& ticketsLeft)
+{
+    assert(ticketsLeft >= 0);
+    if (ticketsLeft == 0)
+    {
+        return false;
+    }
+    ticketsLeft--;
+    return true;
+}
+```
+
+A negative number of remaining tickets would be a bug; `assert` checks for it.
+Zero is valid: it means the cinema has sold out.
+
+There is one ticket left. What happens when two customers book in turn?
+
+<details>
+<summary>Answer</summary>
+
+The first call changes `ticketsLeft` from 1 to 0 and returns `true`.
+The second leaves it at 0 and returns `false`.
+The caller can display "sold out" or offer another screening.
+Replacing the `if` with `assert(ticketsLeft > 0)` would stop a working program
+just because the last ticket had been sold.
+
+</details>
+
+Other checks that should **not** be assertions:
+
+- A login form receives the wrong password.
+  `assert(enteredPassword == savedPassword)` would stop the program on a normal failed login.
+  Report that the password did not match and let the user try again.
+- A search for student `"Mira"` finds nobody.
+  `assert(found != nullptr)` would treat an ordinary absence as a programming error.
+  Return `nullptr` and let the caller display "student not found".
+- An age field receives `-5` from a user.
+  `assert(age >= 0)` would stop the program instead of handling invalid input.
+  Report the invalid age and ask for another value before using it.
 
 ## Practice tasks
 
@@ -98,7 +149,7 @@ Every solution below follows this rule.
 
   A shelf slot either holds a book or is empty, so the slot type is
   `std::optional<Book>` — an empty shelf is `std::nullopt`.
-  The structs themselves are just grouping, as in the previous lab:
+  The structs group each book's title and the shelf's slots:
 
   ```cpp
   #include <array>
@@ -118,11 +169,11 @@ Every solution below follows this rule.
 
   Say slots 0 and 3 hold books and the rest are empty.
   Putting the Atlas at slot 2 checks two things.
-  The index must be inside the array — that is a contract with the caller,
-  so a broken contract is caught with `assert` instead of being reported as a result.
+  The caller must choose an index inside the array.
+  `assert` catches an index such as 5: there is no such slot on this shelf.
   Slot 2 must have no value — that is ordinary data,
   so an occupied slot is reported with `false`.
-  The shelf must never be null — that is another contract, so it is asserted too.
+  The shelf pointer must point at a shelf; `assert` also catches a missing shelf.
   At slot 0 the slot is occupied, so the book is refused and nothing changes:
 
   ```cpp
@@ -142,9 +193,9 @@ Every solution below follows this rule.
   ```
 
   A reference cannot be null, so taking the shelf by `&` instead of by `*`
-  enforces that it is never null. The rest of the examples use references for this reason.
+  enforces that it is never null.
 
-  Taking a book is mirrored: the index is a contract again,
+  Taking a book also requires an existing slot, so `assert` checks the index;
   slot 0 has a book, so clear it with `reset()` and return `true`;
   an empty slot is ordinary data, so it refuses:
 
@@ -226,7 +277,8 @@ Every solution below follows this rule.
   ```
 
   Say fridge shelf 1 holds the pizza and freezer shelf 0 is empty.
-  Both indices are contracts with the caller, so they are asserted.
+  The caller must choose existing shelves in both containers.
+  The two assertions catch an index that points outside either array.
   The source holding food and the target being free are ordinary data,
   so those checks return `false`.
   Then two steps: copy the food into freezer shelf 0,
@@ -392,9 +444,8 @@ Every solution below follows this rule.
   };
   ```
 
-  Walk through a red potion on a hero with 50 health and 0 shield:
-  the `switch` sees `Red`, adds 20 health,
-  and returns `true` — the hero is now at 70.
+  A red potion raises the hero's health from 50 to 70:
+  the `Red` branch adds 20 and returns `true`.
   A blue potion would take the next branch and add 10 shield instead.
   A spoiled potion takes the last branch and returns `false`
   without touching the hero.
@@ -623,8 +674,8 @@ Every solution below follows this rule.
   The function does not need the whole fridge, only a view of its shelves,
   so it accepts a `std::span` of them. The same function can move food
   out of any contiguous shelf array, not just this fridge.
-  The target index is a contract, so it is asserted;
-  whether the target shelf is free is ordinary data, so it is reported with `false`.
+  The target index must name an existing freezer shelf; `assert` checks that.
+  An occupied target shelf is an ordinary result, reported with `false`.
   The `span` borrows each shelf slot in turn: slot 0 has no pizza, so skip it;
   slot 1 has the pizza, so copy it into the freezer and clear the old slot,
   then report success with `true`.
@@ -839,7 +890,10 @@ Every solution below follows this rule.
   }
   ```
 
-  Whether the client is done is its own function too:
+  `cut_one_minute` needs a non-null pointer and a positive number of minutes left.
+  Its assertions catch a missing duration or an attempt to cut after the haircut is finished.
+  `tick_worker` allows zero minutes: that client is already done.
+  A negative duration is a bug, caught before it can leave the worker busy forever:
 
   ```cpp
   void cut_one_minute(MinutesLeft* minutes)
@@ -1031,7 +1085,11 @@ Every solution below follows this rule.
   Then the driver owes rest for what they drove.
   If nobody is ready, the truck idles until the first driver's rest runs out,
   which is the shortest outstanding rest; that much time is subtracted from every driver.
-  Each step writes exactly one event:
+  Each step writes exactly one event.
+  The assertions require at least one driver, a nonnegative trip duration and rest ratio,
+  a positive driving limit, and room for each event.
+  A zero driving limit would prevent the trip from progressing.
+  If nobody is ready, the shortest remaining rest must be positive:
 
   ```cpp
   // Writes the trip's events into events, returns how many were written.
@@ -1194,7 +1252,9 @@ Every solution below follows this rule.
 
   Bit `i` means "hugged member `i`".
   Your own bit is never set, so a fully hugged person has 4 bits out of 5.
-  Same ten pairs as before — only the storage changes:
+  `hug` needs two different members with indices from 0 to 4;
+  its assertions catch a nonexistent member or an attempt to hug oneself.
+  Hugging the same pair again is allowed: it returns `false` and changes nothing.
 
   ```cpp
   #include <array>
@@ -1236,7 +1296,8 @@ Every solution below follows this rule.
   }
   ```
 
-  Usage from `main`:
+  The final `assert` checks that the loop has covered every pair.
+
   ```cpp
   int main()
   {
@@ -1311,9 +1372,8 @@ struct VendingMachine
 
 Buying reports one of several outcomes.
 The slot index and the coin count come from the customer,
-so a bad value is an ordinary result, not a broken precondition:
-the contract accepts any input and reports what happened.
-The only assertion concerns the machine's own state:
+so the function reports bad selections and payments as results.
+A bad price is a mistake in the machine setup, so it is checked with `assert`:
 a slot must have a positive price.
 The success payload is its own struct,
 so the result cannot carry half of a purchase:
@@ -1371,7 +1431,10 @@ Purchase buy_snack(VendingMachine& machine, size_t slotIndex, int coins)
 }
 ```
 
-Printing switches on the status and reacts to what the purchase actually did:
+Printing switches on the purchase status.
+A successful purchase must carry its snack and change; a failed one must not.
+The first assertion catches a result assembled incorrectly.
+The `default` assertion catches an unknown status instead of silently printing nothing:
 
 ```cpp
 void print_purchase(const Purchase& purchase)
@@ -1432,7 +1495,10 @@ a third applies the change.
 The state is touched in one place, and the plan can be inspected before it is applied.
 
 A garage repaints cars. The plan records which car, the new paint,
-the estimated hours, and the price; computing it does not change anything:
+the estimated hours, and the price; computing it does not change anything.
+Planning requires an existing car and recognized current and new paint values.
+Applying checks the index and new paint again, because it can receive a separately built plan.
+These assertions prevent an invalid paint from being stored even if the plan is never printed:
 
 ```cpp
 #include <array>
