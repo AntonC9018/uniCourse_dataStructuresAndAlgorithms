@@ -17,7 +17,7 @@ slug: en/cpp/labs/advanced-practice
 - Naming things with `std::string_view`;
 - Changing objects through pointers and references, reading them through `const` references and `std::span`;
 - Writing small functions that return `bool` or a count, using `if` with guard clauses and `switch` on `enum`;
-- Telling preconditions apart from ordinary results: assert the former, return the latter;
+- Function preconditions (`assert`), explained here;
 - Modeling the result of an operation and planning a mutation as values;
 - Looping over objects, counting empty places, finding the first empty place.
 
@@ -50,10 +50,10 @@ Passing an out-of-range index is a mistake in the calling code.
 Use `assert` to catch that mistake.
 
 An **ordinary result** can be a failure even when the calling code is correct.
-A booking can fail because all tickets have been sold; the program still works correctly.
+A booking can fail because all tickets have been sold, but that's just a normal behavior of the program.
 Return that result so the caller can respond to it.
 
-### Saving a player's score
+### Example: Saving a player's score
 
 A game stores three players' scores at indices 0, 1, and 2.
 `record_score` updates an existing player's score:
@@ -70,10 +70,8 @@ void record_score(std::array<int, 3>& scores, std::size_t playerIndex, int score
 }
 ```
 
-What happens if the game calls `record_score(scores, 3, 10)`?
-
 <details>
-<summary>Answer</summary>
+<summary>What happens if the game calls <code>record_score(scores, 3, 10)</code>?</summary>
 
 There is no player at index 3, so `assert` fails.
 The calling code confused player number 3 with index 2.
@@ -87,7 +85,7 @@ The index needs fixing in the calling code; a failed score update is not a norma
 > The calling code must still pass valid arguments.
 > An assertion never replaces validation of user input.
 
-### Booking a cinema ticket
+### Example: Booking a cinema ticket
 
 A cinema can sell out. `book_ticket` reports whether it reserved a ticket:
 
@@ -106,13 +104,11 @@ bool book_ticket(int& ticketsLeft)
 }
 ```
 
-A negative number of remaining tickets would be a bug; `assert` checks for it.
-Zero is valid: it means the cinema has sold out.
-
-There is one ticket left. What happens when two customers book in turn?
+A negative number of remaining tickets would be a bug, which `assert` checks for here.
+Zero tickets left is still valid - that just means the cinema has sold out.
 
 <details>
-<summary>Answer</summary>
+<summary>There is one ticket left. What happens when two customers book in turn?</summary>
 
 The first call changes `ticketsLeft` from 1 to 0 and returns `true`.
 The second leaves it at 0 and returns `false`.
@@ -126,7 +122,7 @@ Other checks that should **not** be assertions:
 
 - A login form receives the wrong password.
   `assert(enteredPassword == savedPassword)` would stop the program on a normal failed login.
-  Report that the password did not match and let the user try again.
+  The program should report that the password did not match and let the user try again.
 - A search for student `"Mira"` finds nobody.
   `assert(found != nullptr)` would treat an ordinary absence as a programming error.
   Return `nullptr` and let the caller display "student not found".

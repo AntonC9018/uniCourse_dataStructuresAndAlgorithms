@@ -996,6 +996,9 @@ Model each domain with structs and functions.
 Decide what each function receives, what it changes, and how the caller learns whether it succeeded.
 Use the error-reporting techniques from this lab.
 
+> You don't need to implement all of these, just do the ones you found interesting.
+> The goal is to be able to apply the concepts learned in this lab in practice.
+
 ### 1. Vending machine
 
 A vending machine sells water for 3 coins and juice for 5 coins.
