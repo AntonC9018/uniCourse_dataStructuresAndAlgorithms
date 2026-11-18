@@ -62,8 +62,18 @@ jobs:
           include-hidden-files: true
 
   # The tracer and player from the visualizations submodule, tested in the toolchain
-  # the course flake pins.
+  # the course flake pins. The two suites run as parallel jobs. Nix substitutes
+  # from cache.nixos.org directly: a GitHub Actions store cache uploaded each path
+  # serially and stretched the job past ten minutes.
   visualization-tests:
+    strategy:
+      matrix:
+        include:
+          - suite: tracer
+            shell: .#visualizations
+          - suite: player
+            shell: .
+    name: visualization-tests (${{ matrix.suite }})
     runs-on: ubuntu-latest
     steps:
       - name: Checkout course
@@ -74,19 +84,15 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
 
-      - name: Cache Nix store
-        uses: DeterminateSystems/magic-nix-cache-action@84c0677f58dcedf3b91f8223ce36a9ea5b3c84b7 # v15
-
-      - name: Tracer tests (Clang and GDB)
-        run: nix develop .#visualizations --command npm run test:tracer --prefix visualizations
-
       # Chromium comes from the flake, so Playwright downloads no browser.
-      - name: Player browser tests
+      - name: Install player dependencies
+        if: matrix.suite == 'player'
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-        run: |
-          nix develop --command npm ci --prefix visualizations
-          nix develop --command npm run test:player --prefix visualizations
+        run: nix develop . --command npm ci --prefix visualizations --no-audit --no-fund
+
+      - name: ${{ matrix.suite }} tests
+        run: nix develop ${{ matrix.shell }} --command npm run test:${{ matrix.suite }} --prefix visualizations
 
   deploy:
     # CI-4: pushes to master only (direct commits + PR merges). PRs never
