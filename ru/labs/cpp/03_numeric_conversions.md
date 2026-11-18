@@ -97,7 +97,7 @@ int b{ static_cast<int>(a) };
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#3-static_cast-в-больший-тип)
 
@@ -124,7 +124,7 @@ int b{ static_cast<int>(a) };
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#4-static_cast-отрицательного-числа-в-больший-тип)
 
@@ -162,7 +162,7 @@ int main()
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#5-static_cast)
 
@@ -254,7 +254,7 @@ int main()
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#6-static_cast-отрицательного-числа-в-меньший-тип)
 
@@ -298,7 +298,7 @@ int main()
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#7-побитовая-операция-продвинутый-уровень)
 
@@ -369,7 +369,7 @@ int main()
 <details>
 <summary>Выполнение по шагам</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#8-смена-знака-продвинутый-уровень)
 

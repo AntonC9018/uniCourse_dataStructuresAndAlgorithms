@@ -98,7 +98,7 @@ int b{ static_cast<int>(a) };
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#3-static_cast-to-a-larger-type)
 
@@ -125,7 +125,7 @@ int b{ static_cast<int>(a) };
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#4-static_cast-of-a-negative-number-to-a-larger-type)
 
@@ -163,7 +163,7 @@ int main()
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#5-static_cast)
 
@@ -256,7 +256,7 @@ int main()
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#6-static_cast-of-a-negative-number-to-a-smaller-type)
 
@@ -300,7 +300,7 @@ int main()
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#7-bitwise-operation-advanced-level)
 
@@ -372,7 +372,7 @@ int main()
 <details>
 <summary>Execution trace</summary>
 
-<!-- <visualization types> -->
+<!-- <visualization bits> -->
 
 [▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#8-changing-the-sign-advanced-level)
 
