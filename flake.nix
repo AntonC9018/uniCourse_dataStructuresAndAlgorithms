@@ -13,14 +13,13 @@
         # What CI enters to trace tagged examples with the `visualizations` submodule.
         # Its lock is part of every trace key.
         visualizations = pkgs.mkShellNoCC {
-          packages = [ pkgs.clang pkgs.gdb pkgs.nodejs_22 pkgs.python3 ];
+          packages = [ pkgs.clang pkgs.nodejs_22 pkgs.python3 ];
           CLANGXX = "${pkgs.clang}/bin/clang++";
-          GDB = "${pkgs.gdb}/bin/gdb";
         };
         # Local player work: the tracer plus the browser used for screenshots.
         default = pkgs.mkShellNoCC {
           inputsFrom = [ visualizations ];
-          inherit (visualizations) CLANGXX GDB;
+          inherit (visualizations) CLANGXX;
           packages = [ pkgs.chromium ];
           CHROMIUM_EXECUTABLE = "${pkgs.chromium}/bin/chromium";
         };
