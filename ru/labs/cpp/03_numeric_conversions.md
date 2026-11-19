@@ -68,6 +68,17 @@ std::cout << integerHalf << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization types> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#2-приведение-меняет-тип-выражения)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 Печатает `7`, `3.5` и `3`.

@@ -68,6 +68,17 @@ std::cout << integerHalf << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#2-a-cast-changes-the-expression-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 It prints `7`, `3.5`, and `3`.

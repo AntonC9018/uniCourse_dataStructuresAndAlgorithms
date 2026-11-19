@@ -632,6 +632,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#20-pointer-to-itself)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `&p` takes the address of the variable `p` itself.
