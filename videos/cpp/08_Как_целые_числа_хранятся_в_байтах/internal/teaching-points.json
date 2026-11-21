@@ -1,0 +1,1548 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "3HnvK8WrK4M",
+  "uploadId": "3HnvK8WrK4M",
+  "transcriptSha256": "a947a421621dc078f0213fb77d7ac2c0c3ec0806bb9fb4014c9de230823fc9d7",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 40,
+      "endMilliseconds": 12509,
+      "kind": "fact",
+      "text": "A byte is eight cells (bits), each filled or empty, which is why binary is the natural machine encoding of numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 40,
+          "endMilliseconds": 12509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bits-and-bytes"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 10040,
+      "endMilliseconds": 18680,
+      "kind": "fact",
+      "text": "An empty cell means zero and a filled cell means one in binary, so a number is just a pattern of filled and empty cells.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 10040,
+          "endMilliseconds": 18680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bits-and-bytes"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 18560,
+      "endMilliseconds": 33030,
+      "kind": "explanation",
+      "text": "Eight binary digits are limited: the largest value eight digits can hold is fixed, which motivates generalising to an arbitrary base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 18560,
+          "endMilliseconds": 33030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#bits-and-bytes"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 33030,
+      "endMilliseconds": 39040,
+      "kind": "explanation",
+      "text": "The same filling idea generalises to any r-ary numeral system, where each position can hold any digit from zero to r-1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 33030,
+          "endMilliseconds": 39040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 39040,
+      "endMilliseconds": 51239,
+      "kind": "fact",
+      "text": "With three decimal positions the biggest representable number is 999, and the same construction holds for any base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 39040,
+          "endMilliseconds": 51239
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 51239,
+      "endMilliseconds": 66950,
+      "kind": "reason",
+      "text": "To get the largest number from given positions you put the maximum possible digit into each position, since each position's capacity is fixed by the base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 51239,
+          "endMilliseconds": 66950
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 69600,
+      "endMilliseconds": 92440,
+      "kind": "explanation",
+      "text": "Enumerating three decimal positions yields 000, 001 up to 999 consecutively, showing the positions form a dense numbering scheme.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 69600,
+          "endMilliseconds": 92440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 92350,
+      "endMilliseconds": 103149,
+      "kind": "fact",
+      "text": "Three decimal positions express exactly one thousand numbers, from 000 to 999, and the same logic applies to binary positions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 92350,
+          "endMilliseconds": 103149
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 103149,
+      "endMilliseconds": 120000,
+      "kind": "explanation",
+      "text": "In general the number of values expressible with N positions in base r is r to the power N, so base and position count together determine the range.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 103149,
+          "endMilliseconds": 120000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-values-in-any-base"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 120000,
+      "endMilliseconds": 143000,
+      "kind": "fact",
+      "text": "A byte has eight binary positions with base 2, so it can store 2^8 = 256 distinct values.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 120000,
+          "endMilliseconds": 143000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-range-of-one-unsigned-byte"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 143000,
+      "endMilliseconds": 159390,
+      "kind": "edge_case",
+      "text": "Those 256 values run from 0 up to 255, the upper bound reached when all eight bits are set.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 143000,
+          "endMilliseconds": 159390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-range-of-one-unsigned-byte"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 159390,
+      "endMilliseconds": 167350,
+      "kind": "explanation",
+      "text": "Because one byte caps out at 255, larger numbers require combining several bytes, which is the next problem to solve.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 159390,
+          "endMilliseconds": 167350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-range-of-one-unsigned-byte"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 167350,
+      "endMilliseconds": 194040,
+      "kind": "explanation",
+      "text": "In decimal a bigger number is written by appending more positions (10, 100, 1000), the analogy used to grow storage beyond one byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 167350,
+          "endMilliseconds": 194040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#building-a-larger-decimal-number"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 180120,
+      "endMilliseconds": 194030,
+      "kind": "fact",
+      "text": "The same three decimal positions carry the weights 10, 100 and 1000, so a larger number is just more positions appended to the right.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 180120,
+          "endMilliseconds": 194030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#building-a-larger-decimal-number"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 197229,
+      "endMilliseconds": 218900,
+      "kind": "explanation",
+      "text": "A larger number can be stored as separate digit groups kept in different cells and still be treated as one whole number, since each group occupies its own position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 197229,
+          "endMilliseconds": 218900
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#building-a-larger-decimal-number"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 223439,
+      "endMilliseconds": 239000,
+      "kind": "fact",
+      "text": "For example 999 on the left plus 999 on the right reads as the single number 999.999, showing stored groups combine into one value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 223439,
+          "endMilliseconds": 239000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#building-a-larger-decimal-number"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 239000,
+      "endMilliseconds": 246000,
+      "kind": "reason",
+      "text": "The left-hand group is responsible for the thousands power, so position identity, not group size, determines what a stored group contributes.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 239000,
+          "endMilliseconds": 246000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#building-a-larger-decimal-number"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 246000,
+      "endMilliseconds": 262000,
+      "kind": "explanation",
+      "text": "The same trick works for bytes: duplicate the byte and place the copies side by side as the first and second byte of a bigger value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 246000,
+          "endMilliseconds": 262000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-two-bytes"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 262000,
+      "endMilliseconds": 285110,
+      "kind": "explanation",
+      "text": "Inside one byte each bit contributes its position's weight times one or zero (1, 2, 4, 8, 16, 32, 64, 128), so the byte's value is the sum of those contributions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 262000,
+          "endMilliseconds": 285110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-two-bytes"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 288039,
+      "endMilliseconds": 292070,
+      "kind": "fact",
+      "text": "The neighbouring cell holds the second byte's value, completing the two-byte representation of a larger number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 288039,
+          "endMilliseconds": 292070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-two-bytes"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 292070,
+      "endMilliseconds": 349469,
+      "kind": "explanation",
+      "text": "To glue two bytes into one number, multiply the first byte by the base raised to the second byte's position (84 * 256) and add the second byte's value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 292070,
+          "endMilliseconds": 349469
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-two-bytes"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 349469,
+      "endMilliseconds": 359550,
+      "kind": "fact",
+      "text": "Hexadecimal is the notation most often used together with binary because it follows the same positional logic.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 349469,
+          "endMilliseconds": 359550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-sixteen-hexadecimal-digits"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 359550,
+      "endMilliseconds": 388950,
+      "kind": "fact",
+      "text": "Hexadecimal has sixteen digits: zero through nine followed by the letters A through F, which stand for the values ten through fifteen.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 359550,
+          "endMilliseconds": 388950
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-sixteen-hexadecimal-digits"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 380280,
+      "endMilliseconds": 390000,
+      "kind": "fact",
+      "text": "The symbols 0 through F, where F stands for 15, are the sixteen digits of the hexadecimal numeral system.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 380280,
+          "endMilliseconds": 390000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-sixteen-hexadecimal-digits"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 390000,
+      "endMilliseconds": 399000,
+      "kind": "explanation",
+      "text": "The system is called hexadecimal precisely because it has 16 digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 390000,
+          "endMilliseconds": 399000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#the-sixteen-hexadecimal-digits"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 399000,
+      "endMilliseconds": 419960,
+      "kind": "reason",
+      "text": "A byte can be split into two halves of four bits each and each half written as one hexadecimal digit, because four bits can hold 16 distinct values.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 399000,
+          "endMilliseconds": 419960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 419960,
+      "endMilliseconds": 434440,
+      "kind": "explanation",
+      "text": "Every combination of set and unset bits within four bits corresponds to exactly one number that can be written as a single hexadecimal digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 419960,
+          "endMilliseconds": 434440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 434440,
+      "endMilliseconds": 442000,
+      "kind": "explanation",
+      "text": "The bit pattern 0101 is the hexadecimal digit 5, because the set bits contribute 4 + 1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 434440,
+          "endMilliseconds": 442000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 442000,
+      "endMilliseconds": 443680,
+      "kind": "fact",
+      "text": "The bit pattern 0100 is written as the hexadecimal digit 4.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 442000,
+          "endMilliseconds": 443680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 443680,
+      "endMilliseconds": 463800,
+      "kind": "explanation",
+      "text": "When all four bits are set the value is 1 + 2 + 4 + 8 = 15, which is written as the letter F.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 443680,
+          "endMilliseconds": 463800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 463800,
+      "endMilliseconds": 472639,
+      "kind": "explanation",
+      "text": "Combining the two nibbles, the byte with all high bits set and 0101 in the low nibble is conventionally written as 0xF5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 463800,
+          "endMilliseconds": 472639
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 472639,
+      "endMilliseconds": 485080,
+      "kind": "reason",
+      "text": "Writing bits directly as zeros and ones produces long unreadable strings, which is why byte values are normally written in hexadecimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 472639,
+          "endMilliseconds": 485080
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 476680,
+          "endMilliseconds": 485080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 485080,
+      "endMilliseconds": 493070,
+      "kind": "fact",
+      "text": "In the hexadecimal notation one symbol replaces each group of four binary positions, so two symbols stand for the eight bits of a byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 485080,
+          "endMilliseconds": 493070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-hexadecimal-digit-per-four-bits"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 493070,
+      "endMilliseconds": 509070,
+      "kind": "explanation",
+      "text": "The hex place values 16^0, 16^1 and 16^2 are identical to 2^0, 2^4 and 2^8, which is why a hex digit shifts the binary place coefficient by exactly four.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 493070,
+          "endMilliseconds": 509070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-hexadecimal-place-values-match-binary"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 509070,
+      "endMilliseconds": 529070,
+      "kind": "reason",
+      "text": "The same trick cannot be applied in the decimal system, because writing 15 instead of F would be read as the digits of one decimal number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 509070,
+          "endMilliseconds": 529070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-hexadecimal-place-values-match-binary"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 529070,
+      "endMilliseconds": 542430,
+      "kind": "edge_case",
+      "text": "Each hexadecimal digit may of course be written separately, but then the result is not a number in decimal notation, since decimal has no place for such digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 529070,
+          "endMilliseconds": 542430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#why-hexadecimal-place-values-match-binary"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 542430,
+      "endMilliseconds": 558949,
+      "kind": "explanation",
+      "text": "Hexadecimal works for any number of bytes, for example four bytes are written as eight hexadecimal digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 542430,
+          "endMilliseconds": 558949
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 558949,
+      "endMilliseconds": 577640,
+      "kind": "fact",
+      "text": "The int type is normally written in four bytes, sometimes eight, so it occupies 4 bytes and correspondingly8 hexadecimal digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 558949,
+          "endMilliseconds": 577640
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 567600,
+      "endMilliseconds": 577640,
+      "kind": "fact",
+      "text": "The int type is normally written in four bytes, sometimes eight, so it occupies 4 bytes and correspondingly 8 hexadecimal digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 567600,
+          "endMilliseconds": 577640
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 577640,
+      "endMilliseconds": 590000,
+      "kind": "explanation",
+      "text": "Each position of the hexadecimal representation has weight 16^k, that is 2^(4k), which is why consecutive hex digits are four binary places apart.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 577640,
+          "endMilliseconds": 590000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 590000,
+      "endMilliseconds": 604430,
+      "kind": "explanation",
+      "text": "To turn a hex-written integer into its decimal value you have to multiply every digit by the coefficient of its position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 590000,
+          "endMilliseconds": 604430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 604430,
+      "endMilliseconds": 623000,
+      "kind": "explanation",
+      "text": "Applying those coefficients gives a sum of the form 135*2^24 + 135*2^16 + 135*2^8 + 135*2^0 for the shown hexadecimal digits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 604430,
+          "endMilliseconds": 623000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 623000,
+      "endMilliseconds": 644000,
+      "kind": "test_result",
+      "text": "Expanding that sum, with the last term135*2^0 being 135, reproduces the original value of the number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 623000,
+          "endMilliseconds": 644000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 644000,
+      "endMilliseconds": 698360,
+      "kind": "reason",
+      "text": "Because such a conversion is laborious, it is simpler to keep the number written in hexadecimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 644000,
+          "endMilliseconds": 698360
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 688240,
+          "endMilliseconds": 698360
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-a-number-that-spans-four-bytes"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 698360,
+      "endMilliseconds": 714670,
+      "kind": "explanation",
+      "text": "To obtain the hexadecimal form you take each group of four bits and write it as one hexadecimal digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 698360,
+          "endMilliseconds": 714670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-the-bits-compactly"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 714670,
+      "endMilliseconds": 729670,
+      "kind": "explanation",
+      "text": "The resulting digits form a compact hexadecimal number such as ...F4F4F452F5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 714670,
+          "endMilliseconds": 729670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-the-bits-compactly"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 729670,
+      "endMilliseconds": 734670,
+      "kind": "fact",
+      "text": "The hexadecimal form is much more compact than the long sequence of zeros and ones it replaces.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 729670,
+          "endMilliseconds": 734670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#writing-the-bits-compactly"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 734670,
+      "endMilliseconds": 749990,
+      "kind": "fact",
+      "text": "Negative numbers are usually stored using the two's complement representation, as can be shown on the example of a single byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 734670,
+          "endMilliseconds": 749990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 749990,
+      "endMilliseconds": 764920,
+      "kind": "explanation",
+      "text": "In two's complement the highest bit of the number carries the coefficient -2^7 instead of +2^7, and only that coefficient changes while all lower ones stay positive.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 749990,
+          "endMilliseconds": 764920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 764920,
+      "endMilliseconds": 780110,
+      "kind": "explanation",
+      "text": "For a byte whose highest bit is set, such as the pattern E1, the -128 term makes the represented value negative, which is how a positive-looking byte pattern encodes a negative number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 764920,
+          "endMilliseconds": 780110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 780110,
+      "endMilliseconds": 798120,
+      "kind": "edge_case",
+      "text": "If the highest bit is not set, the -2^7 term simply vanishes and the value stays positive, for example a pattern with only the 16 and the 4 bit set gives the positive value 20.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 780110,
+          "endMilliseconds": 798120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 784279,
+      "endMilliseconds": 803550,
+      "kind": "explanation",
+      "text": "The two's complement bit pattern of a negative number is obtained by inverting all bits of its absolute value and adding one, which for -18 yields -64, -32 and -32 contributions that sum back to -18.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 784279,
+          "endMilliseconds": 803550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 803550,
+      "endMilliseconds": 817509,
+      "kind": "fact",
+      "text": "In a signed byte the highest bit acts as the sign bit: when it is set the stored value is negative, and when it is clear the value is positive, so one bit of the byte is spent on the sign.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 803550,
+          "endMilliseconds": 817509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#reading-negative-numbers-with-twos-complement"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 817509,
+      "endMilliseconds": 840300,
+      "kind": "correction",
+      "text": "The all-ones byte pattern was first described as the smallest negative value, but summing it with the -1 offset gives 127, so it is in fact the largest positive value representable in one byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 817509,
+          "endMilliseconds": 840300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#correcting-the-signed-byte-limits"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 840300,
+      "endMilliseconds": 852630,
+      "kind": "fact",
+      "text": "127 is the largest positive number that fits in a single byte because all eight bits are set, which leaves no bit available for a larger magnitude.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 840300,
+          "endMilliseconds": 852630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#correcting-the-signed-byte-limits"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 852630,
+      "endMilliseconds": 867550,
+      "kind": "edge_case",
+      "text": "If a byte is used only for negative numbers, the largest magnitude is the value of the same bit pattern with the sign bit removed, because that bit no longer encodes the sign.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 852630,
+          "endMilliseconds": 867550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#correcting-the-signed-byte-limits"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 869560,
+      "endMilliseconds": 878839,
+      "kind": "explanation",
+      "text": "A useful way to reason about two's complement is to imagine the byte initially holding zero in every position, since subtraction then becomes borrowing from that all-zero state.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 869560,
+          "endMilliseconds": 878839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-058",
+      "startMilliseconds": 869560,
+      "endMilliseconds": 905670,
+      "kind": "explanation",
+      "text": "Subtracting one from zero fails at the first position because a zero digit cannot lend, so the borrow is taken from the next position up, which is exactly how two's complement encodes -1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 869560,
+          "endMilliseconds": 905670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-059",
+      "startMilliseconds": 905670,
+      "endMilliseconds": 931949,
+      "kind": "explanation",
+      "text": "When the next position is also zero the borrow cannot be taken there either, so the chain of borrowing continues upward until a non-zero digit is found.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 905670,
+          "endMilliseconds": 931949
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-060",
+      "startMilliseconds": 931949,
+      "endMilliseconds": 956839,
+      "kind": "explanation",
+      "text": "If every position is zero the borrow is imagined to come from a nonexistent higher position, and since that position lies outside the number it is simply ignored.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 931949,
+          "endMilliseconds": 956839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-061",
+      "startMilliseconds": 956839,
+      "endMilliseconds": 977030,
+      "kind": "fact",
+      "text": "Because every operation stays within one byte, the byte can only hold values from 0 to 255, which is why an unsigned byte of all ones is the maximum value.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 956839,
+          "endMilliseconds": 977030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-062",
+      "startMilliseconds": 960759,
+      "endMilliseconds": 966040,
+      "kind": "fact",
+      "text": "All of these arithmetic steps actually stay inside the byte, which is why the final pattern can be read back as a value in the range of the byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 960759,
+          "endMilliseconds": 966040
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#subtracting-one-from-an-all-zero-byte"
+      }
+    },
+    {
+      "id": "TP-063",
+      "startMilliseconds": 977030,
+      "endMilliseconds": 984199,
+      "kind": "fact",
+      "text": "This is the reasoning behind the overflow notion that exists at the machine level, where a computation is confined to a fixed number of bits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 977030,
+          "endMilliseconds": 984199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-064",
+      "startMilliseconds": 984199,
+      "endMilliseconds": 999030,
+      "kind": "explanation",
+      "text": "Overflow occurs when two byte-sized numbers are added and the result does not fit in one byte: the result is truncated and an overflow is flagged.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 984199,
+          "endMilliseconds": 999030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-065",
+      "startMilliseconds": 999030,
+      "endMilliseconds": 1029750,
+      "kind": "explanation",
+      "text": "In a worked 1 + 1 example each position produces 0 with a carry of 1, and the carry is propagated into the next position, repeating until the most significant bit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 999030,
+          "endMilliseconds": 1029750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-066",
+      "startMilliseconds": 1029750,
+      "endMilliseconds": 1035200,
+      "kind": "reason",
+      "text": "The carry reaching the topmost position has nowhere to be written, because the number is stored in only these eight bits.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1029750,
+          "endMilliseconds": 1035200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-067",
+      "startMilliseconds": 1035200,
+      "endMilliseconds": 1054520,
+      "kind": "explanation",
+      "text": "Everything produced beyond those eight bits after the operation is cut off, so the part of the result above the byte is simply lost.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1035200,
+          "endMilliseconds": 1054520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-068",
+      "startMilliseconds": 1045640,
+      "endMilliseconds": 1050200,
+      "kind": "explanation",
+      "text": "In the demonstrated addition the carry portion that leaves the byte simply disappears, and this dropped-part behaviour is what is called overflow.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1045640,
+          "endMilliseconds": 1050200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-069",
+      "startMilliseconds": 1050200,
+      "endMilliseconds": 1060830,
+      "kind": "explanation",
+      "text": "Overflow also occurs on subtraction when the result is larger than the first operand, which borrows one from a byte above and leaves only the part that still fits in the byte.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1050200,
+          "endMilliseconds": 1060830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-070",
+      "startMilliseconds": 1060830,
+      "endMilliseconds": 1073130,
+      "kind": "edge_case",
+      "text": "For unsigned numbers limited to eight bits the subtraction 0 - 1 yields 255, illustrating that a value outside the representable range wraps around.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1060830,
+          "endMilliseconds": 1073130
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-071",
+      "startMilliseconds": 1073130,
+      "endMilliseconds": 1079190,
+      "kind": "fact",
+      "text": "This wrapping below zero for unsigned numbers bounded by eight bits is called underflow, mirroring overflow in the opposite direction.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1073130,
+          "endMilliseconds": 1079190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#carries-and-unsigned-wraparound"
+      }
+    },
+    {
+      "id": "TP-072",
+      "startMilliseconds": 1079190,
+      "endMilliseconds": 1081310,
+      "kind": "fact",
+      "text": "Both overflow and underflow exist for unsigned and for signed numbers, so the failure mode is not tied to a single signedness.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1079190,
+          "endMilliseconds": 1081310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-073",
+      "startMilliseconds": 1081310,
+      "endMilliseconds": 1085980,
+      "kind": "fact",
+      "text": "For signed numbers overflow is defined as the case where adding two numbers produces a bit pattern that no longer represents the mathematical sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1081310,
+          "endMilliseconds": 1085980
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-074",
+      "startMilliseconds": 1085980,
+      "endMilliseconds": 1111320,
+      "kind": "explanation",
+      "text": "Adding two positive bytes such as 1 + 1 makes every position carry and wraps the result into the range of a negative value, and the decimal value read from the resulting byte is 106 instead of the true sum, which demonstrates signed overflow.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1085980,
+          "endMilliseconds": 1111320
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-075",
+      "startMilliseconds": 1142880,
+      "endMilliseconds": 1151150,
+      "kind": "fact",
+      "text": "Adding the two 8-bit operands 106 and 96 as unsigned values yields 202, which is the reference point for spotting wrap-around.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1142880,
+          "endMilliseconds": 1151150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-076",
+      "startMilliseconds": 1151150,
+      "endMilliseconds": 1169660,
+      "kind": "reason",
+      "text": "Because the values are signed, the top bit contributes -128 instead of +128, so the same bit pattern is not the 202 an unsigned reader would see.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1151150,
+          "endMilliseconds": 1169660
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-077",
+      "startMilliseconds": 1169660,
+      "endMilliseconds": 1181150,
+      "kind": "correction",
+      "text": "The stored result is actually -54, since the set bits64 + 8 + 2 give 74 and 74 - 128 = -54, not the -18 first named.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1169660,
+          "endMilliseconds": 1181150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-078",
+      "startMilliseconds": 1181150,
+      "endMilliseconds": 1198750,
+      "kind": "edge_case",
+      "text": "Two positive operands summing to a negative value is a sign overflow, which shows up as an unexpected negative result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1181150,
+          "endMilliseconds": 1198750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-079",
+      "startMilliseconds": 1198750,
+      "endMilliseconds": 1202110,
+      "kind": "edge_case",
+      "text": "Two negative operands summing to a positive value is an underflow, because the leading sign bit does not fit in the 8-bit result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1198750,
+          "endMilliseconds": 1202110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-080",
+      "startMilliseconds": 1202110,
+      "endMilliseconds": 1209740,
+      "kind": "fact",
+      "text": "Both of these failure modes are called overflow (some sources say overflow, others underflow), so the name alone does not identify the case.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1202110,
+          "endMilliseconds": 1209740
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-081",
+      "startMilliseconds": 1209740,
+      "endMilliseconds": 1227630,
+      "kind": "explanation",
+      "text": "Overflow by definition means the true result cannot be represented in the 8 bits available, so the leading bit is simply cut off and the wrong value is kept.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1209740,
+          "endMilliseconds": 1227630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-082",
+      "startMilliseconds": 1231240,
+      "endMilliseconds": 1242640,
+      "kind": "explanation",
+      "text": "In this example the sum simply did not fit, so it wrapped to a negative number, and that same event is described both as underflow and as overflow.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1231240,
+          "endMilliseconds": 1242640
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-083",
+      "startMilliseconds": 1234760,
+      "endMilliseconds": 1242630,
+      "kind": "explanation",
+      "text": "When a sum does not fit into the destination width it wraps to a negative value, and the instructor names this same occurrence both underflow and overflow.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1234760,
+          "endMilliseconds": 1242630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#signed-overflow-and-the-corrected-sum"
+      }
+    },
+    {
+      "id": "TP-084",
+      "startMilliseconds": 1242640,
+      "endMilliseconds": 1249900,
+      "kind": "explanation",
+      "text": "For a number stored in two bytes, only the single highest bit carries the sign, so the sign occupies one bit out of sixteen.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1242640,
+          "endMilliseconds": 1249900
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-sign-bit-for-the-whole-number"
+      }
+    },
+    {
+      "id": "TP-085",
+      "startMilliseconds": 1249900,
+      "endMilliseconds": 1256430,
+      "kind": "correction",
+      "text": "For a signed two-byte value the top bit equals -2^15 (that is, -32768) rather than +2^7, while all remaining bit positions keep their usual weights.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1249900,
+          "endMilliseconds": 1256430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#one-sign-bit-for-the-whole-number"
+      }
+    }
+  ]
+}
