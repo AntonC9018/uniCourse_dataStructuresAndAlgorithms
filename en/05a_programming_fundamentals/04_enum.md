@@ -2,7 +2,7 @@
 slug: en/cpp/advanced-programming-fundamentals/enum
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/advanced-programming-fundamentals/enum/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/advanced-programming-fundamentals/enum/)
 <!-- course-site-backlink:end -->
 # `enum` and `enum class`
 

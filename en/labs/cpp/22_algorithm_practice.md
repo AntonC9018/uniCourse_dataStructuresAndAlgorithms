@@ -2,7 +2,7 @@
 slug: en/cpp/labs/algorithm-practice
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/algorithm-practice/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/algorithm-practice/)
 <!-- course-site-backlink:end -->
 # Algorithm Practice
 

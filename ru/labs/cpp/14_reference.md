@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/reference
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/reference/)
 <!-- course-site-backlink:end -->
 # Ссылки
 
@@ -89,7 +89,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#5-ссылка-из-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#5-ссылка-из-переменной)
 
 <!-- </visualization> -->
 
@@ -126,7 +126,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#6-ссылка-из-ссылки)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#6-ссылка-из-ссылки)
 
 <!-- </visualization> -->
 
@@ -154,7 +154,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#7-присваивание-числа-к-ссылке)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#7-присваивание-числа-к-ссылке)
 
 <!-- </visualization> -->
 
@@ -179,7 +179,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#8-перезапись-переменной-на-которую-существует-ссылка)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#8-перезапись-переменной-на-которую-существует-ссылка)
 
 <!-- </visualization> -->
 
@@ -244,7 +244,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#11-присваивание-переменной-ссылке)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#11-присваивание-переменной-ссылке)
 
 <!-- </visualization> -->
 
@@ -284,7 +284,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#12-перезапись-ссылки-на-число-после-присвоения-ей-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#12-перезапись-ссылки-на-число-после-присвоения-ей-переменной)
 
 <!-- </visualization> -->
 
@@ -323,7 +323,7 @@ std::cout << *pa << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#13-ссылка-из-dereference-а)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#13-ссылка-из-dereference-а)
 
 <!-- </visualization> -->
 
@@ -355,7 +355,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#14-перезапись-указателя-на-адрес-ссылки)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#14-перезапись-указателя-на-адрес-ссылки)
 
 <!-- </visualization> -->
 
@@ -439,7 +439,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#18-перезапись-переменной-через-адрес-и-ссылка)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#18-перезапись-переменной-через-адрес-и-ссылка)
 
 <!-- </visualization> -->
 
@@ -491,7 +491,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#19-ссылки-на-поля)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#19-ссылки-на-поля)
 
 <!-- </visualization> -->
 
@@ -522,7 +522,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#20-ссылка-на-адрес-1)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#20-ссылка-на-адрес-1)
 
 <!-- </visualization> -->
 
@@ -560,7 +560,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#21-ссылка-на-адрес-2)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#21-ссылка-на-адрес-2)
 
 <!-- </visualization> -->
 
@@ -671,7 +671,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#25-auto-делает-копию)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#25-auto-делает-копию)
 
 <!-- </visualization> -->
 
@@ -699,7 +699,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#26-auto-делает-ссылку)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#26-auto-делает-ссылку)
 
 <!-- </visualization> -->
 
@@ -735,7 +735,7 @@ std::cout << arr[0] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#1-ссылка-на-массив)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#1-ссылка-на-массив)
 
 <!-- </visualization> -->
 
@@ -760,7 +760,7 @@ a = 3;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/reference/#2-ссылка-на-элемент-массива)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#2-ссылка-на-элемент-массива)
 
 <!-- </visualization> -->
 

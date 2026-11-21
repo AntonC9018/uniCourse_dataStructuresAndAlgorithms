@@ -2,7 +2,7 @@
 slug: en/cpp/labs/reference
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/reference/)
 <!-- course-site-backlink:end -->
 # References
 
@@ -88,7 +88,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#5-reference-from-a-variable)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#5-reference-from-a-variable)
 
 <!-- </visualization> -->
 
@@ -125,7 +125,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#6-reference-from-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#6-reference-from-a-reference)
 
 <!-- </visualization> -->
 
@@ -153,7 +153,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#7-assigning-a-number-to-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#7-assigning-a-number-to-a-reference)
 
 <!-- </visualization> -->
 
@@ -178,7 +178,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#8-overwriting-a-variable-that-has-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#8-overwriting-a-variable-that-has-a-reference)
 
 <!-- </visualization> -->
 
@@ -241,7 +241,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#11-assigning-a-variable-to-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#11-assigning-a-variable-to-a-reference)
 
 <!-- </visualization> -->
 
@@ -281,7 +281,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#12-overwriting-the-referenced-variable-after-assigning-through-the-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#12-overwriting-the-referenced-variable-after-assigning-through-the-reference)
 
 <!-- </visualization> -->
 
@@ -320,7 +320,7 @@ std::cout << *pa << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#13-reference-from-a-dereference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#13-reference-from-a-dereference)
 
 <!-- </visualization> -->
 
@@ -352,7 +352,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#14-reassigning-a-pointer-after-creating-a-reference-from-it)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#14-reassigning-a-pointer-after-creating-a-reference-from-it)
 
 <!-- </visualization> -->
 
@@ -437,7 +437,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#18-overwriting-a-variable-through-an-address-and-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#18-overwriting-a-variable-through-an-address-and-a-reference)
 
 <!-- </visualization> -->
 
@@ -489,7 +489,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#19-references-to-fields)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#19-references-to-fields)
 
 <!-- </visualization> -->
 
@@ -520,7 +520,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#20-reference-to-a-pointer-1)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#20-reference-to-a-pointer-1)
 
 <!-- </visualization> -->
 
@@ -558,7 +558,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#21-reference-to-a-pointer-2)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#21-reference-to-a-pointer-2)
 
 <!-- </visualization> -->
 
@@ -669,7 +669,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#25-auto-makes-a-copy)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#25-auto-makes-a-copy)
 
 <!-- </visualization> -->
 
@@ -697,7 +697,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#26-auto-makes-a-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#26-auto-makes-a-reference)
 
 <!-- </visualization> -->
 
@@ -733,7 +733,7 @@ std::cout << arr[0] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#1-reference-to-an-array)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#1-reference-to-an-array)
 
 <!-- </visualization> -->
 
@@ -758,7 +758,7 @@ a = 3;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/reference/#2-reference-to-an-array-element)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#2-reference-to-an-array-element)
 
 <!-- </visualization> -->
 

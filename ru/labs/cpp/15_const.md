@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/const
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/const/)
 <!-- course-site-backlink:end -->
 # `const`
 
@@ -65,7 +65,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#2-копирование-константного-числа)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#2-копирование-константного-числа)
 
 <!-- </visualization> -->
 
@@ -128,7 +128,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#4-копирование-константной-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#4-копирование-константной-структуры)
 
 <!-- </visualization> -->
 
@@ -175,7 +175,7 @@ std::cout << r << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#6-наблюдение-изменения-через-константную-ссылку)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#6-наблюдение-изменения-через-константную-ссылку)
 
 <!-- </visualization> -->
 
@@ -207,7 +207,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#7-копирование-значения-прочитанного-через-константную-ссылку)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#7-копирование-значения-прочитанного-через-константную-ссылку)
 
 <!-- </visualization> -->
 
@@ -682,7 +682,7 @@ std::cout << other[0] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/const/#2-копирование-константного-c-массива)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#2-копирование-константного-c-массива)
 
 <!-- </visualization> -->
 

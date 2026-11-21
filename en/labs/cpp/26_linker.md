@@ -2,7 +2,7 @@
 slug: en/cpp/labs/linker
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/linker/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/linker/)
 <!-- course-site-backlink:end -->
 # Linker
 

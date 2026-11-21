@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/cpp-array
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/)
 <!-- course-site-backlink:end -->
 # C++ массивы (`std::array`)
 
@@ -37,7 +37,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#1-получение-адреса-первого-элемента)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#1-получение-адреса-первого-элемента)
 
 <!-- </visualization> -->
 
@@ -78,7 +78,7 @@ arr = other;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#3-инициализация-c-массивов-1)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#3-инициализация-c-массивов-1)
 
 <!-- </visualization> -->
 
@@ -101,7 +101,7 @@ std::array<int, 2> other{ arr };
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#4-инициализация-c-массивов-2)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#4-инициализация-c-массивов-2)
 
 <!-- </visualization> -->
 
@@ -127,7 +127,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#5-адрес-массива)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#5-адрес-массива)
 
 <!-- </visualization> -->
 
@@ -158,7 +158,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#6-dereference-адреса-массива)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#6-dereference-адреса-массива)
 
 <!-- </visualization> -->
 
@@ -188,7 +188,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#7-индексирование-элементов-из-адреса)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#7-индексирование-элементов-из-адреса)
 
 <!-- </visualization> -->
 
@@ -221,7 +221,7 @@ arr[1] = { 9, 10 };
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#8-матрицы-двумерные-массивы)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#8-матрицы-двумерные-массивы)
 
 <!-- </visualization> -->
 
@@ -301,7 +301,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#1-поле-массива-из-адресов)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#1-поле-массива-из-адресов)
 
 <!-- </visualization> -->
 
@@ -378,7 +378,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#3-инициализация-поля-массива)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#3-инициализация-поля-массива)
 
 <!-- </visualization> -->
 
@@ -419,7 +419,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#4-копирование-структуры-с-полем-массивом)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#4-копирование-структуры-с-полем-массивом)
 
 <!-- </visualization> -->
 
@@ -478,7 +478,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/cpp-array/#5-массив-структур)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/cpp-array/#5-массив-структур)
 
 <!-- </visualization> -->
 

@@ -2,7 +2,7 @@
 slug: en/common/labs/compiler-install
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/compiler-install/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/labs/compiler-install/)
 <!-- course-site-backlink:end -->
 # Installing a Compiler
 

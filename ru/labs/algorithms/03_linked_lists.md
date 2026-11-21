@@ -2,7 +2,7 @@
 slug: ru/dsa/labs/linked-lists
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/linked-lists/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/dsa/labs/linked-lists/)
 <!-- course-site-backlink:end -->
 # Связные списки
 

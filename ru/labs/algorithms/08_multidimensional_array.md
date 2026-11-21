@@ -2,7 +2,7 @@
 slug: ru/dsa/labs/multidimensional-array
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/multidimensional-array/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/dsa/labs/multidimensional-array/)
 <!-- course-site-backlink:end -->
 # Многомерные массивы
 

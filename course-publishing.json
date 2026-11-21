@@ -113,7 +113,8 @@
       "validate"
     ],
     "require_pull_requests": false,
-    "enforce_admins": false
+    "enforce_admins": false,
+    "pages_url": "https://cpp.curmanschii.top"
   },
   "navigation": {
     "group_labels": {

@@ -1,4 +1,4 @@
-View on the [website](https://antonc9018.github.io/uniCourse_dataStructuresAndAlgorithms).
+View on the [website](https://cpp.curmanschii.top/).
 
 Playlists with video content accompanying the lessons:
 - [ru](https://www.youtube.com/playlist?list=PL4sUOB8DjVlXtWZJKdJdTeT9i4q3mNEsm),

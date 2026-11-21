@@ -2,7 +2,7 @@
 slug: en/cpp/labs/exceptions
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/exceptions/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/exceptions/)
 <!-- course-site-backlink:end -->
 # Exceptions
 

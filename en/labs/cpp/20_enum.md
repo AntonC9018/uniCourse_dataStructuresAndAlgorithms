@@ -2,7 +2,7 @@
 slug: en/cpp/labs/enum
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/enum/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/enum/)
 <!-- course-site-backlink:end -->
 # `enum`
 

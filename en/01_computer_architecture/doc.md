@@ -2,7 +2,7 @@
 slug: en/common/computer-architecture
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/computer-architecture/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/computer-architecture/)
 <!-- course-site-backlink:end -->
 # General understanding of computer architecture
 

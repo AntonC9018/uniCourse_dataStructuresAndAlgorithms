@@ -2,7 +2,7 @@
 slug: en/dsa/labs/git
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/labs/git/)
+[This lesson on the website](https://cpp.curmanschii.top/en/dsa/labs/git/)
 <!-- course-site-backlink:end -->
 # Git and GitHub
 

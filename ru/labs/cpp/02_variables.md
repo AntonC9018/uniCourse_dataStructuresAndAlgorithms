@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/variables
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/variables/)
 <!-- course-site-backlink:end -->
 # Переменные и типы
 
@@ -156,7 +156,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#4-присваивание-переменной-к-другой-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#4-присваивание-переменной-к-другой-переменной)
 
 <!-- </visualization> -->
 
@@ -178,7 +178,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#5-присваивание-выражения-к-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#5-присваивание-выражения-к-переменной)
 
 <!-- </visualization> -->
 
@@ -234,7 +234,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#6-литералы-переменные-и-операторы--это-выражения)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#6-литералы-переменные-и-операторы--это-выражения)
 
 <!-- </visualization> -->
 
@@ -326,7 +326,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#10-пустая-инициализация)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#10-пустая-инициализация)
 
 <!-- </visualization> -->
 
@@ -356,7 +356,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#11-присваивание-пустых-фигурных-скобок)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#11-присваивание-пустых-фигурных-скобок)
 
 <!-- </visualization> -->
 
@@ -385,7 +385,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#12-выражение-int)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#12-выражение-int)
 
 <!-- </visualization> -->
 
@@ -505,7 +505,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/variables/#18-смена-переменных)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/variables/#18-смена-переменных)
 
 <!-- </visualization> -->
 

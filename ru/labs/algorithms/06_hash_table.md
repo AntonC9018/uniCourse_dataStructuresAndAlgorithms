@@ -2,7 +2,7 @@
 slug: ru/dsa/labs/hash-table
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/hash-table/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/dsa/labs/hash-table/)
 <!-- course-site-backlink:end -->
 # Хеш-таблицы
 

@@ -2,7 +2,7 @@
 slug: en/common/command-line
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/command-line/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/command-line/)
 <!-- course-site-backlink:end -->
 # Command Line
 

@@ -2,7 +2,7 @@
 slug: ru/dsa/labs/searching-algorithms
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/dsa/labs/searching-algorithms/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/dsa/labs/searching-algorithms/)
 <!-- course-site-backlink:end -->
 # Алгоритмы поиска
 

@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/pointer-arithmetic
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/pointer-arithmetic/)
 <!-- course-site-backlink:end -->
 # Арифметика указателей
 
@@ -218,7 +218,7 @@ int main()
 
 <!-- <visualization template="layout"> -->
 
-[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#7-адрес-поля-относительно-адреса-структуры)
+[▶ Расположение полей в памяти на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer-arithmetic/#7-адрес-поля-относительно-адреса-структуры)
 
 <!-- </visualization> -->
 
@@ -253,7 +253,7 @@ int main()
 
 <!-- <visualization template="layout"> -->
 
-[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer-arithmetic/#8-продвинутый-уровень-смещения-полей)
+[▶ Расположение полей в памяти на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer-arithmetic/#8-продвинутый-уровень-смещения-полей)
 
 <!-- </visualization> -->
 

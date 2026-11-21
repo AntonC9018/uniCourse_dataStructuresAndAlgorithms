@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/struct
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/struct/)
 <!-- course-site-backlink:end -->
 # Структуры
 
@@ -46,7 +46,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#1-инициализация-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#1-инициализация-структуры)
 
 <!-- </visualization> -->
 
@@ -85,7 +85,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#2-выражение-типа-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#2-выражение-типа-структуры)
 
 <!-- </visualization> -->
 
@@ -180,7 +180,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#4-операции-с-полями)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#4-операции-с-полями)
 
 <!-- </visualization> -->
 
@@ -251,7 +251,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#6-присваивание-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#6-присваивание-структуры)
 
 <!-- </visualization> -->
 
@@ -295,7 +295,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#7-адреса-полей)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#7-адреса-полей)
 
 <!-- </visualization> -->
 
@@ -345,7 +345,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-присваивание-переменной-структуры-1)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#8-присваивание-переменной-структуры-1)
 
 <!-- </visualization> -->
 
@@ -390,7 +390,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#9-присваивание-переменной-структуры-2)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#9-присваивание-переменной-структуры-2)
 
 <!-- </visualization> -->
 
@@ -433,7 +433,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-адрес-структуры-1)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#10-адрес-структуры-1)
 
 <!-- </visualization> -->
 
@@ -474,7 +474,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#11-адрес-структуры-2)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#11-адрес-структуры-2)
 
 <!-- </visualization> -->
 
@@ -517,7 +517,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#12-оператор--)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#12-оператор--)
 
 <!-- </visualization> -->
 
@@ -584,7 +584,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#14-перезапись-по-адресу)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#14-перезапись-по-адресу)
 
 <!-- </visualization> -->
 
@@ -677,7 +677,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#17-адресное-поле)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#17-адресное-поле)
 
 <!-- </visualization> -->
 
@@ -729,7 +729,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#18-вложенная-структура)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#18-вложенная-структура)
 
 <!-- </visualization> -->
 
@@ -780,7 +780,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#19-копирование-вложенной-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#19-копирование-вложенной-структуры)
 
 <!-- </visualization> -->
 
@@ -897,7 +897,7 @@ int main()
 Результат будет 8, потому что в каждой структуре по 2 `int`, каждый из которых занимает 4 байта.
 <!-- <visualization template="layout"> -->
 
-[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#22-размер-структуры-1)
+[▶ Расположение полей в памяти на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#22-размер-структуры-1)
 
 <!-- </visualization> -->
 
@@ -927,7 +927,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#23-адрес-поля-из-адреса-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#23-адрес-поля-из-адреса-структуры)
 
 <!-- </visualization> -->
 
@@ -983,7 +983,7 @@ alignment делает так, что между полями остаются �
 
 <!-- <visualization template="layout"> -->
 
-[▶ Расположение полей в памяти на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
+[▶ Расположение полей в памяти на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#24-продвинутый-уровень-размер-структуры-3)
 
 <!-- </visualization> -->
 
@@ -1048,7 +1048,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#26-копирование-структуры-с-полем-указателем)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#26-копирование-структуры-с-полем-указателем)
 
 <!-- </visualization> -->
 
@@ -1095,7 +1095,7 @@ copy = p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#1-указатель-на-структуру-присваивается-структуре)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#1-указатель-на-структуру-присваивается-структуре)
 
 <!-- </visualization> -->
 
@@ -1127,7 +1127,7 @@ copy = &value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#2-адрес-структуры-присваивается-структуре)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#2-адрес-структуры-присваивается-структуре)
 
 <!-- </visualization> -->
 
@@ -1159,7 +1159,7 @@ p = value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#3-структура-присваивается-указателю-на-неё)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#3-структура-присваивается-указателю-на-неё)
 
 <!-- </visualization> -->
 
@@ -1191,7 +1191,7 @@ pp = value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#4-структура-присваивается-двойному-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#4-структура-присваивается-двойному-указателю)
 
 <!-- </visualization> -->
 
@@ -1225,7 +1225,7 @@ copy = pp;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#5-двойной-указатель-присваивается-структуре)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#5-двойной-указатель-присваивается-структуре)
 
 <!-- </visualization> -->
 
@@ -1258,7 +1258,7 @@ p = fieldAddress;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#6-указатель-на-int-присваивается-указателю-на-структуру)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#6-указатель-на-int-присваивается-указателю-на-структуру)
 
 <!-- </visualization> -->
 
@@ -1291,7 +1291,7 @@ fieldAddress = p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#7-указатель-на-структуру-присваивается-указателю-на-int)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#7-указатель-на-структуру-присваивается-указателю-на-int)
 
 <!-- </visualization> -->
 
@@ -1325,7 +1325,7 @@ copy = **pp;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#8-копирование-структуры-через-два-указателя)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#8-копирование-структуры-через-два-указателя)
 
 <!-- </visualization> -->
 
@@ -1357,7 +1357,7 @@ A* p{ &value };
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#9-присваивание-целого-числа-через-указатель-на-структуру)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#9-присваивание-целого-числа-через-указатель-на-структуру)
 
 <!-- </visualization> -->
 
@@ -1390,7 +1390,7 @@ result = p->field;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/struct/#10-целое-число-присваивается-из-поля-структуры)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/struct/#10-целое-число-присваивается-из-поля-структуры)
 
 <!-- </visualization> -->
 

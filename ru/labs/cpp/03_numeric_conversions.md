@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/numeric-conversions
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/)
 <!-- course-site-backlink:end -->
 # Числовые преобразования
 
@@ -99,7 +99,7 @@ int b{ static_cast<int>(a) };
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#3-static_cast-в-больший-тип)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#3-static_cast-в-больший-тип)
 
 <!-- </visualization> -->
 
@@ -126,7 +126,7 @@ int b{ static_cast<int>(a) };
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#4-static_cast-отрицательного-числа-в-больший-тип)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#4-static_cast-отрицательного-числа-в-больший-тип)
 
 <!-- </visualization> -->
 
@@ -164,7 +164,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#5-static_cast)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#5-static_cast)
 
 <!-- </visualization> -->
 
@@ -256,7 +256,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#6-static_cast-отрицательного-числа-в-меньший-тип)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#6-static_cast-отрицательного-числа-в-меньший-тип)
 
 <!-- </visualization> -->
 
@@ -300,7 +300,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#7-побитовая-операция-продвинутый-уровень)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#7-побитовая-операция-продвинутый-уровень)
 
 <!-- </visualization> -->
 
@@ -371,7 +371,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/numeric-conversions/#8-смена-знака-продвинутый-уровень)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/numeric-conversions/#8-смена-знака-продвинутый-уровень)
 
 <!-- </visualization> -->
 

@@ -2,7 +2,7 @@
 slug: en/common/labs/computer-architecture
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/computer-architecture/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/labs/computer-architecture/)
 <!-- course-site-backlink:end -->
 # Computer Architecture
 
