@@ -2,7 +2,7 @@
 slug: en/cpp/labs/variables
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/variables/)
 <!-- course-site-backlink:end -->
 # Variables and Types
 
@@ -154,7 +154,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#4-assigning-one-variable-to-another)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#4-assigning-one-variable-to-another)
 
 <!-- </visualization> -->
 
@@ -176,7 +176,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#5-assigning-an-expression-to-a-variable)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#5-assigning-an-expression-to-a-variable)
 
 <!-- </visualization> -->
 
@@ -231,7 +231,7 @@ std::cout << c << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#6-literals-variables-and-operators-are-expressions)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#6-literals-variables-and-operators-are-expressions)
 
 <!-- </visualization> -->
 
@@ -323,7 +323,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#10-empty-initialization)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#10-empty-initialization)
 
 <!-- </visualization> -->
 
@@ -353,7 +353,7 @@ std::cout << a << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#11-assigning-empty-braces)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#11-assigning-empty-braces)
 
 <!-- </visualization> -->
 
@@ -381,7 +381,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#12-an-int-expression)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#12-an-int-expression)
 
 <!-- </visualization> -->
 
@@ -501,7 +501,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/variables/#18-swapping-variables)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/variables/#18-swapping-variables)
 
 <!-- </visualization> -->
 

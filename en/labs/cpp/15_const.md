@@ -2,7 +2,7 @@
 slug: en/cpp/labs/const
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/const/)
 <!-- course-site-backlink:end -->
 # `const`
 
@@ -65,7 +65,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#2-copying-a-const-integer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#2-copying-a-const-integer)
 
 <!-- </visualization> -->
 
@@ -128,7 +128,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#4-copying-a-const-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#4-copying-a-const-structure)
 
 <!-- </visualization> -->
 
@@ -175,7 +175,7 @@ std::cout << r << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#6-observing-a-change-through-a-const-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#6-observing-a-change-through-a-const-reference)
 
 <!-- </visualization> -->
 
@@ -207,7 +207,7 @@ std::cout << b << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#7-copying-a-value-read-through-a-const-reference)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#7-copying-a-value-read-through-a-const-reference)
 
 <!-- </visualization> -->
 
@@ -682,7 +682,7 @@ std::cout << other[0] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/const/#2-copying-a-const-c-array)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#2-copying-a-const-c-array)
 
 <!-- </visualization> -->
 

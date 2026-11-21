@@ -2,7 +2,7 @@
 slug: en/cpp/labs/pointer
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/pointer/)
 <!-- course-site-backlink:end -->
 # Pointers
 
@@ -49,7 +49,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#1-variable-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#1-variable-address)
 
 <!-- </visualization> -->
 
@@ -109,7 +109,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#2-address-of-an-uninitialized-variable)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#2-address-of-an-uninitialized-variable)
 
 <!-- </visualization> -->
 
@@ -138,7 +138,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#3-dereference-operator-writing)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#3-dereference-operator-writing)
 
 <!-- </visualization> -->
 
@@ -228,7 +228,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#7-printing-a-complex-expression)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#7-printing-a-complex-expression)
 
 <!-- </visualization> -->
 
@@ -254,7 +254,7 @@ int* b{ &a };
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#8-pointer-to-a-larger-data-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#8-pointer-to-a-larger-data-type)
 
 <!-- </visualization> -->
 
@@ -277,7 +277,7 @@ uint8_t* b = &a;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#9-pointer-to-a-smaller-data-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#9-pointer-to-a-smaller-data-type)
 
 <!-- </visualization> -->
 
@@ -304,7 +304,7 @@ int* c = &a;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#10-dependence-of-the-address-on-the-value)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#10-dependence-of-the-address-on-the-value)
 
 <!-- </visualization> -->
 
@@ -344,7 +344,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#11-it-is-the-same-memory)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#11-it-is-the-same-memory)
 
 <!-- </visualization> -->
 
@@ -374,7 +374,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#12-assigning-a-value-through-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#12-assigning-a-value-through-a-pointer)
 
 <!-- </visualization> -->
 
@@ -411,7 +411,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#13-reassigning-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#13-reassigning-a-pointer)
 
 <!-- </visualization> -->
 
@@ -449,7 +449,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#14-double-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#14-double-pointer)
 
 <!-- </visualization> -->
 
@@ -491,7 +491,7 @@ std::cout << value << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#15-auto-from-an-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#15-auto-from-an-address)
 
 <!-- </visualization> -->
 
@@ -521,7 +521,7 @@ std::cout << copiedValue << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#16-auto-from-a-pointer-and-its-value)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#16-auto-from-a-pointer-and-its-value)
 
 <!-- </visualization> -->
 
@@ -550,7 +550,7 @@ std::cout << value << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#17-auto-from-the-address-of-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#17-auto-from-the-address-of-a-pointer)
 
 <!-- </visualization> -->
 
@@ -658,7 +658,7 @@ std::cout << p << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#21-empty-pointer-initialization)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#21-empty-pointer-initialization)
 
 <!-- </visualization> -->
 
@@ -698,7 +698,7 @@ std::cout << *py << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#22-copying-a-variable-and-a-pointer-with-similar-names)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#22-copying-a-variable-and-a-pointer-with-similar-names)
 
 <!-- </visualization> -->
 
@@ -738,7 +738,7 @@ p = value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#1-an-integer-assigned-to-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#1-an-integer-assigned-to-a-pointer)
 
 <!-- </visualization> -->
 
@@ -766,7 +766,7 @@ pp = p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#2-a-pointer-assigned-to-a-double-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#2-a-pointer-assigned-to-a-double-pointer)
 
 <!-- </visualization> -->
 
@@ -794,7 +794,7 @@ result = p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#3-a-pointer-assigned-to-an-integer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#3-a-pointer-assigned-to-an-integer)
 
 <!-- </visualization> -->
 
@@ -822,7 +822,7 @@ other = &p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#4-a-pointer-address-assigned-to-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#4-a-pointer-address-assigned-to-a-pointer)
 
 <!-- </visualization> -->
 
@@ -849,7 +849,7 @@ pp = &value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#5-an-integer-address-assigned-to-a-double-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#5-an-integer-address-assigned-to-a-double-pointer)
 
 <!-- </visualization> -->
 
@@ -878,7 +878,7 @@ other = *pp;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#6-copying-a-pointer-through-a-double-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#6-copying-a-pointer-through-a-double-pointer)
 
 <!-- </visualization> -->
 
@@ -907,7 +907,7 @@ result = *pp;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#7-one-dereference-instead-of-two)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#7-one-dereference-instead-of-two)
 
 <!-- </visualization> -->
 
@@ -935,7 +935,7 @@ int** pp{ &p };
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#8-writing-through-two-dereferences)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#8-writing-through-two-dereferences)
 
 <!-- </visualization> -->
 
@@ -964,7 +964,7 @@ p = &count;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#9-a-size_t-address-assigned-to-an-int8_t-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#9-a-size_t-address-assigned-to-an-int8_t-pointer)
 
 <!-- </visualization> -->
 
@@ -993,7 +993,7 @@ p = &value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#10-an-int8_t-address-assigned-to-a-size_t-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#10-an-int8_t-address-assigned-to-a-size_t-pointer)
 
 <!-- </visualization> -->
 
@@ -1022,7 +1022,7 @@ count = value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#11-an-int8_t-value-assigned-to-a-size_t)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#11-an-int8_t-value-assigned-to-a-size_t)
 
 <!-- </visualization> -->
 
@@ -1051,7 +1051,7 @@ p = count;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#12-a-size_t-value-assigned-to-a-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#12-a-size_t-value-assigned-to-a-pointer)
 
 <!-- </visualization> -->
 
@@ -1081,7 +1081,7 @@ pp = &p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#13-a-double-pointer-with-a-different-pointed-to-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#13-a-double-pointer-with-a-different-pointed-to-type)
 
 <!-- </visualization> -->
 
@@ -1109,7 +1109,7 @@ pp = &count;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#14-a-size_t-address-with-the-wrong-pointer-depth)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#14-a-size_t-address-with-the-wrong-pointer-depth)
 
 <!-- </visualization> -->
 
@@ -1139,7 +1139,7 @@ count = *p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/pointer/#15-assigning-an-int8_t-read-through-a-pointer-to-a-size_t)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#15-assigning-an-int8_t-read-through-a-pointer-to-a-size_t)
 
 <!-- </visualization> -->
 

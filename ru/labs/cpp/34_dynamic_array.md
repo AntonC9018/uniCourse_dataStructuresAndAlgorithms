@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/dynamic-array
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/dynamic-array/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/dynamic-array/)
 <!-- course-site-backlink:end -->
 # Динамический массив - практика
 

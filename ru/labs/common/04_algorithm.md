@@ -2,7 +2,7 @@
 slug: ru/common/labs/algorithm
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/algorithm/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/common/labs/algorithm/)
 <!-- course-site-backlink:end -->
 # Алгоритмы
 

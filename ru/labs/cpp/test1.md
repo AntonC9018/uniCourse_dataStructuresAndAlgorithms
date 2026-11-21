@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/assessment-1
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/assessment-1/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/assessment-1/)
 <!-- course-site-backlink:end -->
 # Макет аттестации 1
 

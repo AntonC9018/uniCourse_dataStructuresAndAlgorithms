@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/advanced-practice
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/advanced-practice/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/advanced-practice/)
 <!-- course-site-backlink:end -->
 # Продвинутая практика
 

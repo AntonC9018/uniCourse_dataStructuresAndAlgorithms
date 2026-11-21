@@ -2,7 +2,7 @@
 slug: en/common/labs/numbers
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/labs/numbers/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/labs/numbers/)
 <!-- course-site-backlink:end -->
 # How Numbers Are Stored in Bytes
 

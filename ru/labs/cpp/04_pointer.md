@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/pointer
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/pointer/)
 <!-- course-site-backlink:end -->
 # Указатели
 
@@ -49,7 +49,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#1-адрес-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#1-адрес-переменной)
 
 <!-- </visualization> -->
 
@@ -109,7 +109,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#2-адрес-неинициализированной-переменной)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#2-адрес-неинициализированной-переменной)
 
 <!-- </visualization> -->
 
@@ -138,7 +138,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#3-оператор-dereference-на-запись)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#3-оператор-dereference-на-запись)
 
 <!-- </visualization> -->
 
@@ -228,7 +228,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#7-печать-сложного-выражения)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#7-печать-сложного-выражения)
 
 <!-- </visualization> -->
 
@@ -254,7 +254,7 @@ int* b{ &a };
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#8-указатель-на-больший-тип-данных)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#8-указатель-на-больший-тип-данных)
 
 <!-- </visualization> -->
 
@@ -277,7 +277,7 @@ uint8_t* b = &a;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#9-указатель-на-меньший-тип-данных)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#9-указатель-на-меньший-тип-данных)
 
 <!-- </visualization> -->
 
@@ -304,7 +304,7 @@ int* c = &a;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#10-зависимость-адреса-от-значения)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#10-зависимость-адреса-от-значения)
 
 <!-- </visualization> -->
 
@@ -344,7 +344,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#11-это-та-же-память)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#11-это-та-же-память)
 
 <!-- </visualization> -->
 
@@ -374,7 +374,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#12-инициализация-через-указатель)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#12-инициализация-через-указатель)
 
 <!-- </visualization> -->
 
@@ -411,7 +411,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#13-перезапись-указателя)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#13-перезапись-указателя)
 
 <!-- </visualization> -->
 
@@ -449,7 +449,7 @@ std::cout << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#14-двойной-указатель)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#14-двойной-указатель)
 
 <!-- </visualization> -->
 
@@ -491,7 +491,7 @@ std::cout << value << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#15-auto-из-адреса)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#15-auto-из-адреса)
 
 <!-- </visualization> -->
 
@@ -521,7 +521,7 @@ std::cout << copiedValue << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#16-auto-из-указателя-и-его-значения)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#16-auto-из-указателя-и-его-значения)
 
 <!-- </visualization> -->
 
@@ -550,7 +550,7 @@ std::cout << value << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#17-auto-из-адреса-указателя)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#17-auto-из-адреса-указателя)
 
 <!-- </visualization> -->
 
@@ -658,7 +658,7 @@ std::cout << p << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#21-пустая-инициализация-указателя)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#21-пустая-инициализация-указателя)
 
 <!-- </visualization> -->
 
@@ -699,7 +699,7 @@ std::cout << *py << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#22-копирование-переменной-и-указателя-с-похожими-именами)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#22-копирование-переменной-и-указателя-с-похожими-именами)
 
 <!-- </visualization> -->
 
@@ -739,7 +739,7 @@ p = value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#1-целое-число-присваивается-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#1-целое-число-присваивается-указателю)
 
 <!-- </visualization> -->
 
@@ -767,7 +767,7 @@ pp = p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#2-указатель-присваивается-двойному-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#2-указатель-присваивается-двойному-указателю)
 
 <!-- </visualization> -->
 
@@ -795,7 +795,7 @@ result = p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#3-указатель-присваивается-целому-числу)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#3-указатель-присваивается-целому-числу)
 
 <!-- </visualization> -->
 
@@ -823,7 +823,7 @@ other = &p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#4-адрес-указателя-присваивается-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#4-адрес-указателя-присваивается-указателю)
 
 <!-- </visualization> -->
 
@@ -850,7 +850,7 @@ pp = &value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#5-адрес-целого-числа-присваивается-двойному-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#5-адрес-целого-числа-присваивается-двойному-указателю)
 
 <!-- </visualization> -->
 
@@ -879,7 +879,7 @@ other = *pp;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#6-копирование-указателя-через-двойной-указатель)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#6-копирование-указателя-через-двойной-указатель)
 
 <!-- </visualization> -->
 
@@ -908,7 +908,7 @@ result = *pp;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#7-одно-разыменование-вместо-двух)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#7-одно-разыменование-вместо-двух)
 
 <!-- </visualization> -->
 
@@ -936,7 +936,7 @@ int** pp{ &p };
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#8-запись-через-два-разыменования)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#8-запись-через-два-разыменования)
 
 <!-- </visualization> -->
 
@@ -965,7 +965,7 @@ p = &count;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#9-адрес-size_t-присваивается-указателю-на-int8_t)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#9-адрес-size_t-присваивается-указателю-на-int8_t)
 
 <!-- </visualization> -->
 
@@ -994,7 +994,7 @@ p = &value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#10-адрес-int8_t-присваивается-указателю-на-size_t)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#10-адрес-int8_t-присваивается-указателю-на-size_t)
 
 <!-- </visualization> -->
 
@@ -1023,7 +1023,7 @@ count = value;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#11-значение-int8_t-присваивается-size_t)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#11-значение-int8_t-присваивается-size_t)
 
 <!-- </visualization> -->
 
@@ -1052,7 +1052,7 @@ p = count;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#12-значение-size_t-присваивается-указателю)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#12-значение-size_t-присваивается-указателю)
 
 <!-- </visualization> -->
 
@@ -1082,7 +1082,7 @@ pp = &p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#13-двойной-указатель-с-другим-типом-данных)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#13-двойной-указатель-с-другим-типом-данных)
 
 <!-- </visualization> -->
 
@@ -1110,7 +1110,7 @@ pp = &count;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#14-адрес-size_t-с-неверным-числом-уровней-указателя)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#14-адрес-size_t-с-неверным-числом-уровней-указателя)
 
 <!-- </visualization> -->
 
@@ -1140,7 +1140,7 @@ count = *p;
 
 <!-- <visualization types> -->
 
-[▶ Пошаговое выполнение на сайте курса](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/pointer/#15-присваивание-size_t-значения-int8_t-прочитанного-через-указатель)
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/pointer/#15-присваивание-size_t-значения-int8_t-прочитанного-через-указатель)
 
 <!-- </visualization> -->
 

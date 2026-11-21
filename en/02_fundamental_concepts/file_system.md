@@ -2,7 +2,7 @@
 slug: en/common/fundamental-concepts/file-system
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/fundamental-concepts/file-system/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/fundamental-concepts/file-system/)
 <!-- course-site-backlink:end -->
 # File System
 

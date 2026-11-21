@@ -2,7 +2,7 @@
 slug: en/cpp/labs/numeric-conversions
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/)
 <!-- course-site-backlink:end -->
 # Numeric conversions
 
@@ -100,7 +100,7 @@ int b{ static_cast<int>(a) };
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#3-static_cast-to-a-larger-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#3-static_cast-to-a-larger-type)
 
 <!-- </visualization> -->
 
@@ -127,7 +127,7 @@ int b{ static_cast<int>(a) };
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#4-static_cast-of-a-negative-number-to-a-larger-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#4-static_cast-of-a-negative-number-to-a-larger-type)
 
 <!-- </visualization> -->
 
@@ -165,7 +165,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#5-static_cast)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#5-static_cast)
 
 <!-- </visualization> -->
 
@@ -258,7 +258,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#6-static_cast-of-a-negative-number-to-a-smaller-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#6-static_cast-of-a-negative-number-to-a-smaller-type)
 
 <!-- </visualization> -->
 
@@ -302,7 +302,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#7-bitwise-operation-advanced-level)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#7-bitwise-operation-advanced-level)
 
 <!-- </visualization> -->
 
@@ -374,7 +374,7 @@ int main()
 
 <!-- <visualization bits> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/numeric-conversions/#8-changing-the-sign-advanced-level)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/numeric-conversions/#8-changing-the-sign-advanced-level)
 
 <!-- </visualization> -->
 

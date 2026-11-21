@@ -2,7 +2,7 @@
 slug: ru/cpp/advanced-programming-fundamentals/template
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/advanced-programming-fundamentals/template/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/advanced-programming-fundamentals/template/)
 <!-- course-site-backlink:end -->
 # `template`
 

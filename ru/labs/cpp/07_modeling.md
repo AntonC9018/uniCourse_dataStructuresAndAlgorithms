@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/modeling
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/modeling/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/modeling/)
 <!-- course-site-backlink:end -->
 # Практика по моделированию простой задачи
 

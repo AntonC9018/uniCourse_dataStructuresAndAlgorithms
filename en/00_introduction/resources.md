@@ -2,7 +2,7 @@
 slug: en/common/introduction/resources
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/common/introduction/resources/)
+[This lesson on the website](https://cpp.curmanschii.top/en/common/introduction/resources/)
 <!-- course-site-backlink:end -->
 # Resources
 

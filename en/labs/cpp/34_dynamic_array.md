@@ -2,7 +2,7 @@
 slug: en/cpp/labs/dynamic-array
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/dynamic-array/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/dynamic-array/)
 <!-- course-site-backlink:end -->
 # Dynamic Array — Practice
 

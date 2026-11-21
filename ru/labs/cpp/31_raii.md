@@ -2,7 +2,7 @@
 slug: ru/cpp/labs/raii
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/labs/raii/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/labs/raii/)
 <!-- course-site-backlink:end -->
 # Конструкторы, деструкторы, RAII
 

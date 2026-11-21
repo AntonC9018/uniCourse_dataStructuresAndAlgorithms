@@ -2,7 +2,7 @@
 slug: ru/cpp/programming-fundamentals
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/programming-fundamentals/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/programming-fundamentals/)
 <!-- course-site-backlink:end -->
 # Основы программирования
 

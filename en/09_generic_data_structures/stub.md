@@ -2,7 +2,7 @@
 slug: en/dsa/generic-data-structures/stub
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/dsa/generic-data-structures/stub/)
+[This lesson on the website](https://cpp.curmanschii.top/en/dsa/generic-data-structures/stub/)
 <!-- course-site-backlink:end -->
 # Generic Data Structures
 

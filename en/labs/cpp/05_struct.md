@@ -2,7 +2,7 @@
 slug: en/cpp/labs/struct
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/struct/)
 <!-- course-site-backlink:end -->
 # Structures
 
@@ -46,7 +46,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#1-structure-initialization)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#1-structure-initialization)
 
 <!-- </visualization> -->
 
@@ -84,7 +84,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#2-an-expression-of-a-structure-type)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#2-an-expression-of-a-structure-type)
 
 <!-- </visualization> -->
 
@@ -178,7 +178,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#4-operations-with-fields)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#4-operations-with-fields)
 
 <!-- </visualization> -->
 
@@ -249,7 +249,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#6-assigning-a-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#6-assigning-a-structure)
 
 <!-- </visualization> -->
 
@@ -291,7 +291,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#7-field-addresses)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#7-field-addresses)
 
 <!-- </visualization> -->
 
@@ -340,7 +340,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#8-assigning-a-structure-variable-1)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#8-assigning-a-structure-variable-1)
 
 <!-- </visualization> -->
 
@@ -385,7 +385,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#9-assigning-a-structure-variable-2)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#9-assigning-a-structure-variable-2)
 
 <!-- </visualization> -->
 
@@ -428,7 +428,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#10-structure-address-1)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#10-structure-address-1)
 
 <!-- </visualization> -->
 
@@ -470,7 +470,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#11-structure-address-2)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#11-structure-address-2)
 
 <!-- </visualization> -->
 
@@ -513,7 +513,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#12-the---operator)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#12-the---operator)
 
 <!-- </visualization> -->
 
@@ -580,7 +580,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#14-overwriting-through-an-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#14-overwriting-through-an-address)
 
 <!-- </visualization> -->
 
@@ -673,7 +673,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#17-an-address-field)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#17-an-address-field)
 
 <!-- </visualization> -->
 
@@ -725,7 +725,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#18-a-nested-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#18-a-nested-structure)
 
 <!-- </visualization> -->
 
@@ -775,7 +775,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#19-copying-a-nested-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#19-copying-a-nested-structure)
 
 <!-- </visualization> -->
 
@@ -891,7 +891,7 @@ Both forms are equivalent.
 The result is 8 because each structure has 2 `int`s, each of which occupies 4 bytes.
 <!-- <visualization template="layout"> -->
 
-[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#22-structure-size-1)
+[▶ Explore this layout on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#22-structure-size-1)
 
 <!-- </visualization> -->
 
@@ -921,7 +921,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#23-field-address-from-a-structure-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#23-field-address-from-a-structure-address)
 
 <!-- </visualization> -->
 
@@ -977,7 +977,7 @@ it goes into the next one.
 
 <!-- <visualization template="layout"> -->
 
-[▶ Explore this layout on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
+[▶ Explore this layout on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#24-advanced-level-structure-size-3)
 
 <!-- </visualization> -->
 
@@ -1043,7 +1043,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#26-copying-a-structure-with-a-pointer-field)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#26-copying-a-structure-with-a-pointer-field)
 
 <!-- </visualization> -->
 
@@ -1090,7 +1090,7 @@ copy = p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#1-a-structure-pointer-assigned-to-a-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#1-a-structure-pointer-assigned-to-a-structure)
 
 <!-- </visualization> -->
 
@@ -1122,7 +1122,7 @@ copy = &value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#2-a-structure-address-assigned-to-a-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#2-a-structure-address-assigned-to-a-structure)
 
 <!-- </visualization> -->
 
@@ -1154,7 +1154,7 @@ p = value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#3-a-structure-assigned-to-its-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#3-a-structure-assigned-to-its-pointer)
 
 <!-- </visualization> -->
 
@@ -1186,7 +1186,7 @@ pp = value;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#4-a-structure-assigned-to-a-double-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#4-a-structure-assigned-to-a-double-pointer)
 
 <!-- </visualization> -->
 
@@ -1220,7 +1220,7 @@ copy = pp;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#5-a-double-pointer-assigned-to-a-structure)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#5-a-double-pointer-assigned-to-a-structure)
 
 <!-- </visualization> -->
 
@@ -1253,7 +1253,7 @@ p = fieldAddress;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#6-an-integer-pointer-assigned-to-a-structure-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#6-an-integer-pointer-assigned-to-a-structure-pointer)
 
 <!-- </visualization> -->
 
@@ -1286,7 +1286,7 @@ fieldAddress = p;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#7-a-structure-pointer-assigned-to-an-integer-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#7-a-structure-pointer-assigned-to-an-integer-pointer)
 
 <!-- </visualization> -->
 
@@ -1320,7 +1320,7 @@ copy = **pp;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#8-copying-the-structure-through-two-pointers)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#8-copying-the-structure-through-two-pointers)
 
 <!-- </visualization> -->
 
@@ -1352,7 +1352,7 @@ A* p{ &value };
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#9-assigning-an-integer-through-a-structure-pointer)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#9-assigning-an-integer-through-a-structure-pointer)
 
 <!-- </visualization> -->
 
@@ -1385,7 +1385,7 @@ result = p->field;
 
 <!-- <visualization types> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/struct/#10-an-integer-assigned-from-a-structure-field)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/struct/#10-an-integer-assigned-from-a-structure-field)
 
 <!-- </visualization> -->
 

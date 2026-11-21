@@ -2,7 +2,7 @@
 slug: en/cpp/labs/cpp-array
 ---
 <!-- course-site-backlink:start -->
-[This lesson on the website](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/)
+[This lesson on the website](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/)
 <!-- course-site-backlink:end -->
 # C++ arrays (`std::array`)
 
@@ -37,7 +37,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#1-obtaining-the-address-of-the-first-element)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#1-obtaining-the-address-of-the-first-element)
 
 <!-- </visualization> -->
 
@@ -78,7 +78,7 @@ arr = other;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#3-initializing-c-arrays-1)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#3-initializing-c-arrays-1)
 
 <!-- </visualization> -->
 
@@ -101,7 +101,7 @@ std::array<int, 2> other{ arr };
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#4-initializing-c-arrays-2)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#4-initializing-c-arrays-2)
 
 <!-- </visualization> -->
 
@@ -127,7 +127,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#5-address-of-an-array)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#5-address-of-an-array)
 
 <!-- </visualization> -->
 
@@ -158,7 +158,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#6-dereferencing-an-array-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#6-dereferencing-an-array-address)
 
 <!-- </visualization> -->
 
@@ -188,7 +188,7 @@ std::cout << arr[1] << std::endl;
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#7-indexing-elements-through-an-address)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#7-indexing-elements-through-an-address)
 
 <!-- </visualization> -->
 
@@ -221,7 +221,7 @@ arr[1] = { 9, 10 };
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#8-matrices-two-dimensional-arrays)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#8-matrices-two-dimensional-arrays)
 
 <!-- </visualization> -->
 
@@ -301,7 +301,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#1-an-array-field-of-addresses)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#1-an-array-field-of-addresses)
 
 <!-- </visualization> -->
 
@@ -378,7 +378,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#3-initializing-an-array-field)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#3-initializing-an-array-field)
 
 <!-- </visualization> -->
 
@@ -419,7 +419,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#4-copying-a-structure-with-an-array-field)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#4-copying-a-structure-with-an-array-field)
 
 <!-- </visualization> -->
 
@@ -477,7 +477,7 @@ int main()
 
 <!-- <visualization> -->
 
-[▶ Step through this example on the course site](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/en/cpp/labs/cpp-array/#5-an-array-of-structures)
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/cpp-array/#5-an-array-of-structures)
 
 <!-- </visualization> -->
 

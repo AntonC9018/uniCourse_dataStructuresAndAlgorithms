@@ -2,7 +2,7 @@
 slug: ru/cpp/arrays/stub
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/cpp/arrays/stub/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/cpp/arrays/stub/)
 <!-- course-site-backlink:end -->
 # Массивы
 

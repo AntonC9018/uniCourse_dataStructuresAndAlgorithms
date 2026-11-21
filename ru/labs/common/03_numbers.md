@@ -2,7 +2,7 @@
 slug: ru/common/labs/numbers
 ---
 <!-- course-site-backlink:start -->
-[Этот урок на сайте](https://AntonC9018.github.io/uniCourse_dataStructuresAndAlgorithms/ru/common/labs/numbers/)
+[Этот урок на сайте](https://cpp.curmanschii.top/ru/common/labs/numbers/)
 <!-- course-site-backlink:end -->
 # Как числа хранятся в байтах
 
