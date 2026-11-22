@@ -1,0 +1,3401 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "cPKhqBM0gIc",
+  "uploadId": "cPKhqBM0gIc",
+  "transcriptSha256": "6c3cfc3029ce1374d48b79036e147a7af3aee8cc7e5bc69fe843397f80f51f46",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 2840,
+      "endMilliseconds": 24670,
+      "kind": "fact",
+      "text": "In base three the only available digits are 0, 1 and 2, which is what makes counting in this system simple and cyclic.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2840,
+          "endMilliseconds": 24670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 24670,
+      "endMilliseconds": 31189,
+      "kind": "explanation",
+      "text": "When counting starts a position at zero and runs 0, 1, 2, all digits of that position are exhausted, which is exactly when a carry must happen.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 24670,
+          "endMilliseconds": 31189
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 31189,
+      "endMilliseconds": 57930,
+      "kind": "reason",
+      "text": "After 2 the next number is 1.0 because positions to the left can be padded with a zero without changing the value, so the missing third digit is never written.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 31189,
+          "endMilliseconds": 57930
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 57930,
+      "endMilliseconds": 76900,
+      "kind": "explanation",
+      "text": "The whole idea of positional numeral systems is that once all digits of a position are used, that position cycles back to its start while the next position increases by one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 57930,
+          "endMilliseconds": 76900
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 76900,
+      "endMilliseconds": 94690,
+      "kind": "explanation",
+      "text": "Counting can be pictured like mechanical water meters where each rotating dial only advances once per full revolution of the dial before it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 76900,
+          "endMilliseconds": 94690
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 102640,
+      "endMilliseconds": 108910,
+      "kind": "explanation",
+      "text": "Each digit position is analogous to a counter disk, where one disk counts units and higher disks count the revolutions of the disk before them.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 102640,
+          "endMilliseconds": 108910
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 102640,
+      "endMilliseconds": 122150,
+      "kind": "explanation",
+      "text": "Each disk counts units while the next disk counts how many times the previous disk turned, so the following disk advances once for every three turns of the small one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 102640,
+          "endMilliseconds": 122150
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 128310,
+      "endMilliseconds": 142270,
+      "kind": "reason",
+      "text": "In base three the digit at the threes position records how many times the units position completed a full cycle, so it changes once every three counts.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 128310,
+          "endMilliseconds": 142270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 145000,
+      "endMilliseconds": 158470,
+      "kind": "explanation",
+      "text": "When the cycle finishes in the last position it wraps back to zero, because the value has moved on to the higher position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 145000,
+          "endMilliseconds": 158470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 158470,
+      "endMilliseconds": 185750,
+      "kind": "reason",
+      "text": "Since 2 is the last digit of base three there is no next digit, so an exhausted position cycles back to the first available digit 0 and the carry is added in the next position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 158470,
+          "endMilliseconds": 185750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#counting-with-three-digits"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 195360,
+      "endMilliseconds": 209310,
+      "kind": "explanation",
+      "text": "From the cycling behaviour one can conclude that every position has its own weight, which makes reading a number a matter of knowing what each position counts.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 195360,
+          "endMilliseconds": 209310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 209310,
+      "endMilliseconds": 218190,
+      "kind": "reason",
+      "text": "The lowest position has weight one because it increases on every single count.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 209310,
+          "endMilliseconds": 218190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 218190,
+      "endMilliseconds": 226440,
+      "kind": "reason",
+      "text": "The next position has weight three because it increases once per three counts of the previous one.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 218190,
+          "endMilliseconds": 226440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 226440,
+      "endMilliseconds": 235160,
+      "kind": "reason",
+      "text": "In base ten the following positions therefore weigh nine and then ninety, since each advances once per nine and once per ninety counts.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 226440,
+          "endMilliseconds": 235160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 235160,
+      "endMilliseconds": 247430,
+      "kind": "explanation",
+      "text": "A correspondence table can be built for decimal so that the value each position contributes is visible at a glance.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 235160,
+          "endMilliseconds": 247430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 250240,
+      "endMilliseconds": 262110,
+      "kind": "explanation",
+      "text": "A single nine with no threes and no units contributes nine, because only that position is filled.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 250240,
+          "endMilliseconds": 262110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 262110,
+      "endMilliseconds": 271600,
+      "kind": "explanation",
+      "text": "A single three with zero in the threes and units positions contributes three, because the higher place values only appear when their positions are filled.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 262110,
+          "endMilliseconds": 271600
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 263320,
+      "endMilliseconds": 271590,
+      "kind": "explanation",
+      "text": "A three in the threes position contributes three even though the lower positions are zero, confirming that each position carries its own weight independently.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 263320,
+          "endMilliseconds": 271590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 271600,
+      "endMilliseconds": 282670,
+      "kind": "explanation",
+      "text": "One in the threes position plus two in the units position gives 1 x 3 + 2 x 1 = 5, showing that reading a number is a weighted sum over its positions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 271600,
+          "endMilliseconds": 282670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#giving-each-position-a-weight"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 288199,
+      "endMilliseconds": 298350,
+      "kind": "scope_boundary",
+      "text": "The lesson moves on to how column addition works, building on the positional weights just established.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 288199,
+          "endMilliseconds": 298350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 298360,
+      "endMilliseconds": 313990,
+      "kind": "explanation",
+      "text": "In decimal each addend can be split into its positional weights, for example into 100 + 20 + 3, which exposes the structure column addition relies on.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 298360,
+          "endMilliseconds": 313990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 314400,
+      "endMilliseconds": 332390,
+      "kind": "explanation",
+      "text": "The separate pieces may then be added together because commutativity lets the weights be regrouped freely before summing.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 314400,
+          "endMilliseconds": 332390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 332390,
+      "endMilliseconds": 347300,
+      "kind": "explanation",
+      "text": "Grouping by weight yields 100 + 4 + 20 + 60 + 3 + 6, which is the same as summing position by position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 332390,
+          "endMilliseconds": 347300
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 347300,
+      "endMilliseconds": 364120,
+      "kind": "fact",
+      "text": "The same positional decomposition works in any numeral system, not only decimal, because every positional system assigns a weight to each digit, and column addition is precisely adding matching positions of both numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 347300,
+          "endMilliseconds": 364120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 355039,
+      "endMilliseconds": 368510,
+      "kind": "explanation",
+      "text": "Column addition pairs the leftmost digit of the first number with the middle digits of the second, and continues middle with middle and left with left, which is what makes the positional scheme work.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 355039,
+          "endMilliseconds": 368510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 368510,
+      "endMilliseconds": 374000,
+      "kind": "fact",
+      "text": "In the addition-with-leftward-carry algorithm the extra zero stands for a carry slot, so every position always has a digit to write into.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 368510,
+          "endMilliseconds": 374000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 376550,
+      "endMilliseconds": 385000,
+      "kind": "explanation",
+      "text": "In the example 123 plus 466 the units digits 3 and 6 are summed first and the result goes into the units position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 376550,
+          "endMilliseconds": 385000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 385240,
+      "endMilliseconds": 400000,
+      "kind": "explanation",
+      "text": "For the tens position 2 plus 5 produces 7, and the zero written to its right shows that the digit belongs to the next, shifted position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 385240,
+          "endMilliseconds": 400000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 400000,
+      "endMilliseconds": 454199,
+      "kind": "edge_case",
+      "text": "When a digit sum exceeds the position capacity, as with 3 plus 9 giving 12, an extra position appears in the answer to hold the carry, which is why the zero placeholders exist.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 400000,
+          "endMilliseconds": 454199
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 439599,
+          "endMilliseconds": 454199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 454199,
+      "endMilliseconds": 478000,
+      "kind": "explanation",
+      "text": "The 12 obtained from 3 plus 9 is split into the digit 2 in the current position and a group of 10 that is carried into the tens position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 454199,
+          "endMilliseconds": 478000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#deriving-decimal-column-addition"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 480629,
+      "endMilliseconds": 496230,
+      "kind": "fact",
+      "text": "The same column-wise addition scheme applies in other numeral systems, where the maximum digit is 3 rather than 9 as in base 4.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 480629,
+          "endMilliseconds": 496230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 496230,
+      "endMilliseconds": 506430,
+      "kind": "explanation",
+      "text": "Numbers in any base can be split digit by digit into positional contributions, so the addition algorithm itself does not change.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 496230,
+          "endMilliseconds": 506430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 506440,
+      "endMilliseconds": 528680,
+      "kind": "reason",
+      "text": "In a non-decimal system the value written as 10 in the carry step means one unit of the next position in that system, so the scheme generalizes to any base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 506440,
+          "endMilliseconds": 528680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 533620,
+      "endMilliseconds": 540800,
+      "kind": "fact",
+      "text": "The group carried out of a column sum equals the numeral-system base, so it is 10 when the maximum digit is 9 and 10 when the maximum digit is 3.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 533620,
+          "endMilliseconds": 540800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 533620,
+      "endMilliseconds": 547350,
+      "kind": "fact",
+      "text": "The value carried out of a column equals the numeral-system base, so it is 10 for a maximum digit of 9 and the base itself for a maximum digit of 3.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 533620,
+          "endMilliseconds": 547350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 547350,
+      "endMilliseconds": 556000,
+      "kind": "explanation",
+      "text": "Addition is performed starting from the last, least significant position, so each position's result is settled before moving left.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 547350,
+          "endMilliseconds": 556000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 556000,
+      "endMilliseconds": 569500,
+      "kind": "correction",
+      "text": "The worked table shown was written for ternary, so for a base-4 example one must build the equivalent table for base 4.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 556000,
+          "endMilliseconds": 569500
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 569500,
+      "endMilliseconds": 578000,
+      "kind": "fact",
+      "text": "In base 4, 3 plus 3 splits into one unit of the next position and 2 remaining, because 4 is written as 10 in that system.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 569500,
+          "endMilliseconds": 578000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 578000,
+      "endMilliseconds": 598000,
+      "kind": "explanation",
+      "text": "Once the column digits of both numbers are used up, a leftover 1 must be written as the leading digit of the result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 578000,
+          "endMilliseconds": 598000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-040",
+      "startMilliseconds": 598000,
+      "endMilliseconds": 615550,
+      "kind": "reason",
+      "text": "A carried group of 10 can be reordered into the next position by commutativity, which is the step that generates the new higher position in the sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 598000,
+          "endMilliseconds": 615550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-041",
+      "startMilliseconds": 615550,
+      "endMilliseconds": 638000,
+      "kind": "fact",
+      "text": "When the carried unit is added to a digit that already equals the maximum digit, the result is the base written as 10 and nothing further carries.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 615550,
+          "endMilliseconds": 638000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-042",
+      "startMilliseconds": 630040,
+      "endMilliseconds": 637990,
+      "kind": "fact",
+      "text": "Adding a carried unit to a digit equal to the maximum digit of the system yields the base written as 10, so no further carry occurs.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 630040,
+          "endMilliseconds": 637990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-043",
+      "startMilliseconds": 638000,
+      "endMilliseconds": 648670,
+      "kind": "reason",
+      "text": "In a column sum the extra 1 of a 20 can be moved to the next position by commutativity while the 0 is left in place, so 20 stays as the recorded digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 638000,
+          "endMilliseconds": 648670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-044",
+      "startMilliseconds": 648670,
+      "endMilliseconds": 667190,
+      "kind": "explanation",
+      "text": "For the leading column 300 plus 100 exceeds the maximum digit, so it is written as 1 in the new position created by the carry.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 648670,
+          "endMilliseconds": 667190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-045",
+      "startMilliseconds": 667200,
+      "endMilliseconds": 682670,
+      "kind": "fact",
+      "text": "After carrying, the result is recorded as a single number written in that numeral system, and column addition then works exactly as in base 10 with a different maximum digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 667200,
+          "endMilliseconds": 682670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#changing-the-carry-threshold-to-base-four"
+      }
+    },
+    {
+      "id": "TP-046",
+      "startMilliseconds": 682670,
+      "endMilliseconds": 684790,
+      "kind": "scope_boundary",
+      "text": "Addition in arbitrary bases is finished here, and the lesson moves on to multiplication.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 682670,
+          "endMilliseconds": 684790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-047",
+      "startMilliseconds": 684790,
+      "endMilliseconds": 700430,
+      "kind": "explanation",
+      "text": "Decimal multiplication such as 123 times 345 starts by splitting each number into a sum of its positional contributions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 684790,
+          "endMilliseconds": 700430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-048",
+      "startMilliseconds": 711240,
+      "endMilliseconds": 719510,
+      "kind": "explanation",
+      "text": "After splitting into positional sums, multiplication relies on the distributive property to combine the terms.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 711240,
+          "endMilliseconds": 719510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-049",
+      "startMilliseconds": 719510,
+      "endMilliseconds": 739839,
+      "kind": "reason",
+      "text": "Distributivity lets a sum of positional contributions be grouped into parenthesized factors, so each positional term of one number multiplies the whole of the other.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 719510,
+          "endMilliseconds": 739839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-050",
+      "startMilliseconds": 726720,
+      "endMilliseconds": 758550,
+      "kind": "explanation",
+      "text": "The distributive property lets you factor a shared multiplier out of a sum, so 100·(300+40+5)+3·(300+40+5) is rewritten as (100+3)·(300+40+5), which shortens the work compared with plain column multiplication.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 726720,
+          "endMilliseconds": 758550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-051",
+      "startMilliseconds": 758550,
+      "endMilliseconds": 769509,
+      "kind": "reason",
+      "text": "Splitting a multiplier into smaller factors is allowed because it keeps the product the same while producing the per-digit pieces column multiplication needs, for example 100 into 1·100 and 20 into 2·10.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 758550,
+          "endMilliseconds": 769509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-a-product-by-position"
+      }
+    },
+    {
+      "id": "TP-052",
+      "startMilliseconds": 769509,
+      "endMilliseconds": 789030,
+      "kind": "fact",
+      "text": "Multiplication by 1 (or by a power of the base) in any numeral system only shifts the digits one position per step and simply appends zeros, so in base six 6084·100 is 8400.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 769509,
+          "endMilliseconds": 789030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-053",
+      "startMilliseconds": 789030,
+      "endMilliseconds": 824839,
+      "kind": "reason",
+      "text": "The appended zeros do not depend on the base, because multiplying by the base just repeats the number's place value as many times as the multiplier's value, which is why the shortcut is safe.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 789030,
+          "endMilliseconds": 824839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-054",
+      "startMilliseconds": 824839,
+      "endMilliseconds": 833160,
+      "kind": "explanation",
+      "text": "After distributing the shared multiplier, each digit of the original number ends up multiplied by that factor, which is exactly how the partial products of column multiplication are formed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 824839,
+          "endMilliseconds": 833150
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 824839,
+          "endMilliseconds": 833160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-055",
+      "startMilliseconds": 845519,
+      "endMilliseconds": 890430,
+      "kind": "explanation",
+      "text": "Re-expanding the brackets per column gives 1·(300+40+5), 10·2·(300+40+5) and 1·3·(300+40+5), which are the same partial products you compute when multiplying in a column.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 845519,
+          "endMilliseconds": 890430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-056",
+      "startMilliseconds": 890430,
+      "endMilliseconds": 900269,
+      "kind": "fact",
+      "text": "The same algebra by positions is valid in any numeral system, so the factoring trick is not tied to decimal notation.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 890430,
+          "endMilliseconds": 900269
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-057",
+      "startMilliseconds": 900269,
+      "endMilliseconds": 915430,
+      "kind": "scope_boundary",
+      "text": "At this stage no carrying is needed, because the digits have only been split by position without checking them against the largest allowed digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 900269,
+          "endMilliseconds": 915430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-058",
+      "startMilliseconds": 915430,
+      "endMilliseconds": 923240,
+      "kind": "edge_case",
+      "text": "9 is the largest digit in base ten, so its limit only comes into play when the individual digit products are actually computed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 915430,
+          "endMilliseconds": 923240
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 917639,
+          "endMilliseconds": 923230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#separating-shifts-from-digit-arithmetic"
+      }
+    },
+    {
+      "id": "TP-059",
+      "startMilliseconds": 923240,
+      "endMilliseconds": 931839,
+      "kind": "explanation",
+      "text": "In base ten these column products would be 5, 10 and 15, but to see the digit limit clearly the same multiplication is redone in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 923240,
+          "endMilliseconds": 931839
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#obtaining-a-first-base-six-digit-product"
+      }
+    },
+    {
+      "id": "TP-060",
+      "startMilliseconds": 931839,
+      "endMilliseconds": 952550,
+      "kind": "fact",
+      "text": "In base six the row where the factor is 1 leaves the digits untouched, because multiplying anything by 1 in any base simply returns the number.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 931839,
+          "endMilliseconds": 952550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#obtaining-a-first-base-six-digit-product"
+      }
+    },
+    {
+      "id": "TP-061",
+      "startMilliseconds": 984700,
+      "endMilliseconds": 1003160,
+      "kind": "explanation",
+      "text": "A digit product can be broken into repeated addition, so 2·5 in base six is 5+5, which is 5+1+4, and 1+4 carries as 10+4, giving 14 in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 984700,
+          "endMilliseconds": 1003160
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#obtaining-a-first-base-six-digit-product"
+      }
+    },
+    {
+      "id": "TP-062",
+      "startMilliseconds": 1003160,
+      "endMilliseconds": 1026839,
+      "kind": "explanation",
+      "text": "The result 14 in base six comes from carrying the one into the next position after the addition overflowed the base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1003160,
+          "endMilliseconds": 1026839
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1012759,
+          "endMilliseconds": 1023550
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#obtaining-a-first-base-six-digit-product"
+      }
+    },
+    {
+      "id": "TP-063",
+      "startMilliseconds": 1026840,
+      "endMilliseconds": 1031920,
+      "kind": "fact",
+      "text": "Larger digit products such as D·E in a hexadecimal-like base raise the question of how the product is obtained at all.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1026840,
+          "endMilliseconds": 1031920
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-064",
+      "startMilliseconds": 1031920,
+      "endMilliseconds": 1037320,
+      "kind": "reason",
+      "text": "Repeating the digit E D times would give the product but is impractical for large digit values, so a better approach is needed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1031920,
+          "endMilliseconds": 1037320
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-065",
+      "startMilliseconds": 1037320,
+      "endMilliseconds": 1060510,
+      "kind": "explanation",
+      "text": "There are several practical routes: build a multiplication table for that numeral system, where a table entry like 8·8=64 in hex gives D·E directly, or use a calculator to multiply D by E and read the result in that base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1037320,
+          "endMilliseconds": 1060510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-066",
+      "startMilliseconds": 1060510,
+      "endMilliseconds": 1064510,
+      "kind": "explanation",
+      "text": "A calculator path works because the digits are ordinary numeric values, so multiplying D by E and expressing the answer in the current base yields the product.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1060510,
+          "endMilliseconds": 1064510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-067",
+      "startMilliseconds": 1090320,
+      "endMilliseconds": 1094510,
+      "kind": "fact",
+      "text": "A calculator set to hexadecimal multiplies D by E and returns the answer directly in that base, which saves manual work.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1090320,
+          "endMilliseconds": 1094510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-068",
+      "startMilliseconds": 1094120,
+      "endMilliseconds": 1115430,
+      "kind": "explanation",
+      "text": "The alternative route is to convert only the two operands to decimal, multiply them there, and convert the product back to hexadecimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1094120,
+          "endMilliseconds": 1115430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-069",
+      "startMilliseconds": 1118600,
+      "endMilliseconds": 1132230,
+      "kind": "reason",
+      "text": "Converting the whole expression is not required, so the calculator route stays acceptable even at basic levels.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1118600,
+          "endMilliseconds": 1132230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-070",
+      "startMilliseconds": 1134600,
+      "endMilliseconds": 1150750,
+      "kind": "fact",
+      "text": "A programmer-mode calculator accepts hexadecimal digits directly, so D times E can be entered as hex and evaluated without any conversion.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1134600,
+          "endMilliseconds": 1150750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-071",
+      "startMilliseconds": 1155720,
+      "endMilliseconds": 1167070,
+      "kind": "explanation",
+      "text": "Even if you follow the conversion route you reach the same answer, so the chosen path does not change the result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1155720,
+          "endMilliseconds": 1167070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#choosing-a-way-to-obtain-digit-products"
+      }
+    },
+    {
+      "id": "TP-072",
+      "startMilliseconds": 1167070,
+      "endMilliseconds": 1195720,
+      "kind": "explanation",
+      "text": "Since E equals 14, which is 2 less than 16, the product D times E can be rewritten as D times (16 minus 2) instead of computing it fully.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1167070,
+          "endMilliseconds": 1195720
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1181240,
+          "endMilliseconds": 1195720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-073",
+      "startMilliseconds": 1200520,
+      "endMilliseconds": 1214909,
+      "kind": "explanation",
+      "text": "Substituting E with 10 in base 2 minus 2 and expanding the brackets turns D times E into D0 minus 2D.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1200520,
+          "endMilliseconds": 1214909
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-074",
+      "startMilliseconds": 1226559,
+      "endMilliseconds": 1244430,
+      "kind": "explanation",
+      "text": "The 2D term can also be split as D0 minus D minus D, i.e. counting D off from D0, which keeps the arithmetic in the given base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1226559,
+          "endMilliseconds": 1244430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-075",
+      "startMilliseconds": 1248200,
+      "endMilliseconds": 1266390,
+      "kind": "correction",
+      "text": "Correcting the digit values, A is 10, B is 11, C is 12 and D is 13 in hexadecimal, so D is 3 less than 10 and needs three additions to reach 10.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1248200,
+          "endMilliseconds": 1266390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-076",
+      "startMilliseconds": 1266400,
+      "endMilliseconds": 1285190,
+      "kind": "explanation",
+      "text": "With that correction the product can be written as (10 minus 3) plus A minus (10 minus 3), subtracting the D minus1 term twice.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1266400,
+          "endMilliseconds": 1285190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-077",
+      "startMilliseconds": 1285230,
+      "endMilliseconds": 1298220,
+      "kind": "explanation",
+      "text": "Subtracting the (10 minus 3) terms makes the digits decrease D then C then B, giving B0, and the minus times minus becomes plus 3 plus 3, yielding B6.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1285230,
+          "endMilliseconds": 1298220
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-078",
+      "startMilliseconds": 1298840,
+      "endMilliseconds": 1311590,
+      "kind": "explanation",
+      "text": "The calculator is not the only option: the same product can be found by hand, possibly adding such sums a couple of times.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1298840,
+          "endMilliseconds": 1311590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#computing-d-times-e-with-complements"
+      }
+    },
+    {
+      "id": "TP-079",
+      "startMilliseconds": 1311590,
+      "endMilliseconds": 1320390,
+      "kind": "scope_boundary",
+      "text": "The lesson now moves on to multiplication in base 6, where D is still the value 14.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1311590,
+          "endMilliseconds": 1320390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-080",
+      "startMilliseconds": 1322720,
+      "endMilliseconds": 1329029,
+      "kind": "explanation",
+      "text": "In base 6 the digit 5 is replaced by the two-digit form 10 plus 4 so that the multiplication can be decomposed into simpler partial products.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1322720,
+          "endMilliseconds": 1329029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-081",
+      "startMilliseconds": 1329039,
+      "endMilliseconds": 1346310,
+      "kind": "explanation",
+      "text": "For the partial product 2 times 4 times 10 the small product 2 times 4 must be computed first, since 10 is the base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1329039,
+          "endMilliseconds": 1346310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-082",
+      "startMilliseconds": 1350919,
+      "endMilliseconds": 1363669,
+      "kind": "fact",
+      "text": "Base 6 only has digits 0 through 5, so 6 is written10, 7 is 11 and 8 is 12, which means 2 times 4 equals 8, that is 12 or 10 plus 2.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1350919,
+          "endMilliseconds": 1363669
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-083",
+      "startMilliseconds": 1363679,
+      "endMilliseconds": 1375990,
+      "kind": "reason",
+      "text": "Writing it as 12 means the digit 2 stays in its column when multiplied by 1 while the carry 1 passes into the next sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1363679,
+          "endMilliseconds": 1375990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-084",
+      "startMilliseconds": 1376000,
+      "endMilliseconds": 1386549,
+      "kind": "explanation",
+      "text": "Continuing the same decomposition, the remaining 1 is multiplied by the 30 term of the other factor.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1376000,
+          "endMilliseconds": 1386549
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-085",
+      "startMilliseconds": 1386559,
+      "endMilliseconds": 1406029,
+      "kind": "explanation",
+      "text": "In base 6, 2 times 3 equals 1 with a carry of 1, and adding two zeros to the trailing 1 turns it into 10.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1386559,
+          "endMilliseconds": 1399159
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1399159,
+          "endMilliseconds": 1406029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-086",
+      "startMilliseconds": 1406039,
+      "endMilliseconds": 1415510,
+      "kind": "explanation",
+      "text": "The resulting 10 is written by adding this ten into the next column, since a carry in base 6 equals one full unit of the base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1406039,
+          "endMilliseconds": 1415510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-087",
+      "startMilliseconds": 1417320,
+      "endMilliseconds": 1425789,
+      "kind": "explanation",
+      "text": "The partial products 13 and 4 are placed in their own positions and the total is obtained simply by adding position by position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1417320,
+          "endMilliseconds": 1425789
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-088",
+      "startMilliseconds": 1434880,
+      "endMilliseconds": 1440029,
+      "kind": "reason",
+      "text": "Because of the carry 10 the accumulated value shifts one more position to the left before the next partial product is added.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1434880,
+          "endMilliseconds": 1440029
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-089",
+      "startMilliseconds": 1440039,
+      "endMilliseconds": 1447470,
+      "kind": "explanation",
+      "text": "The same positional carry procedure is repeated for the next term of the multiplication.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1440039,
+          "endMilliseconds": 1447470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-090",
+      "startMilliseconds": 1452279,
+      "endMilliseconds": 1455789,
+      "kind": "explanation",
+      "text": "Once the partial products are all finished, the intermediate result can be written down.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1452279,
+          "endMilliseconds": 1455789
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-base-six-row-for-two"
+      }
+    },
+    {
+      "id": "TP-091",
+      "startMilliseconds": 1459880,
+      "endMilliseconds": 1465710,
+      "kind": "reason",
+      "text": "The factor300 shifts its partial product two positions to the left, since it is three times a power of one hundred.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1459880,
+          "endMilliseconds": 1465710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-092",
+      "startMilliseconds": 1467279,
+      "endMilliseconds": 1478590,
+      "kind": "explanation",
+      "text": "The term 3 times 300 is treated as 3 times 3 times 100 so that the small product is computed and then shifted by two positions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1467279,
+          "endMilliseconds": 1478590
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-093",
+      "startMilliseconds": 1472440,
+      "endMilliseconds": 1478579,
+      "kind": "explanation",
+      "text": "A three-digit multiplier factor such as 100 places its product three positions to the left, so the digit 3 lands in the hundreds column of the partial product.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1472440,
+          "endMilliseconds": 1478579
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-094",
+      "startMilliseconds": 1480520,
+      "endMilliseconds": 1485480,
+      "kind": "fact",
+      "text": "In base 6, 3 times 3 equals 13, so the product starts with the digit 1 and a carry.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1480520,
+          "endMilliseconds": 1485480
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-095",
+      "startMilliseconds": 1488720,
+      "endMilliseconds": 1498239,
+      "kind": "explanation",
+      "text": "Multiplying by 100 means writing the number 13 and appending two zeros, which is why the partial product 1300 has its significant digits shifted two positions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1488720,
+          "endMilliseconds": 1498239
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-096",
+      "startMilliseconds": 1498579,
+      "endMilliseconds": 1505159,
+      "kind": "explanation",
+      "text": "The factor 40 is 4 times 10, so its partial product equals the product by 4 with one extra position appended.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1498579,
+          "endMilliseconds": 1505159
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-097",
+      "startMilliseconds": 1509779,
+      "endMilliseconds": 1515239,
+      "kind": "explanation",
+      "text": "The trailing zero of a factor is appended to the end of the partial product rather than multiplied, which is what shifts each partial product to its own position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1509779,
+          "endMilliseconds": 1515239
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-098",
+      "startMilliseconds": 1532159,
+      "endMilliseconds": 1536789,
+      "kind": "reason",
+      "text": "Multiplying a partial product by 1 leaves it unchanged, so that column contributes its raw digit to the sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1532159,
+          "endMilliseconds": 1536789
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-099",
+      "startMilliseconds": 1536790,
+      "endMilliseconds": 1537749,
+      "kind": "explanation",
+      "text": "After the per-digit products are computed, all that remains is to sum the results.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1536790,
+          "endMilliseconds": 1537749
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#constructing-the-remaining-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-100",
+      "startMilliseconds": 1539300,
+      "endMilliseconds": 1547540,
+      "kind": "reason",
+      "text": "Grouping the accumulated digits by position is mathematically the same as ordinary column addition, so long multiplication ends in the same carry arithmetic as manual addition.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1539300,
+          "endMilliseconds": 1547540
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-101",
+      "startMilliseconds": 1561080,
+      "endMilliseconds": 1564190,
+      "kind": "reason",
+      "text": "When a column sums to 10, the zero is written in that position and the 1 is carried into the next position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1561080,
+          "endMilliseconds": 1564190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-102",
+      "startMilliseconds": 1566200,
+      "endMilliseconds": 1572549,
+      "kind": "reason",
+      "text": "Adding the carry into the next column produces 5 + 10 = 15, so one more unit is carried onward.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1566200,
+          "endMilliseconds": 1572549
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1570679,
+          "endMilliseconds": 1572549
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-103",
+      "startMilliseconds": 1572559,
+      "endMilliseconds": 1578149,
+      "kind": "explanation",
+      "text": "The remaining digits of that column, 3 plus 5, contribute 8 to the final sum at that position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1572559,
+          "endMilliseconds": 1578149
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-104",
+      "startMilliseconds": 1578159,
+      "endMilliseconds": 1584549,
+      "kind": "explanation",
+      "text": "The remaining positions each contribute 2, the tens column sums to 10 and yields 0 with one carried up, so the carries cascade leftward through the sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1578159,
+          "endMilliseconds": 1584549
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-105",
+      "startMilliseconds": 1595399,
+      "endMilliseconds": 1601870,
+      "kind": "reason",
+      "text": "Reading the accumulated digits column by column gives the low digits of the sum one position at a time.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1595399,
+          "endMilliseconds": 1601870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-106",
+      "startMilliseconds": 1602240,
+      "endMilliseconds": 1606990,
+      "kind": "reason",
+      "text": "A column whose accumulated digits total 0 is written as zero and its carried 1 is added to the next column.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1602240,
+          "endMilliseconds": 1606990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-107",
+      "startMilliseconds": 1630080,
+      "endMilliseconds": 1635390,
+      "kind": "reason",
+      "text": "In the next column 1 plus 3 plus 5 equals 12, so 2 is written there and the extra 1 carries forward.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1630080,
+          "endMilliseconds": 1635390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-108",
+      "startMilliseconds": 1637919,
+      "endMilliseconds": 1648030,
+      "kind": "reason",
+      "text": "Adding the 2 and 4 of the following column again yields 10, which produces another carry while keeping the column remainder.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1637919,
+          "endMilliseconds": 1648030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-109",
+      "startMilliseconds": 1653030,
+      "endMilliseconds": 1661070,
+      "kind": "fact",
+      "text": "The last column sums to 5, so the completed long-multiplication result for this example is read off as the digit sequence ending in 5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1653030,
+          "endMilliseconds": 1661070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#summing-the-base-six-rows"
+      }
+    },
+    {
+      "id": "TP-110",
+      "startMilliseconds": 1672480,
+      "endMilliseconds": 1681789,
+      "kind": "fact",
+      "text": "A second worked example switches to hexadecimal multiplication, taking FD times B5 to show the same procedure in another base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1672480,
+          "endMilliseconds": 1681789
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-111",
+      "startMilliseconds": 1681799,
+      "endMilliseconds": 1690080,
+      "kind": "explanation",
+      "text": "In any base the two-digit factor FD is decomposed by position as F times 16 plus D, which is what makes the per-digit expansion work.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1681799,
+          "endMilliseconds": 1687789
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1681799,
+          "endMilliseconds": 1690080
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-112",
+      "startMilliseconds": 1688000,
+      "endMilliseconds": 1695710,
+      "kind": "explanation",
+      "text": "The second factor B5 is likewise decomposed into B times 16 plus 5, so both multi-digit numbers become pairs of digit-times-base terms.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1688000,
+          "endMilliseconds": 1695710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-113",
+      "startMilliseconds": 1699640,
+      "endMilliseconds": 1712070,
+      "kind": "explanation",
+      "text": "Distributing the product of the two decompositions yields four terms: F times B times 16, 5F times 16, D times B times 16 and 5D.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1699640,
+          "endMilliseconds": 1712070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-114",
+      "startMilliseconds": 1715500,
+      "endMilliseconds": 1725430,
+      "kind": "explanation",
+      "text": "The term F0 equals F times 1 and the term D is factored into a bracket so that the power-of-base factor is common to a group of terms.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1715500,
+          "endMilliseconds": 1725430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-115",
+      "startMilliseconds": 1728000,
+      "endMilliseconds": 1733269,
+      "kind": "explanation",
+      "text": "Factoring the bracket lets the remaining F times B product be handled by the same per-digit method already shown.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1728000,
+          "endMilliseconds": 1733269
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-116",
+      "startMilliseconds": 1736000,
+      "endMilliseconds": 1739950,
+      "kind": "reason",
+      "text": "Since B0 is B times 16, the term F times B0 equals F times B times 16, which is a shifted F times B product.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1736000,
+          "endMilliseconds": 1739950
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-117",
+      "startMilliseconds": 1740000,
+      "endMilliseconds": 1746470,
+      "kind": "reason",
+      "text": "In hexadecimal F plus 1 rolls over to 10, so F plus 1 minus 1 is exactly F, which resolves the extra unit in the last position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1740000,
+          "endMilliseconds": 1746470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-118",
+      "startMilliseconds": 1746800,
+      "endMilliseconds": 1753350,
+      "kind": "scope_boundary",
+      "text": "The trailing 1 of that last position is set aside for now and the extra zero appended at the very end of the sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1746800,
+          "endMilliseconds": 1753350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#expanding-the-hexadecimal-product"
+      }
+    },
+    {
+      "id": "TP-119",
+      "startMilliseconds": 1764119,
+      "endMilliseconds": 1787870,
+      "kind": "fact",
+      "text": "After the F times B terms are settled, the next term to evaluate is B0 minus B, the high-order part of the D times B group.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1764119,
+          "endMilliseconds": 1787870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-120",
+      "startMilliseconds": 1804120,
+      "endMilliseconds": 1811870,
+      "kind": "fact",
+      "text": "The term still to evaluate is B0 minus B, the high-order part of the D times B group.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1804120,
+          "endMilliseconds": 1811870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-121",
+      "startMilliseconds": 1819880,
+      "endMilliseconds": 1826549,
+      "kind": "reason",
+      "text": "Because B0 is B times 16, the difference B0 minus B can be rewritten as A times 16 plus 10 minus B, which exposes a small subtraction.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1819880,
+          "endMilliseconds": 1826549
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-122",
+      "startMilliseconds": 1826559,
+      "endMilliseconds": 1837750,
+      "kind": "explanation",
+      "text": "In base 16 the value 10 minus B is found simply by counting up from B until 10 is reached, which is easier than carrying out a full subtraction.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1826559,
+          "endMilliseconds": 1837750
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-123",
+      "startMilliseconds": 1837760,
+      "endMilliseconds": 1846509,
+      "kind": "reason",
+      "text": "Counting up from B reaches 10 after five steps, so 10 minus B is 5 and the term reduces to A times 16 plus 5, that is A5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1837760,
+          "endMilliseconds": 1846509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-124",
+      "startMilliseconds": 1850919,
+      "endMilliseconds": 1860950,
+      "kind": "reason",
+      "text": "Multiplying A5 by the remaining 1 leaves A5, and with the16 shift the whole term becomes 10 times A5, written as A50.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1850919,
+          "endMilliseconds": 1860950
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-125",
+      "startMilliseconds": 1863200,
+      "endMilliseconds": 1874310,
+      "kind": "explanation",
+      "text": "The digit D is split by position exactly as before, and since10 minus 1 equals F in base 16 the low-order part collapses immediately.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1863200,
+          "endMilliseconds": 1874310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-126",
+      "startMilliseconds": 1874880,
+      "endMilliseconds": 1881350,
+      "kind": "reason",
+      "text": "The subtraction 10 minus 5 is the mirror image of 10 minus B because B plus 5 equals 10, so the same counting trick resolves it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1874880,
+          "endMilliseconds": 1881350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-127",
+      "startMilliseconds": 1916320,
+      "endMilliseconds": 1932509,
+      "kind": "fact",
+      "text": "In hexadecimal the digit B stands for 11, so 40 + B is written as 4B.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1916320,
+          "endMilliseconds": 1932509
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-128",
+      "startMilliseconds": 1932509,
+      "endMilliseconds": 1948389,
+      "kind": "reason",
+      "text": "Computing 10 - 5 gives 5, which equals B, confirming that B denotes 11 in hexadecimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1932509,
+          "endMilliseconds": 1948389
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#simplifying-the-hexadecimal-f-products"
+      }
+    },
+    {
+      "id": "TP-129",
+      "startMilliseconds": 1961909,
+      "endMilliseconds": 1965190,
+      "kind": "explanation",
+      "text": "The last remaining term of the product is D times B, so it still has to be multiplied before the partial products can be summed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1961909,
+          "endMilliseconds": 1965190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-130",
+      "startMilliseconds": 1965190,
+      "endMilliseconds": 1973519,
+      "kind": "scope_boundary",
+      "text": "The exact D times B product is set aside for the moment, with the instructor deciding to just carry out the multiplication quickly and move on.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1965190,
+          "endMilliseconds": 1973519
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-131",
+      "startMilliseconds": 1991399,
+      "endMilliseconds": 2003639,
+      "kind": "fact",
+      "text": "D times B equals 8F, and since both digits are single hex digits the product is appended with a trailing zero, giving 8F0.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1991399,
+          "endMilliseconds": 2003639
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-132",
+      "startMilliseconds": 2003639,
+      "endMilliseconds": 2011230,
+      "kind": "fact",
+      "text": "D times 5 equals 41 in hexadecimal.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2003639,
+          "endMilliseconds": 2011230
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-133",
+      "startMilliseconds": 2011230,
+      "endMilliseconds": 2020350,
+      "kind": "explanation",
+      "text": "The partial products 4B0, 8F0 and 41 must finally be added together, and expanding them yields the leading part A500 of the result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2011230,
+          "endMilliseconds": 2020350
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-134",
+      "startMilliseconds": 2013720,
+      "endMilliseconds": 2034310,
+      "kind": "explanation",
+      "text": "The partial products A500, 4B0, 8F0 and 41 are summed to obtain the product of the original hexadecimal numbers.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2013720,
+          "endMilliseconds": 2034310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-135",
+      "startMilliseconds": 2034320,
+      "endMilliseconds": 2039679,
+      "kind": "explanation",
+      "text": "The partial products are written in a column so the addition can be carried out digit by digit, like ordinary school arithmetic.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2034320,
+          "endMilliseconds": 2039679
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-136",
+      "startMilliseconds": 2039679,
+      "endMilliseconds": 2043440,
+      "kind": "fact",
+      "text": "A leading zero is added to the top partial product so that all of the columns line up.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2039679,
+          "endMilliseconds": 2043440
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-137",
+      "startMilliseconds": 2057030,
+      "endMilliseconds": 2065149,
+      "kind": "edge_case",
+      "text": "The trailing zeros of the aligned partial products have to be dealt with before the first significant column can be added.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2057030,
+          "endMilliseconds": 2065149
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-138",
+      "startMilliseconds": 2065149,
+      "endMilliseconds": 2075480,
+      "kind": "reason",
+      "text": "Adding 4 to B gives F, which shows that this column reaches the largest hex digit without overflowing into a new digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2065149,
+          "endMilliseconds": 2075480
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-139",
+      "startMilliseconds": 2075480,
+      "endMilliseconds": 2088200,
+      "kind": "reason",
+      "text": "F plus the incoming 1 plus F totals 0x1F, so the column is written as the digit E and the remaining 1 is carried into the next column.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2075480,
+          "endMilliseconds": 2088200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-140",
+      "startMilliseconds": 2088200,
+      "endMilliseconds": 2100390,
+      "kind": "explanation",
+      "text": "The carry of 1 is added to the next column, so the digit computed there depends on that carried 1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2088200,
+          "endMilliseconds": 2100390
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-141",
+      "startMilliseconds": 2110400,
+      "endMilliseconds": 2117030,
+      "kind": "reason",
+      "text": "In the next column 5 + 4 = 9 and 9 + 1 = A, and then A + 8 = 12, so the digit 2 is written down and 1 is carried forward.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2110400,
+          "endMilliseconds": 2117030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-142",
+      "startMilliseconds": 2117030,
+      "endMilliseconds": 2122710,
+      "kind": "fact",
+      "text": "The carried 1 added to A gives B, which becomes the next digit of the sum.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2117030,
+          "endMilliseconds": 2122710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#completing-the-hexadecimal-multiplication"
+      }
+    },
+    {
+      "id": "TP-143",
+      "startMilliseconds": 2139910,
+      "endMilliseconds": 2164960,
+      "kind": "explanation",
+      "text": "A second task is introduced: converting the hexadecimal number 5FE into base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2139910,
+          "endMilliseconds": 2164960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#setting-up-conversion-by-positional-expansion"
+      }
+    },
+    {
+      "id": "TP-144",
+      "startMilliseconds": 2167230,
+      "endMilliseconds": 2198790,
+      "kind": "explanation",
+      "text": "In any positional numeral system a number can be written as a sum of digits each multiplied by the value of its position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2167230,
+          "endMilliseconds": 2198790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#setting-up-conversion-by-positional-expansion"
+      }
+    },
+    {
+      "id": "TP-145",
+      "startMilliseconds": 2220520,
+      "endMilliseconds": 2225630,
+      "kind": "fact",
+      "text": "The position value written as 100 in base six denotes 10 squared, so the weights in base six are powers of six rather than powers of ten.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2220520,
+          "endMilliseconds": 2225630
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#setting-up-conversion-by-positional-expansion"
+      }
+    },
+    {
+      "id": "TP-146",
+      "startMilliseconds": 2225630,
+      "endMilliseconds": 2231199,
+      "kind": "explanation",
+      "text": "To convert to base six without going through decimal, each of these numbers is converted to base six and then multiplied and added.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2225630,
+          "endMilliseconds": 2231199
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#setting-up-conversion-by-positional-expansion"
+      }
+    },
+    {
+      "id": "TP-147",
+      "startMilliseconds": 2225630,
+      "endMilliseconds": 2231680,
+      "kind": "explanation",
+      "text": "Converting to base six does not require going through decimal, because each number can be converted on its own and the results multiplied and added.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2225630,
+          "endMilliseconds": 2231680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#setting-up-conversion-by-positional-expansion"
+      }
+    },
+    {
+      "id": "TP-148",
+      "startMilliseconds": 2235040,
+      "endMilliseconds": 2243600,
+      "kind": "fact",
+      "text": "The conversion is done for each digit in turn, and the hexadecimal digit 5 stays 5 in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2235040,
+          "endMilliseconds": 2243600
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-149",
+      "startMilliseconds": 2244440,
+      "endMilliseconds": 2252860,
+      "kind": "reason",
+      "text": "The hexadecimal digit F equals 15 in decimal, and 15 is 2 times 6 plus 3, so F becomes 23 in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2244440,
+          "endMilliseconds": 2252860
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-150",
+      "startMilliseconds": 2255720,
+      "endMilliseconds": 2274720,
+      "kind": "explanation",
+      "text": "The digit 1 stands in the sixteens place, so it is reinterpreted as 16, which is 2 times 6 plus 4, giving 24 in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2255720,
+          "endMilliseconds": 2274720
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-151",
+      "startMilliseconds": 2307480,
+      "endMilliseconds": 2316280,
+      "kind": "reason",
+      "text": "The hexadecimal digit E equals 14 in decimal, and 14 is 2 times 6 plus 2, so E becomes 22 in base six.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2307480,
+          "endMilliseconds": 2316280
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-152",
+      "startMilliseconds": 2316280,
+      "endMilliseconds": 2321519,
+      "kind": "explanation",
+      "text": "The digits6, 6 and 2 of the multiplier give a partial sum 6 + 6 + 2 = 14, which is then multiplied by the carry 1 from the previous position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2316280,
+          "endMilliseconds": 2321519
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-153",
+      "startMilliseconds": 2316280,
+      "endMilliseconds": 2324520,
+      "kind": "scope_boundary",
+      "text": "The question of how to write 10 squared in base six is left open as the segment ends.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2316280,
+          "endMilliseconds": 2324520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-154",
+      "startMilliseconds": 2324520,
+      "endMilliseconds": 2337820,
+      "kind": "explanation",
+      "text": "Writing 10 in the second power in base 6 means taking the plain value 10, multiplying it by itself, and expressing the product in base 6.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2324520,
+          "endMilliseconds": 2337820
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#converting-the-coefficients-and-original-base"
+      }
+    },
+    {
+      "id": "TP-155",
+      "startMilliseconds": 2341119,
+      "endMilliseconds": 2356100,
+      "kind": "explanation",
+      "text": "After forming that product the remaining work is 24 x 24 in base 6 followed by a multiplication by 5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2341119,
+          "endMilliseconds": 2356100
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-156",
+      "startMilliseconds": 2356140,
+      "endMilliseconds": 2375430,
+      "kind": "explanation",
+      "text": "Multiplication of 4 by 4 in base 6 is done by adding 4 + 4 per digit and then doubling, which produces the base-6 digits 1 and 2.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2356140,
+          "endMilliseconds": 2375430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-157",
+      "startMilliseconds": 2375520,
+      "endMilliseconds": 2400069,
+      "kind": "explanation",
+      "text": "Because 6 is written as 10 in base 6, doubling 6 + 2 gives 20 + 2, which is the base-6 value 24.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2375520,
+          "endMilliseconds": 2400069
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-158",
+      "startMilliseconds": 2400120,
+      "endMilliseconds": 2426079,
+      "kind": "fact",
+      "text": "The alternative expansion of 24 x 24 in base 6 also yields 24, confirming the digit-by-digit doubling result.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2400120,
+          "endMilliseconds": 2426079
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-159",
+      "startMilliseconds": 2426280,
+      "endMilliseconds": 2437589,
+      "kind": "fact",
+      "text": "The second way of computing 24 x 24 in base 6 also comes out as 24.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2426280,
+          "endMilliseconds": 2437589
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-160",
+      "startMilliseconds": 2439760,
+      "endMilliseconds": 2447030,
+      "kind": "explanation",
+      "text": "In the column multiplication of 4 by 2 the partial product of the digits is 8.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2439760,
+          "endMilliseconds": 2447030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-161",
+      "startMilliseconds": 2447040,
+      "endMilliseconds": 2455190,
+      "kind": "explanation",
+      "text": "Combining the partial rows gives 12 + 2, which is 14 in base 6.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2447040,
+          "endMilliseconds": 2455190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-162",
+      "startMilliseconds": 2457150,
+      "endMilliseconds": 2460190,
+      "kind": "correction",
+      "text": "The instructor notices the digit just written in the product is wrong and rewrites it as 1 before proceeding.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2457150,
+          "endMilliseconds": 2460190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#squaring-24-and-correcting-the-first-row"
+      }
+    },
+    {
+      "id": "TP-163",
+      "startMilliseconds": 2470190,
+      "endMilliseconds": 2472110,
+      "kind": "explanation",
+      "text": "The second partial row is 2 times 24 written shifted left by one position, which is what makes it a different power of the base.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2470190,
+          "endMilliseconds": 2472110
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-164",
+      "startMilliseconds": 2472110,
+      "endMilliseconds": 2493290,
+      "kind": "explanation",
+      "text": "You may either split the multiplication algebraically as shown earlier or use the column method, whichever is more comfortable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2472110,
+          "endMilliseconds": 2493290
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-165",
+      "startMilliseconds": 2493330,
+      "endMilliseconds": 2496270,
+      "kind": "fact",
+      "text": "2 times 4 equals 12 in base 6.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2493330,
+          "endMilliseconds": 2496270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-166",
+      "startMilliseconds": 2496280,
+      "endMilliseconds": 2509190,
+      "kind": "reason",
+      "text": "Taking 2 minus 1 leaves 1 to carry into the next column and 5 in this column, and 5 is a valid base-6 digit.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2496280,
+          "endMilliseconds": 2509190
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-167",
+      "startMilliseconds": 2509400,
+      "endMilliseconds": 2522200,
+      "kind": "explanation",
+      "text": "The partial rows are then added and the remaining carry 1 is brought down into the next position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2509400,
+          "endMilliseconds": 2522200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-168",
+      "startMilliseconds": 2524000,
+      "endMilliseconds": 2542280,
+      "kind": "fact",
+      "text": "The product of the two partial rows is 104 in base 6, and it still has to be multiplied by 5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2524000,
+          "endMilliseconds": 2542280
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-169",
+      "startMilliseconds": 2531040,
+      "endMilliseconds": 2539270,
+      "kind": "fact",
+      "text": "The partial product is written down as 104 in base 6, and multiplying it by 5 is the only step left.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2531040,
+          "endMilliseconds": 2539270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#shifting-the-second-row-and-completing-the-square"
+      }
+    },
+    {
+      "id": "TP-170",
+      "startMilliseconds": 2542280,
+      "endMilliseconds": 2544510,
+      "kind": "explanation",
+      "text": "Everything that is left is a single further multiplication of the partial product by 5.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2542280,
+          "endMilliseconds": 2544510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#multiplying-the-squared-weight-by-five"
+      }
+    },
+    {
+      "id": "TP-171",
+      "startMilliseconds": 2544590,
+      "endMilliseconds": 2564520,
+      "kind": "reason",
+      "text": "Because the factor 5 is known, you can expand 5 into 24 - 1, i.e. compute 104 - 24, so that fewer separate multiplications are needed.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2544590,
+          "endMilliseconds": 2564520
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#multiplying-the-squared-weight-by-five"
+      }
+    },
+    {
+      "id": "TP-172",
+      "startMilliseconds": 2583499,
+      "endMilliseconds": 2585990,
+      "kind": "explanation",
+      "text": "The remaining step of the exercise is the multiplication by 5 of the already computed 104.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2583499,
+          "endMilliseconds": 2585990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#multiplying-the-squared-weight-by-five"
+      }
+    },
+    {
+      "id": "TP-173",
+      "startMilliseconds": 2585990,
+      "endMilliseconds": 2590090,
+      "kind": "reason",
+      "text": "Multiplication by 5 is easy here because the position-wise products are just 5 and 5 times 4.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2585990,
+          "endMilliseconds": 2590090
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#multiplying-the-squared-weight-by-five"
+      }
+    },
+    {
+      "id": "TP-174",
+      "startMilliseconds": 2590090,
+      "endMilliseconds": 2606220,
+      "kind": "explanation",
+      "text": "For the digit 4 the product with 5 reuses the 4 x 4 result already computed, so it is 24 + 4 = 32.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2590090,
+          "endMilliseconds": 2606220
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#multiplying-the-squared-weight-by-five"
+      }
+    },
+    {
+      "id": "TP-175",
+      "startMilliseconds": 2637190,
+      "endMilliseconds": 2642510,
+      "kind": "explanation",
+      "text": "Collecting the terms, one row contributes 32 while the expanded second row contributes 104 - 24.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2637190,
+          "endMilliseconds": 2642510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-176",
+      "startMilliseconds": 2642520,
+      "endMilliseconds": 2651670,
+      "kind": "explanation",
+      "text": "-24 + 22 simplifies to -2, which is the correction the expanded form applies.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2642520,
+          "endMilliseconds": 2651670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-177",
+      "startMilliseconds": 2644520,
+      "endMilliseconds": 2651670,
+      "kind": "explanation",
+      "text": "-24 + 22 simplifies to -2, which is the correction the expanded multiplication form applies.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2644520,
+          "endMilliseconds": 2651670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-178",
+      "startMilliseconds": 2651720,
+      "endMilliseconds": 2662559,
+      "kind": "explanation",
+      "text": "104 minus 2 gives 102, so the two partial rows are now just added together.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2651720,
+          "endMilliseconds": 2662540
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2651720,
+          "endMilliseconds": 2662559
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-179",
+      "startMilliseconds": 2662559,
+      "endMilliseconds": 2672070,
+      "kind": "explanation",
+      "text": "32 and 102 are added in a column in base 6, digit by digit with carries.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2662559,
+          "endMilliseconds": 2672070
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-180",
+      "startMilliseconds": 2673080,
+      "endMilliseconds": 2685510,
+      "kind": "explanation",
+      "text": "In the addition a digit 0 is written while a carry of 1 moves to the next position.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2673080,
+          "endMilliseconds": 2685510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-181",
+      "startMilliseconds": 2685520,
+      "endMilliseconds": 2700780,
+      "kind": "reason",
+      "text": "The 1 appearing in that position is the carry that was just moved there, which explains why the digit is1.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2685520,
+          "endMilliseconds": 2700780
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-182",
+      "startMilliseconds": 2700790,
+      "endMilliseconds": 2714510,
+      "kind": "explanation",
+      "text": "In the next column 5 plus the carried 1 equals 10, so a 0 is written again and 1 is carried further.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2700790,
+          "endMilliseconds": 2714510
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-183",
+      "startMilliseconds": 2714520,
+      "endMilliseconds": 2720030,
+      "kind": "fact",
+      "text": "The final sum of the two partial rows is 1034 in base 6.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2714520,
+          "endMilliseconds": 2720030
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#combining-all-conversion-contributions"
+      }
+    },
+    {
+      "id": "TP-184",
+      "startMilliseconds": 2726380,
+      "endMilliseconds": 2732200,
+      "kind": "explanation",
+      "text": "The whole exercise exists to make the mechanism of how numbers are represented in a base concrete.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2726380,
+          "endMilliseconds": 2732200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-what-the-arithmetic-establishes"
+      }
+    },
+    {
+      "id": "TP-185",
+      "startMilliseconds": 2735440,
+      "endMilliseconds": 2752069,
+      "kind": "explanation",
+      "text": "Arithmetic works exactly the same in any base, so converting between bases means converting each digit value and multiplying them together.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2735440,
+          "endMilliseconds": 2752069
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-what-the-arithmetic-establishes"
+      }
+    },
+    {
+      "id": "TP-186",
+      "startMilliseconds": 2759540,
+      "endMilliseconds": 2760710,
+      "kind": "reason",
+      "text": "This computation is not performed to read off the result but to grasp the underlying principle.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 2759540,
+          "endMilliseconds": 2760710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#understanding-what-the-arithmetic-establishes"
+      }
+    }
+  ]
+}

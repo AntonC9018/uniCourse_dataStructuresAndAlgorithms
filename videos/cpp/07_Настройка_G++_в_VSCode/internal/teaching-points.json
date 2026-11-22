@@ -1,0 +1,725 @@
+{
+  "schemaVersion": 1,
+  "courseVideoId": "lBVXv8Qaj9Y",
+  "uploadId": "lBVXv8Qaj9Y",
+  "transcriptSha256": "6c100d8edf1378ffeca8a0490f7be452aaaa0f65ea44f01cffbd160eed25fe76",
+  "teachingPoints": [
+    {
+      "id": "TP-001",
+      "startMilliseconds": 1000,
+      "endMilliseconds": 19700,
+      "kind": "fact",
+      "text": "Invoking g++ by the bare executable name and getting an error about no input file is how you confirm the compiler is installed and reachable.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 1000,
+          "endMilliseconds": 19700
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#check-the-compiler-and-debugger"
+      }
+    },
+    {
+      "id": "TP-002",
+      "startMilliseconds": 19700,
+      "endMilliseconds": 26790,
+      "kind": "fact",
+      "text": "The GDB debugger must also be installed for the course tooling to work.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 19700,
+          "endMilliseconds": 26790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#check-the-compiler-and-debugger"
+      }
+    },
+    {
+      "id": "TP-003",
+      "startMilliseconds": 29000,
+      "endMilliseconds": 50100,
+      "kind": "explanation",
+      "text": "On MinGW64 the debugger is installed with the pacman package-manager command and then located with the which command.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 29000,
+          "endMilliseconds": 50100
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#check-the-compiler-and-debugger"
+      }
+    },
+    {
+      "id": "TP-004",
+      "startMilliseconds": 54000,
+      "endMilliseconds": 67800,
+      "kind": "reason",
+      "text": "The directory where gdb is installed must be on PATH just like the GCC installation directory, otherwise the build and debug tasks cannot find the debugger.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 54000,
+          "endMilliseconds": 67800
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#check-the-compiler-and-debugger"
+      }
+    },
+    {
+      "id": "TP-005",
+      "startMilliseconds": 67800,
+      "endMilliseconds": 92200,
+      "kind": "explanation",
+      "text": "The .vscode folder from the course repository should be copied into your own project so you inherit the prepared tasks and launch configuration.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 67800,
+          "endMilliseconds": 92200
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#copy-the-course-configuration"
+      }
+    },
+    {
+      "id": "TP-006",
+      "startMilliseconds": 95520,
+      "endMilliseconds": 99280,
+      "kind": "explanation",
+      "text": "Cloning the repository with git clone pulls the whole course folder with all assignments so you can copy the .vscode configuration from it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 95520,
+          "endMilliseconds": 99280
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#copy-the-course-configuration"
+      }
+    },
+    {
+      "id": "TP-007",
+      "startMilliseconds": 95520,
+      "endMilliseconds": 107000,
+      "kind": "explanation",
+      "text": "git clone copies the entire repository with all tasks and files onto your computer as a single course folder.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 95520,
+          "endMilliseconds": 107000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#copy-the-course-configuration"
+      }
+    },
+    {
+      "id": "TP-008",
+      "startMilliseconds": 107000,
+      "endMilliseconds": 136680,
+      "kind": "explanation",
+      "text": "The cloned .vscode folder can be pasted anywhere into your project because it already contains the full build-and-debug configuration.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 107000,
+          "endMilliseconds": 136680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#copy-the-course-configuration"
+      }
+    },
+    {
+      "id": "TP-009",
+      "startMilliseconds": 136680,
+      "endMilliseconds": 156430,
+      "kind": "fact",
+      "text": "With a compiler and the plugin installed, pressing F5 in VS Code compiles and launches the program.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 136680,
+          "endMilliseconds": 156430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-run-and-stop-at-a-breakpoint"
+      }
+    },
+    {
+      "id": "TP-010",
+      "startMilliseconds": 156430,
+      "endMilliseconds": 166000,
+      "kind": "correction",
+      "text": "The default task selected by F5 is not the right one, so the correct task such as the GDB task must be picked explicitly from the task menu.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 156430,
+          "endMilliseconds": 166000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-run-and-stop-at-a-breakpoint"
+      }
+    },
+    {
+      "id": "TP-011",
+      "startMilliseconds": 166000,
+      "endMilliseconds": 173560,
+      "kind": "test_result",
+      "text": "Running the GDB task with GDB installed compiles the program, starts it, and it prints its answer.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 166000,
+          "endMilliseconds": 173560
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-run-and-stop-at-a-breakpoint"
+      }
+    },
+    {
+      "id": "TP-012",
+      "startMilliseconds": 173560,
+      "endMilliseconds": 188470,
+      "kind": "explanation",
+      "text": "Breakpoints work under this configuration: the program halts on the marked line without executing it, and pressing F10 executes that line and moves to the next.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 173560,
+          "endMilliseconds": 188470
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-run-and-stop-at-a-breakpoint"
+      }
+    },
+    {
+      "id": "TP-013",
+      "startMilliseconds": 188470,
+      "endMilliseconds": 190310,
+      "kind": "scope_boundary",
+      "text": "A deeper look at the debugger itself is deferred to a later lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 188470,
+          "endMilliseconds": 190310
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#build-run-and-stop-at-a-breakpoint"
+      }
+    },
+    {
+      "id": "TP-014",
+      "startMilliseconds": 190310,
+      "endMilliseconds": 214900,
+      "kind": "explanation",
+      "text": "The .vscode folder implements a task system plus configuration, where F5 triggers a launch configuration chosen from the available list and another one can be selected instead.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 190310,
+          "endMilliseconds": 214900
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-015",
+      "startMilliseconds": 214900,
+      "endMilliseconds": 226000,
+      "kind": "fact",
+      "text": "The launch.json file inside the .vscode folder is where all these configurations are declared.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 214900,
+          "endMilliseconds": 226000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-016",
+      "startMilliseconds": 226000,
+      "endMilliseconds": 246079,
+      "kind": "fact",
+      "text": "The example configuration named for launching under GDB is the third entry, GDB Launch.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 226000,
+          "endMilliseconds": 246079
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-017",
+      "startMilliseconds": 236840,
+      "endMilliseconds": 253000,
+      "kind": "explanation",
+      "text": "The GDB Launch configuration's main job is to execute the program located at the path given inside it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 236840,
+          "endMilliseconds": 253000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-018",
+      "startMilliseconds": 253000,
+      "endMilliseconds": 283000,
+      "kind": "explanation",
+      "text": "The dollar-sign variable denotes the folder of the file you are currently in, so the configuration launches the executable of the same name as the source file in that folder.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 253000,
+          "endMilliseconds": 283000
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-019",
+      "startMilliseconds": 283000,
+      "endMilliseconds": 300830,
+      "kind": "scope_boundary",
+      "text": "The remaining fields are auto-generated debugger configuration that the student does not need to understand.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 283000,
+          "endMilliseconds": 300830
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#follow-the-launch-configuration"
+      }
+    },
+    {
+      "id": "TP-020",
+      "startMilliseconds": 300830,
+      "endMilliseconds": 316870,
+      "kind": "explanation",
+      "text": "Tasks referenced by preLaunchTask are the compile actions performed before the program is started.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 300830,
+          "endMilliseconds": 316870
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#remove-the-build-step-and-observe-the-failure"
+      }
+    },
+    {
+      "id": "TP-021",
+      "startMilliseconds": 316870,
+      "endMilliseconds": 328960,
+      "kind": "test_result",
+      "text": "If the preLaunchTask is removed and the built executable deleted, pressing F5 fails with an error that the executable file does not exist.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 316870,
+          "endMilliseconds": 328960
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#remove-the-build-step-and-observe-the-failure"
+      }
+    },
+    {
+      "id": "TP-022",
+      "startMilliseconds": 319919,
+      "endMilliseconds": 336629,
+      "kind": "reason",
+      "text": "Pressing F5 after deleting the executable fails with a \"no such file\" error because the runnable binary does not exist until the program is compiled.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 319919,
+          "endMilliseconds": 336629
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#remove-the-build-step-and-observe-the-failure"
+      }
+    },
+    {
+      "id": "TP-023",
+      "startMilliseconds": 339029,
+      "endMilliseconds": 356629,
+      "kind": "fact",
+      "text": "The program is compiled by the task labeled \"g++ compile current file\", so running and building are both driven by task definitions.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 339029,
+          "endMilliseconds": 356629
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#find-the-compilation-task"
+      }
+    },
+    {
+      "id": "TP-024",
+      "startMilliseconds": 359039,
+      "endMilliseconds": 370680,
+      "kind": "fact",
+      "text": "That g++ task is not a built-in default: it is one we defined ourselves among the entries stored in the tasks.json file.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 359039,
+          "endMilliseconds": 370680
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#find-the-compilation-task"
+      }
+    },
+    {
+      "id": "TP-025",
+      "startMilliseconds": 374680,
+      "endMilliseconds": 397790,
+      "kind": "explanation",
+      "text": "The g++ current file task runs g++ on the currently open file and passes a flag that writes the result back under the same file name, which is the essential part of the command.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 374680,
+          "endMilliseconds": 397790
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#find-the-compilation-task"
+      }
+    },
+    {
+      "id": "TP-026",
+      "startMilliseconds": 397790,
+      "endMilliseconds": 406710,
+      "kind": "scope_boundary",
+      "text": "The remaining entries of the task definition are less important and can be ignored at this point of the lesson.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 397790,
+          "endMilliseconds": 406710
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#find-the-compilation-task"
+      }
+    },
+    {
+      "id": "TP-027",
+      "startMilliseconds": 406710,
+      "endMilliseconds": 423120,
+      "kind": "fact",
+      "text": "Tasks can also be started on their own, independent of the F5 shortcut, so compiling without running is possible.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 406710,
+          "endMilliseconds": 423120
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 409680,
+          "endMilliseconds": 423120
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-028",
+      "startMilliseconds": 423110,
+      "endMilliseconds": 443189,
+      "kind": "fact",
+      "text": "Invoking Run Task lists the two tasks declared in tasks.json, which is how the compiler task is reachable without the shortcut.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 423110,
+          "endMilliseconds": 443189
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-029",
+      "startMilliseconds": 443189,
+      "endMilliseconds": 451840,
+      "kind": "explanation",
+      "text": "Choosing the g++ compile current file task executes exactly the compile command that was configured for it.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 443189,
+          "endMilliseconds": 451840
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-030",
+      "startMilliseconds": 455639,
+      "endMilliseconds": 477149,
+      "kind": "fact",
+      "text": "The executed command reads as g++, the path of the current file, a minus o flag, and the output file name, in that order.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 455639,
+          "endMilliseconds": 477149
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-031",
+      "startMilliseconds": 477149,
+      "endMilliseconds": 486430,
+      "kind": "explanation",
+      "text": "The variable that expands to the output name resolves to the source file name without its .cpp extension, which is why the binary is named after the source.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 477149,
+          "endMilliseconds": 486430
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-032",
+      "startMilliseconds": 500800,
+      "endMilliseconds": 506990,
+      "kind": "explanation",
+      "text": "Because the program was launched from the folder holding the source file, the produced binary lands in that same folder next to the source.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 500800,
+          "endMilliseconds": 506990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-033",
+      "startMilliseconds": 507000,
+      "endMilliseconds": 524990,
+      "kind": "explanation",
+      "text": "The task sets the current working directory to the path of the source file, which decides the folder in which the console command runs.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 507000,
+          "endMilliseconds": 524990
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#compile-without-running-and-locate-the-output"
+      }
+    },
+    {
+      "id": "TP-034",
+      "startMilliseconds": 534600,
+      "endMilliseconds": 547640,
+      "kind": "scope_boundary",
+      "text": "The \"settings\" entry can be ignored because it is not essential and at most sets a language for files with that extension.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 534600,
+          "endMilliseconds": 547640
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    },
+    {
+      "id": "TP-035",
+      "startMilliseconds": 547640,
+      "endMilliseconds": 561360,
+      "kind": "fact",
+      "text": "The cpptools properties entry is consulted when compiling the usual way, so it determines which toolchain the editor assumes by default.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 547640,
+          "endMilliseconds": 561360
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    },
+    {
+      "id": "TP-036",
+      "startMilliseconds": 561360,
+      "endMilliseconds": 582360,
+      "kind": "fact",
+      "text": "That properties entry sets the compiler standard, and without it on Windows the assumed compiler would be Visual Studio's.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 561360,
+          "endMilliseconds": 576720
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 576720,
+          "endMilliseconds": 582360
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    },
+    {
+      "id": "TP-037",
+      "startMilliseconds": 582360,
+      "endMilliseconds": 595670,
+      "kind": "reason",
+      "text": "The cpptools properties entry is needed so that functions from a newer standard are not rejected by the assumed compiler.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 582360,
+          "endMilliseconds": 584440
+        },
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 582360,
+          "endMilliseconds": 595670
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    },
+    {
+      "id": "TP-038",
+      "startMilliseconds": 595670,
+      "endMilliseconds": 621270,
+      "kind": "code_change",
+      "text": "Setting the compiler field of the configuration to g++ makes the tooling use g++ rather than the MSVC target that Windows selects by default.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 595670,
+          "endMilliseconds": 621270
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    },
+    {
+      "id": "TP-039",
+      "startMilliseconds": 621270,
+      "endMilliseconds": 630959,
+      "kind": "fact",
+      "text": "Whichever compiler name you specify in the configuration is the compiler that will be used.",
+      "evidence": [
+        {
+          "type": "transcript_range",
+          "startMilliseconds": 621270,
+          "endMilliseconds": 630959
+        }
+      ],
+      "englishCoverage": {
+        "status": "covered",
+        "anchor": "#align-the-editor-with-the-compiler"
+      }
+    }
+  ]
+}
