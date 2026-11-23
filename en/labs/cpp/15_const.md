@@ -61,17 +61,6 @@ std::cout << b << std::endl;
 ```
 
 <details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#2-copying-a-const-integer)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Answer</summary>
 
 It prints `5` and `6`.
@@ -124,17 +113,6 @@ int main()
 ```
 
 <details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#4-copying-a-const-structure)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Answer</summary>
 
 It prints `1` and `3`.
@@ -171,17 +149,6 @@ std::cout << r << std::endl;
 ```
 
 <details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#6-observing-a-change-through-a-const-reference)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Answer</summary>
 
 It prints `5` and `6`.
@@ -201,17 +168,6 @@ a = 7;
 std::cout << r << std::endl;
 std::cout << b << std::endl;
 ```
-
-<details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#7-copying-a-value-read-through-a-const-reference)
-
-<!-- </visualization> -->
-
-</details>
 
 <details>
 <summary>Answer</summary>
@@ -676,17 +632,6 @@ other[0] = 3;
 std::cout << arr[0] << std::endl;
 std::cout << other[0] << std::endl;
 ```
-
-<details>
-<summary>Execution trace</summary>
-
-<!-- <visualization> -->
-
-[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/const/#2-copying-a-const-c-array)
-
-<!-- </visualization> -->
-
-</details>
 
 <details>
 <summary>Answer</summary>

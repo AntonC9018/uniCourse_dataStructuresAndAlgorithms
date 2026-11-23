@@ -220,6 +220,17 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Выполнение по шагам</summary>
+
+<!-- <visualization> -->
+
+[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/reference/#10-оператор-с-перезаписью-примененный-на-ссылку)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Ответ</summary>
 
 `b` как бы заменяется на `a`.

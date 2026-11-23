@@ -218,6 +218,17 @@ std::cout << b << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/reference/#10-assignment-operator-applied-to-a-reference)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `b += 7` updates `a` because `b` refers to `a`.

@@ -632,6 +632,17 @@ std::cout << std::endl;
 ```
 
 <details>
+<summary>Execution trace</summary>
+
+<!-- <visualization types> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#20-pointer-to-itself)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
 <summary>Answer</summary>
 
 `&p` takes the address of the variable `p` itself.
@@ -717,6 +728,245 @@ so writing through the pointer does not affect it.
 - `y` — `0` (copied before the assignment),
 - `*px` — `1`,
 - `*py` — `1` (same address as `px`).
+</details>
+
+### 23. Writing through a pointer to a larger type (1)
+
+```cpp
+uint8_t a{ 5 };
+int c{ 10 };
+int* b{ reinterpret_cast<int*>(&a) };
+*b = 300;
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#23-writing-through-a-pointer-to-a-larger-type-1)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>What does <code>reinterpret_cast</code> do here?</summary>
+
+In examples 8 and 9, `int* b{ &a };` failed to compile because `&a` has type `uint8_t*`.
+`reinterpret_cast<int*>(&a)` tells the compiler to treat that same address as an `int*` anyway,
+without converting the value or moving the variable.
+That makes it possible to see why the compiler rejected the assignment in the first place.
+</details>
+
+<details>
+<summary>Answer</summary>
+
+`a` is a 1-byte `uint8_t`, while `b` is a pointer to a 4-byte `int`.
+Because `c` is a 4-byte `int`, the compiler places 3 unused alignment padding bytes between `a`
+and `c` so that `c` starts at a 4-byte boundary.
+
+Dereferencing `b` treats the 4 bytes starting at `a`'s address as one `int`.
+In hexadecimal, `300` (`256 + 44`) is `0x0000012C`.
+On a little-endian machine, `*b = 300` writes the least significant byte (`0x2C`, which is `44`)
+into `a` and spills the remaining 3 bytes (`01 00 00`) past `a` into the alignment padding
+before `c`.
+On a big-endian machine, the most significant byte (`00`) lands in `a` and `00 01 2C` spills into
+the padding.
+Writing past the bounds of `a` is undefined behavior.
+</details>
+
+### 24. Writing through a pointer to a larger type (2)
+
+```cpp
+uint8_t a{ 5 };
+uint8_t c{ 10 };
+int* b{ reinterpret_cast<int*>(&a) };
+*b = 300;
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#24-writing-through-a-pointer-to-a-larger-type-2)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Here `c` is a 1-byte `uint8_t`, so it can sit in the very next byte right after `a` with no
+padding between them.
+
+Writing the 4-byte `int` `300` (`0x0000012C`) through `*b` writes 4 bytes starting at `a`'s
+address.
+On a little-endian machine, the first byte (`0x2C`, or `44`) overwrites `a`, the second byte
+(`0x01`, or `1`) overwrites `c`, and the remaining two bytes (`00 00`) spill into the bytes
+after `c`.
+Although the assignment never names `c`, `*b = 300` corrupts `c`.
+Overwriting neighboring memory past `a` is undefined behavior.
+</details>
+
+### 25. Reading through a pointer to a larger type (1)
+
+```cpp
+uint8_t a{ 42 };
+int c{ 10 };
+int* b{ reinterpret_cast<int*>(&a) };
+int x{ *b };
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#25-reading-through-a-pointer-to-a-larger-type-1)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Reading `*b` reads 4 bytes starting at `a`'s address to form an `int`.
+Only the first byte belongs to `a` (`42`, which is `0x2A` in hexadecimal).
+The next 3 bytes are uninitialized alignment padding before `c` and hold indeterminate values
+(`??`).
+
+Reading past `a` is undefined behavior.
+`x` is assembled from `a`'s byte and 3 indeterminate padding bytes (`0x??????2A` on
+little-endian, or `0x2A??????` on big-endian).
+</details>
+
+### 26. Reading through a pointer to a larger type (2)
+
+```cpp
+uint16_t a{ 5 };
+uint16_t c{ 2 };
+int* b{ reinterpret_cast<int*>(&a) };
+int x{ *b };
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#26-reading-through-a-pointer-to-a-larger-type-2)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+`a` and `c` are 2-byte `uint16_t` variables placed in adjacent 2-byte slots (`05 00` and `02 00`
+on little-endian).
+All 4 bytes starting at `a` hold known values with no padding gap, yet reading a 4-byte `int`
+through `*b` still reaches past the end of `a` into `c`, which is undefined behavior.
+
+On a little-endian machine, the 4 bytes `05 00 02 00` assemble into `0x00020005`, which is
+`131077`.
+On a big-endian machine, `00 05 00 02` assembles into `0x00050002`, which is `327682`.
+</details>
+
+### 27. Writing through a pointer to a smaller type (1)
+
+```cpp
+int a{ 5 };
+uint8_t* b{ reinterpret_cast<uint8_t*>(&a) };
+*b = 2;
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#27-writing-through-a-pointer-to-a-smaller-type-1)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+`a` occupies 4 bytes, while `b` is a `uint8_t*` that accesses only 1 byte at `a`'s starting
+address.
+`*b = 2` overwrites only that first byte of `a` with `02` and leaves the other 3 bytes untouched.
+
+On a little-endian machine, the first byte of `a` is its least significant byte (`05 00 00 00`
+becomes `02 00 00 00`), so `a` becomes `2`.
+On a big-endian machine, the first byte of `a` is its most significant byte (`00 00 00 05`
+becomes `02 00 00 05`, or `0x02000005`), so `a` becomes `33554437`.
+</details>
+
+### 28. Writing through a pointer to a smaller type (2)
+
+```cpp
+int a{ 261 };
+uint8_t* b{ reinterpret_cast<uint8_t*>(&a) };
+*b = 0;
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#28-writing-through-a-pointer-to-a-smaller-type-2)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+`261` is `256 + 5`, or `0x00000105`.
+On a little-endian machine, the 4 bytes of `a` are `05 01 00 00`.
+Because `b` is a `uint8_t*`, `*b = 0` zeroes only the first byte (`05` becomes `00`) and does
+not touch the remaining 3 bytes.
+The second byte still holds `01` (`256`), so `a` becomes `256` (`00 01 00 00`) rather than `0`.
+
+On a big-endian machine, the bytes of `a` are `00 00 01 05`, so writing `0` into the first byte
+leaves `a` unchanged at `261`.
+</details>
+
+### 29. Reading through a pointer to a smaller type
+
+```cpp
+int a{ 261 };
+uint8_t* b{ reinterpret_cast<uint8_t*>(&a) };
+uint8_t x{ *b };
+```
+
+<details>
+<summary>Execution trace</summary>
+
+<!-- <visualization punning> -->
+
+[▶ Step through this example on the course site](https://cpp.curmanschii.top/en/cpp/labs/pointer/#29-reading-through-a-pointer-to-a-smaller-type)
+
+<!-- </visualization> -->
+
+</details>
+
+<details>
+<summary>Answer</summary>
+
+Dereferencing `uint8_t* b` reads only 1 byte from `a`'s starting address and ignores the other 3
+bytes of `a`.
+On a little-endian machine, the first byte of `261` (`05 01 00 00`) is `05`, so `x` becomes `5`.
+On a big-endian machine, the first byte of `261` (`00 00 01 05`) is `00`, so `x` becomes `0`.
 </details>
 
 
