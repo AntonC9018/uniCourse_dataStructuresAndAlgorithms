@@ -61,17 +61,6 @@ std::cout << b << std::endl;
 ```
 
 <details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#2-копирование-константного-числа)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Ответ</summary>
 
 Выведутся `5` и `6`.
@@ -124,17 +113,6 @@ int main()
 ```
 
 <details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#4-копирование-константной-структуры)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Ответ</summary>
 
 Выведутся `1` и `3`.
@@ -171,17 +149,6 @@ std::cout << r << std::endl;
 ```
 
 <details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#6-наблюдение-изменения-через-константную-ссылку)
-
-<!-- </visualization> -->
-
-</details>
-
-<details>
 <summary>Ответ</summary>
 
 Выведутся `5` и `6`.
@@ -201,17 +168,6 @@ a = 7;
 std::cout << r << std::endl;
 std::cout << b << std::endl;
 ```
-
-<details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#7-копирование-значения-прочитанного-через-константную-ссылку)
-
-<!-- </visualization> -->
-
-</details>
 
 <details>
 <summary>Ответ</summary>
@@ -676,17 +632,6 @@ other[0] = 3;
 std::cout << arr[0] << std::endl;
 std::cout << other[0] << std::endl;
 ```
-
-<details>
-<summary>Выполнение по шагам</summary>
-
-<!-- <visualization> -->
-
-[▶ Пошаговое выполнение на сайте курса](https://cpp.curmanschii.top/ru/cpp/labs/const/#2-копирование-константного-c-массива)
-
-<!-- </visualization> -->
-
-</details>
 
 <details>
 <summary>Ответ</summary>
