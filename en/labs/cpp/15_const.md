@@ -183,7 +183,7 @@ Changing `b` does not change `a`, and changing `a` does not change `b`.
 The reference `r` continues to refer to `a`.
 
 Rights do not carry over to a copy.
-`b` is a new object with full rights of its own; it does not matter how its value was read.
+`b` is a new object with full rights of its own, regardless of how its value was read.
 </details>
 
 ### 8. A non-const reference from a const reference
@@ -482,7 +482,7 @@ int main()
 The program will not compile at `Position* q = p`.
 Like a const reference, a pointer to const only grants the right to read.
 `Position* q` would need the right to write as well, and it cannot get more rights than `p` has.
-This holds even though this particular `a` is non-const.
+This restriction holds even though this particular `a` is non-const.
 
 Unlike `Position b = a`, copying a pointer copies an address, not the `Position` object.
 The copy gives access to the same object, so copying a pointer can only narrow the rights:

@@ -31,12 +31,13 @@
     <line x1="530" y1="90" x2="444" y2="90" stroke="#0969da" stroke-width="3" marker-end="url(#b)"/>
     <text x="487" y="80" fill="#0969da" font-weight="600">read</text>
 
-    <line x1="670" y1="80" x2="740" y2="52" stroke="#1a7f37" stroke-width="2" marker-end="url(#g)"/>
+    <line x1="670" y1="80" x2="745" y2="46" stroke="#1a7f37" stroke-width="2" marker-end="url(#g)"/>
     <text x="830" y="50" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#24292f">const int&amp; other</text>
     <text x="830" y="72" fill="#1a7f37">✓ same rights: allowed</text>
 
-    <line x1="670" y1="104" x2="740" y2="140" stroke="#cf222e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
+    <line x1="670" y1="104" x2="776" y2="145" stroke="#cf222e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
     <text x="830" y="150" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#24292f">int&amp; other</text>
     <text x="830" y="172" fill="#cf222e">✗ more rights: forbidden</text>
+    <text x="830" y="210" fill="#57606a" font-style="italic">both would refer to the same object</text>
   </g>
 </svg>
