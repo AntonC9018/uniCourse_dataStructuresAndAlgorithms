@@ -1,31 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" role="img" aria-labelledby="t d">
-  <title id="t">References to one object and their rights</title>
-  <desc id="d">int a reads and writes the object; const int&amp; r and const int&amp; other only read it; int&amp; other cannot be made from r because it would need write rights.</desc>
-  <rect x="4" y="4" width="712" height="242" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
-  <g>
-    <rect x="560" y="24" width="120" height="164" rx="10" fill="#ffffff" stroke="#24292f" stroke-width="2"/>
-    <text x="620" y="117" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" fill="#24292f">5</text>
-    <text x="210" y="56" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#24292f">int a</text>
-    <marker id="m0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker>
-    <line x1="228" y1="50" x2="556" y2="50" stroke="#1a7f37" stroke-width="2.5" marker-end="url(#m0)"/>
-    <rect x="278" y="37" width="124" height="26" rx="13" fill="#ffffff" stroke="#1a7f37"/>
-    <text x="340" y="55" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#1a7f37">read, write</text>
-    <text x="210" y="112" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#24292f">const int&amp; r</text>
-    <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0969da"/></marker>
-    <line x1="228" y1="106" x2="556" y2="106" stroke="#0969da" stroke-width="2.5" marker-end="url(#m1)"/>
-    <rect x="278" y="93" width="124" height="26" rx="13" fill="#ffffff" stroke="#0969da"/>
-    <text x="340" y="111" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#0969da">read</text>
-    <text x="210" y="168" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#24292f">const int&amp; other</text>
-    <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0969da"/></marker>
-    <line x1="228" y1="162" x2="556" y2="162" stroke="#0969da" stroke-width="2.5" marker-end="url(#m2)"/>
-    <rect x="278" y="149" width="124" height="26" rx="13" fill="#ffffff" stroke="#0969da"/>
-    <text x="340" y="167" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#0969da">read</text>
-    <text x="210" y="224" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#cf222e">int&amp; other</text>
-    <marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/></marker>
-    <line x1="228" y1="218" x2="470" y2="218" stroke="#cf222e" stroke-width="2.5" stroke-dasharray="7 6"/>
-    <rect x="278" y="205" width="124" height="26" rx="13" fill="#ffffff" stroke="#cf222e"/>
-    <text x="340" y="223" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#cf222e">read, write</text>
-    <path d="M478,209 l18,18 M496,209 l-18,18" stroke="#cf222e" stroke-width="3" stroke-linecap="round"/>
-    <text x="508" y="223" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#cf222e">forbidden</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 256" role="img" aria-labelledby="t d">
+  <title id="t">References hand on access rights</title>
+  <desc id="d">int a can read and write. const int&amp; r = a keeps only read. const int&amp; other = r keeps read and is allowed. int&amp; other = r would need write, which r does not have, so it is forbidden.</desc>
+  <defs><marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/></marker></defs>
+  <rect x="4" y="4" width="752" height="248" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+  <rect x="20" y="75" width="180" height="70" rx="10" fill="#fff" stroke="#1a7f37" stroke-width="2"/>
+  <text x="36" y="103" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">int a = 5;</text>
+  <circle cx="44" cy="125" r="7" fill="#2da44e"/><text x="57" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="120" cy="125" r="7" fill="#2da44e"/><text x="133" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">write</text>
+  <rect x="260" y="75" width="200" height="70" rx="10" fill="#fff" stroke="#0969da" stroke-width="2"/>
+  <text x="276" y="103" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">const int&amp; r = a;</text>
+  <circle cx="284" cy="125" r="7" fill="#2da44e"/><text x="297" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="360" cy="125" r="6.5" fill="#fff" stroke="#afb8c1" stroke-width="1.5"/><text x="373" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#afb8c1">write</text>
+  <rect x="530" y="22" width="210" height="70" rx="10" fill="#fff" stroke="#0969da" stroke-width="2"/>
+  <text x="546" y="50" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">const int&amp; other = r;</text>
+  <circle cx="554" cy="72" r="7" fill="#2da44e"/><text x="567" y="77" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="630" cy="72" r="6.5" fill="#fff" stroke="#afb8c1" stroke-width="1.5"/><text x="643" y="77" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#afb8c1">write</text>
+  <rect x="530" y="130" width="210" height="70" rx="10" fill="#fff" stroke="#cf222e" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="546" y="158" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cf222e">int&amp; other = r;</text>
+  <circle cx="554" cy="180" r="7" fill="#2da44e"/><text x="567" y="185" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="630" cy="180" r="6.5" fill="#fff" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="3 2"/><text x="643" y="185" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#cf222e">write</text>
+  <line x1="204" y1="110" x2="256" y2="110" stroke="#57606a" stroke-width="2.5" marker-end="url(#k)"/>
+  <path d="M464,100 L526,62" stroke="#1a7f37" stroke-width="2.5" marker-end="url(#g)"/>
+  <path d="M464,120 L526,158" stroke="#cf222e" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#r)"/>
+  <text x="380" y="238" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606a">Each step can keep or switch off a right, never switch one back on.</text>
 </svg>

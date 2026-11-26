@@ -203,7 +203,7 @@ The program will not compile at `int& other = r`.
 A reference can give access with the same or fewer rights, but never with more:
 you cannot pass on rights you do not have.
 
-![a reads and writes the object; r and a const other only read it; a non-const other cannot be made from r](./images/15_access_rights.svg)
+![a can read and write; r = a keeps only read; a const other from r keeps read; a non-const other from r would need write, which r lacks](./images/15_access_rights.svg)
 
 Unlike `int b = r`, this would not create a separate integer:
 `other` would refer to the same object and allow writes to it.
