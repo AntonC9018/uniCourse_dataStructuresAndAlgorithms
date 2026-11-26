@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 256" role="img" aria-labelledby="t d">
+  <title id="t">References hand on access rights</title>
+  <desc id="d">int a can read and write. const int&amp; r = a keeps only read. const int&amp; other = r keeps read and is allowed. int&amp; other = r would need write, which r does not have, so it is forbidden.</desc>
+  <defs><marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/></marker></defs>
+  <rect x="4" y="4" width="752" height="248" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+  <rect x="20" y="75" width="180" height="70" rx="10" fill="#fff" stroke="#1a7f37" stroke-width="2"/>
+  <text x="36" y="103" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">int a = 5;</text>
+  <circle cx="44" cy="125" r="7" fill="#2da44e"/><text x="57" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="120" cy="125" r="7" fill="#2da44e"/><text x="133" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">write</text>
+  <rect x="260" y="75" width="200" height="70" rx="10" fill="#fff" stroke="#0969da" stroke-width="2"/>
+  <text x="276" y="103" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">const int&amp; r = a;</text>
+  <circle cx="284" cy="125" r="7" fill="#2da44e"/><text x="297" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="360" cy="125" r="6.5" fill="#fff" stroke="#afb8c1" stroke-width="1.5"/><text x="373" y="130" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#afb8c1">write</text>
+  <rect x="530" y="22" width="210" height="70" rx="10" fill="#fff" stroke="#0969da" stroke-width="2"/>
+  <text x="546" y="50" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292f">const int&amp; other = r;</text>
+  <circle cx="554" cy="72" r="7" fill="#2da44e"/><text x="567" y="77" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="630" cy="72" r="6.5" fill="#fff" stroke="#afb8c1" stroke-width="1.5"/><text x="643" y="77" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#afb8c1">write</text>
+  <rect x="530" y="130" width="210" height="70" rx="10" fill="#fff" stroke="#cf222e" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="546" y="158" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cf222e">int&amp; other = r;</text>
+  <circle cx="554" cy="180" r="7" fill="#2da44e"/><text x="567" y="185" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#24292f">read</text>
+  <circle cx="630" cy="180" r="6.5" fill="#fff" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="3 2"/><text x="643" y="185" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#cf222e">write</text>
+  <line x1="204" y1="110" x2="256" y2="110" stroke="#57606a" stroke-width="2.5" marker-end="url(#k)"/>
+  <path d="M464,100 L526,62" stroke="#1a7f37" stroke-width="2.5" marker-end="url(#g)"/>
+  <path d="M464,120 L526,158" stroke="#cf222e" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#r)"/>
+  <text x="380" y="238" text-anchor="middle" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606a">Each step can keep or switch off a right, never switch one back on.</text>
+</svg>

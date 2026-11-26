@@ -11,6 +11,7 @@ slug: en/cpp/labs/const
 - Const variables and structure objects
 - Copying a const value into a non-const object
 - Const references: reading, observing changes, and copying values
+- References and pointers as access rights: they can be narrowed, never widened
 - Const function parameters: passing by value and by reference
 - Reading through a pointer to const, reassigning the pointer, and observing changes
 - Why copying an address does not remove the pointed-to `const`
@@ -154,6 +155,10 @@ std::cout << r << std::endl;
 It prints `5` and `6`.
 A const reference can also refer to a non-const object.
 `a` can still be changed directly, and `r` reads the current value of that same object.
+
+It helps to think of a reference as a set of access rights to an object.
+The variable `a` has full rights over its object: it can read and write.
+`const int& r = a` gives access to the same object with fewer rights: `r` may only read.
 The restriction applies to writes through `r`; it does not freeze `a`.
 </details>
 
@@ -176,6 +181,9 @@ It prints `7` and `6`.
 `int b = r` copies the value read through `r` into a separate, non-const object.
 Changing `b` does not change `a`, and changing `a` does not change `b`.
 The reference `r` continues to refer to `a`.
+
+Rights do not carry over to a copy.
+`b` is a new object with full rights of its own, regardless of how its value was read.
 </details>
 
 ### 8. A non-const reference from a const reference
@@ -191,9 +199,15 @@ other = 6;
 <summary>Answer</summary>
 
 The program will not compile at `int& other = r`.
-A non-const reference cannot bind to the object through a const reference by discarding `const`.
-Unlike `int b = r`, this would not create a separate integer: `other` would refer to the same object and allow writes to it.
-The rule applies even though this particular `a` is non-const.
+`r` only has the right to read, while `int& other` would need the right to write as well.
+A reference can give access with the same or fewer rights, but never with more:
+you cannot pass on rights you do not have.
+
+![a can read and write; r = a keeps only read; a const other from r keeps read; a non-const other from r would need write, which r lacks](./images/15_access_rights.svg)
+
+Unlike `int b = r`, this would not create a separate integer:
+`other` would refer to the same object and allow writes to it.
+The rule applies even though this particular `a` is non-const: only the rights of `r` count.
 Use `const int& other = r` to keep the restriction; then `other = 6` is also forbidden.
 </details>
 
@@ -466,12 +480,15 @@ int main()
 <summary>Answer</summary>
 
 The program will not compile at `Position* q = p`.
-An ordinary pointer cannot be initialized from a pointer to const by discarding the pointed-to `const`.
+Like a const reference, a pointer to const only grants the right to read.
+`Position* q` would need the right to write as well, and it cannot get more rights than `p` has.
+This restriction holds even though this particular `a` is non-const.
 
 Unlike `Position b = a`, copying a pointer copies an address, not the `Position` object.
-Allowing this conversion would allow writes to the same object through `q`.
+The copy gives access to the same object, so copying a pointer can only narrow the rights:
+a `Position*` converts to a `const Position*`, but not the other way around.
+
 Use `const Position* q = p` to keep the restriction; then `q->x = 3` is also forbidden.
-This conversion is forbidden even though this particular `a` is non-const.
 </details>
 
 ### 19. Copying the value read through a pointer to const
