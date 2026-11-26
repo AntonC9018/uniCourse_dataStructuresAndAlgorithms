@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" role="img" aria-labelledby="t d">
+  <title id="t">Права доступа ссылок к одному объекту</title>
+  <desc id="d">У a права на чтение и запись; const int&amp; r только читает; r может дать константную ссылку, но не неконстантную; b — отдельная копия со всеми правами.</desc>
+  <defs>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0969da"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/></marker>
+    <marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker>
+  </defs>
+  <rect x="8" y="8" width="944" height="314" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+  <g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle">
+    <rect x="300" y="50" width="140" height="80" rx="8" fill="#ffffff" stroke="#24292f" stroke-width="2"/>
+    <text x="370" y="78" fill="#57606a">объект</text>
+    <text x="370" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#24292f">5</text>
+    <rect x="300" y="220" width="140" height="80" rx="8" fill="#ffffff" stroke="#24292f" stroke-width="2"/>
+    <text x="370" y="248" fill="#57606a">новый объект</text>
+    <text x="370" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#24292f">5</text>
+
+    <text x="90" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#24292f">int a</text>
+    <line x1="140" y1="90" x2="296" y2="90" stroke="#1a7f37" stroke-width="3" marker-end="url(#g)"/>
+    <text x="218" y="80" fill="#1a7f37" font-weight="600">чтение + запись</text>
+
+    <text x="90" y="266" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#24292f">int b</text>
+    <line x1="140" y1="260" x2="296" y2="260" stroke="#1a7f37" stroke-width="3" marker-end="url(#g)"/>
+    <text x="218" y="250" fill="#1a7f37" font-weight="600">чтение + запись</text>
+
+    <line x1="370" y1="134" x2="370" y2="216" stroke="#57606a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#k)"/>
+    <text x="380" y="180" text-anchor="start" fill="#57606a">копия значения</text>
+
+    <text x="600" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#24292f">const int&amp; r</text>
+    <line x1="530" y1="90" x2="444" y2="90" stroke="#0969da" stroke-width="3" marker-end="url(#b)"/>
+    <text x="487" y="80" fill="#0969da" font-weight="600">чтение</text>
+
+    <line x1="670" y1="80" x2="740" y2="52" stroke="#1a7f37" stroke-width="2" marker-end="url(#g)"/>
+    <text x="830" y="50" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#24292f">const int&amp; other</text>
+    <text x="830" y="72" fill="#1a7f37">✓ те же права: можно</text>
+
+    <line x1="670" y1="104" x2="740" y2="140" stroke="#cf222e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
+    <text x="830" y="150" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#24292f">int&amp; other</text>
+    <text x="830" y="172" fill="#cf222e">✗ больше прав: нельзя</text>
+  </g>
+</svg>
